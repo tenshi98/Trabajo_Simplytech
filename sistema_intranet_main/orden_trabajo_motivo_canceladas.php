@@ -73,7 +73,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'prioridad_desc':     $order_by = 'core_ot_prioridad.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Descendente';break;
 		case 'tipotrab_asc':       $order_by = 'core_ot_motivos_tipos.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Trabajo Ascendente'; break;
 		case 'tipotrab_desc':      $order_by = 'core_ot_motivos_tipos.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Trabajo Descendente';break;
-		
+
 		default: $order_by = 'orden_trabajo_tareas_listado.idOT DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> OT Descendente';
 	}
 }else{
@@ -139,7 +139,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 </div>
 <div class="clearfix"></div>
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
@@ -175,11 +175,10 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 												  $dbConn, 'form1');
 				$Form_Inputs->form_select('Prioridad','idPrioridad', $x9, 1, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x10, 1, 'idTipo', 'Nombre', 'core_ot_motivos_tipos', 0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
@@ -251,7 +250,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 						<td><?php echo n_doc($ot['idOT'], 8); ?></td>
 						<td><?php echo Fecha_estandar($ot['f_programacion']); ?></td>
 						<td>
-							<?php echo $ot['Ubicacion']; 
+							<?php echo $ot['Ubicacion'];
 							if(isset($ot['UbicacionLVL_1'])&&$ot['UbicacionLVL_1']!=''){echo ' - '.$ot['UbicacionLVL_1'];}
 							if(isset($ot['UbicacionLVL_2'])&&$ot['UbicacionLVL_2']!=''){echo ' - '.$ot['UbicacionLVL_2'];}
 							if(isset($ot['UbicacionLVL_3'])&&$ot['UbicacionLVL_3']!=''){echo ' - '.$ot['UbicacionLVL_3'];}

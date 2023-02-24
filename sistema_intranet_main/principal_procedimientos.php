@@ -30,7 +30,7 @@ require_once 'core/Web.Header.Main.php';
         };
     }
 </script>
- 
+
 <?php 
 	//Se dibuja el explorador de archivos
 	echo file_explorer(1, 'connector_procedimientos', DB_SITE_MAIN_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 1); ?>

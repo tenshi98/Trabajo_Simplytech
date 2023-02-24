@@ -344,7 +344,7 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 				$('#submitBtn').click(function() {
 					//Se verifica que todos los input tengan valores asignados
 					let ninput = <?php echo ($Registro_total-$Registro_ok);?>;
-					
+
 					//verifica el valor
 					let monto = <?php echo $TotalGeneral; ?>;
 					if(monto!=0&&ninput==0){
@@ -604,7 +604,7 @@ array_push( $arrBoletas,$row );
 				Total = Total + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']); ?>;
 				MontoCancelado = MontoCancelado + <?php echo Cantidades_decimales_justos($tipo['MontoPagado']); ?>;
 				Totalgen = Totalgen + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']-($tipo['MontoPagado'])); ?>;
-				
+
 			}
 		<?php }?>
 		
@@ -612,7 +612,7 @@ array_push( $arrBoletas,$row );
 		document.getElementById("final_val_1").innerHTML = number_format(Total, 0, ',', '.');
 		document.getElementById("final_val_2").innerHTML = number_format(MontoCancelado, 0, ',', '.');
 		document.getElementById("final_val_3").innerHTML = number_format(Totalgen, 0, ',', '.');
-		
+
 		//Verifico que el total general sea distinto de 0 y habilito el boton siguiente
 		if(Totalgen!=0){
 			document.getElementById("acep_1").style.display = "block";
@@ -647,7 +647,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){  $x1  = $idCliente; }else{$x1  = '';}
@@ -668,7 +668,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 
 <?php

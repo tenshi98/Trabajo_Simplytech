@@ -122,11 +122,11 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 									
 							?>
 							
-							<tr class="odd <?php echo $danger ?>">		
+							<tr class="odd <?php echo $danger ?>">
 								<td><?php echo $equip['Sistema'] ?></td>
 								<td><?php echo $equip['Nombre'] ?></td>
 								<td><?php echo fecha_estandar($equip['LastUpdateFecha']).' a las '.$equip['LastUpdateHora'].' hrs'; ?></td>
-								<td><div class="btn-group" ><?php echo $eq_ok ?></div></td>		
+								<td><div class="btn-group" ><?php echo $eq_ok ?></div></td>
 								<td>
 									<div class="btn-group" style="width: 105px;" >
 										<a href="<?php echo 'telemetria_gestion_equipos_view_equipo_admin.php?view='.simpleEncode($equip['idTelemetria'], fecha_actual()) ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
@@ -150,7 +150,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Filtro de busqueda
@@ -169,7 +169,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idSistema)){     $x1 = $idSistema;      }else{$x1 = '';}
@@ -196,7 +196,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

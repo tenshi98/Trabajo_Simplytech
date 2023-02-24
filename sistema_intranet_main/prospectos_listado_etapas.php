@@ -122,7 +122,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_hidden('HModificacion', hora_actual(), 2);
 				$Form_Inputs->form_input_hidden('idUsuarioMod', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -132,7 +132,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</div>
 	</div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
@@ -157,8 +157,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_select('Etapa Fidelizacion','idEtapa', $x1, 2, 'idEtapa', 'Nombre', 'prospectos_etapa', 0, '', $dbConn);
 				$Form_Inputs->form_ckeditor('Observacion', 'Observacion', $x2, 2, 2);
 				$Form_Inputs->form_multiple_upload('Seleccionar Archivo','Archivo', 1, '"jpg", "png", "gif", "jpeg", "bmp", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "txt", "rtf", "gz", "gzip", "7Z", "zip", "rar"');
-				
-				
+
 				$Form_Inputs->form_input_hidden('idProspecto', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('Fecha', fecha_actual(), 2);
@@ -177,7 +176,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos

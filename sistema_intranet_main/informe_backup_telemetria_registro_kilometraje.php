@@ -66,7 +66,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		if(isset($arrData['Fecha'])&&$arrData['Fecha']!=''){$arrData['Fecha'] .= ",'".Fecha_estandar($rutas['FechaSistema'])." ".$rutas['HoraSistema']."'"; }else{ $arrData['Fecha'] = "'".Fecha_estandar($rutas['FechaSistema'])." ".$rutas['HoraSistema']."'"; }
 		//datos											
 		if(isset($arrData['Value'])&&$arrData['Value']!=''){$arrData['Value'] .= ", ".$rutas['GeoMovimiento'];  }else{ $arrData['Value'] = $rutas['GeoMovimiento'];}
-		
+
 	}
 	/******************************************/  
 	//variables

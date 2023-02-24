@@ -174,7 +174,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 		}else{
 			$arrData_2['Value'] = floatval(number_format($data['Total'], 2, '.', ''));
 		}
-		
+
 	}
 
 	//nombres
@@ -205,7 +205,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 		</header>
         <div class="tab-content">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				
+
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<?php 
@@ -215,7 +215,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						?>
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<?php 

@@ -282,7 +282,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Documento borrado corr
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['addFile'])){ ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -371,7 +371,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_documentos', $SIS
 				/**************************************/
 				
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_documento"> 
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -420,7 +420,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_documentos', $SIS
 				/**************************************/
 				
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_documento"> 
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -459,14 +459,14 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_bolet
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x1, 2);
 				$Form_Inputs->form_input_number('Valor', 'Valor', $x2, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idExistencia', $_GET['editBoletaEmp'], 2);
 				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_boleta_emp"> 
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -498,13 +498,13 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_bolet
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x1, 2);
 				$Form_Inputs->form_input_number('Valor', 'Valor', $x2, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_boleta_emp"> 
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -550,14 +550,14 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_number('Numero de Boleta', 'N_Doc', $x2, 2);
 				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x3, 1);
 				$Form_Inputs->form_input_number('Valor', 'Valor', $x4, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idExistencia', $_GET['editBoleta'], 2);
 				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_boleta"> 
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -595,13 +595,13 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_number('Numero de Boleta', 'N_Doc', $x2, 2);
 				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x3, 1);
 				$Form_Inputs->form_input_number('Valor', 'Valor', $x4, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_boleta"> 
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -671,7 +671,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros
 				/**************************************/
 				
 				?>
-				
+
 				<script>
 					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){?>
 						document.getElementById("div_Nombre").style.display = 'none';
@@ -742,7 +742,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros
 				/**************************************/
 				
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_otros"> 
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -896,7 +896,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_servi
 				/**************************************/
 				
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_servicio"> 
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -976,7 +976,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_arrie
 				/**************************************/
 				
 				?>
-				
+
 				<script>
 					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){?>
 						document.getElementById("div_idEquipo").style.display = 'none';
@@ -1047,7 +1047,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_arrie
 				/**************************************/
 				
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_arriendo"> 
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -1141,7 +1141,7 @@ foreach ($arrPermisos as $prod) {
 				/**************************************/
 				
 				?>
-				
+
 				<script>
 					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){?>
 						document.getElementById("div_idProducto").style.display = 'none';
@@ -1205,7 +1205,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
-				
+
 				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', '');
 				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', '');
 				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '');
@@ -1227,7 +1227,7 @@ foreach ($arrPermisos as $prod) {
 				/**************************************/
 				
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_ins"> 
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -1320,7 +1320,7 @@ foreach ($arrPermisos as $prod) {
 				/**************************************/
 				
 				?>
-				
+
 				<script>
 					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){?>
 						document.getElementById("div_idProducto").style.display = 'none';
@@ -1382,7 +1382,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
-				
+
 				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', '');
 				$Form_Inputs->form_input_disabled('Proveedor Actual','proveedor', '');
 				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '');
@@ -1439,7 +1439,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProveedor)){      $x1  = $idProveedor;    }else{$x1  = $rowdata['idProveedor'];}
@@ -1451,13 +1451,13 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idOcompra', $_GET['view'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Modificar Documento" name="submit_modBase">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -1469,7 +1469,6 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['view'])){
 //Se consulta
@@ -2224,7 +2223,7 @@ $total = 0;
 					</tr>
 					 
 				 <?php 
-				$numeral++;	
+				$numeral++;
 				}
 			}?>
 
@@ -2259,7 +2258,7 @@ $total = 0;
 					</tr>
 					 
 				 <?php 
-				$numeral++;	
+				$numeral++;
 				}
 			}?>
 

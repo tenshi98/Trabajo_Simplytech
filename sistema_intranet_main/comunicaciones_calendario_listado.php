@@ -69,7 +69,7 @@ $SIS_where = 'idCalendario = '.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'principal_calendario_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -78,7 +78,7 @@ $rowdata = db_select_data (false, $SIS_query, 'principal_calendario_listado', $S
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){      $x1 = $Fecha;       }else{$x1 = $rowdata['Fecha'];}
@@ -93,7 +93,7 @@ $rowdata = db_select_data (false, $SIS_query, 'principal_calendario_listado', $S
 				$Form_Inputs->form_ckeditor('Detalle','Cuerpo', $x3, 2, 2);
 				$Form_Inputs->form_post_data(2, '<strong>Tipo de evento: </strong>En el caso de que sea un evento publico, todos pueden verlo, en caso de que no sea un evento publico, solo podra verlo quien lo creo.' );
 				$Form_Inputs->form_select('Es un evento Publico','idOpciones', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -125,7 +125,7 @@ $SIS_where = 'principal_calendario_listado.idCalendario = '.$_GET['view'];
 $row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 	 
 ?>
- 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -150,8 +150,7 @@ $row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $
 
 						<h2 class="text-primary">Mensaje</h2>
 						<p class="text-muted" style="white-space: normal;"><?php echo $row_data['Cuerpo'];?></p>
-					
-					
+
 						<div class="form-group" >
 							<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$_GET["view"]; ?>" class="btn btn-default pull-right margin_width" >Editar Evento</a><?php }?>
 							<?php if ($rowlevel['level']>=4){
@@ -195,7 +194,7 @@ if(isset($rowlevel['level'])&&$rowlevel['level']!=''){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){       $x1 = $Fecha;       }else{$x1 = '';}
@@ -210,13 +209,13 @@ if(isset($rowlevel['level'])&&$rowlevel['level']!=''){
 				$Form_Inputs->form_ckeditor('Detalle','Cuerpo', $x3, 2, 2);
 				$Form_Inputs->form_post_data(2, '<strong>Tipo de evento: </strong>En el caso de que sea un evento publico, todos pueden verlo, en caso de que no sea un evento publico, solo podra verlo quien lo creo.' );
 				$Form_Inputs->form_select('Es un evento Publico','idOpciones', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario9999', 9999, 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -228,7 +227,6 @@ if(isset($rowlevel['level'])&&$rowlevel['level']!=''){
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Se definen las variables

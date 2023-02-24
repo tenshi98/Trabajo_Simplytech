@@ -87,7 +87,7 @@ foreach($arrHistorial as $hist) {
 	if(isset($hist['HeladaDia'])&&$hist['HeladaDia']!='0000-00-00'){
 		//variables
 		$temp_predic = $hist['Helada'];
-		
+
 		//Se obtiene la fecha
 		$x_dia = fecha2NdiaMes($hist['HeladaDia']);
 		$x_mes = fecha2NMes($hist['HeladaDia']);
@@ -96,7 +96,7 @@ foreach($arrHistorial as $hist) {
 		$x_time     = strtotime($hist['HeladaHora']);
 		$x_hora     = date('H', $x_time);
 		$x_minuto   = date('i', $x_time);
-		
+
 		//Se crea el dato
 		if(isset($arrTemp[$x_mes][$x_dia][$x_hora][$x_minuto])&&$arrTemp[$x_mes][$x_dia][$x_hora][$x_minuto]!=''){							
 			$temp_real = $arrTemp[$x_mes][$x_dia][$x_hora][$x_minuto];
@@ -263,7 +263,6 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 	</div>
 </div>
 
-  
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -291,7 +290,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;      }else{$x1  = '';}
@@ -325,7 +324,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

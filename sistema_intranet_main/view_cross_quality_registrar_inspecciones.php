@@ -106,7 +106,7 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 ?>	
 		
 <section class="invoice">
-	
+
 	<div class="row">
 		
 		<div class="col-xs-4">
@@ -369,7 +369,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 ?>
 
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
@@ -476,7 +476,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
 		</div>
 	</div>
-	
+
 	<?php
 	$zz  = '?idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual());
 	$zz .= '&view='.$_GET['view'];

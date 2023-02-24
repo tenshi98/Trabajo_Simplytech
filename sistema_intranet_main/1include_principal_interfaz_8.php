@@ -89,6 +89,6 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SI
 		echo '</div>';						
 														
 		?>
-	
+
 	</div>
 </div>

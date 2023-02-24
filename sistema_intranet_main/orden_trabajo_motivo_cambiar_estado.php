@@ -86,7 +86,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idEstado)){         $x1  = $idEstado;         }else{$x1  = $rowdata['idEstado'];}
@@ -96,11 +96,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Estado','idEstado', $x1, 2, 'idEstado', 'Nombre', 'core_estado_ot_motivos', 0, '', $dbConn);
 				$Form_Inputs->form_textarea('Observacion Cierre','Observaciones', $x2, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['cambioEstado'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_cambiar"> 
 					<a href="<?php echo $location.'&submit_filter=Filtrar'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -204,7 +204,7 @@ array_push( $arrOTS,$row );
 						<td><?php echo n_doc($ot['idOT'], 8); ?></td>
 						<td><?php echo Fecha_estandar($ot['f_programacion']); ?></td>
 						<td>
-							<?php echo $ot['Ubicacion']; 
+							<?php echo $ot['Ubicacion'];
 							if(isset($ot['UbicacionLVL_1'])&&$ot['UbicacionLVL_1']!=''){echo ' - '.$ot['UbicacionLVL_1'];}
 							if(isset($ot['UbicacionLVL_2'])&&$ot['UbicacionLVL_2']!=''){echo ' - '.$ot['UbicacionLVL_2'];}
 							if(isset($ot['UbicacionLVL_3'])&&$ot['UbicacionLVL_3']!=''){echo ' - '.$ot['UbicacionLVL_3'];}
@@ -246,7 +246,7 @@ array_push( $arrOTS,$row );
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idOT)){                     $x0  = $idOT;                     }else{$x0  = '';}
@@ -281,7 +281,7 @@ array_push( $arrOTS,$row );
 				$Form_Inputs->form_date('Fecha Programacion Hasta','f_programacion_termino', $x11, 1);
 				$Form_Inputs->form_date('Fecha Cierre Desde','f_termino_inicio', $x12, 1);
 				$Form_Inputs->form_date('Fecha Cierre Hasta','f_termino_termino', $x13, 1);
-				
+
 				?>
 
 				<div class="form-group">
@@ -292,7 +292,7 @@ array_push( $arrOTS,$row );
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

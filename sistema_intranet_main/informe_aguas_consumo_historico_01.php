@@ -126,10 +126,10 @@ array_push( $arrConsumos,$row );
 <a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
-//Indico el sistema	 
+//Indico el sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';	 
 ?>
 
@@ -141,7 +141,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Ano)){        $x1  = $Ano;        }else{$x1  = '';}
@@ -153,7 +153,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				$Form_Inputs->form_select_n_auto('Año','Ano', $x1, 1, 2016, ano_actual());
 				$Form_Inputs->form_select_filter('Mes','idMes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x2, 1, 'idCliente', 'Identificador,Nombre', 'aguas_clientes_listado', $z, 'ORDER BY Identificador ASC', $dbConn);
-				
+
 				?>
 	   
 				<div class="form-group">
@@ -164,7 +164,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

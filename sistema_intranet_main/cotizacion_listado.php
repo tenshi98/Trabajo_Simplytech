@@ -169,7 +169,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Documento borrado corr
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['addFile'])){ ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -221,16 +221,15 @@ if(!empty($_GET['addFile'])){ ?>
 				$Form_Inputs->form_select_filter('Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['cotizacion_servicios'][$_GET['editServicios']]['idServicio'], 2);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['cotizacion_servicios'][$_GET['editServicios']]['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['cotizacion_servicios'][$_GET['editServicios']]['vUnitario']), 2);
 				
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
-				
+
 				?>
 
 				
@@ -269,15 +268,15 @@ if(!empty($_GET['addFile'])){ ?>
 				$Form_Inputs->form_select_filter('Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '');
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 				
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_servicio"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -312,15 +311,15 @@ if(!empty($_GET['addFile'])){ ?>
 				$Form_Inputs->form_select_filter('Equipos','idEquipo', $x1, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['cotizacion_arriendos'][$_GET['editArriendo']]['idEquipo'], 2);
-				
+
 				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', Cantidades_decimales_justos($_SESSION['cotizacion_arriendos'][$_GET['editArriendo']]['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($_SESSION['cotizacion_arriendos'][$_GET['editArriendo']]['vUnitario']), 2);
 				
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
-				
+
 				?>
 
 				<div class="form-group">
@@ -357,13 +356,13 @@ if(!empty($_GET['addFile'])){ ?>
 				$Form_Inputs->form_select_filter('Equipos','idEquipo', $x1, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '');
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x4, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
 				
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
-				
+
 				?>
 				
 			  
@@ -458,7 +457,7 @@ foreach ($arrPermisos as $prod) {
 				
 				echo venta_print_value('insumos_listado', 'idProducto', 'unimed', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
-				
+
 				?>
 			  
 				<div class="form-group">
@@ -521,7 +520,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
-				
+
 				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', '');
 				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '');
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
@@ -529,7 +528,7 @@ foreach ($arrPermisos as $prod) {
 				
 				echo venta_print_value('insumos_listado', 'idProducto', 'unimed', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
-				
+
 				?>
 				
 				
@@ -624,9 +623,9 @@ foreach ($arrPermisos as $prod) {
 				
 				echo venta_print_value('productos_listado', 'idProducto', 'unimed', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_prod"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -686,7 +685,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
-				
+
 				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', '');
 				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '');
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
@@ -694,7 +693,7 @@ foreach ($arrPermisos as $prod) {
 				
 				echo venta_print_value('productos_listado', 'idProducto', 'unimed', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
-				
+
 				?>
 					
 			
@@ -720,7 +719,7 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idImpuesto )){       $x1  = $idImpuesto ;      }else{$x1  = '';}
@@ -756,7 +755,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){        $x1  = $idCliente;      }else{$x1  = $_SESSION['cotizacion_basicos']['idCliente'];}
@@ -774,7 +773,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Modificar Documento" name="submit_modBase">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -786,7 +785,6 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['view'])){
 //Variable para sacar el total
@@ -849,7 +847,7 @@ $vtotal_iva   = 0;
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
@@ -981,7 +979,7 @@ $vtotal_iva   = 0;
 						
 					}
 				}?>
-				
+
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Servicios Cotizados</td>
 					<td>
@@ -1029,7 +1027,7 @@ $vtotal_iva   = 0;
 					<td align="right"><?php echo Valores($vtotal_neto, 0);?></td>
 					<td></td>
 				</tr>
-				
+
 				<tr class="item-row linea_punteada">
 					<td class="item-name" colspan="5"><strong>Impuestos</strong></td>
 					<td><a href="<?php echo $location.'&addImpuesto=true' ?>" title="Agregar Impuesto" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Impuestos</a></td>
@@ -1110,7 +1108,7 @@ $vtotal_iva   = 0;
 					</tr>
 					 
 				 <?php 
-				$numeral++;	
+				$numeral++;
 				}
 			}?>
 
@@ -1137,7 +1135,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){        $x1  = $idCliente;      }else{$x1  = '';}
@@ -1149,14 +1147,13 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha de Cotizacion','Creacion_fecha', $x2, 2);
 				$Form_Inputs->form_ckeditor('Condiciones Comerciales','Observaciones', $x3, 1, 2);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -1186,7 +1183,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'Cliente_desc':      $order_by = 'clientes_listado.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Cliente Descendente';break;
 		case 'fecha_asc':         $order_by = 'cotizacion_listado.Creacion_fecha ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
 		case 'fecha_desc':        $order_by = 'cotizacion_listado.Creacion_fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		
+
 		default: $order_by = 'cotizacion_listado.idCotizacion DESC, cotizacion_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Doc, Fecha Descendente';
 	}
 }else{
@@ -1263,11 +1260,10 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha de Cotizacion','Creacion_fecha', $x2, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

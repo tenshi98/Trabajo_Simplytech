@@ -195,9 +195,9 @@ array_push( $arrGrupo,$row );
 }
 
 ?>
-	
+
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
@@ -428,13 +428,13 @@ array_push( $arrGrupo,$row );
 <a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Verifico el tipo de usuario que esta ingresando
 $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
- 
- ?>
+
+?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -443,7 +443,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idMaquina)){     $x1  = $idMaquina;   }else{$x1  = '';}
@@ -458,8 +458,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 										 $dbConn, 'form1');
 				$Form_Inputs->form_date('Fecha Muestreo Inicio','f_inicio', $x3, 2);
 				$Form_Inputs->form_date('Fecha Muestreo Termino','f_termino', $x4, 2);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
@@ -472,7 +471,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

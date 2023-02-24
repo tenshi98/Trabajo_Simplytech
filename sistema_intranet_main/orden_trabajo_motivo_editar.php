@@ -167,7 +167,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idLicitacion)){     $x0  = $idLicitacion;     }else{$x0  = '';}
@@ -227,8 +227,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 										  'Nivel 24','idLevel_24',$x24 ,1,'idLevel_24','Nombre','licitacion_listado_level_24',0,0,
 										  $dbConn, 'form1');
 				$Form_Inputs->form_textarea('Observacion','Observacion', $x26, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
@@ -244,7 +243,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
 				$Form_Inputs->form_input_hidden('idEstadoTarea', 1, 2);
-				
+
 				?>
 			  
 				<div class="form-group">
@@ -257,7 +256,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 		</div>
 	</div>
 </div>
-	
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['editTarea'])){ 
 //Se traen los datos de la ot
@@ -293,7 +292,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idLicitacion)){     $x0  = $idLicitacion;     }else{$x0  = $rowdata['idLicitacion'];}
@@ -353,12 +352,11 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 										  'Nivel 24','idLevel_24',$x24 ,1,'idLevel_24','Nombre','licitacion_listado_level_24',0,0,
 										  $dbConn, 'form1');
 				$Form_Inputs->form_textarea('Observacion','Observacion', $x26, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idEstadoTarea', 1, 2);
 				$Form_Inputs->form_input_hidden('idTrabajoOT', $_GET['editTarea'], 2);
-				
+
 				?>
 			  
 				<div class="form-group">
@@ -415,7 +413,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
@@ -432,7 +430,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
@@ -450,11 +448,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 				}
 				?>
 				</script>
-				
+
 				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
@@ -523,7 +521,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
@@ -540,17 +538,17 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 						<input type="text" value="'.$rowdata['Unidad'].'" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idProductos', $_GET['edit_prod'], 2);
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 				}
 				?>
 				</script>
-				
+
 				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
@@ -614,7 +612,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
@@ -631,7 +629,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
@@ -649,11 +647,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 				}
 				?>
 				</script>
-				
+
 				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
@@ -722,7 +720,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $rowdata['idProducto'];}
@@ -739,17 +737,17 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 						<input type="text" value="'.$rowdata['Unidad'].'" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idInsumos', $_GET['edit_ins'], 2);
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 				}
 				?>
 				</script>
-				
+
 				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
@@ -793,7 +791,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = '';}
@@ -802,7 +800,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador responsable','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
@@ -817,7 +815,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
-				
+
 				?>
 			  
 				<div class="form-group">
@@ -852,7 +850,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = $rowdata['idTrabajador'];}
@@ -860,7 +858,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador responsable','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idResponsable', $_GET['edit_trab'], 2);
 				?>
@@ -893,7 +891,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Observaciones)){    $x1  = $Observaciones;    }else{$x1  = $rowdata['Observaciones'];}
@@ -901,10 +899,10 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Observacion','Observaciones', $x1, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editObs"> 
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -934,7 +932,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idUbicacion)){        $x1  = $idUbicacion;        }else{$x1  = $rowdata['idUbicacion'];}
@@ -962,7 +960,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 							
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
-				
+
 				?>
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editBase"> 
@@ -1132,7 +1130,7 @@ $arrHistorial = array();
 $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrHistorial');
  
 ?>
- 
+
 <div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive">
 	<div id="page-wrap">
 		<div id="header"> ORDEN DE TRABAJO N° <?php echo n_doc($_GET['view'], 8);?></div>
@@ -1215,12 +1213,12 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
 				</tr>
-				
+
 				<?php /**********************************************************************************/?>
 					<tr class="item-row fact_tittle">
 						<td colspan="5">Trabajadores Encargados</td>

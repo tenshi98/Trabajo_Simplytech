@@ -533,7 +533,7 @@ require_once '0_validate_user_1.php';
 						if(isset($rowProspecto['idTab_13']) && $rowProspecto['idTab_13']!= ''){                                  $SIS_data .= ",idTab_13='".$rowProspecto['idTab_13']."'";}
 						if(isset($rowProspecto['idTab_14']) && $rowProspecto['idTab_14']!= ''){                                  $SIS_data .= ",idTab_14='".$rowProspecto['idTab_14']."'";}
 						if(isset($rowProspecto['idTab_15']) && $rowProspecto['idTab_15']!= ''){                                  $SIS_data .= ",idTab_15='".$rowProspecto['idTab_15']."'";}
-						
+
 						if(isset($Contrato_Nombre) && $Contrato_Nombre!= ''){                                                    $SIS_data .= ",Contrato_Nombre='".$Contrato_Nombre."'";}
 						if(isset($Contrato_Numero) && $Contrato_Numero!= ''){                                                    $SIS_data .= ",Contrato_Numero='".$Contrato_Numero."'";}
 						if(isset($Contrato_Fecha_Ini) && $Contrato_Fecha_Ini!= ''){                                              $SIS_data .= ",Contrato_Fecha_Ini='".$Contrato_Fecha_Ini."'";}

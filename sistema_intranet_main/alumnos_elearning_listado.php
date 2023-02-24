@@ -163,7 +163,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_hidden('idContenido', $_GET['Contenido_ID'], 2);
 				$Form_Inputs->form_input_hidden('idCuestionario', $_GET['editCuestionario'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="edit_quiz">	
 					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -201,7 +201,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_hidden('idUnidad', $_GET['Unidad_ID'], 2);
 				$Form_Inputs->form_input_hidden('idContenido', $_GET['Contenido_ID'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_quiz">	
 					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -248,13 +248,12 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_
 				$Form_Inputs->form_ckeditor('Requisitos','Requisitos', $x4, 1, 2);
 				$Form_Inputs->form_ckeditor('Descripcion','Descripcion', $x5, 1, 2);
 				$Form_Inputs->form_select('Estado','idEstado', $x6, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
 				$Form_Inputs->form_input_hidden('idElearning', $_GET['id_curso'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="edit_curso">	
 					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -266,7 +265,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  } elseif(!empty($_GET['addFile'])){ ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -280,11 +279,11 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_
 				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "bmp", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "mp3", "wav", "pdf", "txt", "rtf", "mp2", "mpeg", "mpg", "mov", "avi", "gz", "gzip", "7Z", "zip", "rar"');
-				
+
 				$Form_Inputs->form_input_hidden('idElearning', $_GET['id_curso'], 2);
 				$Form_Inputs->form_input_hidden('idUnidad', $_GET['Unidad_ID'], 2);
 				$Form_Inputs->form_input_hidden('idContenido', $_GET['Contenido_ID'], 2);
-				
+
 				?>
 
 				<div class="form-group">
@@ -299,7 +298,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_
 </div>	 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  }elseif(!empty($_GET['addUnidad'])){ ?>
-	
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -320,7 +319,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_
 				$Form_Inputs->form_select_n_auto('Numero de Unidad','N_Unidad', $x1, 2, 1, 50);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
 				$Form_Inputs->form_select_n_auto('Dias de Duracion','Duracion', $x3, 2, 1, 50);
-				
+
 				$Form_Inputs->form_input_hidden('idElearning', $_GET['id_curso'], 2);
 				?>
 								
@@ -364,7 +363,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidade
 				$Form_Inputs->form_select_n_auto('Unidad','N_Unidad', $x1, 2, 1, 50);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
 				$Form_Inputs->form_select_n_auto('Dias de Duracion','Duracion', $x3, 2, 1, 50);
-				
+
 				$Form_Inputs->form_input_hidden('idElearning', $_GET['id_curso'], 2);
 				$Form_Inputs->form_input_hidden('idUnidad', $_GET['editUnidad'], 2);
 				?>
@@ -381,7 +380,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidade
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  }elseif(!empty($_GET['addContenido'])){ ?>
-	
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -402,8 +401,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidade
 				$Form_Inputs->form_select('N° Unidad','idUnidad', $x1, 2, 'idUnidad', 'N_Unidad,Nombre', 'alumnos_elearning_listado_unidades', 'idElearning='.$_GET['id_curso'], '', $dbConn);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
 				$Form_Inputs->form_ckeditor('Contenido','Contenido', $x3, 2, 2);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idElearning', $_GET['id_curso'], 2);
 				?>
 								
@@ -447,7 +445,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidade
 				$Form_Inputs->form_select('N° Unidad','idUnidad', $x1, 2, 'idUnidad', 'N_Unidad,Nombre', 'alumnos_elearning_listado_unidades', 'idElearning='.$_GET['id_curso'], '', $dbConn);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
 				$Form_Inputs->form_ckeditor('Contenido','Contenido', $x3, 2, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idElearning', $_GET['id_curso'], 2);
 				$Form_Inputs->form_input_hidden('idContenido', $_GET['editContenido'], 2);
 				?>
@@ -525,7 +523,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 }
 								
 ?>
- 
+
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
@@ -730,7 +728,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){      $x1  = $Nombre;      }else{$x1  = '';}
@@ -740,12 +738,12 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_select_n_auto('Numero de Unidades','Unidades', $x2, 2, 1, 50);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -774,7 +772,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'nombre_desc':   $order_by = 'alumnos_elearning_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
 		case 'estado_asc':    $order_by = 'core_estados.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
 		case 'estado_desc':   $order_by = 'core_estados.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		
+
 		default: $order_by = 'alumnos_elearning_listado.idEstado ASC, alumnos_elearning_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
@@ -817,7 +815,7 @@ $arrCurso = db_select_array (false, $SIS_query, 'alumnos_elearning_listado', $SI
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Elearning</a><?php } ?>
 
 </div>
@@ -835,10 +833,10 @@ $arrCurso = db_select_array (false, $SIS_query, 'alumnos_elearning_listado', $SI
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
 				$Form_Inputs->form_select('Estado','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

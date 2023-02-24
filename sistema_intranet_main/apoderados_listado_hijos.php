@@ -140,7 +140,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				
 				$Form_Inputs->form_input_hidden('idHijos', $_GET['edit'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -150,7 +150,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</div>
 	</div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
@@ -164,7 +164,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idPlan)){              $x1  = $idPlan;               }else{$x1  = '';}
@@ -201,7 +201,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos

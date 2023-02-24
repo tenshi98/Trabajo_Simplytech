@@ -3,7 +3,7 @@
 	.iframe_elfinder{height: 3000px;}
 	iframe{float:right;width: 100%;height: 100%;padding: 0;margin: 0;border:none;}
 	</style>
-	
+
 	<script>
 		window.addEventListener('message', function(event) {
 			if(event.data['setAnchor']>0) {

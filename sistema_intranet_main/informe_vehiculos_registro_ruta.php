@@ -262,7 +262,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_time('Hora Inicio','h_inicio', $x3, 1, 1);
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 1, 1);
 				$Form_Inputs->form_select_filter('Vehiculo','idVehiculo', $x5, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
-				
+
 				?>
 	   
 				

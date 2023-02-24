@@ -345,7 +345,7 @@ array_push( $arrHistorial,$row );
 </div>
 
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
@@ -394,7 +394,7 @@ array_push( $arrHistorial,$row );
 						if(isset($row_data['f_termino_fin'])&&$row_data['f_termino_fin']!='0000-00-00'){echo 'Terminado: '.fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin'].'<br/>';}
 						echo 'Agrónomo: '.$row_data['NombreUsuario'];
 						if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){echo 'Dosificador: '.$row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].'<br/>';}
-						
+
 						echo '
 					</address>
 				</div>
@@ -444,7 +444,7 @@ array_push( $arrHistorial,$row );
 					//recorro el listado entregado por la base de datos
 					if ($arrCuarteles) {
                         //recorro
-						foreach ($arrCuarteles as $cuartel) { 
+						foreach ($arrCuarteles as $cuartel) {
 							//Verifico el tipo de cierre
 							if(isset($cuartel['CuartelidEjecucion'])&&$cuartel['CuartelidEjecucion']==1){
 								//se verifica plantas faltantes
@@ -656,7 +656,7 @@ array_push( $arrHistorial,$row );
 					$NTract     = 0;
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrTractores) {
-						foreach ($arrTractores as $tract) { 
+						foreach ($arrTractores as $tract) {
 							//Se suman cantidades
 							$Capacidad = $Capacidad + $tract['TelemetriaCapacidad'];
 							$NTract++;
@@ -761,7 +761,7 @@ array_push( $arrHistorial,$row );
 </section>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
-	
+
 	<?php if ($arrHistorial){ ?>
 		<table id="items">
 			<tbody>
@@ -813,7 +813,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		
 	<?php }
 } ?>
- 
+
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

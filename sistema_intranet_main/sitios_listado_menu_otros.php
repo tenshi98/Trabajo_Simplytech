@@ -94,22 +94,22 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_menu_otros', $SIS_
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Posicion','idPosicion', $x1, 2, 1, 100 );
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
-				
+
 				$Form_Inputs->form_post_data(2, 'Puede ser un enlace o una referencia (#id).' );
 				$Form_Inputs->form_input_text('Link', 'Link', $x3, 2);
-				
+
 				$Form_Inputs->form_post_data(2, 'Abrir el enlace en una nueva pestaña.' );
 				$Form_Inputs->form_select('Uso de tabs','idNewTab', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					
 				$Form_Inputs->form_post_data(2, 'Abrir ventana en una ventana emergente.' );
 				$Form_Inputs->form_select('Uso Popup','idPopup', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_post_data(2, 'Usar o no usar este menu.' );
 				$Form_Inputs->form_select('Estado','idEstado', $x6, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idMenuOtros', $_GET['edit'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -119,7 +119,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_menu_otros', $SIS_
 		</div>
 	</div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
@@ -147,23 +147,22 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Posicion','idPosicion', $x1, 2, 1, 100 );
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
-				
+
 				$Form_Inputs->form_post_data(2, 'Puede ser un enlace o una referencia (#id).' );
 				$Form_Inputs->form_input_text('Link', 'Link', $x3, 2);
-				
+
 				$Form_Inputs->form_post_data(2, 'Abrir el enlace en una nueva pestaña.' );
 				$Form_Inputs->form_select('Uso de tabs','idNewTab', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					
 				$Form_Inputs->form_post_data(2, 'Abrir ventana en una ventana emergente.' );
 				$Form_Inputs->form_select('Uso Popup','idPopup', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_post_data(2, 'Usar o no usar este menu.' );
 				$Form_Inputs->form_select('Estado','idEstado', $x6, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idSitio', simpleDecode($_GET['id'], fecha_actual()), 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
-				
+
 				?>
 
 				<div class="form-group">

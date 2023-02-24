@@ -81,7 +81,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 //Verifico el tipo de usuario que esta ingresando
 $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1';
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -106,12 +106,12 @@ $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND 
 				$Form_Inputs->form_select('Prioridad Ticket','idPrioridad', $x3, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x4, 2);
 				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x5, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idTicket', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idTipoTicket', 1, 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -129,7 +129,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //Verifico el tipo de usuario que esta ingresando
 $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1';
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -154,13 +154,13 @@ $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND 
 				$Form_Inputs->form_select('Prioridad Ticket','idPrioridad', $x3, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x4, 2);
 				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x5, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('FechaCreacion', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('idTipoTicket', 1, 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -264,7 +264,7 @@ $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND 
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Ticket</a><?php } ?>
 
 </div>
@@ -292,10 +292,10 @@ $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND 
 				$Form_Inputs->form_select('Prioridad Ticket','idPrioridad', $x5, 1, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x6, 1);
 				$Form_Inputs->form_date('Fecha Creacion','FechaCreacion', $x7, 1);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

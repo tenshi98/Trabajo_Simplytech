@@ -355,7 +355,7 @@
 									</p>
 									
 									<div class="clearfix"></div>
-								
+
 									<p>
 										<div class="pull-left">Emergencias 24 horas </div>
 										<small class="pull-right"><?php echo formatPhone($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsFonoEmergencias']) ?></small>

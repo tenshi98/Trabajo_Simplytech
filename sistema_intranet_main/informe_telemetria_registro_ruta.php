@@ -58,7 +58,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ruta del equipo <?php echo $rowEquipo['NombreEquipo'];?></h5>
 			</header>
 			<div class="table-responsive">
-				
+
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="row">
 						<?php
@@ -197,7 +197,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								/* ************************************************************************** */
 								google.maps.event.addDomListener(window, "load", initialize());
 							</script>
-				
+
 						<?php } ?>
 					</div>
 				</div>

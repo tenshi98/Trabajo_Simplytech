@@ -222,7 +222,7 @@ document.getElementById("loading").style.display = "none";
 <?php 
 //Se verifica si se pidieron los graficos
 if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
-	
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
@@ -376,7 +376,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 			</div>
 		</div>
 	</div>
-	
+
 <?php } ?>
 
 
@@ -410,7 +410,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($fecha_desde)){    $x1  = $fecha_desde;    }else{$x1  = '';}
@@ -439,7 +439,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

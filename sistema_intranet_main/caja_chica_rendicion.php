@@ -116,7 +116,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Rendicion borrada corr
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['addFile'])){ ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -154,7 +154,7 @@ if(!empty($_GET['addFile'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Item)){   $x1  = $Item;  }else{$x1  = $_SESSION['caja_rend_items'][$_GET['editRendicion']]['Item'];}
@@ -164,7 +164,7 @@ if(!empty($_GET['addFile'])){ ?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Item','Item', $x1, 2);
 				$Form_Inputs->form_input_number('Valor Total Neto', 'Valor', $x2, 2);
-				
+
 				$Form_Inputs->form_input_hidden('oldItemID', $_GET['editRendicion'], 2);
 				?>
 				
@@ -190,7 +190,7 @@ if(!empty($_GET['addFile'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Item)){   $x1  = $Item;   }else{$x1  = '';}
@@ -200,9 +200,9 @@ if(!empty($_GET['addFile'])){ ?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Item','Item', $x1, 2);
 				$Form_Inputs->form_input_number('Monto', 'Valor', $x2, 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_item"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -225,7 +225,7 @@ if(!empty($_GET['addFile'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idDocPago)){  $x1  = $idDocPago;  }else{$x1  = $_SESSION['caja_rend_documentos'][$_GET['editMonto']]['idDocPago'];}
@@ -237,7 +237,7 @@ if(!empty($_GET['addFile'])){ ?>
 				$Form_Inputs->form_select_filter('Documento de Pago','idDocPago', $x1, 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_Doc', $x2, 1);
 				$Form_Inputs->form_input_number('Valor Total Neto', 'Valor', $x3, 2);
-				
+
 				$Form_Inputs->form_input_hidden('oldItemID', $_GET['editMonto'], 2);
 				?>
 				
@@ -263,7 +263,7 @@ if(!empty($_GET['addFile'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idDocPago)){   $x1  = $idDocPago;  }else{$x1  = '';}
@@ -275,9 +275,9 @@ if(!empty($_GET['addFile'])){ ?>
 				$Form_Inputs->form_select_filter('Documento de Pago','idDocPago', $x1, 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_Doc', $x2, 1);
 				$Form_Inputs->form_input_number('Monto', 'Valor', $x3, 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_monto"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -307,7 +307,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idCajaChica)){               $x1 = $idCajaChica;                 }else{$x1 = $_SESSION['caja_rend_basicos']['idCajaChica'];}
@@ -322,8 +322,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 										 $dbConn, 'form1');
 				$Form_Inputs->form_date('Fecha Rendicion','Creacion_fecha', $x3, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -418,12 +417,12 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
 				</tr>
-				
+
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Rendiciones</td>
 					<td>
@@ -544,7 +543,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 					</tr>
 					 
 				 <?php 
-				$numeral++;	
+				$numeral++;
 				}
 			}?>
 
@@ -577,7 +576,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idCajaChica)){                $x1  = $idCajaChica;              }else{$x1  = '';}
@@ -593,8 +592,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 										 
 				$Form_Inputs->form_date('Fecha Rendicion','Creacion_fecha', $x3, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -602,7 +600,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_input_hidden('idEstado', 2, 2);	
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -614,7 +612,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Se inicializa el paginador de resultados
@@ -634,7 +631,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'caja_desc':    $order_by = 'caja_chica_listado.Nombre DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Caja Descendente';break;
 		case 'monto_asc':    $order_by = 'caja_chica_facturacion.Valor ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Monto Ascendente';break;
 		case 'monto_desc':   $order_by = 'caja_chica_facturacion.Valor DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Monto Descendente';break;
-		
+
 		default: $order_by = 'caja_chica_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
@@ -687,7 +684,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'caja_chica_facturacion', $SIS_jo
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){
 	if (isset($_SESSION['caja_rend_basicos']['idCajaChica'])&&$_SESSION['caja_rend_basicos']['idCajaChica']!=''){?>
 		
@@ -716,10 +713,10 @@ $arrTipo = db_select_array (false, $SIS_query, 'caja_chica_facturacion', $SIS_jo
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Caja Chica','idCajaChica', $x1, 1, 'idCajaChica', 'Nombre', 'caja_chica_listado', $y, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Rendicion','Creacion_fecha', $x2, 1);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

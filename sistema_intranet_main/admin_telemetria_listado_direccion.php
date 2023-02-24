@@ -102,7 +102,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 						}else{
 							$nlat = '-33.4372';
 						}
-						
+
 						if(isset($rowdata['GeoLongitud']) && $rowdata['GeoLongitud']!='' && $rowdata['GeoLongitud']!=0){
 							$nlong = $rowdata['GeoLongitud'];
 						}else{
@@ -217,7 +217,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
+
 						<?php 
 						if(isset($idZona)){      $x0  = $idZona;      }else{$x0  = $rowdata['idZona'];}
 						if(isset($idCiudad)){    $x1  = $idCiudad;    }else{$x1  = $rowdata['idCiudad'];}

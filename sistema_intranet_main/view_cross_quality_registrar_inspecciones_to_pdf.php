@@ -178,7 +178,7 @@ $html .= '
 						</tr>
 					</tbody>
 				</table>
-				
+
 				<br/>
 				<br/>
 
@@ -234,10 +234,10 @@ $html .= '
 				$html .= '
 					</tbody>
 				</table>
-				
+
 				<br/>
 				<br/>
-				
+
 				<table style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0">
 					<tbody><tr><td style="vertical-align: top;">Observaciones:</td></tr></tbody>
 				</table>

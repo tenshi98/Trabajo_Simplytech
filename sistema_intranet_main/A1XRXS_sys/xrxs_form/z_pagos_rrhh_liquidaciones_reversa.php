@@ -125,16 +125,16 @@ require_once '0_validate_user_1.php';
 
 					//variable
 					$Valor_Doc = 0;
-					
+
 					//filtro
 					$z = 'pagos_rrhh_liquidaciones.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 					$z .= ' AND pagos_rrhh_liquidaciones.idDocPago='.$indice1;
 					$z .= ' AND pagos_rrhh_liquidaciones.N_DocPago='.$indice2;
-					
+
 					//consulto los datos
 					$arrReversa = array();
 					$arrReversa = db_select_array (false, 'idPago, idFactTrab, MontoPagado, montoPactado', 'pagos_rrhh_liquidaciones', '', $z, 'idPago ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//actualizo registro de la liquidacion
 					if ($arrReversa!=false && !empty($arrReversa) && $arrReversa!='') {
 						foreach ($arrReversa as $tipo){

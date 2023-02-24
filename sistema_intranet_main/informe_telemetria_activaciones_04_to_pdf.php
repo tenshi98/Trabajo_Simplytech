@@ -71,7 +71,7 @@ for ($i = 1; $i <= $rowMaquina['cantSensores']; $i++) {
 					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.' 
 					ORDER BY HoraSistema ASC
 					LIMIT 1) AS HoraMinimo_'.$i.'';
-					
+
 					//Consulto el valor maximo
 					$subquery .= ',(SELECT Sensor_'.$i.'
 					FROM `telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'`

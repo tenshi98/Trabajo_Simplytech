@@ -263,7 +263,7 @@ require_once '0_validate_user_1.php';
 					// elimino la tabla si es que existe
 					$query  = "DROP TABLE IF EXISTS `vehiculos_listado_tablarelacionada_".$ultimo_id."`";
 					$result = mysqli_query($dbConn, $query);
-					
+
 					// se crea la nueva tabla
 					$query  = "CREATE TABLE `vehiculos_listado_tablarelacionada_".$ultimo_id."` (
 					`idTabla` int(11) unsigned NOT NULL AUTO_INCREMENT,

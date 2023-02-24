@@ -257,7 +257,7 @@ $Total_4 = 0;
 			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart']});</script>
 
 			<div class="tab-pane fade active in" id="netos" style="padding-top:5px;">
-				
+
 				<script>
 
 					google.charts.setOnLoadCallback(drawBasic);
@@ -301,7 +301,7 @@ $Total_4 = 0;
 
 			</div>
 			<div class="tab-pane fade" id="totales" style="padding-top:5px;">
-				
+
 				<script>
 
 					google.charts.setOnLoadCallback(drawBasic);
@@ -698,7 +698,7 @@ $Total_4 = 0;
 			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart']});</script>
 
 			<div class="tab-pane fade active in" id="netos" style="padding-top:5px;">
-				
+
 				<script>
 
 					google.charts.setOnLoadCallback(drawBasic);
@@ -742,7 +742,7 @@ $Total_4 = 0;
 
 			</div>
 			<div class="tab-pane fade" id="totales" style="padding-top:5px;">
-				
+
 				<script>
 
 					google.charts.setOnLoadCallback(drawBasic);
@@ -1136,7 +1136,7 @@ $Total_4 = 0;
 			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart']});</script>
 
 			<div class="tab-pane fade active in" id="netos" style="padding-top:5px;">
-				
+
 				<script>
 
 					google.charts.setOnLoadCallback(drawBasic);
@@ -1180,7 +1180,7 @@ $Total_4 = 0;
 
 			</div>
 			<div class="tab-pane fade" id="totales" style="padding-top:5px;">
-				
+
 				<script>
 
 					google.charts.setOnLoadCallback(drawBasic);
@@ -1583,7 +1583,7 @@ $Total_4 = 0;
 			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart']});</script>
 
 			<div class="tab-pane fade active in" id="netos" style="padding-top:5px;">
-				
+
 				<script>
 
 					google.charts.setOnLoadCallback(drawBasic);
@@ -1625,7 +1625,7 @@ $Total_4 = 0;
 
 			</div>
 			<div class="tab-pane fade" id="totales" style="padding-top:5px;">
-				
+
 				<script>
 
 					google.charts.setOnLoadCallback(drawBasic);

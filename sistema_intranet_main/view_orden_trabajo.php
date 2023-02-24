@@ -189,7 +189,7 @@ $zz .= '&view='.$_GET['view'];
 			<div id="header"> ORDEN DE TRABAJO N° <?php echo n_doc($X_Puntero, 8);?></div>
 		
 			<div id="customer">
-				
+
 				<table id="meta" class="pull-left otdata">
 					<tbody>
 						<tr>

@@ -333,7 +333,7 @@ $Form_Inputs = new Inputs();
 
 		</script>
 			
-	</div> 
+	</div>
 <?php } ?>
 
 
@@ -532,7 +532,7 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 		document.getElementById("final_val_1").innerHTML = number_format(TotalAPagar, 0, ',', '.');
 		document.getElementById("final_val_2").innerHTML = number_format(MontoPagado, 0, ',', '.');
 		document.getElementById("final_val_3").innerHTML = number_format(MontoAPagar, 0, ',', '.');
-		
+
 		//Verifico que el total general sea distinto de 0 y habilito el boton siguiente
 		if(MontoAPagar>0){
 			document.getElementById("acep_1").style.display = "block";
@@ -570,7 +570,7 @@ $_SESSION['form_require'].=',idFacturacion';
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-			
+
 				<?php 
 				$input  = '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/chosen/chosen.css">';
 				$input .= '<div class="form-group" id="div_idFacturacion">
@@ -625,7 +625,7 @@ $_SESSION['form_require'].=',idFacturacion';
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 
 <?php

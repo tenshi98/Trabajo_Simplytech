@@ -111,7 +111,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){            $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
@@ -129,20 +129,20 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				
+
 				$Form_Inputs->form_select('Tipo Puntuacion','idTipoEvaluacion', $x2, 2, 'idTipoEvaluacion', 'Nombre', 'quiz_tipo_evaluacion', 0, '', $dbConn);
 				$Form_Inputs->form_select('Escala','idEscala', $x3, 1, 'idEscala', 'Nombre', 'quiz_escala', 0, '', $dbConn);
 				$Form_Inputs->form_select('% Aprobacion','Porcentaje_apro', $x4, 1, 'idEscala', 'Nombre', 'quiz_escala', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_select('Tipo de Evaluacion','idTipoQuiz', $x7, 2, 'idTipoQuiz', 'Nombre', 'quiz_tipo_quiz', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_tittle(3, 'Header');
 				$Form_Inputs->form_input_text('Texto Cabecera', 'Header_texto', $x8, 1); 
 				$Form_Inputs->form_date('F Inicio','Header_fecha', $x9, 1);
-				
+
 				$Form_Inputs->form_tittle(3, 'Contenido');
 				$Form_Inputs->form_ckeditor('Indicaciones','Texto_Inicio', $x10, 1,2);
-				
+
 				$Form_Inputs->form_tittle(3, 'Footer');
 				$Form_Inputs->form_input_text('Texto Pie', 'Footer_texto', $x11, 1); 
 				
@@ -155,9 +155,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idQuiz', $_GET['id_quiz'], 2);
-				
+
 				?>
-				
+
 				<script>
 					document.getElementById('div_idEscala').style.display = 'none';
 					document.getElementById('div_Porcentaje_apro').style.display = 'none';
@@ -196,7 +196,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							TipoEvaluacion= $("#idTipoEvaluacion").val();
 
 							//Escala
-							if(TipoEvaluacion == 1){ 
+							if(TipoEvaluacion == 1){
 								document.getElementById('div_idEscala').style.display = '';
 								document.getElementById('div_Porcentaje_apro').style.display = 'none';
 								
@@ -204,7 +204,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('Porcentaje_apro').required = 'false';
 
 							//Porcentaje
-							} else if(TipoEvaluacion == 2){ 
+							} else if(TipoEvaluacion == 2){
 								document.getElementById('div_idEscala').style.display = 'none';
 								document.getElementById('div_Porcentaje_apro').style.display = '';
 								
@@ -265,7 +265,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select('Categoria','idCategoria', $x1, 2, 'idCategoria', 'Nombre', 'rrhh_quiz_categorias', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Pregunta', 'Nombre', $x2, 2); 
 				$Form_Inputs->form_select('Tipo de Pregunta','idTipo', $x3, 2, 'idTipo', 'Nombre', 'rrhh_quiz_tipo', 'idTipo!=2', '', $dbConn);
-				
+
 				$Form_Inputs->form_input_text('Opcion 1', 'Opcion_1', $x4, 1);
 				$Form_Inputs->form_input_text('Opcion 2', 'Opcion_2', $x5, 1);
 				$Form_Inputs->form_input_text('Opcion 3', 'Opcion_3', $x6, 1);
@@ -276,9 +276,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_hidden('idQuiz', $_GET['id_quiz'], 2);
 
 				?>
-				
+
 				<script src="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/jquery/jquery.min.js"></script>
-				
+
 				<script>
 					document.getElementById('div_Opcion_1').style.display = 'none';
 					document.getElementById('div_Opcion_2').style.display = 'none';
@@ -437,7 +437,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select('Categoria','idCategoria', $x1, 2, 'idCategoria', 'Nombre', 'rrhh_quiz_categorias', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Pregunta', 'Nombre', $x2, 2); 
 				$Form_Inputs->form_select('Tipo de Pregunta','idTipo', $x3, 2, 'idTipo', 'Nombre', 'rrhh_quiz_tipo', 'idTipo!=2', '', $dbConn);
-				
+
 				$Form_Inputs->form_input_text('Opcion 1', 'Opcion_1', $x4, 1);
 				$Form_Inputs->form_input_text('Opcion 2', 'Opcion_2', $x5, 1);
 				$Form_Inputs->form_input_text('Opcion 3', 'Opcion_3', $x6, 1);
@@ -450,9 +450,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 
 				?>
-				
+
 				<script src="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/jquery/jquery.min.js"></script>
-				
+
 				<script>
 					document.getElementById('div_Opcion_1').style.display = 'none';
 					document.getElementById('div_Opcion_2').style.display = 'none';
@@ -714,7 +714,7 @@ foreach ($arrPreguntas as $preg) {
 	</div>
 	<div class="clearfix"></div>
 <?php } ?>
- 
+
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<a target="new" href="rrhh_quiz_listado_to_word_1.php?id_quiz=<?php echo $_GET['id_quiz'] ?>" class="btn btn-info pull-right" ><i class="fa fa-file-word-o" aria-hidden="true"></i> Exportar a Word</a>
@@ -899,20 +899,20 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				
+
 				$Form_Inputs->form_select('Tipo Puntuacion','idTipoEvaluacion', $x2, 2, 'idTipoEvaluacion', 'Nombre', 'quiz_tipo_evaluacion', 0, '', $dbConn);
 				$Form_Inputs->form_select('Escala','idEscala', $x3, 1, 'idEscala', 'Nombre', 'quiz_escala', 0, '', $dbConn);
 				$Form_Inputs->form_select('% Aprobacion','Porcentaje_apro', $x4, 1, 'idEscala', 'Nombre', 'quiz_escala', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_select('Tipo de Evaluacion','idTipoQuiz', $x7, 2, 'idTipoQuiz', 'Nombre', 'quiz_tipo_quiz', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_tittle(3, 'Header');
 				$Form_Inputs->form_input_text('Texto Cabecera', 'Header_texto', $x8, 1); 
 				$Form_Inputs->form_date('F Inicio','Header_fecha', $x9, 1);
-				
+
 				$Form_Inputs->form_tittle(3, 'Contenido');
 				$Form_Inputs->form_ckeditor('Indicaciones','Texto_Inicio', $x10, 1,2);
-				
+
 				$Form_Inputs->form_tittle(3, 'Footer');
 				$Form_Inputs->form_input_text('Texto Pie', 'Footer_texto', $x11, 1); 
 				
@@ -923,7 +923,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				?>
-				
+
 				<script>
 					document.getElementById('div_idEscala').style.display = 'none';
 					document.getElementById('div_Porcentaje_apro').style.display = 'none';
@@ -934,7 +934,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 							let TipoEvaluacion= $("#idTipoEvaluacion").val();
 
 							//Escala
-							if(TipoEvaluacion == 1){ 
+							if(TipoEvaluacion == 1){
 								document.getElementById('div_idEscala').style.display = '';
 								document.getElementById('div_Porcentaje_apro').style.display = 'none';
 								
@@ -942,7 +942,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 								document.getElementById('Porcentaje_apro').required = 'false';
 
 							//Porcentaje
-							} else if(TipoEvaluacion == 2){ 
+							} else if(TipoEvaluacion == 2){
 								document.getElementById('div_idEscala').style.display = 'none';
 								document.getElementById('div_Porcentaje_apro').style.display = '';
 								
@@ -985,7 +985,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
 		case 'nombre_asc':    $order_by = 'rrhh_quiz_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
 		case 'nombre_desc':   $order_by = 'rrhh_quiz_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		
+
 		default: $order_by = 'rrhh_quiz_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
@@ -1026,7 +1026,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'rrhh_quiz_listado', $SIS_join, 
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Evaluacion</a><?php } ?>
 
 </div>
@@ -1042,10 +1042,10 @@ $arrUsers = db_select_array (false, $SIS_query, 'rrhh_quiz_listado', $SIS_join, 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

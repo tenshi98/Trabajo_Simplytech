@@ -278,7 +278,7 @@ array_push( $arrVehiculos,$row );
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php 
 				
 				//Se verifican si existen los datos
@@ -292,7 +292,7 @@ array_push( $arrVehiculos,$row );
 				$Form_Inputs->form_tittle(3, 'Generar Informe por Mes');
 				$Form_Inputs->form_select_n_auto('Año','Ano', $x1, 1, 2016, ano_actual());
 				$Form_Inputs->form_select_filter('Mes','idMes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
-				
+
 				$Form_Inputs->form_tittle(3, 'Generar informe entre fechas');
 				$Form_Inputs->form_date('F Inicio','fInicio', $x3, 1);
 				$Form_Inputs->form_date('F Termino','fTermino', $x4, 1);

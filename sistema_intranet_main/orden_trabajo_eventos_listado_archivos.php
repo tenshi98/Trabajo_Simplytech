@@ -55,7 +55,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Archivo borrado correc
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['new_file'])){ ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -69,7 +69,7 @@ if(!empty($_GET['new_file'])){ ?>
 				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','event_file', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
-				
+
 				$Form_Inputs->form_input_hidden('idEvento', $_GET['id'], 2);
 				?>
 

@@ -163,7 +163,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	}
 
 	?>
-	
+
 	<style>
 	#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif';?>");background-repeat: no-repeat;background-position: center;}
 	</style>
@@ -172,7 +172,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	//oculto el loader
 	document.getElementById("loading").style.display = "none";
 	</script>
-	
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 		<a target="new" href="<?php echo 'informe_telemetria_registro_sensores_2_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 		<?php if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
@@ -203,16 +203,16 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 			<form method="post" id="make_pdf" action="informe_telemetria_registro_sensores_19_to_pdf.php">
 				<input type="hidden" name="img_adj" id="img_adj" />
-				
+
 				<input type="hidden" name="idSistema"     id="idSistema"    value="<?php echo $_SESSION['usuario']['basic_data']['idSistema']; ?>" />
 				<input type="hidden" name="f_inicio"      id="f_inicio"     value="<?php echo $_GET['f_inicio']; ?>" />
 				<input type="hidden" name="f_termino"     id="f_termino"    value="<?php echo $_GET['f_termino']; ?>" />
 				<input type="hidden" name="idTelemetria"  id="idTelemetria" value="<?php echo $_GET['idTelemetria']; ?>" />
 				<input type="hidden" name="sensorn"       id="sensorn"      value="<?php echo $_GET['sensorn']; ?>" />
-				
+
 				<?php if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){?>   <input type="hidden" name="h_inicio"   id="h_inicio"  value="<?php echo $_GET['h_inicio']; ?>" /><?php } ?>
 				<?php if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){?> <input type="hidden" name="h_termino"  id="h_termino" value="<?php echo $_GET['h_termino']; ?>" /><?php } ?>
-				
+
 				<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
 			
 			</form>
@@ -278,7 +278,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			</div>
 		</div>
 	</div>
-	
+
 <?php } ?>
 
 

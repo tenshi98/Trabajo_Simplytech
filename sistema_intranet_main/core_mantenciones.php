@@ -71,7 +71,7 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -80,7 +80,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){       $x1  = $Fecha;       }else{$x1  = $rowdata['Fecha'];}
@@ -94,7 +94,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_time('Tiempo Inicio','Hora_ini', $x2, 2, 2);
 				$Form_Inputs->form_time('Tiempo Termino','Hora_fin', $x3, 2, 2);
 				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x4, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idMantencion', $_GET['id'], 2);
 				?>
 
@@ -123,7 +123,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){       $x1  = $Fecha;       }else{$x1  = '';}
@@ -137,7 +137,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_time('Tiempo Inicio','Hora_ini', $x2, 2, 2);
 				$Form_Inputs->form_time('Tiempo Termino','Hora_fin', $x3, 2, 2);
 				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x4, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
 	 
@@ -152,7 +152,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Se inicializa el paginador de resultados

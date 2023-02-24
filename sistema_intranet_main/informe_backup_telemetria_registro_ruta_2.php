@@ -371,7 +371,7 @@ alert_post_data(2,1,1, $Alert_Text);
 				}
 				$Form_Inputs->form_post_data(1, '<strong>Solo aplicaciones: </strong>Esta opcion se utiliza para mostrar solo las rutas realizadas mientras estaba haciendo una aplicacion (Opcion Si), o toda la ruta que realizo, incluyendo cuando solo se estaba movilizando (Opcion No)');
 				$Form_Inputs->form_select('Solo aplicaciones','idOpciones', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				
+
 				?>
 	   
 				

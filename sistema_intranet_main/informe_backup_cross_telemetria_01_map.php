@@ -59,7 +59,7 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 ?>
 
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
@@ -91,7 +91,7 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 				<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=visualization"></script>
 											
 				<div id="map_canvas" style="width: 100%; height: 550px;"></div>
-				
+
 				<script>
 					
 					var myLatlng = new google.maps.LatLng(<?php echo $arrPuntos[0]['Latitud']; ?>, <?php echo $arrPuntos[0]['Longitud']; ?>);
@@ -169,7 +169,7 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 		<div class="clearfix"></div>
 	</div>
 <?php } ?>
- 
+
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

@@ -66,7 +66,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'frecibida_desc':  $order_by = 'analisis_listado.f_recibida DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha recibida Descendente';break;
 		case 'freporte_asc':    $order_by = 'analisis_listado.f_reporte ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha reporte Ascendente';break;
 		case 'freporte_desc':   $order_by = 'analisis_listado.f_reporte DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha reporte Descendente';break;
-		
+
 		default: $order_by = 'analisis_listado.idAnalisis ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> N° Analisis Ascendente';
 	}
 }else{
@@ -91,7 +91,7 @@ if(isset($_GET['f_recibida_ini'])&&$_GET['f_recibida_ini']!=''&&isset($_GET['f_r
 }
 if(isset($_GET['f_reporte_ini'])&&$_GET['f_reporte_ini']!=''&&isset($_GET['f_reporte_fin'])&&$_GET['f_reporte_fin']!=''){
 	$SIS_where.= " AND analisis_listado.F_Pago BETWEEN '".$_GET['f_reporte_ini']."' AND '".$_GET['f_reporte_fin']."'";
-}	
+}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idAnalisis', 'analisis_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -125,7 +125,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'analisis_listado', $SIS_join, $S
 		<li class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
-	
+
 </div>
 <div class="clearfix"></div>
 
@@ -214,7 +214,6 @@ $arrTipo = db_select_array (false, $SIS_query, 'analisis_listado', $SIS_join, $S
 	</div>
 </div>
 
-  
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -224,8 +223,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'analisis_listado', $SIS_join, $S
 } else {
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
- 
- ?>
+
+?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -234,7 +233,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($n_muestra)){        $x1  = $n_muestra;        }else{$x1  = '';}
@@ -274,7 +273,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

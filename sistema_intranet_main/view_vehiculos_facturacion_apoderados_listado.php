@@ -85,7 +85,7 @@ $arrDetalle = db_select_array (false, $SIS_query, 'vehiculos_facturacion_apodera
 ?>
 
 <div class="col-xs-12">
-	
+
 	<div class="row">
 		<div class="invoice">
 			<div class="row">

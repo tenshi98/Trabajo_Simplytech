@@ -232,7 +232,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		<a target="new" href="<?php echo 'informe_telemetria_registro_promedios_2_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 		<a target="new" href="<?php echo 'informe_telemetria_registro_promedios_2_to_pdf.php?bla=bla'.$search ; ?>"   class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
 	</div>
-	
+
 	<?php
 	//Verifico si se imprimen los graficos
 	if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>

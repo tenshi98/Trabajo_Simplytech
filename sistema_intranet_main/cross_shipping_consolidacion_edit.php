@@ -115,7 +115,7 @@ if(!$resultado){
 }
 $rowConso = mysqli_fetch_assoc ($resultado);
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -132,10 +132,9 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 15, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
-				
+
 				$Form_Inputs->form_select('Tipo Foto','idArchivoTipo', $x1, 2, 'idArchivoTipo', 'Nombre', 'core_cross_shipping_archivos_tipos', 0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
 				$Form_Inputs->form_input_hidden('CTNNombreCompañia', $rowConso['CTNNombreCompañia'], 2);	
 				?>
@@ -205,8 +204,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
 				$Form_Inputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
 				?>
 				
@@ -277,8 +275,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
 				$Form_Inputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idEstibaListado', $_GET['editEstiba'], 2);
 				$Form_Inputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
 				?>
@@ -328,10 +325,10 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
 				$Form_Inputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_estiba">
 					<a href="<?php echo $new_location.'&edit='.$_GET['edit']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -384,7 +381,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($CTNNombreCompañia)){     $x1  = $CTNNombreCompañia;     }else{$x1  = $rowConso['CTNNombreCompañia'];}
@@ -438,15 +435,13 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select_filter('Mercado','idMercado', $x15, 1, 'idMercado', 'Codigo,Nombre', 'cross_shipping_mercado', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Pais','idPais', $x16, 1, 'idPais', 'Nombre', 'core_paises', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Recibidor','idRecibidor', $x17, 1, 'idRecibidor', 'Codigo,Nombre', 'cross_shipping_recibidores', $w, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_tittle(3, 'Cuerpo Indentificacion Empresa Transportista');
 				$Form_Inputs->form_select_filter('Empresa Transporte','idEmpresaTransporte', $x18, 1, 'idEmpresaTransporte', 'Nombre', 'cross_shipping_empresa_transporte', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Conductor', 'ChoferNombreRut', $x19, 1);
 				$Form_Inputs->form_input_text('Patente Camion', 'PatenteCamion', $x20, 1);
 				$Form_Inputs->form_input_text('Patente Carro', 'PatenteCarro', $x21, 1);
-				
-				
+
 				$Form_Inputs->form_tittle(3, 'Cuerpo Parametros Evaluados');
 				$Form_Inputs->form_select('Condicion CTN','idCondicion', $x22, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);
 				$Form_Inputs->form_select('Sellado Piso','idSellado', $x23, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
@@ -455,8 +450,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_number('T° Ambiente', 'TAmbiente', $x26, 1);
 				$Form_Inputs->form_input_text('Numero de sello', 'NumeroSello', $x27, 1);
 				$Form_Inputs->form_select_filter('Inspector','idInspector', $x28, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_tittle(3, 'Otros');
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x29, 1);
 				
@@ -465,7 +459,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
-				
+
 				?>
 				
 
@@ -654,7 +648,7 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 	</div>
 	<div class="clearfix"></div>
 <?php } ?>
- 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
@@ -783,7 +777,7 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 		
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="8">Detalle</th>
 					<th width="160">Acciones</th>

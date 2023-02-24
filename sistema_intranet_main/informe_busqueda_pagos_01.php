@@ -170,7 +170,7 @@ switch ($_GET['idType']) {
 		<li class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
-	
+
 </div>
 <div class="clearfix"></div>
 	
@@ -258,7 +258,6 @@ switch ($_GET['idType']) {
 	</div>
 </div>
 
-  
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -268,8 +267,8 @@ switch ($_GET['idType']) {
 } else {
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
- 
- ?>
+
+?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -278,7 +277,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idType)){               $x1  = $idType;              }else{$x1  = '';}
@@ -302,7 +301,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_date('Fecha Pagada Hasta','f_termino_p', $x8, 1);
 						
 				?>
-				
+
 				<script>
 					document.getElementById('div_idProveedor').style.display = 'none';
 					document.getElementById('div_idCliente').style.display = 'none';
@@ -338,7 +337,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

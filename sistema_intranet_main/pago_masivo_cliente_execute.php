@@ -69,7 +69,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['FacRelacionada']     = '';
 				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['idFacRelacionada']   = 0;
 				$_SESSION['pago_clientes_insumos'][$row_data['idFacturacion']]['MontoNC']            = 0;
-				
+
 			}
 					
 			break;
@@ -130,7 +130,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['FacRelacionada']     = '';
 				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['idFacRelacionada']   = 0;
 				$_SESSION['pago_clientes_productos'][$row_data['idFacturacion']]['MontoNC']            = 0;
-				
+
 			}
 			break;
 		/*******************************************************************/
@@ -190,7 +190,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['FacRelacionada']     = '';
 				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['idFacRelacionada']   = 0;
 				$_SESSION['pago_clientes_arriendo'][$row_data['idFacturacion']]['MontoNC']            = 0;
-				
+
 			}
 			break;
 		/*******************************************************************/
@@ -250,7 +250,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''){
 				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['FacRelacionada']     = '';
 				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['idFacRelacionada']   = 0;
 				$_SESSION['pago_clientes_servicio'][$row_data['idFacturacion']]['MontoNC']            = 0;
-				
+
 			}
 			break;
 	}

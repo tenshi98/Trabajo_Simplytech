@@ -174,7 +174,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 				$arrMedTractores[$trac['idTelemetria']]['caudales']     .= '["'.$med['FechaSistema'].' '.$med['HoraSistema'].'",'.Cantidades_decimales_justos($med['Sensor_1']).','.Cantidades_decimales_justos($med['Sensor_2']).'],';
 				$arrMedTractores[$trac['idTelemetria']]['niveles']      .= '["'.$med['FechaSistema'].' '.$med['HoraSistema'].'",'.Cantidades_decimales_justos($med['Sensor_3']).',],';
 				$arrMedTractores[$trac['idTelemetria']]['velocidades']  .= '["'.$med['FechaSistema'].' '.$med['HoraSistema'].'", '.Cantidades_decimales_justos($med['GeoVelocidad']).'],';
-				
+
 			}
 		}
 	}
@@ -1181,7 +1181,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		
 	<?php }
 } ?>
- 
+
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

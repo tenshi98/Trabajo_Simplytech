@@ -135,7 +135,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	foreach ($arrPermisos as $prod) {
 		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion={$prod['idLicitacion']})";
 	}
-		
+
 }
 
 
@@ -152,7 +152,7 @@ $w = 'idUtilizable=1';
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idLicitacion)){     $x0  = $idLicitacion;     }else{$x0  = '';}
@@ -296,7 +296,7 @@ foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -356,8 +356,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_text('Unidad de Medida','idUml', $x18, 1);
 				$Form_Inputs->form_input_text('Frecuencia', 'Frecuencia', $x19, 1);
 				$Form_Inputs->form_select('Medida Frecuencia','idFrecuencia', $x20, 1, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
@@ -391,12 +390,12 @@ foreach ($arrPermisos as $prod) {
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
-					';	
+					';
 				}
 				
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
-					';	
+					';
 				}
 				?>
 				</script>
@@ -438,7 +437,7 @@ foreach ($arrPermisos as $prod) {
 						let Sensores_val_1= $("#idUtilizable").val();
 
 						//si es No Usable
-						if(Sensores_val_1 == 1){ 
+						if(Sensores_val_1 == 1){
 							document.getElementById('div_Modelo').style.display = 'none';
 							document.getElementById('div_AnoFab').style.display = 'none';
 							document.getElementById('div_Serie').style.display = 'none';
@@ -457,7 +456,7 @@ foreach ($arrPermisos as $prod) {
 							
 																
 						//si es Componente
-						} else if(Sensores_val_1 == 2){ 
+						} else if(Sensores_val_1 == 2){
 							document.getElementById('div_Modelo').style.display = '';
 							document.getElementById('div_AnoFab').style.display = '';
 							document.getElementById('div_Serie').style.display = '';
@@ -476,7 +475,7 @@ foreach ($arrPermisos as $prod) {
 	
 							
 						//si es Subcomponente
-						} else if(Sensores_val_1 == 3){ 
+						} else if(Sensores_val_1 == 3){
 							document.getElementById('div_Modelo').style.display = 'none';
 							document.getElementById('div_AnoFab').style.display = 'none';
 							document.getElementById('div_Serie').style.display = 'none';
@@ -498,7 +497,7 @@ foreach ($arrPermisos as $prod) {
 						let Sensores_val_2= $("#idSubTipo").val();
 
 						//si es grasa
-						if(Sensores_val_2 == 1){ 
+						if(Sensores_val_2 == 1){
 							document.getElementById('div_Saf').style.display = '';
 							document.getElementById('div_Numero').style.display = '';
 							document.getElementById('div_idProducto').style.display = '';
@@ -515,7 +514,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Cantidad').value = "0";
 							
 						//si es aceite
-						} else if(Sensores_val_2 == 2){ 
+						} else if(Sensores_val_2 == 2){
 							document.getElementById('div_Saf').style.display = '';
 							document.getElementById('div_Numero').style.display = '';
 							document.getElementById('div_idProducto').style.display = '';
@@ -533,7 +532,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Cantidad').value = "0";
 							
 						//si es normal
-						} else if(Sensores_val_2 == 3){ 
+						} else if(Sensores_val_2 == 3){
 							document.getElementById('div_Saf').style.display = '';
 							document.getElementById('div_Numero').style.display = '';
 							document.getElementById('div_idProducto').style.display = '';
@@ -550,7 +549,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Grasa_relubricacion').value = "0";
 							document.getElementById('Aceite').value = "0";
 						//si es otro
-						} else if(Sensores_val_2 == 4){ 
+						} else if(Sensores_val_2 == 4){
 							document.getElementById('div_Saf').style.display = 'none';
 							document.getElementById('div_Numero').style.display = 'none';
 							document.getElementById('div_idProducto').style.display = 'none';
@@ -581,7 +580,7 @@ foreach ($arrPermisos as $prod) {
 						let TipoComp = $(this).val(); 
 						
 						//si es No Usable
-						if(TipoComp == 1){ 
+						if(TipoComp == 1){
 							document.getElementById('div_Modelo').style.display = 'none';
 							document.getElementById('div_AnoFab').style.display = 'none';
 							document.getElementById('div_Serie').style.display = 'none';
@@ -610,7 +609,7 @@ foreach ($arrPermisos as $prod) {
 						
 																
 						//si es Componente
-						} else if(TipoComp == 2){ 
+						} else if(TipoComp == 2){
 							document.getElementById('div_Modelo').style.display = '';
 							document.getElementById('div_AnoFab').style.display = '';
 							document.getElementById('div_Serie').style.display = '';
@@ -639,7 +638,7 @@ foreach ($arrPermisos as $prod) {
 	
 							
 						//si es Subcomponente
-						} else if(TipoComp == 3){ 
+						} else if(TipoComp == 3){
 							document.getElementById('div_Modelo').style.display = 'none';
 							document.getElementById('div_AnoFab').style.display = 'none';
 							document.getElementById('div_Serie').style.display = 'none';
@@ -725,7 +724,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Grasa_relubricacion').value = "0";
 							document.getElementById('Aceite').value = "0";
 						//si es otro
-						} else if(modelSelected == 4){ 
+						} else if(modelSelected == 4){
 							document.getElementById('div_Saf').style.display = '';
 							document.getElementById('div_Numero').style.display = '';
 							document.getElementById('div_idProducto').style.display = 'none';
@@ -832,7 +831,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	 
 
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -846,7 +845,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 					 <img src="upload/<?php echo $rowdata['Direccion_img']; ?>" width="100%" >
 				</div>
-				
+
 				<div class="form-group">
 					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&lvl='.$_GET['lvl'].'&del_img='.$_GET['editimg']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -1036,12 +1035,12 @@ foreach ($arrPermisos as $prod) {
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
-					';	
+					';
 				}
 				
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
-					';	
+					';
 				}
 				?>
 				</script>
@@ -1081,7 +1080,7 @@ foreach ($arrPermisos as $prod) {
 						let TipoComp = $(this).val(); 
 						
 						//si es No Usable
-						if(TipoComp == 1){ 
+						if(TipoComp == 1){
 							document.getElementById('div_Modelo').style.display = 'none';
 							document.getElementById('div_AnoFab').style.display = 'none';
 							document.getElementById('div_Serie').style.display = 'none';
@@ -1109,7 +1108,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('idFrecuencia').selectedIndex = 0;
 																
 						//si es Componente
-						} else if(TipoComp == 2){ 
+						} else if(TipoComp == 2){
 							document.getElementById('div_Modelo').style.display = '';
 							document.getElementById('div_AnoFab').style.display = '';
 							document.getElementById('div_Serie').style.display = '';
@@ -1137,7 +1136,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('idFrecuencia').selectedIndex = 0;
 							
 						//si es Subcomponente
-						} else if(TipoComp == 3){ 
+						} else if(TipoComp == 3){
 							document.getElementById('div_Modelo').style.display = 'none';
 							document.getElementById('div_AnoFab').style.display = 'none';
 							document.getElementById('div_Serie').style.display = 'none';
@@ -1214,7 +1213,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Grasa_relubricacion').value = "0";
 							document.getElementById('Aceite').value = "0";
 						//si es otro
-						} else if(modelSelected == 4){ 
+						} else if(modelSelected == 4){
 							document.getElementById('div_Saf').style.display = '';
 							document.getElementById('div_Numero').style.display = '';
 							document.getElementById('div_idProducto').style.display = 'none';
@@ -1435,7 +1434,7 @@ for ($i = 1; $i <= $nmax; $i++) {
 		$Trabajo[$trab['idLicitacion']][$i][$trab['lvl']]['Nombre']  = $trab['Nombre'];
 		$Trabajo[$trab['idLicitacion']][$i][$trab['lvl']]['Codigo']  = $trab['Codigo'];
 	}
-	
+
 }
 
 
@@ -1747,7 +1746,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 						echo ')</strong>';
 					}
 				echo '</div>';
-					
+
 				echo '<div class="btn-group pull-right" >';
 					//Boton para agregar familia tarea componente
 					if ($rowlevel>=2&&$value['Tipo']==2){

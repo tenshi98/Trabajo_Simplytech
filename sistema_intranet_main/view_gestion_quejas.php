@@ -58,7 +58,7 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_quejas', $SIS_join, $SIS_
 ?>
 
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">

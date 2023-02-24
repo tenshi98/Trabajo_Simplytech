@@ -149,7 +149,7 @@ $SIS_where = 'cross_quality_analisis_calidad.idAnalisis ='.$_GET['edit'];
 $row_data = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -269,7 +269,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_time_popover('Hora Inspeccion','H_inspeccion', $x7, 1, 1, 24);
 				$Form_Inputs->form_input_number('N° Cajas/Bolsas/Racimos', 'cantidad', $x8, 2);
 				$Form_Inputs->form_input_number('Peso Caja', 'peso', $x9, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idAnalisis', $_GET['edit'], 2);
 					
 				$Form_Inputs->form_tittle(3, 'Datos Tipo Planilla');
@@ -447,7 +447,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_time_popover('Hora Inspeccion','H_inspeccion', $x7, 1, 1, 24);
 				$Form_Inputs->form_input_number('N° Cajas/Bolsas/Racimos', 'cantidad', $x8, 2);
 				$Form_Inputs->form_input_number('Peso Caja', 'peso', $x9, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idMuestras', $rowMuestras['idMuestras'], 2);
 				$Form_Inputs->form_input_hidden('idAnalisis', $_GET['edit'], 2);
 					
@@ -532,7 +532,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				}
 
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_muestra">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -607,7 +607,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_time_popover('Hora Inspeccion','H_inspeccion', $x7, 1, 1, 24);
 				$Form_Inputs->form_input_number('N° Cajas/Bolsas/Racimos', 'cantidad', $x8, 2);
 				$Form_Inputs->form_input_number('Peso Caja', 'peso', $x9, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idAnalisis', $_GET['edit'], 2);
 					
 				$Form_Inputs->form_tittle(3, 'Datos Tipo Planilla');
@@ -692,7 +692,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				}
 
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_muestra">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -725,7 +725,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idMaquina)){        $x1  = $idMaquina;        }else{$x1  = '';}
@@ -733,7 +733,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Maquina','idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idAnalisis', $row_data['idAnalisis'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $row_data['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -790,7 +790,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador responsable','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idAnalisis', $row_data['idAnalisis'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $row_data['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -837,7 +837,7 @@ $row_data = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad',
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){      $x1  = $Creacion_fecha;    }else{$x1  = $row_data['Creacion_fecha'];}
@@ -869,14 +869,13 @@ $row_data = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad',
 							                 'Nivel 4', 'idUbicacion_lvl_4',  $x10,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
 							                 'Nivel 5', 'idUbicacion_lvl_5',  $x11,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 							                 $dbConn, 'form1');
-				
+
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idAnalisis', $_GET['edit'], 2);
-				
+
 				?>
 
 				<div class="form-group">
@@ -977,7 +976,7 @@ $arrArchivos = array();
 $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calidad_archivo', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrArchivos');
 						
 ?>
- 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
@@ -998,7 +997,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 					<tr>
 						<td class="meta-head">Ubicacion</td>
 						<td>
-							<?php echo $row_data['UbicacionNombre']; 
+							<?php echo $row_data['UbicacionNombre'];
 							if(isset($row_data['UbicacionNombre_lvl_1'])&&$row_data['UbicacionNombre_lvl_1']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_1'];}
 							if(isset($row_data['UbicacionNombre_lvl_2'])&&$row_data['UbicacionNombre_lvl_2']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_2'];}
 							if(isset($row_data['UbicacionNombre_lvl_3'])&&$row_data['UbicacionNombre_lvl_3']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_3'];}
@@ -1025,12 +1024,12 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
 				</tr>
-				
+
 				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Trabajadores Encargados</td>
@@ -1162,7 +1161,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 					</tr>
 					 
 				 <?php 
-				$numeral++;	
+				$numeral++;
 				}
 			}?>
 

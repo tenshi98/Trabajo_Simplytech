@@ -137,7 +137,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			</div>
 		</div>
 	</div>
-	
+
 <?php } ?>
   
 <div class="clearfix"></div>
@@ -168,7 +168,7 @@ alert_post_data(2,1,1, $Alert_Text);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTelemetria)){           $x1  = $idTelemetria;           }else{$x1  = '';}
@@ -200,7 +200,7 @@ alert_post_data(2,1,1, $Alert_Text);
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

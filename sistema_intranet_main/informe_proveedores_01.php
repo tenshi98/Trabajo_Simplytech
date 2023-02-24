@@ -169,7 +169,7 @@ array_push( $arrProveedores,$row );
 <a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {?>
 	 
@@ -181,7 +181,7 @@ array_push( $arrProveedores,$row );
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = '';}
@@ -204,7 +204,7 @@ array_push( $arrProveedores,$row );
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
-				
+
 				?>
 	   
 				<div class="form-group">
@@ -215,7 +215,7 @@ array_push( $arrProveedores,$row );
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

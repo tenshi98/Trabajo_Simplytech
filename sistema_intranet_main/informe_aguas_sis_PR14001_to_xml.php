@@ -130,7 +130,7 @@ $xmlstr =
 							<valor>'.Cantidades_decimales_justos($productos['valor']).'</valor>
 							<Laboratorio idLaboratorio="'.$productos['idLaboratorio'].'" rutLaboratorio="'.$productos['rutLaboratorio'].'"/>
 						</Parametro>
-					</Muestra>';	
+					</Muestra>';
 				}
 				$xmlstr .= '</Sector>';		
 			}

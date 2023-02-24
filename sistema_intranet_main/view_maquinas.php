@@ -134,13 +134,13 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 		$SIS_query = 'idLevel_'.$i.' AS lvl, idLicitacion, Nombre,Codigo';
 		$arrTrabajo = array();
 		$arrTrabajo = db_select_array (false, $SIS_query, 'licitacion_listado_level_'.$i, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTrabajo');
-		
+
 		//se guardan los datos
 		foreach($arrTrabajo as $trab) {
 			$Trabajo[$trab['idLicitacion']][$i][$trab['lvl']]['Nombre']  = $trab['Nombre'];
 			$Trabajo[$trab['idLicitacion']][$i][$trab['lvl']]['Codigo']  = $trab['Codigo'];
 		}
-		
+
 	}
 
 
@@ -170,7 +170,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			if(isset($key['LVL_'.$i.'_table'])&&$key['LVL_'.$i.'_table']!=''){        $y[$i]  = $key['LVL_'.$i.'_table'];}
 			if(isset($key['LVL_'.$i.'_table_value'])&&$key['LVL_'.$i.'_table_value']!=''){   $m[$i]  = $key['LVL_'.$i.'_table_value'];}
 			if(isset($key['LVL_'.$i.'_imagen'])&&$key['LVL_'.$i.'_imagen']!=''){      $t[$i]  = $key['LVL_'.$i.'_imagen'];}
-			
+
 		}
 		
 

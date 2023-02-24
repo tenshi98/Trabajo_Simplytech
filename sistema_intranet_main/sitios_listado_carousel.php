@@ -99,22 +99,22 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_carousel', $SIS_jo
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Posicion','idPosicion', $x1, 2, 1, 100 );
 				$Form_Inputs->form_input_icon('Imagen', 'Imagen', $x2, 2,'fa fa-file-image-o');
-				
+
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x3, 1);
 				$Form_Inputs->form_input_icon('Estilo del Titulo', 'TituloStyle', $x4, 1,'fa fa-file-image-o');
-				
+
 				$Form_Inputs->form_input_text('Subtitulo', 'Subtitulo', $x5, 1);
 				$Form_Inputs->form_input_icon('Estilo del Subtitulo', 'SubtituloStyle', $x6, 1,'fa fa-file-image-o');
-				
+
 				$Form_Inputs->form_input_text('Texto', 'Texto', $x7, 1);
 				$Form_Inputs->form_input_icon('Estilo del Texto', 'TextoStyle', $x8, 1,'fa fa-file-image-o');
-				
+
 				$Form_Inputs->form_select_n_auto('Altura','PosicionBloque', $x9, 2, 1, 100 );
 				$Form_Inputs->form_select('Estado','idEstado', $x10, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idCarousel', $_GET['edit'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -124,7 +124,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_carousel', $SIS_jo
 		</div>
 	</div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
@@ -155,21 +155,21 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Posicion','idPosicion', $x1, 2, 1, 100 );
 				$Form_Inputs->form_input_icon('Imagen', 'Imagen', $x2, 2,'fa fa-file-image-o');
-				
+
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x3, 1);
 				$Form_Inputs->form_input_icon('Estilo del Titulo', 'TituloStyle', $x4, 1,'fa fa-file-image-o');
-				
+
 				$Form_Inputs->form_input_text('Subtitulo', 'Subtitulo', $x5, 1);
 				$Form_Inputs->form_input_icon('Estilo del Subtitulo', 'SubtituloStyle', $x6, 1,'fa fa-file-image-o');
-				
+
 				$Form_Inputs->form_input_text('Texto', 'Texto', $x7, 1);
 				$Form_Inputs->form_input_icon('Estilo del Texto', 'TextoStyle', $x8, 1,'fa fa-file-image-o');
-				
+
 				$Form_Inputs->form_select_n_auto('Altura','PosicionBloque', $x9, 2, 1, 100 );
-				
+
 				$Form_Inputs->form_input_hidden('idSitio', simpleDecode($_GET['id'], fecha_actual()), 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
-				
+
 				?>
 
 				<div class="form-group">

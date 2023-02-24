@@ -65,7 +65,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		if(isset($arrData['Fecha'])&&$arrData['Fecha']!=''){$arrData['Fecha'] .= ",'".Fecha_estandar($rutas['FechaSistema'])." ".$rutas['HoraSistema']."'"; }else{ $arrData['Fecha'] = "'".Fecha_estandar($rutas['FechaSistema'])." ".$rutas['HoraSistema']."'"; }
 		//datos											
 		if(isset($arrData['Value'])&&$arrData['Value']!=''){$arrData['Value'] .= ", ".$rutas['GeoMovimiento'];  }else{ $arrData['Value'] = $rutas['GeoMovimiento'];}
-		
+
 	}
 	/******************************************/  
 	//variables
@@ -124,7 +124,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	</div>
 
 	<div class="clearfix"></div>
-	
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
@@ -226,7 +226,7 @@ alert_post_data(2,1,1, $Alert_Text);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x3, 2);
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 1, 1);
 				$Form_Inputs->form_select_filter('Vehiculo','idVehiculo', $x5, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
-				
+
 				?>
 	   
 				

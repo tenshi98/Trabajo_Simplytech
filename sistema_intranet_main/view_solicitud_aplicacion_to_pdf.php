@@ -276,7 +276,7 @@ $html .= '
 						</tr>
 					</tbody>
 				</table>
-				
+
 				<br/>
 				<br/>
 
@@ -308,7 +308,7 @@ $html .= '
                     
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrCuarteles!=false && !empty($arrCuarteles) && $arrCuarteles!='') {
-						foreach ($arrCuarteles as $cuartel) { 
+						foreach ($arrCuarteles as $cuartel) {
 							//Verifico el tipo de cierre
 							if(isset($cuartel['CuartelidEjecucion'])&&$cuartel['CuartelidEjecucion']==1){
 								$S_LitrosAplicados  = $cuartel['CuartelLitrosAplicados'];
@@ -370,7 +370,7 @@ $html .= '
 								 
 							$html .= '</tr>';  
 						}
-						
+
 						if($TotLitrosApliXhect!=0){$ndatax1 = porcentaje($TotLitrosApliXhect/$TotalMojamiento);}else{ $ndatax1 = '0 %';}
 						
 						$html .= '<tr>'; 
@@ -393,7 +393,7 @@ $html .= '
 				</table>
 				<br/>
 				<br/>
-				
+
 				<table class="zebra tableline" style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0" >
 					<thead>
 						<tr style="background-color: #f9f9f9;">
@@ -436,7 +436,7 @@ $html .= '
 				</table>
 				<br/>
 				<br/>
-				
+
 				<table class="zebra tableline" style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0" >
 					<thead>
 						<tr style="background-color: #f9f9f9;">
@@ -456,7 +456,7 @@ $html .= '
 					$NTract     = 0;
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrTractores!=false && !empty($arrTractores) && $arrTractores!='') {
-						foreach ($arrTractores as $tract) { 
+						foreach ($arrTractores as $tract) {
 							//Se suman cantidades
 							$Capacidad = $Capacidad + $tract['TelemetriaCapacidad'];
 							$NTract++;
@@ -480,7 +480,7 @@ $html .= '
 				</table>
 				<br/>
 				<br/>
-				
+
 				<table class="zebra tableline" style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0" >
 					<thead>
 						<tr style="background-color: #f9f9f9;">
@@ -521,7 +521,7 @@ $html .= '
 				</table>
 				<br/>
 				<br/>
-				
+
 				<table class="zebra tableline" style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0" >
 					<thead>
 						<tr style="background-color: #f9f9f9;">

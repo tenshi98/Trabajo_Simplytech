@@ -160,7 +160,7 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<?php
 				//cuento la cantidad de columnas a utilizar
 				$data_column = 2;
@@ -219,7 +219,7 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 				}
 				
 				echo '<tr id="hiderow"><td colspan="'.($data_column-1).'"><a name="Ancla_obs"></a></td></tr>';?>
-				
+
 				<tr class="invoice-total" bgcolor="#f1f1f1">
 					<td colspan="<?php echo $data_column-2; ?>" align="right"><strong>Total Horas extras</strong></td> 
 					<td align="right"></td>
@@ -233,7 +233,7 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 						<td align="right">'.$prod['Total'].' Horas</td>
 					</tr>';
 				} ?>
-				
+
 				<tr>
 					<td colspan="10" class="blank word_break"> 
 						<?php echo $row_data['Observaciones'];?>
@@ -295,7 +295,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		
 	<?php }
 } ?>
- 
+
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

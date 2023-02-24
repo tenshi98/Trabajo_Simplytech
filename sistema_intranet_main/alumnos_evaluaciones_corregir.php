@@ -74,7 +74,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	
 	
 	?>
-	
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -91,8 +91,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Estado Aprobacion','idEstadoAprobacion', $x1, 2, 'idEstadoAprobacion', 'Nombre', 'core_estado_aprobacion_evaluacion', 'idEstadoAprobacion!=3', '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idQuizRealizadas', $_GET['id'], 2);
 				?>
 								
@@ -239,7 +238,7 @@ $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstad
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Programada_fecha)){ $x1  = $Programada_fecha;  }else{$x1  = '';}
@@ -260,7 +259,7 @@ $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstad
 				$Form_Inputs->form_select('Tipo Puntuacion','idTipoEvaluacion', $x5, 1, 'idTipoEvaluacion', 'Nombre', 'quiz_tipo_evaluacion', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Evaluacion','idTipoQuiz', $x6, 1, 'idTipoQuiz', 'Nombre', 'quiz_tipo_quiz', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tiempo Limite','idLimiteTiempo', $x7, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				
+
 				?>
 
 				<div class="form-group">
@@ -271,7 +270,7 @@ $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstad
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

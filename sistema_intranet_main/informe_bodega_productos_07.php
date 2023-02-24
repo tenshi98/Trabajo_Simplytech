@@ -283,7 +283,7 @@ foreach ($arrBodega as $bod) {
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo 'Traspasos desde '.$rowBodega['Nombre']; ?></h5>
-				
+
 				<?php
 				//llamamos a la función para filtrar los datos
 				filtrar($arrExistencias, 'BodegaNombre');
@@ -307,8 +307,7 @@ foreach ($arrBodega as $bod) {
 			
 				echo '<div class="tab-pane fade active in" id="tab_main">';
 					echo '<div class="wmd-panel">';?>
-					
-					
+
 						<script>
 							google.charts.setOnLoadCallback(graficoMain);
 
@@ -348,8 +347,7 @@ foreach ($arrBodega as $bod) {
 						
 						</script>
 						<div id="chart_main" style="height: 500px; width: 100%;"></div>
-					
-					
+
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 							<thead>
 								<tr role="row">
@@ -652,7 +650,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idBodegaOrigen)){       $x1  = $idBodegaOrigen;        }else{$x1  = '';}
@@ -660,7 +658,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x1, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', 'usuarios_bodegas_productos', $z1, $dbConn);
-				
+
 				?>
 	   
 				<div class="form-group">
@@ -671,7 +669,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 
 

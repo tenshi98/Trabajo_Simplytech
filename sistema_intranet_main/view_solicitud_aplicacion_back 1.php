@@ -247,7 +247,7 @@ array_push( $arrHistorial,$row );
 ?>
 
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
@@ -403,7 +403,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		
 	<?php }
 } ?>
- 
+
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

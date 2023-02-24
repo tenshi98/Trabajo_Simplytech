@@ -243,7 +243,7 @@ if($rowDatos['idEstado']==2){ ?>
 			</div>
 		</div>
 	</div>
-	
+
 	<?php 
 	//cuento la cantidad de pagos relacionados
 	$nn = 0;

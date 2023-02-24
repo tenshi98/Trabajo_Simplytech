@@ -926,7 +926,7 @@ require_once '0_validate_user_1.php';
 
 					//se borran los datos
 					$resultado = db_delete_data (false, 'maquinas_listado_level_'.$i, 'idLevel_'.$_GET['lvl'].' = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//Se elimina la imagen
 					if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
 						try {
@@ -2046,7 +2046,7 @@ require_once '0_validate_user_1.php';
 		$dis_23 = $lvl + 22;
 		$dis_24 = $lvl + 23;
 		$dis_25 = $lvl + 24;
-		
+
 		//Consultas
 		/********************************************/
 		if(isset($arrLVL[$dis_1])){

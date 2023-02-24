@@ -57,7 +57,7 @@
 				if(isset($rowDatos['ClienteRemarcador'])&&$rowDatos['ClienteRemarcador']!=''&&$rowDatos['ClienteRemarcador']!=0){
 					$ndecim = 2;
 				}else{
-					$ndecim = 0;	
+					$ndecim = 0;
 				}
 				?>
 					
@@ -140,7 +140,7 @@
 						<td align="right"><?php echo Valores(($rowDatos['DetalleInteresDeuda']/1.19), 0)?></td>
 					</tr>
 				<?php } ?>
-				
+
 				<?php 
 				//Otros Cargos 1
 				if(isset($rowDatos['DetalleOtrosCargos1Valor'])&&$rowDatos['DetalleOtrosCargos1Valor']!=0){?>
@@ -359,7 +359,7 @@
 								<p>
 									<div class="pull-left">Emergencias 24 horas </div>
 									<small class="pull-right"><?php echo formatPhone($rowDatos['DetConsFonoEmergencias']) ?></small>
-								
+
 									<br/>
 									<div class="pull-left">Consultas Lunes a Viernes </div>
 									<small class="pull-right"><?php echo formatPhone($rowDatos['DetConsFonoConsultas']) ?></small>
@@ -367,7 +367,7 @@
 							</div>
 						</div>
 					</div>
-				
+
 				</div>
 				
 			</div>

@@ -108,7 +108,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Dev. Std.</th>';		
 				//Si no se ven detalles	
 				}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
-					$html .= '<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Promedio</th>';	
+					$html .= '<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Promedio</th>';
 				} 
 				$html .= '         
 			</tr>
@@ -134,7 +134,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedProm'], 2).' '.DeSanitizar($rutas['Unimed']).'</td>
 						';
 					} 
-					$html .= '</tr>';	
+					$html .= '</tr>';
 				}
 			}
 								

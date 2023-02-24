@@ -162,7 +162,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 				$arrMedTractores[$trac['idTelemetria']]['caudales']     .= '["'.$med['FechaSistema'].' '.$med['HoraSistema'].'",'.Cantidades_decimales_justos($med['Sensor_1']).','.Cantidades_decimales_justos($med['Sensor_2']).'],';
 				$arrMedTractores[$trac['idTelemetria']]['niveles']      .= '["'.$med['FechaSistema'].' '.$med['HoraSistema'].'",'.Cantidades_decimales_justos($med['Sensor_3']).',],';
 				$arrMedTractores[$trac['idTelemetria']]['velocidades']  .= '["'.$med['FechaSistema'].' '.$med['HoraSistema'].'", '.Cantidades_decimales_justos($med['GeoVelocidad']).'],';
-				
+
 			}
 		}
 	}
@@ -325,7 +325,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 			<div class="box noborderbox">
-				
+
 				<div id="loading"></div>
 			
 				<header class="header">
@@ -1236,7 +1236,7 @@ if($ndata_1==0) {
 	$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrBorrame');
 	
 	?>
-	
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
@@ -1303,7 +1303,7 @@ if($ndata_1==0) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($NSolicitud)){             $x1  = $NSolicitud;             }else{$x1  = '';}

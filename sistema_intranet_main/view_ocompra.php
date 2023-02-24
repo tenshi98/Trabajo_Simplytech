@@ -48,7 +48,7 @@ include '1include_ocompra.php'; ?>
 					<i class="fa fa-print" aria-hidden="true"></i> Imprimir
 				</a>
 			</div>
-	
+
 	<?php } ?>
 
 <?php 

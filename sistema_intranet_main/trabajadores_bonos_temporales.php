@@ -85,7 +85,7 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -94,7 +94,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){    $x1  = $idTrabajador;    }else{$x1  = $rowdata['idTrabajador'];}
@@ -110,8 +110,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_select_filter('Bono Asignado','idBonoTemporal', $x3, 2, 'idBonoTemporal', 'Nombre', 'sistema_bonos_temporales', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Monto','Monto', $x4, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observacion', $x5, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idBonoTemp', $_GET['id'], 2);
@@ -147,7 +146,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){    $x1  = $idTrabajador;    }else{$x1  = '';}
@@ -163,16 +162,15 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_select_filter('Bono Asignado','idBonoTemporal', $x3, 2, 'idBonoTemporal', 'Nombre', 'sistema_bonos_temporales', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Monto','Monto', $x4, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observacion', $x5, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('idUso', 1, 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -184,7 +182,6 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 /**********************************************************/
@@ -208,7 +205,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'bono_desc':        $order_by = 'sistema_bonos_temporales.Nombre DESC ';                                                                             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Bono Descendente';break;
 		case 'monto_asc':        $order_by = 'trabajadores_bonos_temporales.Monto ASC ';                                                                          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Monto Ascendente'; break;
 		case 'monto_desc':       $order_by = 'trabajadores_bonos_temporales.Monto DESC ';                                                                         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Monto Descendente';break;
-		
+
 		default: $order_by = 'trabajadores_bonos_temporales.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Facturacion Descendente';
 	}
 }else{
@@ -271,7 +268,7 @@ $arrInasHoras = db_select_array (false, $SIS_query, 'trabajadores_bonos_temporal
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Asignacion</a><?php } ?>
 
 </div>
@@ -297,10 +294,10 @@ $arrInasHoras = db_select_array (false, $SIS_query, 'trabajadores_bonos_temporal
 				$Form_Inputs->form_select_filter('Mes','idMes', $x4, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x5, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				$Form_Inputs->form_select_filter('Bono Asignado','idBonoTemporal', $x6, 1, 'idBonoTemporal', 'Nombre', 'sistema_bonos_temporales', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

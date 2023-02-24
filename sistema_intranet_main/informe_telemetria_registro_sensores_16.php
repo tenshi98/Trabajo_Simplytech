@@ -102,7 +102,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		//numero sensores equipo
 		$N_Maximo_Sensores  = $rowEquipo['cantSensores'];
 		$arrDato            = array();
-		
+
 		//recorro los sensores									
 		for ($x = 1; $x <= $N_Maximo_Sensores; $x++) {
 			//Que el valor medido sea distinto de 999
@@ -203,7 +203,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				/***********************************************/
 				//imprimo tabla
 				$m_table .= '<td>'.cantidades($New_Dato, 2).' '.$rowUnimed['Nombre'].'</td>';
-				
+
 			}
 			/***********************************************/
 			//imprimo tabla	
@@ -317,7 +317,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 			<form method="post" id="make_pdf" action="informe_telemetria_registro_sensores_16_to_pdf.php">
 				<input type="hidden" name="img_adj" id="img_adj" />
-				
+
 				<input type="hidden" name="idSistema"     id="idSistema"    value="<?php echo $_SESSION['usuario']['basic_data']['idSistema']; ?>" />
 				<input type="hidden" name="f_inicio"      id="f_inicio"     value="<?php echo $_GET['f_inicio']; ?>" />
 				<input type="hidden" name="f_termino"     id="f_termino"    value="<?php echo $_GET['f_termino']; ?>" />
@@ -458,7 +458,7 @@ alert_post_data(2,1,1, $Alert_Text);
 				
 				
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>

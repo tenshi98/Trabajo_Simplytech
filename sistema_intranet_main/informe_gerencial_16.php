@@ -314,7 +314,6 @@ switch ($_GET['idTipoProd']) {
 	</div>
 </div>
 
-  
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -387,7 +386,7 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTipoMov)){      $x1  = $idTipoMov;     }else{$x1  = '';}
@@ -406,18 +405,18 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_select('Tipo Movimiento','idTipoMov', $x1, 2, 'idTipoMov', 'Nombre', 'core_bodega_tipomov', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x2, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x3, 1, 'idCliente', 'Nombre', 'clientes_listado', $z, '', $dbConn);
-				
+
 				$Form_Inputs->form_select('Tipo Producto','idTipoProd', $x4, 2, 'idTipoProd', 'Nombre', 'core_bodega_tipoprod', 0, '', $dbConn);
 				$Form_Inputs->form_select('Equipos','idEquipo', $x5, 1, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
 				$Form_Inputs->form_select('Insumo','idInsumo', $x6, 1, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
 				$Form_Inputs->form_select('Producto','idProducto', $x7, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_select('Servicio','idServicio', $x8, 1, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
-				
+
 				$Form_Inputs->form_date('Fecha Mov Desde','f_inicio', $x9, 1);
 				$Form_Inputs->form_date('Fecha Mov Hasta','f_termino', $x10, 1);
 						
 				?>
-				
+
 				<script>
 					document.getElementById('div_idProveedor').style.display = 'none';
 					document.getElementById('div_idCliente').style.display = 'none';
@@ -483,7 +482,7 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('idProducto').required = 'true';
 								document.getElementById('idServicio').required = 'false';
 							//Servicios	
-							} else if(tipo_val == 4){ 
+							} else if(tipo_val == 4){
 								document.getElementById('div_idEquipo').style.display = 'none';
 								document.getElementById('div_idInsumo').style.display = 'none';
 								document.getElementById('div_idProducto').style.display = 'none';
@@ -519,7 +518,7 @@ foreach ($arrPermisos as $prod) {
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

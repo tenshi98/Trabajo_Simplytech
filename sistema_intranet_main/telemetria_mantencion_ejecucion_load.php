@@ -179,13 +179,13 @@ if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $location .= "&Nombre
 		
 		<div class="row" style="margin-top:15px;">
 			<div class="col-xs-12">
-				
+
 				<?php if($pass_points>=$rowdata['Matriz_Puntos']){ ?>
 					<a href="<?php echo $location.'&verify='.$_GET['verify'].'&end=true'; ?>" class="btn btn-primary pull-right"  style="margin-left: 5px;" >
 						<i class="fa fa-check-circle" aria-hidden="true"></i> Finalizar Mantencion
 					</a>
 				<?php } ?>
-				
+
 				<a href="<?php echo $location.'&verify='.$_GET['verify'].'&reset=true'; ?>" class="btn btn-default pull-right">
 					<i class="fa fa-window-close-o" aria-hidden="true"></i> Resetear Valores
 				</a>

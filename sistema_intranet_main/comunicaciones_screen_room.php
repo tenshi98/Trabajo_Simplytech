@@ -95,7 +95,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	<?php }else{ ?>
 		<button id="join-room" class="btn btn-success pull-right margin_width fmrbtn" ><i class="fa fa-video-camera" aria-hidden="true"></i> Unirse a Screen Sharing</button>
 	<?php } ?>
-	
+
 </div>
 <div class="clearfix"></div>
 

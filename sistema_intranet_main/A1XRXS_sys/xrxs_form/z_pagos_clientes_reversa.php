@@ -126,7 +126,7 @@ require_once '0_validate_user_1.php';
 					$NDocsubmit_filter1  = '';
 					$NDocsubmit_filter1 .= ' AND pagos_facturas_clientes.idDocPago='.$indice1;
 					$NDocsubmit_filter1 .= ' AND pagos_facturas_clientes.N_DocPago='.$indice2;
-					
+
 					//Variable con el total del documento pagado
 					$Valor_Doc = 0;
 

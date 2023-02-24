@@ -285,7 +285,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){ ?>
-	
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -312,7 +312,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 										 'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');
-				
+
 				$Form_Inputs->form_input_hidden('Config_idTheme', 1, 2);
 				$Form_Inputs->form_input_hidden('idOpcionesGen_1', 1, 2);
 				$Form_Inputs->form_input_hidden('idOpcionesGen_2', 1, 2);
@@ -327,7 +327,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 				$Form_Inputs->form_input_hidden('idConfigRam', 9, 2);
 				$Form_Inputs->form_input_hidden('idConfigTime', 13, 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
-				
+
 				?>
 	 
 				<div class="form-group">

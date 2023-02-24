@@ -101,7 +101,7 @@ array_push( $arrCamaras,$row );
 					$SIS_Config_IP        = $camara['Config_IP'];
 					$SIS_Config_Puerto    = $camara['Config_Puerto'];
 					$SIS_TipoCamara       = $camara['idTipoCamara'];
-					
+
 					//se crea la direccion web
 					$direccion  = 'http://';
 					$direccion .= $SIS_Config_usuario;
@@ -118,7 +118,7 @@ array_push( $arrCamaras,$row );
 					$SIS_Config_IP        = $rowCamara['Config_IP'];
 					$SIS_Config_Puerto    = $rowCamara['Config_Puerto'];
 					$SIS_TipoCamara       = $rowCamara['idTipoCamara'];
-					
+
 					//se crea la direccion web
 					$direccion  = 'http://';
 					$direccion .= $SIS_Config_usuario;
@@ -162,7 +162,7 @@ array_push( $arrCamaras,$row );
 <a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Se inicializa el paginador de resultados
@@ -178,7 +178,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
 		case 'camara_asc':    $order_by = 'seguridad_camaras_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Camara Ascendente';break;
 		case 'camara_desc':   $order_by = 'seguridad_camaras_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Camara Descendente';break;
-		
+
 		default: $order_by = 'seguridad_camaras_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Camara Ascendente';
 	}
 }else{
@@ -219,7 +219,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $SIS
 		<li class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
-	
+
 </div>                    
 <div class="clearfix"></div>
 

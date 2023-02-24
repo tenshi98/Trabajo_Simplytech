@@ -107,7 +107,7 @@ foreach ($arrEquipos as $fac) {
 											
 	if($Temperatura_N!=0){  $New_Temperatura = $Temperatura/$Temperatura_N; }else{$New_Temperatura = 0;}
 	if($Humedad_N!=0){      $New_Humedad     = $Humedad/$Humedad_N;         }else{$New_Humedad = 0;}
-		
+
 	//omite la linea mientras alguna de las variables contenga datos
 	if($Temperatura_N!=0 OR $Humedad_N!=0){
 		$Temp_1  .= "'".Fecha_estandar($fac['FechaSistema'])." - ".Hora_estandar($fac['HoraSistema'])."',";
@@ -179,7 +179,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		
 	<?php }
 } ?>
- 
+
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

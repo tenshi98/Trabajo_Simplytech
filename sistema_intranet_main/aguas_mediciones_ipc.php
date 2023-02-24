@@ -86,7 +86,7 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -95,7 +95,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Ano)){          $x1  = $Ano;            }else{$x1  = $rowdata['Ano'];}
@@ -117,8 +117,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_input_number('Mensual', 'Mensual', $x6, 1);
 				$Form_Inputs->form_input_number('Acumulado', 'Acumulado', $x7, 1);
 				$Form_Inputs->form_input_number('Doce Meses', 'DoceMeses', $x8, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idIPC', $_GET['id'], 2);
@@ -148,7 +147,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Ano)){          $x1  = $Ano;            }else{$x1  = '';}
@@ -170,13 +169,12 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_number('Mensual', 'Mensual', $x6, 1);
 				$Form_Inputs->form_input_number('Acumulado', 'Acumulado', $x7, 1);
 				$Form_Inputs->form_input_number('Doce Meses', 'DoceMeses', $x8, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -188,7 +186,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 /**********************************************************/
@@ -218,7 +215,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'acumulado_desc':   $order_by = 'aguas_mediciones_ipc.Acumulado DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Acumulado Descendente';break;
 		case 'doce_asc':         $order_by = 'aguas_mediciones_ipc.DoceMeses ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Doce Meses Ascendente'; break;
 		case 'doce_desc':        $order_by = 'aguas_mediciones_ipc.DoceMeses DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Doce Meses Descendente';break;
-		
+
 		default: $order_by = 'aguas_mediciones_ipc.Ano ASC, core_tiempo_meses.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Año, Mes Ascendente';
 	}
 }else{
@@ -274,9 +271,9 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_ipc', $SIS_join,
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear IPC</a><?php } ?>
-	
+
 </div>
 <div class="clearfix"></div>
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
@@ -304,10 +301,10 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_ipc', $SIS_join,
 				$Form_Inputs->form_input_number('Mensual', 'Mensual', $x6, 1);
 				$Form_Inputs->form_input_number('Acumulado', 'Acumulado', $x7, 1);
 				$Form_Inputs->form_input_number('Doce Meses', 'DoceMeses', $x8, 1);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
@@ -319,8 +316,7 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_ipc', $SIS_join,
 	</div>
 </div>
 <div class="clearfix"></div>
-                     
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -394,7 +390,7 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_ipc', $SIS_join,
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>		  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrUML as $uml) { ?>
 					<tr class="odd">

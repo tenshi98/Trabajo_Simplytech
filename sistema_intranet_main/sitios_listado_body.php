@@ -104,35 +104,35 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_body', $SIS_join, 
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Tipo','idTipo', $x0, 2, 'idTipo', 'Nombre', 'core_sitios_tipos_body', 0, '', $dbConn);
 				$Form_Inputs->form_select_n_auto('Posicion','idPosicion', $x1, 2, 1, 100 );
-				
+
 				$Form_Inputs->form_post_data(2, 'Icono del Body (Opcional).' );
 				$Form_Inputs->form_input_text('Icono', 'Icono', $x2, 1);
 				$Form_Inputs->form_input_icon('Estilo del Icono', 'IconoStyle', $x3, 1,'fa fa-file-image-o');
-				
+
 				$Form_Inputs->form_post_data(2, 'Titulo del Body (Opcional).' );
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x4, 1);
 				$Form_Inputs->form_input_icon('Estilo del Titulo', 'TituloStyle', $x5, 1,'fa fa-file-image-o');
-				
+
 				$Form_Inputs->form_post_data(2, 'Texto del Body (Opcional).' );
 				$Form_Inputs->form_textarea('Texto', 'Texto', $x6, 1);
 				$Form_Inputs->form_input_icon('Estilo del Texto', 'TextoStyle', $x7, 1,'fa fa-file-image-o');
-				
+
 				$Form_Inputs->form_post_data(2, 'Enlace del Body (Opcional).' );
 				$Form_Inputs->form_input_text('Nombre del enlace', 'LinkNombre', $x8, 1);
 				$Form_Inputs->form_input_icon('Estilo del enlace', 'LinkStyle', $x9, 1,'fa fa-file-image-o');
 				$Form_Inputs->form_input_text('Enlace (Link o referencia)', 'LinkURL', $x10, 1);
 				$Form_Inputs->form_select('Abrir en una nueva pestaña','idNewTab', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_select('Abrir en ventana emergente','idPopup', $x12, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_post_data(2, 'Imagen de fondo del Body (Opcional).' );
 				$Form_Inputs->form_input_icon('Imagen', 'Imagen', $x13, 1,'fa fa-file-image-o');
-				
+
 				$Form_Inputs->form_post_data(2, 'Estado del Body (Opcional).' );
 				$Form_Inputs->form_select('Estado','idEstado', $x14, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idBody', $_GET['edit'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -142,7 +142,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_body', $SIS_join, 
 		</div>
 	</div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
@@ -178,32 +178,32 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Tipo','idTipo', $x0, 2, 'idTipo', 'Nombre', 'core_sitios_tipos_body', 0, '', $dbConn);
 				$Form_Inputs->form_select_n_auto('Posicion','idPosicion', $x1, 2, 1, 100 );
-				
+
 				$Form_Inputs->form_post_data(2, 'Icono del Body (Opcional).' );
 				$Form_Inputs->form_input_text('Icono', 'Icono', $x2, 1);
 				$Form_Inputs->form_input_icon('Estilo del Icono', 'IconoStyle', $x3, 1,'fa fa-file-image-o');
-				
+
 				$Form_Inputs->form_post_data(2, 'Titulo del Body (Opcional).' );
 				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x4, 1);
 				$Form_Inputs->form_input_icon('Estilo del Titulo', 'TituloStyle', $x5, 1,'fa fa-file-image-o');
-				
+
 				$Form_Inputs->form_post_data(2, 'Texto del Body (Opcional).' );
 				$Form_Inputs->form_textarea('Texto', 'Texto', $x6, 1);
 				$Form_Inputs->form_input_icon('Estilo del Texto', 'TextoStyle', $x7, 1,'fa fa-file-image-o');
-				
+
 				$Form_Inputs->form_post_data(2, 'Enlace del Body (Opcional).' );
 				$Form_Inputs->form_input_text('Nombre del enlace', 'LinkNombre', $x8, 1);
 				$Form_Inputs->form_input_icon('Estilo del enlace', 'LinkStyle', $x9, 1,'fa fa-file-image-o');
 				$Form_Inputs->form_input_text('Enlace (Link o referencia)', 'LinkURL', $x10, 1);
 				$Form_Inputs->form_select('Abrir en una nueva pestaña','idNewTab', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_select('Abrir en ventana emergente','idPopup', $x12, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_post_data(2, 'Imagen de fondo del Body (Opcional).' );
 				$Form_Inputs->form_input_icon('Imagen', 'Imagen', $x13, 1,'fa fa-file-image-o');
-				
+
 				$Form_Inputs->form_input_hidden('idSitio', simpleDecode($_GET['id'], fecha_actual()), 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
-				
+
 				?>
 
 				<div class="form-group">

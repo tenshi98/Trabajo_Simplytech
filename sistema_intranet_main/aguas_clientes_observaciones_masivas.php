@@ -95,7 +95,7 @@ alert_post_data(2,1,2, $Alert_Text);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate >
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Observacion)){   $x1  = $Observacion;   }else{$x1  = '';}
@@ -105,7 +105,7 @@ alert_post_data(2,1,2, $Alert_Text);
 				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2);
 				$Form_Inputs->form_multiple_upload('Seleccionar Formulario','Formulario', 1, '"jpg", "png", "gif", "jpeg", "bmp", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "txt", "rtf", "gz", "gzip", "7Z", "zip", "rar"');
 				$Form_Inputs->form_multiple_upload('Seleccionar Foto','Foto', 1, '"jpg", "png", "gif", "jpeg"');
-				
+
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('Fecha', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('NClientes', $num, 2);
@@ -178,10 +178,10 @@ alert_post_data(2,1,2, $Alert_Text);
 <a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
-//Indico el sistema	 
+//Indico el sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';		 
 ?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -192,7 +192,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){      $x1  = $idCliente;      }else{$x1  = '';}
@@ -206,7 +206,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				$Form_Inputs->form_select('Tipo de Cliente','idTipo', $x2, 1, 'idTipo', 'Nombre', 'aguas_clientes_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_select('Forma Facturacion','idFacturable', $x3, 1, 'idFacturable', 'Nombre', 'aguas_clientes_facturable', 0, '', $dbConn);
 				$Form_Inputs->form_select('Sector','idSector', $x4, 1, 'idSector', 'Nombre', 'aguas_analisis_sectores', 0, '', $dbConn);
-				
+
 				?>
 	   
 				<div class="form-group">
@@ -217,7 +217,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

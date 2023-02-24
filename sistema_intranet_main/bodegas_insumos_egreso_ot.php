@@ -51,7 +51,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'fecha_desc':   $order_by = 'bodegas_insumos_facturacion.Creacion_fecha DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
 		case 'ot_asc':       $order_by = 'bodegas_insumos_facturacion.idOT ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> OT Ascendente';break;
 		case 'ot_desc':      $order_by = 'bodegas_insumos_facturacion.idOT DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> OT Descendente';break;
-		
+
 		default: $order_by = 'bodegas_insumos_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
@@ -90,7 +90,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 		<li class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
-	
+
 </div>
 <div class="clearfix"></div>
 

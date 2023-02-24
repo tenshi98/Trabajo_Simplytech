@@ -84,7 +84,7 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -93,7 +93,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				//Se verifican si existen los datos
@@ -112,8 +112,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_input_icon('Web', 'SitioWeb', $x6, 1,'fa fa-internet-explorer');
 				$Form_Inputs->form_input_icon('Descargar', 'SitioDescarga', $x7, 2,'fa fa-internet-explorer');
 				$Form_Inputs->form_select('Categoria','idCategoria', $x8, 2, 'idCategoria', 'Nombre', 'soporte_software_listado_categorias', 0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idSoftware', $_GET['id'], 2);
 				?>
 
@@ -141,7 +140,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){         $x1  = $Nombre;         }else{$x1  = '';}
@@ -159,9 +158,9 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_icon('Web', 'SitioWeb', $x6, 1,'fa fa-internet-explorer');
 				$Form_Inputs->form_input_icon('Descargar', 'SitioDescarga', $x7, 2,'fa fa-internet-explorer');
 				$Form_Inputs->form_select('Categoria','idCategoria', $x8, 2, 'idCategoria', 'Nombre', 'soporte_software_listado_categorias', 0, '', $dbConn);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -173,7 +172,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 /**********************************************************/
@@ -191,7 +189,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'nombre_desc':     $order_by = 'soporte_software_listado.Nombre DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
 		case 'licencia_asc':    $order_by = 'soporte_software_listado_licencias.Nombre ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Licencia Ascendente';break;
 		case 'licencia_desc':   $order_by = 'soporte_software_listado_licencias.Nombre DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Licencia Descendente';break;
-		
+
 		default: $order_by = 'soporte_software_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
@@ -235,7 +233,7 @@ $arrImpuestos = db_select_array (false, $SIS_query, 'soporte_software_listado', 
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Aplicacion</a><?php } ?>
 
 </div>
@@ -261,11 +259,10 @@ $arrImpuestos = db_select_array (false, $SIS_query, 'soporte_software_listado', 
 				$Form_Inputs->form_input_icon('Web', 'SitioWeb', $x6, 1,'fa fa-internet-explorer');
 				$Form_Inputs->form_input_icon('Descargar', 'SitioDescarga', $x7, 1,'fa fa-internet-explorer');
 				$Form_Inputs->form_select('Categoria','idCategoria', $x8, 1, 'idCategoria', 'Nombre', 'soporte_software_listado_categorias', 0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

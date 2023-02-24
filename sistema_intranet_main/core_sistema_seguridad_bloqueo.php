@@ -81,7 +81,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){      $x1  = $Fecha;      }else{$x1  = $rowdata['Fecha'];}
@@ -95,7 +95,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_time('Hora','Hora', $x2, 2, 2);
 				$Form_Inputs->form_input_text('IP Cliente', 'IP_Client', $x3, 2);
 				$Form_Inputs->form_textarea('Motivo', 'Motivo', $x4, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idBloqueo', $_GET['id'], 2);
 				?>
 
@@ -124,7 +124,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){      $x1  = $Fecha;      }else{$x1  = '';}

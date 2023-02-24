@@ -145,13 +145,12 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProductoRel)){    $x1  = $idProductoRel;   }else{$x1  = '';}
 				if(isset($Number)){           $x2  = $Number;          }else{$x2  = '';}
-	
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Producto','idProductoRel', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
@@ -163,11 +162,11 @@ foreach ($arrPermisos as $prod) {
 						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
-				
+
 				$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
-				
+
 				?>
-				
+
 				<script>
 					<?php
 					//Imprimo las variables
@@ -198,7 +197,6 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['edit'])){
 //Se traen los datos
@@ -246,7 +244,7 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProductoRel)){    $x1  = $idProductoRel;   }else{$x1  = $row_data['idProductoRel'];}
@@ -263,12 +261,12 @@ foreach ($arrPermisos as $prod) {
 						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled value="'.$row_data['Unimed'].'">
 					</div>
 				</div>';
-				
+
 				$Form_Inputs->form_input_hidden('idReceta', $_GET['edit'], 2);
 				$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
-				
+
 				?>
-				
+
 				<script>
 					<?php
 					//Imprimo las variables
@@ -341,7 +339,7 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $_SESSION['receta_productos'][$_GET['editProd']]['idProducto'];}
@@ -358,9 +356,9 @@ foreach ($arrPermisos as $prod) {
 						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled value="'.$row_data['Unimed'].'">
 					</div>
 				</div>';
-				
+
 				?>
-				
+
 				<script>
 					<?php
 					//Imprimo las variables
@@ -425,13 +423,12 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
 				if(isset($Number)){           $x2  = $Number;          }else{$x2  = '';}
-	
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
@@ -443,9 +440,9 @@ foreach ($arrPermisos as $prod) {
 						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
-				
+
 				?>
-				
+
 				<script>
 					<?php
 					//Imprimo las variables
@@ -594,7 +591,7 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 		$dialogo   = '¿Realmente desea ingresar el documento, una vez terminado no podra realizar cambios?';?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary pull-right margin_form_btn" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
 	<?php } ?>
-	
+
 	<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
 	<div class="clearfix"></div>
@@ -621,7 +618,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_number('Medida','medida', $x1, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
 				?>
 
@@ -635,7 +632,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos

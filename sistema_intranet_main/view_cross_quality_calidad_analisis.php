@@ -101,7 +101,7 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 ?>	
 		
 <section class="invoice">
-	
+
 	<div class="row">
 		
 		<div class="col-xs-4">
@@ -338,7 +338,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 ?>
 
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
@@ -444,7 +444,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
 		</div>
 	</div>
-	
+
 </section>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">

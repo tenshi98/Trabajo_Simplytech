@@ -147,7 +147,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			alert_post_data(3,1,1, $Alert_Text);
 		echo '</div>';
 	} ?>
-	
+
 	<style>
 	#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif';?>");background-repeat: no-repeat;background-position: center;}
 	</style>
@@ -156,7 +156,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	//oculto el loader
 	document.getElementById("loading").style.display = "none";
 	</script>
-	
+
 	<?php if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){  ?>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">
@@ -174,7 +174,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			</div>
 		</div>
 	<?php } ?>
-	
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>

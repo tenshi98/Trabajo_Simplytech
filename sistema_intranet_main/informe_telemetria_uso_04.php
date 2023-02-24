@@ -125,7 +125,7 @@ $arrConsulta = db_select_array (false, 'Fecha, Horas_Sensor_activo'.$subquery, '
 						<td><strong>Total</strong></td>
 						<td><strong><?php echo segundos2horas($t_s_activo); ?></strong></td>
 						<?php 
-						foreach ($arrColumnas as $col) { 
+						foreach ($arrColumnas as $col) {
 							//verifico si existe
 							if(isset($arrSuma[$col['idGrupo']])&&$arrSuma[$col['idGrupo']]!=''){
 								echo '<td><strong>'.segundos2horas($arrSuma[$col['idGrupo']]).'</strong></td>';
@@ -150,7 +150,7 @@ $arrConsulta = db_select_array (false, 'Fecha, Horas_Sensor_activo'.$subquery, '
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Filtro de busqueda
@@ -174,7 +174,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTelemetria)){  $x1  = $idTelemetria;  }else{$x1  = '';}
@@ -191,7 +191,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				}
 				$Form_Inputs->form_date('Fecha Inicio','F_inicio', $x2, 2);
 				$Form_Inputs->form_date('Fecha Termino','F_termino', $x3, 2);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 				?>
 	   
@@ -203,7 +203,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

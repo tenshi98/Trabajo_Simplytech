@@ -81,7 +81,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 //sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -90,7 +90,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($AFP_idCentroCosto)){            $x2  = $AFP_idCentroCosto;            }else{$x2  = $rowdata['AFP_idCentroCosto'];}
@@ -122,7 +122,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 							             'Nivel 4', 'AFP_idLevel_4',  $x6,  1,  'idLevel_4',  'Nombre',  'centrocosto_listado_level_4',  0,   0,
 							             'Nivel 5', 'AFP_idLevel_5',  $x7,  1,  'idLevel_5',  'Nombre',  'centrocosto_listado_level_5',  0,   0,
 							             $dbConn, 'form1');
-				
+
 				$Form_Inputs->form_tittle(3, 'Salud');
 				$Form_Inputs->form_select_depend5('Centro de Costo', 'SALUD_idCentroCosto',  $x8,  2,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  $z,   0,
 							             'Nivel 1', 'SALUD_idLevel_1',  $x9,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0, 
@@ -131,7 +131,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 							             'Nivel 4', 'SALUD_idLevel_4',  $x12,  1,  'idLevel_4',  'Nombre',  'centrocosto_listado_level_4',  0,   0,
 							             'Nivel 5', 'SALUD_idLevel_5',  $x13,  1,  'idLevel_5',  'Nombre',  'centrocosto_listado_level_5',  0,   0,
 							             $dbConn, 'form1');
-				
+
 				$Form_Inputs->form_tittle(3, 'Seguridad');
 				$Form_Inputs->form_select_depend5('Centro de Costo', 'SEGURIDAD_idCentroCosto',  $x14,  2,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  $z,   0,
 							             'Nivel 1', 'SEGURIDAD_idLevel_1',  $x15,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0, 
@@ -175,7 +175,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($AFP_idCentroCosto)){        $x2  = $AFP_idCentroCosto;          }else{$x2  = '';}
@@ -207,7 +207,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 							             'Nivel 4', 'AFP_idLevel_4',  $x6,  1,  'idLevel_4',  'Nombre',  'centrocosto_listado_level_4',  0,   0,
 							             'Nivel 5', 'AFP_idLevel_5',  $x7,  1,  'idLevel_5',  'Nombre',  'centrocosto_listado_level_5',  0,   0,
 							             $dbConn, 'form1');
-				
+
 				$Form_Inputs->form_tittle(3, 'Salud');
 				$Form_Inputs->form_select_depend5('Centro de Costo', 'SALUD_idCentroCosto',  $x8,  2,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  $z,   0,
 							             'Nivel 1', 'SALUD_idLevel_1',  $x9,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0, 
@@ -216,7 +216,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 							             'Nivel 4', 'SALUD_idLevel_4',  $x12,  1,  'idLevel_4',  'Nombre',  'centrocosto_listado_level_4',  0,   0,
 							             'Nivel 5', 'SALUD_idLevel_5',  $x13,  1,  'idLevel_5',  'Nombre',  'centrocosto_listado_level_5',  0,   0,
 							             $dbConn, 'form1');
-				
+
 				$Form_Inputs->form_tittle(3, 'Seguridad');
 				$Form_Inputs->form_select_depend5('Centro de Costo', 'SEGURIDAD_idCentroCosto',  $x14,  2,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  $z,   0,
 							             'Nivel 1', 'SEGURIDAD_idLevel_1',  $x15,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0, 
@@ -225,10 +225,10 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 							             'Nivel 4', 'SEGURIDAD_idLevel_4',  $x18,  1,  'idLevel_4',  'Nombre',  'centrocosto_listado_level_4',  0,   0,
 							             'Nivel 5', 'SEGURIDAD_idLevel_5',  $x19,  1,  'idLevel_5',  'Nombre',  'centrocosto_listado_level_5',  0,   0,
 							             $dbConn, 'form1');
-				
+
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -240,7 +240,6 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 // Se trae un listado con todos los elementos
@@ -327,7 +326,7 @@ $ndata_1 = db_select_nrows (false, 'idSistema', 'sistema_leyes_sociales', '', "i
 						<th>Datos</th>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>		  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrImpuestos as $imp) { ?>
 					<tr class="odd">

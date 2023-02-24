@@ -117,7 +117,7 @@ $rowDatos = db_select_data (false, $SIS_query, 'vehiculos_facturacion_listado_de
 ?>
 
 <div class="col-xs-12">
-	
+
 	<div class="row no-print">
 		<div class="col-xs-12">
 			<a target="new" href="view_facturacion_to_print_1.php?view=<?php echo $X_Puntero; ?>" class="btn btn-default pull-right" style="margin-right: 5px;"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>

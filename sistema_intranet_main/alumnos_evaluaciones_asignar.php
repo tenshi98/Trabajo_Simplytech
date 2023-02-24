@@ -117,7 +117,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Programada_fecha)){   $x1  = $Programada_fecha;  }else{$x1  = $rowdata['Programada_fecha'];}
@@ -125,7 +125,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Programada','Programada_fecha', $x1, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idAsignadas', $_GET['editFecha'], 2);
 				?>
 	   
@@ -150,7 +150,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Programada_fecha)){   $x1  = $Programada_fecha;  }else{$x1  = '';}
@@ -158,7 +158,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Programada','Programada_fecha', $x1, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idAsignadas', $_GET['add'], 2);
 				?>
 	   
@@ -205,7 +205,7 @@ array_push( $arrCategoria,$row );
 
 	 
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -214,7 +214,7 @@ array_push( $arrCategoria,$row );
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				$Form_Inputs = new Form_Inputs();
 				//variables
@@ -284,7 +284,7 @@ array_push( $arrCategoria,$row );
 
 	 
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -293,7 +293,7 @@ array_push( $arrCategoria,$row );
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				$Form_Inputs = new Form_Inputs();
 				//variables
@@ -344,7 +344,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idAsignar)){          $x1  = $idAsignar;         }else{$x1  = '';}
@@ -358,11 +358,10 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_filter('Cursos Alumnos','idCurso', $x2, 2, 'idCurso', 'Nombre', 'cursos_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select_filter('Cuestionario','idQuiz', $x3, 2, 'idQuiz', 'Nombre', 'quiz_listado', $z, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Programada','Programada_fecha', $x4, 2);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				
+
 				?>
 	   
 				<div class="form-group">
@@ -469,7 +468,7 @@ $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstad
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Asignar Evaluacion</a><?php }?>
 
 </div>
@@ -499,10 +498,10 @@ $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstad
 				$Form_Inputs->form_input_number('N° Alumnos','N_Alumnos', $x6, 1);
 				$Form_Inputs->form_input_number('N° Fallas','N_Alumnos_Falla', $x7, 1);
 				$Form_Inputs->form_input_number('N° Reintentos','N_Alumnos_Rep', $x8, 1);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
@@ -589,7 +588,7 @@ $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstad
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
-				
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrUsers as $usuarios){ ?>
 					<tr class="odd">

@@ -259,7 +259,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_post_data(1, 'Los clientes recien creados tienen la contraseña <strong>1234</strong> asignada por defecto');
-				
+
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_select('Tipo de Cliente','idTipo', $x1, 2, 'idTipo', 'Nombre', 'clientes_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 2);
@@ -270,7 +270,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x8, 1,'fa fa-industry');
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
@@ -310,7 +310,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'estado_desc':     $order_by = 'clientes_listado.idEstado DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		case 'previred_asc':    $order_by = 'core_sistemas_opciones.Nombre ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Previred Ascendente';break;
 		case 'previred_desc':   $order_by = 'core_sistemas_opciones.Nombre DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Previred Descendente';break;
-		
+
 		default: $order_by = 'clientes_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
@@ -366,7 +366,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'clientes_listado', $SIS_join, $
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cliente</a><?php }?>
 
 </div>
@@ -402,7 +402,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'clientes_listado', $SIS_join, $
 					
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

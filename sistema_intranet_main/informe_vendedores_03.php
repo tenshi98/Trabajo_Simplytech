@@ -117,7 +117,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'prospectos_listado', $SIS_join,
 			<li class="btn btn-danger"><a href="<?php echo $original; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 </div>
 <div class="clearfix"></div>
 
@@ -208,7 +208,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'prospectos_listado', $SIS_join,
 <a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 $w      = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
@@ -231,7 +231,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTipo)){                $x1  = $idTipo;                 }else{$x1  = '';}
@@ -262,7 +262,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select_join_filter('Vendedor','idUsuario', $x12, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
-				
+
 				?>
 	   
 				<div class="form-group">
@@ -273,7 +273,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

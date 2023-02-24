@@ -178,7 +178,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
         <div class="tab-content">
 
 			<div class="tab-pane fade active in" id="basicos" style="padding-top:5px;">
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					<?php if ($rowdata['Direccion_img']=='') { ?>
 						<img class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
@@ -212,7 +212,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 						<?php } ?>
 					</p>
 				</div>
-				
+
 				<?php if($arrMenu!=false && !empty($arrMenu) && $arrMenu!=''){ ?>
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos Asignados</h2>

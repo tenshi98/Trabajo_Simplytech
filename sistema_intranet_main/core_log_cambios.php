@@ -71,7 +71,7 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -80,7 +80,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){        $x1  = $Fecha;        }else{$x1  = $rowdata['Fecha'];}
@@ -90,7 +90,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
 				$Form_Inputs->form_textarea('Descripcion', 'Descripcion', $x2, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idLog', $_GET['id'], 2);
 				?>
 
@@ -119,7 +119,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){       $x1  = $Fecha;       }else{$x1  = '';}
@@ -142,7 +142,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Se inicializa el paginador de resultados

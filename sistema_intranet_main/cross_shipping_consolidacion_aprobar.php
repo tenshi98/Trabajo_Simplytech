@@ -79,13 +79,13 @@ if(!empty($_GET['consolidacion_rechazo'])){ ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idConsolidacion', $_GET['consolidacion_rechazo'], 2);
 				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('Creacion_hora', hora_actual(), 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_rechazo">
 					<a href="<?php echo $location.'&view='.$_GET['consolidacion_rechazo']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -114,13 +114,13 @@ if(!empty($_GET['consolidacion_rechazo'])){ ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idConsolidacion', $_GET['consolidacion_nula'], 2);
 				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('Creacion_hora', hora_actual(), 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_nula">
 					<a href="<?php echo $location.'&view='.$_GET['consolidacion_nula']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -208,7 +208,6 @@ array_push( $arrAprobado,$row );
 </div>
 <div class="clearfix"></div>
 
- 
 <?php include '1include_cross_shipping_consolidacion.php'; ?>
 	  
 <div class="clearfix"></div>
@@ -310,10 +309,10 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 										 'Variedad','idProducto', $x3, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_text('Contenedor Nro.', 'CTNNombreCompañia', $x4, 1);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

@@ -134,7 +134,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			</div>
 		</div>
 	</div>
-	
+
 	<?php
 }
 ?>
@@ -195,7 +195,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				}
 				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 2, $dbConn);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>

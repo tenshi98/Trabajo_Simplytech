@@ -50,7 +50,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'usuario_desc':  $order_by = 'usuarios_listado.Nombre DESC ';               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
 		case 'equipo_asc':    $order_by = 'telemetria_listado.Nombre ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Equipo Ascendente'; break;
 		case 'equipo_desc':   $order_by = 'telemetria_listado.Nombre DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Equipo Descendente';break;
-		
+
 		default: $order_by = 'telemetria_historial_mantencion.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
@@ -64,7 +64,7 @@ $SIS_where = "telemetria_historial_mantencion.idMantencion!=0";
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){ $SIS_where .= " AND telemetria_historial_mantencion.idTelemetria=".$_GET['idTelemetria'];}
 if(isset($_GET['Fecha_ini']) && $_GET['Fecha_ini'] != ''&&isset($_GET['Fecha_ter']) && $_GET['Fecha_ter']!=''){ 
 	$SIS_where .= " AND telemetria_historial_mantencion.Fecha BETWEEN '".$_GET['Fecha_ini']."' AND '".$_GET['Fecha_ter']."'";
-}	
+}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idMantencion', 'telemetria_historial_mantencion', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -166,7 +166,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 <a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 $w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
@@ -182,7 +182,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTelemetria)){    $x1  = $idTelemetria;    }else{$x1  = '';}
@@ -200,8 +200,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				}
 				$Form_Inputs->form_date('Fecha Mantencion Inicio','Fecha_ini', $x2, 1);
 				$Form_Inputs->form_date('Fecha Mantencion Termino','Fecha_ter', $x3, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 				
 				
@@ -215,7 +214,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

@@ -264,7 +264,7 @@ array_push( $arrPuntos,$row );
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
+
 						<?php
 						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
@@ -463,7 +463,7 @@ array_push( $arrPuntos,$row );
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
+
 						<?php
 						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
@@ -565,9 +565,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);	
 				$Form_Inputs->form_select('Estado','idEstado', $x2, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idZona', $_GET['edit_zona'], 2);
-				
+
 				?>
 
 							
@@ -607,7 +607,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
-				
+
 				?>
 
 							
@@ -637,7 +637,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'nombre_desc':   $order_by = 'telemetria_geocercas.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
 		case 'estado_asc':    $order_by = 'telemetria_geocercas.idEstado ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
 		case 'estado_desc':   $order_by = 'telemetria_geocercas.idEstado DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		
+
 		default: $order_by = 'telemetria_geocercas.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
@@ -683,7 +683,7 @@ $arrCercas = db_select_array (false, $SIS_query, 'telemetria_geocercas', $SIS_jo
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Geocerca</a><?php }?>
 
 </div>
@@ -699,10 +699,10 @@ $arrCercas = db_select_array (false, $SIS_query, 'telemetria_geocercas', $SIS_jo
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x1, 1);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

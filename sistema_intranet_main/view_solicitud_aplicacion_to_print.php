@@ -205,7 +205,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 ?>
 
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
@@ -300,7 +300,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
                     
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrCuarteles!=false && !empty($arrCuarteles) && $arrCuarteles!='') {
-						foreach ($arrCuarteles as $cuartel) { 
+						foreach ($arrCuarteles as $cuartel) {
 							//Verifico el tipo de cierre
 							if(isset($cuartel['CuartelidEjecucion'])&&$cuartel['CuartelidEjecucion']==1){
 								$S_LitrosAplicados  = $cuartel['CuartelLitrosAplicados'];
@@ -449,7 +449,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 					$NTract     = 0;
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrTractores!=false && !empty($arrTractores) && $arrTractores!='') {
-						foreach ($arrTractores as $tract) { 
+						foreach ($arrTractores as $tract) {
 							//Se suman cantidades
 							$Capacidad = $Capacidad + $tract['TelemetriaCapacidad'];
 							$NTract++; ?>

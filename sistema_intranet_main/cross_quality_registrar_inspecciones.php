@@ -133,7 +133,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ingreso borrado correc
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['addFile'])){ ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -247,8 +247,7 @@ array_push( $arrGrupo,$row );
 				$Form_Inputs->form_time_popover('Hora Inspeccion','H_inspeccion', $x7, 1, 1, 24);
 				$Form_Inputs->form_input_number('N° Cajas/Bolsas/Racimos', 'cantidad', $x8, 2);
 				$Form_Inputs->form_input_number('Peso Caja', 'peso', $x9, 2);
-				
-					
+
 				$Form_Inputs->form_tittle(3, 'Datos Tipo Planilla');
 				foreach ($arrGrupo as $grupo) {
 					//Cuento si hay items dentro de la categoria
@@ -464,7 +463,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_time_popover('Hora Inspeccion','H_inspeccion', $x7, 1, 1, 24);
 				$Form_Inputs->form_input_number('N° Cajas/Bolsas/Racimos', 'cantidad', $x8, 2);
 				$Form_Inputs->form_input_number('Peso Caja', 'peso', $x9, 2);
-				
+
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['cross_quality_reg_insp_muestras'][$_GET['editMuestra']]['idMuestra'], 2);
 					
 				$Form_Inputs->form_tittle(3, 'Datos Tipo Planilla');
@@ -685,8 +684,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_time_popover('Hora Inspeccion','H_inspeccion', $x7, 1, 1, 24);
 				$Form_Inputs->form_input_number('N° Cajas/Bolsas/Racimos', 'cantidad', $x8, 2);
 				$Form_Inputs->form_input_number('Peso Caja', 'peso', $x9, 2);
-				
-					
+
 				$Form_Inputs->form_tittle(3, 'Datos Tipo Planilla');
 				foreach ($arrGrupo as $grupo) {
 					//Cuento si hay items dentro de la categoria
@@ -801,7 +799,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idMaquina)){        $x1  = $idMaquina;        }else{$x1  = '';}
@@ -835,7 +833,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = '';}
@@ -926,7 +924,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){      $x1  = $Creacion_fecha;    }else{$x1  = $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'];}
@@ -969,7 +967,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
-				
+
 				?>
 
 				<div class="form-group">
@@ -1024,7 +1022,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 					<tr>
 						<td class="meta-head">Ubicacion</td>
 						<td>
-							<?php echo $_SESSION['cross_quality_reg_insp_basicos']['Ubicacion']; 
+							<?php echo $_SESSION['cross_quality_reg_insp_basicos']['Ubicacion'];
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_1'])&&$_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_1']!=''){echo $_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_1'];}
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_2'])&&$_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_2']!=''){echo $_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_2'];}
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_3'])&&$_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_3']!=''){echo $_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_3'];}
@@ -1051,12 +1049,12 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
 				</tr>
-				
+
 				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Trabajadores Encargados</td>
@@ -1196,7 +1194,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 					</tr>
 					 
 				 <?php 
-				$numeral++;	
+				$numeral++;
 				}
 			}?>
 
@@ -1277,7 +1275,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php 
 				//Precarga datos
 				$xdata1 = ano_actual();
@@ -1313,8 +1311,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 							                 'Nivel 4', 'idUbicacion_lvl_4',  $x10,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
 							                 'Nivel 5', 'idUbicacion_lvl_5',  $x11,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 							                 $dbConn, 'form1');
-				
-				
+
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1);
 				
 				
@@ -1324,7 +1321,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -1336,7 +1333,6 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Se inicializa el paginador de resultados
@@ -1452,7 +1448,7 @@ foreach ($arrProductos as $prod) { $zx2 .= " OR (idEstado=1 AND idProducto={$pro
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){ ?>
 		<?php if (isset($_SESSION['cross_quality_reg_insp_basicos']['idTipo'])&&$_SESSION['cross_quality_reg_insp_basicos']['idTipo']!=''){?>
 			
@@ -1501,11 +1497,10 @@ foreach ($arrProductos as $prod) { $zx2 .= " OR (idEstado=1 AND idProducto={$pro
 							                 'Nivel 4', 'idUbicacion_lvl_4',  $x10,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
 							                 'Nivel 5', 'idUbicacion_lvl_5',  $x11,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 							                 $dbConn, 'form1');
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
@@ -1586,7 +1581,7 @@ foreach ($arrProductos as $prod) { $zx2 .= " OR (idEstado=1 AND idProducto={$pro
 						<td><?php echo $tipo['Temporada']; ?></td>
 						<td><?php echo $tipo['ProductoCategoria'].' - '.$tipo['ProductoNombre']; ?></td>
 						<td>
-							<?php echo $tipo['Ubicacion']; 
+							<?php echo $tipo['Ubicacion'];
 							if(isset($tipo['UbicacionLVL_1'])&&$tipo['UbicacionLVL_1']!=''){echo ' - '.$tipo['UbicacionLVL_1'];}
 							if(isset($tipo['UbicacionLVL_2'])&&$tipo['UbicacionLVL_2']!=''){echo ' - '.$tipo['UbicacionLVL_2'];}
 							if(isset($tipo['UbicacionLVL_3'])&&$tipo['UbicacionLVL_3']!=''){echo ' - '.$tipo['UbicacionLVL_3'];}

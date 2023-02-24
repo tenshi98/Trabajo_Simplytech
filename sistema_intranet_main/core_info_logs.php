@@ -65,7 +65,7 @@ $Archivo3 = '1_logs_error_log_php.txt';
 			
 			
 			<div class="tab-pane fade active in" id="data1">
-				
+
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 						<thead>
@@ -113,7 +113,7 @@ $Archivo3 = '1_logs_error_log_php.txt';
 			</div>
 
 			<div class="tab-pane fade" id="data2">
-				
+
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 						<thead>
@@ -148,7 +148,7 @@ $Archivo3 = '1_logs_error_log_php.txt';
 			</div>
 
 			<div class="tab-pane fade" id="data3">
-				
+
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 						<thead>

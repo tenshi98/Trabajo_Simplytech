@@ -70,7 +70,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar Archivos','files_adj', 20, '"jpg","png","gif","jpeg"');
-				
+
 				$Form_Inputs->form_input_hidden('idMantencion', $_GET['id'], 2);
 				?>
 
@@ -84,7 +84,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</div>
 	</div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos

@@ -104,7 +104,7 @@ array_push( $arrProductos,$row );
 <a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 $z = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -122,7 +122,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idBodega)){      $x1  = $idBodega;    }else{$x1  = '';}
@@ -140,7 +140,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

@@ -75,7 +75,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 		//Guardo la fecha
 		$Temp_1 .= "'".Fecha_estandar($fac['FechaSistema'])." - ".$fac['HoraSistema']."',";
-		
+
 		//Que el valor medido sea distinto de 999
 		if(isset($fac['SensorValue'])&&$fac['SensorValue']<99900){
 
@@ -176,16 +176,16 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 			<form method="post" id="make_pdf" action="informe_telemetria_registro_sensores_18_to_pdf.php">
 				<input type="hidden" name="img_adj" id="img_adj" />
-				
+
 				<input type="hidden" name="idSistema"     id="idSistema"    value="<?php echo $_SESSION['usuario']['basic_data']['idSistema']; ?>" />
 				<input type="hidden" name="f_inicio"      id="f_inicio"     value="<?php echo $_GET['f_inicio']; ?>" />
 				<input type="hidden" name="f_termino"     id="f_termino"    value="<?php echo $_GET['f_termino']; ?>" />
 				<input type="hidden" name="idTelemetria"  id="idTelemetria" value="<?php echo $_GET['idTelemetria']; ?>" />
 				<input type="hidden" name="sensorn"       id="sensorn"      value="<?php echo $_GET['sensorn']; ?>" />
-				
+
 				<?php if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){?>   <input type="hidden" name="h_inicio"   id="h_inicio"  value="<?php echo $_GET['h_inicio']; ?>" /><?php } ?>
 				<?php if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){?> <input type="hidden" name="h_termino"  id="h_termino" value="<?php echo $_GET['h_termino']; ?>" /><?php } ?>
-				
+
 				<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
 			
 			</form>
@@ -312,7 +312,7 @@ alert_post_data(2,1,1, $Alert_Text);
 				$Form_Inputs->form_select_tel_group_sens('Sensor','sensorn', 'idTelemetria', 'form1', 2, $dbConn);
 				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>

@@ -267,7 +267,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idTrabajador) && $idTrabajador!=''){
 					// consulto los datos
 					$rowTrabajador = db_select_data (false, 'Nombre,ApellidoPat, ApellidoMat, Cargo, Rut', 'trabajadores_listado', '', 'idTrabajador ='.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//se guarda dato
 					$_SESSION['ot_motivo_trabajador'][$idTrabajador]['Trabajador']   = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
 					$_SESSION['ot_motivo_trabajador'][$idTrabajador]['Cargo']        = $rowTrabajador['Cargo'];
@@ -573,7 +573,7 @@ require_once '0_validate_user_1.php';
 					
 					// consulto los datos
 					$rowLicitacion = db_select_data (false, 'Nombre'.$subquery, 'licitacion_listado', '', 'idLicitacion = '.$idLicitacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//se guarda dato
 					$_SESSION['ot_motivo_tareas'][$idInterno]['Licitacion'] = $rowLicitacion['Nombre'];
 					//Tarea 
@@ -1282,7 +1282,7 @@ require_once '0_validate_user_1.php';
 					LEFT JOIN `ubicacion_listado_level_5`  ON ubicacion_listado_level_5.idLevel_5   = orden_trabajo_tareas_listado.idUbicacion_lvl_5';
 					$SIS_where = 'orden_trabajo_tareas_listado.idOT = '.$idOT;
 					$rowdataPost = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//Comparacion datos antiguos con datos nuevos
 					$compare = 'Modificacion en los datos basicos de la OT:</strong><br/>';
 					if(isset($rowdata['f_programacion'])&&isset($rowdataPost['f_programacion'])&&$rowdata['f_programacion']!=$rowdataPost['f_programacion']){
@@ -1807,7 +1807,7 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					//Consulto por el item recien ingresado
 					$rowdata = db_select_data (false, 'productos_listado.Nombre AS Producto, orden_trabajo_tareas_listado_productos.Cantidad, sistema_productos_uml.Nombre AS Unidad', 'orden_trabajo_tareas_listado_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = orden_trabajo_tareas_listado_productos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'orden_trabajo_tareas_listado_productos.idProductos = '.$ultimo_id, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//Nombre del item
 					$NombreItem = $rowdata['Cantidad'].' '.$rowdata['Unidad'].' de '.$rowdata['Producto'];
 
@@ -2238,7 +2238,7 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",idLevel_24='0'" ;
 					$SIS_data .= ",idLevel_25='0'" ;
 					$SIS_data .= ",Observacion=''" ;
-					
+
 					//se actualizan los datos
 					$resultado = db_update_data (false, $SIS_data, 'orden_trabajo_tareas_listado_tareas', 'idTrabajoOT = "'.$idTrabajoOT.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}

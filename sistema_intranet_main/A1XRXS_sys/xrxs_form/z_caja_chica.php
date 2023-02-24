@@ -1789,7 +1789,7 @@ require_once '0_validate_user_1.php';
 					/*********************************************************************/
 					//Variable para el total de la devolucion
 					$subDevolucion = 0;
-					
+
 					//Se guardan los datos de los documentos utilizados
 					if (isset($_SESSION['caja_rend_documentos'])){		
 						foreach ($_SESSION['caja_rend_documentos'] as $key => $producto){

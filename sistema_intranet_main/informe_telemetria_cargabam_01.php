@@ -57,7 +57,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'fechavenc_desc':  $order_by = 'telemetria_carga_bam.FechaVencimiento DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Vencimiento Descendente';break;
 		case 'monto_asc':       $order_by = 'telemetria_carga_bam.Monto ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Monto Ascendente';break;
 		case 'monto_desc':      $order_by = 'telemetria_carga_bam.Monto DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Monto Descendente';break;
-		
+
 		default: $order_by = 'telemetria_carga_bam.FechaVencimiento DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Vencimiento Descendente';
 	}
 }else{
@@ -103,7 +103,7 @@ $arrCarga = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_joi
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
-	
+
 </div>
 <div class="clearfix"></div>
 
@@ -188,7 +188,7 @@ $arrCarga = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_joi
 <a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 $w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
@@ -206,7 +206,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTelemetria)){     $x1  = $idTelemetria;      }else{$x1  = '';}
@@ -229,7 +229,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select('Documento de Pago','idDocPago', $x4, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x5, 1);
 				$Form_Inputs->form_values('Monto', 'Monto', $x6, 1);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 				
 				
@@ -243,7 +243,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

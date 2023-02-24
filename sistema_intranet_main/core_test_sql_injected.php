@@ -40,7 +40,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 		<div class="body">
 			
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();	
@@ -51,7 +51,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 					
 					if (!empty($_POST['usuario']))    $usuario_1   = $_POST['usuario'];
 					if (!empty($_POST['password']))   $password_1  = $_POST['password'];
-					
+
 					// consulto los datos
 					$query = "SELECT  
 					usuarios_listado.password, 
@@ -86,7 +86,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 					
 					if (!empty($_POST['usuario']))    $usuario_2    = $_POST['usuario'];
 					if (!empty($_POST['password']))   $password_2   = $_POST['password'];
-					
+
 					// consulto los datos
 					$query = "SELECT  
 					usuarios_listado.password, 
@@ -116,7 +116,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 				//Se verifican si existen los datos
 				$x1  = '';
 				$x2  = '';
-				
+
 				$Form_Inputs->form_input_text('Usuario', 'usuario', $x1, 2);
 				$Form_Inputs->form_input_text('Password', 'password', $x2, 2);
 				

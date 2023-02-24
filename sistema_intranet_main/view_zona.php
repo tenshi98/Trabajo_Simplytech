@@ -151,7 +151,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 						<?php } ?>
 					</div>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div style="margin-top:20px;">
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">

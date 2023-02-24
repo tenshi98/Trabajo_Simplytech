@@ -94,11 +94,11 @@ if(!empty($_GET['clone_idUsuario'])){
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_post_data(1, 'Los usuarios recien creados tienen la contraseña <strong>1234</strong> asignada por defecto');
 				$Form_Inputs->form_post_data(1, 'Los usuarios recien creados perteneceran al sistema <strong>'.$_SESSION['usuario']['basic_data']['RazonSocial'].'</strong> por defecto');
-				
+
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_input_icon('Nombre de Usuario', 'usuario', $x1, 2,'fa fa-user');
 				$Form_Inputs->form_select('Tipo de usuario','idTipoUsuario', $x3, 2, 'idTipoUsuario', 'Nombre', 'usuarios_tipos', 'idTipoUsuario!=1', '', $dbConn);
-				
+
 				$Form_Inputs->form_tittle(3, 'Datos Personales');
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x4, 2);
 				$Form_Inputs->form_input_phone('Fono', 'Fono', $x5, 1);
@@ -109,12 +109,11 @@ if(!empty($_GET['clone_idUsuario'])){
 										 'Comuna','idComuna', $x10, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x11, 1,'fa fa-map');
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_GET['clone_idUsuario'], 2);
-				
+
 				?>
 	   
 				<div class="form-group">
@@ -635,12 +634,11 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_post_data(1, 'Los usuarios recien creados tienen la contraseña <strong>1234</strong> asignada por defecto');
 				$Form_Inputs->form_post_data(1, 'Los usuarios recien creados perteneceran al sistema <strong>'.$_SESSION['usuario']['basic_data']['RazonSocial'].'</strong> por defecto');
-				
-				
+
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_input_icon('Nombre de Usuario', 'usuario', $x1, 2,'fa fa-user');
 				$Form_Inputs->form_select('Tipo de usuario','idTipoUsuario', $x3, 2, 'idTipoUsuario', 'Nombre', 'usuarios_tipos', 'idTipoUsuario!=1', '', $dbConn);
-				
+
 				$Form_Inputs->form_tittle(3, 'Datos Personales');
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x4, 2);
 				$Form_Inputs->form_input_phone('Fono', 'Fono', $x5, 1);
@@ -651,8 +649,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 										 'Comuna','idComuna', $x11, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x11, 1,'fa fa-map');
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
@@ -694,7 +691,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'tipo_desc':      $order_by = 'usuarios_tipos.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Descendente';break;
 		case 'estado_asc':     $order_by = 'core_estados.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
 		case 'estado_desc':    $order_by = 'core_estados.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		
+
 		default: $order_by = 'usuarios_listado.idEstado ASC, usuarios_tipos.Nombre ASC, usuarios_listado.usuario ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo, Usuario Ascendente';
 	}
 }else{
@@ -760,7 +757,7 @@ foreach ($arrSistemas as $sis) {
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Usuario</a><?php } ?>
 
 </div>
@@ -790,10 +787,10 @@ foreach ($arrSistemas as $sis) {
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x7, 1);
 				$Form_Inputs->form_date('F Nacimiento','fNacimiento', $x8, 1);
 				$Form_Inputs->form_select('Sistema','idSistema', $x9, 1, 'idSistema', 'Nombre', 'core_sistemas',0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

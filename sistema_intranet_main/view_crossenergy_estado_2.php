@@ -342,7 +342,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 		</header>
         <div class="tab-content">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				
+
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<?php 
@@ -352,7 +352,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						?>
 					</div>
 				</div>
-				
+
 				<div class="row">
 					
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -388,7 +388,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 					</div>
 					
 				</div>
-				
+
 				<div class="row">
 					
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -480,7 +480,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_crossenergy_02.php?f_inicio='.$Informes_2_FechaInicio.'&h_inicio='.$Informes_2_HoraInicio.'&f_termino='.$Informes_2_FechaTermino.'&h_termino='.$Informes_2_HoraTermino.'&idTelemetria='.$X_Puntero.'&idGrupo='.$idGrupoPotencia.'&idGrafico=1&submit_filter=Filtrar'; ?>" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-				
+
 				</div>
 				
 				

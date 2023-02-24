@@ -321,7 +321,6 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 	</div>
 </div>
 
-  
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -338,8 +337,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 $y = "idEstado=1";
 $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
- 
- ?>
+
+?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -348,7 +347,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($NSolicitud)){             $x1  = $NSolicitud;             }else{$x1  = '';}
@@ -392,7 +391,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_filter('Estado Fenológico','idEstadoFen', $x5, 1, 'idEstadoFen', 'Codigo,Nombre', 'cross_checking_estado_fenologico', $y, '', $dbConn);
 					*/	
 				?>
-				
+
 				<script>
 					//oculto los div
 					document.getElementById('div_f_programacion_desde').style.display = 'none';
@@ -406,7 +405,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						let idEstado = $(this).val(); //Asignamos el valor seleccionado
 						
 						//Solicitado
-						if(idEstado == 1){ 
+						if(idEstado == 1){
 							document.getElementById('div_f_programacion_desde').style.display = 'block';
 							document.getElementById('div_f_programacion_hasta').style.display = 'block';
 							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
@@ -422,7 +421,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							document.getElementById('f_termino_hasta').value = "";				
 						
 						//Programado
-						}else if(idEstado == 2){ 
+						}else if(idEstado == 2){
 							document.getElementById('div_f_programacion_desde').style.display = 'none';
 							document.getElementById('div_f_programacion_hasta').style.display = 'none';
 							document.getElementById('div_f_ejecucion_desde').style.display = 'block';
@@ -438,7 +437,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							document.getElementById('f_termino_hasta').value = "";	
 						
 						//Ejecutado
-						}else if(idEstado == 3){ 
+						}else if(idEstado == 3){
 							document.getElementById('div_f_programacion_desde').style.display = 'none';
 							document.getElementById('div_f_programacion_hasta').style.display = 'none';
 							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
@@ -454,7 +453,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							//document.getElementById('f_termino_hasta').value = "";		
 						
 						//el resto
-						}else{ 
+						}else{
 							document.getElementById('div_f_programacion_desde').style.display = 'none';
 							document.getElementById('div_f_programacion_hasta').style.display = 'none';
 							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
@@ -482,7 +481,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

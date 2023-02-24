@@ -609,7 +609,7 @@ foreach ($arrTemporal_9 as $trab) {
 						$Sub_GEN             = $arrTotColIngGEN[$i] + $Sub_GEN;
 					}
 					$arrTotColIngGEN[13] = $Sub_GEN;
-					
+
 					//Total Afecto al IVA
 					echo '<tr class="odd" style="background-color: #d2d2d2;">';
 						echo '<td><strong>Total Afecto al IVA</strong></td>';
@@ -919,7 +919,7 @@ foreach ($arrTemporal_9 as $trab) {
 						$Sub_GEN            = $arrTotColEgGEN[$i] + $Sub_GEN;
 					}
 					$arrTotColEgGEN[13] = $Sub_GEN;
-					
+
 					//Total Afecto al IVA
 					echo '<tr class="odd" style="background-color: #d2d2d2;">';
 						echo '<td><strong>Total Afecto al IVA</strong></td>';
@@ -1165,8 +1165,8 @@ foreach ($arrTemporal_9 as $trab) {
 } else {
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
- 
- ?>
+
+?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -1175,7 +1175,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_ano)){ $x1  = $Creacion_ano;  }else{$x1  = '';}
@@ -1194,7 +1194,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

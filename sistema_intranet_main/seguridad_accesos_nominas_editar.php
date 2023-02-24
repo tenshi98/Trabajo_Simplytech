@@ -71,7 +71,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Boleta de Honorarios b
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['addFile'])){ ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -85,7 +85,7 @@ if(!empty($_GET['addFile'])){ ?>
 				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
-				
+
 				$Form_Inputs->form_input_hidden('idAcceso', $_GET['id'], 2);
 					
 				?>
@@ -131,11 +131,11 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listad
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x2, 2);
 				$Form_Inputs->form_input_text('Numero Documento', 'NDocCedula', $x3, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idNomina', $_GET['editPersona'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_persona"> 
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -169,12 +169,12 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listad
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x2, 2);
 				$Form_Inputs->form_input_text('Numero Documento', 'NDocCedula', $x3, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('idAcceso', $_GET['id'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_persona"> 
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -204,7 +204,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($FechaProgramada)){        $x1  = $FechaProgramada;         }else{$x1  = $row_data['FechaProgramada'];}
@@ -231,7 +231,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 												  'Nivel 5', 'idUbicacion_lvl_5',  $x9,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 												  $dbConn, 'form1');
 				$Form_Inputs->form_input_text('Persona Reunion', 'PersonaReunion', $x10, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idAcceso', $_GET['id'], 2);
 				?>
 
@@ -370,12 +370,12 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
 				</tr>
-				
+
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Personas a Ingresar</td>
 					<td><a href="<?php echo $location.'&addPersona=true' ?>" title="Agregar Persona" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Persona</a></td>
@@ -434,7 +434,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 					</tr>
 					 
 				 <?php 
-				$numeral++;	
+				$numeral++;
 				}
 			}?>
 
@@ -452,7 +452,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 	<a href="seguridad_accesos_nominas.php?pagina=1" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 	<div class="clearfix"></div>
 </div>
-	
+
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

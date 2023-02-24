@@ -106,7 +106,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default">Listado de Videoconferencias</li>	
 	</ul>
-	
+
 </div>
 <div class="clearfix"></div>
 
@@ -124,11 +124,10 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Cursos Alumnos','idCurso', $x1, 1, 'idCurso', 'Nombre', 'cursos_listado', $y, '', $dbConn);
 				$Form_Inputs->form_select_join_filter('Profesor','idUsuario', $x2, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

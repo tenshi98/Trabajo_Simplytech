@@ -62,25 +62,16 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
+
+/*******************************************************/
 // consulto los datos
-$query = "SELECT Nombre,Codigo, Rut
-FROM `aguas_analisis_laboratorios`
-WHERE idLaboratorio = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	?>
- 
+$SIS_query = 'Nombre,Codigo, Rut';
+$SIS_join  = '';
+$SIS_where = 'idLaboratorio ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_laboratorios', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -89,7 +80,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){   $x1  = $Nombre;   }else{$x1  = $rowdata['Nombre'];}
@@ -101,8 +92,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 1);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idLaboratorio', $_GET['id'], 2);
@@ -132,7 +122,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){      $x1  = $Nombre;     }else{$x1  = '';}
@@ -144,13 +134,12 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 1);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -162,7 +151,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 /**********************************************************/
@@ -182,7 +170,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'codigo_desc':   $order_by = 'aguas_analisis_laboratorios.Codigo DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Codigo Descendente';break;
 		case 'rut_asc':       $order_by = 'aguas_analisis_laboratorios.Rut ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Rut Ascendente'; break;
 		case 'rut_desc':      $order_by = 'aguas_analisis_laboratorios.Rut DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Rut Descendente';break;
-		
+
 		default: $order_by = 'aguas_analisis_laboratorios.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
@@ -207,7 +195,7 @@ $total_paginas = ceil($cuenta_registros / $cant_reg);
 $SIS_query = '
 aguas_analisis_laboratorios.idLaboratorio,
 aguas_analisis_laboratorios.Nombre,
-aguas_analisis_laboratorios.Codigo, 
+aguas_analisis_laboratorios.Codigo,
 aguas_analisis_laboratorios.Rut,
 core_sistemas.Nombre AS sistema';
 $SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = aguas_analisis_laboratorios.idSistema';
@@ -226,9 +214,9 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_analisis_laboratorios', $SI
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Laboratorio</a><?php } ?>
-	
+
 </div>
 <div class="clearfix"></div>
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
@@ -246,10 +234,10 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_analisis_laboratorios', $SI
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 1);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 1);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
@@ -261,8 +249,7 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_analisis_laboratorios', $SI
 	</div>
 </div>
 <div class="clearfix"></div>
-                     
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -301,7 +288,7 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_analisis_laboratorios', $SI
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>		  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrUML as $uml) { ?>
 					<tr class="odd">

@@ -63,7 +63,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		//datos											
 		if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){$arrData[1]['Value'] .= ", ".$rutas['GeoVelocidad'];         }else{ $arrData[1]['Value'] = $rutas['GeoVelocidad'];}
 		if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){$arrData[2]['Value'] .= ", ".$rowEquipo['LimiteVelocidad'];  }else{ $arrData[2]['Value'] = $rowEquipo['LimiteVelocidad'];}
-		
+
 	}
 	/******************************************/  
 	//variables

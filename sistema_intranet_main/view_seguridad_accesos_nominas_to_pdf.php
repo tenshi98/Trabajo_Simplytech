@@ -128,7 +128,7 @@ $html .= '
 						</tr>
 					</tbody>
 				</table>
-				
+
 				<br/>
 				<br/>
 
@@ -139,7 +139,7 @@ $html .= '
 						</tr>
 					</thead>
 					<tbody>';
-					
+
 					//si existen guias
 					if ($arrPersonas!=false && !empty($arrPersonas) && $arrPersonas!='') {
 						foreach ($arrPersonas as $otro) {
@@ -156,7 +156,7 @@ $html .= '
 				$html .= '
 					</tbody>
 				</table>
-				
+
 				<br/>
 				<br/>
 				';

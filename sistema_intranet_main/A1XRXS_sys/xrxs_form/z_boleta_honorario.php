@@ -203,7 +203,7 @@ require_once '0_validate_user_1.php';
 					
 					$arrBoletas = array();
 					$arrBoletas = db_select_array (false, 'idExistencia, Descripcion, Valor', 'ocompra_listado_existencias_boletas', '', 'idUso=1 AND idOcompra = '.$idOcompra.' AND idTrabajador = '.$idTrabajador.' AND N_Doc = '.$N_Doc, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//Se guardan los datos
 					$idInterno = 1;
 					foreach ($arrBoletas as $motivo){
@@ -396,7 +396,7 @@ require_once '0_validate_user_1.php';
 					
 					$arrBoletas = array();
 					$arrBoletas = db_select_array (false, 'idExistencia, Descripcion, Valor', 'ocompra_listado_existencias_boletas', '', 'idUso=1 AND idOcompra = '.$idOcompra.' AND idTrabajador = '.$idTrabajador.' AND N_Doc = '.$N_Doc, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//Se guardan los datos
 					$idInterno = 1;
 					foreach ($arrBoletas as $motivo){
@@ -1477,11 +1477,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idOcompra)&&$idOcompra!=''){
 					
 					$_SESSION['boleta_ing_prov_basicos']['idOcompra']        = $idOcompra;
-					
+
 					// Se trae un listado con todos las boletas de los trabajadores
 					$arrBoletas = array();
 					$arrBoletas = db_select_array (false, 'idExistencia, Descripcion, Valor, Total_Ingresado', 'ocompra_listado_existencias_boletas_empresas', '', 'Valor>Total_Ingresado AND idOcompra = '.$idOcompra, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//Se guardan los datos
 					$idInterno = 1;
 					foreach ($arrBoletas as $motivo){
@@ -1621,11 +1621,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idOcompra)&&$idOcompra!=''){
 					
 					$_SESSION['boleta_ing_prov_basicos']['idOcompra']        = $idOcompra;
-					
+
 					// Se trae un listado con todos las boletas de los trabajadores
 					$arrBoletas = array();
 					$arrBoletas = db_select_array (false, 'idExistencia, Descripcion, Valor, Total_Ingresado', 'ocompra_listado_existencias_boletas_empresas', '', 'Valor>Total_Ingresado AND idOcompra = '.$idOcompra, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//Se guardan los datos
 					$idInterno = 1;
 					foreach ($arrBoletas as $motivo){

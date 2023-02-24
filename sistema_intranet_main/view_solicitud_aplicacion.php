@@ -232,7 +232,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 </div>
 
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
@@ -331,7 +331,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					//recorro el listado entregado por la base de datos
 					if ($arrCuarteles!=false && !empty($arrCuarteles) && $arrCuarteles!='') {
                         //recorro
-						foreach ($arrCuarteles as $cuartel) { 
+						foreach ($arrCuarteles as $cuartel) {
 							//Verifico el tipo de cierre
 							if(isset($cuartel['CuartelidEjecucion'])&&$cuartel['CuartelidEjecucion']==1){
 								$S_LitrosAplicados  = $cuartel['CuartelLitrosAplicados'];
@@ -492,7 +492,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					$NTract     = 0;
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrTractores!=false && !empty($arrTractores) && $arrTractores!='') {
-						foreach ($arrTractores as $tract) { 
+						foreach ($arrTractores as $tract) {
 							//Se suman cantidades
 							$Capacidad = $Capacidad + $tract['TelemetriaCapacidad'];
 							$NTract++;
@@ -589,7 +589,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 </section>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
-	
+
 	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
 			<tbody>
@@ -641,7 +641,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		
 	<?php }
 } ?>
- 
+
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

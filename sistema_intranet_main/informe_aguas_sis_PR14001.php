@@ -174,7 +174,7 @@ array_push( $arrProductos,$row );
 							<td><?php echo Cantidades_decimales_justos($productos['valor']); ?></td>
 							<td><?php echo $productos['rutLaboratorio']; ?></td>
 							<td><?php echo $productos['idLaboratorio']; ?></td>
-				
+
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -190,11 +190,11 @@ array_push( $arrProductos,$row );
 <a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 ?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -204,7 +204,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_muestra_inicio)){       $x1  = $f_muestra_inicio;     }else{$x1  = '';}
@@ -230,7 +230,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_filter('Parametro','idParametros', $x8, 1, 'idParametros', 'Nombre', 'aguas_analisis_parametros', $z, 0, $dbConn);
 				$Form_Inputs->form_select_filter('Signo','idSigno', $x9, 1, 'idSigno', 'Nombre', 'aguas_analisis_aguas_signo', 0, 0, $dbConn);
 				$Form_Inputs->form_select_filter('Laboratorio','idLaboratorio', $x10, 1, 'idLaboratorio', 'Nombre', 'aguas_analisis_laboratorios', $z, 0, $dbConn);
-				
+
 				?>
 	   
 				<div class="form-group">
@@ -241,7 +241,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

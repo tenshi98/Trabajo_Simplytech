@@ -162,7 +162,7 @@ $arrHistorial = db_select_array (false, 'clientes_listado_historial_contratos.Cr
 					$Form_Inputs->form_values('Valor Anual', 'Contrato_Valor_Anual', $x11, 1);
 					$Form_Inputs->form_input_number('Valor UF instalacion', 'Contrato_UF_Instalacion', $x12, 1);
 					$Form_Inputs->form_input_number('Valor UF servicio mensual', 'Contrato_UF_Mensual', $x13, 1);
-					
+
 					//Solo para plataforma Intranet
 					if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){
 						$Form_Inputs->form_tittle(3, 'Servicios');
@@ -186,7 +186,7 @@ $arrHistorial = db_select_array (false, 'clientes_listado_historial_contratos.Cr
 </div>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
-	
+
 	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
 			<tbody>

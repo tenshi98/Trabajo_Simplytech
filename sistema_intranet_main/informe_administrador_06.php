@@ -52,7 +52,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'usuario_desc':  $order_by = 'ORDER BY usuario DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
 		case 'ip_asc':        $order_by = 'ORDER BY IP_Client ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> IP Ascendente';break;
 		case 'ip_desc':       $order_by = 'ORDER BY IP_Client DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> IP Descendente';break;
-		
+
 		default: $order_by = 'ORDER BY Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
@@ -97,7 +97,7 @@ array_push( $arrCarga,$row );
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
-	
+
 </div>
 <div class="clearfix"></div>
 
@@ -167,7 +167,7 @@ array_push( $arrCarga,$row );
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -178,7 +178,7 @@ array_push( $arrCarga,$row );
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){       $x1  = $Fecha;       }else{$x1  = '';}
@@ -190,9 +190,9 @@ array_push( $arrCarga,$row );
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 1);
 				$Form_Inputs->form_input_text('Usuario', 'usuario', $x2, 1);
 				$Form_Inputs->form_input_text('Direccion IP', 'IP_Client', $x3, 1);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
-				
+
 				?>
 	   
 				<div class="form-group">
@@ -203,7 +203,7 @@ array_push( $arrCarga,$row );
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

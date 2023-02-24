@@ -90,7 +90,7 @@ if(!empty($_GET['clone_idMatriz'])){
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['clone_idMatriz'], 2);
 				?>
 	   
@@ -143,7 +143,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -151,7 +151,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select('Tipo de Sensor','SensoresTipo', $rowdata['Sensor'], 2, 'idSensores', 'Nombre', 'telemetria_listado_sensores', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Valor a Alcanzar','SensoresValor', Cantidades_decimales_justos($rowdata['Valor']), 2);
 				$Form_Inputs->form_select_n_auto('N° Sensor Revisado','SensoresNumero', $rowdata['SensoresNumero'], 2, 1, 72);
-				
+
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz'], 2);
 				$Form_Inputs->form_input_hidden('mod', $_GET['mod'], 2);
 				?>
@@ -299,7 +299,7 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -308,7 +308,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){      $x1  = $Nombre;       }else{$x1  = $rowdata['Nombre'];}
@@ -341,7 +341,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 //verifico que sea un administrador
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -352,7 +352,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){      $x1  = $Nombre;       }else{$x1  = '';}
@@ -362,8 +362,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_select_n_auto('N° Puntos Revision','cantPuntos', $x2, 2, 1, 72);
-				
-					
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
@@ -400,7 +399,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'puntos_desc':  $order_by = 'telemetria_mantencion_matriz.cantPuntos DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Puntos Descendente';break;
 		case 'estado_asc':   $order_by = 'core_estados.Nombre ASC ';                        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
 		case 'estado_desc':  $order_by = 'core_estados.Nombre DESC ';                       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		
+
 		default: $order_by = 'telemetria_mantencion_matriz.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
@@ -444,7 +443,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'telemetria_mantencion_matriz',
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Matriz</a><?php }?>
 
 </div>
@@ -462,10 +461,10 @@ $arrMatriz = db_select_array (false, $SIS_query, 'telemetria_mantencion_matriz',
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
 				$Form_Inputs->form_select('Estado','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

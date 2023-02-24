@@ -111,13 +111,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 2);
 				$Form_Inputs->form_select('Utilizable','idUtilizable', $x3, 2, 'idUtilizable', 'Nombre', 'core_estado_utilizable', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x4, 1, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Tareas x Contrato', 'Cantidad', $x5, 1);
 				$Form_Inputs->form_time('Tiempo Programado','TiempoProgramado', $x6, 1, 1);
 				$Form_Inputs->form_select('Tipo Trabajo','idTrabajo', $x7, 1, 'idTrabajo', 'Nombre', 'core_licitacion_trabajos', 0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_number('Valor', 'Valor', $x8, 1);
 				echo '<div class="form-group" id="div_ValorTotal">
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Valor Total</label>
@@ -125,8 +124,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<input value="'.$x9.'" type="text" placeholder="Valor Total" class="form-control"  name="Total" id="Total" disabled >
 					</div>
 				</div>';
-				
-				
+
 				$Form_Inputs->form_input_hidden('ValorTotal', $x9, 1);
 				$Form_Inputs->form_input_hidden('idLevel_'.$_GET['lvl'], $_GET['edit'], 1);
 				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
@@ -257,7 +255,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</div>
 	</div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
@@ -290,13 +288,12 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 2);
 				$Form_Inputs->form_select('Utilizable','idUtilizable', $x3, 2, 'idUtilizable', 'Nombre', 'core_estado_utilizable', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x4, 1, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Tareas x Contrato', 'Cantidad', $x5, 1);
 				$Form_Inputs->form_time('Tiempo Programado','TiempoProgramado', $x6, 1, 1);
 				$Form_Inputs->form_select('Tipo Trabajo','idTrabajo', $x7, 1, 'idTrabajo', 'Nombre', 'core_licitacion_trabajos', 0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_number('Valor', 'Valor', $x8, 1);
 				echo '<div class="form-group" id="div_ValorTotal">
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Valor Total</label>
@@ -304,12 +301,12 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 						<input value="'.$x9.'" type="text" placeholder="Valor Total" class="form-control"  name="Total" id="Total" disabled >
 					</div>
 				</div>';
-				
+
 				$Form_Inputs->form_input_hidden('ValorTotal', $x9, 1);
 				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idLicitacion', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
-				
+
 				?>
 				
 					

@@ -399,7 +399,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'fmod_desc':     $order_by = 'prospectos_listado.FModificacion DESC, prospectos_listado.HModificacion DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Modificacion Descendente';break;
 		case 'tab_asc':       $order_by = 'prospectos_listado.idTab_1 ASC ';                                                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Unidad de Negocio Ascendente';break;
 		case 'tab_desc':      $order_by = 'prospectos_listado.idTab_1 DESC ';                                                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Unidad de Negocio Descendente';break;
-		
+
 		default: $order_by = 'prospectos_listado.idEstado ASC, prospectos_listado.FModificacion DESC, prospectos_listado.HModificacion DESC, prospectos_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
@@ -507,7 +507,7 @@ foreach ($arrTabs as $tab) {
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Prospecto</a><?php }?>
 
 </div>
@@ -567,7 +567,7 @@ foreach ($arrTabs as $tab) {
 				
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

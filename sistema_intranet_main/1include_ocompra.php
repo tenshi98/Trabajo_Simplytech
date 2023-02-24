@@ -262,7 +262,7 @@ foreach ($arrHistorial as $doc){
 <?php } ?>
 		
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
@@ -420,7 +420,7 @@ foreach ($arrHistorial as $doc){
 </section>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
-	
+
 	<table id="items">
         <tbody>
 			<tr><th colspan="3">Historial</th></tr>

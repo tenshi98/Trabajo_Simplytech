@@ -59,7 +59,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SI
 ?>
 
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">

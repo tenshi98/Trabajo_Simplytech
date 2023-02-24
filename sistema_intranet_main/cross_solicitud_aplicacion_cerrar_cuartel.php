@@ -57,7 +57,7 @@ if(!empty($_GET['addDetalle'])){?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Observacion)){      $x1  = $Observacion;        }else{$x1  = '';}
@@ -65,14 +65,13 @@ if(!empty($_GET['addDetalle'])){?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Observacion','Observacion', $x1, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
 				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_add_detalle"> 
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -94,7 +93,7 @@ if(!empty($_GET['addDetalle'])){?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_cierre)){          $x1  = $f_cierre;         }else{$x1  = '';}
@@ -112,13 +111,13 @@ if(!empty($_GET['addDetalle'])){?>
 				$Form_Inputs->form_input_number_spinner('Vel. Promedio Tractor Km/hr','VelPromedio', $x4, 0, 50, '0.1', 1, 1);
 				$Form_Inputs->form_input_number_spinner('Litros Aplicados','LitrosAplicados', $x5, 0, 50000, '0.1', 1, 1);
 				//$Form_Inputs->form_time('Tiempo de Aplicacion','T_Aplicacion', $x6, 1, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idCuarteles', $_GET['lock_cuartel'], 2);
 				$Form_Inputs->form_input_hidden('f_ejecucion', $_GET['f_ejecucion'], 2);
 				$Form_Inputs->form_input_hidden('f_ejecucion_fin', $_GET['f_ejecucion_fin'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
-				
+
 				<script>
 					document.getElementById('div_GeoDistance').style.display = 'none';
 					document.getElementById('div_VelPromedio').style.display = 'none';
@@ -129,7 +128,7 @@ if(!empty($_GET['addDetalle'])){?>
 						let idEjecucion = $(this).val(); //Asignamos el valor seleccionado
 					
 						//No ejecutado
-						if(idEjecucion == 1){ 
+						if(idEjecucion == 1){
 							document.getElementById('div_GeoDistance').style.display = '';
 							document.getElementById('div_VelPromedio').style.display = '';
 							document.getElementById('div_LitrosAplicados').style.display = '';
@@ -150,7 +149,7 @@ if(!empty($_GET['addDetalle'])){?>
 					});
 
 				</script>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_close_cuartel"> 
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -212,7 +211,7 @@ $arrHistorial = array();
 $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrHistorial');
 
 ?>
- 
+
 <div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive" style="margin-bottom:30px">
 
 	<div id="page-wrap">
@@ -220,12 +219,12 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 		
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="8">Detalle</th>
 					<th width="160">Acciones</th>
 				</tr>
-				
+
 				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
 					<td><strong>Cuarteles</strong></td>
@@ -281,7 +280,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 	<div id="page-wrap">
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
-				
+
 				<tr class="invoice-total" bgcolor="#f1f1f1">
 					<th colspan="8">Detalles</th>
 					<th width="160"><a href="<?php echo $location.'&idEstado='.$row_data['idEstado'].'&addDetalle=true' ?>" title="Agregar Detalle" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Detalle</a></th>
@@ -292,7 +291,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					<th width="260">Usuario</th>
 					<th colspan="6">Observacion</th>
 				</tr>
-				
+
 				<?php foreach ($arrHistorial as $doc){?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>

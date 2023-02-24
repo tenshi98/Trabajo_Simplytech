@@ -85,11 +85,11 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listad
 				$Form_Inputs->form_time('Hora Inicio','HoraEntrada', $x2, 2, 2);
 				$Form_Inputs->form_time('Hora Termino','HoraTerminoProgramada', $x3, 2, 2);
 				$Form_Inputs->form_select('Estado','idEstado', $x4, 2, 'idEstado', 'Nombre', 'core_estado_nomina_asistencia', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idNomina', $_GET['editPersona'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_persona"> 
 					<a href="<?php echo $location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -119,7 +119,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idEstado)){ $x1  = $idEstado;  }else{$x1  = $row_data['idEstado'];}
@@ -127,7 +127,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Estado','idEstado', $x1, 1, 'idEstado', 'Nombre', 'core_estado_caja', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idAcceso', $_GET['id'], 2);
 				?>
 
@@ -266,12 +266,12 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
 				</tr>
-				
+
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Personas a Ingresar</td>
 					<td></td>
@@ -322,7 +322,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 					</tr>
 					 
 				 <?php 
-				$numeral++;	
+				$numeral++;
 				}
 			}?>
 
@@ -362,7 +362,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'persona_desc':          $order_by = 'seguridad_accesos_nominas.PersonaReunion DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Persona de Reunion Descendente';break;
 		case 'estado_asc':            $order_by = 'core_estado_caja.Nombre ASC ';                                $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
 		case 'estado_desc':           $order_by = 'core_estado_caja.Nombre DESC ';                               $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		
+
 		default: $order_by = 'seguridad_accesos_nominas.FechaProgramada DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> FechaProgramada Descendente';
 	}
 }else{
@@ -494,7 +494,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 					
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

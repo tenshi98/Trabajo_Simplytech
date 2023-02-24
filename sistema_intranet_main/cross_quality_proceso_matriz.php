@@ -99,7 +99,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['clone_idMatriz'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -144,20 +144,20 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Parametro','PuntoidGrupo', $rowdata['Grupo'], 1, 'idGrupo', 'Nombre', 'cross_quality_proceso_matriz_grupos', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombre', 'PuntoNombre', $rowdata['Nombre'], 1);
 				$Form_Inputs->form_select('Tipo','PuntoidTipo', $rowdata['Tipo'], 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_number('Aceptable','PuntoMedAceptable', Cantidades_decimales_justos($rowdata['Aceptable']), 1);
 				$Form_Inputs->form_input_number('Alerta','PuntoMedAlerta', Cantidades_decimales_justos($rowdata['Alerta']), 1);
 				$Form_Inputs->form_input_number('Condenatorio','PuntoMedCondenatorio', Cantidades_decimales_justos($rowdata['Condenatorio']), 1);
 				$Form_Inputs->form_select('Unidad de Medida','PuntoUniMed', $rowdata['UniMed'], 1, 'idUml', 'Nombre', 'sistema_cross_analisis_uml', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Datos a Validar', 'Validar', $rowdata['Validar'], 1);
-				
+
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz'], 2);
 				$Form_Inputs->form_input_hidden('mod', $_GET['mod'], 2);
 				?>
@@ -180,7 +180,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 							document.getElementById('div_PuntoMedCondenatorio').style.display = '';
 							document.getElementById('div_PuntoUniMed').style.display = '';
 						//si es Medicion (Decimal) sin parametros limitantes
-						}else if(Sensores_val == 2){ 
+						}else if(Sensores_val == 2){
 							document.getElementById('div_PuntoMedAceptable').style.display = 'none';
 							document.getElementById('div_PuntoMedAlerta').style.display = 'none';
 							document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
@@ -190,13 +190,13 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 							document.getElementById('PuntoMedAlerta').value = "0";
 							document.getElementById('PuntoMedCondenatorio').value = "0";
 						//si es Medicion (Enteros) con parametros limitantes
-						}else if(Sensores_val == 3){ 
+						}else if(Sensores_val == 3){
 							document.getElementById('div_PuntoMedAceptable').style.display = '';
 							document.getElementById('div_PuntoMedAlerta').style.display = '';
 							document.getElementById('div_PuntoMedCondenatorio').style.display = '';
 							document.getElementById('div_PuntoUniMed').style.display = '';
 						//si es Medicion (Enteros) sin parametros limitantes
-						}else if(Sensores_val == 4){ 
+						}else if(Sensores_val == 4){
 							document.getElementById('div_PuntoMedAceptable').style.display = 'none';
 							document.getElementById('div_PuntoMedAlerta').style.display = 'none';
 							document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
@@ -206,7 +206,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 							document.getElementById('PuntoMedAlerta').value = "0";
 							document.getElementById('PuntoMedCondenatorio').value = "0";
 						//si es Texto Libre con Validacion
-						}else if(Sensores_val == 11){ 
+						}else if(Sensores_val == 11){
 							document.getElementById('div_Validar').style.display = '';
 							document.getElementById('div_PuntoUniMed').style.display = 'none';
 						//para el resto
@@ -236,7 +236,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 							document.getElementById('div_PuntoMedCondenatorio').style.display = '';
 							document.getElementById('div_PuntoUniMed').style.display = '';
 						//si es Medicion (Decimal) sin parametros limitantes
-						}else if(modelSelected1 == 2){ 
+						}else if(modelSelected1 == 2){
 							document.getElementById('div_PuntoMedAceptable').style.display = 'none';
 							document.getElementById('div_PuntoMedAlerta').style.display = 'none';
 							document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
@@ -246,13 +246,13 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 							document.getElementById('PuntoMedAlerta').value = "0";
 							document.getElementById('PuntoMedCondenatorio').value = "0";
 						//si es Medicion (Enteros) con parametros limitantes
-						}else if(modelSelected1 == 3){ 
+						}else if(modelSelected1 == 3){
 							document.getElementById('div_PuntoMedAceptable').style.display = '';
 							document.getElementById('div_PuntoMedAlerta').style.display = '';
 							document.getElementById('div_PuntoMedCondenatorio').style.display = '';
 							document.getElementById('div_PuntoUniMed').style.display = '';
 						//si es Medicion (Enteros) sin parametros limitantes
-						}else if(modelSelected1 == 4){ 
+						}else if(modelSelected1 == 4){
 							document.getElementById('div_PuntoMedAceptable').style.display = 'none';
 							document.getElementById('div_PuntoMedAlerta').style.display = 'none';
 							document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
@@ -262,7 +262,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 							document.getElementById('PuntoMedAlerta').value = "0";
 							document.getElementById('PuntoMedCondenatorio').value = "0";
 						//si es Texto Libre con Validacion
-						}else if(modelSelected1 == 11){ 
+						}else if(modelSelected1 == 11){
 							document.getElementById('div_Validar').style.display = '';
 							document.getElementById('div_PuntoUniMed').style.display = 'none';
 						//para el resto
@@ -283,7 +283,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 							
 							
 				</script>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_2">
 					<a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -467,7 +467,7 @@ $SIS_where = 'idMatriz ='.$_GET['idMatriz_2'];
 $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -476,7 +476,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){       $x1  = $Nombre;       }else{$x1  = $rowdata['Nombre'];}
@@ -499,25 +499,24 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 				$Form_Inputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 2, 1, 100);
 				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x3, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Estado','idEstado', $x4, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_select('Nota Calidad','idNota_1', $x5, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo Nota Calidad','idNotaTipo_1', $x6, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);
 				$Form_Inputs->form_input_text('Datos a Validar', 'Validar_1', $x7, 1);
-				
+
 				$Form_Inputs->form_select('Nota Condicion','idNota_2', $x8, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo Nota Condicion','idNotaTipo_2', $x9, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);
 				$Form_Inputs->form_input_text('Datos a Validar', 'Validar_2', $x10, 1);
-				
+
 				$Form_Inputs->form_select('Calificacion','idNota_3', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo Calificacion','idNotaTipo_3', $x12, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);
 				$Form_Inputs->form_input_text('Datos a Validar', 'Validar_3', $x13, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz_2'], 2);
 				?>
-				
+
 				<script>
 					document.getElementById('div_idNotaTipo_1').style.display = 'none';
 					document.getElementById('div_idNotaTipo_2').style.display = 'none';
@@ -538,10 +537,10 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 						
 						/******************************************************************/
 						//si la opcion esta activa
-						if(Sensores_val_1 == 1){ 
+						if(Sensores_val_1 == 1){
 							document.getElementById('div_idNotaTipo_1').style.display = '';				
 						//si la opcion esta inactiva
-						}else if(Sensores_val_1 == 2){ 
+						}else if(Sensores_val_1 == 2){
 							document.getElementById('div_idNotaTipo_1').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_1').selectedIndex = 0;
@@ -553,10 +552,10 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 						}
 						/******************************************************************/
 						//si la opcion esta activa
-						if(Sensores_val_2 == 1){ 
+						if(Sensores_val_2 == 1){
 							document.getElementById('div_idNotaTipo_2').style.display = '';				
 						//si la opcion esta inactiva
-						}else if(Sensores_val_2 == 2){ 
+						}else if(Sensores_val_2 == 2){
 							document.getElementById('div_idNotaTipo_2').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_2').selectedIndex = 0;
@@ -568,10 +567,10 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 						}
 						/******************************************************************/
 						//si la opcion esta activa
-						if(Sensores_val_3 == 1){ 
+						if(Sensores_val_3 == 1){
 							document.getElementById('div_idNotaTipo_3').style.display = '';				
 						//si la opcion esta inactiva
-						}else if(Sensores_val_3 == 2){ 
+						}else if(Sensores_val_3 == 2){
 							document.getElementById('div_idNotaTipo_3').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_3').selectedIndex = 0;
@@ -584,7 +583,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 
 						/******************************************************************/
 						//Texto Libre con Validacion
-						if(Sensores_tipo_1 == 11){ 
+						if(Sensores_tipo_1 == 11){
 							document.getElementById('div_Validar_1').style.display = '';				
 						//para el resto
 						} else {
@@ -594,7 +593,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 						}
 						/******************************************************************/
 						//Texto Libre con Validacion
-						if(Sensores_tipo_2 == 11){ 
+						if(Sensores_tipo_2 == 11){
 							document.getElementById('div_Validar_2').style.display = '';				
 						//para el resto
 						} else {
@@ -604,7 +603,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 						}
 						/******************************************************************/
 						//Texto Libre con Validacion
-						if(Sensores_tipo_3 == 11){ 
+						if(Sensores_tipo_3 == 11){
 							document.getElementById('div_Validar_3').style.display = '';				
 						//para el resto
 						} else {
@@ -620,10 +619,10 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 						let modelSelected_1 = $(this).val(); //Asignamos el valor seleccionado
 						
 						//si la opcion esta activa
-						if(modelSelected_1 == 1){ 
+						if(modelSelected_1 == 1){
 							document.getElementById('div_idNotaTipo_1').style.display = '';
 						//si la opcion esta inactiva
-						}else if(modelSelected_1 == 2){ 
+						}else if(modelSelected_1 == 2){
 							document.getElementById('div_idNotaTipo_1').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_1').selectedIndex = 0;
@@ -639,10 +638,10 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 						let modelSelected_2 = $(this).val(); //Asignamos el valor seleccionado
 						
 						//si la opcion esta activa
-						if(modelSelected_2 == 1){ 
+						if(modelSelected_2 == 1){
 							document.getElementById('div_idNotaTipo_2').style.display = '';
 						//si la opcion esta inactiva
-						}else if(modelSelected_2 == 2){ 
+						}else if(modelSelected_2 == 2){
 							document.getElementById('div_idNotaTipo_2').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_2').selectedIndex = 0;	
@@ -658,10 +657,10 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 						let modelSelected_3 = $(this).val(); //Asignamos el valor seleccionado
 						
 						//si la opcion esta activa
-						if(modelSelected_3 == 1){ 
+						if(modelSelected_3 == 1){
 							document.getElementById('div_idNotaTipo_3').style.display = '';
 						//si la opcion esta inactiva
-						}else if(modelSelected_3 == 2){ 
+						}else if(modelSelected_3 == 2){
 							document.getElementById('div_idNotaTipo_3').style.display = 'none';
 							//Reseteo los valores a 0
 							document.getElementById('idNotaTipo_3').selectedIndex = 0;
@@ -677,7 +676,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 					$("#idNotaTipo_1").on("change", function(){ //se ejecuta al cambiar valor del select
 						let Sensores_tipo_1 = $(this).val(); //Asignamos el valor seleccionado
 						//Texto Libre con Validacion
-						if(Sensores_tipo_1 == 11){ 
+						if(Sensores_tipo_1 == 11){
 							document.getElementById('div_Validar_1').style.display = '';				
 						//para el resto
 						} else {
@@ -690,7 +689,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 					$("#idNotaTipo_2").on("change", function(){ //se ejecuta al cambiar valor del select
 						let Sensores_tipo_2 = $(this).val(); //Asignamos el valor seleccionado
 						//Texto Libre con Validacion
-						if(Sensores_tipo_2 == 11){ 
+						if(Sensores_tipo_2 == 11){
 							document.getElementById('div_Validar_2').style.display = '';				
 						//para el resto
 						} else {
@@ -703,7 +702,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 					$("#idNotaTipo_3").on("change", function(){ //se ejecuta al cambiar valor del select
 						let Sensores_tipo_3 = $(this).val(); //Asignamos el valor seleccionado
 						//Texto Libre con Validacion
-						if(Sensores_tipo_3 == 11){ 
+						if(Sensores_tipo_3 == 11){
 							document.getElementById('div_Validar_3').style.display = '';				
 						//para el resto
 						} else {
@@ -743,7 +742,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){      $x1  = $Nombre;       }else{$x1  = '';}
@@ -755,8 +754,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 2, 1, 100);
 				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x3, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
@@ -804,7 +802,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'ops3_desc':     $order_by = 'ops3.Nombre DESC ';                                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Opciones 3 Descendente';break;
 		case 'planilla_asc':  $order_by = 'core_cross_quality_analisis_calidad.Nombre ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Planilla Ascendente'; break;
 		case 'planilla_desc': $order_by = 'core_cross_quality_analisis_calidad.Nombre DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Planilla Descendente';break;
-		
+
 		default: $order_by = 'cross_quality_proceso_matriz.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
@@ -863,7 +861,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_proceso_matriz',
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Tipo Planilla</a><?php } ?>
 
 </div>
@@ -889,10 +887,10 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_proceso_matriz',
 				$Form_Inputs->form_select('Nota Calidad','idNota_1', $x4, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_select('Nota Condicion','idNota_2', $x5, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_select('Calificacion','idNota_3', $x6, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

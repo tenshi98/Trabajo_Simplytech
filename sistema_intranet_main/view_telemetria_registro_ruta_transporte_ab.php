@@ -95,7 +95,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$Temp_1 .= "'".Fecha_estandar($med['FechaSistema'])." ".$med['HoraSistema']."',";
 			
 			if(isset($arrData[4]['Value'])&&$arrData[4]['Value']!=''){$arrData[4]['Value'] .= ", ".$med['GeoVelocidad'];   }else{ $arrData[4]['Value'] = $med['GeoVelocidad'];}
-			
+
 		}
 		//Si hay mediciones de velocidad
 		if($VelCount!=0){$VelProm = $VelSum/$VelCount;}
@@ -529,8 +529,7 @@ if (validarNumero($_GET['view'])){
 				$Form_Inputs->form_time('Hora Inicio','h_inicio', $x2, 1, 1);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x3, 2);
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 1, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idTelemetria', $X_Puntero, 2);
 				?>
 

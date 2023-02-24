@@ -88,9 +88,9 @@ $arrArchivo = array();
 $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrArchivo');
 
 ?>
-	
+
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
@@ -114,7 +114,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 				if(isset($row_data['UbicacionLVL_4'])&&$row_data['UbicacionLVL_4']!=''){echo ' - '.$row_data['UbicacionLVL_4'];}
 				if(isset($row_data['UbicacionLVL_5'])&&$row_data['UbicacionLVL_5']!=''){echo ' - '.$row_data['UbicacionLVL_5'];}
 				?>
-				
+
 				<br/>
 				<strong>Persona Reunion:</strong> <?php echo $row_data['PersonaReunion']; ?><br/>
 				<strong>Estado:</strong> <?php echo $row_data['Estado']; ?><br/>
@@ -157,7 +157,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 			</table>
 		</div>
 	</div>
-	
+
 	<?php
 	$zz  = '?idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual());
 	$zz .= '&view='.$_GET['view'];
@@ -178,7 +178,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 </section>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
-	
+
 	<?php if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
@@ -227,7 +227,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		
 	<?php }
 } ?>
- 
+
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

@@ -355,7 +355,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 										 'Comuna','idComuna', $x4, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 1,'fa fa-map');
-				
+
 				$Form_Inputs->form_input_hidden('Config_idTheme', 1, 2);
 				$Form_Inputs->form_input_hidden('idOpcionesGen_1', 1, 2);
 				$Form_Inputs->form_input_hidden('idOpcionesGen_2', 1, 2);
@@ -370,7 +370,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_hidden('idConfigRam', 9, 2);
 				$Form_Inputs->form_input_hidden('idConfigTime', 13, 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
-				
+
 				?>
 	 
 				<div class="form-group">
@@ -402,7 +402,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'nombre_desc':  $order_by = 'core_sistemas.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
 		case 'estado_asc':   $order_by = 'core_estados.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
 		case 'estado_desc':  $order_by = 'core_estados.Nombre DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		
+
 		default: $order_by = 'core_sistemas.idEstado ASC, core_sistemas.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
@@ -461,10 +461,10 @@ $arrUsers = db_select_array (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x1, 1);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x2, 1);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

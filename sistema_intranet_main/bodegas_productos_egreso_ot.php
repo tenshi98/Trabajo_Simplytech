@@ -51,7 +51,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'fecha_desc':   $order_by = 'bodegas_productos_facturacion.Creacion_fecha DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
 		case 'ot_asc':       $order_by = 'bodegas_productos_facturacion.idOT ASC ';              $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> OT Ascendente';break;
 		case 'ot_desc':      $order_by = 'bodegas_productos_facturacion.idOT DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> OT Descendente';break;
-		
+
 		default: $order_by = 'bodegas_productos_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{

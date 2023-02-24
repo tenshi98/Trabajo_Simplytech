@@ -81,7 +81,7 @@ require_once '0_validate_user_1.php';
 				$Mes       = fecha2NMes($Fecha);
 				$Dia       = fecha2NdiaMes($Fecha);
 				$N_Semana  = fecha2NSemana($Fecha);
-				
+
 			}else{
 				$error['Fecha']       = 'error/No ha ingresado la fecha';
 			}
@@ -133,7 +133,7 @@ require_once '0_validate_user_1.php';
 				$Mes       = fecha2NMes($Fecha);
 				$Dia       = fecha2NdiaMes($Fecha);
 				$N_Semana  = fecha2NSemana($Fecha);
-				
+
 			}else{
 				$error['Fecha']       = 'error/No ha ingresado la fecha';
 			}

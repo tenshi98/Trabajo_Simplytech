@@ -182,7 +182,7 @@ require_once 'core/Web.Header.Main.php';
 				echo GraphPie_1('graphPie_1', 'Normal', $Graphics_values,$Graphics_labels,$Graphics_width,$Graphics_height, 1,0);
 				echo GraphPie_1('graphPie_2', 'Valores fuera', $Graphics_values,$Graphics_labels,$Graphics_width,$Graphics_height, 2,1);
 				echo GraphPie_1('graphPie_3', 'Donut Chart', $Graphics_values,$Graphics_labels,$Graphics_width,$Graphics_height, 3,0);
-				
+
 				?>
 			</div>
 

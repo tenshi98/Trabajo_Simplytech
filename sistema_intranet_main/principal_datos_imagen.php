@@ -106,7 +106,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 						<a href="<?php echo $location.'&id_usuario='.$_SESSION['usuario']['basic_data']['idUsuario'].'&del_img=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
 					</div>
 					<div class="clearfix"></div>
-				
+
 				<?php }else{ ?>
 
 					<link rel="stylesheet" href="<?php echo DB_SITE_REPO ?>/LIBS_js/upload_and_crop_image/croppie.css">

@@ -90,7 +90,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){       $x1 = $Fecha;       }else{$x1 = $rowdata['Fecha'];}
@@ -100,7 +100,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
 				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x2, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idLog', $_GET['id'], 2);
 				?>
 
@@ -131,7 +131,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){       $x1 = $Fecha;       }else{$x1 = '';}
@@ -193,7 +193,7 @@ $arrBloqueo = db_select_array (false, $SIS_query, 'seg_vecinal_actualizaciones',
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default">Fecha Descendente</li>	
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Actualizacion</a><?php }?>
 
 </div>
@@ -209,10 +209,10 @@ $arrBloqueo = db_select_array (false, $SIS_query, 'seg_vecinal_actualizaciones',
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 1);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

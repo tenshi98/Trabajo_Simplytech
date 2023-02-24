@@ -104,7 +104,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Boleta de Honorarios b
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['addFile'])){ ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -160,9 +160,9 @@ if(!empty($_GET['addFile'])){ ?>
 				}
 				
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['boleta_ing_servicios'][$_GET['editOtros']]['idServicio'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_servicios"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -197,7 +197,7 @@ if(!empty($_GET['addFile'])){ ?>
 				
 
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_servicios"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -223,7 +223,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){       $x1  = $idTrabajador;     }else{$x1  = $_SESSION['boleta_ing_basicos']['idTrabajador'];}
@@ -327,12 +327,12 @@ $Form_Inputs = new Inputs();
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
 				</tr>
-				
+
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Servicios a Ingresar</td>
 					<td><a href="<?php echo $location.'&addServicio=true' ?>" title="Agregar Servicio" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Servicio</a></td>
@@ -429,7 +429,7 @@ $Form_Inputs = new Inputs();
 					</tr>
 					 
 				 <?php 
-				$numeral++;	
+				$numeral++;
 				}
 			}?>
 
@@ -459,7 +459,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){       $x1  = $idTrabajador;     }else{$x1  = '';}
@@ -475,7 +475,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x3, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
 				$Form_Inputs->form_input_number('Numero Orden Compra', 'idOcompra', $x5, 1);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -484,7 +484,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 						
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -496,7 +496,6 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Se inicializa el paginador de resultados
@@ -518,7 +517,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'doc_desc':        $order_by = 'boleta_honorarios_facturacion.N_Doc DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Documento Descendente';break;
 		case 'valor_asc':       $order_by = 'boleta_honorarios_facturacion.ValorTotal ASC ';          $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Valor Ascendente';break;
 		case 'valor_desc':      $order_by = 'boleta_honorarios_facturacion.ValorTotal DESC ';         $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Valor Descendente';break;
-		
+
 		default: $order_by = 'boleta_honorarios_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
@@ -569,7 +568,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'boleta_honorarios_facturacion', 
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){ ?>
 		<?php if (isset($_SESSION['boleta_ing_basicos']['idTrabajador'])&&$_SESSION['boleta_ing_basicos']['idTrabajador']!=''){?>
 			
@@ -600,11 +599,10 @@ $arrTipo = db_select_array (false, $SIS_query, 'boleta_honorarios_facturacion', 
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
 				$Form_Inputs->form_input_number('Numero de Documento', 'N_Doc', $x2, 1);
 				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x3, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

@@ -224,7 +224,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idMaquina) && $idMaquina!=''){ 
 					// consulto los datos
 					$rowMaquina = db_select_data (false, 'maquinas_listado.Nombre AS NombreMaquina, clientes_listado.Nombre AS NombreCliente', 'maquinas_listado', 'LEFT JOIN `clientes_listado` ON clientes_listado.idCliente = maquinas_listado.idCliente', 'maquinas_listado.idMaquina='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//se guarda dato
 					$_SESSION['ot_basicos']['NombreMaquina'] = $rowMaquina['NombreMaquina'];
 					$_SESSION['ot_basicos']['NombreCliente'] = $rowMaquina['NombreCliente'];
@@ -236,7 +236,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idPrioridad) && $idPrioridad!=''){
 					// consulto los datos
 					$rowPrioridad = db_select_data (false, 'Nombre', 'core_ot_prioridad', '', 'idPrioridad='.$idPrioridad, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//se guarda dato
 					$_SESSION['ot_basicos']['Prioridad'] = $rowPrioridad['Nombre'];
 				}else{
@@ -246,7 +246,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idTipo) && $idTipo!=''){
 					// consulto los datos
 					$rowTipo = db_select_data (false, 'Nombre', 'core_ot_tipos', '', 'idTipo='.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//se guarda dato
 					$_SESSION['ot_basicos']['Tipo'] = $rowTipo['Nombre'];
 				}else{
@@ -256,7 +256,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idTrabajador) && $idTrabajador!=''){
 					// consulto los datos
 					$rowTrabajador = db_select_data (false, 'Nombre,ApellidoPat, ApellidoMat, Cargo, Rut', 'trabajadores_listado', '', 'idTrabajador ='.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//se guarda dato
 					$_SESSION['ot_trabajador'][$idTrabajador]['Trabajador']   = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
 					$_SESSION['ot_trabajador'][$idTrabajador]['Cargo']        = $rowTrabajador['Cargo'];
@@ -319,7 +319,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idMaquina) && $idMaquina!=''){ 
 					// consulto los datos
 					$rowMaquina = db_select_data (false, 'maquinas_listado.Nombre AS NombreMaquina, clientes_listado.Nombre AS NombreCliente', 'maquinas_listado', 'LEFT JOIN `clientes_listado` ON clientes_listado.idCliente = maquinas_listado.idCliente', 'maquinas_listado.idMaquina='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//se guarda dato
 					$_SESSION['ot_basicos']['NombreMaquina'] = $rowMaquina['NombreMaquina'];
 					$_SESSION['ot_basicos']['NombreCliente'] = $rowMaquina['NombreCliente'];
@@ -331,7 +331,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idPrioridad) && $idPrioridad!=''){
 					// consulto los datos
 					$rowPrioridad = db_select_data (false, 'Nombre', 'core_ot_prioridad', '', 'idPrioridad='.$idPrioridad, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//se guarda dato
 					$_SESSION['ot_basicos']['Prioridad'] = $rowPrioridad['Nombre'];
 				}else{
@@ -341,7 +341,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idTipo) && $idTipo!=''){
 					// consulto los datos
 					$rowTipo = db_select_data (false, 'Nombre', 'core_ot_tipos', '', 'idTipo='.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//se guarda dato
 					$_SESSION['ot_basicos']['Tipo'] = $rowTipo['Nombre'];
 				}else{
@@ -2355,7 +2355,7 @@ require_once '0_validate_user_1.php';
 				$total   = $trab['BodegaProdIngresos'] - $trab['BodegaProdEgresos'];
 				//condiciono el error
 				if($ingreso < $egreso){
-					$error['productos1'] = 'error/No hay suficientes '.$trab['NombreProducto'].', en bodega solo hay '.$total.' y necesitas '.$valor;	
+					$error['productos1'] = 'error/No hay suficientes '.$trab['NombreProducto'].', en bodega solo hay '.$total.' y necesitas '.$valor;
 				}
 			}
 			/*********************************************************************/

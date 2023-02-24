@@ -120,7 +120,7 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					//se consulta el correo de la empresa
 					$rowusr = db_select_data (false, 'Nombre,email_principal, core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, core_sistemas.Config_Gmail_Password AS Gmail_Password', 'core_sistemas','', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//si tiene la interfaz de crosstech
 					if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&($_SESSION['usuario']['basic_data']['idInterfaz']==7 OR $_SESSION['usuario']['basic_data']['idInterfaz']==6)){
 						//logo de la compañia

@@ -233,7 +233,7 @@ $html = '
 	</div>
 
 	<div class="row invoice-info">';
-		
+
 		//se verifica el tipo de movimiento
 		switch ($row_data['idTipo']) {
 			//Ingreso de Productos a bodega
@@ -256,7 +256,7 @@ $html = '
 						Giro de la Empresa: '.$row_data['GiroProveedor'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
@@ -330,7 +330,7 @@ $html = '
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
@@ -346,7 +346,7 @@ $html = '
 						Giro de la Empresa: '.$row_data['GiroCliente'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</strong><br/>
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
@@ -407,11 +407,11 @@ $html = '
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>';
@@ -441,11 +441,11 @@ $html = '
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>
@@ -476,11 +476,11 @@ $html = '
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>
@@ -554,11 +554,11 @@ $html = '
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega utilizada:</strong> '.$row_data['BodegaDesde'].'<br/>
@@ -635,7 +635,7 @@ $html = '
 						Giro de la Empresa: '.$row_data['GiroProveedor'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
@@ -667,7 +667,7 @@ $html = '
 		}
 		
 	$html .= '</div>
-	
+
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<table class="table table-striped">

@@ -165,7 +165,7 @@ $zz .= '&view='.$_GET['view'];
 	</div>
 </div>
 <div class="clearfix"></div>
- 
+
 <?php if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 	if(isset($rowConso['idEstado'])&&$rowConso['idEstado']!=2){ ?>
 		<div class="col-xs-12" style="margin-top:15px;">

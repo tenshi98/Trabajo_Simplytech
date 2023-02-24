@@ -167,7 +167,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 						Fecha Ingreso: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					
 				</div>';
@@ -189,7 +189,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 						Fecha Egreso: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Trabajador
 					<address>
@@ -217,7 +217,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 						Fecha Rendicion: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Documento Relacionado
 					<address>
@@ -312,7 +312,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
 		</div>
 	</div>
-	
+
 	<?php 
 	//Egreso
 	if($row_data['idTipo']==2){?>
@@ -330,7 +330,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 fcont"><p>Aprobado Por:<br/><?php echo $row_data['AprobadoNombre'].' '.$row_data['AprobadoApellidoPat']; ?><br/>Firma</p></div> 
 		</div>
 	<?php } ?>
-	
+
 	<?php
 	$zz  = '?idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual());
 	$zz .= '&view='.$_GET['view'];
@@ -350,7 +350,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 </section>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
-	
+
 	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
 			<tbody>
@@ -372,7 +372,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 			</tbody>
 		</table>
 	<?php } ?>
-	
+
 	<?php if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
@@ -395,7 +395,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
     <?php } ?>
     
 </div>
- 
+
 <?php 
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){

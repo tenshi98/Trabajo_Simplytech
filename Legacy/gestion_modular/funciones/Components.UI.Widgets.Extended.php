@@ -8160,7 +8160,7 @@ function widget_Social( $Social_facebook,
 	$GPS .= '</div>';
 
 	return $GPS;
-}	
+}
 /*******************************************************************************************************************/
 //Muestra los widget sociales
 function widget_Ficha_1($bg_color, $icon, $porcentaje,

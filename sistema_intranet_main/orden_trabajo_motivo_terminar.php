@@ -83,7 +83,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Observaciones)){    $x1  = $Observaciones;    }else{$x1  = $rowdata['Observaciones'];}
@@ -91,13 +91,13 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Observacion Cierre','Observaciones', $x1, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['cerrar'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 3, 2);
 				$Form_Inputs->form_input_hidden('f_termino', fecha_actual(), 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf023; Cerrar" name="submit_cerrar"> 
 					<a href="<?php echo $location.'&submit_filter=Filtrar'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -108,7 +108,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</div>
 	</div>
 </div>
-	
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  } elseif(!empty($_GET['submit_filter'])){
 //Verifico el tipo de usuario que esta ingresando
@@ -195,7 +195,7 @@ array_push( $arrOTS,$row );
 						<td><?php echo n_doc($ot['idOT'], 8); ?></td>
 						<td><?php echo Fecha_estandar($ot['f_programacion']); ?></td>
 						<td>
-							<?php echo $ot['Ubicacion']; 
+							<?php echo $ot['Ubicacion'];
 							if(isset($ot['UbicacionLVL_1'])&&$ot['UbicacionLVL_1']!=''){echo ' - '.$ot['UbicacionLVL_1'];}
 							if(isset($ot['UbicacionLVL_2'])&&$ot['UbicacionLVL_2']!=''){echo ' - '.$ot['UbicacionLVL_2'];}
 							if(isset($ot['UbicacionLVL_3'])&&$ot['UbicacionLVL_3']!=''){echo ' - '.$ot['UbicacionLVL_3'];}
@@ -236,7 +236,7 @@ array_push( $arrOTS,$row );
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idOT)){                     $x0  = $idOT;                     }else{$x0  = '';}
@@ -277,7 +277,7 @@ array_push( $arrOTS,$row );
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

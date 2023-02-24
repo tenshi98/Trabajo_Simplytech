@@ -309,7 +309,7 @@ require_once '0_validate_user_1.php';
 				//En caso de que el mes sea enero, ponerlo como diciembre del año anterior
 				if($SIS_Fecha_Mes_anterior == 0){
 					$SIS_Fecha_Mes_anterior  = 12;
-					$SIS_Fecha_Ano           = $SIS_Fecha_Ano - 1;	
+					$SIS_Fecha_Ano           = $SIS_Fecha_Ano - 1;
 				}
 			
 				

@@ -241,7 +241,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		//variables
 		$y_counter = 0;
 		$x_counter = 0;
-		
+
 		//verifico la existencia de datos
 		for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
 			if($rutas['SensoresGrupo_'.$i]==$_GET['idGrupo']){	
@@ -266,7 +266,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							->setCellValue('B'.$nn, $rutas['HoraSistema']); 
 						
 				for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
-					if($rutas['SensoresGrupo_'.$i]==$_GET['idGrupo']){	
+					if($rutas['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 						if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]<99900){
 							$xdata=Cantidades_decimales_justos($rutas['SensorValue_'.$i]);
 							$spreadsheet->setActiveSheetIndex(0)
@@ -285,7 +285,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							->setCellValue('B'.$nn, $rutas['HoraSistema']); 
 						
 				for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
-					if($rutas['SensoresGrupo_'.$i]==$_GET['idGrupo']){	
+					if($rutas['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 						if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]<99900){
 							$xdata=Cantidades_decimales_justos($rutas['SensorValue_'.$i]);
 							$spreadsheet->setActiveSheetIndex(0)

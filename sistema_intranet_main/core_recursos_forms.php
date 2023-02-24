@@ -32,7 +32,7 @@ require_once 'core/Web.Header.Main.php';
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				$x1  = '';
@@ -148,7 +148,7 @@ require_once 'core/Web.Header.Main.php';
 				$Form_Inputs->form_post_data(2, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt' );
 				$Form_Inputs->form_post_data(3, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt' );
 				$Form_Inputs->form_post_data(4, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt' );
-						
+
 				$Form_Inputs->form_tittle(3, 'Inputs');
 				$Form_Inputs->form_input_text('Texto normal', 'form_input_text1', $x1, 1);
 				$Form_Inputs->form_input_text('Texto normal', 'form_input_text2', $x2, 2);
@@ -174,7 +174,7 @@ require_once 'core/Web.Header.Main.php';
 				$Form_Inputs->form_input_phone('telefono', 'form_input_phone2', $x22, 2);
 				$Form_Inputs->form_input_fax('fax', 'form_input_fax1', $x23, 1);
 				$Form_Inputs->form_input_fax('fax', 'form_input_fax2', $x24, 2);
-				
+
 				$Form_Inputs->form_tittle(3, 'Fecha - Hora');
 				$Form_Inputs->form_date('fecha','form_date1', $x25, 1);
 				$Form_Inputs->form_date('fecha','form_date2', $x26, 2);
@@ -182,25 +182,25 @@ require_once 'core/Web.Header.Main.php';
 				$Form_Inputs->form_time('hora','form_time2', $x28, 2, 2);
 				$Form_Inputs->form_time_popover('hora','form_time_popover1', $x29, 1, 1, 24);
 				$Form_Inputs->form_time_popover('hora','form_time_popover2', $x30, 2, 2, 24);
-				
+
 				$Form_Inputs->form_tittle(3, 'Otros');
 				$Form_Inputs->form_color_picker( 'color picker', 'form_input_color1', $x31, 1);
 				$Form_Inputs->form_color_picker( 'color picker', 'form_input_color2', $x32, 2);
-				
+
 				$Form_Inputs->form_tittle(3, 'Grandes Textos');
 				$Form_Inputs->form_textarea('texto', 'form_textarea1', $x33, 1);
 				$Form_Inputs->form_textarea('texto', 'form_textarea2', $x34, 2);
 				$Form_Inputs->form_ckeditor('ckeditor','form_ckeditor1', $x35, 1, 2);
 				$Form_Inputs->form_ckeditor('ckeditor','form_ckeditor2', $x36, 2, 2);
-				
+
 				$Form_Inputs->form_tittle(3, 'Subida Archivos');
 				$Form_Inputs->form_multiple_upload('Subir archivos','form_multiple_upload1', 1, '"jpg", "png", "gif", "jpeg"');
 				$Form_Inputs->form_multiple_upload('Subir archivos','form_multiple_upload2', 1, '"jpg", "png", "gif", "jpeg"');
-				
+
 				$Form_Inputs->form_tittle(3, 'Opciones');
 				$Form_Inputs->form_checkbox_active('opciones seleccionadas','form_checkbox_active1', $x39, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
 				$Form_Inputs->form_checkbox_active('opciones seleccionadas','form_checkbox_active2', $x40, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
-				
+
 				$Form_Inputs->form_tittle(3, 'Selects');
 				$Form_Inputs->form_select('form_select','form_select1', $x41, 1, 'idBodega', 'Nombre', 'bodegas_productos_listado', 0, '', $dbConn);
 				$Form_Inputs->form_select('form_select','form_select2', $x42, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', 0, '', $dbConn);

@@ -191,7 +191,7 @@ $SIS_where = 'idOT ='.$_GET['view'];
 $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
-	
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -208,7 +208,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','NombreArchivo', 15, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
@@ -273,7 +273,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idLicitacion)){     $x0  = $idLicitacion;     }else{$x0  = '';}
@@ -333,8 +333,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 										  'Nivel 24','idLevel_24',$x24 ,1,'idLevel_24','Nombre','licitacion_listado_level_24',0,0,
 										  $dbConn, 'form1');
 				$Form_Inputs->form_textarea('Observacion','Observacion', $x26, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
@@ -350,7 +349,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
 				$Form_Inputs->form_input_hidden('idEstadoTarea', 1, 2);
-				
+
 				?>
 			  
 				<div class="form-group">
@@ -398,7 +397,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idEstadoTarea)){    $x1  = $idEstadoTarea;   }else{$x1  = $rowdata['idEstadoTarea'];}
@@ -407,14 +406,13 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_post_data(1, 'Una vez marcada la tarea como <strong>realizada</strong> no se podran hacer mas modificaciones');
-				
+
 				$Form_Inputs->form_select('Estado Tarea','idEstadoTarea', $x1, 2, 'idEstadoTarea', 'Nombre', 'core_estado_ot_motivos_tareas', 0, '', $dbConn);
 				$Form_Inputs->form_textarea('Observacion','Observacion', $x2, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idTrabajoOT', $_GET['editTarea'], 2);
-				
+
 				?>
 			  
 				<div class="form-group">
@@ -468,7 +466,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
@@ -485,7 +483,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
@@ -503,11 +501,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 				}
 				?>
 				</script>
-				
+
 				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
@@ -553,7 +551,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_prod
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Cantidad)){  $x1  = $Cantidad; }else{$x1  = $rowdata['Cantidad'];}
@@ -566,7 +564,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_prod
 						<input type="text" value="'.$rowdata['Producto'].'" placeholder="Producto" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
-				
+
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x1, 2);
 				
 				echo '<div class="form-group" id="div_">
@@ -575,7 +573,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_prod
 						<input type="text" value="'.$rowdata['Unidad'].'" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idProductos', $_GET['edit_prod'], 2);
 					
@@ -634,7 +632,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
@@ -651,7 +649,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
@@ -669,11 +667,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 				}
 				?>
 				</script>
-				
+
 				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
@@ -719,7 +717,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_insu
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Cantidad)){   $x1  = $Cantidad;  }else{$x1  = $rowdata['Cantidad'];}
@@ -732,7 +730,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_insu
 						<input type="text" value="'.$rowdata['Producto'].'" placeholder="Insumo" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
-				
+
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x1, 2);
 				
 				echo '<div class="form-group" id="div_">
@@ -741,10 +739,10 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_insu
 						<input type="text" value="'.$rowdata['Unidad'].'" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idInsumos', $_GET['edit_ins'], 2);
-				
+
 				?>
 				
 			  
@@ -779,7 +777,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = '';}
@@ -788,7 +786,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador responsable','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $rowdata['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUbicacion', $rowdata['idUbicacion'], 2);
@@ -803,7 +801,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
-				
+
 				?>
 			  
 				<div class="form-group">
@@ -836,7 +834,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = $rowdata['idTrabajador'];}
@@ -844,7 +842,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador responsable','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idResponsable', $_GET['edit_trab'], 2);
 				?>
@@ -877,7 +875,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Observaciones)){    $x1  = $Observaciones;    }else{$x1  = $rowdata['Observaciones'];}
@@ -885,10 +883,10 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Observacion','Observaciones', $x1, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editObs"> 
 					<a href="<?php echo $location.'?view='.$_GET['view']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -1154,12 +1152,12 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
 				</tr>
-				
+
 				<?php /**********************************************************************************/?>
 					<tr class="item-row fact_tittle">
 						<td colspan="5">Trabajadores  <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Encargados';}else{echo 'Utilizados';}?></td>
@@ -1431,7 +1429,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'prioridad_desc':     $order_by = 'core_ot_prioridad.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Descendente';break;
 		case 'tipotrab_asc':       $order_by = 'core_ot_motivos_tipos.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Trabajo Ascendente'; break;
 		case 'tipotrab_desc':      $order_by = 'core_ot_motivos_tipos.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Trabajo Descendente';break;
-		
+
 		default: $order_by = 'orden_trabajo_tareas_listado.idEstado DESC, orden_trabajo_tareas_listado.f_programacion DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Ejecucion, Fecha Programacion Descendente';
 	}
 }else{
@@ -1535,7 +1533,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 				
 				
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
@@ -1610,7 +1608,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 						<td><?php echo Fecha_estandar($ot['f_programacion']); ?></td>
 						<td><?php echo $ot['NombreEstado']; ?></td>
 						<td>
-							<?php echo $ot['Ubicacion']; 
+							<?php echo $ot['Ubicacion'];
 							if(isset($ot['UbicacionLVL_1'])&&$ot['UbicacionLVL_1']!=''){echo ' - '.$ot['UbicacionLVL_1'];}
 							if(isset($ot['UbicacionLVL_2'])&&$ot['UbicacionLVL_2']!=''){echo ' - '.$ot['UbicacionLVL_2'];}
 							if(isset($ot['UbicacionLVL_3'])&&$ot['UbicacionLVL_3']!=''){echo ' - '.$ot['UbicacionLVL_3'];}

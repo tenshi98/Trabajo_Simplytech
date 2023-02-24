@@ -121,7 +121,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario!=''){
 					// consulto los datos
 					$rowUsuario = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario = '.$idUsuario, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//se guarda dato
 					$_SESSION['solicitud_basicos']['Usuario'] = $rowUsuario['Nombre'];
 				}else{
@@ -175,7 +175,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario!=''){
 					// consulto los datos
 					$rowUsuario = db_select_data (false, 'Nombre', 'usuarios_listado', '', 'idUsuario = '.$idUsuario, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//se guarda dato
 					$_SESSION['solicitud_basicos']['Usuario'] = $rowUsuario['Nombre'];
 				}else{
@@ -1093,7 +1093,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['ocompra_productos'][$prod['idProducto']]['Nombre']      = $prod['NombreProd'];
 					$_SESSION['ocompra_productos'][$prod['idProducto']]['vUnitario']   = $prod['Valor'];
 					$_SESSION['ocompra_productos'][$prod['idProducto']]['Frecuencia']  = $prod['Medida'];
-					
+
 					//cantidad y valor total
 					if(isset($_SESSION['ocompra_productos'][$prod['idProducto']]['Cantidad'])){
 						$_SESSION['ocompra_productos'][$prod['idProducto']]['Cantidad'] = $_SESSION['ocompra_productos'][$prod['idProducto']]['Cantidad'] + $prod['Cantidad'];
@@ -1113,7 +1113,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['ocompra_insumos'][$prod['idProducto']]['Nombre']      = $prod['NombreProd'];
 					$_SESSION['ocompra_insumos'][$prod['idProducto']]['vUnitario']   = $prod['Valor'];
 					$_SESSION['ocompra_insumos'][$prod['idProducto']]['Frecuencia']  = $prod['Medida'];
-					
+
 					//cantidad y valor total
 					if(isset($_SESSION['ocompra_insumos'][$prod['idProducto']]['Cantidad'])){
 						$_SESSION['ocompra_insumos'][$prod['idProducto']]['Cantidad'] = $_SESSION['ocompra_insumos'][$prod['idProducto']]['Cantidad'] + $prod['Cantidad'];
@@ -1133,7 +1133,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['ocompra_arriendos'][$prod['idEquipo']]['idFrecuencia']  = $prod['idFrecuencia'];
 					$_SESSION['ocompra_arriendos'][$prod['idEquipo']]['vUnitario']     = $prod['Valor'];
 					$_SESSION['ocompra_arriendos'][$prod['idEquipo']]['Frecuencia']    = $prod['Medida'];
-					
+
 					//cantidad y valor total
 					if(isset($_SESSION['ocompra_arriendos'][$prod['idEquipo']]['Cantidad'])){
 						$_SESSION['ocompra_arriendos'][$prod['idEquipo']]['Cantidad'] = $_SESSION['ocompra_arriendos'][$prod['idEquipo']]['Cantidad'] + $prod['Cantidad'];
@@ -1153,7 +1153,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['ocompra_servicios'][$prod['idServicio']]['idFrecuencia']  = $prod['idFrecuencia'];
 					$_SESSION['ocompra_servicios'][$prod['idServicio']]['vUnitario']     = $prod['Valor'];
 					$_SESSION['ocompra_servicios'][$prod['idServicio']]['Frecuencia']    = $prod['Medida'];
-					
+
 					//cantidad y valor total
 					if(isset($_SESSION['ocompra_servicios'][$prod['idServicio']]['Cantidad'])){
 						$_SESSION['ocompra_servicios'][$prod['idServicio']]['Cantidad'] = $_SESSION['ocompra_servicios'][$prod['idServicio']]['Cantidad'] + $prod['Cantidad'];

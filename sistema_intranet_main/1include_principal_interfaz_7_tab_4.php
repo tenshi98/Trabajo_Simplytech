@@ -4,7 +4,7 @@
 	.bs-callout {margin: 2px 0;}
 	.bs-callout .rounded-circle{border-radius: 50% !important;margin-left:2px;border: 1px solid #7F7F7F;}
 	</style>
-	
+
 	<?php
 	//Agrego el boton crear solo si se tiene acceso a la transaccion o es superadministrador
 	if($prm_x[1]['Val']=='1' OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1) {

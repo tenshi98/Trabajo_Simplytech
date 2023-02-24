@@ -155,11 +155,10 @@ $Form_Inputs = new Inputs();
 </div>
 <div class="clearfix"></div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //filtro por sistema
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -177,7 +176,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Facturacion','idFacturacion', $x1, 2, 'idFacturacion', 'Fecha', 'aguas_facturacion_listado', $z, 'ORDER BY Fecha DESC', $dbConn);
-				
+
 				?>
 				
 				

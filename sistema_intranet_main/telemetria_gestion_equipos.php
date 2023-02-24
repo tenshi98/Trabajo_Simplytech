@@ -165,7 +165,7 @@ foreach ($arrGrupos as $sen) {
 								</tr>
 								<tr class="odd" style="background-color: #CCCCCC;">		
 									<td>Grupo</td>	
-									<td colspan="2">Mediciones</td>		
+									<td colspan="2">Mediciones</td>
 								</tr>
 								
 								<?php
@@ -337,7 +337,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $original; ?>" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTelemetria)){     $x1  = $idTelemetria;      }else{$x1  = '';}
@@ -346,7 +346,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Ver" name="submit_filter">
 				</div>

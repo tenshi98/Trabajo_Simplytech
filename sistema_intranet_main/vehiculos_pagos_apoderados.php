@@ -122,7 +122,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 			
 		<ul class="list-group inbox-options">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
+
 				<li class="list-group-item"><i class="fa fa-inbox" aria-hidden="true"></i>  Pago</li>
 				<li class="list-group-item">		
 					<?php 
@@ -258,7 +258,7 @@ array_push( $arrFacturaciones,$row );
 		<hr>	
 	</div>
 </div>
- 
+
 <?php if(isset($rowFacturacion['MontoPactado'])&&$rowFacturacion['MontoPactado']!=''){?>
 	
 	
@@ -315,7 +315,7 @@ array_push( $arrFacturaciones,$row );
 						
 					
 				</li>
-				
+
 				<li class="list-group-item">
 					
 					<div class="pull-left">TOTAL A PAGAR</div>
@@ -334,7 +334,7 @@ array_push( $arrFacturaciones,$row );
 <?php } else{ ?>
 	<p class="bg-primary" style="padding: 10px;">Este cliente no registra ninguna deuda</p>
 <?php }  ?>
- 
+
 <div class="clearfix"></div>
 <?php if ($rowlevel['level']>=3){?>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
@@ -343,7 +343,7 @@ array_push( $arrFacturaciones,$row );
 		<?php } ?>
 		<a href="<?php echo $location; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 		<div class="clearfix"></div>
-	</div> 
+	</div>
 <?php } ?>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -351,7 +351,7 @@ array_push( $arrFacturaciones,$row );
 //filtro sistema
 $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 ?>
-	
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -360,7 +360,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location; ?>" id="form1" name="form1" novalidate >
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idApoderado)){        $x1  = $idApoderado;        }else{$x1  = '';}
@@ -368,10 +368,10 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Apoderado','idApoderado', $x1, 2, 'idApoderado', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'apoderados_listado', $z, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 2); 
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Buscar" name="submit">
 				</div>

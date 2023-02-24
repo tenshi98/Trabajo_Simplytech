@@ -84,7 +84,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idMaquina', $_GET['clone_idMaquina'], 2);
 				?>
 	   
@@ -278,7 +278,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			$Trabajo[$trab['idLicitacion']][$i][$trab['lvl']]['Nombre']  = $trab['Nombre'];
 			$Trabajo[$trab['idLicitacion']][$i][$trab['lvl']]['Codigo']  = $trab['Codigo'];
 		}
-		
+
 	}
 
 
@@ -307,7 +307,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			if(isset($key['LVL_'.$i.'_table'])&&$key['LVL_'.$i.'_table']!=''){        $y[$i]  = $key['LVL_'.$i.'_table'];}
 			if(isset($key['LVL_'.$i.'_table_value'])&&$key['LVL_'.$i.'_table_value']!=''){   $m[$i]  = $key['LVL_'.$i.'_table_value'];}
 			if(isset($key['LVL_'.$i.'_imagen'])&&$key['LVL_'.$i.'_imagen']!=''){      $t[$i]  = $key['LVL_'.$i.'_imagen'];}
-			
+
 		}
 		
 
@@ -805,7 +805,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				//if(isset($idCliente)){  $x1  = $idCliente;   }else{$x1  = '';}
@@ -817,8 +817,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				//$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 1);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x3, 2);
-				
-					
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
@@ -860,7 +859,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'nombre_desc':  $order_by = 'maquinas_listado.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Maquina Descendente';break;
 		case 'estado_asc':   $order_by = 'core_estados.Nombre ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
 		case 'estado_desc':  $order_by = 'core_estados.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		
+
 		default: $order_by = 'clientes_listado.Nombre ASC, maquinas_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Cliente, Nombre Ascendente';
 	}
 }else{
@@ -911,7 +910,7 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Maquina</a><?php }?>
 
 </div>
@@ -935,7 +934,7 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
 				
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

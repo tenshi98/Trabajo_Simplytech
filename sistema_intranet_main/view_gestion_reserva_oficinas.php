@@ -62,7 +62,7 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_reserva_oficinas', $SIS_j
 ?>
 
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">

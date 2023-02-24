@@ -792,7 +792,7 @@ $Form_Inputs = new Inputs();
 		</div>
 	</div> 
 <?php }else{ ?>
-	
+
 	<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0&&isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalDeuda!=0&&$TotalGeneral!=0){ ?>	
 		<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 
@@ -862,7 +862,7 @@ $Form_Inputs = new Inputs();
 				$('#submitBtn').click(function() {
 					//Se verifica que todos los input tengan valores asignados
 					let ninput = <?php echo ($Registro_total-$Registro_ok);?>;
-					
+
 					//verifica el valor
 					let monto = <?php echo $TotalGeneral; ?>;
 					if(monto!=0&&ninput==0){
@@ -1616,7 +1616,7 @@ array_push( $arrTipo4,$row );
 		document.getElementById("final_val_2").innerHTML = number_format(MontoCancelado, 0, ',', '.');
 		document.getElementById("final_val_3").innerHTML = number_format(NCCancelado, 0, ',', '.');
 		document.getElementById("final_val_4").innerHTML = number_format(Totalgen, 0, ',', '.');
-		
+
 		//Verifico que el total general sea distinto de 0 y habilito el boton siguiente
 		if(Totalgen>0){
 			document.getElementById("acep_1").style.display = "block";
@@ -1656,7 +1656,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProveedor)){   $x1  = $idProveedor;  }else{$x1  = '';}
@@ -1679,7 +1679,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 
 <?php

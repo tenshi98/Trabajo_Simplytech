@@ -73,7 +73,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'vendedor_desc':    $order_by = 'trabajadores_listado.ApellidoPat DESC, trabajadores_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Vendedor Descendente';break;
 		case 'estado_asc':       $order_by = 'core_estado_facturacion.Nombre ASC ';                                       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
 		case 'estado_desc':      $order_by = 'core_estado_facturacion.Nombre DESC ';                                      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		
+
 		default: $order_by = 'bodegas_productos_facturacion.Pago_fecha ASC, proveedor_listado.Nombre ASC, bodegas_productos_facturacion.N_Doc ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Pago, Proveedor, N° Doc Pago Ascendente';
 	}
 }else{
@@ -102,7 +102,7 @@ if(isset($_GET['f_pago_inicio'])&&$_GET['f_pago_inicio']!=''&&isset($_GET['f_pag
 }
 if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
 	$SIS_where.= " AND bodegas_productos_facturacion.F_Pago BETWEEN '".$_GET['f_inicio_p']."' AND '".$_GET['f_termino_p']."'";
-}	
+}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idFacturacion', 'bodegas_productos_facturacion', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -147,7 +147,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 		<li class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
-	
+
 </div>
 <div class="clearfix"></div>
 
@@ -256,7 +256,6 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 	</div>
 </div>
 
-  
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -266,8 +265,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 } else {
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
- 
- ?>
+
+?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -276,7 +275,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTipo)){               $x0  = $idTipo;              }else{$x0  = '';}
@@ -299,7 +298,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Tipo');
 				$Form_Inputs->form_select('Tipo Movimiento','idTipo', $x0, 1, 'idTipo', 'Nombre', 'bodegas_productos_facturacion_tipo', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_tittle(3, 'Emision');
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x2, 1, 'idCliente', 'Nombre', 'clientes_listado', $z, '', $dbConn);
@@ -310,7 +309,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_date('Fecha Creacion Hasta','f_creacion_termino', $x7, 1);
 				$Form_Inputs->form_date('Fecha Pago prog Desde','f_pago_inicio', $x8, 1);
 				$Form_Inputs->form_date('Fecha Pago prog Hasta','f_pago_termino', $x9, 1);
-				
+
 				$Form_Inputs->form_tittle(3, 'Pago');
 				$Form_Inputs->form_select('Estado','idEstado', $x10, 1, 'idEstado', 'Nombre', 'core_estado_facturacion', 0, '', $dbConn);
 				$Form_Inputs->form_select('Documento de Pago','idDocPago', $x11, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
@@ -328,7 +327,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

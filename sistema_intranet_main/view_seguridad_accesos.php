@@ -70,7 +70,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seguridad_accesos', $SIS_join, $S
 ?>
 
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">

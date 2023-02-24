@@ -453,7 +453,7 @@ foreach ($arrTemporal_7 as $temp) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idSistema)){   $x1  = $idSistema;      }else{$x1  = '';}
@@ -471,7 +471,7 @@ foreach ($arrTemporal_7 as $temp) {
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 
 <?php

@@ -61,7 +61,7 @@ if(!empty($_GET['id'])){?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($FechaDevolucionReal)){  $x1  = $FechaDevolucionReal;  }else{$x1  = '';}
@@ -69,13 +69,13 @@ if(!empty($_GET['id'])){?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Devolucion','FechaDevolucionReal', $x1, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idFacturacion', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idEstadoDevolucion', 2, 2);
 				$Form_Inputs->form_input_hidden('idUsuarioDevolucion', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Ingresar Devolucion" name="submit_devolucion">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -105,7 +105,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'fecha_desc':     $order_by = 'bodegas_arriendos_facturacion.Creacion_fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
 		case 'doc_asc':        $order_by = 'core_documentos_mercantiles.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Documento Ascendente';break;
 		case 'doc_desc':       $order_by = 'core_documentos_mercantiles.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Documento Descendente';break;
-		
+
 		default: $order_by = 'bodegas_arriendos_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
@@ -168,7 +168,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', 
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 </div>
 <div class="clearfix"></div>
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
@@ -194,11 +194,10 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', 
 				$Form_Inputs->form_date('F Devolucion Estimada','Devolucion_fecha', $x5, 1);
 				$Form_Inputs->form_select_join_filter('Bodega destino','idBodega', $x6, 1, 'idBodega', 'Nombre', 'bodegas_arriendos_listado', 'usuarios_bodegas_arriendos', $y, $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x7, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

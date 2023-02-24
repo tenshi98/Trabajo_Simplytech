@@ -460,7 +460,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 						}
 						echo '<li class=""><a href="#tab_sis_'.$sis_count.'" data-toggle="tab"><i class="fa fa-cog" aria-hidden="true"></i> '.$sistema['Nombre'].'</a></li>';
 					}
-					$sis_count++;	
+					$sis_count++;
 				} 
 				if($sis_count>=4){
 					echo '</ul></li>';

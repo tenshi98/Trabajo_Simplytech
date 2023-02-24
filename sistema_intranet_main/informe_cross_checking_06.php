@@ -264,7 +264,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($NSolicitud)){             $x1  = $NSolicitud;             }else{$x1  = '';}
@@ -307,7 +307,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 										 'Variedad','idProducto', $x7, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');*/	
 				?>
-				
+
 				<script>
 					//oculto los div
 					document.getElementById('div_f_programacion_desde').style.display = 'none';
@@ -321,7 +321,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						let idEstado = $(this).val(); //Asignamos el valor seleccionado
 						
 						//Solicitado
-						if(idEstado == 1){ 
+						if(idEstado == 1){
 							document.getElementById('div_f_programacion_desde').style.display = 'block';
 							document.getElementById('div_f_programacion_hasta').style.display = 'block';
 							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
@@ -337,7 +337,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							document.getElementById('f_termino_hasta').value = "";				
 						
 						//Programado
-						}else if(idEstado == 2){ 
+						}else if(idEstado == 2){
 							document.getElementById('div_f_programacion_desde').style.display = 'none';
 							document.getElementById('div_f_programacion_hasta').style.display = 'none';
 							document.getElementById('div_f_ejecucion_desde').style.display = 'block';
@@ -353,7 +353,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							document.getElementById('f_termino_hasta').value = "";	
 						
 						//Ejecutado
-						}else if(idEstado == 3){ 
+						}else if(idEstado == 3){
 							document.getElementById('div_f_programacion_desde').style.display = 'none';
 							document.getElementById('div_f_programacion_hasta').style.display = 'none';
 							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
@@ -369,7 +369,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							//document.getElementById('f_termino_hasta').value = "";		
 						
 						//el resto
-						}else{ 
+						}else{
 							document.getElementById('div_f_programacion_desde').style.display = 'none';
 							document.getElementById('div_f_programacion_hasta').style.display = 'none';
 							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
@@ -397,7 +397,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

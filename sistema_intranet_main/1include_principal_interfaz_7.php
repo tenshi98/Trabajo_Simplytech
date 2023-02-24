@@ -4,10 +4,10 @@
 /*****************************************************************************************************************/
 //Nueva conexion a otra base de datos
 //verifica la capa de desarrollo
-$whitelist = array( 'localhost', '127.0.0.1', '::1' );
+$SIS_where_1hitelist = array( 'localhost', '127.0.0.1', '::1' );
 ////////////////////////////////////////////////////////////////////////////////
 //si estoy en ambiente de desarrollo
-if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
+if( in_array( $_SERVER['REMOTE_ADDR'], $SIS_where_1hitelist) ){
 	$CON_Base      = 'power_engine_main';
 ////////////////////////////////////////////////////////////////////////////////
 //si estoy en ambiente de produccion
@@ -34,12 +34,12 @@ if($CON_Base!=''){
 /*                                     Tab 1                                        */
 /************************************************************************************/
 //Datos
-$w         = " WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-$subquery  = '';
-$subquery .= ",(SELECT COUNT(idAgenda) FROM principal_agenda_telefonica ".$w." AND idUsuario = '".$_SESSION['usuario']['basic_data']['idUsuario']."' OR idUsuario=9999 LIMIT 1) AS CuentaContactos";
-$subquery .= ",(SELECT COUNT(idSoftware) FROM soporte_software_listado LIMIT 1) AS CuentaProgramas";
-$subquery .= ",(SELECT COUNT(idCalendario) FROM principal_calendario_listado ".$w." AND Mes=".mes_actual()." AND Ano=".ano_actual()." AND idUsuario = 9999 LIMIT 1) AS CEvComunes";
-$subquery .= ",(SELECT COUNT(idCalendario) FROM principal_calendario_listado ".$w." AND Mes=".mes_actual()." AND Ano=".ano_actual()." AND idUsuario = '".$_SESSION['usuario']['basic_data']['idUsuario']."' LIMIT 1) AS CEvPropios";
+$SIS_where_1 = " WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$subquery    = '';
+$subquery   .= ",(SELECT COUNT(idAgenda) FROM principal_agenda_telefonica      ".$SIS_where_1." AND idUsuario = '".$_SESSION['usuario']['basic_data']['idUsuario']."' OR idUsuario=9999 LIMIT 1) AS CuentaContactos";
+$subquery   .= ",(SELECT COUNT(idSoftware) FROM soporte_software_listado LIMIT 1) AS CuentaProgramas";
+$subquery   .= ",(SELECT COUNT(idCalendario) FROM principal_calendario_listado ".$SIS_where_1." AND Mes=".mes_actual()." AND Ano=".ano_actual()." AND idUsuario = 9999 LIMIT 1) AS CEvComunes";
+$subquery   .= ",(SELECT COUNT(idCalendario) FROM principal_calendario_listado ".$SIS_where_1." AND Mes=".mes_actual()." AND Ano=".ano_actual()." AND idUsuario = '".$_SESSION['usuario']['basic_data']['idUsuario']."' LIMIT 1) AS CEvPropios";
 
 /************************************************************************************/
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso

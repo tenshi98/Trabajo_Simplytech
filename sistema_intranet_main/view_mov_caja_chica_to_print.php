@@ -108,7 +108,7 @@ $html = '
 	</div>
 
 	<div class="row invoice-info">';
-		
+
 		//se verifica el tipo de movimiento
 		switch ($row_data['idTipo']) {
 			//Ingreso
@@ -125,7 +125,7 @@ $html = '
 						Fecha Ingresada: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 
 				</div>';
@@ -145,7 +145,7 @@ $html = '
 						Fecha Ingresada: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 					Trabajador
 					<address>
@@ -165,7 +165,7 @@ $html = '
 		}
 		
 	$html .= '</div>
-	
+
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<table class="table table-striped">

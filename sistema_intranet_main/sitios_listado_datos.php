@@ -134,7 +134,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 					$Form_Inputs->form_input_text('Titulo', 'Whatsapp_tittle', $x3, 1);
 					$Form_Inputs->form_input_phone('Numero Whatsapp 1', 'Whatsapp_number_1', $x4, 1);
 					$Form_Inputs->form_input_phone('Numero Whatsapp 2', 'Whatsapp_number_2', $x5, 1);
-					
+
 					//Si el carrousel esta desactivado
 					if(isset($rowdata['Config_Carousel'])&&$rowdata['Config_Carousel']==2){
 						$Form_Inputs->form_tittle(3, 'Header');

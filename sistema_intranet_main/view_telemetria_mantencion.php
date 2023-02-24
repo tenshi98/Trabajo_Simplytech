@@ -142,7 +142,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 						Aprobador Email: '.$row_data['Recepcion_Email'].'<br/>
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Tecnico a Cargo</strong>
 					<address>
@@ -236,7 +236,6 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
       
 </section>
 
- 
 <?php 
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){

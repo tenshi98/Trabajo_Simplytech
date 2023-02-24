@@ -106,7 +106,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ingreso borrado correc
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['addFile'])){ ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -123,7 +123,7 @@ if(!empty($_GET['addFile'])){ ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 15, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
-				
+
 				$Form_Inputs->form_select('Tipo Foto','idArchivoTipo', $x1, 2, 'idArchivoTipo', 'Nombre', 'core_cross_shipping_archivos_tipos', 0, '', $dbConn);
 				
 				
@@ -174,8 +174,7 @@ if(!empty($_GET['addFile'])){ ?>
 				$Form_Inputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
 				$Form_Inputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('randompass', $_GET['view'], 2);
 				?>
 				
@@ -223,8 +222,7 @@ if(!empty($_GET['addFile'])){ ?>
 				$Form_Inputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
 				$Form_Inputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['cross_shipping_consolidacion_estibas'][$_GET['view']][$_GET['editEstiba']]['idInterno'], 2);
 				$Form_Inputs->form_input_hidden('randompass', $_GET['view'], 2);
 				?>
@@ -274,10 +272,10 @@ if(!empty($_GET['addFile'])){ ?>
 				$Form_Inputs->form_input_number('Temp. De Pulpa', 'Temperatura', $x6, 1);
 				$Form_Inputs->form_select_filter('Marca Modelo Sensor','idTermografo', $x7, 1, 'idTermografo', 'Codigo,Nombre', 'cross_shipping_termografo', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nro. Serie Sensor', 'NSerieSensor', $x8, 1);
-				
+
 				$Form_Inputs->form_input_hidden('randompass', $_GET['view'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_estiba">
 					<a href="<?php echo $location.'&view='.$_GET['view']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -305,7 +303,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($CTNNombreCompañia)){     $x1  = $CTNNombreCompañia;     }elseif($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CTNNombreCompañia']=='Sin Datos'){    $x1  = '';}else{$x1  = $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CTNNombreCompañia'];}
@@ -359,15 +357,13 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_filter('Mercado','idMercado', $x15, 1, 'idMercado', 'Codigo,Nombre', 'cross_shipping_mercado', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Pais','idPais', $x16, 1, 'idPais', 'Nombre', 'core_paises', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Recibidor','idRecibidor', $x17, 1, 'idRecibidor', 'Codigo,Nombre', 'cross_shipping_recibidores', $w, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_tittle(3, 'Cuerpo Indentificacion Empresa Transportista');
 				$Form_Inputs->form_select_filter('Empresa Transporte','idEmpresaTransporte', $x18, 1, 'idEmpresaTransporte', 'Nombre', 'cross_shipping_empresa_transporte', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Conductor', 'ChoferNombreRut', $x19, 1);
 				$Form_Inputs->form_input_text('Patente Camion', 'PatenteCamion', $x20, 1);
 				$Form_Inputs->form_input_text('Patente Carro', 'PatenteCarro', $x21, 1);
-				
-				
+
 				$Form_Inputs->form_tittle(3, 'Cuerpo Parametros Evaluados');
 				$Form_Inputs->form_select('Condicion CTN','idCondicion', $x22, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);
 				$Form_Inputs->form_select('Sellado Piso','idSellado', $x23, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
@@ -376,8 +372,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_number('T° Ambiente', 'TAmbiente', $x26, 1);
 				$Form_Inputs->form_input_text('Numero de sello', 'NumeroSello', $x27, 1);
 				$Form_Inputs->form_select_filter('Inspector','idInspector', $x28, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_tittle(3, 'Otros');
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x29, 1);
 				
@@ -388,7 +383,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('randompass', $_GET['view'], 2);
-				
+
 				?>
 				
 
@@ -554,7 +549,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="8">Detalle</th>
 					<th width="160">Acciones</th>
@@ -667,7 +662,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 
 <div class="clearfix"></div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  } elseif(!empty($_GET['cloneConsolidacion'])){ ?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -678,7 +673,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($CTNNombreCompañia)){   $x2 = $CTNNombreCompañia;  }else{$x2 = '';}
@@ -687,12 +682,11 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Contenedor Nro.', 'CTNNombreCompañia', $x2, 2);
-				
-				
+
 				$Form_Inputs->form_input_hidden('randompass', genera_password_unica(), 2);
 				$Form_Inputs->form_input_hidden('cloneConsolidacion', $_GET['cloneConsolidacion'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Clonar Documento" name="submit_clone">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -716,7 +710,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){      $x1 = $Creacion_fecha;     }else{$x1 = '';}
@@ -732,7 +726,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x3, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
 										 'Variedad','idProducto', $x4, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				
+
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1);
 				
 				
@@ -743,7 +737,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('randompass', genera_password_unica(), 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -755,7 +749,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Se inicializa el paginador de resultados
@@ -830,7 +823,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){ ?>
 		<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Consolidacion</a>
 	<?php }?>
@@ -854,10 +847,10 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 										 'Variedad','idProducto', $x3, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_text('Contenedor Nro.', 'CTNNombreCompañia', $x4, 1);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

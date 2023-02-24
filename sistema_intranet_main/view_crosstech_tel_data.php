@@ -533,7 +533,7 @@ if($in_eq_fueralinea!=0){
 						$GPS .= "], ";
 						
 					$GPS .= '];
-					
+
 					//ubicacion inicial
 					setMarkers(map, locations, 1);
 

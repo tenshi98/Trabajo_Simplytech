@@ -156,11 +156,11 @@ require_once '0_validate_user_1.php';
 					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.simpleEncode($ultimo_id, '123333').'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a></div>';
 					$Notificacion .= ' '.$Titulo;
 					$Estado = '1';
-					
+
 					//busco a todos los usuarios del sistema
 					$arrUsuarios = array();
 					$arrUsuarios = db_select_array (false, 'usuarios_listado.idUsuario', 'usuarios_listado', 'LEFT JOIN `usuarios_sistemas` ON usuarios_sistemas.idUsuario = usuarios_listado.idUsuario', 'usuarios_sistemas.idSistema = "'.$idSistema.'" AND usuarios_listado.idEstado=1 GROUP BY usuarios_listado.idUsuario', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//Inserto el mensaje de entrega de materiales
 					foreach($arrUsuarios as $users) {
 						if(isset($idSistema) && $idSistema!=''){   $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
@@ -218,7 +218,7 @@ require_once '0_validate_user_1.php';
 					if(isset($Estado) && $Estado!=''){                  $SIS_data .= ",'".$Estado."'";            }else{$SIS_data .= ",''";}
 					if(isset($ultimo_id) && $ultimo_id!=''){            $SIS_data .= ",'".$ultimo_id."'";  }else{$SIS_data .= ",''";}
 					$SIS_data .= ",'".hora_actual()."'";
-					
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idSistema,idUsuario,Notificacion, Fecha, idEstado, idNotificaciones, Hora';
 					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'principal_notificaciones_ver', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -276,7 +276,7 @@ require_once '0_validate_user_1.php';
 					$Notificacion  = '<div class="btn-group" ><a href="view_notificacion.php?view='.simpleEncode($ultimo_id, '123333').'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a></div>';
 					$Notificacion .= ' '.$Titulo;
 					$Estado        = '1';
-					
+
 					//busco a todos los usuarios del sistema
 					$z = 'usuarios_listado.idEstado = 1';
 					if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario']!=''){  $z .= " AND usuarios_listado.idTipoUsuario = '".$_GET['idTipoUsuario']."'";}
@@ -291,7 +291,7 @@ require_once '0_validate_user_1.php';
 					
 					$arrPermiso = array();
 					$arrPermiso = db_select_array (false, 'usuarios_listado.idUsuario', 'usuarios_listado', 'LEFT JOIN `usuarios_sistemas` ON usuarios_sistemas.idUsuario = usuarios_listado.idUsuario', $z.' GROUP BY usuarios_listado.idUsuario', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//Inserto el mensaje de entrega de materiales
 					foreach($arrPermiso as $permiso) {
 						if(isset($idSistema) && $idSistema!=''){       $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}

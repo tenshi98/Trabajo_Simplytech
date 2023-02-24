@@ -143,7 +143,7 @@ $arrIpRelacionadas = db_select_array (false, $SIS_query, $xtabla, $SIS_join, $SI
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else { 
 //Verifico el tipo de usuario que esta ingresando
@@ -165,7 +165,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idSeguridad)){   $x0 = $idSeguridad;   }else{$x0 = '';}
@@ -183,11 +183,11 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 				$Form_Inputs->form_select_filter('Transportista','idTransporte', $x3, 1, 'idTransporte', 'Nombre', 'transportes_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select_filter('Apoderado','idApoderado', $x4, 1, 'idApoderado', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'apoderados_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select_filter('Alumno','idAlumno', $x5, 1, 'idAlumno', 'Nombre,ApellidoPat', 'alumnos_listado', $z, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
-				
+
 				?>
-				
+
 				<script>
 					document.getElementById('div_idUsuario').style.display = 'none';
 					document.getElementById('div_idCliente').style.display = 'none';
@@ -250,7 +250,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 					});
 
 				</script>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>

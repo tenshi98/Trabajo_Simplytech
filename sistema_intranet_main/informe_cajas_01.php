@@ -99,8 +99,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'caja_chica_facturacion', $SIS_jo
 
 </div>
 <div class="clearfix"></div>
-                     
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -192,7 +191,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'caja_chica_facturacion', $SIS_jo
 <a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 $z = "caja_chica_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -210,7 +209,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idCajaChica)){                $x1  = $idCajaChica;               }else{$x1  = '';}
@@ -228,7 +227,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_input_number('N° Doc Relacionado', 'idFacturacionRelacionada', $x4, 1);
 				$Form_Inputs->form_select('Tipo Movimiento','idTipo', $x5, 1, 'idTipo', 'Nombre', 'caja_chica_facturacion_tipo', 0, '', $dbConn);
 				$Form_Inputs->form_select('Estado','idEstado', $x6, 1, 'idEstado', 'Nombre', 'core_estado_caja', 0, '', $dbConn);
-				
+
 				?>
 	   
 				<div class="form-group">
@@ -239,7 +238,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

@@ -84,7 +84,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php 
 					if(isset($rowcount)&&$rowcount!=0){
-						for ($i = 1; $i <= $rowdata['cantSensores']; $i++) { 
+						for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 							//Se verifica si el sensor esta habilitado para la supervision
 							if(isset($rowMed['SensoresUso_'.$i])&&$rowMed['SensoresUso_'.$i]==1){
 								//verifico si esta activo el sensor
@@ -121,7 +121,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Filtro de busqueda
@@ -145,7 +145,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTelemetria)){  $x1  = $idTelemetria;  }else{$x1  = '';}
@@ -170,7 +170,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

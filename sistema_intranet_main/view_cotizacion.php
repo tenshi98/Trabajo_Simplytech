@@ -177,9 +177,9 @@ foreach ($arrImpuestos as $impto) {
 }
 
 ?>
-	
+
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
@@ -357,7 +357,7 @@ foreach ($arrImpuestos as $impto) {
 							<td align="right"><?php echo Valores($row_data['ValorTotal'], 0); ?></td>
 						</tr>
 					<?php } ?>
-				
+
 				</tbody>
 			</table>
 		</div>
@@ -369,7 +369,7 @@ foreach ($arrImpuestos as $impto) {
 			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
 		</div>
 	</div>
-	
+
 </section>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">

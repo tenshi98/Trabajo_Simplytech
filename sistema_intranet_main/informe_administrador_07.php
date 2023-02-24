@@ -331,7 +331,7 @@ $z  = "telemetria_listado.idTelemetria!=0";   //Siempre pasa
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;      }else{$x1  = '';}
@@ -358,7 +358,7 @@ $z  = "telemetria_listado.idTelemetria!=0";   //Siempre pasa
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

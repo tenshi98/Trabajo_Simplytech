@@ -136,7 +136,7 @@ foreach ($arrGrupos as $sen) {
 								</tr>
 								<tr class="odd" style="background-color: #CCCCCC;">		
 									<td>Grupo</td>	
-									<td colspan="2">Mediciones</td>		
+									<td colspan="2">Mediciones</td>
 								</tr>
 								
 								<?php

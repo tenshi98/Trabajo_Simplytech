@@ -134,7 +134,7 @@ $html .= '<div class="row">
 	</div>
 
 	<div class="row invoice-info">';
-		
+
 		//se verifica el tipo de movimiento
 		switch ($row_data['idTipo']) {
 			//Boleta Trabajadores
@@ -151,7 +151,7 @@ $html .= '<div class="row">
 						Centro de Costo: '.$row_data['CentroCosto'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Receptor
 					<address>
@@ -195,7 +195,7 @@ $html .= '<div class="row">
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Receptor
 					<address>
@@ -211,7 +211,7 @@ $html .= '<div class="row">
 						Giro de la Empresa: '.$row_data['Cliente_Giro'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Fecha Creacion : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					<strong>Usuario Ingreso : </strong>'.$row_data['BoletaUsuario'].'<br/>';
@@ -248,7 +248,7 @@ $html .= '<div class="row">
 						Giro de la Empresa: '.$row_data['Proveedor_Giro'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Receptor
 					<address>
@@ -282,7 +282,7 @@ $html .= '<div class="row">
 		
     
 	$html .= '</div>
-	
+
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<table class="table table-striped">

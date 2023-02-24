@@ -278,7 +278,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			</div>
 		</div>
 	</div>
-	
+
 <?php } ?>
 
 

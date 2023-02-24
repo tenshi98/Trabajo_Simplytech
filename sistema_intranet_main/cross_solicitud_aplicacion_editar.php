@@ -144,7 +144,7 @@ if(!empty($_GET['addDetalle'])){?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Observacion)){      $x1  = $Observacion;        }else{$x1  = '';}
@@ -152,14 +152,13 @@ if(!empty($_GET['addDetalle'])){?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Observacion','Observacion', $x1, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', $_GET['idEstado'], 2);
 				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_add_detalle"> 
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -181,7 +180,7 @@ if(!empty($_GET['addDetalle'])){?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_cierre)){          $x1  = $f_cierre;         }else{$x1  = '';}
@@ -199,13 +198,13 @@ if(!empty($_GET['addDetalle'])){?>
 				$Form_Inputs->form_input_number_spinner('Vel. Promedio Tractor Km/hr','VelPromedio', $x4, 0, 50, '0.1', 1, 1);
 				$Form_Inputs->form_input_number_spinner('Litros Aplicados','LitrosAplicados', $x5, 0, 50000, '0.1', 1, 1);
 				//$Form_Inputs->form_time('Tiempo de Aplicacion','T_Aplicacion', $x6, 1, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idCuarteles', $_GET['lock_cuartel'], 2);
 				$Form_Inputs->form_input_hidden('f_ejecucion', $_GET['f_ejecucion'], 2);
 				$Form_Inputs->form_input_hidden('f_ejecucion_fin', $_GET['f_ejecucion_fin'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
-				
+
 				<script>
 					document.getElementById('div_GeoDistance').style.display = 'none';
 					document.getElementById('div_VelPromedio').style.display = 'none';
@@ -216,7 +215,7 @@ if(!empty($_GET['addDetalle'])){?>
 						let idEjecucion = $(this).val(); //Asignamos el valor seleccionado
 					
 						//No ejecutado
-						if(idEjecucion == 1){ 
+						if(idEjecucion == 1){
 							document.getElementById('div_GeoDistance').style.display = '';
 							document.getElementById('div_VelPromedio').style.display = '';
 							document.getElementById('div_LitrosAplicados').style.display = '';
@@ -237,7 +236,7 @@ if(!empty($_GET['addDetalle'])){?>
 					});
 
 				</script>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_close_cuartel"> 
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -277,7 +276,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){     $x1  = $idProducto;    }else{$x1  = $row_data['idProducto'];}
@@ -292,12 +291,12 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 				$Form_Inputs->form_input_number_spinner('Dosis a aplicar','DosisAplicar', $x2, 0, 2000, '0.01', 2, 2);
 				$Form_Inputs->form_input_disabled( 'Unidad de medida', 'escribeme2', 0);
 				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x3, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idCuarteles', $_GET['cuartel_id'], 2);
 				$Form_Inputs->form_input_hidden('idProdQuim', $_GET['edit_prod'], 2);
 				?>
-				
+
 				<script>
 					
 					<?php
@@ -360,7 +359,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){     $x1  = $idProducto;    }else{$x1  = '';}
@@ -375,11 +374,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 				$Form_Inputs->form_input_number_spinner('Dosis a aplicar','DosisAplicar', $x2, 0, 2000, '0.01', 2, 2);
 				$Form_Inputs->form_input_disabled( 'Unidad de medida', 'escribeme2', 0);
 				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x3, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idCuarteles', $_GET['cuartel_id'], 2);
 				?>
-				
+
 				<script>
 					
 					<?php
@@ -449,7 +448,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idVehiculo)){     $x1  = $idVehiculo;    }else{$x1  = $row_data['idVehiculo'];}
@@ -466,14 +465,13 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				}
 				$Form_Inputs->form_select_filter('Equipo Aplicacion','idVehiculo', $x1, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select_filter('Trabajador Asignado','idTrabajador', $x3, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $x, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idCuarteles', $_GET['cuartel_id'], 2);
 				$Form_Inputs->form_input_hidden('idTractores', $_GET['edit_trac'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_tractor"> 
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -508,7 +506,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idVehiculo)){     $x1  = $idVehiculo;    }else{$x1  = '';}
@@ -525,11 +523,10 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				}
 				$Form_Inputs->form_select_filter('Equipo Aplicacion','idVehiculo', $x1, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select_filter('Trabajador Asignado','idTrabajador', $x3, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $x, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idCuarteles', $_GET['cuartel_id'], 2);
-				
+
 				?>
 				
 			  
@@ -576,7 +573,7 @@ if(isset($row_data_ini['idProducto'])&&$row_data_ini['idProducto']!=0){$z.= " AN
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idZona)){         $x1  = $idZona;        }else{$x1  = $row_data['idZona'];}
@@ -599,12 +596,12 @@ if(isset($row_data_ini['idProducto'])&&$row_data_ini['idProducto']!=0){$z.= " AN
 				$Form_Inputs->form_input_number_spinner('Temperatura minima','TempMin', $x5, -20, 500, '0.01', 2, 2);
 				$Form_Inputs->form_input_number_spinner('Temperatura maxima','TempMax', $x6, -20, 500, '0.01', 2, 2);
 				$Form_Inputs->form_input_number_spinner('Humedad','HumTempMax', $x7, -20, 500, '0.01', 2, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idCuarteles', $_GET['cuartel_id'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_cuartel"> 
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -664,7 +661,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idZona)){         $x1  = $idZona;        }else{$x1  = '';}
@@ -694,7 +691,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				$Form_Inputs->form_input_number_spinner('Temperatura minima','TempMin', $x5, -20, 500, '0.01', 2, 2);
 				$Form_Inputs->form_input_number_spinner('Temperatura maxima','TempMax', $x6, -20, 500, '0.01', 2, 2);
 				$Form_Inputs->form_input_number_spinner('Humedad','HumTempMax', $x7, -20, 500, '0.01', 2, 2);
-				
+
 				$Form_Inputs->form_tittle(3, 'Tractor');
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					$Form_Inputs->form_select_filter('Tractor','idTelemetria', $x9, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);
@@ -703,15 +700,14 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				}
 				$Form_Inputs->form_select_filter('Equipo Aplicacion','idVehiculo', $x8, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $y, '', $dbConn);
 				$Form_Inputs->form_select_filter('Trabajador Asignado','idTrabajador', $x10, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $m, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_tittle(3, 'Producto Químico a aplicar');
 				$Form_Inputs->form_select_filter('Producto Químico','idProducto', $x11, 2, 'idProducto', 'Nombre', 'productos_listado', $x, '', $dbConn);
 				$Form_Inputs->form_input_disabled( 'Dosis Recomendada', 'escribeme1', 0);
 				$Form_Inputs->form_input_number_spinner('Dosis a aplicar','DosisAplicar', $x12, 0, 500, '0.01', 2, 2);
 				$Form_Inputs->form_input_disabled( 'Unidad de medida', 'escribeme2', 0);
 				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x13, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
 				?>			
 				
@@ -764,7 +760,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idMatSeguridad)){     $x1  = $idMatSeguridad;    }else{$x1  = '';}
@@ -774,7 +770,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				$Form_Inputs->form_select_filter('Material de Seguridad','idMatSeguridad', $x1, 2, 'idMatSeguridad', 'Nombre', 'cross_checking_materiales_seguridad', 'idEstado=1', '', $dbConn);
 					
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
-				
+
 				?>
 				
 			  
@@ -811,7 +807,7 @@ $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idPrioridad)){          $x0  = $idPrioridad;          }else{$x0  = $row_data['idPrioridad'];}
@@ -898,7 +894,7 @@ $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -1087,7 +1083,7 @@ foreach ($arrProductos as $prod) {
 }
 
 ?>
- 
+
 <div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive" style="margin-bottom:30px">
 
 	<div id="page-wrap">
@@ -1214,7 +1210,7 @@ foreach ($arrProductos as $prod) {
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="8">Detalle</th>
 					<th width="160">Acciones</th>
@@ -1364,7 +1360,7 @@ foreach ($arrProductos as $prod) {
 	<div id="page-wrap">
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
-				
+
 				<tr class="invoice-total" bgcolor="#f1f1f1">
 					<th colspan="8">Detalles</th>
 					<th width="160"><a href="<?php echo $location.'&idEstado='.$row_data['idEstado'].'&addDetalle=true' ?>" title="Agregar Detalle" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Detalle</a></th>
@@ -1375,7 +1371,7 @@ foreach ($arrProductos as $prod) {
 					<th width="260">Usuario</th>
 					<th colspan="6">Observacion</th>
 				</tr>
-				
+
 				<?php foreach ($arrHistorial as $doc){?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>

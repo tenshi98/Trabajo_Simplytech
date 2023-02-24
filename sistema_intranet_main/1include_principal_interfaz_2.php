@@ -118,25 +118,25 @@ $subquery       = '';
 $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 
 //Filtro
-$z  = " WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-$w  = " WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-$x1 = " idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where_1  = " WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where_2  = " WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where_3  = " idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 //Verifico el tipo de usuario que esta ingresando
 if($idTipoUsuario==1){
-	$z .= " AND idUsuario>=0";
-	$x2 = "idUsuario>=0";
+	$SIS_where_1.= " AND idUsuario>=0";
+	$SIS_where_4 = "idUsuario>=0";
 }else{
-	$z .= " AND idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
-	$x2 = "idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_where_1.= " AND idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_where_4 = "idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 /****************************************/
 //Visualizacion de los widgets Comunes, se verifica si esta activado o si es un superusuario
 if($n_permisos['idOpcionesGen_1']=='1' OR $idTipoUsuario==1){
-	$subquery .= ",(SELECT COUNT(idNoti) FROM principal_notificaciones_ver ".$z." AND idEstado='1' LIMIT 1) AS Notificacion";
-	$subquery .= ",(SELECT COUNT(idAgenda) FROM principal_agenda_telefonica ".$w." AND idUsuario = '".$_SESSION['usuario']['basic_data']['idUsuario']."' OR idUsuario=9999 LIMIT 1) AS CuentaContactos";
+	$subquery .= ",(SELECT COUNT(idNoti) FROM principal_notificaciones_ver  ".$SIS_where_1." AND idEstado='1' LIMIT 1) AS Notificacion";
+	$subquery .= ",(SELECT COUNT(idAgenda) FROM principal_agenda_telefonica ".$SIS_where_2." AND idUsuario = '".$_SESSION['usuario']['basic_data']['idUsuario']."' OR idUsuario=9999 LIMIT 1) AS CuentaContactos";
 	$subquery .= ",(SELECT COUNT(idSoftware) FROM soporte_software_listado LIMIT 1) AS CuentaProgramas";
-	$subquery .= ",(SELECT COUNT(idCalendario) FROM principal_calendario_listado ".$w." AND Mes=".mes_actual()." AND Ano=".ano_actual()." LIMIT 1) AS CuentaEventos";
+	$subquery .= ",(SELECT COUNT(idCalendario) FROM principal_calendario_listado ".$SIS_where_2." AND Mes=".mes_actual()." AND Ano=".ano_actual()." LIMIT 1) AS CuentaEventos";
 }
 /****************************************/
 //Visualizacion de los widgets de las transacciones
@@ -144,42 +144,42 @@ if($n_permisos['idOpcionesGen_2']=='1' OR $idTipoUsuario==1){
 	
 	/***************************************** PRIMERA COLUMNA *****************************************/
 	/*** Cargas por Vencer ***/
-	if($prm_x[12]=='1' OR $idTipoUsuario==1){$subquery .= ",(SELECT COUNT(idCarga) FROM telemetria_carga_bam ".$w." AND Semana=".semana_actual()." AND Ano=".ano_actual()." LIMIT 1) AS CuentaRecargas";}
+	if($prm_x[12]=='1' OR $idTipoUsuario==1){$subquery .= ",(SELECT COUNT(idCarga) FROM telemetria_carga_bam ".$SIS_where_2." AND Semana=".semana_actual()." AND Ano=".ano_actual()." LIMIT 1) AS CuentaRecargas";}
 	
 	/*** Solicitudes sin OC ***/
 	if($prm_x[13]=='1' OR $idTipoUsuario==1){
-		$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_productos ".$w." AND idOcompra=0 LIMIT 1) AS CuentaSolProd";
-		$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_insumos ".$w." AND idOcompra=0 LIMIT 1) AS CuentaSolIns";
-		$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_arriendos ".$w." AND idOcompra=0 LIMIT 1) AS CuentaSolArr";
-		$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_servicios ".$w." AND idOcompra=0 LIMIT 1) AS CuentaSolServ";
-		$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_otros ".$w." AND idOcompra=0 LIMIT 1) AS CuentaSolOtro";
+		$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_productos ".$SIS_where_2." AND idOcompra=0 LIMIT 1) AS CuentaSolProd";
+		$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_insumos ".$SIS_where_2." AND idOcompra=0 LIMIT 1) AS CuentaSolIns";
+		$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_arriendos ".$SIS_where_2." AND idOcompra=0 LIMIT 1) AS CuentaSolArr";
+		$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_servicios ".$SIS_where_2." AND idOcompra=0 LIMIT 1) AS CuentaSolServ";
+		$subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_otros ".$SIS_where_2." AND idOcompra=0 LIMIT 1) AS CuentaSolOtro";
 	}
 	
 	/*** OC sin Aprobar ***/
-	if($prm_x[14]=='1' OR $idTipoUsuario==1){$subquery .= ",(SELECT COUNT(idOcompra) FROM ocompra_listado ".$w." AND idEstado=1 LIMIT 1) AS CuentaOC";}
+	if($prm_x[14]=='1' OR $idTipoUsuario==1){$subquery .= ",(SELECT COUNT(idOcompra) FROM ocompra_listado ".$SIS_where_2." AND idEstado=1 LIMIT 1) AS CuentaOC";}
 
 	/*** OT Maquinas para la Semana ***/
 	$OT_Semana = $prm_x[10] + $prm_x[11];
 	if($OT_Semana!=0 OR $idTipoUsuario==1) {
-		$subquery .= ",(SELECT COUNT(idOT) FROM orden_trabajo_listado WHERE  ".$x1." AND progSemana=".semana_actual()."   AND progAno=".ano_actual()." AND idEstado=1  LIMIT 1 ) AS CountOTSemana";
+		$subquery .= ",(SELECT COUNT(idOT) FROM orden_trabajo_listado WHERE  ".$SIS_where_3." AND progSemana=".semana_actual()."   AND progAno=".ano_actual()." AND idEstado=1  LIMIT 1 ) AS CountOTSemana";
 	}
 	
 	/*** OT Maquinas no Cumplidas ***/
 	$OT_Semana = $prm_x[10] + $prm_x[11];
 	if($OT_Semana!=0 OR $idTipoUsuario==1) {
-		$subquery .= ",(SELECT COUNT(idOT) FROM orden_trabajo_listado WHERE  ".$x1." AND progSemana<".semana_actual()."   AND progAno=".ano_actual()." AND idEstado=1  LIMIT 1 ) AS CountOTRetrasada";
+		$subquery .= ",(SELECT COUNT(idOT) FROM orden_trabajo_listado WHERE  ".$SIS_where_3." AND progSemana<".semana_actual()."   AND progAno=".ano_actual()." AND idEstado=1  LIMIT 1 ) AS CountOTRetrasada";
 	}
 	
 	/*** OT Tareas para la Semana ***/
 	$OT_Semana = $prm_x[44] + $prm_x[45] + $prm_x[46] + $prm_x[47] + $prm_x[48] + $prm_x[49];					
 	if($OT_Semana!=0 OR $idTipoUsuario==1) {
-		$subquery .= ",(SELECT COUNT(idOT) FROM orden_trabajo_tareas_listado WHERE  ".$x1." AND f_programacion_Semana=".semana_actual()."   AND f_programacion_Ano=".ano_actual()." AND idEstado=1  LIMIT 1 ) AS CountOTSemanaTarea";
+		$subquery .= ",(SELECT COUNT(idOT) FROM orden_trabajo_tareas_listado WHERE  ".$SIS_where_3." AND f_programacion_Semana=".semana_actual()."   AND f_programacion_Ano=".ano_actual()." AND idEstado=1  LIMIT 1 ) AS CountOTSemanaTarea";
 	}
 	
 	/*** OT Tareas no Cumplidas ***/
 	$OT_Semana = $prm_x[44] + $prm_x[45] + $prm_x[46] + $prm_x[47] + $prm_x[48] + $prm_x[49];					
 	if($OT_Semana!=0 OR $idTipoUsuario==1) {
-		$subquery .= ",(SELECT COUNT(idOT) FROM orden_trabajo_tareas_listado WHERE  ".$x1." AND f_programacion_Semana<".semana_actual()."   AND f_programacion_Ano=".ano_actual()." AND idEstado=1  LIMIT 1 ) AS CountOTRetrasadaTarea";
+		$subquery .= ",(SELECT COUNT(idOT) FROM orden_trabajo_tareas_listado WHERE  ".$SIS_where_3." AND f_programacion_Semana<".semana_actual()."   AND f_programacion_Ano=".ano_actual()." AND idEstado=1  LIMIT 1 ) AS CountOTRetrasadaTarea";
 	}
 	
 	/*** OT Tareas no Cumplidas ***/
@@ -200,48 +200,48 @@ if($n_permisos['idOpcionesGen_2']=='1' OR $idTipoUsuario==1){
 	/*** Facturas atrasadas ***/
 	$PermFactComp = $prm_x[15] + $prm_x[16] + $prm_x[17] + $prm_x[18];					
 	if($PermFactComp!=0 OR $idTipoUsuario==1) {
-		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_arriendos_facturacion    INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion.idBodega           WHERE bodegas_arriendos_facturacion.idEstado=1  AND bodegas_arriendos_facturacion.idTipo=1   AND bodegas_arriendos_facturacion.".$x1."   AND bodegas_arriendos_facturacion.Pago_Semana<".semana_actual()."   AND bodegas_arriendos_facturacion.Pago_ano=".ano_actual()."  AND usuarios_bodegas_arriendos.".$x2." LIMIT 1) AS CountFactArriendo_retr";
-		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_insumos_facturacion      INNER JOIN usuarios_bodegas_insumos ON usuarios_bodegas_insumos.idBodega = bodegas_insumos_facturacion.idBodegaDestino          WHERE bodegas_insumos_facturacion.idEstado=1    AND bodegas_insumos_facturacion.idTipo=1     AND bodegas_insumos_facturacion.".$x1."     AND bodegas_insumos_facturacion.Pago_Semana<".semana_actual()."     AND bodegas_insumos_facturacion.Pago_ano=".ano_actual()."    AND usuarios_bodegas_insumos.".$x2." LIMIT 1) AS CountFactInsumo_retr";
-		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_productos_facturacion    INNER JOIN usuarios_bodegas_productos ON usuarios_bodegas_productos.idBodega = bodegas_productos_facturacion.idBodegaDestino    WHERE bodegas_productos_facturacion.idEstado=1  AND bodegas_productos_facturacion.idTipo=1   AND bodegas_productos_facturacion.".$x1."   AND bodegas_productos_facturacion.Pago_Semana<".semana_actual()."   AND bodegas_productos_facturacion.Pago_ano=".ano_actual()."  AND usuarios_bodegas_productos.".$x2." LIMIT 1) AS CountFactProducto_retr";
-		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_servicios_facturacion WHERE bodegas_servicios_facturacion.idEstado=1  AND bodegas_servicios_facturacion.idTipo=1   AND bodegas_servicios_facturacion.".$x1." AND bodegas_servicios_facturacion.Pago_Semana<".semana_actual()." AND bodegas_servicios_facturacion.Pago_ano=".ano_actual()." LIMIT 1) AS CountFactServicio_retr";
+		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_arriendos_facturacion    INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion.idBodega           WHERE bodegas_arriendos_facturacion.idEstado=1  AND bodegas_arriendos_facturacion.idTipo=1   AND bodegas_arriendos_facturacion.".$SIS_where_3."   AND bodegas_arriendos_facturacion.Pago_Semana<".semana_actual()."   AND bodegas_arriendos_facturacion.Pago_ano=".ano_actual()."  AND usuarios_bodegas_arriendos.".$SIS_where_4." LIMIT 1) AS CountFactArriendo_retr";
+		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_insumos_facturacion      INNER JOIN usuarios_bodegas_insumos ON usuarios_bodegas_insumos.idBodega = bodegas_insumos_facturacion.idBodegaDestino          WHERE bodegas_insumos_facturacion.idEstado=1    AND bodegas_insumos_facturacion.idTipo=1     AND bodegas_insumos_facturacion.".$SIS_where_3."     AND bodegas_insumos_facturacion.Pago_Semana<".semana_actual()."     AND bodegas_insumos_facturacion.Pago_ano=".ano_actual()."    AND usuarios_bodegas_insumos.".$SIS_where_4." LIMIT 1) AS CountFactInsumo_retr";
+		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_productos_facturacion    INNER JOIN usuarios_bodegas_productos ON usuarios_bodegas_productos.idBodega = bodegas_productos_facturacion.idBodegaDestino    WHERE bodegas_productos_facturacion.idEstado=1  AND bodegas_productos_facturacion.idTipo=1   AND bodegas_productos_facturacion.".$SIS_where_3."   AND bodegas_productos_facturacion.Pago_Semana<".semana_actual()."   AND bodegas_productos_facturacion.Pago_ano=".ano_actual()."  AND usuarios_bodegas_productos.".$SIS_where_4." LIMIT 1) AS CountFactProducto_retr";
+		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_servicios_facturacion WHERE bodegas_servicios_facturacion.idEstado=1  AND bodegas_servicios_facturacion.idTipo=1   AND bodegas_servicios_facturacion.".$SIS_where_3." AND bodegas_servicios_facturacion.Pago_Semana<".semana_actual()." AND bodegas_servicios_facturacion.Pago_ano=".ano_actual()." LIMIT 1) AS CountFactServicio_retr";
 	}
 	
 	/*** Facturas x pagar ***/
 	$PermFactComp = $prm_x[15] + $prm_x[16] + $prm_x[17] + $prm_x[18];					
 	if($PermFactComp!=0 OR $idTipoUsuario==1) {
-		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_arriendos_facturacion    INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion.idBodega           WHERE bodegas_arriendos_facturacion.idEstado=1  AND bodegas_arriendos_facturacion.idTipo=1   AND bodegas_arriendos_facturacion.".$x1."   AND bodegas_arriendos_facturacion.Pago_Semana=".semana_actual()."   AND bodegas_arriendos_facturacion.Pago_ano=".ano_actual()."  AND usuarios_bodegas_arriendos.".$x2." LIMIT 1) AS CountFactArriendo";
-		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_insumos_facturacion      INNER JOIN usuarios_bodegas_insumos ON usuarios_bodegas_insumos.idBodega = bodegas_insumos_facturacion.idBodegaDestino          WHERE bodegas_insumos_facturacion.idEstado=1    AND bodegas_insumos_facturacion.idTipo=1     AND bodegas_insumos_facturacion.".$x1."     AND bodegas_insumos_facturacion.Pago_Semana=".semana_actual()."     AND bodegas_insumos_facturacion.Pago_ano=".ano_actual()."    AND usuarios_bodegas_insumos.".$x2." LIMIT 1) AS CountFactInsumo";
-		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_productos_facturacion    INNER JOIN usuarios_bodegas_productos ON usuarios_bodegas_productos.idBodega = bodegas_productos_facturacion.idBodegaDestino    WHERE bodegas_productos_facturacion.idEstado=1  AND bodegas_productos_facturacion.idTipo=1   AND bodegas_productos_facturacion.".$x1."   AND bodegas_productos_facturacion.Pago_Semana=".semana_actual()."   AND bodegas_productos_facturacion.Pago_ano=".ano_actual()."  AND usuarios_bodegas_productos.".$x2." LIMIT 1) AS CountFactProducto";
-		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_servicios_facturacion WHERE bodegas_servicios_facturacion.idEstado=1  AND bodegas_servicios_facturacion.idTipo=1   AND bodegas_servicios_facturacion.".$x1." AND bodegas_servicios_facturacion.Pago_Semana=".semana_actual()." AND bodegas_servicios_facturacion.Pago_ano=".ano_actual()." LIMIT 1) AS CountFactServicio";
+		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_arriendos_facturacion    INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion.idBodega           WHERE bodegas_arriendos_facturacion.idEstado=1  AND bodegas_arriendos_facturacion.idTipo=1   AND bodegas_arriendos_facturacion.".$SIS_where_3."   AND bodegas_arriendos_facturacion.Pago_Semana=".semana_actual()."   AND bodegas_arriendos_facturacion.Pago_ano=".ano_actual()."  AND usuarios_bodegas_arriendos.".$SIS_where_4." LIMIT 1) AS CountFactArriendo";
+		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_insumos_facturacion      INNER JOIN usuarios_bodegas_insumos ON usuarios_bodegas_insumos.idBodega = bodegas_insumos_facturacion.idBodegaDestino          WHERE bodegas_insumos_facturacion.idEstado=1    AND bodegas_insumos_facturacion.idTipo=1     AND bodegas_insumos_facturacion.".$SIS_where_3."     AND bodegas_insumos_facturacion.Pago_Semana=".semana_actual()."     AND bodegas_insumos_facturacion.Pago_ano=".ano_actual()."    AND usuarios_bodegas_insumos.".$SIS_where_4." LIMIT 1) AS CountFactInsumo";
+		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_productos_facturacion    INNER JOIN usuarios_bodegas_productos ON usuarios_bodegas_productos.idBodega = bodegas_productos_facturacion.idBodegaDestino    WHERE bodegas_productos_facturacion.idEstado=1  AND bodegas_productos_facturacion.idTipo=1   AND bodegas_productos_facturacion.".$SIS_where_3."   AND bodegas_productos_facturacion.Pago_Semana=".semana_actual()."   AND bodegas_productos_facturacion.Pago_ano=".ano_actual()."  AND usuarios_bodegas_productos.".$SIS_where_4." LIMIT 1) AS CountFactProducto";
+		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_servicios_facturacion WHERE bodegas_servicios_facturacion.idEstado=1  AND bodegas_servicios_facturacion.idTipo=1   AND bodegas_servicios_facturacion.".$SIS_where_3." AND bodegas_servicios_facturacion.Pago_Semana=".semana_actual()." AND bodegas_servicios_facturacion.Pago_ano=".ano_actual()." LIMIT 1) AS CountFactServicio";
 	}
 	
 	/*** Devolucion Arriendos ***/
-	if($prm_x[15]=='1' OR $idTipoUsuario==1){$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_arriendos_facturacion    INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion.idBodega           WHERE bodegas_arriendos_facturacion.idTipo=1 AND bodegas_arriendos_facturacion.idEstadoDevolucion=1   AND bodegas_arriendos_facturacion.".$x1."   AND bodegas_arriendos_facturacion.Devolucion_Semana=".semana_actual()."   AND bodegas_arriendos_facturacion.Devolucion_ano=".ano_actual()."  AND usuarios_bodegas_arriendos.".$x2." LIMIT 1) AS CountArriendoIn";}
+	if($prm_x[15]=='1' OR $idTipoUsuario==1){$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_arriendos_facturacion    INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion.idBodega           WHERE bodegas_arriendos_facturacion.idTipo=1 AND bodegas_arriendos_facturacion.idEstadoDevolucion=1   AND bodegas_arriendos_facturacion.".$SIS_where_3."   AND bodegas_arriendos_facturacion.Devolucion_Semana=".semana_actual()."   AND bodegas_arriendos_facturacion.Devolucion_ano=".ano_actual()."  AND usuarios_bodegas_arriendos.".$SIS_where_4." LIMIT 1) AS CountArriendoIn";}
 	
 	/*** Documentos x Pagar ***/
 	$PermChequesPagar = $prm_x[23] + $prm_x[24];					
 	if($PermChequesPagar!=0 OR $idTipoUsuario==1) {
-		$subquery .= ",(SELECT COUNT(idPago) FROM pagos_facturas_proveedores    INNER JOIN usuarios_documentos_pago ON usuarios_documentos_pago.idDocPago = pagos_facturas_proveedores.idDocPago           WHERE  pagos_facturas_proveedores.".$x1."   AND pagos_facturas_proveedores.F_Pago_Semana=".semana_actual()."   AND pagos_facturas_proveedores.F_Pago_ano=".ano_actual()."  AND pagos_facturas_proveedores.".$x2." LIMIT 1) AS CountChequePago";
+		$subquery .= ",(SELECT COUNT(idPago) FROM pagos_facturas_proveedores    INNER JOIN usuarios_documentos_pago ON usuarios_documentos_pago.idDocPago = pagos_facturas_proveedores.idDocPago           WHERE  pagos_facturas_proveedores.".$SIS_where_3."   AND pagos_facturas_proveedores.F_Pago_Semana=".semana_actual()."   AND pagos_facturas_proveedores.F_Pago_ano=".ano_actual()."  AND pagos_facturas_proveedores.".$SIS_where_4." LIMIT 1) AS CountChequePago";
 	}
 	
 	/*************** Ventas ***************/
 	/*** Facturas x Cobrar ***/
 	$PermFactComp = $prm_x[19] + $prm_x[20] + $prm_x[21] + $prm_x[22];					
 	if($PermFactComp!=0 OR $idTipoUsuario==1) {
-		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_arriendos_facturacion    INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion.idBodega           WHERE bodegas_arriendos_facturacion.idEstado=1  AND bodegas_arriendos_facturacion.idTipo=2   AND bodegas_arriendos_facturacion.".$x1."   AND bodegas_arriendos_facturacion.Pago_Semana=".semana_actual()."   AND bodegas_arriendos_facturacion.Pago_ano=".ano_actual()."  AND usuarios_bodegas_arriendos.".$x2." LIMIT 1) AS CountFactArriendoVent";
-		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_insumos_facturacion      INNER JOIN usuarios_bodegas_insumos   ON usuarios_bodegas_insumos.idBodega = bodegas_insumos_facturacion.idBodegaDestino        WHERE bodegas_insumos_facturacion.idEstado=1    AND bodegas_insumos_facturacion.idTipo=2     AND bodegas_insumos_facturacion.".$x1."     AND bodegas_insumos_facturacion.Pago_Semana=".semana_actual()."     AND bodegas_insumos_facturacion.Pago_ano=".ano_actual()."    AND usuarios_bodegas_insumos.".$x2." LIMIT 1) AS CountFactInsumoVent";
-		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_productos_facturacion    INNER JOIN usuarios_bodegas_productos ON usuarios_bodegas_productos.idBodega = bodegas_productos_facturacion.idBodegaDestino    WHERE bodegas_productos_facturacion.idEstado=1  AND bodegas_productos_facturacion.idTipo=2   AND bodegas_productos_facturacion.".$x1."   AND bodegas_productos_facturacion.Pago_Semana=".semana_actual()."   AND bodegas_productos_facturacion.Pago_ano=".ano_actual()."  AND usuarios_bodegas_productos.".$x2." LIMIT 1) AS CountFactProductoVent";
-		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_servicios_facturacion WHERE bodegas_servicios_facturacion.idEstado=1  AND bodegas_servicios_facturacion.idTipo=2   AND bodegas_servicios_facturacion.".$x1." AND bodegas_servicios_facturacion.Pago_Semana=".semana_actual()." AND bodegas_servicios_facturacion.Pago_ano=".ano_actual()." LIMIT 1) AS CountFactServicioVent";
+		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_arriendos_facturacion    INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion.idBodega           WHERE bodegas_arriendos_facturacion.idEstado=1  AND bodegas_arriendos_facturacion.idTipo=2   AND bodegas_arriendos_facturacion.".$SIS_where_3."   AND bodegas_arriendos_facturacion.Pago_Semana=".semana_actual()."   AND bodegas_arriendos_facturacion.Pago_ano=".ano_actual()."  AND usuarios_bodegas_arriendos.".$SIS_where_4." LIMIT 1) AS CountFactArriendoVent";
+		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_insumos_facturacion      INNER JOIN usuarios_bodegas_insumos   ON usuarios_bodegas_insumos.idBodega = bodegas_insumos_facturacion.idBodegaDestino        WHERE bodegas_insumos_facturacion.idEstado=1    AND bodegas_insumos_facturacion.idTipo=2     AND bodegas_insumos_facturacion.".$SIS_where_3."     AND bodegas_insumos_facturacion.Pago_Semana=".semana_actual()."     AND bodegas_insumos_facturacion.Pago_ano=".ano_actual()."    AND usuarios_bodegas_insumos.".$SIS_where_4." LIMIT 1) AS CountFactInsumoVent";
+		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_productos_facturacion    INNER JOIN usuarios_bodegas_productos ON usuarios_bodegas_productos.idBodega = bodegas_productos_facturacion.idBodegaDestino    WHERE bodegas_productos_facturacion.idEstado=1  AND bodegas_productos_facturacion.idTipo=2   AND bodegas_productos_facturacion.".$SIS_where_3."   AND bodegas_productos_facturacion.Pago_Semana=".semana_actual()."   AND bodegas_productos_facturacion.Pago_ano=".ano_actual()."  AND usuarios_bodegas_productos.".$SIS_where_4." LIMIT 1) AS CountFactProductoVent";
+		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_servicios_facturacion WHERE bodegas_servicios_facturacion.idEstado=1  AND bodegas_servicios_facturacion.idTipo=2   AND bodegas_servicios_facturacion.".$SIS_where_3." AND bodegas_servicios_facturacion.Pago_Semana=".semana_actual()." AND bodegas_servicios_facturacion.Pago_ano=".ano_actual()." LIMIT 1) AS CountFactServicioVent";
 		
 	}
 	
 	/*** Devolucion Arriendos ***/
-	if($prm_x[19]=='1' OR $idTipoUsuario==1){$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_arriendos_facturacion    INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion.idBodega           WHERE bodegas_arriendos_facturacion.idTipo=2 AND bodegas_arriendos_facturacion.idEstadoDevolucion=1   AND bodegas_arriendos_facturacion.".$x1."   AND bodegas_arriendos_facturacion.Devolucion_Semana=".semana_actual()."   AND bodegas_arriendos_facturacion.Devolucion_ano=".ano_actual()."  AND usuarios_bodegas_arriendos.".$x2." LIMIT 1) AS CountArriendoOut";}
+	if($prm_x[19]=='1' OR $idTipoUsuario==1){$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_arriendos_facturacion    INNER JOIN usuarios_bodegas_arriendos ON usuarios_bodegas_arriendos.idBodega = bodegas_arriendos_facturacion.idBodega           WHERE bodegas_arriendos_facturacion.idTipo=2 AND bodegas_arriendos_facturacion.idEstadoDevolucion=1   AND bodegas_arriendos_facturacion.".$SIS_where_3."   AND bodegas_arriendos_facturacion.Devolucion_Semana=".semana_actual()."   AND bodegas_arriendos_facturacion.Devolucion_ano=".ano_actual()."  AND usuarios_bodegas_arriendos.".$SIS_where_4." LIMIT 1) AS CountArriendoOut";}
 	
 	/*** Documentos x Cobrar ***/
 	$PermChequesCobrar = $prm_x[25] + $prm_x[26];					
 	if($PermChequesCobrar!=0 OR $idTipoUsuario==1) {
-		$subquery .= ",(SELECT COUNT(idPago) FROM pagos_facturas_clientes    INNER JOIN usuarios_documentos_pago ON usuarios_documentos_pago.idDocPago = pagos_facturas_clientes.idDocPago           WHERE  pagos_facturas_clientes.".$x1."   AND pagos_facturas_clientes.F_Pago_Semana=".semana_actual()."   AND pagos_facturas_clientes.F_Pago_ano=".ano_actual()."  AND pagos_facturas_clientes.".$x2." LIMIT 1) AS CountChequeCobro";
+		$subquery .= ",(SELECT COUNT(idPago) FROM pagos_facturas_clientes    INNER JOIN usuarios_documentos_pago ON usuarios_documentos_pago.idDocPago = pagos_facturas_clientes.idDocPago           WHERE  pagos_facturas_clientes.".$SIS_where_3."   AND pagos_facturas_clientes.F_Pago_Semana=".semana_actual()."   AND pagos_facturas_clientes.F_Pago_ano=".ano_actual()."  AND pagos_facturas_clientes.".$SIS_where_4." LIMIT 1) AS CountChequeCobro";
 	}
 	
 	
@@ -321,9 +321,9 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SI
 	/*****************************************************************************************************************/
 	if($idTipoUsuario==1) { 
 		//verifica la capa de desarrollo
-		$whitelist = array( 'localhost', '127.0.0.1', '::1' );
+		$SIS_where_2hitelist = array( 'localhost', '127.0.0.1', '::1' );
 		//si estoy en ambiente de desarrollo
-		if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
+		if( in_array( $_SERVER['REMOTE_ADDR'], $SIS_where_2hitelist) ){
 			echo widget_superadmin($dbConn, DB_SERVER, DB_USER, DB_PASS, 'power_engine_main', DB_NAME );
 		//si estoy en ambiente de produccion
 		}else{
@@ -446,7 +446,7 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SI
 						   'bodegas_productos_listado', 'bodegas_productos_facturacion_existencias', 'bodegas_productos_facturacion_tipo', 
 						   'productos_listado', 'sistema_productos_uml', 'tipo1,tipo2,tipo3,tipo4,tipo5,tipo6,tipo7,tipo8,tipo9',1,
 						   $trans[1],$dbConn, 'usuarios_bodegas_productos', $_SESSION['usuario']['basic_data']['idSistema']);
-		
+
 		//Bodega de Insumos
 		echo widget_bodega('Bodega de Insumos',
 						   'bodegas_insumos_listado', 'bodegas_insumos_facturacion_existencias', 'bodegas_insumos_facturacion_tipo', 

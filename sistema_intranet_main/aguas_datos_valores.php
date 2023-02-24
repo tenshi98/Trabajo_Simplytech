@@ -74,7 +74,7 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -83,7 +83,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($valorCargoFijo)){      $x1  = $valorCargoFijo;      }else{$x1  = $rowdata['valorCargoFijo'];}
@@ -111,7 +111,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_select_n_auto('Dias para Vencimiento','NdiasPago', $x9, 2, 1, 31);	
 				$Form_Inputs->form_input_phone('Fono Emergencias 24 hrs', 'Fac_nEmergencia', $x10, 2);
 				$Form_Inputs->form_input_phone('Fono Consultas', 'Fac_nConsultas', $x11, 2);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idDato', $_GET['id'], 2);
@@ -141,7 +141,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($valorCargoFijo)){      $x1  = $valorCargoFijo;      }else{$x1  = '';}
@@ -169,13 +169,12 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_select_n_auto('Dias para Vencimiento','NdiasPago', $x9, 2, 1, 31);	
 				$Form_Inputs->form_input_phone('Fono Emergencias 24 hrs', 'Fac_nEmergencia', $x10, 2);
 				$Form_Inputs->form_input_phone('Fono Consultas', 'Fac_nConsultas', $x11, 2);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -187,7 +186,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Variable de busqueda
@@ -252,7 +250,7 @@ foreach ($arrUML as $uml) {
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>		  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrUML as $uml) { ?>
 					<tr class="odd">

@@ -633,7 +633,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 				
 				for ($z_ano = $ano_min; $z_ano <= $ano_max; $z_ano++) {
 					$suma_real       = 0;
-					
+
 					//recorro los meses
 					if($interruptor_mes==0){
 						for ($z_mes = $mes_min; $z_mes <= 12; $z_mes++) {
@@ -684,7 +684,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 					
 					//Total real
 					echo '<td align="right">'.valores($suma_real, 0).'</td>';
-					
+
 					//porcentaje cumplimiento
 					if($value['ValorTotal']!=0){
 						
@@ -879,7 +879,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 									<td colspan="1" align="center" style="background-color: #ccc;">Total<br/>Real</td>
 									<td colspan="1" align="center" style="background-color: #ccc;">%<br/>Cumplimiento</td>
 								</tr>
-								
+
 									<?php //Se imprime el arbol
 										
 										echo arrayFlujo($array3d, $FlujoMensual, $UML, $nmax, $ano_min, $ano_max, $mes_min, $mes_max);
@@ -1109,7 +1109,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 		</div>
 	</div>
 </div>
-	
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -1276,7 +1276,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 		</div>
 	</div>
 </div>
-	
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -1388,8 +1388,8 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 //sistema
 $y = "licitacion_listado.idEstado=1 AND licitacion_listado.idAprobado=2 ";	
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
- 
- ?>
+
+?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -1398,7 +1398,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){       $x0  = $idCliente;     }else{$x0  = '';}
@@ -1423,7 +1423,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

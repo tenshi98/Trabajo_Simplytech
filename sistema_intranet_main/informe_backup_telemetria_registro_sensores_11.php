@@ -244,7 +244,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 			</script>
 		</div>
-	
+
 	<?php } ?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -330,7 +330,7 @@ alert_post_data(2,1,1, $Alert_Text);
 				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 2, $dbConn);
 				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>

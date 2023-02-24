@@ -550,7 +550,7 @@ require_once '0_validate_user_1.php';
 				}
 				//si hay repetidos
 				if($n_repetidos!=0) {
-					$error['productos'] = 'error/El Producto que intenta agregar ya existe';	
+					$error['productos'] = 'error/El Producto que intenta agregar ya existe';
 				}
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
@@ -1854,11 +1854,11 @@ require_once '0_validate_user_1.php';
 				}
 				//si hay repetidos
 				if($n_repetidos!=0) {
-					$error['productos'] = 'error/El producto que intenta agregar ya existe';	
+					$error['productos'] = 'error/El producto que intenta agregar ya existe';
 				}
 				//si hay repetidos
 				if($n_existencia!=0) {
-					$error['productos'] = 'error/No hay suficientes existencias para algunos productos';	
+					$error['productos'] = 'error/No hay suficientes existencias para algunos productos';
 				}
 				
 			
@@ -2717,15 +2717,15 @@ require_once '0_validate_user_1.php';
 					//Guardo el valor ingreso
 					$ValorIngreso[$j1]   = $rowResultado['ValorIngreso'];
 					$ProductoNombre[$j1] = $rowResultado['Nombre'];
-					$ProductoUnimed[$j1] = $rowResultado['Unimed'];	
+					$ProductoUnimed[$j1] = $rowResultado['Unimed'];
 				}
 				//si hay repetidos
 				if($n_repetidos!=0) {
-					$error['productos'] = 'error/El producto que intenta agregar ya existe';	
+					$error['productos'] = 'error/El producto que intenta agregar ya existe';
 				}
 				//si hay repetidos
 				if($n_existencia!=0) {
-					$error['productos'] = 'error/No hay suficientes existencias para algunos productos';	
+					$error['productos'] = 'error/No hay suficientes existencias para algunos productos';
 				}
 				
 			
@@ -3398,11 +3398,11 @@ require_once '0_validate_user_1.php';
 				}
 				//si hay repetidos
 				if($n_repetidos!=0) {
-					$error['productos'] = 'error/El productos que intenta agregar ya existe';	
+					$error['productos'] = 'error/El productos que intenta agregar ya existe';
 				}
 				//si hay repetidos
 				if($n_existencia!=0) {
-					$error['productos'] = 'error/No hay suficientes existencias para algunos productos';	
+					$error['productos'] = 'error/No hay suficientes existencias para algunos productos';
 				}
 				
 			
@@ -4626,15 +4626,15 @@ require_once '0_validate_user_1.php';
 					//Guardo el valor ingreso
 					$ValorIngreso[$j1]   = $rowResultado['ValorIngreso'];
 					$ProductoNombre[$j1] = $rowResultado['Nombre'];
-					$ProductoUnimed[$j1] = $rowResultado['Unimed'];	
+					$ProductoUnimed[$j1] = $rowResultado['Unimed'];
 				}
 				//si hay repetidos
 				if($n_repetidos!=0) {
-					$error['productos'] = 'error/El producto que intenta agregar ya existe';	
+					$error['productos'] = 'error/El producto que intenta agregar ya existe';
 				}
 				//si hay repetidos
 				if($n_existencia!=0) {
-					$error['productos'] = 'error/No hay suficientes existencias para algunos producto';	
+					$error['productos'] = 'error/No hay suficientes existencias para algunos producto';
 				}
 				
 			
@@ -5223,15 +5223,15 @@ require_once '0_validate_user_1.php';
 					//Guardo el valor ingreso
 					$ValorIngreso[$j1]   = $rowResultado['ValorIngreso'];
 					$ProductoNombre[$j1] = $rowResultado['Nombre'];
-					$ProductoUnimed[$j1] = $rowResultado['Unimed'];	
+					$ProductoUnimed[$j1] = $rowResultado['Unimed'];
 				}
 				//si hay repetidos
 				if($n_repetidos!=0) {
-					$error['productos'] = 'error/El producto que intenta agregar ya existe';	
+					$error['productos'] = 'error/El producto que intenta agregar ya existe';
 				}
 				//si hay repetidos
 				if($n_existencia!=0) {
-					$error['productos'] = 'error/No hay suficientes existencias para algunos productos';	
+					$error['productos'] = 'error/No hay suficientes existencias para algunos productos';
 				}
 				
 			
@@ -5819,7 +5819,7 @@ require_once '0_validate_user_1.php';
 				}
 				//si hay repetidos
 				if($n_repetidos!=0) {
-					$error['productos'] = 'error/El producto que intenta agregar ya existe';	
+					$error['productos'] = 'error/El producto que intenta agregar ya existe';
 				}
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
@@ -6589,7 +6589,7 @@ require_once '0_validate_user_1.php';
 				}
 				//si hay repetidos
 				if($n_repetidos!=0) {
-					$error['productos'] = 'error/El producto que intenta agregar ya existe';	
+					$error['productos'] = 'error/El producto que intenta agregar ya existe';
 				}
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
@@ -7472,7 +7472,7 @@ require_once '0_validate_user_1.php';
 				}
 				//si hay repetidos
 				if($n_repetidos!=0) {
-					$error['productos'] = 'error/El Producto que intenta agregar ya existe';	
+					$error['productos'] = 'error/El Producto que intenta agregar ya existe';
 				}
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
@@ -8350,7 +8350,7 @@ require_once '0_validate_user_1.php';
 				}
 				//si hay repetidos
 				if($n_repetidos!=0) {
-					$error['productos'] = 'error/El Producto que intenta agregar ya existe';	
+					$error['productos'] = 'error/El Producto que intenta agregar ya existe';
 				}
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
@@ -9232,7 +9232,7 @@ require_once '0_validate_user_1.php';
 				}
 				//si hay repetidos
 				if($n_repetidos!=0) {
-					$error['productos'] = 'error/El Producto que intenta agregar ya existe';	
+					$error['productos'] = 'error/El Producto que intenta agregar ya existe';
 				}
 				// Se trae un listado con todos los productos
 				$arrProductos = array();

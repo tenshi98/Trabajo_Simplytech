@@ -314,7 +314,7 @@ array_push( $arrPuntos,$row );
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
+
 						<?php
 						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
@@ -646,7 +646,7 @@ array_push( $arrZonas,$row );
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
+
 						<?php
 						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
@@ -771,10 +771,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_number_spinner('Distancia de plantación','DistanciaPlant', $x10, 0, 100, '0.1', 1, 2);
 				$Form_Inputs->form_input_number_spinner('Distancia Hileras','DistanciaHileras', $x11, 0, 100, '0.1', 1, 2);
 				$Form_Inputs->form_select('Estado','idEstado', $x12, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idPredio', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idZona', $_GET['edit_zona'], 2);
-				
+
 				?>
 
 							
@@ -829,11 +829,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_select('Estado productivo','idEstadoProd', $x9, 2, 'idEstadoProd', 'Nombre', 'core_cross_estados_productivos', 0, '', $dbConn);
 				$Form_Inputs->form_input_number_spinner('Distancia de plantación','DistanciaPlant', $x10, 0, 100, '0.1', 1, 2);
 				$Form_Inputs->form_input_number_spinner('Distancia Hileras','DistanciaHileras', $x11, 0, 100, '0.1', 1, 2);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idPredio', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
-				
+
 				?>
 
 							

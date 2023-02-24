@@ -92,7 +92,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -101,7 +101,7 @@ $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idOT)){              $x1  = $idOT;               }else{$x1  = $rowdata['idOT'];}
@@ -119,7 +119,7 @@ $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=
 				$Form_Inputs->form_input_text('Persona Queja', 'NombreQueja', $x4, 1);
 				$Form_Inputs->form_select('Tipo Queja','idTipoQueja', $x5, 2, 'idTipoQueja', 'Nombre', 'core_tipo_queja', 0, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 1);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -150,7 +150,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
  ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -177,7 +177,7 @@ $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=
 				$Form_Inputs->form_input_text('Persona Queja', 'NombreQueja', $x4, 1);
 				$Form_Inputs->form_select('Tipo Queja','idTipoQueja', $x5, 2, 'idTipoQueja', 'Nombre', 'core_tipo_queja', 0, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 1);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -217,7 +217,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'tipo_desc':     $order_by = 'core_tipo_queja.Nombre DESC ';                  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Queja Descendente';break;
 		case 'fecha_asc':     $order_by = 'orden_trabajo_tareas_quejas.FechaQueja ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Queja Ascendente';break;
 		case 'fecha_desc':    $order_by = 'orden_trabajo_tareas_quejas.FechaQueja DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Queja Descendente';break;
-		
+
 		default: $order_by = 'orden_trabajo_tareas_quejas.idOT DESC'; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> OT Ascendente';
 	}
 }else{
@@ -282,7 +282,7 @@ $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Queja</a><?php }?>
 
 </div>
@@ -311,7 +311,7 @@ $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=
 					
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

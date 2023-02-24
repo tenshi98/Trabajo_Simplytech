@@ -94,7 +94,7 @@ foreach($arrLicitacion as $key) {
 		$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']]['id']     = $d['5'];
 		$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']]['Nombre'] = $n['5'];
 	}
-	
+
 }
 
 function arrayToUL(array $array, $lv, $nmax){

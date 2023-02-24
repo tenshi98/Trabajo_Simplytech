@@ -76,7 +76,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Elearning','idElearning', $x1, 2, 'idElearning', 'Nombre', 'alumnos_elearning_listado',$z, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idCurso', $_GET['id'], 2);
 						
 				?>

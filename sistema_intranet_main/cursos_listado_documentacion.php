@@ -95,7 +95,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','File_Curso', 1, '"jpg", "png", "gif", "jpeg", "bmp", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "mp3", "wav", "pdf", "txt", "rtf", "mp2", "mpeg", "mpg", "mov", "avi", "gz", "gzip", "7Z", "zip", "rar"');
-				
+
 				$Form_Inputs->form_select_n_auto('Semana','Semana', $x2, 2, 1, $rowdata['Semanas']);
 
 				$Form_Inputs->form_input_hidden('idCurso', $_GET['id'], 2);

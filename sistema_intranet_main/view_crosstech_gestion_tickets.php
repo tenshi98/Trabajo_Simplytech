@@ -66,7 +66,7 @@ $rowdata = db_select_data (false, $SIS_query, 'crosstech_gestion_tickets', $SIS_
 ?>
 
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
@@ -104,7 +104,7 @@ $rowdata = db_select_data (false, $SIS_query, 'crosstech_gestion_tickets', $SIS_
 			<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Descripcion'];?></p>
 		</div>
 	</div>
-	
+
 	<?php if(isset($rowdata['DescripcionCierre'])&&$rowdata['DescripcionCierre']!=''){?>
 		<div class="col-xs-12">
 			<div class="row">
@@ -113,7 +113,7 @@ $rowdata = db_select_data (false, $SIS_query, 'crosstech_gestion_tickets', $SIS_
 			</div>
 		</div>
 	<?php } ?>
-	
+
 	<?php if(isset($rowdata['DescripcionCancelacion'])&&$rowdata['DescripcionCancelacion']!=''){?>
 		<div class="col-xs-12">
 			<div class="row">

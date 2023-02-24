@@ -157,7 +157,7 @@ if(!empty($_GET['clone'])){  ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_programacion)){    $x1  = $f_programacion;   }else{$x1  = '';}
@@ -165,7 +165,7 @@ if(!empty($_GET['clone'])){  ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Programada','f_programacion', $x1, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idOT', $_GET['clone'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
@@ -280,12 +280,12 @@ foreach ($arrPermisos as $prod) {
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
-					';	
+					';
 				}
 				
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
-					';	
+					';
 				}
 				?>
 				</script>
@@ -346,7 +346,7 @@ foreach ($arrPermisos as $prod) {
 						document.getElementById('Grasa_inicial').value = "0";
 						document.getElementById('Grasa_relubricacion').value = "0";
 						document.getElementById('Aceite').value = "0";
-					
+
 					//si es otro
 					} else if(Sensores_val_2 == 4){ 
 						document.getElementById('div_Grasa_inicial').style.display = 'none';
@@ -403,7 +403,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Grasa_relubricacion').value = "0";
 							document.getElementById('Aceite').value = "0";
 						//si es otro
-						} else if(modelSelected == 4){ 
+						} else if(modelSelected == 4){
 							document.getElementById('div_Grasa_inicial').style.display = 'none';
 							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
 							document.getElementById('div_Aceite').style.display = 'none';
@@ -466,7 +466,7 @@ foreach ($arrPermisos as $prod) {
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Itemizado','idItemizado', $x1, 1, 'idLevel_'.$tablamad, 'Nombre', 'licitacion_listado_level_'.$tablamad, 'idLevel_'.$_GET['addItemizado'].'='.$_GET['lvl'], '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('tabla', $_GET['tabla'], 2);
 				$Form_Inputs->form_input_hidden('id_tabla', $_GET['id_tabla'], 2);
 				$Form_Inputs->form_input_hidden('idInterno', $_GET['idInterno'], 2);
@@ -500,7 +500,7 @@ $z="idMaquina=".$_SESSION['ot_basicos']['idMaquina'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idLevel_1)){        $x1  = $idLevel_1;        }else{$x1  = '';}
@@ -612,7 +612,7 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
@@ -658,11 +658,11 @@ foreach ($arrPermisos as $prod) {
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 				}
 				?>
 				</script>
-				
+
 				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
@@ -724,7 +724,7 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = '';}
@@ -770,11 +770,11 @@ foreach ($arrPermisos as $prod) {
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 				}
 				?>
 				</script>
-				
+
 				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
@@ -811,7 +811,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = '';}
@@ -848,7 +848,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){        $x0 = $idCliente;        }else{$x0 = $_SESSION['ot_basicos']['idCliente'];}
@@ -872,7 +872,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x3, 2, 'idTipo', 'Nombre', 'core_ot_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Programada','f_programacion', $x4, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -895,7 +895,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 </div>	
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['view'])){?>
- 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
 
@@ -958,7 +958,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
@@ -1134,7 +1134,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_1=1 AND idEstado=1";	
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -1143,7 +1143,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){        $x0  = $idCliente;        }else{$x0  = '';}
@@ -1170,7 +1170,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 				$Form_Inputs->form_date('Fecha Programada','f_programacion', $x4, 2);
 				$Form_Inputs->form_select_filter('Trabajador responsable','idTrabajador', $x5, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 1);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -1214,7 +1214,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'prioridad_desc':     $order_by = 'core_ot_prioridad.Nombre DESC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Descendente';break;
 		case 'tipotrab_asc':       $order_by = 'core_ot_tipos.Nombre ASC ';                  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Trabajo Ascendente'; break;
 		case 'tipotrab_desc':      $order_by = 'core_ot_tipos.Nombre DESC ';                 $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Tipo Trabajo Descendente';break;
-		
+
 		default: $order_by = 'orden_trabajo_listado.idOT DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> OT Descendente';
 	}
 }else{
@@ -1271,7 +1271,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){
 	if (isset($_SESSION['ot_basicos']['idMaquina'])&&$_SESSION['ot_basicos']['idMaquina']!=''){?>
 		
@@ -1313,11 +1313,10 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join
 				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x3, 1, 'idTipo', 'Nombre', 'core_ot_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Programada','f_programacion', $x4, 1);
 				$Form_Inputs->form_select_filter('Trabajador responsable','idTrabajador', $x6, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $y, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

@@ -168,7 +168,7 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){       $x1  = $idProducto;      }else{$x1  = $_SESSION['insumos_traspaso_productos'][$_GET['editProd']]['idProducto'];}
@@ -178,7 +178,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado',$zx2, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
-				
+
 				$Form_Inputs->form_input_disabled('Unidad de Medida','unimed', $row_data['Unimed']);
 				$Form_Inputs->form_input_disabled('Valor Unitario','Unitario', Cantidades_decimales_justos($row_data['ValorIngreso']));
 				$Form_Inputs->form_input_disabled('Existencias','Existencias', Cantidades_decimales_justos($Total_existencias));
@@ -240,13 +240,13 @@ $Form_Inputs = new Inputs();
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
+
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
 					<a onclick="producto_add();"  class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Nuevo</a>
 				</div>
 				<div class="clearfix"></div>
 				<div id="insert_producto"></div>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -293,7 +293,7 @@ $Form_Inputs = new Inputs();
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	
+
 </div>
 <div class="clearfix"></div>
 
@@ -399,7 +399,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idCentroCosto)){  $x1  = $idCentroCosto;  }else{$x1  = $_SESSION['insumos_traspaso_basicos']['idCentroCosto'];}
@@ -461,8 +461,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x2, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', $z1, $dbConn);
 				$Form_Inputs->form_select('Bodega Destino','idBodegaDestino', $x3, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', $z2, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -504,7 +503,7 @@ if($valor_0!=0){
 	<div class="clearfix"></div>
 	';
 }else{ ?>
-	
+
 	<div class="clearfix"></div>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 		<div class="btn-group pull-right" role="group" aria-label="...">
@@ -523,7 +522,7 @@ if($valor_0!=0){
 
 		</div>
 		<div class="clearfix"></div>
-	</div> 
+	</div>
 <?php } ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -570,7 +569,7 @@ if($valor_0!=0){
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
@@ -646,7 +645,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){   $x1  = $Creacion_fecha;    }else{$x1  = '';}
@@ -660,15 +659,14 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x2, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', $z1, $dbConn);
 				$Form_Inputs->form_select('Bodega Destino','idBodegaDestino', $x3, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', $z2, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idTipo', 4, 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -680,7 +678,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Se inicializa el paginador de resultados
@@ -700,7 +697,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'bod_dest_desc':   $order_by = 'bodega2.Nombre DESC ';                             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Bodega Destino Descendente';break;
 		case 'fecha_asc':       $order_by = 'bodegas_insumos_facturacion.Creacion_fecha ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente';break;
 		case 'fecha_desc':      $order_by = 'bodegas_insumos_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		
+
 		default: $order_by = 'bodegas_insumos_facturacion.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
@@ -758,7 +755,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){ ?>
 		<?php if (isset($_SESSION['insumos_traspaso_basicos']['idBodegaOrigen'])&&$_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']!=''){?>
 			
@@ -795,11 +792,10 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x4, 1, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', $z1, $dbConn);
 				$Form_Inputs->form_select('Bodega Destino','idBodegaDestino', $x5, 1, 'idBodega', 'Nombre', 'bodegas_insumos_listado', $z2, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

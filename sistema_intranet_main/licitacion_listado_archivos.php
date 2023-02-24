@@ -56,7 +56,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -74,7 +74,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','NombreArchivo', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
 				$Form_Inputs->form_input_text('Detalle', 'Detalle', $x1, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idLicitacion', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('Fecha_ingreso', fecha_actual(), 2);

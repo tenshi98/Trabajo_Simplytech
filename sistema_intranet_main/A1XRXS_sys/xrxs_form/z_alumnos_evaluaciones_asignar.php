@@ -330,7 +330,7 @@ require_once '0_validate_user_1.php';
 					//Traigo las preguntas
 					$arrPreguntas = array();
 					$arrPreguntas = db_select_array (false, 'quiz_listado.Tiempo, quiz_listado_preguntas.idPregunta', 'quiz_listado_preguntas', 'LEFT JOIN `quiz_listado` ON quiz_listado.idQuiz = quiz_listado_preguntas.idQuiz', 'quiz_listado_preguntas.idQuiz='.$idQuiz.' AND quiz_listado_preguntas.idCategoria='.$cat['idCategoria'], 'quiz_listado_preguntas.idCategoria ASC, RAND() LIMIT '.$categoria[$xxn], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//se cuentan las preguntas de la campaña y se guardan sus id
 					foreach ($arrPreguntas as $pre) {
 						$Total_Preguntas++;
@@ -892,7 +892,7 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",'".$pre['idAlumno']."'";
 					$SIS_data .= ",'2'" ;
 					$SIS_data .= ",'".$Programada_fecha."'";
-					
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idAsignadas, idAlumno, idTipo, Programada_fecha';
 					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_evaluaciones_asignadas_alumnos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

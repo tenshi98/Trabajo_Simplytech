@@ -69,7 +69,7 @@ $Alert_Text .= '<a href="1download.php?dir='.simpleEncode('templates', fecha_act
 alert_post_data(2,1,2, $Alert_Text);
 	
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -78,7 +78,7 @@ alert_post_data(2,1,2, $Alert_Text);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate >
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idOpciones)){  $x1 = $idOpciones;   }else{$x1 = '';}
@@ -94,7 +94,7 @@ alert_post_data(2,1,2, $Alert_Text);
 				$Form_Inputs->form_input_hidden('idEstadoContrato', 1, 2);	 
 				
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_plant">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -285,7 +285,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){              $x1  = $Nombre;               }else{$x1  = '';}
@@ -300,13 +300,13 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_text('Apellido Paterno', 'ApellidoPat', $x2, 2);
 				$Form_Inputs->form_input_text('Apellido Materno', 'ApellidoMat', $x3, 2);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 2);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('idEstadoContrato', 1, 2);	 
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -318,7 +318,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 /**********************************************************/
@@ -336,7 +335,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'nombre_desc':   $order_by = 'postulantes_listado.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
 		case 'estado_asc':    $order_by = 'core_estados.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
 		case 'estado_desc':   $order_by = 'core_estados.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		
+
 		default: $order_by = 'postulantes_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';
 	}
 }else{
@@ -386,10 +385,10 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'postulantes_listado', $SIS
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Postulante</a><?php } ?>
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new_plantilla=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear con Plantilla</a><?php } ?>
-	
+
 </div>
 <div class="clearfix"></div>
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
@@ -409,11 +408,10 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'postulantes_listado', $SIS
 				$Form_Inputs->form_input_text('Apellido Paterno', 'ApellidoPat', $x2, 1);
 				$Form_Inputs->form_input_text('Apellido Materno', 'ApellidoMat', $x3, 1);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
@@ -425,8 +423,7 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'postulantes_listado', $SIS
 	</div>
 </div>
 <div class="clearfix"></div>
-                     
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>

@@ -90,7 +90,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 ?>
 
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
@@ -179,11 +179,11 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
 		</div>
 	</div>
-	
+
 </section>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
-	
+
 	<?php if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
@@ -233,7 +233,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		
 	<?php }
 } ?>
- 
+
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

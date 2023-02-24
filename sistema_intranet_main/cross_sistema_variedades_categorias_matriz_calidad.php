@@ -103,13 +103,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select_depend1('Proceso','idProceso', $x1, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, 0,
 										 'Matriz','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'cross_quality_calidad_matriz', $z, 0, 
 										 $dbConn, 'form1');
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idCategoria',$_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idVarMatriz',$_GET['edit'], 2);
-				
+
 				?>
 
 				<div class="form-group">

@@ -94,11 +94,10 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_links', $SIS_join,
 				$Form_Inputs->form_input_icon('Enlace', 'Enlace', $x2, 2,'fa fa-file-image-o');
 				$Form_Inputs->form_textarea('Palabras Clave', 'PalabrasClave', $x3, 2);
 				$Form_Inputs->form_select('Estado','idEstado', $x4, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idLinks', $_GET['edit'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -108,7 +107,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_links', $SIS_join,
 		</div>
 	</div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
@@ -134,10 +133,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_icon('Nombre', 'Nombre', $x1, 2,'fa fa-file-image-o');
 				$Form_Inputs->form_input_icon('Enlace', 'Enlace', $x2, 2,'fa fa-file-image-o');
 				$Form_Inputs->form_textarea('Palabras Clave', 'PalabrasClave', $x3, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idSitio', simpleDecode($_GET['id'], fecha_actual()), 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
-				
+
 				?>
 
 				<div class="form-group">

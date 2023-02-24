@@ -174,7 +174,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
 		</div>
 	</div>
-	
+
 	<?php
 	$zz  = '?idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual());
 	$zz .= '&view='.$_GET['view'];
@@ -194,7 +194,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 </section>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
-	
+
 	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
 			<tbody>
@@ -216,7 +216,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 			</tbody>
 		</table>
 	<?php } ?>
-	
+
 	<?php if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
@@ -239,7 +239,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
     <?php } ?>
     
 </div>
- 
+
 <?php 
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){

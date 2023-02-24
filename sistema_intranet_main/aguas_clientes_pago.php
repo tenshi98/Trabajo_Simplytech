@@ -116,7 +116,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 				<div class="pull-left">Cargo Fijo Cliente</div>
 				<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleCargoFijoValor'], 0); ?></small>
 				<br/>
-				
+
 				<?php if(isset($rowFacturacion['DetalleConsumoValor'])&&$rowFacturacion['DetalleConsumoValor']!='0'){ ?>
 					<div class="pull-left">Consumo Agua Potable</div>
 					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleConsumoValor'], 0); ?></small>
@@ -167,7 +167,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleSaldoAnterior'], 0)?></small>
 					<br/>
 				<?php } ?>
-				
+
 				<?php if(isset($rowFacturacion['DetalleOtrosCargos1Valor'])&&$rowFacturacion['DetalleOtrosCargos1Valor']!='0'){ ?>
 					<div class="pull-left">Otros Cargos 1</div>
 					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos1Valor'], 0)?></small>
@@ -205,7 +205,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 				</li>
 			<?php } ?>
 			<li class="list-group-item">
-				
+
 				<div class="pull-left">TOTAL A PAGAR</div>
 				<?php $calculo = $rowFacturacion['DetalleTotalAPagar'] - $rowFacturacion['montoPago']; ?>
 				<small class="pull-right"><strong><?php echo Valores($calculo, 0); ?></strong></small>
@@ -259,7 +259,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 	</div> 
 							
 </div>
-	
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['submit_filter'])){
 //obtengo los datos del cliente
@@ -351,7 +351,7 @@ array_push( $arrFacturaciones,$row );
 		<hr>	
 	</div>
 </div>
- 
+
 <?php if(isset($rowFacturacion['DetalleTotalAPagar'])&&$rowFacturacion['DetalleTotalAPagar']!=''){?>
 	<div class="row inbox">
 							
@@ -529,7 +529,7 @@ array_push( $arrFacturaciones,$row );
 } elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
-//Indico el sistema	 
+//Indico el sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';	 
 ?>
 
@@ -549,7 +549,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Identificador,Nombre', 'aguas_clientes_listado', $z, 'ORDER BY Identificador ASC', $dbConn);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 2);
 				?>
@@ -625,7 +625,7 @@ $SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrUsers = array();
 $arrUsers = db_select_array (false, $SIS_query, 'aguas_clientes_pago', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
 
-//Indico el sistema	 
+//Indico el sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';	
 ?>
 
@@ -638,7 +638,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Ingresar Pago</a><?php }?>
 
 </div>
@@ -659,7 +659,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 					
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

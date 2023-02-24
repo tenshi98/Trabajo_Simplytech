@@ -106,10 +106,10 @@ require_once '0_validate_user_1.php';
 					/**********************************************************************/
 					//selecciono el monto desde el registro de pago
 					$rowPago = db_select_data (false, 'pagos_boletas_clientes.MontoPagado,sistema_documentos_pago.Nombre AS Documento,pagos_boletas_clientes.N_DocPago', 'pagos_boletas_clientes', 'LEFT JOIN sistema_documentos_pago ON sistema_documentos_pago.idDocPago = pagos_boletas_clientes.idDocPago', 'pagos_boletas_clientes.idPago = "'.$indice1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//selecciono los datos de la boleta
 					$rowBoleta = db_select_data (false, 'MontoPagado,idUsuarioPago,idDocPago,N_DocPago,F_Pago,F_Pago_dia,F_Pago_mes,F_Pago_ano', 'boleta_honorarios_facturacion', '', 'idFacturacion = "'.$indice2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//verifico si el dato es pago parcial
 					if($rowBoleta['MontoPagado']>$rowPago['MontoPagado']){
 						$nuevoMonto = $rowBoleta['MontoPagado'] - $rowPago['MontoPagado'];

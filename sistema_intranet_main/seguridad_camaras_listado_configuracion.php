@@ -137,7 +137,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_post_data(2, 'Este numero de canal debe de coincidir con el que figura en el DVR O NVR.');
 				$Form_Inputs->form_input_number_spinner('N° de Canal','Chanel', $x8, 0, 99, 1, 0, 2);
 				$Form_Inputs->form_select('Estado','idEstado', $x9, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idCamara', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idCanal', $_GET['edit_camara'], 2);
 				?>
@@ -212,10 +212,10 @@ $rowConfig = mysqli_fetch_assoc ($resultado);
 				}
 				$Form_Inputs->form_post_data(2, 'Este numero de canal debe de coincidir con el que figura en el DVR O NVR.');
 				$Form_Inputs->form_input_number_spinner('N° de Canal','Chanel', $x8, 0, 99, 1, 0, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idCamara', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
-				
+
 				?>
 
 							

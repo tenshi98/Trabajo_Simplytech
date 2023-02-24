@@ -185,7 +185,7 @@ foreach ($arrPermisos as $prod) {
 }
 
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -213,12 +213,11 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_date('Fecha de muestreo','f_muestreo', $x1, 2);
 				$Form_Inputs->form_date('Fecha Recibida','f_recibida', $x2, 2);
 				$Form_Inputs->form_date('Fecha del reporte','f_reporte', $x3, 2);
-				
+
 				$Form_Inputs->form_tittle(3, 'Laboratorio');
 				$Form_Inputs->form_select('Tipo Analisis','idTipo', $x4, 2, 'idTipo', 'Nombre', 'analisis_listado_tipo', 0, '', $dbConn);
 				$Form_Inputs->form_select('Laboratorio','idLaboratorio', $x5, 1, 'idLaboratorio', 'Nombre', 'laboratorio_listado', 0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_tittle(3, 'Datos Iniciales');
 				$Form_Inputs->form_input_number('N° de muestra', 'n_muestra', $x6, 2);
 				
@@ -256,7 +255,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_textarea('Diagnostico','obs_Diagnostico', $x7, 1);
 				$Form_Inputs->form_textarea('Accion','obs_Accion', $x8, 1);
 				$Form_Inputs->form_select('Estado','idEstado', $x9, 2, 'idEstado', 'Nombre', 'core_analisis_estado', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idAnalisis', $_GET['id'], 2);
 			
 				?>
@@ -421,7 +420,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_tittle(3, 'Laboratorio');
 				$Form_Inputs->form_select('Tipo Analisis','idTipo', $x1, 2, 'idTipo', 'Nombre', 'analisis_listado_tipo', 0, '', $dbConn);
 				$Form_Inputs->form_select('Laboratorio','idLaboratorio', $x2, 1, 'idLaboratorio', 'Nombre', 'laboratorio_listado', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_tittle(3, 'Datos Iniciales');
 				$Form_Inputs->form_input_number('N° de muestra', 'n_muestra', $x3, 2);
 				
@@ -473,7 +472,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_textarea('Diagnostico','obs_Diagnostico', '', 1);
 				$Form_Inputs->form_textarea('Accion','obs_Accion', '', 1);
 				$Form_Inputs->form_select('Estado','idEstado', '', 2, 'idEstado', 'Nombre', 'core_analisis_estado', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 2);
 				$Form_Inputs->form_input_hidden('f_muestreo', $_GET['f_muestreo'], 2);
 				$Form_Inputs->form_input_hidden('f_recibida', $_GET['f_recibida'], 2);
@@ -481,9 +480,9 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_hidden('idMaquina', $_GET['idMaquina'], 2);
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
-				
+
 				?>
-				
+
 				<script>
 					document.getElementById('div_idLaboratorio').style.display = 'none';
 					
@@ -503,7 +502,7 @@ foreach ($arrPermisos as $prod) {
 							
 							
 				</script>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit">
 					<a href="<?php echo $location.'&new=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -547,12 +546,12 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_2
 				$Form_Inputs->form_select_depend1('Maquina','idMaquina', $x4, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
 										 'Analisis','idMatriz', $x5, 2, 'idMatriz', 'Nombre', 'maquinas_listado_matriz', 'idEstado=1', 0, 
 										  $dbConn, 'form1');
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf178; Continuar" name="new2">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -564,7 +563,6 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_2
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 /**********************************************************/
@@ -590,7 +588,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'frecibida_desc': $order_by = 'analisis_listado.f_recibida DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Recibida Descendente';break;
 		case 'freporte_asc':   $order_by = 'analisis_listado.f_reporte ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Reporte Ascendente';break;
 		case 'freporte_desc':  $order_by = 'analisis_listado.f_reporte DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Reporte Descendente';break;
-		
+
 		default: $order_by = 'analisis_listado.idAnalisis DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';
 	}
 }else{
@@ -647,7 +645,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'analisis_listado', $SIS_join, $S
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location.'&pagina='.$_GET['pagina'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Ingresar Nuevo Analisis</a><?php } ?>
 
 </div>
@@ -672,11 +670,10 @@ $arrTipo = db_select_array (false, $SIS_query, 'analisis_listado', $SIS_join, $S
 				$Form_Inputs->form_select_depend1('Maquina','idMaquina', $x4, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, 0,
 										 'Analisis','idMatriz', $x5, 1, 'idMatriz', 'Nombre', 'maquinas_listado_matriz', 'idEstado=1', 0, 
 										  $dbConn, 'form1');
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

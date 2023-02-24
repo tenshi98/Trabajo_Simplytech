@@ -1,7 +1,7 @@
 <?php
 /**************************************************************************/
 //Cross
-$temp = $prm_x[38] + $prm_x[39] + $prm_x[40] + $prm_x[41];					
+$temp = $prm_x[38] + $prm_x[39] + $prm_x[40] + $prm_x[41];
 if($temp!=0) {
 	
 //Se traen todas las solicitudes	
@@ -144,7 +144,7 @@ foreach ($arrSolicitud as $sol) {
 		</div>
 		
 	</div>
-	
+
 <?php } ?>
 
 

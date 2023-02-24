@@ -151,7 +151,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUbicacion) && $idUbicacion!=''){ 
 					// consulto los datos
 					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado', '', 'idUbicacion = '.$idUbicacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//se guarda dato
 					$_SESSION['nomina_basicos']['Ubicacion'] .= $rowUbicacion['Nombre'];
 				}
@@ -282,7 +282,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUbicacion) && $idUbicacion!=''){ 
 					// consulto los datos
 					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado', '', 'idUbicacion = '.$idUbicacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					//se guarda dato
 					$_SESSION['nomina_basicos']['Ubicacion'] .= $rowUbicacion['Nombre'];
 				}

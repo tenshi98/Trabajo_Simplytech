@@ -267,7 +267,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 												  $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 2,'fa fa-map');	 
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x8, 1,'fa fa-industry');
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
@@ -308,7 +308,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'estado_desc':     $order_by = 'seg_vecinal_clientes_listado.idEstado DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		case 'verificado_asc':  $order_by = 'core_seguridad_verificacion.Nombre ASC ';     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Verificacion Ascendente';break;
 		case 'verificado_desc': $order_by = 'core_seguridad_verificacion.Nombre DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Verificacion Descendente';break;
-		
+
 		default: $order_by = 'seg_vecinal_clientes_listado.idVerificado ASC, seg_vecinal_clientes_listado.idEstado ASC, seg_vecinal_clientes_listado.Nombre ASC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Verificacion, Estado, Nombre Ascendente';
 	}
 }else{
@@ -365,7 +365,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'seg_vecinal_clientes_listado', 
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Vecino</a><?php }?>
 
 </div>
@@ -400,10 +400,10 @@ $arrUsers = db_select_array (false, $SIS_query, 'seg_vecinal_clientes_listado', 
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
 				$Form_Inputs->form_select('Estado','idEstado', $x10, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 				$Form_Inputs->form_select('Verificacion','idVerificado', $x11, 1, 'idVerificado', 'Nombre', 'core_seguridad_verificacion', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

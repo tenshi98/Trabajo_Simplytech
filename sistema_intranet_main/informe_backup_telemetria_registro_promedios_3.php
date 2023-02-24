@@ -185,7 +185,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 			foreach ($arrEquipos as $equipo) {
 				//Llamo a la funcion
 				$arrTemporal = crear_data($equipo['cantSensores'], $subf, $equipo['idTelemetria'], $_GET['f_inicio'], $_GET['f_termino'], $_GET['desde'], $_GET['hasta'] , $dbConn); ?>
-				
+
 				<div class="tab-pane fade <?php echo $stemp; ?>" id="tab_<?php echo $equipo['idTelemetria']; $stemp = '';?>">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -305,7 +305,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 							
 							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
-								
+
 									<tr class="odd">
 										<td></td>
 										<?php 
@@ -374,7 +374,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 										}
 										echo '</tr>';
 									}
-									?>		
+									?>
 								</tbody>
 							</table>
 						</div>

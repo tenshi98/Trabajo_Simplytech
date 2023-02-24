@@ -53,7 +53,7 @@ if (isset($_GET['del_doc_vehi'])){ $error['del_doc_vehi'] = 'sucess/Mantencion b
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['new_mant'])){ ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -72,7 +72,7 @@ if(!empty($_GET['new_mant'])){ ?>
 				$Form_Inputs->form_tittle(3, 'Mantenciones');
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','doc_mantencion', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
 				$Form_Inputs->form_date('Fecha Vencimiento','doc_fecha_mantencion', $x1, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idVehiculo', $_GET['id'], 2);
 				?>
 
@@ -274,7 +274,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 		</header>
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
-				
+
 				<?php if(isset($rowdata['doc_mantencion'])&&$rowdata['doc_mantencion']!=''){?>
         
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">

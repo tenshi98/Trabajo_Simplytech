@@ -326,19 +326,19 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 			<h5>Datos del Equipo</h5>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				
+
 				<?php if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){ ?>
 				<li class=""><a href="#mediciones" data-toggle="tab"><i class="fa fa-wifi" aria-hidden="true"></i> Ultimas Mediciones</a></li>
 				<?php } ?>
-				
+
 				<?php if(isset($rowdata['idTrabajador'])&&$rowdata['idTrabajador']!=0){?>
 				<li class=""><a href="#trabajador" data-toggle="tab"><i class="fa fa-user-o" aria-hidden="true"></i> Datos del Trabajador</a></li>
 				<?php } ?>
-				
+
 				<?php if(isset($rowdata['idBodega'])&&$rowdata['idBodega']!=0){?>
 				<li class=""><a href="#bodega" data-toggle="tab"><i class="fa fa-cubes" aria-hidden="true"></i> Stock Bodega</a></li>
 				<?php } ?>
-				
+
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">

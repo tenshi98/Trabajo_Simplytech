@@ -51,7 +51,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'vendedor_desc':     $order_by = 'usuarios_listado.Nombre DESC ';                       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Vendedor Descendente';break;
 		case 'fecha_asc':         $order_by = 'cotizacion_prospectos_listado.Creacion_fecha ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
 		case 'fecha_desc':        $order_by = 'cotizacion_prospectos_listado.Creacion_fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		
+
 		default: $order_by = 'cotizacion_prospectos_listado.idCotizacion DESC, cotizacion_prospectos_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Doc, Fecha Descendente';
 	}
 }else{
@@ -99,8 +99,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_prospectos_li
 
 </div>
 <div class="clearfix"></div>
-                     
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -183,7 +182,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_prospectos_li
 <a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 $w      = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -206,7 +205,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProspecto)){        $x1  = $idProspecto;      }else{$x1  = '';}
@@ -231,7 +230,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

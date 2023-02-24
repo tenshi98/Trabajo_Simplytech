@@ -337,7 +337,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		for ($x = 1; $x <= $Maincount; $x++) {
 			$arrTable3[$x]['Contenido']  = $arrTableTemp3[$x];		
 		}
-		
+
 	} 
 	
 	/****************************************************************/

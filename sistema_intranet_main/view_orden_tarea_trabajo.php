@@ -235,14 +235,14 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 	</div>
 
 <?php } ?>
-	
+
 <div class="col-xs-12">
 	<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive">
 		<div id="page-wrap">
 			<div id="header"> ORDEN DE TRABAJO N° <?php echo n_doc($X_Puntero, 8);?></div>
 		
 			<div id="customer">
-				
+
 				<table id="meta" class="pull-left otdata">
 					<tbody>
 						<tr>

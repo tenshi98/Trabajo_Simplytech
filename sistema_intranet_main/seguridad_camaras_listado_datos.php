@@ -149,7 +149,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 							}
 
 							//Si tiene subconfiguracion
-							if(idSubconfiguracion == 1){ 
+							if(idSubconfiguracion == 1){
 								document.getElementById('div_idTipoCamara').style.display = 'none';
 								document.getElementById('div_Config_usuario').style.display = 'none';
 								document.getElementById('div_Config_Password').style.display = 'none';
@@ -165,7 +165,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 								document.getElementById('Config_Web').value = "";
 
 							//No tiene subconfiguracion
-							}else if(idSubconfiguracion == 2){ 
+							}else if(idSubconfiguracion == 2){
 								document.getElementById('div_idTipoCamara').style.display = 'block';
 								document.getElementById('div_Config_usuario').style.display = 'block';
 								document.getElementById('div_Config_Password').style.display = 'block';
@@ -213,7 +213,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 							let idSubconfiguracion_sel= $("#idSubconfiguracion").val();
 
 							//Si tiene subconfiguracion
-							if(idSubconfiguracion_sel == 1){ 
+							if(idSubconfiguracion_sel == 1){
 								document.getElementById('div_idTipoCamara').style.display = 'none';
 								document.getElementById('div_Config_usuario').style.display = 'none';
 								document.getElementById('div_Config_Password').style.display = 'none';
@@ -229,7 +229,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 								document.getElementById('Config_Web').value = "";
 
 							//No tiene subconfiguracion
-							}else if(idSubconfiguracion_sel == 2){ 
+							}else if(idSubconfiguracion_sel == 2){
 								document.getElementById('div_idTipoCamara').style.display = 'block';
 								document.getElementById('div_Config_usuario').style.display = 'block';
 								document.getElementById('div_Config_Password').style.display = 'block';

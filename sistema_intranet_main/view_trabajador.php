@@ -215,7 +215,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
         <div class="tab-content">
 
 			<div class="tab-pane fade active in" id="basicos">
-				
+
 				<div class="wmd-panel">
 
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -476,8 +476,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 					<div class="clearfix"></div>
 			
 				</div>
-				
-				
+
 			</div>
 			
 			
@@ -536,7 +535,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 				</ul>
 			</header>
 			<div class="body tab-content">
-				
+
 				<?php 
 				$xx=1;
 				$var='';

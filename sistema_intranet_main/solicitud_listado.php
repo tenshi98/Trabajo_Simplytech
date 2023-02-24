@@ -182,11 +182,11 @@ if(!empty($_GET['editOtros'])){  ?>
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
 				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['solicitud_otros'][$_GET['editOtros']]['idOtros'], 2);
-				
+
 				$Form_Inputs->form_input_hidden('idFrecuencia', 2, 2);
-				
+
 				?>
 				
 			  
@@ -223,9 +223,9 @@ if(!empty($_GET['editOtros'])){  ?>
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
 				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idFrecuencia', 2, 2);
-				
+
 				?>
 				
 			  
@@ -264,7 +264,7 @@ if(!empty($_GET['editOtros'])){  ?>
 				$Form_Inputs->form_select_filter('Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
 				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['solicitud_servicios'][$_GET['editServicios']]['idServicio'], 2);
 				$Form_Inputs->form_input_hidden('idFrecuencia', 2, 2);
 				?>
@@ -303,7 +303,7 @@ if(!empty($_GET['editOtros'])){  ?>
 				$Form_Inputs->form_select_filter('Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'servicios_listado', 'idEstado=1', '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
 				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idFrecuencia', 2, 2);
 				?>
 				
@@ -341,7 +341,7 @@ if(!empty($_GET['editOtros'])){  ?>
 				$Form_Inputs->form_select_filter('Equipos','idEquipo', $x1, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
 				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['solicitud_arriendos'][$_GET['editArriendo']]['idEquipo'], 2);
 				$Form_Inputs->form_input_hidden('idFrecuencia', 2, 2);
 				?>
@@ -380,7 +380,7 @@ if(!empty($_GET['editOtros'])){  ?>
 				$Form_Inputs->form_select_filter('Equipos','idEquipo', $x1, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad de dias', 'Cantidad', $x2, 2);
 				//$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x3, 2, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idFrecuencia', 2, 2);
 				?>
 				
@@ -444,7 +444,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
-				
+
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['solicitud_insumos'][$_GET['editIns']]['idProducto'], 2);
 				?>
 				
@@ -569,7 +569,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
-				
+
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['solicitud_productos'][$_GET['editProd']]['idProducto'], 2);
 				?>
 				
@@ -632,7 +632,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
-				
+
 				?>
 			  
 				<div class="form-group">
@@ -656,7 +656,7 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){   $x1  = $Creacion_fecha; }else{$x1  = $_SESSION['solicitud_basicos']['Creacion_fecha'];}
@@ -666,12 +666,11 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha de Solicitud','Creacion_fecha', $x1, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x2, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Modificar Documento" name="submit_modBase">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -683,7 +682,6 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  } elseif(!empty($_GET['view'])){
 //Variable para sacar el total
@@ -742,7 +740,7 @@ $total = 0;
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
@@ -836,7 +834,7 @@ $total = 0;
 						</tr>
 				<?php }
 				}?>
-				
+
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Servicios a Solicitar</td>
 					<td><a href="<?php echo $location.'&addServicios=true' ?>" title="Agregar Servicio" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Servicios</a></td>
@@ -864,7 +862,7 @@ $total = 0;
 						</tr>
 				<?php }
 				}?>
-				
+
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Otros a Solicitar</td>
 					<td><a href="<?php echo $location.'&addOtros=true' ?>" title="Agregar Otro" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Otros</a></td>
@@ -922,7 +920,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){   $x1  = $Creacion_fecha; }else{$x1  = '';}
@@ -932,13 +930,12 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha de Solicitud','Creacion_fecha', $x1, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x2, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -970,7 +967,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'creador_desc':      $order_by = 'usuarios_listado.Nombre DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
 		case 'observacion_asc':   $order_by = 'solicitud_listado.Observaciones ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Observaciones Ascendente';break;
 		case 'observacion_desc':  $order_by = 'solicitud_listado.Observaciones DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Observaciones Descendente';break;
-		
+
 		default: $order_by = 'solicitud_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
@@ -1043,11 +1040,10 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'solicitud_listado', $SIS_
 				$Form_Inputs = new Form_Inputs();	
 				$Form_Inputs->form_date('Fecha de Solicitud','Creacion_fecha', $x1, 1);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x2, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

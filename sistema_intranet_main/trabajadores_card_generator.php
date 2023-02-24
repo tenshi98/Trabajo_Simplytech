@@ -375,7 +375,7 @@ switch ($rowCard['idCardType']) {
 
  
 <div id="identification_card" class="fcenter">
-	
+
 	<?php if ($rowCard['idPosition']==1 OR $rowCard['idPosition']==4 OR $rowCard['idPosition']==7 OR $rowCard['idPosition']==2 OR $rowCard['idPosition']==5 OR $rowCard['idPosition']==8) { ?>
 		<div id="card_text">
 			<table>
@@ -387,7 +387,7 @@ switch ($rowCard['idCardType']) {
 			</table> 
 		</div>
 	<?php } ?>
-	
+
 	<?php if (isset($rowCard['idCardImage'])&&$rowCard['idCardImage']==1) { ?>
 		<?php if ($rowCard['idPosition']!=2 && $rowCard['idPosition']!=5 && $rowCard['idPosition']!=8) { ?>
 			<div id="card_box">
@@ -402,7 +402,7 @@ switch ($rowCard['idCardType']) {
 			</div>
 		<?php } ?>
 	<?php } ?>
-	
+
 	<?php if ($rowCard['idPosition']==3 OR $rowCard['idPosition']==6 OR $rowCard['idPosition']==9) { ?>
 		<div id="card_text">
 			<table>
@@ -447,7 +447,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select_filter('Tarjeta','idCard', $x2, 2, 'idCard', 'Nombre', 'card_listado', 0, '', $dbConn);
-				
+
 				?>
 	   
 				

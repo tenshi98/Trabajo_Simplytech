@@ -155,7 +155,7 @@ $html ='
 
 		</div>
 	</div>
-	
+
 </section>';
 
 echo $html;

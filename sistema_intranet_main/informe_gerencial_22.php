@@ -1162,7 +1162,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 					
 					/*****************************************************/
 					if($arrTemp[1]!=false && !empty($arrTemp[1]) && $arrTemp[1]!=''){
-						foreach ($arrTemp[1] as $trab) { 
+						foreach ($arrTemp[1] as $trab) {
 							//calculos
 							$margen_tel   = $trab['Total_1']-$trab['Total_4'];
 							$margen_ins   = $trab['Total_2']-$trab['Total_5'];
@@ -1209,7 +1209,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 					}
 					/*****************************************************/
 					if($arrTemp[2]!=false && !empty($arrTemp[2]) && $arrTemp[2]!=''){
-						foreach ($arrTemp[2] as $trab) { 
+						foreach ($arrTemp[2] as $trab) {
 							//calculos
 							$margen_tel   = $trab['Total_1']-$trab['Total_4'];
 							$margen_ins   = $trab['Total_2']-$trab['Total_5'];
@@ -1256,7 +1256,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 					}
 					/*****************************************************/
 					if($arrTemp[3]!=false && !empty($arrTemp[3]) && $arrTemp[3]!=''){
-						foreach ($arrTemp[3] as $trab) { 
+						foreach ($arrTemp[3] as $trab) {
 							//calculos
 							$margen_tel   = $trab['Total_1']-$trab['Total_4'];
 							$margen_ins   = $trab['Total_2']-$trab['Total_5'];
@@ -1303,7 +1303,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 					}
 					/*****************************************************/
 					if($arrTemp[4]!=false && !empty($arrTemp[4]) && $arrTemp[4]!=''){
-						foreach ($arrTemp[4] as $trab) { 
+						foreach ($arrTemp[4] as $trab) {
 							//calculos
 							$margen_tel   = $trab['Total_1']-$trab['Total_4'];
 							$margen_ins   = $trab['Total_2']-$trab['Total_5'];
@@ -1350,7 +1350,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 					} 
 					/*****************************************************/
 					if($arrTemp[5]!=false && !empty($arrTemp[5]) && $arrTemp[5]!=''){
-						foreach ($arrTemp[5] as $trab) { 
+						foreach ($arrTemp[5] as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
@@ -1387,7 +1387,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 					} 
 					/*****************************************************/
 					if($arrTemp[6]!=false && !empty($arrTemp[6]) && $arrTemp[6]!=''){
-						foreach ($arrTemp[6] as $trab) { 
+						foreach ($arrTemp[6] as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
@@ -1424,7 +1424,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 					}
 					/*****************************************************/
 					if($arrTemp[7]!=false && !empty($arrTemp[7]) && $arrTemp[7]!=''){
-						foreach ($arrTemp[7] as $trab) { 
+						foreach ($arrTemp[7] as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
@@ -1461,7 +1461,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 					}
 					/*****************************************************/
 					if($arrTemp[8]!=false && !empty($arrTemp[8]) && $arrTemp[8]!=''){
-						foreach ($arrTemp[8] as $trab) { 
+						foreach ($arrTemp[8] as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
@@ -1498,7 +1498,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 					}
 					/*****************************************************/
 					if($arrTemp[9]!=false && !empty($arrTemp[9]) && $arrTemp[9]!=''){
-						foreach ($arrTemp[9] as $trab) { 
+						foreach ($arrTemp[9] as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
@@ -1535,7 +1535,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 					}
 					/*****************************************************/
 					if($arrTemp[10]!=false && !empty($arrTemp[10]) && $arrTemp[10]!=''){
-						foreach ($arrTemp[10] as $trab) { 
+						foreach ($arrTemp[10] as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
@@ -1572,7 +1572,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 					}
 					/*****************************************************/
 					if($arrTemp[11]!=false && !empty($arrTemp[11]) && $arrTemp[11]!=''){
-						foreach ($arrTemp[11] as $trab) { 
+						foreach ($arrTemp[11] as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
@@ -1609,7 +1609,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 					}
 					/*****************************************************/
 					if($arrTemp[12]!=false && !empty($arrTemp[12]) && $arrTemp[12]!=''){
-						foreach ($arrTemp[12] as $trab) { 
+						foreach ($arrTemp[12] as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
@@ -1646,7 +1646,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 					}
 					/*****************************************************/
 					if($arrTemp[13]!=false && !empty($arrTemp[13]) && $arrTemp[13]!=''){
-						foreach ($arrTemp[13] as $trab) { 
+						foreach ($arrTemp[13] as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
@@ -1683,7 +1683,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 					}
 					/*****************************************************/
 					if($arrTemp[14]!=false && !empty($arrTemp[14]) && $arrTemp[14]!=''){
-						foreach ($arrTemp[14] as $trab) { 
+						foreach ($arrTemp[14] as $trab) {
 							//calculos
 							$margen_total   = $trab['Total']*-1;
 							$ing_total      = $margen_total;
@@ -1760,7 +1760,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -1769,7 +1769,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){       $x1  = $f_inicio;       }else{$x1  = '';}
@@ -1796,7 +1796,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

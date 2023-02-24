@@ -164,7 +164,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								//Reseteo los valores a 0
 								document.getElementById('idOpcionesGen_10').selectedIndex = 1;
 							//Interfaz Antigua
-							} else if(Interfaz == 2){ 
+							} else if(Interfaz == 2){
 								document.getElementById('div_idOpcionesTel').style.display = '';
 								document.getElementById('div_idOpcionesGen_1').style.display = '';
 								document.getElementById('div_idOpcionesGen_2').style.display = '';
@@ -172,7 +172,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								//Reseteo los valores a 0
 								document.getElementById('idOpcionesGen_10').selectedIndex = 1;
 							//Interfaz Nueva v2
-							} else if(Interfaz == 3){ 
+							} else if(Interfaz == 3){
 								document.getElementById('div_idOpcionesTel').style.display = '';
 								document.getElementById('div_idOpcionesGen_1').style.display = '';
 								document.getElementById('div_idOpcionesGen_2').style.display = '';
@@ -180,7 +180,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								//Reseteo los valores a 0
 								document.getElementById('idOpcionesGen_10').selectedIndex = 1;
 							//Interfaz Solo telemetria
-							} else if(Interfaz == 4){ 
+							} else if(Interfaz == 4){
 								document.getElementById('div_idOpcionesTel').style.display = '';
 								document.getElementById('div_idOpcionesGen_1').style.display = 'none';
 								document.getElementById('div_idOpcionesGen_2').style.display = 'none';
@@ -190,7 +190,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								document.getElementById('idOpcionesGen_2').selectedIndex = 1;
 								document.getElementById('idOpcionesGen_10').selectedIndex = 1;
 							//Interfaz CrossTech
-							} else if(Interfaz == 6){ 
+							} else if(Interfaz == 6){
 								document.getElementById('div_idOpcionesTel').style.display = 'none';
 								document.getElementById('div_idOpcionesGen_1').style.display = 'none';
 								document.getElementById('div_idOpcionesGen_2').style.display = 'none';
@@ -214,10 +214,10 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 							/*******************************************/
 							//Si la Pagina Principal necesita refrescarse, se indica el tiempo
 							//Si
-							if(RefreshPaginaPrincipal == 1){ 
+							if(RefreshPaginaPrincipal == 1){
 								document.getElementById('div_idOpcionesGen_6').style.display = '';				
 							//No
-							} else if(RefreshPaginaPrincipal == 2){ 
+							} else if(RefreshPaginaPrincipal == 2){
 								document.getElementById('div_idOpcionesGen_6').style.display = 'none';
 								//Reseteo los valores a 0
 								document.getElementById('idOpcionesGen_6').value = "0";
@@ -226,9 +226,9 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 						
 						/*******************************************/
 						//se ejecuta al cambiar valor del select		
-						$("#idOpcionesGen_7").on("change", function(){ 
+						$("#idOpcionesGen_7").on("change", function(){
 							//Asignamos el valor seleccionado
-							let OpcionesGen_7 = $(this).val(); 
+							let OpcionesGen_7 = $(this).val();
 							//seleccion de interfaces
 							//Interfaz Nueva v1
 							if(OpcionesGen_7 == 1){
@@ -239,7 +239,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								//Reseteo los valores a 0
 								document.getElementById('idOpcionesGen_10').selectedIndex = 1;
 							//Interfaz Antigua
-							} else if(OpcionesGen_7 == 2){ 
+							} else if(OpcionesGen_7 == 2){
 								document.getElementById('div_idOpcionesTel').style.display = '';
 								document.getElementById('div_idOpcionesGen_1').style.display = '';
 								document.getElementById('div_idOpcionesGen_2').style.display = '';
@@ -247,7 +247,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								//Reseteo los valores a 0
 								document.getElementById('idOpcionesGen_10').selectedIndex = 1;
 							//Interfaz Nueva v2
-							} else if(OpcionesGen_7 == 3){ 
+							} else if(OpcionesGen_7 == 3){
 								document.getElementById('div_idOpcionesTel').style.display = '';
 								document.getElementById('div_idOpcionesGen_1').style.display = '';
 								document.getElementById('div_idOpcionesGen_2').style.display = '';
@@ -255,7 +255,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								//Reseteo los valores a 0
 								document.getElementById('idOpcionesGen_10').selectedIndex = 1;
 							//Interfaz Solo telemetria
-							} else if(OpcionesGen_7 == 4){ 
+							} else if(OpcionesGen_7 == 4){
 								document.getElementById('div_idOpcionesTel').style.display = '';
 								document.getElementById('div_idOpcionesGen_1').style.display = 'none';
 								document.getElementById('div_idOpcionesGen_2').style.display = 'none';
@@ -265,7 +265,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								document.getElementById('idOpcionesGen_2').selectedIndex = 1;
 								document.getElementById('idOpcionesGen_10').selectedIndex = 1;
 							//Interfaz CrossTech
-							} else if(OpcionesGen_7 == 6){ 
+							} else if(OpcionesGen_7 == 6){
 								document.getElementById('div_idOpcionesTel').style.display = 'none';
 								document.getElementById('div_idOpcionesGen_1').style.display = 'none';
 								document.getElementById('div_idOpcionesGen_2').style.display = 'none';
@@ -289,15 +289,15 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 						
 						/*******************************************/
 						//se ejecuta al cambiar valor del select		
-						$("#idOpcionesGen_4").on("change", function(){ 
+						$("#idOpcionesGen_4").on("change", function(){
 							//Asignamos el valor seleccionado
-							let OpcionesGen_4 = $(this).val(); 
+							let OpcionesGen_4 = $(this).val();
 							//Si la Pagina Principal necesita refrescarse, se indica el tiempo
 							//Si
-							if(OpcionesGen_4 == 1){ 
+							if(OpcionesGen_4 == 1){
 								document.getElementById('div_idOpcionesGen_6').style.display = '';				
 							//No
-							} else if(OpcionesGen_4 == 2){ 
+							} else if(OpcionesGen_4 == 2){
 								document.getElementById('div_idOpcionesGen_6').style.display = 'none';
 								//Reseteo los valores a 0
 								document.getElementById('idOpcionesGen_6').value = "0";

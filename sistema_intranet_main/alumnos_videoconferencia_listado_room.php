@@ -98,7 +98,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	if(($rowdata['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
 		<button id="open-room" class="btn btn-success pull-right margin_width fmrbtn" ><i class="fa fa-video-camera" aria-hidden="true"></i> Iniciar VideoConferencia</button>
 	<?php } ?>
-	
+
 </div>
 <div class="clearfix"></div>
 

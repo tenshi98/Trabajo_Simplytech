@@ -205,13 +205,13 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion_est
 <a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Verifico el tipo de usuario que esta ingresando
 $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
- 
- ?>
+
+?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -220,7 +220,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idEstado)){              $xz  = $idEstado;              }else{$xz  = '';}
@@ -277,15 +277,13 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_filter('Puerto Embarque','idPuertoEmbarque', $x14, 1, 'idPuertoEmbarque', 'Codigo,Nombre', 'cross_shipping_puerto_embarque', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Mercado','idMercado', $x15, 1, 'idMercado', 'Codigo,Nombre', 'cross_shipping_mercado', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Pais','idPais', $x16, 1, 'idPais', 'Nombre', 'core_paises', 0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_tittle(3, 'Cuerpo Indentificacion Empresa Transportista');
 				$Form_Inputs->form_select_filter('Empresa Transporte','idEmpresaTransporte', $x17, 1, 'idEmpresaTransporte', 'Nombre', 'cross_shipping_empresa_transporte', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Conductor', 'ChoferNombreRut', $x18, 1);
 				$Form_Inputs->form_input_text('Patente Camion', 'PatenteCamion', $x19, 1);
 				$Form_Inputs->form_input_text('Patente Carro', 'PatenteCarro', $x20, 1);
-				
-				
+
 				$Form_Inputs->form_tittle(3, 'Cuerpo Parametros Evaluados');
 				$Form_Inputs->form_select('Condicion CTN','idCondicion', $x21, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);
 				$Form_Inputs->form_select('Sellado Piso','idSellado', $x22, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
@@ -310,7 +308,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

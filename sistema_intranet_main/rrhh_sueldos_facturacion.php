@@ -312,7 +312,7 @@ array_push( $arrArchivos,$row );
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['addFile'])){ ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -355,7 +355,7 @@ array_push( $arrArchivos,$row );
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php 
 				if(isset($Creacion_fecha)){  $x1  = $Creacion_fecha;     }else{$x1  = $_SESSION['fact_sueldos_basicos']['Creacion_fecha'];}
 				if(isset($Fecha_desde)){     $x2  = $Fecha_desde;        }else{$x2  = $_SESSION['fact_sueldos_basicos']['Fecha_desde'];}
@@ -376,22 +376,21 @@ array_push( $arrArchivos,$row );
 				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x1, 2);
 				$Form_Inputs->form_date('Periodo Inicio','Fecha_desde', $x2, 2);
 				$Form_Inputs->form_date('Periodo Termino','Fecha_hasta', $x3, 2);
-				
+
 				$Form_Inputs->form_tittle(3, 'Indicadores');
 				$Form_Inputs->form_input_number('UF', 'UF', $x4, 2);
 				$Form_Inputs->form_input_number('UTM', 'UTM', $x5, 2);
 				$Form_Inputs->form_input_number('Renta Minima', 'IMM', $x6, 2);
-				
+
 				$Form_Inputs->form_tittle(3, 'Topes Legales');
 				$Form_Inputs->form_input_number('Tope Imponible AFP', 'TopeImpAFP', $x7, 2);
 				$Form_Inputs->form_input_number('Tope Imponible IPS', 'TopeImpIPS', $x8, 2);
 				$Form_Inputs->form_input_number('Tope Seguro Cesantia', 'TopeSegCesantia', $x9, 2);
 				$Form_Inputs->form_input_number('Tope APV Mensual', 'TopeAPVMensual', $x10, 2);
 				$Form_Inputs->form_input_number('Tope Deposito Convenido', 'TopeDepConv', $x11, 2);
-				
+
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
@@ -408,7 +407,7 @@ array_push( $arrArchivos,$row );
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['view'])){?>
- 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
 
@@ -541,7 +540,7 @@ array_push( $arrArchivos,$row );
 					</tr>
 					 
 				 <?php 
-				$numeral++;	
+				$numeral++;
 				}
 			}?>
 
@@ -573,7 +572,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){  $x1  = $Creacion_fecha;     }else{$x1  = '';}
@@ -595,12 +594,12 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_date('Fecha Facturacion','Creacion_fecha', $x1, 2);
 				$Form_Inputs->form_date('Periodo Inicio','Fecha_desde', $x2, 2);
 				$Form_Inputs->form_date('Periodo Termino','Fecha_hasta', $x3, 2);
-				
+
 				$Form_Inputs->form_tittle(3, 'Indicadores');
 				$Form_Inputs->form_input_number('UF', 'UF', $x4, 2);
 				$Form_Inputs->form_input_number('UTM', 'UTM', $x5, 2);
 				$Form_Inputs->form_input_number('Renta Minima', 'IMM', $x6, 2);
-				
+
 				$Form_Inputs->form_tittle(3, 'Topes Legales');
 				$Form_Inputs->form_input_number('Tope Imponible AFP', 'TopeImpAFP', $x7, 2);
 				$Form_Inputs->form_input_number('Tope Imponible IPS', 'TopeImpIPS', $x8, 2);
@@ -611,15 +610,14 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				
 				
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
 
-						
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -631,7 +629,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Se inicializa el paginador de resultados
@@ -697,7 +694,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'rrhh_sueldos_facturacion', $SIS_
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){ ?>
 		<?php if (isset($_SESSION['fact_sueldos_basicos']['idUsuario'])&&$_SESSION['fact_sueldos_basicos']['idUsuario']!=''){?>
 			
@@ -732,7 +729,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'rrhh_sueldos_facturacion', $SIS_
 			
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

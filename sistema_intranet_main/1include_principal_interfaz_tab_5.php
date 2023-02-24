@@ -1,7 +1,7 @@
 <?php
 /**************************************************************************/
 if($n_permisos['idOpcionesGen_9']=='1' OR $idTipoUsuario==1){?>
-	
+
 	<div class="tab-pane fade" id="Menu_tab_5">
 		<div class="">
 			<script type = "text/javascript">
@@ -18,6 +18,6 @@ if($n_permisos['idOpcionesGen_9']=='1' OR $idTipoUsuario==1){?>
 	echo file_explorer(1, 'connector_repositorio', DB_SITE_MAIN_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 1); ?>
 		</div>
 	</div>
-	
+
 <?php } ?>
 

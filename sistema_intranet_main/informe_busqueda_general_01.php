@@ -181,7 +181,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''&&$_GET['type']==1){
 							$_SESSION['usuario']['basic_data']['idTipoUsuario'],$_SESSION['usuario']['basic_data']['idSistema'], 
 							$dbConn);
 	}
-	
+
 }
 
 ?>
@@ -211,7 +211,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<div class="tab-content">
-				
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idOcompra)){      $x1  = $idOcompra;      }else{$x1  = '';}
@@ -221,7 +221,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				
 				$Form_Inputs = new Form_Inputs();
 				?>
-				
+
 				<div class="tab-pane fade active in" id="tab_1">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
@@ -237,7 +237,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						</form>
 					</div>
 				</div>
-				
+
 				<div class="tab-pane fade" id="tab_2">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<form class="form-horizontal" id="form2" name="form1" action="<?php echo $location; ?>" novalidate>
@@ -262,7 +262,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
             </div>      
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

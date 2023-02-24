@@ -198,7 +198,7 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
+
 						<?php
 						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
@@ -232,7 +232,7 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 <a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {	 
 // consulto los datos
@@ -519,7 +519,7 @@ array_push( $arrRutas,$row );
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
+
 						<?php
 						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();

@@ -726,8 +726,7 @@ if (validarNumero($_GET['view'])){
 				$Form_Inputs->form_time('Hora Inicio','h_inicio', $x2, 1, 1);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x3, 2);
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 1, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('idTelemetria', $X_Puntero, 2);
 				?>
 

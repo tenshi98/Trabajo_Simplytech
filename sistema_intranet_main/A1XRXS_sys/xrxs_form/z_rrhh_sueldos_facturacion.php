@@ -647,13 +647,13 @@ require_once '0_validate_user_1.php';
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['AFP_Porcentaje'] = $AFPPorcentaje;
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['AFP_Total']      = ($Sueldo_Imp/100)*$AFPPorcentaje;
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['AFP_SIS']        = ($Sueldo_Imp/100)*1.94;
-					
+
 					//SALUD
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_idAFP']      = $trab['Salud_idAFP'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_Nombre']     = $trab['Salud_Nombre'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_Porcentaje'] = $trab['Salud_Porcentaje'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_Total']      = ($Sueldo_Imp/100)*$trab['Salud_Porcentaje'];
-					
+
 					//COTIZACION EXTRA
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_idCotizacion']         = $trab['idCotizacionSaludExtra'];  //idCotizacionSaludExtra
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionPorcentaje'] = $trab['PorcCotSaludExtra'];  //PorcCotSaludExtra
@@ -692,7 +692,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['AFP_Total'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionValor'];
 					//$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Mutual_Valor'];
-					
+
 					//Calculo Total Bonos Fijos(100 tipos bonos estimados en el sistema)
 					for ($x = 0; $x <= 100; $x++) {
 						//verifico si existe
@@ -718,7 +718,7 @@ require_once '0_validate_user_1.php';
 						}
 					}
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SegCesantia_Trabajador'];
-					
+
 					//Calculo del impuesto a la renta
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['ImpuestoRenta'] = 0;
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['RentaAfecta'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] - $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'];
@@ -1364,13 +1364,13 @@ require_once '0_validate_user_1.php';
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['AFP_Porcentaje'] = $AFPPorcentaje;
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['AFP_Total']      = ($Sueldo_Imp/100)*$AFPPorcentaje;
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['AFP_SIS']        = ($Sueldo_Imp/100)*1.94;
-					
+
 					//SALUD
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_idAFP']      = $trab['Salud_idAFP'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_Nombre']     = $trab['Salud_Nombre'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_Porcentaje'] = $trab['Salud_Porcentaje'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_Total']      = ($Sueldo_Imp/100)*$trab['Salud_Porcentaje'];
-					
+
 					//COTIZACION EXTRA
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_idCotizacion']         = $trab['idCotizacionSaludExtra'];  //idCotizacionSaludExtra
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionPorcentaje'] = $trab['PorcCotSaludExtra'];  //PorcCotSaludExtra
@@ -1409,7 +1409,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['AFP_Total'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionValor'];
 					//$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Mutual_Valor'];
-					
+
 					//Calculo Total Bonos Fijos(100 tipos bonos estimados en el sistema)
 					for ($x = 0; $x <= 100; $x++) {
 						//verifico si existe
@@ -1435,7 +1435,7 @@ require_once '0_validate_user_1.php';
 						}
 					}
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SegCesantia_Trabajador'];
-					
+
 					//Calculo del impuesto a la renta
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['ImpuestoRenta'] = 0;
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['RentaAfecta'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] - $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'];

@@ -103,7 +103,7 @@ array_push( $arrAccesos,$row );
 						<th>Agent Transp</th>
 					</tr>
 				</thead>
-				
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php 
 					//recorro los datos
@@ -128,7 +128,7 @@ array_push( $arrAccesos,$row );
 <a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Verifico el tipo de usuario que esta ingresando
@@ -142,7 +142,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idSistemaFil)){   $x1 = $idSistemaFil;   }else{$x1 = '';}
@@ -167,7 +167,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

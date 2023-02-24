@@ -178,7 +178,7 @@ if($s_Gasto_OT=='true'){          $s_data .= ',tipo7';}
 if($s_Traspaso_Manual=='true'){   $s_data .= ',tipo8';}
 if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 ?>
- 
+
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table']});</script>
 

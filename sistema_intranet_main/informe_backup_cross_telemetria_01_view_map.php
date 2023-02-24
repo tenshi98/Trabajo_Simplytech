@@ -196,7 +196,7 @@ $rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_tablare
 		<div class="clearfix"></div>
 	</div>
 <?php } ?>
- 
+
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

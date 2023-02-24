@@ -85,7 +85,7 @@ foreach($arrHistorial as $hist) {
 	if(isset($hist['HeladaDia'])&&$hist['HeladaDia']!='0000-00-00'){
 		//variables
 		$temp_predic = $hist['Helada'];
-		
+
 		//Se obtiene la fecha
 		$x_dia = fecha2NdiaMes($hist['HeladaDia']);
 		$x_mes = fecha2NMes($hist['HeladaDia']);
@@ -94,7 +94,7 @@ foreach($arrHistorial as $hist) {
 		$x_time     = strtotime($hist['HeladaHora']);
 		$x_hora     = date('H', $x_time);
 		$x_minuto   = date('i', $x_time);
-		
+
 		//Se crea el dato
 		if(isset($arrTemp[$x_mes][$x_dia][$x_hora][$x_minuto])&&$arrTemp[$x_mes][$x_dia][$x_hora][$x_minuto]!=''){							
 			$temp_real = $arrTemp[$x_mes][$x_dia][$x_hora][$x_minuto];

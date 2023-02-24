@@ -335,7 +335,7 @@ require_once '0_validate_user_1.php';
 					$EmpresaEmail             = $rowTicket['EmpresaEmail'];
 					$Gmail_Usuario            = $rowTicket['Gmail_Usuario'];
 					$Gmail_Password           = $rowTicket['Gmail_Password'];
-					
+
 					//solo se envian los tickets
 					if(isset($idTipoTicket) && $idTipoTicket == 1){
 						

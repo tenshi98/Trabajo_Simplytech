@@ -107,10 +107,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_icon('Nombre de Usuario', 'Usuario', $x2, 2,'fa fa-user');
 				$Form_Inputs->form_input_password('Contraseña', 'Password', $x3, 2);
 				$Form_Inputs->form_input_icon('Email', 'email', $x4, 2,'fa fa-envelope-o');
-				
+
 				$Form_Inputs->form_input_hidden('idSubcuenta', $_GET['edit'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -120,7 +120,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</div>
 	</div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
@@ -148,7 +148,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_icon('Nombre de Usuario', 'Usuario', $x2, 2,'fa fa-user');
 				$Form_Inputs->form_input_password('Contraseña', 'Password', $x3, 2);
 				$Form_Inputs->form_input_icon('Email', 'email', $x4, 2,'fa fa-envelope-o');
-				
+
 				$Form_Inputs->form_input_hidden('idApoderado', $_GET['id'], 2);
 				?>
 

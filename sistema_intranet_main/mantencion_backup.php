@@ -208,7 +208,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'hora_desc':    $order_by = 'Hora DESC ';    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Hora Descendente';break;
 		case 'nombre_asc':   $order_by = 'Nombre ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente';break;
 		case 'nombre_desc':  $order_by = 'Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		
+
 		default: $order_by = 'Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
@@ -237,7 +237,7 @@ $arrBackup = db_select_array (false, $SIS_query, 'mantencion_backup', $SIS_join,
 		<li class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&backup=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Backup</a><?php } ?>
 
 </div>

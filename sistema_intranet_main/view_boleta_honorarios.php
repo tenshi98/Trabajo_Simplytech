@@ -285,7 +285,7 @@ if($row_data['MontoPagado']!=0){?>
 
 
 <section class="invoice">
-	
+
 	<div class="row">
 		<div class="col-xs-12">
 			<h2 class="page-header">
@@ -314,7 +314,7 @@ if($row_data['MontoPagado']!=0){?>
 						Centro de Costo: '.$row_data['CentroCosto'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Receptor
 					<address>
@@ -358,7 +358,7 @@ if($row_data['MontoPagado']!=0){?>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Receptor
 					<address>
@@ -410,7 +410,7 @@ if($row_data['MontoPagado']!=0){?>
 						Giro de la Empresa: '.$row_data['Proveedor_Giro'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Receptor
 					<address>
@@ -497,7 +497,7 @@ if($row_data['MontoPagado']!=0){?>
 			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
 		</div>
 	</div>
-	
+
 	<?php 
 	//Gasto de Productos
 	if($row_data['idTipo']==3){?>
@@ -506,7 +506,7 @@ if($row_data['MontoPagado']!=0){?>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div>
 		</div>
 	<?php } ?>
-	
+
 	<?php 
 	//Traspaso de Productos a otra Empresa
 	if($row_data['idTipo']==6){?>
@@ -536,7 +536,7 @@ if($row_data['MontoPagado']!=0){?>
 
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
-	
+
 	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
 			<tbody>
@@ -607,7 +607,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		
 	<?php }
 } ?>
- 
+
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

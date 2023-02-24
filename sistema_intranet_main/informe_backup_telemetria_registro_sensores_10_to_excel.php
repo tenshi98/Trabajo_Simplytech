@@ -229,7 +229,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 				//AVG
 				$count_val++;
 				$sum_val   = $sum_val + $weight ;
-				
+
 			}
 		}
 		if($count_val!=0){

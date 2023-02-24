@@ -10,7 +10,7 @@ echo '
 		echo '
 	</div>
 	<div class="name"><a href="#">'.$_SESSION['usuario']['basic_data']['Nombre'].'</a></div>
-	
+
 	<ul class="cover-nav nav nav-tabs">';
 		echo '<li class="active"><a href="#Menu_tab_1" data-toggle="tab"><i class="fa fa-fw fa-bars" aria-hidden="true"></i> Resumen</a></li>';
 

@@ -4315,14 +4315,14 @@ require_once '0_validate_user_1.php';
 					$idUsuario   = $_SESSION['usuario']['basic_data']['idUsuario'];
 					$Fecha_elim  = fecha_actual();
 					$Hora_elim   = hora_actual();
-					
+
 					//filtros
 					$SIS_data = "'".$idOcompra."'";
 					$SIS_data .= ",'".$idSistema."'";
 					$SIS_data .= ",'".$idUsuario."'";
 					$SIS_data .= ",'".$Fecha_elim."'";
 					$SIS_data .= ",'".$Hora_elim."'";
-					
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idOcompra, idSistema, idUsuario, Fecha_elim, Hora_elim';
 					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_log_eliminacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

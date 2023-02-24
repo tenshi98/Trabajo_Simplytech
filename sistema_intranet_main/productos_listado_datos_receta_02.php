@@ -108,7 +108,7 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProductoRel)){    $x1  = $idProductoRel;   }else{$x1  = $row_data['idProductoRel'];}
@@ -125,12 +125,12 @@ foreach ($arrPermisos as $prod) {
 						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled value="'.$row_data['Unimed'].'">
 					</div>
 				</div>';
-				
+
 				$Form_Inputs->form_input_hidden('idReceta', $_GET['edit'], 2);
 				$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
-				
+
 				?>
-				
+
 				<script>
 					<?php
 					//Imprimo las variables
@@ -196,7 +196,7 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProductoRel)){    $x1  = $idProductoRel;   }else{$x1  = '';}
@@ -213,11 +213,11 @@ foreach ($arrPermisos as $prod) {
 						<input type="text" placeholder="Unidad de Medida" class="form-control"  name="escribeme" id="escribeme" disabled >
 					</div>
 				</div>';
-				
+
 				$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
-				
+
 				?>
-				
+
 				<script>
 					<?php
 					//Imprimo las variables
@@ -247,7 +247,6 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos

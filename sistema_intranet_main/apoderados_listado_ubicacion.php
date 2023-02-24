@@ -166,7 +166,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-				
+
 						<?php
 						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();

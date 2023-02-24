@@ -74,7 +74,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	
 mysqli_free_result($resultado);
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -83,7 +83,7 @@ mysqli_free_result($resultado);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($id_pmcat)){         $x1  = $id_pmcat;       }else{$x1  = $rowdata['id_pmcat'];}
@@ -109,7 +109,7 @@ mysqli_free_result($resultado);
 				$Form_Inputs->form_textarea('Habilitacion de tabs Usuario','Habilita', $x8, 1);
 				$Form_Inputs->form_textarea('Habilitacion de tabs Principal','Principal', $x9, 1);
 				$Form_Inputs->form_select_n_auto('Limite Nivel','Level_Limit', $x10, 2, 1, 4);
-				
+
 				$Form_Inputs->form_input_hidden('idAdmpm', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('fake_id_pmcat', $rowdata['id_pmcat'], 2);
 				$Form_Inputs->form_input_hidden('fake_Nombre', $rowdata['Nombre'], 2);
@@ -145,7 +145,7 @@ mysqli_free_result($resultado);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($id_pmcat)){         $x1  = $id_pmcat;       }else{$x1  = '';}
@@ -186,7 +186,6 @@ mysqli_free_result($resultado);
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Creo la variable con la ubicacion

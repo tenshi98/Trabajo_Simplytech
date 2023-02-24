@@ -467,7 +467,7 @@ if($row_data['MontoPagado']!=0){?>
 						Giro de la Empresa: '.$row_data['GiroProveedor'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
@@ -541,7 +541,7 @@ if($row_data['MontoPagado']!=0){?>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
@@ -557,7 +557,7 @@ if($row_data['MontoPagado']!=0){?>
 						Giro de la Empresa: '.$row_data['GiroCliente'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</strong><br/>
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
@@ -619,11 +619,11 @@ if($row_data['MontoPagado']!=0){?>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.n_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>';
@@ -652,11 +652,11 @@ if($row_data['MontoPagado']!=0){?>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>
@@ -686,11 +686,11 @@ if($row_data['MontoPagado']!=0){?>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>
@@ -762,11 +762,11 @@ if($row_data['MontoPagado']!=0){?>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega utilizada:</strong> '.$row_data['BodegaDesde'].'<br/>
@@ -841,7 +841,7 @@ if($row_data['MontoPagado']!=0){?>
 						Giro de la Empresa: '.$row_data['GiroProveedor'].'
 					</address>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
@@ -1017,7 +1017,7 @@ if($row_data['MontoPagado']!=0){?>
 							<td align="right"><?php echo Valores($row_data['ValorTotal'], 0); ?></td>
 						</tr>
 					<?php } ?>
-				
+
 				</tbody>
 			</table>
 		</div>
@@ -1029,7 +1029,7 @@ if($row_data['MontoPagado']!=0){?>
 			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
 		</div>
 	</div>
-	
+
 	<?php
 	//Traspaso de Productos a otra Empresa
 	if($row_data['idTipo']==6){?>
@@ -1040,7 +1040,7 @@ if($row_data['MontoPagado']!=0){?>
 		</div>
 		
 	<?php } ?>
-	
+
 	<?php
 	$zz  = '?idSistema='.simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual());
 	$zz .= '&view='.$_GET['view'];
@@ -1060,7 +1060,7 @@ if($row_data['MontoPagado']!=0){?>
 </section>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
-	
+
 	<?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 		<table id="items">
 			<tbody>
@@ -1082,7 +1082,7 @@ if($row_data['MontoPagado']!=0){?>
 			</tbody>
 		</table>
 	<?php } ?>
-	
+
 	<?php if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
@@ -1105,7 +1105,7 @@ if($row_data['MontoPagado']!=0){?>
     <?php } ?>
     
 </div>
- 
+
 <?php 
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){

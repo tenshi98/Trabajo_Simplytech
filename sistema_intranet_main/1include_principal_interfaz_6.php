@@ -176,7 +176,7 @@ foreach ($arrTabMenu as $tab) {
 			</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 fcenter">
-				
+
 				<a href="<?php if($Tab_2!=0){echo 'principal_6_2.php';} ?>">
 					<div class="tile color_1 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 						<div class="tile-content">
@@ -190,7 +190,7 @@ foreach ($arrTabMenu as $tab) {
 						</span>
 					</div>
 				</a>
-				
+
 				<a href="<?php if($Tab_1!=0){echo 'principal_6_1.php';} ?>">
 					<div class="tile color_2 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 						<div class="tile-content">
@@ -204,7 +204,7 @@ foreach ($arrTabMenu as $tab) {
 						</span>
 					</div>
 				</a>
-				
+
 				<a href="<?php if($Tab_6!=0){echo 'principal_6_6.php';} ?>">
 					<div class="tile color_3 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 						<div class="tile-content">
@@ -218,7 +218,7 @@ foreach ($arrTabMenu as $tab) {
 						</span>
 					</div>
 				</a>
-				
+
 				<a href="<?php if($Tab_3!=0){echo 'principal_6_3.php';} ?>">
 					<div class="tile color_4 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 						<div class="tile-content">
@@ -232,7 +232,7 @@ foreach ($arrTabMenu as $tab) {
 						</span>
 					</div>
 				</a>
-				
+
 				<a href="<?php if($Tab_4!=0){echo 'principal_6_4.php';} ?>">
 					<div class="tile color_5 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 						<div class="tile-content">
@@ -246,7 +246,7 @@ foreach ($arrTabMenu as $tab) {
 						</span>
 					</div>
 				</a>
-				
+
 				<a href="<?php if($Tab_7!=0){echo 'principal_6_7.php';} ?>">
 					<div class="tile color_6 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 						<div class="tile-content">
@@ -269,7 +269,7 @@ foreach ($arrTabMenu as $tab) {
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="tile color_8 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 					<div class="tile-content">
 						<div class="tile-icon-large">
@@ -278,16 +278,14 @@ foreach ($arrTabMenu as $tab) {
 						</div>
 					</div>
 				</div>
-				
-				
+
 			</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 fcenter clearfix">
 				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 					<br/>
 					<p class="xtabtext">
-						Si tienes alguna consulta con tu servicio contratado, puedes escribirnos a soporte@crosstech.cl 
-						y responderemos rápidamente a tus preguntas.
+						Si tienes alguna consulta con tu servicio contratado, puedes escribirnos a soporte@crosstech.cl y responderemos rápidamente a tus preguntas.
 					</p>
 				</div>
 			</div>

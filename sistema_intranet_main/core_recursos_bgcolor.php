@@ -59,7 +59,7 @@ require_once 'core/Web.Header.Main.php';
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 					<div class="box">
 						<header>
@@ -88,7 +88,7 @@ require_once 'core/Web.Header.Main.php';
 						</div>
 					</div>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
 					<div class="box">
 						<header>
@@ -118,8 +118,7 @@ require_once 'core/Web.Header.Main.php';
 						</div>
 					</div>
 				</div>
-				
-				
+
 			</div>
 
 
@@ -216,7 +215,7 @@ require_once 'core/Web.Header.Main.php';
 			</div>
 
 			<div class="tab-pane fade" id="mycolors">
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bg-purple">purple</li>
@@ -228,7 +227,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bg-ocean_boat_blue">ocean_boat_blue</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bg-pastel_magenta">pastel_magenta</li>
@@ -250,7 +249,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bg-dark_pastel_red">dark_pastel_red</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="mdb-color">color</li>
@@ -288,7 +287,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-red-accent-4">red-accent-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-pink">pink</li>
@@ -307,7 +306,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-pink-accent-4">pink-accent-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-purple">purple</li>
@@ -326,7 +325,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-purple-accent-4">purple-accent-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-deep-purple">-deep-purple</li>
@@ -345,7 +344,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-deep-purple-accent-4">-deep-purple-accent-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-indigo">-indigo</li>
@@ -383,7 +382,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-blue-accent-4">-blue-accent-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-light-blue">-light-blue</li>
@@ -402,7 +401,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-light-blue-accent-4">-light-blue-accent-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-cyan">-cyan</li>
@@ -421,7 +420,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-cyan-accent-4">-cyan-accent-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-teal">-teal</li>
@@ -440,7 +439,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-teal-accent-4">-teal-accent-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-green">-green</li>
@@ -459,7 +458,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-green-accent-4">-green-accent-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-light-green">-light-green</li>
@@ -478,7 +477,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-light-green-accent-4">-light-green-accent-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-lime">-lime</li>
@@ -497,7 +496,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-lime-accent-4">-lime-accent-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-yellow">-yellow</li>
@@ -516,7 +515,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-yellow-accent-4">-yellow-accent-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-amber">-amber</li>
@@ -535,7 +534,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-amber-accent-4">-amber-accent-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-orange">-orange</li>
@@ -554,7 +553,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-orange-accent-4">-orange-accent-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-deep-orange">-deep-orange</li>
@@ -573,7 +572,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-deep-orange-accent-4">-deep-orange-accent-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-brown">-brown</li>
@@ -588,7 +587,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-brown-darken-4">-brown-darken-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-blue-grey">-blue-grey</li>
@@ -603,7 +602,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="bkg-blue-grey-darken-4">-blue-grey-darken-4</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-grey">-grey</li>
@@ -620,7 +619,7 @@ require_once 'core/Web.Header.Main.php';
 				</div>
 
 				<div class="clearfix"></div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-mdb-color-slight">rgba-mdb-color-slight</li>
@@ -628,7 +627,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-mdb-color-strong">rgba-mdb-color-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-red-slight">rgba-red-slight</li>
@@ -636,7 +635,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-red-strong">rgba-red-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-pink-slight">rgba-pink-slight</li>
@@ -644,7 +643,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-pink-strong">rgba-pink-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-purple-slight">rgba-purple-slight</li>
@@ -652,7 +651,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-purple-strong">rgba-purple-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-deep-purple-slight">rgba-deep-purple-slight</li>
@@ -660,7 +659,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-deep-purple-strong">rgba-deep-purple-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-indigo-slight">rgba-indigo-slight</li>
@@ -668,7 +667,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-indigo-strong">rgba-indigo-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-blue-slight">rgba-blue-slight</li>
@@ -676,7 +675,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-blue-strong">rgba-blue-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-light-blue-slight">rgba-light-blue-slight</li>
@@ -684,7 +683,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-light-blue-strong">rgba-light-blue-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-cyan-slight">rgba-cyan-slight</li>
@@ -692,7 +691,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-cyan-strong">rgba-cyan-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-teal-slight">rgba-teal-slight</li>
@@ -700,7 +699,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-teal-strong">rgba-teal-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-green-slight">rgba-green-slight</li>
@@ -708,7 +707,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-green-strong">rgba-green-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-light-green-slight">rgba-light-green-slight</li>
@@ -716,7 +715,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-light-green-strong">rgba-light-green-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-lime-slight">rgba-lime-slight</li>
@@ -724,7 +723,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-lime-strong">rgba-lime-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-yellow-slight">rgba-yellow-slight</li>
@@ -732,7 +731,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-yellow-strong">rgba-yellow-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-amber-slight">rgba-amber-slight</li>
@@ -740,7 +739,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-amber-strong">rgba-amber-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-orange-slight">rgba-orange-slight</li>
@@ -748,7 +747,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-orange-strong">rgba-orange-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-deep-orange-slight">rgba-deep-orange-slight</li>
@@ -756,7 +755,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-deep-orange-strong">rgba-deep-orange-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-brown-slight">rgba-brown-slight</li>
@@ -764,7 +763,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-brown-strong">rgba-brown-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-blue-grey-slight">rgba-blue-grey-slight</li>
@@ -772,7 +771,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="rgba-blue-grey-strong">rgba-blue-grey-strong</li>
 					</ul>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="rgba-grey-slight">rgba-grey-slight</li>

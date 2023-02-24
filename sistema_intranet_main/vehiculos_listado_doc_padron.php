@@ -218,7 +218,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 		</header>
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
-				
+
 				<?php if(isset($rowdata['doc_padron'])&&$rowdata['doc_padron']!=''){?>
         
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">

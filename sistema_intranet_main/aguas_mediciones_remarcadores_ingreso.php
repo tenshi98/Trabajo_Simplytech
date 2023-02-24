@@ -123,7 +123,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos_detalle', 
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Consumo)){  $x1  = $Consumo;  }else{$x1  = cantidades_decimales_justos($rowdata['Consumo']);}
@@ -131,7 +131,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos_detalle', 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_number('Consumo', 'Consumo', $x1, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idDatosDetalle', $_GET['modMed'], 2);
 				?>
 
@@ -167,7 +167,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos', $SIS_joi
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php 
 				if(isset($Fecha)){  $x1  = $Fecha;            }else{$x1  = $rowdata['Fecha'];}
 				if(isset($Observaciones)){    $x2  = $Observaciones;    }else{$x2  = $rowdata['Observaciones'];}
@@ -176,11 +176,11 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos', $SIS_joi
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha de Facturacion','Fecha', $x1, 2);
 				$Form_Inputs->form_textarea('Observaciones', 'Observaciones', $x2, 1);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				
+
 				$Form_Inputs->form_input_hidden('idDatos', $_GET['modData'], 2);
 				?>
 
@@ -243,7 +243,7 @@ $arrDatosCorrectos = array();
 $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos_detalle', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrDatosCorrectos');
 
 ?>
-	
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
@@ -309,7 +309,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 					<th colspan="6">Detalle</th>
 					<th colspan="1"></th>
 				</tr>
-				
+
 				<?php if($arrDatosCorrectos!=false && !empty($arrDatosCorrectos) && $arrDatosCorrectos!='') { ?>
 					<tr class="item-row linea_punteada" bgcolor="#F0F0F0">
 						<td><strong>Identificador</strong></td>
@@ -364,7 +364,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 <a href="<?php echo $location; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-	
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['addclient'])){ 
 //Filtro
@@ -400,7 +400,7 @@ $Form_Inputs = new Inputs();
 				<h5>Ingreso Consumos</h5>
 			</header>
 			<div class="body">
-				
+
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 					
 					<div> 	
@@ -493,7 +493,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate >
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){  $x1  = $Fecha;            }else{$x1  = $_SESSION['rem_basicos']['Fecha'];}
@@ -507,12 +507,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x2, 2, 'idCliente', 'identificador,Nombre', 'aguas_clientes_listado', $z, 'ORDER BY Identificador ASC', $dbConn);
 				$Form_Inputs->form_select('Tipo Medicion','idTipoMedicion', $x3, 2, 'idTipoMedicion', 'Nombre', 'aguas_mediciones_datos_tipo_medicion', 0, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones', 'Observaciones', $x4, 1);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -525,7 +525,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['view'])){ ?>
-	
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
 
@@ -601,7 +601,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					<th colspan="4">Detalle</th>
 					<th colspan="1"><a href="<?php echo $location.'&view=true&addclient=true' ?>" title="Agregar Clientes" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-user-plus" aria-hidden="true"></i> Agregar Clientes</a></th>
 				</tr>
-				
+
 				<?php if(isset($_SESSION['rem_clientes'])){ ?>
 					<tr class="item-row linea_punteada" bgcolor="#F0F0F0">
 						<td><strong>Nombre Cliente</strong></td>
@@ -655,7 +655,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 <a href="<?php echo $location; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-	
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
@@ -663,7 +663,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro 
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idFacturable=3"; 
 ?>
-	
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -672,7 +672,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate >
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){  $x1  = $Fecha;            }else{$x1  = '';}
@@ -686,13 +686,13 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x2, 2, 'idCliente', 'identificador,Nombre', 'aguas_clientes_listado', $z, 'ORDER BY Identificador ASC', $dbConn);
 				$Form_Inputs->form_select('Tipo Medicion','idTipoMedicion', $x3, 2, 'idTipoMedicion', 'Nombre', 'aguas_mediciones_datos_tipo_medicion', 0, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones', 'Observaciones', $x4, 1);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -704,7 +704,6 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 /**********************************************************/
@@ -728,7 +727,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'creador_desc':         $order_by = 'usuarios_listado.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
 		case 'nombre_asc':           $order_by = 'aguas_mediciones_datos.Nombre ASC ';           $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Nombre Ascendente'; break;
 		case 'nombre_desc':          $order_by = 'aguas_mediciones_datos.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
-		
+
 		default: $order_by = 'aguas_mediciones_datos.idDatos DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ingreso Descendente';
 	}
 }else{
@@ -781,9 +780,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Medicion</a><?php } ?>
-	
+
 </div>
 <div class="clearfix"></div>
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
@@ -802,10 +801,10 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select_n_auto('Año','Ano', $x1, 1, 2016, ano_actual());
 				$Form_Inputs->form_select_filter('Mes','idMes', $x2, 1, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x3, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
@@ -817,8 +816,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	</div>
 </div>
 <div class="clearfix"></div>
-                     
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -871,7 +869,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>		  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrTipo as $tipo) { ?>
 						<tr class="odd">

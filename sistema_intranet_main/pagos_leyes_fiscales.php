@@ -134,7 +134,7 @@ if($arrFormaPago){
 				case 2: $PPM_Pagado     = $PPM_Pagado + $pago['Monto']; break;
 				case 3: $RET_Pagado     = $RET_Pagado + $pago['Monto']; break;
 				case 4: $IMPRENT_Pagado = $IMPRENT_Pagado + $pago['Monto']; break;
-				
+
 			}
 		}
 	}
@@ -474,7 +474,7 @@ input[type="date"].form-control{
 </div>
 
 <div style="display: none;">
-	
+
 	<div id="clone_pago_iva" class="pago_iva_container"> 
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
@@ -594,7 +594,7 @@ input[type="date"].form-control{
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	
+
 </div>	
 	
 <script>
@@ -756,7 +756,7 @@ input[type="date"].form-control{
 <div class="clearfix"></div>
 
 <div style="display: none;">
-	
+
 	<div id="clone_pago_iva" class="pago_iva_container"> 
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
@@ -876,7 +876,7 @@ input[type="date"].form-control{
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	
+
 </div>	
 	
 <script>
@@ -971,7 +971,7 @@ input[type="date"].form-control{
 <div class="clearfix"></div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['addFile'])){ ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -1020,7 +1020,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php 
 				
 				//Se verifican si existen los datos
@@ -1051,10 +1051,10 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_disabled('Saldo','fake_emp', $x1);
 				$Form_Inputs->form_input_number('Monto a Pagar', 'PPM_MontoPago', $x2, 2);
-				
+
 				$Form_Inputs->form_input_hidden('edit_ppm', $_GET['edit_ppm'], 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_ppm"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -1087,7 +1087,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php 
 				//Saldo general del bloque
 				$x0  = Valores($_SESSION['pagos_leyes_fiscales_basicos']['IVA_TotalSaldo'], 0);
@@ -1128,10 +1128,10 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
 				$Form_Inputs->form_input_disabled('Saldo IVA Total','fake_emp', $x0);
 				$Form_Inputs->form_input_disabled($xtext,'fake_emp', $x1);
 				$Form_Inputs->form_input_number('Monto a Pagar', 'IVA_MontoPago', $x2, 2);
-				
+
 				$Form_Inputs->form_input_hidden('edit_iva', $_GET['edit_iva'], 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_iva"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -1156,7 +1156,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Periodo_Ano)){      $x1  = $Periodo_Ano;    }else{$x1  = $_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Ano'];}
@@ -1170,13 +1170,12 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_filter('Periodo Mes','Periodo_Mes', $x2, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_date('Fecha Pago','Pago_fecha', $x3, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
-				
+
 				?>
 
 				<div class="form-group">
@@ -1644,7 +1643,7 @@ $Form_Inputs = new Inputs();
 						?>
 					</td>
 				</tr>
-				
+
 				<tr class="item-row fact_tittle">
 					<td><strong>Totales</strong></td>
 					<td align="right"><strong><?php echo valores($_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Actual'], 0);?></strong></td>
@@ -1692,7 +1691,7 @@ $Form_Inputs = new Inputs();
 					</tr>
 					 
 				 <?php 
-				$numeral++;	
+				$numeral++;
 				}
 			}?>
 
@@ -1721,7 +1720,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Periodo_Ano)){      $x1  = $Periodo_Ano;    }else{$x1  = '';}
@@ -1735,14 +1734,13 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_filter('Periodo Mes','Periodo_Mes', $x2, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_date('Fecha Pago','Pago_fecha', $x3, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -1754,7 +1752,6 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Se inicializa el paginador de resultados
@@ -1778,7 +1775,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'usuario_desc':       $order_by = 'usuarios_listado.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Usuario Descendente';break;
 		case 'estado_asc':         $order_by = 'core_estado_facturacion.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado de Pago Ascendente';break;
 		case 'estado_desc':        $order_by = 'core_estado_facturacion.Nombre ASC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado de Pago Descendente';break;
-		
+
 		default: $order_by = 'pagos_leyes_fiscales.idEstadoPago ASC, pagos_leyes_fiscales.Pago_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado de Pago Ascendente, Fecha de Pago Descendente';
 	}
 }else{
@@ -1835,7 +1832,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Pago</a><?php } ?>
 </div> 
 <div class="clearfix"></div>
@@ -1862,7 +1859,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				}
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

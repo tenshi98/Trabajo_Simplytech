@@ -37,7 +37,7 @@ if(isset($_GET['filterCat'])&&$_GET['filterCat']!=''){
 	$SIS_where = 'soporte_software_listado.idCategoria='.$_GET['filterCat'];
 }else{
 	$SIS_where = '';
-}	
+}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'Nombre', 'soporte_software_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -76,7 +76,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'soporte_software_listado_c
 ?>
 
 <div class="row">
-	
+
 	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 		<?php foreach ($arrSoftware as $soft) { ?>
 			<div class="block task task-high boxsoftware">

@@ -64,66 +64,41 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
+
+/************************************/
 // consulto los datos
-$query = "SELECT f_muestra,f_recibida,idTipoMuestra,RemuestraFecha,Remuestra_codigo_muestra,idParametros,
+$SIS_query = 'f_muestra,f_recibida,idTipoMuestra,RemuestraFecha,Remuestra_codigo_muestra,idParametros,
 idSigno,valorAnalisis,idLaboratorio,codigoMuestra,idOpciones,idSector,UTM_norte,UTM_este,idPuntoMuestreo,
-idCliente,idSistema, idEstado, Observaciones, CodigoLaboratorio
-FROM `aguas_analisis_aguas`
-WHERE idAnalisisAgua = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+idCliente,idSistema, idEstado, Observaciones, CodigoLaboratorio';
+$SIS_join  = '';
+$SIS_where = 'idAnalisisAgua = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_aguas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+/************************************/
 //Busco los datos de los clientes
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 aguas_clientes_listado.idCliente,
 aguas_clientes_listado.idSector,
 aguas_clientes_listado.idPuntoMuestreo,
-				
+
 aguas_clientes_listado.UTM_norte,
 aguas_clientes_listado.UTM_este,
 aguas_analisis_sectores.Nombre AS Sector,
-				
-aguas_analisis_aguas_tipo_punto_muestreo.Nombre AS Punto
-				
-FROM `aguas_clientes_listado`
+
+aguas_analisis_aguas_tipo_punto_muestreo.Nombre AS Punto';
+$SIS_join  = '
 LEFT JOIN `aguas_analisis_sectores`                  ON aguas_analisis_sectores.idSector                         = aguas_clientes_listado.idSector
-LEFT JOIN `aguas_analisis_aguas_tipo_punto_muestreo` ON aguas_analisis_aguas_tipo_punto_muestreo.idPuntoMuestreo = aguas_clientes_listado.idPuntoMuestreo
-WHERE aguas_clientes_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']."
-AND aguas_clientes_listado.idEstado=1
-ORDER BY aguas_clientes_listado.idCliente ASC";
-//consulto
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrTipo,$row );
-}	 
-//Indico el sistema	 
+LEFT JOIN `aguas_analisis_aguas_tipo_punto_muestreo` ON aguas_analisis_aguas_tipo_punto_muestreo.idPuntoMuestreo = aguas_clientes_listado.idPuntoMuestreo';
+$SIS_where = 'aguas_clientes_listado.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';
+$SIS_order = 'aguas_clientes_listado.idCliente ASC';
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'aguas_clientes_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
+//Indico el sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -132,7 +107,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_muestra)){                 $x1  = $f_muestra;                  }else{$x1  = $rowdata['f_muestra'];}
@@ -169,7 +144,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_filter('Parametro analizado','idParametros', $x9, 2, 'idParametros', 'Nombre', 'aguas_analisis_parametros', $z, '', $dbConn);
 				$Form_Inputs->form_select('Signo','idSigno', $x10, 2, 'idSigno', 'Nombre', 'aguas_analisis_aguas_signo', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Valor', 'valorAnalisis', $x11, 2);
-						
+
 				$Form_Inputs->form_tittle(3, 'Datos del Cliente');
 				$Form_Inputs->form_select('Relacionar a cliente','idOpciones', $x12, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 
@@ -189,8 +164,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_hidden('UTM_norte_fake2', '', 2);
 				$Form_Inputs->form_input_hidden('UTM_este_fake2', '', 2);
 				$Form_Inputs->form_input_hidden('idPuntoMuestreo_fake2', '', 2);
-				
-					
+
 				$Form_Inputs->form_tittle(3, 'Datos del Analisis');
 				$Form_Inputs->form_select('Estado','idEstado', $x18, 2, 'idEstado', 'Nombre', 'aguas_analisis_aguas_estado', 0, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones', 'Observaciones', $x19, 1);
@@ -200,7 +174,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_hidden('codigoArchivo', 1, 2);
 				$Form_Inputs->form_input_hidden('codigoServicio', 13694, 2);
 				$Form_Inputs->form_input_hidden('idAnalisisAgua', $_GET['id'], 2);
-					
+
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
 					echo '
@@ -210,12 +184,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					let UTM_este_'.$tipo['idCliente'].'= "'.$tipo['UTM_este'].'";
 					let Sector_'.$tipo['idCliente'].'= "'.$tipo['Sector'].'";
 					let Punto_'.$tipo['idCliente'].'= "'.$tipo['Punto'].'";
-					';	
+					';
 				}
-				echo '</script>';	
+				echo '</script>';
 
 				?>
-				
+
 				<script>
 					//oculto todos los div
 					document.getElementById('div_RemuestraFecha').style.display = 'none';
@@ -229,35 +203,31 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					document.getElementById('div_UTM_norte_fake1').style.display = 'none';
 					document.getElementById('div_UTM_este_fake1').style.display = 'none';
 					document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
-					
+
 					//declaro variables
-					
-					
 					var elem_8 = document.getElementById("idPuntoMuestreo_fake2");
-					
+
 					//inicio documentos
 					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-						
+
 						/***********************************************************************************/
 						tipo_val_1= $("#idTipoMuestra").val();
 						tipo_val_2= $("#idOpciones").val();
 						tipo_val_3= $("#idCliente").val();
-						
-						
-		
-						if(tipo_val_1 == 1){ 
+
+						if(tipo_val_1 == 1){
 							document.getElementById('div_RemuestraFecha').style.display = 'none';
 							document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
 						//si es remuestra
-						} else if(tipo_val_1 == 2){ 
+						} else if(tipo_val_1 == 2){
 							document.getElementById('div_RemuestraFecha').style.display = '';
 							document.getElementById('div_Remuestra_codigo_muestra').style.display = '';
 						} else {
 							document.getElementById('div_RemuestraFecha').style.display = 'none';
 							document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
 						}
-						
-						if(tipo_val_2 == 1){ 
+
+						if(tipo_val_2 == 1){
 							document.getElementById('div_idSector').style.display = 'none';
 							document.getElementById('div_UTM_norte').style.display = 'none';
 							document.getElementById('div_UTM_este').style.display = 'none';
@@ -268,7 +238,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							document.getElementById('div_UTM_este_fake1').style.display = '';
 							document.getElementById('div_idPuntoMuestreo_fake1').style.display = '';
 						//si es no
-						} else if(tipo_val_2 == 2){ 
+						} else if(tipo_val_2 == 2){
 							document.getElementById('div_idSector').style.display = '';
 							document.getElementById('div_UTM_norte').style.display = '';
 							document.getElementById('div_UTM_este').style.display = '';
@@ -299,14 +269,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						document.getElementById("UTM_norte_fake2").value        = eval("UTM_norte_" + tipo_val_3);
 						document.getElementById("UTM_este_fake2").value         = eval("UTM_este_" + tipo_val_3);
 						document.getElementById("idPuntoMuestreo_fake2").value  = eval("id_idPuntoMuestreo_" + tipo_val_3);
-						
-	
-					
+
 						/***********************************************************************************/
 						//busco cambios en el Cliente seleccionado
-						$("#idCliente").on("change", function(){ 
+						$("#idCliente").on("change", function(){
 							//verifico si la seleccion tiene datos y procedo a escribir
-							let idCliente = $(this).val(); 
+							let idCliente = $(this).val();
 							if (idCliente != "") {
 								document.getElementById("idSector_fake1").value         = eval("Sector_" + idCliente);
 								document.getElementById("UTM_norte_fake1").value        = eval("UTM_norte_" + idCliente);
@@ -317,19 +285,18 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById("UTM_este_fake2").value         = eval("UTM_este_" + idCliente);
 								document.getElementById("idPuntoMuestreo_fake2").value  = eval("id_idPuntoMuestreo_" + idCliente);
 							}
-		
+
 						});
-						
-						
+
 						//busco cambios en el tipo de muestra
-						$("#idTipoMuestra").on("change", function(){ 
-							let idTipoMuestra = $(this).val(); 
+						$("#idTipoMuestra").on("change", function(){
+							let idTipoMuestra = $(this).val();
 							//si es muestra
-							if(idTipoMuestra == 1){ 
+							if(idTipoMuestra == 1){
 								document.getElementById('div_RemuestraFecha').style.display = 'none';
 								document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
 							//si es remuestra
-							} else if(idTipoMuestra == 2){ 
+							} else if(idTipoMuestra == 2){
 								document.getElementById('div_RemuestraFecha').style.display = '';
 								document.getElementById('div_Remuestra_codigo_muestra').style.display = '';
 							} else {
@@ -339,10 +306,10 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						});
 
 						//busco cambios en el uso del cliente
-						$("#idOpciones").on("change", function(){ 
-							let idOpciones = $(this).val(); 
+						$("#idOpciones").on("change", function(){
+							let idOpciones = $(this).val();
 							//si es si
-							if(idOpciones == 1){ 
+							if(idOpciones == 1){
 								document.getElementById('div_idSector').style.display = 'none';
 								document.getElementById('div_UTM_norte').style.display = 'none';
 								document.getElementById('div_UTM_este').style.display = 'none';
@@ -353,7 +320,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_UTM_este_fake1').style.display = '';
 								document.getElementById('div_idPuntoMuestreo_fake1').style.display = '';
 							//si es no
-							} else if(idOpciones == 2){ 
+							} else if(idOpciones == 2){
 								document.getElementById('div_idSector').style.display = '';
 								document.getElementById('div_UTM_norte').style.display = '';
 								document.getElementById('div_UTM_este').style.display = '';
@@ -375,9 +342,9 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
 							}
 						});
-					   
+
 					});
-				
+
 				</script>
 
 				<div class="form-group">
@@ -395,43 +362,29 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
  } elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
+
+/************************************/
 //Busco los datos de los clientes
-$arrTipo = array();
-$query = "SELECT 
+$SIS_query = '
 aguas_clientes_listado.idCliente,
 aguas_clientes_listado.idSector,
 aguas_clientes_listado.idPuntoMuestreo,
-				
+
 aguas_clientes_listado.UTM_norte,
 aguas_clientes_listado.UTM_este,
 aguas_analisis_sectores.Nombre AS Sector,
-				
-aguas_analisis_aguas_tipo_punto_muestreo.Nombre AS Punto
-				
-FROM `aguas_clientes_listado`
+
+aguas_analisis_aguas_tipo_punto_muestreo.Nombre AS Punto';
+$SIS_join  = '
 LEFT JOIN `aguas_analisis_sectores`                  ON aguas_analisis_sectores.idSector                         = aguas_clientes_listado.idSector
-LEFT JOIN `aguas_analisis_aguas_tipo_punto_muestreo` ON aguas_analisis_aguas_tipo_punto_muestreo.idPuntoMuestreo = aguas_clientes_listado.idPuntoMuestreo
-WHERE aguas_clientes_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']."
-AND aguas_clientes_listado.idEstado=1
-ORDER BY aguas_clientes_listado.idCliente ASC";
-//consulto
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrTipo,$row );
-}	 
-//Indico el sistema	 
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
+LEFT JOIN `aguas_analisis_aguas_tipo_punto_muestreo` ON aguas_analisis_aguas_tipo_punto_muestreo.idPuntoMuestreo = aguas_clientes_listado.idPuntoMuestreo';
+$SIS_where = 'aguas_clientes_listado.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';
+$SIS_order = 'aguas_clientes_listado.idCliente ASC';
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'aguas_clientes_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
+//Indico el sistema
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -442,7 +395,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_muestra)){                 $x1  = $f_muestra;                  }else{$x1  = '';}
@@ -479,7 +432,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_filter('Parametro analizado','idParametros', $x9, 2, 'idParametros', 'Nombre', 'aguas_analisis_parametros', $z, '', $dbConn);
 				$Form_Inputs->form_select('Signo','idSigno', $x10, 2, 'idSigno', 'Nombre', 'aguas_analisis_aguas_signo', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Valor', 'valorAnalisis', $x11, 2);
-						
+
 				$Form_Inputs->form_tittle(3, 'Datos del Cliente');
 				$Form_Inputs->form_select('Relacionar a cliente','idOpciones', $x12, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 
@@ -499,8 +452,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_hidden('UTM_norte_fake2', '', 2);
 				$Form_Inputs->form_input_hidden('UTM_este_fake2', '', 2);
 				$Form_Inputs->form_input_hidden('idPuntoMuestreo_fake2', '', 2);
-				
-					
+
 				$Form_Inputs->form_tittle(3, 'Datos del Analisis');
 				$Form_Inputs->form_select('Estado','idEstado', $x18, 2, 'idEstado', 'Nombre', 'aguas_analisis_aguas_estado', 0, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones', 'Observaciones', $x19, 1);
@@ -509,7 +461,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_hidden('codigoProceso', 1, 2);
 				$Form_Inputs->form_input_hidden('codigoArchivo', 1, 2);
 				$Form_Inputs->form_input_hidden('codigoServicio', 13694, 2);
-					
+
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
 					echo '
@@ -519,12 +471,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					var UTM_este_'.$tipo['idCliente'].'= "'.$tipo['UTM_este'].'";
 					var Sector_'.$tipo['idCliente'].'= "'.$tipo['Sector'].'";
 					var Punto_'.$tipo['idCliente'].'= "'.$tipo['Punto'].'";
-					';	
+					';
 				}
-				echo '</script>';	
+				echo '</script>';
 
 				?>
-				
+
 				<script>
 					//oculto todos los div
 					document.getElementById('div_RemuestraFecha').style.display = 'none';
@@ -538,14 +490,14 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					document.getElementById('div_UTM_norte_fake1').style.display = 'none';
 					document.getElementById('div_UTM_este_fake1').style.display = 'none';
 					document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
-					
+
 					//inicio documentos
 					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-						
+
 						//busco cambios en el Cliente seleccionado
-						$("#idCliente").on("change", function(){ 
+						$("#idCliente").on("change", function(){
 							//verifico si la seleccion tiene datos y procedo a escribir
-							let idCliente = $(this).val(); 
+							let idCliente = $(this).val();
 							if (idCliente != "") {
 								document.getElementById("idSector_fake1").value         = eval("Sector_" + idCliente);
 								document.getElementById("UTM_norte_fake1").value        = eval("UTM_norte_" + idCliente);
@@ -556,19 +508,18 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById("UTM_este_fake2").value         = eval("UTM_este_" + idCliente);
 								document.getElementById("idPuntoMuestreo_fake2").value  = eval("id_idPuntoMuestreo_" + idCliente);
 							}
-		
+
 						});
-						
-						
+
 						//busco cambios en el tipo de muestra
-						$("#idTipoMuestra").on("change", function(){ 
-							let idTipoMuestra = $(this).val(); 
+						$("#idTipoMuestra").on("change", function(){
+							let idTipoMuestra = $(this).val();
 							//si es muestra
-							if(idTipoMuestra == 1){ 
+							if(idTipoMuestra == 1){
 								document.getElementById('div_RemuestraFecha').style.display = 'none';
 								document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
 							//si es remuestra
-							} else if(idTipoMuestra == 2){ 
+							} else if(idTipoMuestra == 2){
 								document.getElementById('div_RemuestraFecha').style.display = '';
 								document.getElementById('div_Remuestra_codigo_muestra').style.display = '';
 							} else {
@@ -578,10 +529,10 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						});
 
 						//busco cambios en el uso del cliente
-						$("#idOpciones").on("change", function(){ 
-							let idOpciones = $(this).val(); 
+						$("#idOpciones").on("change", function(){
+							let idOpciones = $(this).val();
 							//si es si
-							if(idOpciones == 1){ 
+							if(idOpciones == 1){
 								document.getElementById('div_idSector').style.display = 'none';
 								document.getElementById('div_UTM_norte').style.display = 'none';
 								document.getElementById('div_UTM_este').style.display = 'none';
@@ -592,7 +543,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_UTM_este_fake1').style.display = '';
 								document.getElementById('div_idPuntoMuestreo_fake1').style.display = '';
 							//si es no
-							} else if(idOpciones == 2){ 
+							} else if(idOpciones == 2){
 								document.getElementById('div_idSector').style.display = '';
 								document.getElementById('div_UTM_norte').style.display = '';
 								document.getElementById('div_UTM_este').style.display = '';
@@ -614,11 +565,11 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
 							}
 						});
-					   
+
 					});
-				
+
 				</script>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -630,7 +581,6 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 /**********************************************************/
@@ -707,9 +657,9 @@ $z = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSis
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Analisis</a><?php } ?>
-	
+
 </div>
 <div class="clearfix"></div>
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
@@ -731,10 +681,10 @@ $z = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSis
 				$Form_Inputs->form_select_filter('Laboratorio','idLaboratorio', $x3, 1, 'idLaboratorio', 'Nombre', 'aguas_analisis_laboratorios', $z, '', $dbConn);
 				$Form_Inputs->form_input_number('Codigo Muestra', 'codigoMuestra', $x4, 1);
 				$Form_Inputs->form_input_number('Codigo Laboratorio', 'CodigoLaboratorio', $x5, 1);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
@@ -746,8 +696,7 @@ $z = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSis
 	</div>
 </div>
 <div class="clearfix"></div>
-                     
-                                 
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -807,7 +756,7 @@ $z = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSis
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>		  
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrTipo as $tipo) { ?>
 					<tr class="odd">

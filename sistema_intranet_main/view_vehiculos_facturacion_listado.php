@@ -221,9 +221,9 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 					<?php 
 					}
 				} ?>
-				
+
 				<tr id="hiderow"><td colspan="5"></td></tr>
-				
+
 				<tr>
 					<td colspan="5" class="blank"> 
 						<p>

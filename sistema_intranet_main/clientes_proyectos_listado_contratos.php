@@ -148,13 +148,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 2);
 				$Form_Inputs->form_select('Utilizable','idUtilizable', $x3, 2, 'idUtilizable', 'Nombre', 'core_estado_utilizable', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x4, 1, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x5, 1);
 				$Form_Inputs->form_time('Tiempo Programado','TiempoProgramado', $x6, 1, 1);
 				$Form_Inputs->form_select('Tipo Trabajo','idTrabajo', $x7, 1, 'idTrabajo', 'Nombre', 'core_licitacion_trabajos', 0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_number('Valor', 'Valor', $x8, 1);
 				echo '<div class="form-group" id="div_ValorTotal">
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Valor Total</label>
@@ -290,7 +289,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</div>
 	</div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new_itemizado'])){ ?>
 
@@ -321,13 +320,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 2);
 				$Form_Inputs->form_select('Utilizable','idUtilizable', $x3, 2, 'idUtilizable', 'Nombre', 'core_estado_utilizable', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_select('Frecuencia','idFrecuencia', $x4, 1, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x5, 1);
 				$Form_Inputs->form_time('Tiempo Programado','TiempoProgramado', $x6, 1, 1);
 				$Form_Inputs->form_select('Tipo Trabajo','idTrabajo', $x7, 1, 'idTrabajo', 'Nombre', 'core_licitacion_trabajos', 0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_number('Valor', 'Valor', $x8, 1);
 				echo '<div class="form-group" id="div_ValorTotal">
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Valor Total</label>
@@ -335,7 +333,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<input value="'.$x9.'" type="text" placeholder="Valor Total" class="form-control"  name="Total" id="Total" disabled >
 					</div>
 				</div>';
-				
+
 				$Form_Inputs->form_input_hidden('ValorTotal', $x9, 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idLicitacion', $_GET['itemizado'], 2);
@@ -780,7 +778,7 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 
 </div>
 <div class="clearfix"></div>
-	
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -870,7 +868,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
-	
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['edit'])){
 //verifico que sea un administrador
@@ -939,7 +937,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_hidden('idLicitacion', $_GET['edit'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2); 
 				?>
-				
+
 				<script>
 					document.getElementById('div_ValorMensual').style.display = 'none';
 					document.getElementById('div_Presupuesto').style.display = 'none';
@@ -983,7 +981,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					});
 								
 				</script>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -993,7 +991,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</div>
 	</div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
@@ -1038,7 +1036,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select('Bodega Productos','idBodegaProd', $x8, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select('Bodega Insumos','idBodegaIns', $x9, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select('Utilizar Itemizado','idOpcionItem', $x10, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('idAprobado', 2, 2);
@@ -1047,7 +1045,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				
 				
 				?>
-				
+
 				<script>
 					document.getElementById('div_ValorMensual').style.display = 'none';
 					document.getElementById('div_Presupuesto').style.display = 'none';

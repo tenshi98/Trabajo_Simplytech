@@ -68,7 +68,7 @@ if(!empty($_GET['cancel_ejecution'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Observacion)){  $x1  = $Observacion;    }else{$x1  = '';}
@@ -76,8 +76,7 @@ if(!empty($_GET['cancel_ejecution'])){ ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Observacion','Observacion', $x1, 2);
-				
-				
+
 				$Form_Inputs->form_input_hidden('f_ejecucion', '0000-00-00', 2);
 				$Form_Inputs->form_input_hidden('horaEjecucion', '00:00:00', 2);
 				$Form_Inputs->form_input_hidden('f_ejecucion_fin', '0000-00-00', 2);
@@ -89,7 +88,7 @@ if(!empty($_GET['cancel_ejecution'])){ ?>
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -132,7 +131,7 @@ $row_data = mysqli_fetch_assoc ($resultado);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_termino)){        $x1  = $f_termino;        }else{$x1  = $row_data['f_termino'];}
@@ -155,9 +154,9 @@ $row_data = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -196,7 +195,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'feje_desc':        $order_by = 'cross_solicitud_aplicacion_listado.f_ejecucion DESC ';                        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Ejecucion Descendente';break;
 		case 'especie_asc':      $order_by = 'sistema_variedades_categorias.Nombre ASC, variedades_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Especie/Variedad Ascendente'; break;
 		case 'especie_desc':     $order_by = 'sistema_variedades_categorias.Nombre DESC, variedades_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Especie/Variedad Descendente';break;
-		
+
 		default: $order_by = 'cross_solicitud_aplicacion_listado.NSolicitud DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Solicitud Descendente';
 	}
 }else{
@@ -269,7 +268,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 </div>
 <div class="clearfix"></div>
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
@@ -307,11 +306,11 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_date('Fecha Programada Desde','f_ejecucion_desde', $x10, 1);
 				$Form_Inputs->form_date('Fecha Programada Hasta','f_ejecucion_hasta', $x11, 1);
 				$Form_Inputs->form_select_join_filter('Agrónomo','idUsuario', $x12, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 						
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
@@ -450,7 +449,6 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 
- 
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

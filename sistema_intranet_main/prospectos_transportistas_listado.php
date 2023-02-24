@@ -172,7 +172,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 						
 				echo '<h3 class="register-heading">Datos Apoderado</h3>';
 				$Form_Inputs->form_input_icon('Email de notificacion', 'email_noti', $x4, 2,'fa fa-envelope-o');
-						
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('F_Ingreso', fecha_actual(), 2);
@@ -255,7 +255,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'prospectos_transportistas_lista
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Prospecto</a><?php }?>
 
 </div>
@@ -275,10 +275,10 @@ $arrUsers = db_select_array (false, $SIS_query, 'prospectos_transportistas_lista
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x1, 1);
 				$Form_Inputs->form_select('Estado Fidelizacion','idEstadoFidelizacion', $x2, 1, 'idEstadoFidelizacion', 'Nombre', 'prospectos_estado_fidelizacion', 0, '', $dbConn);
 				$Form_Inputs->form_select('Etapa','idEtapa', $x3, 1, 'idEtapa', 'Nombre', 'prospectos_transportistas_etapa', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

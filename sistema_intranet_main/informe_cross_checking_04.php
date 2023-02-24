@@ -425,7 +425,6 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 	</div>
 </div>
 
-  
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -441,8 +440,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 $y = "idEstado=1";
 $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
- 
- ?>
+
+?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -451,7 +450,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($NSolicitud)){             $x1  = $NSolicitud;             }else{$x1  = '';}
@@ -481,7 +480,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x6, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
 										 'Variedad','idProducto', $x7, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
 										 $dbConn, 'form1');
-				
+
 				$Form_Inputs->form_select('Estado','idEstado', $x8, 2, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Programada Desde','f_programacion_desde', $x9, 1);
 				$Form_Inputs->form_date('Fecha Programada Hasta','f_programacion_hasta', $x10, 1);
@@ -489,7 +488,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_date('Fecha Ejecutada Hasta','f_ejecucion_hasta', $x12, 1);
 				$Form_Inputs->form_date('Fecha Terminada Desde','f_termino_desde', $x13, 1);
 				$Form_Inputs->form_date('Fecha Terminada Hasta','f_termino_hasta', $x14, 1);
-				
+
 				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x15, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 						
 				?>
@@ -508,7 +507,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 						let idEstado = $(this).val(); //Asignamos el valor seleccionado
 						
 						//Solicitado
-						if(idEstado == 1){ 
+						if(idEstado == 1){
 							document.getElementById('div_f_programacion_desde').style.display = 'block';
 							document.getElementById('div_f_programacion_hasta').style.display = 'block';
 							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
@@ -524,7 +523,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 							document.getElementById('f_termino_hasta').value = "";				
 						
 						//Programado
-						}else if(idEstado == 2){ 
+						}else if(idEstado == 2){
 							document.getElementById('div_f_programacion_desde').style.display = 'none';
 							document.getElementById('div_f_programacion_hasta').style.display = 'none';
 							document.getElementById('div_f_ejecucion_desde').style.display = 'block';
@@ -540,7 +539,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 							document.getElementById('f_termino_hasta').value = "";	
 						
 						//Ejecutado
-						}else if(idEstado == 3){ 
+						}else if(idEstado == 3){
 							document.getElementById('div_f_programacion_desde').style.display = 'none';
 							document.getElementById('div_f_programacion_hasta').style.display = 'none';
 							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
@@ -556,7 +555,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 							//document.getElementById('f_termino_hasta').value = "";		
 						
 						//el resto
-						}else{ 
+						}else{
 							document.getElementById('div_f_programacion_desde').style.display = 'none';
 							document.getElementById('div_f_programacion_hasta').style.display = 'none';
 							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
@@ -584,7 +583,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

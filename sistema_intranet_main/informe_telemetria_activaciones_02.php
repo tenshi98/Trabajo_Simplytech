@@ -114,7 +114,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //filtros
@@ -133,7 +133,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTelemetria)){  $x1  = $idTelemetria;  }else{$x1  = '';}
@@ -154,7 +154,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_time('Hora Inicio','H_inicio', $x3, 1, 2);
 				$Form_Inputs->form_date('Fecha Termino','F_termino', $x4, 2);
 				$Form_Inputs->form_time('Hora Termino','H_termino', $x5, 1, 1);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 				?>
 	   
@@ -166,7 +166,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

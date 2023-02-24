@@ -88,7 +88,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Documento borrado corr
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['addFile'])){ ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -137,11 +137,11 @@ if(!empty($_GET['addFile'])){ ?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Cuota','FechaCuota', $x1, 2);
 				$Form_Inputs->form_input_number('Monto Cuota', 'MontoCuota', $x2, 2);
-				
+
 				$Form_Inputs->form_input_hidden('oldidProducto', $_GET['editCuotas'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_cuotas"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -166,7 +166,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){       $x1  = $idTrabajador;     }else{$x1  = $_SESSION['desc_cuotas_basicos']['idTrabajador'];}
@@ -184,7 +184,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_number('Monto', 'Monto', $x4, 2);
 				$Form_Inputs->form_select_n_auto('N° Cuotas','N_Cuotas', $x5, 2, 1, 72);	
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 1);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -284,12 +284,12 @@ if (isset($_SESSION['desc_cuotas_listado'])){
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="5">Detalle</th>
 					<th width="10">Acciones</th>
 				</tr>
-				
+
 				<tr class="item-row fact_tittle">
 					<td>Fecha Cobro</td>
 					<td colspan="3">Numero Cuota</td>
@@ -317,7 +317,7 @@ if (isset($_SESSION['desc_cuotas_listado'])){
 					}
 				}
 				echo '<tr id="hiderow"><td colspan="6"><a name="Ancla_obs"></a></td></tr>';?>
-				
+
 				<tr class="invoice-total" bgcolor="#f1f1f1">
 					<td colspan="4" align="right"><strong>Total Cuotas</strong></td> 
 					<td align="right"><span <?php if($vtotal_neto!=$_SESSION['desc_cuotas_basicos']['Monto']){echo 'style="color:red;"';} ?>><?php echo Valores($vtotal_neto, 0);?></span></td>
@@ -363,7 +363,7 @@ if (isset($_SESSION['desc_cuotas_listado'])){
 					</tr>
 					 
 				 <?php 
-				$numeral++;	
+				$numeral++;
 				}
 			}?>
 
@@ -392,7 +392,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){       $x1  = $idTrabajador;     }else{$x1  = '';}
@@ -410,7 +410,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_number('Monto', 'Monto', $x4, 2);
 				$Form_Inputs->form_select_n_auto('N° Cuotas','N_Cuotas', $x5, 2, 1, 72);	
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 1);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -418,7 +418,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	
 						
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -430,7 +430,6 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Se inicializa el paginador de resultados
@@ -454,7 +453,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'monto_desc':      $order_by = 'trabajadores_descuentos_cuotas.Monto DESC ';              $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Monto Descendente';break;
 		case 'cuotas_asc':      $order_by = 'trabajadores_descuentos_cuotas.N_Cuotas ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Numero Cuotas Ascendente';break;
 		case 'cuotas_desc':     $order_by = 'trabajadores_descuentos_cuotas.N_Cuotas DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Numero Cuotas Descendente';break;
-		
+
 		default: $order_by = 'trabajadores_descuentos_cuotas.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
@@ -509,7 +508,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuotas',
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){ ?>
 		<?php if (isset($_SESSION['desc_cuotas_basicos']['idTrabajador'])&&$_SESSION['desc_cuotas_basicos']['idTrabajador']!=''){?>
 			
@@ -544,10 +543,10 @@ $arrTipo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuotas',
 				$Form_Inputs->form_select_filter('Tipo','idTipo', $x3, 1, 'idTipo', 'Nombre', 'trabajadores_descuentos_cuotas_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Monto', 'Monto', $x4, 1);
 				$Form_Inputs->form_select_n_auto('N° Cuotas','N_Cuotas', $x5, 1, 1, 72);
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

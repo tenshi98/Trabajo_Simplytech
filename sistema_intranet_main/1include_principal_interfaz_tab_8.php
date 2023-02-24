@@ -29,7 +29,7 @@ $arrFacturaciones = db_select_array (false, $SIS_query, 'apoderados_listado', $S
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Facturaciones Pendientes Pago</h5>
 			</header>
 			<div class="table-responsive">
-				
+
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -58,7 +58,7 @@ $arrFacturaciones = db_select_array (false, $SIS_query, 'apoderados_listado', $S
 						</table>
 					</div>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -87,7 +87,7 @@ $arrFacturaciones = db_select_array (false, $SIS_query, 'apoderados_listado', $S
 						</table>
 					</div>
 				</div>
-				
+
 				<div class="clearfix"></div>
 					
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -118,7 +118,7 @@ $arrFacturaciones = db_select_array (false, $SIS_query, 'apoderados_listado', $S
 						</table>
 					</div>
 				</div>
-				
+
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -147,14 +147,13 @@ $arrFacturaciones = db_select_array (false, $SIS_query, 'apoderados_listado', $S
 						</table>
 					</div>
 				</div>
-				
-				
+
 			</div>
 		</div>
 	</div>
-	
+
 </div>
-	
+
 <?php } ?>
 
 

@@ -354,7 +354,7 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'cross_predios_listado_zonas.Nombre ASC';
 				$arrCuarteles = array();
 				$arrCuarteles = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 			}
 			/**********************************************/
 			if($ndata_2!=0) {
@@ -371,7 +371,7 @@ require_once '0_validate_user_1.php';
 				//Se trae un listado con los trabajadores
 				$arrTrabajadores = array();
 				$arrTrabajadores = db_select_array (false, 'idTrabajador, Rut,Nombre,ApellidoPat', 'trabajadores_listado', '', 'idSistema ='.$_SESSION['sol_apli_basicos']['idSistema'].' AND idEstado=1', 'idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 			}
 			/**********************************************/
 			//Se trae un listado con los productos
@@ -386,14 +386,14 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'sistema_productos_uml.Nombre ASC';
 				$arrProductos = array();
 				$arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 			}
 			/**********************************************/
 			//Se trae un listado con los materiales	
 			if($ndata_4!=0) {
 				$arrMateriales = array();
 				$arrMateriales = db_select_array (false, 'idMatSeguridad, Nombre,Codigo', 'cross_checking_materiales_seguridad', '', 'idEstado=1', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 			}
 			/*******************************************************************/
 			//verifico que no existan repetidos
@@ -537,7 +537,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['sol_apli_cuarteles'][$nmc1]['CuartelVariedad'] = $arrCuart[$idZona[$j1]]['Variedad'];
 					$_SESSION['sol_apli_cuarteles'][$nmc1]['idCategoria']     = $arrCuart[$idZona[$j1]]['idCategoria'];
 					$_SESSION['sol_apli_cuarteles'][$nmc1]['idProducto']      = $arrCuart[$idZona[$j1]]['idProducto'];
-					
+
 					//Recorro los tractores
 					for($j2 = 0; $j2 < $ndata_2; $j2++){
 						//variable interna
@@ -776,7 +776,7 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'cross_predios_listado_zonas.Nombre ASC';
 				$arrCuarteles = array();
 				$arrCuarteles = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 			}
 			/**********************************************/
 			if($ndata_2!=0) {
@@ -793,7 +793,7 @@ require_once '0_validate_user_1.php';
 				//Se trae un listado con los trabajadores
 				$arrTrabajadores = array();
 				$arrTrabajadores = db_select_array (false, 'idTrabajador, Rut,Nombre,ApellidoPat', 'trabajadores_listado', '', 'idSistema ='.$_SESSION['sol_apli_basicos']['idSistema'].' AND idEstado=1', 'idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 			}
 			/**********************************************/
 			//Se trae un listado con los productos
@@ -808,14 +808,14 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'sistema_productos_uml.Nombre ASC';
 				$arrProductos = array();
 				$arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 			}
 			/**********************************************/
 			//Se trae un listado con los materiales	
 			if($ndata_4!=0) {
 				$arrMateriales = array();
 				$arrMateriales = db_select_array (false, 'idMatSeguridad, Nombre,Codigo', 'cross_checking_materiales_seguridad', '', 'idEstado=1', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 			}
 			/*******************************************************************/
 			//verifico que no existan repetidos
@@ -958,7 +958,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['sol_apli_cuarteles'][$nmc1]['CuartelVariedad'] = $arrCuart[$idZona[$j1]]['Variedad'];
 					$_SESSION['sol_apli_cuarteles'][$nmc1]['idCategoria']     = $arrCuart[$idZona[$j1]]['idCategoria'];
 					$_SESSION['sol_apli_cuarteles'][$nmc1]['idProducto']      = $arrCuart[$idZona[$j1]]['idProducto'];
-					
+
 					//Recorro los tractores
 					for($j2 = 0; $j2 < $ndata_2; $j2++){
 						//variable interna

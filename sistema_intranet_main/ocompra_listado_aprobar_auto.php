@@ -77,14 +77,14 @@ if(!empty($_GET['compra_rechazo'])){ ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idOcompra', $_GET['compra_rechazo'], 2);
 				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('Creacion_hora', hora_actual(), 2);
 				$Form_Inputs->form_input_hidden('idTipo', 4, 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_rechazo">
 					<a href="<?php echo $location.'&view='.$_GET['compra_rechazo']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -113,14 +113,14 @@ if(!empty($_GET['compra_rechazo'])){ ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x1, 2);
-				
+
 				$Form_Inputs->form_input_hidden('idOcompra', $_GET['compra_nula'], 2);
 				$Form_Inputs->form_input_hidden('Creacion_fecha', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('Creacion_hora', hora_actual(), 2);
 				$Form_Inputs->form_input_hidden('idTipo', 4, 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_nula">
 					<a href="<?php echo $location.'&view='.$_GET['compra_nula']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -242,7 +242,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'estado_desc':       $order_by = 'core_oc_estado.Nombre DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		case 'fecha_asc':         $order_by = 'ocompra_listado.Creacion_fecha ASC ';   $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
 		case 'fecha_desc':        $order_by = 'ocompra_listado.Creacion_fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		
+
 		default: $order_by = 'core_oc_estado.idEstado DESC,ocompra_listado.idOcompra DESC, ocompra_listado.Creacion_fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado, N° Doc, Fecha Descendente';
 	}
 }else{
@@ -307,11 +307,10 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'ocompra_listado', $SIS_jo
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 1);
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
@@ -370,7 +369,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'ocompra_listado', $SIS_jo
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
-				
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrSolicitudes as $sol) { ?>
 					<tr class="odd <?php if(isset($sol['idEstado'])&&$sol['idEstado']==3){echo 'danger';} ?>">

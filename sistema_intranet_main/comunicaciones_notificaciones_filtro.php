@@ -195,7 +195,7 @@ foreach ($arrNotificaciones as $noti) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Titulo)){        $x1  = $Titulo;        }else{$x1  = '';}
@@ -218,7 +218,7 @@ foreach ($arrNotificaciones as $noti) {
 				if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {        $Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);}     
 				
 				?>
-				
+
 				<div class="form-group">
 					<?php if($total_usr){?>
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf003; Enviar" name="submit">
@@ -293,8 +293,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 										 'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										  $dbConn, 'form1');
 				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
@@ -328,7 +327,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'fecha_desc':    $order_by = 'Fecha DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
 		case 'titulo_asc':    $order_by = 'Titulo ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Titulo Ascendente';break;
 		case 'titulo_desc':   $order_by = 'Titulo DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Titulo Descendente';break;
-		
+
 		default: $order_by = 'Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
@@ -359,7 +358,7 @@ $arrNotificaciones = db_select_array (false, $SIS_query, 'principal_notificacion
 		<li class="btn btn-default"><i class="fa fa-search" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Notificacion</a><?php } ?>
 
 </div>

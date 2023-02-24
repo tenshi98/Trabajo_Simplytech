@@ -55,7 +55,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'sistema_desc':  $order_by = 'core_sistemas.Nombre DESC ';                      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Sistema Descendente';break;
 		case 'servicio_asc':  $order_by = 'core_telemetria_servicio_tecnico.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Servicio Ascendente'; break;
 		case 'servicio_desc': $order_by = 'core_telemetria_servicio_tecnico.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Servicio Descendente';break;
-		
+
 		default: $order_by = 'telemetria_historial_mantencion.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
@@ -75,7 +75,7 @@ if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){$SIS_where .= " AND tele
 if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){$SIS_where .= " AND telemetria_historial_mantencion.idSistema='".$_GET['idSistema']."'";}
 if(isset($_GET['Fecha_ini']) && $_GET['Fecha_ini'] != ''&&isset($_GET['Fecha_ter']) && $_GET['Fecha_ter']!=''){ 
 	$SIS_where .= " AND telemetria_historial_mantencion.Fecha BETWEEN '".$_GET['Fecha_ini']."' AND '".$_GET['Fecha_ter']."'";
-}	
+}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idMantencion', 'telemetria_historial_mantencion', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -225,7 +225,7 @@ foreach ($arrOpciones as $mant) {
 <a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
 </div>
- 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //filtros
@@ -249,7 +249,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idServicio)){      $x1  = $idServicio;         }else{$x1  = '';}
@@ -276,10 +276,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_date('Fecha Mantencion Termino','Fecha_ter', $x5, 1);
 				$Form_Inputs->form_select_join_filter('Tecnico','idUsuario', $x6, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				$Form_Inputs->form_select('Sistema','idSistema', $x7, 1, 'idSistema', 'Nombre', 'core_sistemas',0, '', $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
-				
+
 				?>
 	   
 				<div class="form-group">
@@ -290,7 +289,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/

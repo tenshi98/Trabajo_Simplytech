@@ -71,7 +71,7 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	?>
- 
+
 <style>
 select {
   font-family: 'FontAwesome', 'sans-serif';
@@ -85,7 +85,7 @@ select {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){              $x1  = $Nombre;             }else{$x1  = $rowdata['Nombre'];}
@@ -97,7 +97,7 @@ select {
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_select_filter('Icono de la Categoria','idFont', $x2, 2, 'idFont', 'Nombre', 'core_font_awesome', 0, '', $dbConn);
 				$Form_Inputs->form_color_picker( 'Color Icono', 'IconColor', $x3, 1);
-				
+
 				$Form_Inputs->form_input_hidden('id_pmcat', $_GET['id'], 2);
 				?>
 
@@ -131,7 +131,7 @@ select {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){              $x1  = $Nombre;             }else{$x1  = '';}

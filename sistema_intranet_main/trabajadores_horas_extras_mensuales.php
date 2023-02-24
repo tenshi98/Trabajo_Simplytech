@@ -98,7 +98,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Boleta de Honorarios b
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['addFile'])){ ?>
- 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -153,12 +153,12 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $w, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Horas ', 'horas_dia', $x2, 1);
 				$Form_Inputs->form_select('Porcentaje Horas','porcentaje_dia', $x3, 1, 'idPorcentaje', 'Porcentaje', 'core_horas_extras_porcentajes', 0, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idMes', $_SESSION['horas_extras_mens_ing_basicos']['idMes'], 2);
 				$Form_Inputs->form_input_hidden('Ano', $_SESSION['horas_extras_mens_ing_basicos']['Ano'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_horas"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -181,7 +181,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){  $x1  = $Creacion_fecha;     }else{$x1  = $_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha'];}
@@ -195,7 +195,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_n_auto('Año','Ano', $x2, 2, 2016, ano_actual());
 				$Form_Inputs->form_select_filter('Mes','idMes', $x3, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 
@@ -266,7 +266,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<?php
 				//cuento la cantidad de columnas a utilizar
 				$data_column = 2;
@@ -340,7 +340,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 						echo '</tr>';
 					}
 				}?>
-				
+
 				<tr class="invoice-total" bgcolor="#f1f1f1">
 					<td colspan="<?php echo ($data_column-1); ?>" align="right"><strong>Total Horas extras</strong></td> 
 					<td align="right"><?php echo $total_general_horas; ?></td>
@@ -385,7 +385,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					</tr>
 					 
 				 <?php 
-				$numeral++;	
+				$numeral++;
 				}
 			}?>
 
@@ -411,7 +411,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){  $x1  = $Creacion_fecha;     }else{$x1  = '';}
@@ -425,15 +425,14 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_select_n_auto('Año','Ano', $x2, 2, 2016, ano_actual());
 				$Form_Inputs->form_select_filter('Mes','idMes', $x3, 2, 'idMes', 'Nombre', 'core_tiempo_meses', 0, 'idMes ASC', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x4, 1);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
 
-						
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf046; Crear Documento" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -445,7 +444,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 	</div>
 </div>
 
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Se inicializa el paginador de resultados
@@ -509,7 +507,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_mensua
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){ ?>
 		<?php if (isset($_SESSION['horas_extras_mens_ing_basicos']['idUsuario'])&&$_SESSION['horas_extras_mens_ing_basicos']['idUsuario']!=''){?>
 			
@@ -544,7 +542,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_mensua
 			
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

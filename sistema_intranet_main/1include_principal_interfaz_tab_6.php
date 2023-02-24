@@ -1,7 +1,7 @@
 <?php
 /**************************************************************************/
 //Cross
-$temp = $prm_x[32] + $prm_x[33] + $prm_x[34] + $prm_x[35] + $prm_x[36] + $prm_x[37];					
+$temp = $prm_x[32] + $prm_x[33] + $prm_x[34] + $prm_x[35] + $prm_x[36] + $prm_x[37];
 if($temp!=0) {
 	//Variables
 	$FechaDesde = restarDias(fecha_actual(),330);
@@ -102,7 +102,7 @@ if($temp!=0) {
 			}elseif($temp_act<$temp_crit_min){
 				$arrCrossGeneral['Fuera_de_rango_inf']++;
 				$arrCrossGeneral[$cross['Creacion_mes']]['Fuera_de_rango_inf']++;
-				
+
 			}
 		}
 	}
@@ -205,7 +205,7 @@ if($temp!=0) {
 								}
 							</script>
 							<div id="chart_anual" style="height: 200px; width: 100%;"></div>
-				
+
 						</div>
 					</div>
 				</div>';
@@ -337,7 +337,7 @@ if($temp!=0) {
 								
 							</script>
 							<div id="chart_div" style="height: 300px; width: 100%;"></div>
-				
+
 						</div>
 					</div>
 				</div>';
@@ -424,7 +424,7 @@ if($temp!=0) {
 								}
 							</script>
 							<div id="chart_anual" style="height: 200px; width: 100%;"></div>
-				
+
 						</div>
 					</div>
 				</div>';

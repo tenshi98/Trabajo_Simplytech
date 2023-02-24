@@ -213,7 +213,7 @@ $rowData = db_select_data (false, 'NSolicitud, f_programacion, horaProg, f_progr
 				$Form_Inputs->form_date('Fecha termino requerido','f_programacion_fin', $x4, 2);
 				$Form_Inputs->form_time('Hora termino requerido','horaProg_fin', $x5, 2, 1);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x6, 2);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -222,7 +222,7 @@ $rowData = db_select_data (false, 'NSolicitud, f_programacion, horaProg, f_progr
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['clone_idSolicitud'], 2);
 				$Form_Inputs->form_input_hidden('NSolicitudOld', $rowData['NSolicitud'], 2);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c5; Clonar" name="clone_Solicitud">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -252,7 +252,7 @@ if(isset($_SESSION['sol_apli_basicos']['idProducto'])&&$_SESSION['sol_apli_basic
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idZona)){         $x1  = $idZona;        }else{$x1  = $_SESSION['sol_apli_cuarteles'][$_GET['cuartel_id']]['idZona'];}
@@ -276,9 +276,9 @@ if(isset($_SESSION['sol_apli_basicos']['idProducto'])&&$_SESSION['sol_apli_basic
 				$Form_Inputs->form_input_number_spinner('Temperatura maxima','TempMax', $x6, -20, 500, '0.01', 2, 2);*/
 				
 				$Form_Inputs->form_input_hidden('idInterno', $_GET['cuartel_id'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_cuartel"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -327,7 +327,7 @@ array_push( $arrTipo,$row );
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){     $x1  = $idProducto;    }else{$x1  = $_SESSION['sol_apli_productos'][$_GET['cuartel_id']][$_GET['edit_prod']]['idProducto'];}
@@ -342,11 +342,11 @@ array_push( $arrTipo,$row );
 				$Form_Inputs->form_input_number_spinner('Dosis a aplicar','DosisAplicar', $x2, 0, 2000, '0.01', 2, 2);
 				$Form_Inputs->form_input_disabled( 'Unidad de medida', 'escribeme2', 0);
 				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x3, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idInterno', $_GET['cuartel_id'], 2);
 				$Form_Inputs->form_input_hidden('idInterno3', $_GET['edit_prod'], 2);
 				?>
-				
+
 				<script>
 					<?php
 					foreach ($arrTipo as $tipo) {
@@ -426,7 +426,7 @@ array_push( $arrTipo,$row );
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProducto)){     $x1  = $idProducto;    }else{$x1  = '';}
@@ -441,10 +441,10 @@ array_push( $arrTipo,$row );
 				$Form_Inputs->form_input_number_spinner('Dosis a aplicar','DosisAplicar', $x2, 0, 2000, '0.01', 2, 2);
 				$Form_Inputs->form_input_disabled( 'Unidad de medida', 'escribeme2', 0);
 				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x3, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idInterno', $_GET['cuartel_id'], 2);
 				?>
-				
+
 				<script>
 					<?php
 					foreach ($arrTipo as $tipo) {
@@ -455,7 +455,7 @@ array_push( $arrTipo,$row );
 					
 					//verifico el cambio
 					document.getElementById("idProducto").onchange = function() {myFunction()};
-					
+
 					//funcion de cambio
 					function myFunction() {
 						let Componente = document.getElementById("idProducto").value;
@@ -510,7 +510,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idVehiculo)){     $x1  = $idVehiculo;    }else{$x1  =  $_SESSION['sol_apli_tractores'][$_GET['cuartel_id']][$_GET['edit_trac']]['idVehiculo'];}
@@ -527,10 +527,10 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				}
 				$Form_Inputs->form_select_filter('Equipo Aplicacion','idVehiculo', $x1, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select_filter('Trabajador Asignado','idTrabajador', $x3, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $x, '', $dbConn);
-				
+
 				$Form_Inputs->form_input_hidden('idInterno', $_GET['cuartel_id'], 2);
 				$Form_Inputs->form_input_hidden('idInterno2', $_GET['edit_trac'], 2);
-				
+
 				?>
 				
 			  
@@ -567,7 +567,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idVehiculo)){     $x1  = $idVehiculo;    }else{$x1  = '';}
@@ -587,9 +587,9 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 					
 				
 				$Form_Inputs->form_input_hidden('idInterno', $_GET['cuartel_id'], 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_tractor"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -612,7 +612,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idMatSeguridad)){     $x1  = $idMatSeguridad;    }else{$x1  = '';}
@@ -620,9 +620,9 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Material de Seguridad','idMatSeguridad', $x1, 2, 'idMatSeguridad', 'Nombre', 'cross_checking_materiales_seguridad', 'idEstado=1', '', $dbConn);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_material"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -679,7 +679,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCuenta,$row );
-}	
+}
 /**************************************************************/
 //tractores filtrados
 $arrCuenta2 = array();
@@ -801,7 +801,7 @@ array_push( $arrCuenta2,$row );
 <div class="clearfix"></div>
 
 <div style="display: none;">
-	
+
 	<div id="clone_cuartel" class="cuartel_container"> 
 		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
@@ -1154,7 +1154,7 @@ array_push( $arrCuenta2,$row );
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Mojamiento)){    $x0 = $Mojamiento;    }else{$x0 = Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['Mojamiento']);}
@@ -1174,16 +1174,15 @@ array_push( $arrCuenta2,$row );
 				$Form_Inputs->form_input_number_spinner('Temperatura minima','TempMin', $x3, -20, 50, '0.1', 1, 2);
 				$Form_Inputs->form_input_number_spinner('Temperatura maxima','TempMax', $x4, -20, 50, '0.1', 1, 2);
 				$Form_Inputs->form_input_number_spinner('Humedad','HumTempMax', $x5, -20, 500, '0.1', 1, 2);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase_Tract"> 
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -1263,7 +1262,7 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($NSolicitud)){           $x1  = $NSolicitud;           }else{$x1  = $_SESSION['sol_apli_basicos']['NSolicitud'];}
@@ -1296,16 +1295,15 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_date('Fecha termino requerido','f_programacion_fin', $x10, 2);
 				$Form_Inputs->form_time('Hora termino requerido','horaProg_fin', $x11, 2, 1);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 2);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modBase">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -1430,7 +1428,7 @@ foreach ($arrPermisos as $prod) {
 		</div>
 		<table id="items">
 			<tbody>
-				
+
 				<tr>
 					<th colspan="8">Detalle</th>
 					<th width="160">Acciones</th>
@@ -1467,7 +1465,7 @@ foreach ($arrPermisos as $prod) {
 						</tr>
 					<?php } ?>
 				<?php } ?>
-				
+
 				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
 					<td><strong>Cuarteles</strong></td>
@@ -1630,7 +1628,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCuenta,$row );
-}	
+}
 /**************************************************************/
 //tractores filtrados
 $arrCuenta2 = array();
@@ -1757,7 +1755,7 @@ array_push( $arrCuenta2,$row );
 <div class="clearfix"></div>
 
 <div style="display: none;">
-	
+
 	<div id="clone_cuartel" class="cuartel_container"> 
 		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
@@ -2110,7 +2108,7 @@ array_push( $arrCuenta2,$row );
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Mojamiento)){    $x0 = $Mojamiento;    }else{$x0 = Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['Mojamiento']);}
@@ -2130,16 +2128,15 @@ array_push( $arrCuenta2,$row );
 				$Form_Inputs->form_input_number_spinner('Temperatura minima','TempMin', $x3, -20, 50, '0.1', 1, 2);
 				$Form_Inputs->form_input_number_spinner('Temperatura maxima','TempMax', $x4, -20, 50, '0.1', 1, 2);
 				$Form_Inputs->form_input_number_spinner('Humedad','HumTempMax', $x5, -20, 500, '0.1', 1, 2);
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
-				
+
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="Siguiente &#xf061;" name="submit_new_2"> 
 					<a href="<?php echo $location.'&new=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver Paso 1</a>
@@ -2221,7 +2218,7 @@ foreach ($arrPermisos as $prod) {
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($NSolicitud)){           $x1  = $NSolicitud;           }else{$x1  = '';}
@@ -2253,7 +2250,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_date('Fecha termino requerido','f_programacion_fin', $x10, 2);
 				$Form_Inputs->form_time('Hora termino requerido','horaProg_fin', $x11, 2, 1);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 2);
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -2295,7 +2292,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'predio_desc':   $order_by = 'cross_predios_listado.Nombre DESC ';                                          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Predio Descendente';break;
 		case 'especie_asc':   $order_by = 'sistema_variedades_categorias.Nombre ASC, variedades_listado.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Especie/Variedad Ascendente'; break;
 		case 'especie_desc':  $order_by = 'sistema_variedades_categorias.Nombre DESC, variedades_listado.Nombre DESC ';  $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Especie/Variedad Descendente';break;
-		
+
 		default: $order_by = 'cross_solicitud_aplicacion_listado.NSolicitud DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> N° Solicitud Descendente';
 	}
 }else{
@@ -2360,7 +2357,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 	<?php if ($rowlevel['level']>=3){
 	if (isset($_SESSION['sol_apli_basicos']['idPredio'])&&$_SESSION['sol_apli_basicos']['idPredio']!=''){?>
 		
@@ -2404,11 +2401,10 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 				$Form_Inputs->form_date('Fecha Programada','f_programacion', $x7, 1);
 				$Form_Inputs->form_time('Hora Programada','horaProg', $x8, 1, 2);
 				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x9, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>

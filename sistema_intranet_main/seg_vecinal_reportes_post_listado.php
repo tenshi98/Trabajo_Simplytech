@@ -90,7 +90,7 @@ $ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-        	
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Fecha)){       $x1 = $Fecha;       }else{$x1 = '';}
@@ -100,7 +100,7 @@ $ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
 				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x2, 1);
-				
+
 				$Form_Inputs->form_input_hidden('idCliente', $_GET['idCreador'], 2);
 				?>
 	 
@@ -295,11 +295,10 @@ array_push( $arrReportes,$row );
 		</ul>
 	</div>
 	<a href="<?php echo $location; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-	
+
 	<div class="clearfix"></div>
 </div>
 
- 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -490,7 +489,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	
+
 </div>
 <div class="clearfix"></div>
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
@@ -510,10 +509,10 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 				$Form_Inputs->form_select('Tipo de Reporte','idTipo', $x2, 1, 'idTipo', 'Nombre', 'seg_vecinal_reportes_post_tipos', 0, '',$dbConn);
 				$Form_Inputs->form_date('Fecha','Fecha', $x3, 1);
 				$Form_Inputs->form_time('Hora','Hora', $x4, 1, 1);
-						
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="filtro_form">
 					<a href="<?php echo $original.'?pagina=1'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a>
