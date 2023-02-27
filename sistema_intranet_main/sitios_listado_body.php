@@ -146,7 +146,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_body', $SIS_join, 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -156,7 +156,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTipo)){        $x0  = $idTipo;        }else{$x0  = '';}
@@ -245,9 +245,9 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowdata['Nombre'], 'Elementos Cuerpo');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowdata['Nombre'], 'Elementos Cuerpo'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cuerpo</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cuerpo</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -293,13 +293,13 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 							<tr class="odd">
 								<td><?php echo $tipos['idPosicion']; ?></td>
 								<td><?php echo $tipos['Titulo']; ?></td>
-								<td><label class="label <?php if(isset($tipos['idEstado'])&&$tipos['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $tipos['Estado']; ?></label></td>
+								<td><label class="label <?php if(isset($tipos['idEstado'])&&$tipos['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $tipos['Estado']; ?></label></td>
 								<td>
 									<div class="btn-group" style="width: 70px;" >
 										<a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$tipos['idBody']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-										<?php 
+										<?php
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($tipos['idBody'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar el body '.$tipos['Titulo'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar el body '.$tipos['Titulo'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									</div>
 								</td>
@@ -315,10 +315,9 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php } ?>
 <?php
@@ -326,4 +325,5 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

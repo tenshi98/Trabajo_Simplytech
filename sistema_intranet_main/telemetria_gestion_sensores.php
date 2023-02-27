@@ -40,15 +40,15 @@ $enlace .= "&idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 if (isset($_GET['idCiudad'])&&$_GET['idCiudad']!=''){
 	$SIS_where .= " AND telemetria_listado.idCiudad=".$_GET['idCiudad'];
-	$enlace    .= "&idCiudad=".$_GET['idCiudad'];	
+	$enlace    .= "&idCiudad=".$_GET['idCiudad'];
 }
 if (isset($_GET['idComuna'])&&$_GET['idComuna']!=''){
 	$SIS_where .= " AND telemetria_listado.idComuna=".$_GET['idComuna'];
-	$enlace    .= "&idComuna=".$_GET['idComuna'];	
+	$enlace    .= "&idComuna=".$_GET['idComuna'];
 }
 if (isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$SIS_where .= " AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
-	$enlace    .= "&idTelemetria=".$_GET['idTelemetria'];	
+	$enlace    .= "&idTelemetria=".$_GET['idTelemetria'];
 }
 
 //numero sensores equipo
@@ -119,7 +119,7 @@ foreach ($arrUnimed as $sen) {
 									$tiempo1     = $data['LastUpdateHora'];
 									$tiempo2     = $HoraSistema;
 									$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
-									
+
 									//Comparaciones de tiempo
 									$Time_Tiempo     = horas2segundos($Tiempo);
 									$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
@@ -149,9 +149,9 @@ foreach ($arrUnimed as $sen) {
 									}
 			
 									?>
-									<tr class="odd <?php echo $danger; ?>">		
+									<tr class="odd <?php echo $danger; ?>">
 										<td><?php echo $data['Nombre']; ?></td>
-										<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>		
+										<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>
 										<td>
 											<div class="btn-group" style="width: 35px;" >
 												<a href="<?php echo 'telemetria_gestion_sensores_view_equipo.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
@@ -186,7 +186,7 @@ foreach ($arrUnimed as $sen) {
 							var map;
 										
 							var marcadores = [
-								<?php 
+								<?php
 								$in=0;
 								foreach ($arrEquipo as $data) { 
 									$explanation = "<div class='iw-subTitle'>Equipo: ".$data['Nombre']."</div>";
@@ -202,7 +202,7 @@ foreach ($arrUnimed as $sen) {
 									$explanation .= '</p>';		
 									
 									
-									if($in==0){$in=1;}else{echo ',';}?>
+									if($in==0){$in=1;}else{echo ',';} ?>
 									{  
 										position: {
 											lat: <?php echo $data['GeoLatitud']; ?>,
@@ -320,7 +320,7 @@ foreach ($arrUnimed as $sen) {
 									case 1:
 										$('#consulta').load('telemetria_gestion_sensores_update.php<?php echo $enlace; ?>');
 										break;
-									
+
 									//se dibujan los iconos de los buses	
 									case 2:
 										//Los demas buses
@@ -371,7 +371,7 @@ foreach ($arrUnimed as $sen) {
 } else {
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=2";	
+	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=2";
 }else{
 	//filtro
 	$z = "idTelemetria=0";
@@ -402,7 +402,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 }	 
 ?>
 
-
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
 		<header>
@@ -430,7 +429,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						<div class="clearfix"></div>
 					</form>
 				</div>
-			
+
 			<?php widget_validator(); ?>
 			
         </div>
@@ -447,4 +446,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

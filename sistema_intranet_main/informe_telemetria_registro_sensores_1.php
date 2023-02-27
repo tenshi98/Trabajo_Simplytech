@@ -40,17 +40,17 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 }
 $search .= "&sensorn=".$_GET['sensorn'];
 $search .= "&idTelemetria=".$_GET['idTelemetria'];
-	
+
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
 
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
-}else{			
+}else{
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowEquipo');
-	
+
 	/****************************************/
 	//consulto
 	$SIS_query = '
@@ -85,7 +85,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	//titulo de la tabla
 	$m_table_title  .= '<th>Medicion</th>';
 	$arrData[1]['Name'] = "'Medicion'";
-	
+
 	//se arman datos
 	foreach ($arrEquipos as $fac) {
 		//que valor sea distinto de error
@@ -93,7 +93,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			//Grafico
 			$Temp_1  .= "'".Fecha_estandar($fac['FechaSistema'])." ".$fac['HoraSistema']."',";
 			if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){$arrData[1]['Value'] .= ", ".$fac['SensorValue'];}else{ $arrData[1]['Value'] = $fac['SensorValue'];}
-						
+
 			//Tabla
 			$m_table .= '<tr class="odd">';
 			$m_table .= '<td>'.Fecha_estandar($fac['FechaSistema']).'</td>';
@@ -109,11 +109,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			//contador
 			$count++;
 		}
-	} 
+	}
 
-	/******************************************/  
+	/******************************************/
 	$xmax = 1;
-	
+
 	//variables
 	$Graphics_xData       = 'var xData = [';
 	$Graphics_yData       = 'var yData = [';
@@ -160,11 +160,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			alert_post_data(3,1,1, $Alert_Text);
 		echo '</div>';
 	}
-	
+
 	?>
 
 	<style>
-	#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif';?>");background-repeat: no-repeat;background-position: center;}
+	#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif'; ?>");background-repeat: no-repeat;background-position: center;}
 	</style>
 	<div id="loading"></div>
 	<script>
@@ -185,7 +185,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">
 				<header>
-					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>	
+					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 					<h5>Graficos del Sensor N° <?php echo $_GET['sensorn'].' '.$arrEquipos[0]['SensorNombre'].' de '.$rowEquipo['NombreEquipo']; ?></h5>
 				</header>
 				<div class="table-responsive">
@@ -197,7 +197,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: none;">
 
 			<form method="post" id="make_pdf" action="informe_telemetria_registro_sensores_19_to_pdf.php">
@@ -213,13 +213,13 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				<?php if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){?> <input type="hidden" name="h_termino"  id="h_termino" value="<?php echo $_GET['h_termino']; ?>" /><?php } ?>
 
 				<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
-			
+
 			</form>
 
 			<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>
 			<script>
 				var node = document.getElementById('graphLinear_1');
-				
+
 				function sendDatatoSRV(img) {
 					$('#img_adj').val(img);
 					//$('#img_adj').val($('#img-out').html());
@@ -245,7 +245,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								console.error('oops, something went wrong!', error);
 								alert('No se puede exportar!');
 								document.getElementById("loading").style.display = "none";
-							});		
+							});
 						}
 					, 3000);
 				}
@@ -280,13 +280,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 <?php } ?>
 
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-			
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //filtros
@@ -304,8 +303,9 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 alert_post_data(2,1,1, $Alert_Text);
+
 ?>
-		
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -314,7 +314,7 @@ alert_post_data(2,1,1, $Alert_Text);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
@@ -340,13 +340,12 @@ alert_post_data(2,1,1, $Alert_Text);
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				$Form_Inputs->form_select_tel_group_sens('Sensor','sensorn', 'idTelemetria', 'form1', 2, $dbConn);
-				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				
+				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+
 				//Si es redireccionado desde otra pagina con datos precargados
-				if(isset($_GET['view'])&&$_GET['view']!='') { echo '<script> $(document).ready(function(){cambia_idTelemetria();});</script>';}	
+				if(isset($_GET['view'])&&$_GET['view']!='') { echo '<script> $(document).ready(function(){cambia_idTelemetria();});</script>';}
 				?>
-	   
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -357,12 +356,10 @@ alert_post_data(2,1,1, $Alert_Text);
 </div>
 <?php } ?>
 
-	
-
-          
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

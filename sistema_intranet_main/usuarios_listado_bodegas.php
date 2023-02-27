@@ -292,7 +292,7 @@ if($arriendos!=0){
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Permisos de acceso a Bodegas');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Permisos de acceso a Bodegas'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -334,7 +334,7 @@ if($arriendos!=0){
 			</ul>
 		</header>
         <div class="table-responsive">
-			
+
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -342,9 +342,9 @@ if($arriendos!=0){
 						<th width="160">Sistema</th>
 						<th width="10">Acciones</th>
 					</tr>
-					<?php echo widget_sherlock(1, 3, 'TableFiltered');?>
+					<?php echo widget_sherlock(1, 3, 'TableFiltered'); ?>
 				</thead>
-								  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 					<tr class="odd" >
 						<td style="background-color:#DDD"  colspan="2" >
@@ -427,21 +427,21 @@ if($arriendos!=0){
 					
 				</tbody>
 			</table>
-		
+
 		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

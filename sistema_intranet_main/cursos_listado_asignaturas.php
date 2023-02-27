@@ -59,6 +59,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 //filtro para la asignatura
 $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -69,7 +70,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idAsignatura)){     $x1  = $idAsignatura;    }else{$x1  = '';}
@@ -79,7 +80,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				$Form_Inputs->form_select_filter('Asignatura','idAsignatura', $x1, 2, 'idCurso', 'Nombre', 'alumnos_cursos',$z, '', $dbConn);
 
 				$Form_Inputs->form_input_hidden('idCurso', $_GET['id'], 2);
-						
+
 				?>
 
 				<div class="form-group">
@@ -146,10 +147,11 @@ array_push( $arrCursos,$row );
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Curso', $rowdata['Nombre'], 'Editar Asignaturas Relacionadas');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Curso', $rowdata['Nombre'], 'Editar Asignaturas Relacionadas'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Asignatura</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Asignatura</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -180,15 +182,15 @@ array_push( $arrCursos,$row );
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					
+
 					<?php foreach ($arrCursos as $curso){ ?>
-						<tr> 
+						<tr>
 							<td><?php echo $curso['NombreCurso']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($curso['idRelacionados'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar la asignatura '.$curso['NombreCurso'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar la asignatura '.$curso['NombreCurso'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -204,8 +206,8 @@ array_push( $arrCursos,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -214,4 +216,5 @@ array_push( $arrCursos,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

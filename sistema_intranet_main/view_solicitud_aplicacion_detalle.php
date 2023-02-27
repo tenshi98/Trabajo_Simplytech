@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -148,7 +148,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			<strong>Datos Empresa</strong>
 			<address>
@@ -203,7 +203,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 				Temperatura Min: <?php echo Cantidades_decimales_justos($row_data['TempMin']); ?> °<br/>
 				Temperatura Max: <?php echo Cantidades_decimales_justos($row_data['TempMax']); ?> °<br/>
 				Humedad: <?php echo Cantidades_decimales_justos($row_data['HumTempMax']); ?> %<br/>
-						
+
 			</address>
 		</div>
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
@@ -212,7 +212,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 				N° Cuarteles Programados: <?php echo $row_data['N_Cuarteles']; ?><br/>
 				N° Cuarteles Cerrados: <?php echo $row_data['N_Cuarteles_Cerrados']; ?><br/>
 				Avance %: <?php echo porcentaje($row_data['N_Cuarteles_Cerrados']/$row_data['N_Cuarteles']); ?><br/>
-						
+
 			</address>
 		</div>
 				
@@ -241,29 +241,29 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 							<td><strong>Hileras</strong></td>
 							<td><strong>Distancia Plant</strong></td>
 							<td><strong>Distancia Hileras</strong></td>
-							
+
 							<th><strong>Promedio</strong></th>
-							
+
 							<th><strong>Faltante</strong></th>
-							
+
 							<th><strong>Derecho</strong></th>
 							<th><strong>Izquierdo</strong></th>
-							
+
 							<th><strong>Litros Aplicados</strong></th>
 							<th><strong>Litros x Hectarea</strong></th>
-							
+
 							<th><strong>Pendientes</strong></th>
-							
+
 							<th></th>
-									
+
 						</tr>
 
-						<?php 
+						<?php
 						//recorro el lsiatdo entregado por la base de datos
 						if ($arrCuarteles!=false && !empty($arrCuarteles) && $arrCuarteles!='') {
-							foreach ($arrCuarteles as $cuartel) { 
+							foreach ($arrCuarteles as $cuartel) {
 								if(isset($cuartel['idEstado'])&&$cuartel['idEstado']==2){ $cierre = ' (Cerrado el '.fecha_estandar($cuartel['f_cierre']).')';}else{$cierre = '';}
-								
+
 								//defino el icono y su color
 								switch ($cuartel['CuartelidEjecucion']) {
 									case 0:
@@ -277,7 +277,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 										break;
 								}
 								?>
-								
+
 								<tr class="item-row linea_punteada">
 									<td class="item-name"><?php echo $s_Icon.' '.$cuartel['CuartelNombre'].$cierre ?></td>
 									<td class="item-name"><?php echo $cuartel['CuartelEspecie'].' '.$cuartel['CuartelVariedad']; ?></td>
@@ -287,7 +287,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 									<td class="item-name"><?php echo Cantidades($cuartel['CuartelHileras'], 0); ?></td>
 									<td class="item-name"><?php echo Cantidades($cuartel['CuartelDistanciaPlant'], 1); ?></td>
 									<td class="item-name"><?php echo Cantidades($cuartel['CuartelDistanciaHileras'], 1); ?></td>
-									
+
 									<td class="item-name"><?php echo Cantidades($cuartel['GeoVelocidadProm'], 1); ?></td>
 									<td class="item-name">
 										<?php  
@@ -303,7 +303,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 									<td class="item-name"><?php echo cantidades($cuartel['Litros'], 0); ?></td>
 									<td class="item-name"><?php if(isset($cuartel['CuartelHectareas'])&&$cuartel['CuartelHectareas']!=0){echo cantidades(($cuartel['Litros']/$cuartel['CuartelHectareas']), 0);}else{echo '0';} ?></td>
 									<td class="item-name">
-										<?php 
+										<?php
 										$pendiente = ((($cuartel['CuartelDistanciaPlant']*$cuartel['NPlantas']) - ($cuartel['GeoDistance']*1000))/$cuartel['CuartelDistanciaPlant']);
 										if($pendiente<0){
 											$pendiente = 0;
@@ -344,7 +344,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -354,7 +354,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -363,4 +363,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -21,7 +21,7 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['Programada_fecha']))     $Programada_fecha        = $_POST['Programada_fecha'];
 	if (!empty($_POST['idSistema']))            $idSistema               = $_POST['idSistema'];
 	if (!empty($_POST['idAsignadas']))          $idAsignadas             = $_POST['idAsignadas'];
-	
+
 	//Categorias
 	$categoria   = array();
 	$n_categoria = array();
@@ -29,8 +29,7 @@ require_once '0_validate_user_1.php';
 		if (!empty($_POST['categoria_'.$i]))    $categoria[$i]     = $_POST['categoria_'.$i];
 		if (!empty($_POST['n_categoria_'.$i]))  $n_categoria[$i]   = $_POST['n_categoria_'.$i];
 	}
-	
-	
+
 	//Respuestas
 	if (!empty($_POST['idQuizRealizadas']))     $idQuizRealizadas     = $_POST['idQuizRealizadas'];
 	if (!empty($_POST['PorcentajeMin']))        $PorcentajeMin        = $_POST['PorcentajeMin'];
@@ -175,7 +174,7 @@ require_once '0_validate_user_1.php';
 							if(isset($Total_Preguntas) && $Total_Preguntas!=''){ $SIS_data .= ",'".$Total_Preguntas."'";  }else{$SIS_data .= ",''";}
 							if(isset($Tiempo) && $Tiempo!=''){                   $SIS_data .= ",'".$Tiempo."'";           }else{$SIS_data .= ",''";}
 							if(isset($Programada_fecha) && $Programada_fecha!=''){    
-								$SIS_data .= ",'".$Programada_fecha."'";  
+								$SIS_data .= ",'".$Programada_fecha."'";
 								$SIS_data .= ",'".fecha2NdiaMes($Programada_fecha)."'";
 								$SIS_data .= ",'".fecha2NMes($Programada_fecha)."'";
 								$SIS_data .= ",'".fecha2Ano($Programada_fecha)."'";  
@@ -248,7 +247,7 @@ require_once '0_validate_user_1.php';
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idAsignadas, idCategoria, N_preguntas';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_evaluaciones_asignadas_categorias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 							}
 							/************************************/
@@ -392,7 +391,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idCurso) && $idCurso!=''){                   $SIS_data .= ",'".$idCurso."'";   }else{$SIS_data .= ",''";}
 				if(isset($idQuiz) && $idQuiz!=''){                     $SIS_data .= ",'".$idQuiz."'";    }else{$SIS_data .= ",''";}
 				if(isset($Programada_fecha) && $Programada_fecha!=''){    
-					$SIS_data .= ",'".$Programada_fecha."'";  
+					$SIS_data .= ",'".$Programada_fecha."'";
 					$SIS_data .= ",'".fecha2NMes($Programada_fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($Programada_fecha)."'";  
 				}else{
@@ -416,7 +415,7 @@ require_once '0_validate_user_1.php';
 					for ($i = 1; $i <= 30; $i++) {
 						//Reviso si existe el dato
 						if(isset($categoria[$i]) && $categoria[$i]!=''){
-								
+
 							//filtros
 							$SIS_data  = "'".$ultimo_id."'";
 							$SIS_data .= ",'".$i."'";
@@ -561,7 +560,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idCurso) && $idCurso!=''){                   $SIS_data .= ",'".$idCurso."'";   }else{$SIS_data .= ",''";}
 				if(isset($idQuiz) && $idQuiz!=''){                     $SIS_data .= ",'".$idQuiz."'";    }else{$SIS_data .= ",''";}
 				if(isset($Programada_fecha) && $Programada_fecha!=''){    
-					$SIS_data .= ",'".$Programada_fecha."'";  
+					$SIS_data .= ",'".$Programada_fecha."'";
 					$SIS_data .= ",'".fecha2NMes($Programada_fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($Programada_fecha)."'";  
 				}else{
@@ -586,7 +585,7 @@ require_once '0_validate_user_1.php';
 					for ($i = 1; $i <= 30; $i++) {
 						//Reviso si existe el dato
 						if(isset($categoria[$i]) && $categoria[$i]!=''){
-								
+
 							//filtros
 							$SIS_data = "'".$ultimo_id."'";
 							$SIS_data .= ",'".$i."'";
@@ -708,7 +707,7 @@ require_once '0_validate_user_1.php';
 							if(isset($Total_Preguntas) && $Total_Preguntas!=''){ $SIS_data .= ",'".$Total_Preguntas."'";  }else{$SIS_data .= ",''";}
 							if(isset($Tiempo) && $Tiempo!=''){                   $SIS_data .= ",'".$Tiempo."'";           }else{$SIS_data .= ",''";}
 							if(isset($Programada_fecha) && $Programada_fecha!=''){    
-								$SIS_data .= ",'".$Programada_fecha."'";  
+								$SIS_data .= ",'".$Programada_fecha."'";
 								$SIS_data .= ",'".fecha2NdiaMes($Programada_fecha)."'";
 								$SIS_data .= ",'".fecha2NMes($Programada_fecha)."'";
 								$SIS_data .= ",'".fecha2Ano($Programada_fecha)."'";  
@@ -779,7 +778,7 @@ require_once '0_validate_user_1.php';
 							if(isset($Total_Preguntas) && $Total_Preguntas!=''){  $SIS_data .= ",'".$Total_Preguntas."'";  }else{$SIS_data .= ",''";}
 							if(isset($Tiempo) && $Tiempo!=''){                    $SIS_data .= ",'".$Tiempo."'";           }else{$SIS_data .= ",''";}
 							if(isset($Programada_fecha) && $Programada_fecha!=''){    
-								$SIS_data .= ",'".$Programada_fecha."'";  
+								$SIS_data .= ",'".$Programada_fecha."'";
 								$SIS_data .= ",'".fecha2NdiaMes($Programada_fecha)."'";
 								$SIS_data .= ",'".fecha2NMes($Programada_fecha)."'";
 								$SIS_data .= ",'".fecha2Ano($Programada_fecha)."'";  
@@ -854,7 +853,7 @@ require_once '0_validate_user_1.php';
 							if(isset($Total_Preguntas) && $Total_Preguntas!=''){  $SIS_data .= ",'".$Total_Preguntas."'";  }else{$SIS_data .= ",''";}
 							if(isset($Tiempo) && $Tiempo!=''){                    $SIS_data .= ",'".$Tiempo."'";           }else{$SIS_data .= ",''";}
 							if(isset($Programada_fecha) && $Programada_fecha!=''){    
-								$SIS_data .= ",'".$Programada_fecha."'";  
+								$SIS_data .= ",'".$Programada_fecha."'";
 								$SIS_data .= ",'".fecha2NdiaMes($Programada_fecha)."'";
 								$SIS_data .= ",'".fecha2NMes($Programada_fecha)."'";
 								$SIS_data .= ",'".fecha2Ano($Programada_fecha)."'";  
@@ -921,7 +920,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'update':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -1097,7 +1096,7 @@ require_once '0_validate_user_1.php';
 				//tabla principal
 				$SIS_data = "idAsignadas='".$idAsignadas."'";
 				if(isset($Programada_fecha) && $Programada_fecha!=''){    
-					$SIS_data .= ",Programada_fecha='".$Programada_fecha."'";  
+					$SIS_data .= ",Programada_fecha='".$Programada_fecha."'";
 					$SIS_data .= ",Programada_mes='".fecha2NMes($Programada_fecha)."'";
 					$SIS_data .= ",Programada_ano='".fecha2Ano($Programada_fecha)."'"; 
 				}

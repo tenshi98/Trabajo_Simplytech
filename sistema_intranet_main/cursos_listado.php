@@ -170,8 +170,9 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrVideo,$row );
 }
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Curso', $rowdata['CursoNombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Curso', $rowdata['CursoNombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -248,7 +249,7 @@ array_push( $arrVideo,$row );
 									<th>Nombre</th>
 									<th>Profesor</th>
 									<th>Horario</th>
-									
+
 									<th>Lunes</th>
 									<th>Martes</th>
 									<th>Miercoles</th>
@@ -285,7 +286,7 @@ array_push( $arrVideo,$row );
 				
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
 		
@@ -295,14 +296,14 @@ array_push( $arrVideo,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -326,8 +327,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_select_n_auto('Semanas de Duracion','Semanas', $x3, 2, 1, 50);
 				$Form_Inputs->form_date('F. Inicio','F_inicio', $x4, 1);
 				$Form_Inputs->form_date('F. Termino','F_termino', $x5, 1);
-					
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
@@ -518,7 +518,7 @@ $arrCiudad = db_select_array (false, $SIS_query, 'cursos_listado', $SIS_join, $S
 						<td><?php echo $ciudad['Semanas']; ?></td>
 						<td><?php echo fecha_estandar($ciudad['F_inicio']); ?></td>
 						<td><?php echo fecha_estandar($ciudad['F_termino']); ?></td>
-						<td><label class="label <?php if(isset($ciudad['idEstado'])&&$ciudad['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $ciudad['Estado']; ?></label></td>
+						<td><label class="label <?php if(isset($ciudad['idEstado'])&&$ciudad['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $ciudad['Estado']; ?></label></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $ciudad['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
@@ -526,7 +526,7 @@ $arrCiudad = db_select_array (false, $SIS_query, 'cursos_listado', $SIS_join, $S
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$ciudad['idCurso']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($ciudad['idCurso'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el Curso '.$ciudad['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el Curso '.$ciudad['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -550,4 +550,5 @@ $arrCiudad = db_select_array (false, $SIS_query, 'cursos_listado', $SIS_join, $S
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

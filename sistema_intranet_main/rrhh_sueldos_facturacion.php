@@ -84,7 +84,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Facturacion de Sueldos
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['details'])){ 	
+if(!empty($_GET['details'])){
 // Se traen todos los datos del proveedor
 $query = "SELECT  fecha_auto, Creacion_fecha, Fecha_desde, Fecha_hasta, Observaciones, 
 UF, UTM, IMM, TopeImpAFP, TopeImpIPS, TopeSegCesantia, TopeAPVMensual, TopeDepConv
@@ -148,14 +148,14 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrArchivos,$row );
 }	
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
 		<div id="header"> Facturacion Sueldos</div>
 
-		
 		<div id="customer">
-			
+
 			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
@@ -224,12 +224,12 @@ array_push( $arrArchivos,$row );
 		
 			<table id="items">
 				<tbody>
-					
+
 					<tr>
 						<th colspan="5">Detalle</th>
 						<th width="10">Acciones</th>
 					</tr>
-					
+
 					<tr class="item-row fact_tittle">
 						<td>Nombre</td>
 						<td width="120">Rut</td>
@@ -248,10 +248,10 @@ array_push( $arrArchivos,$row );
 								}
 								?>
 							</td>
-							<td class="blank"><?php echo $producto['TrabajadorRut'];?></td>
-							<td class="blank" align="right"><?php echo valores($producto['TotalHaberes'], 0);?></td>
-							<td class="blank" align="right"><?php echo valores($producto['TotalDescuentos'], 0);?></td>
-							<td class="blank" align="right"><?php echo valores($producto['TotalAPagar'], 0);?></td>
+							<td class="blank"><?php echo $producto['TrabajadorRut']; ?></td>
+							<td class="blank" align="right"><?php echo valores($producto['TotalHaberes'], 0); ?></td>
+							<td class="blank" align="right"><?php echo valores($producto['TotalDescuentos'], 0); ?></td>
+							<td class="blank" align="right"><?php echo valores($producto['TotalAPagar'], 0); ?></td>
 							<td class="blank">
 								<div class="btn-group" style="width: 35px;" >
 									<a href="<?php echo 'view_rrhh_sueldos.php?view='.simpleEncode($producto['idFactTrab'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
@@ -266,22 +266,22 @@ array_push( $arrArchivos,$row );
 		
 		
     </div>
-    
+
     <div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Observaciones']; ?></p>
 		</div>
 	</div>
 	
     <table id="items" style="margin-bottom: 20px;">
         <tbody>
-            
+
 			<tr class="invoice-total" bgcolor="#f1f1f1">
                 <td colspan="5">Archivos Adjuntos</td>
                 <td width="160"></td>
             </tr>
-            
+
 			<?php foreach ($arrArchivos as $producto){?>
 				<tr class="item-row">
 					<td colspan="5"><?php echo $producto['Nombre']; ?></td>
@@ -297,7 +297,6 @@ array_push( $arrArchivos,$row );
 		</tbody>
     </table>
 
-
 </div>
  
 
@@ -305,10 +304,9 @@ array_push( $arrArchivos,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['addFile'])){ ?>
@@ -321,12 +319,12 @@ array_push( $arrArchivos,$row );
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
-			
+
 				<?php
 				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
-					
+
 				?>
 
 				<div class="form-group">
@@ -338,10 +336,11 @@ array_push( $arrArchivos,$row );
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['modBase'])){?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<a target="_blank" rel="noopener noreferrer" href="https://www.previred.com/web/previred/indicadores-previsionales" class="btn btn-default pull-right margin_width" ><i class="fa fa-search" aria-hidden="true"></i> Indicadores Previsionales</a>
 </div>
@@ -356,7 +355,7 @@ array_push( $arrArchivos,$row );
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				if(isset($Creacion_fecha)){  $x1  = $Creacion_fecha;     }else{$x1  = $_SESSION['fact_sueldos_basicos']['Creacion_fecha'];}
 				if(isset($Fecha_desde)){     $x2  = $Fecha_desde;        }else{$x2  = $_SESSION['fact_sueldos_basicos']['Fecha_desde'];}
 				if(isset($Fecha_hasta)){     $x3  = $Fecha_hasta;        }else{$x3  = $_SESSION['fact_sueldos_basicos']['Fecha_hasta'];}
@@ -411,30 +410,29 @@ array_push( $arrArchivos,$row );
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
 
-		<?php 
+		<?php
 		$ubicacion = $location.'&clear_all=true';
-		$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+		$dialogo   = '¿Realmente deseas eliminar todos los registros?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger dialogBox"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
 
 		<a href="<?php echo $location; ?>"  class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
-		<?php 		
+		<?php
 		$ubicacion = $location.'&view=true&ing_sueldo=true';
-		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?';?>
-		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
+		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?'; ?>
+		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>
 
 	</div>
 	<div class="clearfix"></div>
-</div> 
+</div>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
 		<div id="header"> Facturacion Sueldos</div>
 
-		
 		<div id="customer">
-			
+
 			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
@@ -465,12 +463,12 @@ array_push( $arrArchivos,$row );
 		
 			<table id="items">
 				<tbody>
-					
+
 					<tr>
 						<th colspan="5">Detalle</th>
 						<th width="10">Acciones</th>
 					</tr>
-					
+
 					<tr class="item-row fact_tittle">
 						<td>Nombre</td>
 						<td width="120">Rut</td>
@@ -487,16 +485,16 @@ array_push( $arrArchivos,$row );
 								if(isset($producto['CentroCosto'])&&$producto['CentroCosto']!=''){echo '<br/><strong>Centro de Costo: </strong>'.$producto['CentroCosto'];}
 								?>
 							</td>
-							<td class="blank"><?php echo $producto['TrabajadorRut'];?></td>
-							<td class="blank" align="right"><?php echo valores($producto['TotalHaberes'], 0);?></td>
-							<td class="blank" align="right"><?php echo valores($producto['TotalDescuentos'], 0);?></td>
-							<td class="blank" align="right"><?php echo valores($producto['TotalAPagar'], 0);?></td>
+							<td class="blank"><?php echo $producto['TrabajadorRut']; ?></td>
+							<td class="blank" align="right"><?php echo valores($producto['TotalHaberes'], 0); ?></td>
+							<td class="blank" align="right"><?php echo valores($producto['TotalDescuentos'], 0); ?></td>
+							<td class="blank" align="right"><?php echo valores($producto['TotalAPagar'], 0); ?></td>
 							<td class="blank">
 								<div class="btn-group" style="width: 70px;" >
 									<a href="<?php echo 'view_rrhh_sueldos_pre.php?idTrabajador='.$producto['idTrabajador']; ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-									<?php 
+									<?php
 									$ubicacion = $location.'&view=true&del_trab='.$producto['idTrabajador'];
-									$dialogo   = '¿Realmente deseas eliminar la facturacion de '.$producto['TrabajadorNombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la facturacion de '.$producto['TrabajadorNombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								</div>
 							</td>
@@ -505,23 +503,23 @@ array_push( $arrArchivos,$row );
 			</tbody>
 		</table>
     </div>
-    
+
     <div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['fact_sueldos_basicos']['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['fact_sueldos_basicos']['Observaciones']; ?></p>
 		</div>
 	</div>
-    
+
     <table id="items" style="margin-bottom: 20px;">
         <tbody>
-            
+
 			<tr class="invoice-total" bgcolor="#f1f1f1">
                 <td colspan="5">Archivos Adjuntos</td>
                 <td width="160"><a href="<?php echo $location.'&addFile=true' ?>" title="Agregar Archivo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Archivos</a></td>
             </tr>
-            
-			<?php 
+
+			<?php
 			if (isset($_SESSION['fact_sueldos_archivos'])){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
@@ -531,38 +529,35 @@ array_push( $arrArchivos,$row );
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $location.'&del_file='.$producto['idFile'];
-								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?'; ?>
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
-					 
-				 <?php 
+
+				 <?php
 				$numeral++;
 				}
-			}?>
+			} ?>
 
 		</tbody>
     </table>
 
-
 </div>
-
 
 <div class="clearfix"></div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<a target="_blank" rel="noopener noreferrer" href="https://www.previred.com/web/previred/indicadores-previsionales" class="btn btn-default pull-right margin_width" ><i class="fa fa-search" aria-hidden="true"></i> Indicadores Previsionales</a>
 </div>
 <div class="clearfix"></div>
-
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -697,12 +692,12 @@ $arrTipo = db_select_array (false, $SIS_query, 'rrhh_sueldos_facturacion', $SIS_
 
 	<?php if ($rowlevel['level']>=3){ ?>
 		<?php if (isset($_SESSION['fact_sueldos_basicos']['idUsuario'])&&$_SESSION['fact_sueldos_basicos']['idUsuario']!=''){?>
-			
-			<?php 
+
+			<?php
 			$ubicacion = $location.'&clear_all=true';
-			$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+			$dialogo   = '¿Realmente deseas eliminar todos los registros?'; ?>
 			<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</a>
-			
+
 			<a href="<?php echo $location; ?>&view=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-arrow-right" aria-hidden="true"></i> Continuar Facturacion</a>
 		<?php }else{ ?>
 			<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Facturacion</a>
@@ -774,7 +769,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'rrhh_sueldos_facturacion', $SIS_
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
-								  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrTipo as $tipo) { ?>
 						<tr class="odd">
@@ -799,11 +794,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'rrhh_sueldos_facturacion', $SIS_
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

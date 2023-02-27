@@ -73,6 +73,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);	
 mysqli_free_result($resultado);
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -113,8 +114,7 @@ mysqli_free_result($resultado);
 				$Form_Inputs->form_input_hidden('idAdmpm', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('fake_id_pmcat', $rowdata['id_pmcat'], 2);
 				$Form_Inputs->form_input_hidden('fake_Nombre', $rowdata['Nombre'], 2);
-				
-				
+
 				?>
 		 
 	  
@@ -130,9 +130,6 @@ mysqli_free_result($resultado);
 		</div>
 	</div>
 </div>
-
-
-
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){?>
@@ -221,7 +218,8 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
-}?>
+} ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Permiso</a>
 </div>
@@ -243,7 +241,7 @@ array_push( $arrPermisos,$row );
 						<th>Visualizacion</th>
 						<th width="10">Acciones</th>
 					</tr>
-					<?php echo widget_sherlock(1, 6, 'TableFiltered');?>
+					<?php echo widget_sherlock(1, 6, 'TableFiltered'); ?>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 					<?php
@@ -264,28 +262,27 @@ array_push( $arrPermisos,$row );
 								   echo 'Todos';
 								}else{
 								   echo $subcategorias['ver'];
-								}?>
+								} ?>
 							</td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
 									<a href="<?php echo $location.'&id='.$subcategorias['idAdmpm']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-									<?php 
+									<?php
 										$ubicacion = $location.'&del='.simpleEncode($subcategorias['idAdmpm'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar el permiso '.$subcategorias['Nombre'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar el permiso '.$subcategorias['Nombre'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>	
 								</div>
 							</td>
 						</tr>
 					 <?php } 
-					}?>
+					} ?>
 								   
 				</tbody>
-				
+
 			</table>
 		</div>
 	</div>
 </div>
-
 
 <?php } ?>
 <?php
@@ -293,4 +290,5 @@ array_push( $arrPermisos,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

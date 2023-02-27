@@ -70,8 +70,9 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Editar Estado');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Editar Estado'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -100,7 +101,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<?php if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -138,14 +139,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

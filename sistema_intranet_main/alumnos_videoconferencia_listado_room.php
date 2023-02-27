@@ -25,32 +25,18 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-// Se traen todos los datos del Contratista
-$query = "SELECT
+
+/*******************************************************/
+// consulto los datos
+$SIS_query = '
 cursos_listado.Nombre AS Curso,
 cursos_listado_videoconferencia.Nombre,
 cursos_listado_videoconferencia.HoraInicio,
 cursos_listado_videoconferencia.HoraTermino,
-cursos_listado_videoconferencia.idUsuario
-
-FROM `cursos_listado`
-LEFT JOIN `cursos_listado_videoconferencia`  ON cursos_listado_videoconferencia.idCurso  = cursos_listado.idCurso
-
-WHERE cursos_listado_videoconferencia.idVideoConferencia = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+cursos_listado_videoconferencia.idUsuario';
+$SIS_join  = 'LEFT JOIN `cursos_listado_videoconferencia`  ON cursos_listado_videoconferencia.idCurso  = cursos_listado.idCurso';
+$SIS_where = 'cursos_listado_videoconferencia.idVideoConferencia = '.$_GET['view'];
+$rowdata = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
@@ -68,7 +54,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <style>
 .messaging {margin-top:15px;}
 
-.messaging .inbox_msg {border: 1px solid #c4c4c4;}	
+.messaging .inbox_msg {border: 1px solid #c4c4c4;}
 
 .messaging .inbox_msg .video_ib {padding: 30px 15px 0 25px;}
 
@@ -88,7 +74,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 .messaging .inbox_msg .chating .inbox_chat .type_msg .input_msg_write .write_msg {background: rgba(0, 0, 0, 0) none repeat scroll 0 0;border: medium none;color: #4c4c4c;font-size: 15px;min-height: 48px;width: 100%;padding-top: 5px;padding-right: 40px;padding-bottom: 5px;padding-left: 5px;}
 
 .messaging .inbox_msg {white-space: initial!important;}
-</style> 
+</style>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
@@ -118,22 +104,22 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						</div>
 					</div>
 					<div class="inbox_chat">
-									
+
 						<div class="msg_history chat-output" id="file-container" >
 							<br/>
-														
+
 						</div>
-									
+
 						<div class="type_msg">
 							<div class="input_msg_write">
 								<input type="hidden" id="user-id"/>
 								<input type="text" disabled class="write_msg" placeholder="Escriba su mensaje" id="input-text-chat"/>
-								
+
 							</div>
 							<button id="share-file" disabled class="btn btn-success" style="width: 98%;margin-left: 1%;margin-right: 1%;"><i class="fa fa-file-o" aria-hidden="true"></i> Adjuntar Archivo</button>
-							
+
 						</div>
-										
+
 					</div>
 				</div>
 			</div>
@@ -141,15 +127,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 
-
-
-
 <script>
 // ......................................................
 // .......................UI Code........................
 // ......................................................
 <?php if(($rowdata['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
-	
+
 	document.getElementById('open-room').onclick = function() {
 		disableInputButtons();
 		connection.open(document.getElementById('room-id').value, function(isRoomOpened, roomid, error) {
@@ -166,11 +149,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			}
 		});
 	};
-	
+
 <?php } ?>
 
-
-           
 // ......................................................
 // ..................RTCMultiConnection Code.............
 // ......................................................
@@ -236,7 +217,7 @@ var CodecsHandler = connection.CodecsHandler;
 
 connection.processSdp = function(sdp) {
     var codecs = 'vp8';
-    
+
     if (codecs.length) {
         sdp = CodecsHandler.preferCodec(sdp, codecs.toLowerCase());
     }
@@ -284,10 +265,10 @@ connection.iceServers = [{
 
 connection.videosContainer = document.getElementById('videos-container');
 connection.onstream = function(event) {
-    
+
     document.getElementById('share-file').disabled = false;
     document.getElementById('input-text-chat').disabled = false;
-    
+
     var existing = document.getElementById(event.streamid);
     if(existing && existing.parentNode) {
       existing.parentNode.removeChild(existing);
@@ -527,7 +508,7 @@ document.getElementById('input-text-chat').onkeyup = function(e) {
     this.value = this.value.replace(/^\s+|\s+$/g, '');
     if (!this.value.length) return;
 	var msgxx = '<p><strong><?php echo $_SESSION['usuario']['basic_data']['Nombre'] ?> dijo:</strong><br/>' + this.value + '</p>';
-				
+
     connection.send(msgxx);
     appendDIV(msgxx);
     this.value = '';
@@ -543,15 +524,15 @@ var chatContainer = document.querySelector('.chat-output');
     div.focus();
 
     document.getElementById('input-text-chat').focus();
-} */           
+} */
 
 function appendDIV(event) {
     var div = document.createElement('div');
-    var data = event.data || event;  
+    var data = event.data || event;
     div.innerHTML = '<div class="incoming_msg">'
 						+ '<div class="received_msg">'
 							+ '<div class="received_withd_msg">'
-								+ data	
+								+ data
 							+ '</div>'
 						+ '</div>'
 					+ '</div>';
@@ -562,17 +543,16 @@ function appendDIV(event) {
 
     document.getElementById('input-text-chat').focus();
 }
-    
+
 connection.onmessage = appendDIV;
 connection.filesContainer = document.getElementById('file-container');
 
-
-                       
 </script>
-   
+
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -58,7 +58,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowdata['Nombre'], 'Editar Datos Basicos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowdata['Nombre'], 'Editar Datos Basicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -86,7 +86,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-					<?php 
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Nombre)){                  $x1  = $Nombre;                  }else{$x1  = $rowdata['Nombre'];}
 					if(isset($Domain)){                  $x2  = $Domain;                  }else{$x2  = $rowdata['Domain'];}
@@ -123,13 +123,13 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 					if(isset($Nosotros_Subtitulo)){      $x33 = $Nosotros_Subtitulo;      }else{$x33 = $rowdata['Nosotros_Subtitulo'];}
 					if(isset($Nosotros_Texto)){          $x34 = $Nosotros_Texto;          }else{$x34 = $rowdata['Nosotros_Texto'];}
 					if(isset($Nosotros_Link)){           $x35 = $Nosotros_Link;           }else{$x35 = $rowdata['Nosotros_Link'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_tittle(3, 'Datos Basicos');
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 					$Form_Inputs->form_input_text('Dominio', 'Domain', $x2, 1);
-					
+
 					$Form_Inputs->form_tittle(3, 'Whatsapp');
 					$Form_Inputs->form_input_text('Titulo', 'Whatsapp_tittle', $x3, 1);
 					$Form_Inputs->form_input_phone('Numero Whatsapp 1', 'Whatsapp_number_1', $x4, 1);
@@ -148,7 +148,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 						$Form_Inputs->form_select('Abrir en una nueva pestaña','Header_idNewTab', $x13, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 						$Form_Inputs->form_select('Abrir en ventana emergente','Header_idPopup', $x14, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					}
-					
+
 					$Form_Inputs->form_tittle(3, 'Contacto');
 					$Form_Inputs->form_input_text('Contacto - Titulo', 'Contact_Tittle', $x15, 1);
 					$Form_Inputs->form_textarea('Contacto - Cuerpo', 'Contact_Tittle_body', $x16, 1);
@@ -161,7 +161,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 					$Form_Inputs->form_input_icon('Receptor - Asunto', 'Contact_Recep_asunto', $x23, 1,'fa fa-users');
 					$Form_Inputs->form_input_icon('Receptor - Email', 'Contact_Recep_mail', $x24, 1,'fa fa-users');
 					$Form_Inputs->form_input_icon('Receptor - Nombre', 'Contact_Recep_name', $x25, 1,'fa fa-users');
-					
+
 					$Form_Inputs->form_tittle(3, 'Social');
 					$Form_Inputs->form_input_text('Titulo', 'Social_Tittle', $x26, 1);
 					$Form_Inputs->form_input_icon('Twitter', 'Social_Twitter', $x27, 1,'fa fa-twitter');
@@ -169,7 +169,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 					$Form_Inputs->form_input_icon('Instagram', 'Social_Instagram', $x29, 1,'fa fa-instagram');
 					$Form_Inputs->form_input_icon('Googleplus', 'Social_Googleplus', $x30, 1,'fa fa-google-plus');
 					$Form_Inputs->form_input_icon('Linkedin', 'Social_Linkedin', $x31, 1,'fa fa-linkedin');
-					
+
 					$Form_Inputs->form_tittle(3, 'Nosotros');
 					$Form_Inputs->form_input_text('Titulo', 'Nosotros_Titulo', $x32, 1);
 					$Form_Inputs->form_input_text('Subtitulo', 'Nosotros_Subtitulo', $x33, 1);
@@ -192,14 +192,14 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

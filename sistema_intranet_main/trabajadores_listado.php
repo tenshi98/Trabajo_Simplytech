@@ -90,7 +90,7 @@ alert_post_data(2,1,2, $Alert_Text);
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','FileTrabajador', 1, '"xlsx"');
 				$Form_Inputs->form_select('¿Envio de correos?','idOpciones', $x1, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-					
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
@@ -110,7 +110,7 @@ alert_post_data(2,1,2, $Alert_Text);
 </div> 
  
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['id'])){
+} elseif(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -234,8 +234,9 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCargas,$row );
 }
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -260,7 +261,7 @@ array_push( $arrCargas,$row );
 						<li class=""><a href="<?php echo 'trabajadores_listado_antecedentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Antecedentes</a></li>
 						<li class=""><a href="<?php echo 'trabajadores_listado_carnet.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Carnet</a></li>
 						<li class=""><a href="<?php echo 'trabajadores_listado_rhtm.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Permiso Trabajo Menor Edad</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -275,7 +276,7 @@ array_push( $arrCargas,$row );
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
@@ -291,7 +292,7 @@ array_push( $arrCargas,$row );
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
 							<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?>
 						</p>
-					
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Cargas Familiares</h2>
 						<p class="text-muted">
 							<?php
@@ -358,7 +359,7 @@ array_push( $arrCargas,$row );
 							<strong>Tipo de cuenta deposito : </strong><?php echo $rowdata['Pago_TipoCuenta']; ?><br/>
 							<strong>Nro. Cta. Deposito : </strong><?php echo $rowdata['Pago_N_Cuenta']; ?><br/>
 						</p>
-							
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Licencia de Conducir</h2>
 						<p class="text-muted">
 							<strong>Tipo de Licencia : </strong><?php echo $rowdata['LicenciaTipo']; ?><br/>
@@ -370,7 +371,7 @@ array_push( $arrCargas,$row );
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
-								<?php 
+								<?php
 								//Contrato
 								if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){
 									echo '
@@ -463,7 +464,7 @@ array_push( $arrCargas,$row );
 										
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
         </div>
@@ -472,14 +473,14 @@ array_push( $arrCargas,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -636,7 +637,7 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'trabajadores_listado', $SI
 				$Form_Inputs->form_select('Tipo Trabajador','idTipo', $x5, 1, 'idTipo', 'Nombre', 'trabajadores_listado_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Cargo', 'Cargo', $x6, 1);
 				$Form_Inputs->form_input_phone('Fono', 'Fono', $x7, 1);
-					
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 
@@ -706,7 +707,7 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'trabajadores_listado', $SI
 						<td><?php echo $trab['Rut']; ?></td>
 						<td><?php echo $trab['ApellidoPat'].' '.$trab['ApellidoMat'].' '.$trab['Nombre']; ?></td>
 						<td><?php echo $trab['Tipo']; ?></td>
-						<td><label class="label <?php if(isset($trab['idEstado'])&&$trab['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $trab['Estado']; ?></label></td>
+						<td><label class="label <?php if(isset($trab['idEstado'])&&$trab['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $trab['Estado']; ?></label></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $trab['RazonSocial']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
@@ -714,7 +715,7 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'trabajadores_listado', $SI
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$trab['idTrabajador']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($trab['idTrabajador'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el trabajador '.$trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el trabajador '.$trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -732,11 +733,11 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'trabajadores_listado', $SI
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

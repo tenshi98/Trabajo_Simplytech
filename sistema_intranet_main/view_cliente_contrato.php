@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 $X_idTab = simpleDecode($_GET['idTab'], fecha_actual());
@@ -149,7 +149,7 @@ foreach ($arrTabs as $tab) {
 				if(isset($rowdata['Contrato_UF_Mensual'])&&$rowdata['Contrato_UF_Mensual']!=''){             $ValorUFMensualidadPalabra  = str_replace('PESOS', 'UF',numtoletras($rowdata['Contrato_UF_Mensual']));      }else{$ValorUFMensualidadPalabra  = 'Sin datos';}
 				if(isset($rowdata['Contrato_N_Meses'])&&$rowdata['Contrato_N_Meses']!=''){                   $NMeses                     = Cantidades_decimales_justos($rowdata['Contrato_N_Meses']);                    }else{$NMeses                     = 'Sin datos';}
 				if(isset($rowdata['Contrato_Periodo'])&&$rowdata['Contrato_Periodo']!=''){                   $Periodo                    = $rowdata['Contrato_Periodo'];                                                 }else{$Periodo                    = 'Sin datos';}
-				
+
 				?>
 				
 				doc.setData({
@@ -198,4 +198,5 @@ foreach ($arrTabs as $tab) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

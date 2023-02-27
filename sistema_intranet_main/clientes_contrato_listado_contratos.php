@@ -694,8 +694,9 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
     echo '</ul>';
 }
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'].'&new_itemizado=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'].'&new_itemizado=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
 </div>
 <div class="clearfix"></div>
 
@@ -890,6 +891,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //verifico que sea un administrador
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -1015,10 +1017,11 @@ array_push( $arrArea,$row );
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Contratos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Contratos'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Contrato</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Contrato</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -1063,7 +1066,7 @@ array_push( $arrArea,$row );
 					<tr class="odd">
 						<td><?php echo $area['Codigo']; ?></td>
 						<td><?php echo $area['Nombre']; ?></td>
-						<td><label class="label <?php if(isset($area['idEstado'])&&$area['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $area['Estado']; ?></label></td>
+						<td><label class="label <?php if(isset($area['idEstado'])&&$area['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $area['Estado']; ?></label></td>
 						<td><?php echo $area['EstadoAprobacion']; ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $area['sistema']; ?></td><?php } ?>
 						<td>
@@ -1076,7 +1079,7 @@ array_push( $arrArea,$row );
 								<?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $new_location.'&del='.simpleEncode($area['idLicitacion'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el registro '.$area['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el registro '.$area['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -1093,8 +1096,8 @@ array_push( $arrArea,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -1103,4 +1106,5 @@ array_push( $arrArea,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

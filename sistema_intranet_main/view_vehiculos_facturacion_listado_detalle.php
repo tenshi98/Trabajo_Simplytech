@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -186,43 +186,43 @@ $rowDatos = db_select_data (false, $SIS_query, 'vehiculos_facturacion_listado_de
 					</tr>
 				</thead>
 				<tbody>
-					
+
 					<?php if(isset($rowDatos['Vehiculo_1_Nombre'])&&$rowDatos['Vehiculo_1_Nombre']!=''){?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_1_Nombre'].' Patente '.$rowDatos['Vehiculo_1_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_1_Nombre'].' '.$rowDatos['Hijo_1_ApellidoPat'].' '.$rowDatos['Hijo_1_ApellidoMat']; ?></td>
-							<td align="right"><?php echo Valores($rowDatos['Monto_1'], 0);?></td>
+							<td align="right"><?php echo Valores($rowDatos['Monto_1'], 0); ?></td>
 						</tr>
-					<?php }?>
+					<?php } ?>
 					<?php if(isset($rowDatos['Vehiculo_2_Nombre'])&&$rowDatos['Vehiculo_2_Nombre']!=''){?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_2_Nombre'].' Patente '.$rowDatos['Vehiculo_2_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_2_Nombre'].' '.$rowDatos['Hijo_2_ApellidoPat'].' '.$rowDatos['Hijo_2_ApellidoMat']; ?></td>
-							<td align="right"><?php echo Valores($rowDatos['Monto_2'], 0);?></td>
+							<td align="right"><?php echo Valores($rowDatos['Monto_2'], 0); ?></td>
 						</tr>
-					<?php }?>
+					<?php } ?>
 					<?php if(isset($rowDatos['Vehiculo_3_Nombre'])&&$rowDatos['Vehiculo_3_Nombre']!=''){?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_3_Nombre'].' Patente '.$rowDatos['Vehiculo_3_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_3_Nombre'].' '.$rowDatos['Hijo_3_ApellidoPat'].' '.$rowDatos['Hijo_3_ApellidoMat']; ?></td>
-							<td align="right"><?php echo Valores($rowDatos['Monto_3'], 0);?></td>
+							<td align="right"><?php echo Valores($rowDatos['Monto_3'], 0); ?></td>
 						</tr>
-					<?php }?>
+					<?php } ?>
 					<?php if(isset($rowDatos['Vehiculo_4_Nombre'])&&$rowDatos['Vehiculo_4_Nombre']!=''){?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_4_Nombre'].' Patente '.$rowDatos['Vehiculo_4_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_4_Nombre'].' '.$rowDatos['Hijo_4_ApellidoPat'].' '.$rowDatos['Hijo_4_ApellidoMat']; ?></td>
-							<td align="right"><?php echo Valores($rowDatos['Monto_4'], 0);?></td>
+							<td align="right"><?php echo Valores($rowDatos['Monto_4'], 0); ?></td>
 						</tr>
-					<?php }?>
+					<?php } ?>
 					<?php if(isset($rowDatos['Vehiculo_5_Nombre'])&&$rowDatos['Vehiculo_5_Nombre']!=''){?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_5_Nombre'].' Patente '.$rowDatos['Vehiculo_5_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_5_Nombre'].' '.$rowDatos['Hijo_5_ApellidoPat'].' '.$rowDatos['Hijo_5_ApellidoMat']; ?></td>
-							<td align="right"><?php echo Valores($rowDatos['Monto_5'], 0);?></td>
+							<td align="right"><?php echo Valores($rowDatos['Monto_5'], 0); ?></td>
 						</tr>
-					<?php }?>
-					
+					<?php } ?>
+
 					<tr>
 						<td colspan="2"><strong>Subtotal</strong></td>
 						<td align="right"><strong><?php echo Valores($rowDatos['MontoSubTotal'], 0); ?></strong></td>
@@ -239,7 +239,7 @@ $rowDatos = db_select_data (false, $SIS_query, 'vehiculos_facturacion_listado_de
 						<td colspan="2"><strong>Total</strong></td>
 						<td align="right"><strong><?php echo Valores($rowDatos['MontoTotal'], 0); ?></strong></td>
 					</tr>
-					
+
 				</tbody>
 			</table>
 		
@@ -270,7 +270,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -280,7 +280,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -289,4 +289,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

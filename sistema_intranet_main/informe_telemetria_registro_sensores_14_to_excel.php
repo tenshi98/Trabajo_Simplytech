@@ -40,7 +40,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 }else{
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
-	
+
 	//se traen lo datos del equipo
 	$SIS_query = '
 	telemetria_listado_grupos.Nombre AS Grupo,
@@ -71,7 +71,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								 ->setDescription("Document for Office 2007")
 								 ->setKeywords("office 2007")
 								 ->setCategory("office 2007 result file");
-		 
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A1', 'Fecha')
 				->setCellValue('B1', 'Hora')

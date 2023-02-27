@@ -87,7 +87,7 @@ alert_post_data(2,1,2, $Alert_Text);
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','FilePostulante', 1, '"xlsx"');
 				$Form_Inputs->form_select('¿Envio de correos?','idOpciones', $x1, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-					
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
@@ -107,7 +107,7 @@ alert_post_data(2,1,2, $Alert_Text);
 </div> 
  
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['id'])){
+} elseif(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -158,8 +158,9 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -179,7 +180,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class=""><a href="<?php echo 'postulantes_listado_curriculum.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i>  Curriculum</a></li>
 						<li class=""><a href="<?php echo 'postulantes_listado_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i>  Otros</a></li>
 						<li class=""><a href="<?php echo 'postulantes_listado_estado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-text-o" aria-hidden="true"></i>  Estado Contrato</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -194,7 +195,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
@@ -209,11 +210,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							<strong>Estado Civil: </strong><?php echo $rowdata['EstadoCivil']; ?><br/>
 							<strong>Tipo de Licencia : </strong><?php echo $rowdata['LicenciaTipo']; ?><br/>
 							<strong>Pretenciones : </strong><?php echo valores($rowdata['SueldoLiquido'], 0); ?><br/>
-							
+
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
 							<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?>
 						</p>
-					
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Estudios</h2>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Cursos</h2>
@@ -235,7 +236,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
-								<?php 
+								<?php
 								//Curriculum
 								if(isset($rowdata['File_Curriculum'])&&$rowdata['File_Curriculum']!=''){
 									echo '
@@ -259,7 +260,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 										
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
         </div>
@@ -268,14 +269,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -460,7 +461,7 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'postulantes_listado', $SIS
 				<?php foreach ($arrTrabajador as $trab) { ?>
 					<tr class="odd">
 						<td><?php echo $trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat']; ?></td>
-						<td><label class="label <?php if(isset($trab['idEstado'])&&$trab['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $trab['Estado']; ?></label></td>
+						<td><label class="label <?php if(isset($trab['idEstado'])&&$trab['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $trab['Estado']; ?></label></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $trab['RazonSocial']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
@@ -468,7 +469,7 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'postulantes_listado', $SIS
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$trab['idPostulante']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($trab['idPostulante'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el postulante '.$trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el postulante '.$trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -486,11 +487,11 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'postulantes_listado', $SIS
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -108,7 +108,7 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-	
+
 		case 'new_egreso':
 
 			//Se elimina la restriccion del sql 5.7
@@ -169,7 +169,7 @@ require_once '0_validate_user_1.php';
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
@@ -199,7 +199,7 @@ require_once '0_validate_user_1.php';
 			}
 			unset($_SESSION['contab_caja_gastos_archivos']);
 
-			
+			//redirijo
 			header( 'Location: '.$location );
 			die;
 
@@ -445,7 +445,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -574,7 +574,7 @@ require_once '0_validate_user_1.php';
 			if(isset($n_data1)&&$n_data1==0){
 				$error['trabajos'] = 'error/No se han asignado documentos';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -583,8 +583,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['contab_caja_gastos_basicos']['idSistema']) && $_SESSION['contab_caja_gastos_basicos']['idSistema']!=''){     $SIS_data  = "'".$_SESSION['contab_caja_gastos_basicos']['idSistema']."'";      }else{$SIS_data  = "''";}
 				if(isset($_SESSION['contab_caja_gastos_basicos']['idUsuario']) && $_SESSION['contab_caja_gastos_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['contab_caja_gastos_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['contab_caja_gastos_basicos']['fecha_auto']) && $_SESSION['contab_caja_gastos_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['contab_caja_gastos_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']) && $_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']) && $_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['contab_caja_gastos_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['contab_caja_gastos_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['contab_caja_gastos_basicos']['Creacion_fecha'])."'";
@@ -607,14 +607,14 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de los trabajadores	
-					if (isset($_SESSION['contab_caja_gastos_documentos'])){		
+					if (isset($_SESSION['contab_caja_gastos_documentos'])){
 						foreach ($_SESSION['contab_caja_gastos_documentos'] as $key => $producto){
 
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                $SIS_data  = "'".$ultimo_id."'";                                                }else{$SIS_data  = "''";}
 							if(isset($_SESSION['contab_caja_gastos_basicos']['fecha_auto']) && $_SESSION['contab_caja_gastos_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['contab_caja_gastos_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']) && $_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']) && $_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NSemana($_SESSION['contab_caja_gastos_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['contab_caja_gastos_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['contab_caja_gastos_basicos']['Creacion_fecha'])."'";
@@ -681,13 +681,12 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['contab_caja_gastos_basicos']);
 					unset($_SESSION['contab_caja_gastos_documentos']);
 					unset($_SESSION['contab_caja_gastos_archivos']);
-					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
 
 			}
-	
 
 		break;
 /*******************************************************************************************************************/

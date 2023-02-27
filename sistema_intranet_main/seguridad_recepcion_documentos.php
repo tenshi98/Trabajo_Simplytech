@@ -134,7 +134,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -226,10 +226,10 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {     
 	$SIS_where .= " AND seguridad_recepcion_documentos.idUsuario = '".$_GET['idUsuario']."'";
 }
-if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){ 
+if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){
 	$SIS_where .= " AND seguridad_recepcion_documentos.Hora BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'";
 }
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){
 	$SIS_where .= " AND seguridad_recepcion_documentos.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
 if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){  $SIS_where .= " AND seguridad_recepcion_documentos.idTipo='".$_GET['idTipo']."'";}
@@ -392,7 +392,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_recepcion_documentos',
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idRecepcion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($tipo['idRecepcion'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar la recepcion del documento ?';?>
+										$dialogo   = '¿Realmente deseas eliminar la recepcion del documento ?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -415,4 +415,5 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_recepcion_documentos',
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

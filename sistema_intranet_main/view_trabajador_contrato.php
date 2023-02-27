@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 
@@ -162,7 +162,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 				if(isset($rowdata['Trabajador_Salud'])&&$rowdata['Trabajador_Salud']!=''){                   $Trabajador_Salud               = $rowdata['Trabajador_Salud'];                                }else{$Trabajador_Salud               = 'Sin datos';}
 				if(isset($rowdata['Trabajador_FechaIngreso'])&&$rowdata['Trabajador_FechaIngreso']!=''){     $Trabajador_FechaIngreso        = Fecha_estandar($rowdata['Trabajador_FechaIngreso']);         }else{$Trabajador_FechaIngreso        = 'Sin datos';}
 				if(isset($rowdata['Trabajador_UbicacionTrabajo'])&&$rowdata['Trabajador_UbicacionTrabajo']!=''){    $Trabajador_UbicacionTrabajo    = $rowdata['Trabajador_UbicacionTrabajo'];                     }else{$Trabajador_UbicacionTrabajo    = 'Sin datos';}
-				
+
 				?>
 				
 				doc.setData({
@@ -214,4 +214,5 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

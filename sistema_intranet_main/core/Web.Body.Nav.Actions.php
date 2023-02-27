@@ -14,7 +14,6 @@ if(isset($_SESSION['usuario']['basic_data']['idSistema'])){
 
 ?>
 
-
 <div class="topnav menutop2-toggle">
 
     <div class="btn-group grouphidden">
@@ -29,7 +28,7 @@ if(isset($_SESSION['usuario']['basic_data']['idSistema'])){
     <div class="btn-group">
         <a href="principal_notificaciones.php?pagina=1" title="Notificaciones" class="btn btn-default btn-sm tooltip">
             <i class="fa fa-commenting-o <?php if($nNoti!=0){ echo 'faa-horizontal animated';} ?>" aria-hidden="true"></i>
-            <?php if(isset($nNoti)&&$nNoti!=0){echo '<span class="label label-danger">'.$nNoti.'</span>';}?>
+            <?php if(isset($nNoti)&&$nNoti!=0){echo '<span class="label label-danger">'.$nNoti.'</span>';} ?>
         </a>
 
         <a href="principal_ayuda.php" title="Ayuda" class="btn btn-default btn-sm tooltip">
@@ -57,7 +56,7 @@ if(isset($_SESSION['usuario']['basic_data']['idSistema'])){
 		<?php } ?>
 		<?php
 		$ubicacion = $original.'?salir=true';
-		$dialogo   = '¿Realmente desea cerrar su sesion?';?>
+		$dialogo   = '¿Realmente desea cerrar su sesion?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Cerrar sesion" class="btn btn-metis-1 btn-sm tooltip">
             <i class="fa fa-power-off" aria-hidden="true"></i>
         </a>
@@ -73,10 +72,10 @@ if(isset($_SESSION['usuario']['basic_data']['idSistema'])){
 <?php
 //se resetea la interfaz
 if(isset($_SESSION['menu'])&&$_SESSION['menu']!=''){
-	$iii = $_SESSION['menu'];	
+	$iii = $_SESSION['menu'];
 }else{
 	$iii = 1; 
-}?> 
+} ?>
 
 <script type='text/javascript'>
     let sesionbase = <?php echo $iii; ?>;

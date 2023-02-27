@@ -15,7 +15,7 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 $aa = '';
-for ($i = 1; $i <= $_GET['cantSensores']; $i++) { 
+for ($i = 1; $i <= $_GET['cantSensores']; $i++) {
 	$aa .= ',SensoresNombre_'.$i;
 	$aa .= ',SensoresUniMed_'.$i;
 	$aa .= ',SensoresMedActual_'.$i;
@@ -62,7 +62,7 @@ foreach ($arrUnimed as $sen) {
 				
 		</header>
         <div class="table-responsive">
-			<?php 
+			<?php
 			$explanation  = '<strong>'.fecha_estandar($rowdata['LastUpdateFecha']).' - '.$rowdata['LastUpdateHora'].'</strong><br/>';
 			for ($i = 1; $i <= $_GET['cantSensores']; $i++) { 
 				//solo sensores activos
@@ -99,4 +99,5 @@ foreach ($arrUnimed as $sen) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

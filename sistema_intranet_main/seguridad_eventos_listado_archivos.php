@@ -64,7 +64,7 @@ if(!empty($_GET['new_file'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
-					
+
 				<?php
 				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -74,7 +74,7 @@ if(!empty($_GET['new_file'])){ ?>
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf093; Subir Archivo" name="submit_file"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf093; Subir Archivo" name="submit_file">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 							  
@@ -85,7 +85,7 @@ if(!empty($_GET['new_file'])){ ?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } else{
+} else{
 // consulto los datos
 $query = "SELECT 
 seguridad_eventos_listado.Fecha,
@@ -135,7 +135,7 @@ array_push( $arrArchivos,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs', 'Editar Archivos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs', 'Editar Archivos'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new_file='.$_GET['id']; ?>" class="btn btn-default pull-right margin_width" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Nuevo Archivo</a>
 	</div>
@@ -167,9 +167,9 @@ array_push( $arrArchivos,$row );
 								<div class="btn-group" style="width: 105px;" >
 									<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($tipo['Nombre'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 									<a href="1download.php?dir=<?php echo simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($tipo['Nombre'], fecha_actual()); ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
-									<?php 
+									<?php
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del_file='.simpleEncode($tipo['idArchivo'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el documento '.$tipo['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el documento '.$tipo['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								</div>
 							</td>
@@ -188,8 +188,8 @@ array_push( $arrArchivos,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -198,4 +198,5 @@ array_push( $arrArchivos,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

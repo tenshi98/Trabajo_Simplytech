@@ -46,7 +46,7 @@ $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelaciona
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
-}else{			
+}else{
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo,cantSensores', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowEquipo');
 
@@ -58,7 +58,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
 		$consql .= ',telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$i.' AS SensorValue_'.$i;
 	}
-	
+
 	/****************************************************************/
 	//se traen lo datos del equipo
 	$SIS_query = '
@@ -74,17 +74,17 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
 	//consulto grupos											
 	$rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$_GET['idGrupo'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowGrupo');
-	
+
 	//guardo las unidades de medida
 	$Unimed = array();
-	foreach ($arrUnimed as $sen) { 
+	foreach ($arrUnimed as $sen) {
 		$Unimed[$sen['idUniMed']] = ' '.$sen['Nombre'];
 	}
-	
+
 	?>
 
 	<style>
-	#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif';?>");background-repeat: no-repeat;background-position: center;}
+	#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif'; ?>");background-repeat: no-repeat;background-position: center;}
 	</style>
 	<div id="loading"></div>
 	<script>
@@ -93,7 +93,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	</script>
 							
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trazabilidad', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo']);?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trazabilidad', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo']); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
 			<a target="new" href="<?php echo 'informe_telemetria_registro_sensores_17_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 		
@@ -102,7 +102,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			<?php }else{ ?>
 				<a target="new" href="<?php echo 'informe_telemetria_registro_sensores_17_to_pdf.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
 			<?php } ?>
-			
+
 		</div>
 	</div>
 	<div class="clearfix"></div>
@@ -212,7 +212,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				</div>
 			</div>
 		</div>
-			
+
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: none;">
 
 			<form method="post" id="make_pdf" action="informe_telemetria_registro_sensores_17_to_pdf.php">
@@ -230,13 +230,13 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				<?php if(isset($_GET['RangoMaximo'])&&$_GET['RangoMaximo']!=''){?> <input type="hidden" name="RangoMaximo"  id="RangoMaximo" value="<?php echo $_GET['RangoMaximo']; ?>" /><?php } ?>
 
 				<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
-			
+
 			</form>
 
 			<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>
 			<script>
 				var node = document.getElementById('graphLinear_1');
-				
+
 				function sendDatatoSRV(img) {
 					$('#img_adj').val(img);
 					//$('#img_adj').val($('#img-out').html());
@@ -262,14 +262,14 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								console.error('oops, something went wrong!', error);
 								alert('No se puede exportar!');
 								document.getElementById("loading").style.display = "none";
-							});		
+							});
 						}
 					, 3000);
 				}
 
 			</script>
 		</div>
-		
+
 	<?php } ?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -277,7 +277,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 				<h5>Registro Sensores grupo <?php echo $rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo']; ?></h5>
-				
+
 			</header>
 			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -286,7 +286,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<th>Fecha</th>
 							<th>Hora</th>
 							<?php 
-							for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
+							for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 								if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 									echo '<th style="text-align:center">'.$arrEquipos[0]['SensorNombre_'.$i].'</th>';
 								}
@@ -317,7 +317,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									}
 								}
 							} ?>
-							<?php 
+							<?php
 							//si se definio el minimo y maximo
 							if(isset($_GET['RangoMinimo'])&&$_GET['RangoMinimo']!=''&&isset($_GET['RangoMaximo'])&&$_GET['RangoMaximo']!=''){
 								if (isset($y_counter)&&$y_counter!=0&&isset($x_counter)&&$x_counter==0){ ?>
@@ -348,10 +348,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-			
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Filtro de busqueda
@@ -363,13 +363,14 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=6";//CrossCrane	
+	$z .= " AND telemetria_listado.idTab=6";//CrossCrane
 }
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 alert_post_data(2,1,1, $Alert_Text);
+
 ?>
-		
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -411,8 +412,7 @@ alert_post_data(2,1,1, $Alert_Text);
 				$Form_Inputs->form_post_data(2, '<strong>Opcional:</strong> Esta opcion solo mostrara los datos que esten dentro del rango minimo y maximo, ignorando el resto.' );
 				$Form_Inputs->form_input_number('Rango Voltaje Minimo','RangoMinimo', $x9, 1);
 				$Form_Inputs->form_input_number('Rango Voltaje Maximo','RangoMaximo', $x10, 1);
-				
-				
+
 				?>
 
 				<div class="form-group">
@@ -425,11 +425,10 @@ alert_post_data(2,1,1, $Alert_Text);
 </div>
 <?php } ?>
 
-	
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

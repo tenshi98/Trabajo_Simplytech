@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -54,7 +54,6 @@ $SIS_where = 'aguas_clientes_otros_cargos.idOtrosCargos ='.$X_Puntero;
 $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_otros_cargos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 ?>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
@@ -93,7 +92,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_otros_cargos', $SI
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Ejecucion</td>
-						<td><?php echo Fecha_estandar($rowdata['FechaEjecucion']);?></td>
+						<td><?php echo Fecha_estandar($rowdata['FechaEjecucion']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -112,14 +111,14 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_otros_cargos', $SI
 					<tr id="hiderow"><td colspan="6"></td></tr>
 				<?php } ?>
 				<tr>
-					<td colspan="6" class="blank"> 
+					<td colspan="6" class="blank">
 						<p>
 							<?php 
 							if(isset($rowdata['Observacion'])&&$rowdata['Observacion']!=''){
 								echo $rowdata['Observacion'];
 							}else{
 								echo 'Sin Observaciones';
-							}?>
+							} ?>
 						</p>
 					</td>
 				</tr>
@@ -145,7 +144,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -155,7 +154,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -164,4 +163,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

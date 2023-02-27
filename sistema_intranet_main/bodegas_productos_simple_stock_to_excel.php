@@ -27,6 +27,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 productos_listado.StockLimite,
 productos_listado.Nombre AS NombreProd,
@@ -59,7 +60,7 @@ $spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-           
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Alertas')
@@ -68,9 +69,9 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('D1', 'Stock Min')
             ->setCellValue('E1', 'Stock Actual')
             ->setCellValue('F1', 'Unidad de Medida');
-            
+
 $nn=2;
-foreach ($arrProductos as $productos) { 
+foreach ($arrProductos as $productos) {
 	$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];
 	if ($productos['StockLimite']>$stock_actual){$delta = 'Stock Bajo';}else{$delta = '';}
 	if ($stock_actual!=0&&$productos['NombreProd']!=''){
@@ -83,7 +84,7 @@ foreach ($arrProductos as $productos) {
 					->setCellValue('F'.$nn, DeSanitizar($productos['UnidadMedida']));
 		 $nn++;
 	} 
-} 
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle(cortar('Bodega '.DeSanitizar($arrProductos[0]['NombreBodega']), 25));

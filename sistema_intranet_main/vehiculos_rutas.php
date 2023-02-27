@@ -97,8 +97,9 @@ array_push( $arrRutas,$row );
 }
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -109,7 +110,7 @@ array_push( $arrRutas,$row );
 				<li class="active"><a href="<?php echo 'vehiculos_rutas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class=""><a href="<?php echo 'vehiculos_rutas_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class=""><a href="<?php echo 'vehiculos_rutas_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
-				
+
 			</ul>
 		</header>
         <div class="tab-content">
@@ -141,13 +142,13 @@ array_push( $arrRutas,$row );
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 								RutasAlternativas();
 							}
-							
+
 							/* ************************************************************************** */
 							function RutasAlternativas() {
 								
 								var route=[];
 								var tmp;
-								
+
 								var locations = [ 
 								<?php foreach ( $arrRutas as $pos ) { ?>
 									['<?php echo $pos['idUbicaciones']; ?>', <?php echo $pos['Latitud']; ?>, <?php echo $pos['Longitud']; ?>], 					
@@ -176,9 +177,9 @@ array_push( $arrRutas,$row );
 								  content: ''
 								});
 								var marcadores = [
-								<?php 
+								<?php
 								$in=0;
-								foreach ($arrRutas as $pos) { 
+								foreach ($arrRutas as $pos) {
 										if($in==0){
 											$in=1;
 										}else{
@@ -221,7 +222,7 @@ array_push( $arrRutas,$row );
 									});
 								  })(marker, contenido);
 								}
-								
+
 								// *
 								// START INFOWINDOW CUSTOMIZE.
 								// The google.maps.event.addListener() event expects
@@ -286,14 +287,14 @@ array_push( $arrRutas,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -316,7 +317,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
-			
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -455,7 +456,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'vehiculos_rutas', $SIS_join, $S
 								<?php if ($rowlevel['level']>=4){
 									//se verifica que el usuario no sea uno mismo
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idRuta'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el equipo '.$usuarios['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el equipo '.$usuarios['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -483,4 +484,5 @@ $arrUsers = db_select_array (false, $SIS_query, 'vehiculos_rutas', $SIS_join, $S
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

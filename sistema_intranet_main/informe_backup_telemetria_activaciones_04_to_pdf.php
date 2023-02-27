@@ -163,7 +163,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 		/************************************************************************/
 		//TCPDF
 		case 1:
-			
+
 			require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 			// create new PDF document
@@ -218,7 +218,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output(DeSanitizar($pdf_file), 'I');
-	
+
 			break;
 		/************************************************************************/
 		//DomPDF (Solo compatible con PHP 5.x)

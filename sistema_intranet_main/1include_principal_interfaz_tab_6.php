@@ -10,7 +10,7 @@ if($temp!=0) {
 	$SIS_query = '
 	cross_shipping_consolidacion_estibas.idEstibaListado,
 	cross_shipping_consolidacion_estibas.Temperatura,
-	
+
 	cross_shipping_consolidacion.Creacion_mes,
 	cross_shipping_consolidacion.idCategoria,
 	cross_shipping_consolidacion.idMercado,
@@ -34,24 +34,24 @@ if($temp!=0) {
 	// Se trae un listado con todos los meses
 	$SIS_query = 'idMes, Nombre';
 	$SIS_join  = '';
-	$SIS_where = '';
+	$SIS_where = 'idMes!=0';
 	$SIS_order = 'idMes ASC';
 	$arrMeses = array();
 	$arrMeses = db_select_array (false, $SIS_query, 'core_tiempo_meses', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMeses');
-	
+
 	/************************************/
 	// Se trae un listado con todos los meses
 	$SIS_query = 'idMercado, Nombre';
 	$SIS_join  = '';
-	$SIS_where = '';
+	$SIS_where = 'idMercado!=0';
 	$SIS_order = 'idMercado ASC';
 	$arrMercados = array();
 	$arrMercados = db_select_array (false, $SIS_query, 'cross_shipping_mercado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMercados');
-	
+
 	/******************************************************************/
 	//Variables
 	$arrCrossGeneral    = array();
-	
+
 	//Inicializo variables
 	/*$arrCrossGeneral['Normal']          = 0;
 	$arrCrossGeneral['Critico']         = 0;
@@ -106,15 +106,14 @@ if($temp!=0) {
 			}
 		}
 	}
-	
+
 	/********************************/
 	//Se arman los datos
 	$arrMes = array();
 	foreach ($arrMeses as $mes) {
 		$arrMes[$mes['idMes']]['Nombre'] = $mes['Nombre'];
 	}
-	
-	
+
 	/********************************************************************************/
 	echo '<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript">google.charts.load(\'current\', {\'packages\':[\'corechart\', \'bar\']});</script>';
@@ -123,15 +122,15 @@ if($temp!=0) {
 	<div class="tab-pane fade" id="Menu_tab_6">
 
 		<div class="table-responsive">
-								
+
 			<div class="sort-disable">
 
 				<div class="panel-heading">
 					<span class="panel-title pull-left"  style="color: #666;font-weight: 700 !important;"> Detalle General</span>
 				</div>
-								
+
 				<div class="panel-body mnw700 of-a">';
-															
+
 					/**************************************************************/
 					echo '
 					<div class="row">
@@ -139,29 +138,29 @@ if($temp!=0) {
 							<h5 style="color: #666;font-weight: 600 !important;">Estado Temperaturas
 								<small class="pull-right fw600 text-primary"></small>
 							</h5>
-																			
+
 							<table class="table mbn covertable">
 								<tbody>';
 									/***************************************************************/
 									//Verifico existencias
-									if(isset($arrCrossGeneral['Normal'])&&$arrCrossGeneral['Normal']!=''){                  $Med_optimo       = $arrCrossGeneral['Normal'];              }else{$Med_optimo       = 0;}
-									if(isset($arrCrossGeneral['Critico_inf'])&&$arrCrossGeneral['Critico_inf']!=''){        $Med_critico_inf  = $arrCrossGeneral['Critico_inf'];         }else{$Med_critico_inf  = 0;}
-									if(isset($arrCrossGeneral['Critico_sup'])&&$arrCrossGeneral['Critico_sup']!=''){        $Med_critico_sup  = $arrCrossGeneral['Critico_sup'];         }else{$Med_critico_sup  = 0;}
+									if(isset($arrCrossGeneral['Normal'])&&$arrCrossGeneral['Normal']!=''){                         $Med_optimo       = $arrCrossGeneral['Normal'];              }else{$Med_optimo       = 0;}
+									if(isset($arrCrossGeneral['Critico_inf'])&&$arrCrossGeneral['Critico_inf']!=''){               $Med_critico_inf  = $arrCrossGeneral['Critico_inf'];         }else{$Med_critico_inf  = 0;}
+									if(isset($arrCrossGeneral['Critico_sup'])&&$arrCrossGeneral['Critico_sup']!=''){               $Med_critico_sup  = $arrCrossGeneral['Critico_sup'];         }else{$Med_critico_sup  = 0;}
 									if(isset($arrCrossGeneral['Fuera_de_rango_inf'])&&$arrCrossGeneral['Fuera_de_rango_inf']!=''){ $Med_fuera_inf    = $arrCrossGeneral['Fuera_de_rango_inf'];  }else{$Med_fuera_inf    = 0;}
 									if(isset($arrCrossGeneral['Fuera_de_rango_sup'])&&$arrCrossGeneral['Fuera_de_rango_sup']!=''){ $Med_fuera_sup    = $arrCrossGeneral['Fuera_de_rango_sup'];  }else{$Med_fuera_sup    = 0;}
 									$Med_critico  = $Med_critico_inf + $Med_critico_sup;
 									$Med_fuera    = $Med_fuera_inf + $Med_fuera_sup;
-									
+
 									/***************************************************************/
 									//se imprimen datos
-									echo '		
+									echo '
 									<tr>
 										<td class="text-muted">
 											<a href="#" class="iframe"><i class="fa fa-database color-blue" aria-hidden="true"></i> Optimo</a>
 										</td>
 										<td class="text-right color-blue" style="font-weight: 700;">'.$Med_optimo.'</td>
 									</tr>
-									
+
 									<tr>
 										<td class="text-muted">
 											<a href="#" class="iframe"><i class="fa fa-database color-yellow-light" aria-hidden="true"></i> Critico</a>
@@ -178,13 +177,13 @@ if($temp!=0) {
 							</table>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-												
+
 							<script>
-												
+
 								google.charts.setOnLoadCallback(drawChart_anual);
 
 								function drawChart_anual() {
-														
+
 									var data = google.visualization.arrayToDataTable([
 										[\'Tipo\', \'Cantidad\'],
 										[\'Temperaturas Optimas\', '.Cantidades_decimales_justos($Med_optimo).'],
@@ -211,13 +210,13 @@ if($temp!=0) {
 				</div>';
 				/***************************************************************************/
 				/***************************************************************************/
-				echo '	
+				echo '
 				<div class="panel-heading">
 					<span class="panel-title pull-left"  style="color: #666;font-weight: 700 !important;"> Detalle Ultimos 12 Meses</span>
 				</div>
-								
+
 				<div class="panel-body mnw700 of-a">';
-															
+
 					/**************************************************************/
 					echo '
 					<div class="row">
@@ -225,10 +224,10 @@ if($temp!=0) {
 							<h5 style="color: #666;font-weight: 600 !important;">Estado Temperaturas
 								<small class="pull-right fw600 text-primary"></small>
 							</h5>
-																			
+
 							<table class="table mbn covertable">
 								<tbody>';
-									
+
 									$mes_ini = mes_actual()+1;
 									echo '<tr>';
 									echo '<td class="text-muted">Dato</td>';
@@ -238,8 +237,7 @@ if($temp!=0) {
 										if($mes_ini==13){$mes_ini = 1;}
 									}
 									echo '</tr>';
-									
-									
+
 									/***************************************************************/
 									//se imprimen datos
 									/**********************************/
@@ -278,14 +276,14 @@ if($temp!=0) {
 									}
 									echo '</tr>';
 
-									echo '		
+									echo '
 								</tbody>
 							</table>
 						</div>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-												
+
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawStacked);
 
 								function drawStacked() {
@@ -307,13 +305,11 @@ if($temp!=0) {
 										$Med_critico  = $Med_critico_inf + $Med_critico_sup;
 										$Med_fuera    = $Med_fuera_inf + $Med_fuera_sup;
 										echo '[\''.$arrMes[$mes_ini]['Nombre'].'\', '.$Med_optimo.', '.$Med_critico.', '.$Med_fuera.'],';
-										
-										
-										
+
 										$mes_ini++;
 										if($mes_ini==13){$mes_ini = 1;}
 									}
-									
+
 									echo '
 									]);
 
@@ -324,7 +320,7 @@ if($temp!=0) {
 											title: \'Meses\',
 										},
 										vAxis: {
-											title: \'Cantidad\', 
+											title: \'Cantidad\',
 											minValue: 0
 										},
 										colors:[\'#3399cc\',\'#f5b75f\',\'#ed7a53\']
@@ -333,34 +329,23 @@ if($temp!=0) {
 									var chart = new google.visualization.ColumnChart(document.getElementById(\'chart_div\'));
 									chart.draw(data, options);
 								}
-    				
-								
+
 							</script>
 							<div id="chart_div" style="height: 300px; width: 100%;"></div>
 
 						</div>
 					</div>
 				</div>';
-				
-				
-				
-				
-				
 
-
-
-
-	
-	
 				/***************************************************************************/
 				/***************************************************************************/
-				echo '	
+				echo '
 				<div class="panel-heading">
 					<span class="panel-title pull-left"  style="color: #666;font-weight: 700 !important;"> Mercados</span>
 				</div>
-								
+
 				<div class="panel-body mnw700 of-a">';
-															
+
 					/**************************************************************/
 					echo '
 					<div class="row">
@@ -368,15 +353,15 @@ if($temp!=0) {
 							<h5 style="color: #666;font-weight: 600 !important;">Mercados destinos
 								<small class="pull-right fw600 text-primary"></small>
 							</h5>
-																			
+
 							<table class="table mbn covertable">
 								<tbody>';
-								
+
 									foreach ($arrMercados as $merc) {
-										
+
 										if(isset($arrCrossGeneral[$merc['idMercado']]['Cantidad'])&&$arrCrossGeneral[$merc['idMercado']]['Cantidad']!=''){
 											//se imprimen datos
-											echo '		
+											echo '
 											<tr>
 												<td class="text-muted">
 													<a href="#" class="iframe"><i class="fa fa-database color-blue" aria-hidden="true"></i> '.$merc['Nombre'].'</a>
@@ -385,21 +370,19 @@ if($temp!=0) {
 											</tr>';
 										}
 									}
-									
-									
-									
-									echo '		
+
+									echo '
 								</tbody>
 							</table>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-												
+
 							<script>
-												
+
 								google.charts.setOnLoadCallback(drawChart_anual);
 
 								function drawChart_anual() {
-														
+
 									var data = google.visualization.arrayToDataTable([
 										[\'Tipo\', \'Cantidad\'],';
 										foreach ($arrMercados as $merc) {
@@ -407,9 +390,8 @@ if($temp!=0) {
 												echo '[\''.$merc['Nombre'].'\', '.Cantidades_decimales_justos($arrCrossGeneral[$merc['idMercado']]['Cantidad']).'],';
 											}
 										}
-									
 
-										echo '	
+										echo '
 									]);
 
 									var options = {
@@ -428,18 +410,10 @@ if($temp!=0) {
 						</div>
 					</div>
 				</div>';
-				
-				
-				
-				
-				
-				
+
 		echo '
 			</div>
 		</div>
-	</div>';	
-	
+	</div>';
+
 } ?>
-
-
-

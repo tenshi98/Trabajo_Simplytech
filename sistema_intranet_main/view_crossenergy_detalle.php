@@ -19,7 +19,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 //Cargamos la ubicacion original
@@ -160,7 +160,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 	$Graphics_info        = "var grf_info = [[".$Temp_1."],];";
 	$Graphics_markerColor = "var markerColor = [''];";
 	$Graphics_markerLine  = "var markerLine = [''];";
-		
+
 	/******************************************************/
 	//recorro
 	foreach ($arrDemanda as $data) {
@@ -224,7 +224,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						?>
 					</div>
 				</div>
-				
+
 			</div>
 			<div class="clearfix"></div>
 		</div>
@@ -251,7 +251,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -261,7 +261,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -270,4 +270,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

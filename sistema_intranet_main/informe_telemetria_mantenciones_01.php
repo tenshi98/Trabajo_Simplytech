@@ -73,7 +73,7 @@ if(isset($_GET['idOpciones_3']) && $_GET['idOpciones_3']!=''){ $SIS_where .= " A
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){ $SIS_where .= " AND telemetria_historial_mantencion.idTelemetria=".$_GET['idTelemetria'];}
 if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){$SIS_where .= " AND telemetria_historial_mantencion.idUsuario='".$_GET['idUsuario']."'";}
 if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){$SIS_where .= " AND telemetria_historial_mantencion.idSistema='".$_GET['idSistema']."'";}
-if(isset($_GET['Fecha_ini']) && $_GET['Fecha_ini'] != ''&&isset($_GET['Fecha_ter']) && $_GET['Fecha_ter']!=''){ 
+if(isset($_GET['Fecha_ini']) && $_GET['Fecha_ini'] != ''&&isset($_GET['Fecha_ter']) && $_GET['Fecha_ter']!=''){
 	$SIS_where .= " AND telemetria_historial_mantencion.Fecha BETWEEN '".$_GET['Fecha_ini']."' AND '".$_GET['Fecha_ter']."'";
 }
 /**********************************************************/
@@ -222,8 +222,8 @@ foreach ($arrOpciones as $mant) {
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -239,7 +239,7 @@ $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-}?>
+} ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -280,7 +280,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -296,4 +296,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

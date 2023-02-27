@@ -60,10 +60,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+$rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Proyecto', $rowdata['Nombre'], 'Editar Datos Basicos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Proyecto', $rowdata['Nombre'], 'Editar Datos Basicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -93,8 +93,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = $rowdata['idTipo'];}
 					if(isset($Nombre)){           $x2  = $Nombre;            }else{$x2  = $rowdata['Nombre'];}
@@ -103,7 +103,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					if(isset($idCiudad)){         $x5  = $idCiudad;          }else{$x5  = $rowdata['idCiudad'];}
 					if(isset($idComuna)){         $x6  = $idComuna;          }else{$x6  = $rowdata['idComuna'];}
 					if(isset($Direccion)){        $x7  = $Direccion;         }else{$x7  = $rowdata['Direccion'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select('Tipo de Proyecto','idTipo', $x1, 2, 'idTipo', 'Nombre', 'clientes_tipos', 0, '', $dbConn);
@@ -114,7 +114,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					}else{
 						$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
 						$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 2);
-					} 
+					}
 					$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x4, 1);
 					$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
@@ -140,14 +140,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

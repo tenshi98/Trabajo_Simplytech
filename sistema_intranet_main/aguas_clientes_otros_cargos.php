@@ -71,27 +71,19 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
+
+/*******************************************************/
 // consulto los datos
-$query = "SELECT idCliente, FechaEjecucion, Fecha, ValorCargo, Observacion, Archivo
-FROM `aguas_clientes_otros_cargos`
-WHERE idOtrosCargos = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$SIS_query = 'idCliente, FechaEjecucion, Fecha, ValorCargo, Observacion, Archivo';
+$SIS_join  = '';
+$SIS_where = 'idOtrosCargos = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_otros_cargos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 //Indico el sistema
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';	 
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';
+
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -105,7 +97,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				//Se verifican si existen los datos
 				if(isset($idCliente)){        $x1  = $idCliente;         }else{$x1  = $rowdata['idCliente'];}
 				if(isset($FechaEjecucion)){   $x2  = $FechaEjecucion;    }else{$x2  = $rowdata['FechaEjecucion'];}
-				if(isset($Fecha)){  $x3  = $Fecha;             }else{$x3  = $rowdata['Fecha'];}
+				if(isset($Fecha)){            $x3  = $Fecha;             }else{$x3  = $rowdata['Fecha'];}
 				if(isset($ValorCargo)){       $x4  = $ValorCargo;        }else{$x4  = cantidades_decimales_justos($rowdata['ValorCargo']);}
 				if(isset($Observacion)){      $x5  = $Observacion;       }else{$x5  = $rowdata['Observacion'];}
 
@@ -118,24 +110,24 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x5, 1);
 				//si existe archivo se mustra previsualizador
 				if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){?>
-        
+
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<h3>Archivo</h3>
 						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['Archivo'], ''); ?>
 					</div>
 					<a href="<?php echo $location.'&id='.$_GET['id'].'&del_Archivo='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					<div class="clearfix"></div>
-					
+
 				<?php }else{
 					$Form_Inputs->form_multiple_upload('Seleccionar Archivo','Archivo', 1, '"jpg", "png", "gif", "jpeg", "bmp", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "txt", "rtf", "gz", "gzip", "7Z", "zip", "rar"');
 				}
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idOtrosCargos', $_GET['id'], 2);
 				?>
-								
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -147,11 +139,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //Indico el sistema
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';	 
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -167,7 +160,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				//Se verifican si existen los datos
 				if(isset($idCliente)){        $x1  = $idCliente;         }else{$x1  = '';}
 				if(isset($FechaEjecucion)){   $x2  = $FechaEjecucion;    }else{$x2  = '';}
-				if(isset($Fecha)){  $x3  = $Fecha;             }else{$x3  = '';}
+				if(isset($Fecha)){            $x3  = $Fecha;             }else{$x3  = '';}
 				if(isset($ValorCargo)){       $x4  = $ValorCargo;        }else{$x4  = '';}
 				if(isset($Observacion)){      $x5  = $Observacion;       }else{$x5  = '';}
 
@@ -184,7 +177,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
-								
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -208,15 +201,15 @@ if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) *
 //ordenamiento
 if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 	switch ($_GET['order_by']) {
-		case 'numero_asc':          $order_by = 'aguas_clientes_otros_cargos.idOtrosCargos ASC ';        $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Numero Evento Ascendente'; break;
-		case 'numero_desc':         $order_by = 'aguas_clientes_otros_cargos.idOtrosCargos DESC ';       $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Numero Evento Descendente';break;
+		case 'numero_asc':          $order_by = 'aguas_clientes_otros_cargos.idOtrosCargos ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Numero Evento Ascendente'; break;
+		case 'numero_desc':         $order_by = 'aguas_clientes_otros_cargos.idOtrosCargos DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Numero Evento Descendente';break;
 		case 'fecha_asc':           $order_by = 'aguas_clientes_otros_cargos.Fecha ASC ';            $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Ascendente'; break;
 		case 'fecha_desc':          $order_by = 'aguas_clientes_otros_cargos.Fecha DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Descendente';break;
-		case 'identificador_asc':   $order_by = 'aguas_clientes_listado.Identificador ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Identificador Ascendente'; break;
-		case 'identificador_desc':  $order_by = 'aguas_clientes_listado.Identificador DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Identificador Descendente';break;
-		case 'creador_asc':         $order_by = 'usuarios_listado.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
-		case 'creador_desc':        $order_by = 'usuarios_listado.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
-							
+		case 'identificador_asc':   $order_by = 'aguas_clientes_listado.Identificador ASC ';         $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Identificador Ascendente'; break;
+		case 'identificador_desc':  $order_by = 'aguas_clientes_listado.Identificador DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Identificador Descendente';break;
+		case 'creador_asc':         $order_by = 'usuarios_listado.Nombre ASC ';                      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Creador Ascendente';break;
+		case 'creador_desc':        $order_by = 'usuarios_listado.Nombre DESC ';                     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Creador Descendente';break;
+
 		default: $order_by = 'aguas_clientes_otros_cargos.Fecha DESC '; $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Descendente';
 	}
 }else{
@@ -227,9 +220,9 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 $SIS_where = "aguas_clientes_otros_cargos.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){       $SIS_where .= " AND aguas_clientes_otros_cargos.idCliente='".$_GET['idCliente']."'";}
+if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){              $SIS_where .= " AND aguas_clientes_otros_cargos.idCliente='".$_GET['idCliente']."'";}
 if(isset($_GET['FechaEjecucion']) && $_GET['FechaEjecucion']!=''){    $SIS_where .= " AND aguas_clientes_otros_cargos.FechaEjecucion='".$_GET['FechaEjecucion']."'";}
-if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){               $SIS_where .= " AND aguas_clientes_otros_cargos.Fecha='".$_GET['Fecha']."'";}
+if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){                      $SIS_where .= " AND aguas_clientes_otros_cargos.Fecha='".$_GET['Fecha']."'";}
 
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
@@ -252,8 +245,10 @@ $arrUsers = array();
 $arrUsers = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
 
 //Indico el sistema
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';
+
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
@@ -264,7 +259,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cargo</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cargo</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -274,16 +269,16 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php
 				//Se verifican si existen los datos
-				if(isset($idCliente)){        $x1  = $idCliente;         }else{$x1  = '';}
-				if(isset($FechaEjecucion)){   $x3  = $FechaEjecucion;    }else{$x3  = '';}
-				if(isset($Fecha)){  $x4  = $Fecha;             }else{$x4  = '';}
+				if(isset($idCliente)){        $x1 = $idCliente;         }else{$x1 = '';}
+				if(isset($FechaEjecucion)){   $x2 = $FechaEjecucion;    }else{$x2 = '';}
+				if(isset($Fecha)){            $x3 = $Fecha;             }else{$x3 = '';}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 1, 'idCliente', 'Identificador,Nombre', 'aguas_clientes_listado', $z, 'ORDER BY Identificador ASC', $dbConn);
-				$Form_Inputs->form_date('Fecha Ejecucion','FechaEjecucion', $x3, 1);
-				$Form_Inputs->form_date('Fecha Facturacion (9 del mes)','Fecha', $x4, 1);
-					
+				$Form_Inputs->form_date('Fecha Ejecucion','FechaEjecucion', $x2, 1);
+				$Form_Inputs->form_date('Fecha Facturacion (9 del mes)','Fecha', $x3, 1);
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 
@@ -347,24 +342,24 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrUsers as $usuarios){ ?>
-					<tr class="odd">
-						<td><?php echo n_doc($usuarios['idOtrosCargos'], 7); ?></td>
-						<td><?php echo fecha_estandar($usuarios['Fecha']); ?></td>
-						<td><?php echo $usuarios['Identificador']; ?></td>
-						<td><?php echo $usuarios['Creador']; ?></td>
-						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
-						<td>
-							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_aguas_otros_cargos.php?view='.simpleEncode($usuarios['idOtrosCargos'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idOtrosCargos']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.simpleEncode($usuarios['idOtrosCargos'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el cargo del cliente '.$usuarios['Identificador'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>
-							</div>
-						</td>
-					</tr>
+						<tr class="odd">
+							<td><?php echo n_doc($usuarios['idOtrosCargos'], 7); ?></td>
+							<td><?php echo fecha_estandar($usuarios['Fecha']); ?></td>
+							<td><?php echo $usuarios['Identificador']; ?></td>
+							<td><?php echo $usuarios['Creador']; ?></td>
+							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
+							<td>
+								<div class="btn-group" style="width: 105px;" >
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_aguas_otros_cargos.php?view='.simpleEncode($usuarios['idOtrosCargos'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idOtrosCargos']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=4){
+										$ubicacion = $location.'&del='.simpleEncode($usuarios['idOtrosCargos'], fecha_actual());
+										$dialogo   = '¿Realmente deseas eliminar el cargo del cliente '.$usuarios['Identificador'].'?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<?php } ?>
+								</div>
+							</td>
+						</tr>
 					<?php } ?>
 				</tbody>
 			</table>
@@ -377,7 +372,6 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 	</div>
 </div>
 
-
 <?php } ?>
 
 <?php
@@ -385,4 +379,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

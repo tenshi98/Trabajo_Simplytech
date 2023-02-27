@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -152,11 +152,11 @@ $arrServicios = db_select_array (false, $SIS_query, 'bodegas_servicios_facturaci
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 							<p class="text-muted word_break">
 								<strong>Tipo de Proveedor : </strong><?php echo $rowdata['tipoCliente']; ?><br/>
-								<?php 
+								<?php
 								//Si el cliente es una empresa
 								if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){?>
 									<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<?php 
+								<?php
 								//si es una persona
 								}else{?>
 									<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>
@@ -170,8 +170,8 @@ $arrServicios = db_select_array (false, $SIS_query, 'bodegas_servicios_facturaci
 								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
 								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
 							</p>
-									
-							<?php 
+
+							<?php
 							//Si el proveedor es una empresa
 							if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){?>
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
@@ -182,7 +182,7 @@ $arrServicios = db_select_array (false, $SIS_query, 'bodegas_servicios_facturaci
 									<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?><br/>
 								</p>
 							<?php } ?>
-									
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 							<p class="text-muted word_break">
 								<strong>Telefono Fijo : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
@@ -191,7 +191,7 @@ $arrServicios = db_select_array (false, $SIS_query, 'bodegas_servicios_facturaci
 								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
 								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
 							</p>
-									
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Persona de Contacto</h2>
 							<p class="text-muted word_break">
 								<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
@@ -199,16 +199,16 @@ $arrServicios = db_select_array (false, $SIS_query, 'bodegas_servicios_facturaci
 								<strong>Telefono : </strong><?php echo formatPhone($rowdata['PersonaContacto_Fono']); ?><br/>
 								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
 							</p>
-									
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Facturacion</h2>
 							<p class="text-muted word_break"><strong>Forma de Pago : </strong><?php echo $rowdata['FormaPago']; ?></p>
-									
+
 						</div>
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
-						<?php 
+						<?php
 							//se arma la direccion
 							$direccion = "";
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
@@ -225,7 +225,7 @@ $arrServicios = db_select_array (false, $SIS_query, 'bodegas_servicios_facturaci
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				
+
 			</div>
 
 			<div class="tab-pane fade" id="observaciones">
@@ -355,7 +355,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -365,7 +365,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -374,4 +374,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -48,7 +48,7 @@ $SIS_where .= " AND telemetria_listado.id_Geo = 2";
 $SIS_where .= " AND telemetria_listado.idTab = 4 ";//CrossWeather
 //Filtro el equipo	
 if(isset($idTelemetria)&&$idTelemetria!=''&&$idTelemetria!=0){
-	$SIS_where .= " AND telemetria_listado.idTelemetria = ".$idTelemetria;	
+	$SIS_where .= " AND telemetria_listado.idTelemetria = ".$idTelemetria;
 }
 			
 //numero sensores equipo
@@ -59,7 +59,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresMedActual_'.$i;
 	$subquery .= ',SensoresUniMed_'.$i;
 	$subquery .= ',SensoresActivo_'.$i;
-}	
+}
 
 //Listar los datos
 $SIS_query = 'Nombre,TiempoFueraLinea, LastUpdateFecha, LastUpdateHora,GeoLatitud, GeoLongitud, cantSensores, id_Sensores'.$subquery;
@@ -126,8 +126,7 @@ if($in_eq_fueralinea!=0){
 
 ?>
 
-
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google;?>&sensor=false"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table', 'gauge']});</script>
 
@@ -207,7 +206,7 @@ if($in_eq_fueralinea!=0){
 						</div>
 					</div>
 				</div>
-						
+
 				<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
 					<div title="Unidades de frio acumuladas de acuerdo a tabla de unidades de frío de la Universidad de Utah-USA (Modelo del Dr. Richardson) desde la fecha '.fecha_estandar($CrossTech_FechaUnidadFrio).'" class="box box-blue box-solid tooltip">
 						<div class="box-header with-border text-center">
@@ -224,7 +223,7 @@ if($in_eq_fueralinea!=0){
 				<div class="clearfix"></div>
 			</div>
 			<div class="">
-						
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					<div title="Horas acumuladas sobre '.$CrossTech_TempMax.'°C desde la fecha '.fecha_estandar($CrossTech_FechaTempMax).'" class="box box-blue box-solid tooltip">
 						<div class="box-header with-border text-center">
@@ -238,7 +237,7 @@ if($in_eq_fueralinea!=0){
 						</div>
 					</div>
 				</div>
-						
+
 				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 					<div class="box box-blue box-solid">
 						<div class="box-header with-border text-center">
@@ -257,7 +256,7 @@ if($in_eq_fueralinea!=0){
 						</div>
 					</div>
 				</div>
-			
+
 			</div>';
 			
 			echo $GPS;		
@@ -267,7 +266,7 @@ if($in_eq_fueralinea!=0){
 				<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 				<div id="consulta"></div>
 			</div>
-			
+
 			<?php
 			$GPS = '
 			<script>
@@ -531,7 +530,7 @@ if($in_eq_fueralinea!=0){
 							$GPS .= ", ".$rowTel['GeoLongitud'];
 							$GPS .= ", '".$explanation."'";
 						$GPS .= "], ";
-						
+
 					$GPS .= '];
 
 					//ubicacion inicial
@@ -630,7 +629,7 @@ if($in_eq_fueralinea!=0){
 			
 			echo $GPS;
 			?>
-			
+
 		</div>
 	</div>
 </div>	
@@ -649,7 +648,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -659,7 +658,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -668,4 +667,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

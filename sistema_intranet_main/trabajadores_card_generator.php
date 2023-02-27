@@ -71,7 +71,7 @@ WHERE trabajadores_listado.idTrabajador = ".$_GET['idTrabajador'];
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
 if(!$resultado){
-	
+
 	//Genero numero aleatorio
 	$vardata = genera_password(8,'alfanumerico');
 					
@@ -361,8 +361,7 @@ switch ($rowCard['idCardType']) {
 
 }
 ?>
-	
-	
+
 <div class="row no-print">
 	<div class="col-xs-12">
 		<a target="new" href="trabajadores_card_generator_to_print.php<?php echo '?idTrabajador='.$_GET['idTrabajador'].'&idCard='.$_GET['idCard'] ?>" class="btn btn-default pull-right" style="margin-right: 5px;">
@@ -395,7 +394,7 @@ switch ($rowCard['idCardType']) {
 					<img width="80px" height="100px" style="border:1px solid black;" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png"><br/>
 				<?php }else{  ?>
 					<img width="80px" height="100px" style="border:1px solid black;"  src="upload/<?php echo $rowTrabajador['Direccion_img']; ?>"><br/>
-				<?php }?>		
+				<?php } ?>		
 				<div id="card_ID">
 					ID : <?php echo n_doc($_GET['idTrabajador'],5); ?>
 				</div>
@@ -420,10 +419,10 @@ switch ($rowCard['idCardType']) {
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-			
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Verifico el tipo de usuario que esta ingresando
@@ -437,7 +436,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){  $x1  = $idTrabajador;  }else{$x1  = '';}
@@ -449,8 +448,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select_filter('Tarjeta','idCard', $x2, 2, 'idCard', 'Nombre', 'card_listado', 0, '', $dbConn);
 
 				?>
-	   
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -461,12 +459,10 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 </div>
 <?php } ?>
 
-	
-
-          
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

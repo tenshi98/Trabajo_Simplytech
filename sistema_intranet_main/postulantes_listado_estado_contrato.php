@@ -58,7 +58,7 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Estado');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Postulante', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Estado'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -78,7 +78,7 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 						<li class=""><a href="<?php echo 'postulantes_listado_curriculum.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i>  Curriculum</a></li>
 						<li class=""><a href="<?php echo 'postulantes_listado_otros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i>  Otros</a></li>
 						<li class="active"><a href="<?php echo 'postulantes_listado_estado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-text-o" aria-hidden="true"></i>  Estado Contrato</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -99,7 +99,7 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 								<?php if ($rowlevel['level']>=2){?>
 									<?php if ( $rowdata['idEstadoContrato']==1 ) {   
 										$ubicacion = $new_location.'&id='.$rowdata['idPostulante'].'&estadoContrato='.simpleEncode(2, fecha_actual());
-										$dialogo   = 'Esta a punto de contratar al postulante '.$rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'].', una vez hecho se desactivara como postulante y sera registrado como trabajador activo';?>
+										$dialogo   = 'Esta a punto de contratar al postulante '.$rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'].', una vez hecho se desactivara como postulante y sera registrado como trabajador activo'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-success pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Contratar</a>
 									<?php } ?>
 								<?php } ?>
@@ -114,14 +114,14 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -84,6 +84,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	 
  
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -115,7 +116,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				 
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -150,7 +151,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idCentroCosto', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
-				
+
 				if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){  $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);}
 				if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){  $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);}
 				if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){  $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);}
@@ -246,7 +247,7 @@ array_push( $arrLicitacion,$row );
 
 $array3d = array();
 foreach($arrLicitacion as $key) {
-	
+
 	//Creo Variables para la rejilla
 	for ($i = 1; $i <= $nmax; $i++) {
 		$d[$i]  = $key['LVL_'.$i.'_id'];   
@@ -341,10 +342,11 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Centro de Costo', $rowdata['Nombre'], 'Itemizado');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Centro de Costo', $rowdata['Nombre'], 'Itemizado'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -365,7 +367,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 			</ul>
 		</header>
         <div class="table-responsive">
-			
+
 			<?php //Se imprime el arbol
 			echo arrayToUL($array3d, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'], $nmax);
 			?>
@@ -378,8 +380,8 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -388,4 +390,5 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

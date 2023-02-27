@@ -41,7 +41,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = backup_telemetria_listado_errores_999.idTelemetria ";
 	$SIS_where.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
-	
+
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
@@ -108,8 +108,8 @@ foreach ($arrErrores as $error) {
 				->setCellValue('E'.$nn, $error['Valor'])
 				->setCellValue('F'.$nn, DeSanitizar($unimed));
 	$nn++;
-   
-} 
+
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Resumen de Alertas');

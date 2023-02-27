@@ -106,7 +106,7 @@ alert_post_data(2,1,2, $Alert_Text);
 </div> 
  
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['id'])){
+} elseif(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -166,8 +166,9 @@ $Ubicacion = str_replace("Av.", 'Avenida', $Ubicacion);
 $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -244,7 +245,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 							function initialize() {
 								
 								var myLatlng = new google.maps.LatLng(-33.4372, -70.6506);
-								
+
 								var myOptions = {
 									zoom: 15,
 									center: myLatlng,
@@ -285,7 +286,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 									//Variables con la primera posicion
 									$Latitud_x = '';
 									$Longitud_x = '';
-									
+
 									foreach ($zonas as $puntos) {
 										if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
 											echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
@@ -320,7 +321,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 									}));
 									polygons[polygons.length-1].setMap(map);
 									';
-									
+
 									/*if(isset($Latitud_x)&&$Latitud_x!=''&&isset($Longitud_x)&&$Longitud_x!=''){
 										echo 'myLatlng = new google.maps.LatLng('.$Latitud_x.', '.$Longitud_x.');
 												map.setCenter(myLatlng);'; 
@@ -335,7 +336,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 									// The label that pops up when the mouse moves within each polygon.
 									echo '
 									myLatlng = new google.maps.LatLng('.$Latitud_z_prom_2.', '.$Longitud_z_prom_2.');
-									
+
 									var marker = new MyMarker({
 										position: myLatlng,
 										label: "'.$zonas[0]['Nombre'].'"
@@ -356,7 +357,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 										});
 									});
 									';
-									
+
 									$zcounter2++;	
 								}
 								//Centralizado del mapa
@@ -410,14 +411,14 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -439,9 +440,9 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
-					
+
 				?>
-			
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -603,7 +604,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'cross_predios_listado', $SIS_jo
 					<?php foreach ($arrUsers as $usuarios){ ?>
 					<tr class="odd">
 						<td><?php echo $usuarios['Nombre']; ?></td>
-						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['estado']; ?></label></td>	
+						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $usuarios['estado']; ?></label></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
@@ -612,7 +613,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'cross_predios_listado', $SIS_jo
 								<?php if ($rowlevel['level']>=4){
 									//se verifica que el usuario no sea uno mismo
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idPredio'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el Predio '.$usuarios['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el Predio '.$usuarios['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -640,4 +641,5 @@ $arrUsers = db_select_array (false, $SIS_query, 'cross_predios_listado', $SIS_jo
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

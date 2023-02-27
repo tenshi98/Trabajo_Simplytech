@@ -52,8 +52,9 @@ $SIS_where = 'idSistema ='.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Configuracion');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Configuracion'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -78,7 +79,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 						<li class=""><a href="<?php echo 'core_sistemas_crosstech.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >CrossTech</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_crossenergy.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >CrossEnergy</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_social.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -86,8 +87,8 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Config_idTheme)){            $x1  = $Config_idTheme;             }else{$x1  = $rowdata['Config_idTheme'];}
 					if(isset($Config_CorreoRespaldo)){     $x2  = $Config_CorreoRespaldo;      }else{$x2  = $rowdata['Config_CorreoRespaldo'];}
@@ -107,15 +108,14 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 					if(isset($Config_Gmail_Usuario)){      $x16 = $Config_Gmail_Usuario;       }else{$x16 = $rowdata['Config_Gmail_Usuario'];}
 					if(isset($Config_Gmail_Password)){     $x17 = $Config_Gmail_Password;      }else{$x17 = $rowdata['Config_Gmail_Password'];}
 					if(isset($idOpcionesGen_10)){          $x18 = $idOpcionesGen_10;           }else{$x18 = $rowdata['idOpcionesGen_10'];}
-					
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_tittle(3, 'Visualizacion General');
 					$Form_Inputs->form_select('Tema','Config_idTheme', $x1, 2, 'idTheme', 'Nombre', 'core_theme_colors', 0, '', $dbConn);
 					$Form_Inputs->form_select('Mostrar Repositorio Comun','idOpcionesGen_9', $x15, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_select('Gestor de Correo','idOpcionesGen_8', $x14, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-					
+
 					$Form_Inputs->form_tittle(3, 'Visualizacion Pagina Inicio');
 					$Form_Inputs->form_select('Interfaz','idOpcionesGen_7', $x13, 2, 'idInterfaz', 'Nombre', 'core_interfaces', 0, '', $dbConn);
 					$Form_Inputs->form_select('Tipo Resumen Telemetria','idOpcionesTel', $x4, 1, 'idOpcionesTel', 'Nombre', 'core_sistemas_opciones_telemetria', 0, '', $dbConn);
@@ -125,7 +125,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 					$Form_Inputs->form_select('Widget de acceso directo','idOpcionesGen_2', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_select('Valores promedios de las mediciones','idOpcionesGen_3', $x9, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_select('Nuevo Widget CrossC','idOpcionesGen_10', $x18, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-					
+
 					$Form_Inputs->form_tittle(3, 'Configuracion Sistema');
 					$Form_Inputs->form_select('Ram Maxima (Mega Bytes)','idConfigRam', $x5, 2, 'idConfigRam', 'Nombre', 'core_config_ram', 0, '', $dbConn);
 					$Form_Inputs->form_select('Tiempo Maximo (Minutos)','idConfigTime', $x6, 2, 'idConfigTime', 'Nombre', 'core_config_time', 0, '', $dbConn);
@@ -138,7 +138,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 						
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
 					?>
-					
+
 					<script>
 						//Oculto los div
 						document.getElementById('div_idOpcionesTel').style.display    = 'none';//Tipo Resumen Telemetria
@@ -303,8 +303,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								document.getElementById('idOpcionesGen_6').value = "0";
 							}
 						});
-								
-								
+
 					</script>
 
 					<div class="form-group">
@@ -319,14 +318,14 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

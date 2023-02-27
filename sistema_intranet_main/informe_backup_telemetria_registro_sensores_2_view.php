@@ -48,7 +48,7 @@ $rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_tablare
 				
 		</header>
         <div class="table-responsive">
-			<?php 
+			<?php
 			$explanation  = '<strong>'.fecha_estandar($rowdata['FechaSistema']).' - '.$rowdata['HoraSistema'].'</strong><br/>';
 			$explanation .= '<strong>Equipo: </strong>'.$rowdata['NombreEquipo'].'<br/>';
 			$explanation .= '<strong>Sensor: </strong>'.$rowdata['SensorNombre'].'<br/>';
@@ -65,4 +65,5 @@ $rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_tablare
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

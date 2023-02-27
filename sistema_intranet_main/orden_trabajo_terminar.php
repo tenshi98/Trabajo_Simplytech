@@ -37,10 +37,9 @@ if (isset($_GET['editprod'])){   $error['editprod']   = 'sucess/Producto editado
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['addInsumo'])){ ?>
-	
-	
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['submit_filter'])){
+} elseif(!empty($_GET['submit_filter'])){
 
 //Verifico el tipo de usuario que esta ingresando
 $z="WHERE orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -114,7 +113,7 @@ array_push( $arrOTS,$row );
 					<tr class="odd">
 						<td><?php echo $ot['idOT']; ?></td>
 						<td><?php echo Fecha_estandar($ot['f_programacion']); ?></td>
-						<td><?php if(isset($ot['NombreCliente'])&&$ot['NombreCliente']!=''){echo $ot['NombreCliente'].' - '.$ot['NombreMaquina'];}else{echo $ot['NombreMaquina'];} ?></td>	
+						<td><?php if(isset($ot['NombreCliente'])&&$ot['NombreCliente']!=''){echo $ot['NombreCliente'].' - '.$ot['NombreMaquina'];}else{echo $ot['NombreMaquina'];} ?></td>
 						<td><?php echo $ot['NombrePrioridad']; ?></td>
 						<td><?php echo $ot['NombreTipo']; ?></td>
 						<td><?php echo $ot['Observaciones']; ?></td>
@@ -132,12 +131,12 @@ array_push( $arrOTS,$row );
 	</div>
 </div>
 
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_1=1 AND idEstado=1";
-$y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";?>
+$y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -186,4 +185,5 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

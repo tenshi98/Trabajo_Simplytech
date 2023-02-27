@@ -154,7 +154,7 @@ foreach ($arrTemporal as $fac) {
 										
 	if($Temperatura_N!=0){  $New_Temperatura = $Temperatura/$Temperatura_N; }else{$New_Temperatura = 0;}
 	if($Humedad_N!=0){      $New_Humedad     = $Humedad/$Humedad_N;         }else{$New_Humedad     = 0;}
-	
+
 	//omite la linea mientras alguna de las variables contenga datos
 	if($Temperatura_N!=0 OR $Humedad_N!=0){
 		$Temp_1  .= "'".Fecha_estandar($fac['FechaSistema'])."',";
@@ -178,7 +178,7 @@ foreach ($arrTemporal as $fac) {
 		$m_table .= '<td>'.cantidades($New_Humedad, 2).' %</td>';
 		$m_table .= '</tr>';
 	}
-	
+
 	//contador
 	$count++;			
 } 
@@ -195,7 +195,7 @@ if(isset($count)&&$count>9000){
 ?>
 
 <style>
-#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif';?>");background-repeat: no-repeat;background-position: center;}
+#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif'; ?>");background-repeat: no-repeat;background-position: center;}
 </style>
 <div id="loading"></div>
 <script>
@@ -204,7 +204,7 @@ document.getElementById("loading").style.display = "none";
 </script>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Informe Promedio Camara', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo']);?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Informe Promedio Camara', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo']); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
 		<a target="new" href="<?php echo 'informe_telemetria_registro_promedios_5_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 
@@ -213,7 +213,7 @@ document.getElementById("loading").style.display = "none";
 		<?php }else{ ?>
 			<a target="new" href="<?php echo 'informe_telemetria_registro_promedios_5_to_pdf.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
 		<?php } ?>
-		
+
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -224,8 +224,8 @@ if(isset($_GET['idGraficos'])&&$_GET['idGraficos']==1){ ?>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>	
-				<h5>Graficos del equipo <?php echo $rowEquipo['NombreEquipo']; if(isset($rowGrupo['Nombre'])&&$rowGrupo['Nombre']!=''){echo ' del grupo '.$rowGrupo['Nombre'];}?></h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
+				<h5>Graficos del equipo <?php echo $rowEquipo['NombreEquipo']; if(isset($rowGrupo['Nombre'])&&$rowGrupo['Nombre']!=''){echo ' del grupo '.$rowGrupo['Nombre'];} ?></h5>
 			</header>
 			<div class="table-responsive">
 				<?php
@@ -240,18 +240,18 @@ if(isset($_GET['idGraficos'])&&$_GET['idGraficos']==1){ ?>
 
 		<form method="post" id="make_pdf" action="informe_telemetria_registro_promedios_5_to_pdf.php">
 			<input type="hidden" name="img_adj" id="img_adj" />
-						
+
 			<input type="hidden" name="idSistema"     id="idSistema"    value="<?php echo $_SESSION['usuario']['basic_data']['idSistema']; ?>" />
 			<input type="hidden" name="f_inicio"      id="f_inicio"     value="<?php echo $_GET['f_inicio']; ?>" />
 			<input type="hidden" name="f_termino"     id="f_termino"    value="<?php echo $_GET['f_termino']; ?>" />
 			<input type="hidden" name="idTelemetria"  id="idTelemetria" value="<?php echo $_GET['idTelemetria']; ?>" />
 			<input type="hidden" name="idGrupo"       id="idGrupo"      value="<?php echo $_GET['idGrupo']; ?>" />
-						
+
 			<?php if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){?>       <input type="hidden" name="h_inicio"     id="h_inicio"    value="<?php echo $_GET['h_inicio']; ?>" /><?php } ?>
 			<?php if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){?>     <input type="hidden" name="h_termino"    id="h_termino"   value="<?php echo $_GET['h_termino']; ?>" /><?php } ?>
 			<?php if(isset($_GET['desde'])&&$_GET['desde']!=''){?>             <input type="hidden" name="desde"        id="desde"       value="<?php echo $_GET['desde']; ?>" /><?php } ?>
 			<?php if(isset($_GET['hasta'])&&$_GET['hasta']!=''){?>             <input type="hidden" name="hasta"        id="hasta"       value="<?php echo $_GET['hasta']; ?>" /><?php } ?>
-								
+
 			<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
 					
 		</form>
@@ -294,12 +294,11 @@ if(isset($_GET['idGraficos'])&&$_GET['idGraficos']==1){ ?>
 	</div>
 <?php } ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>	
-			<h5>Informe equipo <?php echo $rowEquipo['NombreEquipo']; if(isset($rowGrupo['Nombre'])&&$rowGrupo['Nombre']!=''){echo ' del grupo '.$rowGrupo['Nombre'];}?></h5>
+			<h5>Informe equipo <?php echo $rowEquipo['NombreEquipo']; if(isset($rowGrupo['Nombre'])&&$rowGrupo['Nombre']!=''){echo ' del grupo '.$rowGrupo['Nombre'];} ?></h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -321,10 +320,10 @@ if(isset($_GET['idGraficos'])&&$_GET['idGraficos']==1){ ?>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-			
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //filtros
@@ -340,7 +339,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 	$z .= " AND telemetria_listado.idTab=3";//CrossTrack
 }
 ?>
-		
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -349,7 +348,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
@@ -377,12 +376,11 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 2, $dbConn);
-				$Form_Inputs->form_select('Ver Graficos','idGraficos', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Ver Graficos','idGraficos', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Valores Desde','desde', $x7, 1);
 				$Form_Inputs->form_input_number('Valores Hasta','hasta', $x8, 1);
 				?>
-	   
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -393,12 +391,10 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 </div>
 <?php } ?>
 
-	
-
-          
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

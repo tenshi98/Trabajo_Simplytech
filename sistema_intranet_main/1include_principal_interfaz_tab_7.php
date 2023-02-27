@@ -62,7 +62,7 @@ foreach ($arrSolicitud as $sol) {
 ?>
 
 	<div class="tab-pane fade" id="Menu_tab_7">
-		
+
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:30px">
 			<?php
 				$Alert_Text  = 'Descargar APP SmartFlux ';
@@ -138,11 +138,11 @@ foreach ($arrSolicitud as $sol) {
 							<?php } ?>
 						</tbody>
 					</table>
-					
+
 				</div>
 			</div>
 		</div>
-		
+
 	</div>
 
 <?php } ?>

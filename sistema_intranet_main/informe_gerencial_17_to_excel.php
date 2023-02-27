@@ -43,7 +43,7 @@ $SIS_where .= " AND telemetria_listado.idSistema = ".$_SESSION['usuario']['basic
 $SIS_join = "LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema";	
 if(isset($_SESSION['usuario']['basic_data']['idTipoUsuario'])&&$_SESSION['usuario']['basic_data']['idTipoUsuario']!=1&&isset($_SESSION['usuario']['basic_data']['idUsuario'])&&$_SESSION['usuario']['basic_data']['idUsuario']!=0){
 	$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-	$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 
 //Se consultan datos
@@ -72,7 +72,7 @@ $spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-           
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', $titulo_cuadro)
@@ -96,7 +96,7 @@ foreach($arrEquipo as $equip) {
 	$tiempo1     = $equip['LastUpdateHora'];
 	$tiempo2     = $HoraSistema;
 	$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
-	
+
 	//Comparaciones de tiempo
 	$Time_Tiempo     = horas2segundos($Tiempo);
 	$Time_Tiempo_FL  = horas2segundos($equip['TiempoFueraLinea']);
@@ -117,7 +117,7 @@ foreach($arrEquipo as $equip) {
 	if($in_eq_alertas>0){    
 		$danger = 'Alerta';
 		$eq_ok  = ' Con Alertas';
-	}elseif($in_eq_fueralinea>0){ 
+	}elseif($in_eq_fueralinea>0){
 		$danger = 'Peligro';
 		$eq_ok  = ' Fuera de Linea';
 	}else{
@@ -134,10 +134,8 @@ foreach($arrEquipo as $equip) {
 				->setCellValue('D'.$nn, $eq_ok);		
 	
 	$nn++;
-   
-} 
 
-
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle($titulo_cuadro);

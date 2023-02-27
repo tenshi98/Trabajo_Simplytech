@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -201,7 +201,6 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 </div>
 <div class="clearfix"></div>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -223,7 +222,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
@@ -239,7 +238,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
 							<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?>
 						</p>
-					
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Cargas Familiares</h2>
 						<p class="text-muted">
 							<?php
@@ -274,7 +273,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 							<span class="text-danger"><strong>Datos Trabajador</strong></span><br/>
 							<strong>Tipo Trabajador : </strong><?php echo $rowdata['TipoTrabajador']; ?><br/>
 							<strong>Cargo : </strong><?php echo $rowdata['Cargo']; ?><br/>
-							
+
 							<br/><span class="text-danger"><strong>Datos Contrato</strong></span><br/>
 							<?php if(isset($rowdata['Contratista'])&&$rowdata['Contratista']!=''){?><strong>Contratista : </strong><?php echo $rowdata['Contratista']; ?><br/><?php } ?>
 							<strong>Tipo de Trabajador : </strong><?php echo $rowdata['TipoConTrabajador']; ?><br/>
@@ -285,7 +284,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 							<strong>Fecha de Inicio Contrato : </strong><?php if(isset($rowdata['F_Inicio_Contrato'])&&$rowdata['F_Inicio_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Inicio_Contrato']);}else{echo 'Sin fecha de inicio';} ?><br/>
 							<strong>Fecha de Termino Contrato : </strong><?php if(isset($rowdata['F_Termino_Contrato'])&&$rowdata['F_Termino_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Termino_Contrato']);}else{echo 'Sin fecha de termino';} ?><br/>
 							<strong>Ubicacion Trabajo : </strong><?php echo $rowdata['UbicacionTrabajo']; ?><br/>
-							
+
 							<br/><span class="text-danger"><strong>Remuneraciones</strong></span><br/>
 							<?php if(isset($rowdata['idTipoContratoTrab'])){ 
 								switch ($rowdata['idTipoContratoTrab']) {
@@ -301,21 +300,21 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 										echo '<strong>Sueldo Liquido a Pago por hora : </strong>'.valores($rowdata['SueldoHora'], 0).'<br/>';
 										break;
 								}
-							}?>
+							} ?>
 							<strong>Gratificacion : </strong><?php echo valores($rowdata['Gratificacion'], 0); ?><br/>
-							
+
 							<br/><span class="text-danger"><strong>Forma de Pago</strong></span><br/>
 							<strong>Banco : </strong><?php echo $rowdata['Pago_Banco']; ?><br/>
 							<strong>Tipo de cuenta deposito : </strong><?php echo $rowdata['Pago_TipoCuenta']; ?><br/>
 							<strong>Nro. Cta. Deposito : </strong><?php echo $rowdata['Pago_N_Cuenta']; ?><br/>
-							
+
 							<br/><span class="text-danger"><strong>Descuentos Previsionales</strong></span><br/>
 							<strong>AFP : </strong><?php echo $rowdata['nombre_afp']; ?><br/>
 							<?php foreach ($arrDescuentos as $bon) { ?>
 								<strong><?php echo $bon['Descuento'].' ('.$bon['AFP'].')'; ?> : </strong><?php echo valores($bon['Monto'], 0); ?><br/>
 							<?php } ?>
 							<strong>Salud : </strong><?php echo $rowdata['nombre_salud']; ?><br/>
-							
+
 							<br/><span class="text-danger"><strong>Bonos Fijos Asignados</strong></span><br/>
 							<?php
 							//Verifico el total de cargas
@@ -346,7 +345,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 								echo '<br/>';
 							}
 							?>
-							
+
 							<br/><span class="text-danger"><strong>Observaciones</strong></span><br/>
 							<div class="text-muted well well-sm no-shadow">
 								<?php if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){echo $rowdata['Observaciones'];}else{echo 'Sin Observaciones';} ?>
@@ -367,7 +366,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
-								<?php 
+								<?php
 								//Contrato
 								if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){
 									echo '
@@ -474,7 +473,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 										
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 
 			</div>
@@ -516,14 +515,14 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 
 <?php if ($arrActivos!=false && !empty($arrActivos) && $arrActivos!=''){ ?>   
 	<?php 
-	filtrar($arrActivos, 'Categoria');?>
+	filtrar($arrActivos, 'Categoria'); ?>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 				<h5>Insumos entregados</h5>
 				<ul class="nav nav-tabs pull-right">
-					<?php 
+					<?php
 					$xx=1;
 					$var='';
 					foreach($arrActivos as $menu=>$productos) {
@@ -536,11 +535,11 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 			</header>
 			<div class="body tab-content">
 
-				<?php 
+				<?php
 				$xx=1;
 				$var='';
 				foreach($arrActivos as $menu=>$productos) {	
-					if($xx==1){$var='active in';}else{$var='';}?>
+					if($xx==1){$var='active in';}else{$var='';} ?>
 					<div class="tab-pane fade <?php echo $var; ?>" id="<?php echo espacio_guion($menu); ?>">
 						<div class="wmd-panel">
 							<div class="table-responsive">
@@ -551,7 +550,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 										<th>Articulo</th>
 									</tr>
 									</thead>
-													  
+
 									<tbody role="alert" aria-live="polite" aria-relevant="all">
 									<?php foreach ($productos as $producto) { ?>
 										<tr class="odd">
@@ -572,7 +571,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 							</div>
 						</div>
 					</div>
-				<?php 
+				<?php
 				$xx=2;
 				} ?>
 
@@ -594,7 +593,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -604,7 +603,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -613,4 +612,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -26,7 +26,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -160,7 +160,7 @@ $html .= '
 											Tipo Cargo: '.$row_data['Trab_Tipo'].'<br/>
 											Centro de Costo: '.$row_data['CentroCosto'].'
 									</td>
-									
+
 									<td style="vertical-align: top;width:33%;">
 										Receptor<br/>
 											<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -200,7 +200,7 @@ $html .= '
 											Rut: '.$row_data['SistemaOrigenRut'].'<br/>
 											Email: '.$row_data['SistemaOrigenEmail'].'
 									</td>
-									
+
 									<td style="vertical-align: top;width:33%;">
 										Receptor<br/>
 											<strong>'.$row_data['Cliente_Nombre'].'</strong><br/>
@@ -214,7 +214,7 @@ $html .= '
 											Contacto: '.$row_data['Cliente_PersonaContacto'].'<br/>
 											Giro de la Empresa: '.$row_data['Cliente_Giro'].'
 									</td>
-									
+
 									<td style="vertical-align: top;width:33%;">
 										<strong>Fecha Creacion : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 										<strong>Usuario Ingreso : </strong>'.$row_data['BoletaUsuario'].'<br/>';
@@ -248,7 +248,7 @@ $html .= '
 											Contacto: '.$row_data['Proveedor_PersonaContacto'].'<br/>
 											Giro de la Empresa: '.$row_data['Proveedor_Giro'].'
 									</td>
-									
+
 									<td style="vertical-align: top;width:33%;">
 										Receptor<br/>
 											<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -306,19 +306,19 @@ $html .= '
 					}
 					if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td align="right"><strong>Total Honorarios</strong></td> 
+							<td align="right"><strong>Total Honorarios</strong></td>
 							<td align="right">'.Valores($row_data['ValorNeto'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto'])&&$row_data['Impuesto']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td align="right"><strong>'.$row_data['Porcentaje_Ret_Boletas'].'% Impuesto Retenido</strong></td> 
+							<td align="right"><strong>'.$row_data['Porcentaje_Ret_Boletas'].'% Impuesto Retenido</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto'], 0).'</td>
 						</tr>';
 					} 
 					if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td align="right"><strong>Total</strong></td> 
+							<td align="right"><strong>Total</strong></td>
 							<td align="right">'.Valores($row_data['ValorTotal'], 0).'</td>
 						</tr>';
 					}
@@ -364,7 +364,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 		/************************************************************************/
 		//TCPDF
 		case 1:
-			
+
 			require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 			// create new PDF document
@@ -419,7 +419,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output(DeSanitizar($pdf_file), 'I');
-	
+
 			break;
 		/************************************************************************/
 		//DomPDF (Solo compatible con PHP 5.x)

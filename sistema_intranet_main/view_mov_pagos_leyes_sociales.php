@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -170,7 +170,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Datos Basicos
 			<address>
@@ -181,7 +181,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 				<strong>Centro de Costo AFP: </strong><?php echo $AFP_CC; ?><br/>
 				<strong>Centro de Costo Salud: </strong><?php echo $SALUD_CC; ?><br/>
 				<strong>Centro de Costo Seguridad: </strong><?php echo $SEGURIDAD_CC; ?><br/>
-				
+
 			</address>
 		</div>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
@@ -199,7 +199,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
-			
+
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -235,7 +235,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							<td align="right"><?php echo valores($trab['AFC_Empleador'], 0); ?></td>
 							<td align="right"><?php echo valores($trab['AFC_Trabajador'], 0); ?></td>
 							<td align="right"><?php echo valores($trab['Total_AFP'], 0); ?></td>
-						</tr>	
+						</tr>
 					<?php }  ?>
 					 
 					<tr class="invoice-total" bgcolor="#f1f1f1">
@@ -257,7 +257,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="margin-top:15px;padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
-			
+
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -283,7 +283,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							<td align="right"><?php echo valores($trab['Salud_Cotizacion'], 0); ?></td>
 							<td align="right"><?php echo valores($trab['Salud_Extra_Valor'], 0).' ('.$trab['Salud_Extra_Porcentaje'].'%)'; ?></td>
 							<td align="right"><?php echo valores($trab['Total_SALUD'], 0); ?></td>
-						</tr>	
+						</tr>
 					<?php }  ?>
 					 
 					<tr class="invoice-total" bgcolor="#f1f1f1">
@@ -300,7 +300,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 
 	<div class="">
 		<div class="col-xs-12 table-responsive" style="margin-top:15px;padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
-			
+
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -324,7 +324,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 							<td><?php echo $trab['MutualNombre'].' ('.$trab['MutualPorcentaje'].'%)'; ?></td>
 							<td align="right"><?php echo valores($trab['MutualValor'], 0); ?></td>
 							<td align="right"><?php echo valores($trab['Total_SEGURIDAD'], 0); ?></td>
-						</tr>	
+						</tr>
 					<?php }  ?>
 					 
 					<tr class="invoice-total" bgcolor="#f1f1f1">
@@ -340,7 +340,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 
 	<div style="row">
 		<div class="col-xs-12 table-responsive" style="margin-top:15px;padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
-				
+
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -359,7 +359,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 					</tr>
 					<tr>
 						<td class="meta-head">Administradora Fondos de Pensiones</td>
-						<td align="right"><?php echo valores($row_data['AFP_MontoPago'], 0);?></td>
+						<td align="right"><?php echo valores($row_data['AFP_MontoPago'], 0); ?></td>
 						<td align="left">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 								foreach ($arrFormaPago as $pago) {
@@ -369,7 +369,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 										echo '<br/>';
 									}
 								}
-							}?>
+							} ?>
 						</td>
 						<td align="right">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
@@ -378,7 +378,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 										echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
 									}
 								}
-							}?>
+							} ?>
 						</td>
 						<td align="right">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
@@ -387,7 +387,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 										echo fecha_estandar($pago['F_Pago']).'<br/>';
 									}
 								}
-							}?>
+							} ?>
 						</td>
 						<td align="right">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
@@ -396,7 +396,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 										echo $pago['Usuario'].'<br/>';
 									}
 								}
-							}?>
+							} ?>
 						</td>
 						<td align="right">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
@@ -405,12 +405,12 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 										echo valores($pago['Monto'], 0).'<br/>';
 									}
 								}
-							}?>
+							} ?>
 						</td>
 					</tr>
 					<tr>
 						<td class="meta-head">Salud</td>
-						<td align="right"><?php echo valores($row_data['SALUD_MontoPago'], 0);?></td>
+						<td align="right"><?php echo valores($row_data['SALUD_MontoPago'], 0); ?></td>
 						<td align="left">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 								foreach ($arrFormaPago as $pago) {
@@ -420,7 +420,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 										echo '<br/>';
 									}
 								}
-							}?>
+							} ?>
 						</td>
 						<td align="right">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
@@ -429,7 +429,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 										echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
 									}
 								}
-							}?>
+							} ?>
 						</td>
 						<td align="right">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
@@ -438,7 +438,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 										echo fecha_estandar($pago['F_Pago']).'<br/>';
 									}
 								}
-							}?>
+							} ?>
 						</td>
 						<td align="right">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
@@ -447,7 +447,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 										echo $pago['Usuario'].'<br/>';
 									}
 								}
-							}?>
+							} ?>
 						</td>
 						<td align="right">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
@@ -456,12 +456,12 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 										echo valores($pago['Monto'], 0).'<br/>';
 									}
 								}
-							}?>
+							} ?>
 						</td>
 					</tr>
 					<tr>
 						<td class="meta-head">Seguridad</td>
-						<td align="right"><?php echo valores($row_data['SEGURIDAD_MontoPago'], 0);?></td>
+						<td align="right"><?php echo valores($row_data['SEGURIDAD_MontoPago'], 0); ?></td>
 						<td align="left">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
 								foreach ($arrFormaPago as $pago) {
@@ -471,7 +471,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 										echo '<br/>';
 									}
 								}
-							}?>
+							} ?>
 						</td>
 						<td align="right">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
@@ -480,7 +480,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 										echo fecha_estandar($pago['Creacion_fecha']).'<br/>';
 									}
 								}
-							}?>
+							} ?>
 						</td>
 						<td align="right">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
@@ -489,7 +489,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 										echo fecha_estandar($pago['F_Pago']).'<br/>';
 									}
 								}
-							}?>
+							} ?>
 						</td>
 						<td align="right">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
@@ -498,7 +498,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 										echo $pago['Usuario'].'<br/>';
 									}
 								}
-							}?>
+							} ?>
 						</td>
 						<td align="right">
 							<?php if($arrFormaPago!=false && !empty($arrFormaPago) && $arrFormaPago!=''){
@@ -507,18 +507,18 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 										echo valores($pago['Monto'], 0).'<br/>';
 									}
 								}
-							}?>
+							} ?>
 						</td>
 					</tr>
-					
+
 					<tr>
 						<td class="meta-head"><strong>Totales</strong></td>
-						<td align="right"><strong><?php echo valores($row_data['TotalGeneral'], 0);?></strong></td>
+						<td align="right"><strong><?php echo valores($row_data['TotalGeneral'], 0); ?></strong></td>
 						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td align="right"><strong><?php echo valores($row_data['TotalPagoGeneral'], 0);?></strong></td>
+						<td align="right"><strong><?php echo valores($row_data['TotalPagoGeneral'], 0); ?></strong></td>
 					</tr>
 				</tbody>
 			</table>
@@ -528,7 +528,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
 		</div>
 	</div>
 
@@ -593,7 +593,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -603,7 +603,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -612,4 +612,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

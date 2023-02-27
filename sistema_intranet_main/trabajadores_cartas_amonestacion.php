@@ -102,7 +102,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){     $x1  = $idTrabajador;      }else{$x1  = $rowdata['idTrabajador'];}
@@ -116,18 +116,18 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_date('Fecha inicio','Fecha', $x2, 2);
 				$Form_Inputs->form_select_filter('Tipo Amonestacion','idAmonestaciones', $x3, 2, 'idAmonestaciones', 'Nombre', 'sistema_rrhh_amonestaciones', 0, '', $dbConn);
 				$Form_Inputs->form_textarea('Observaciones','Observacion', $x4, 1);
-				
+
 				if(isset($rowdata['File_Amonestacion'])&&$rowdata['File_Amonestacion']!=''){?>
-        
+
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<h3>Archivo</h3>
 						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['File_Amonestacion'], ''); ?>
 					</div>
 					<a href="<?php echo $location.'&id='.$_GET['id'].'&del_file='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					<div class="clearfix"></div>
-					
+
 				<?php 
-				}else{ 
+				}else{
 					$Form_Inputs->form_multiple_upload('Seleccionar archivo','File_Amonestacion', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
 							
 				}
@@ -158,6 +158,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -381,7 +382,7 @@ $arrInasHoras = db_select_array (false, $SIS_query, 'trabajadores_cartas_amonest
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$plan['idCartaAmo']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($plan['idCartaAmo'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la carta de amonestacion del '.fecha_estandar($plan['Fecha']).'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la carta de amonestacion del '.fecha_estandar($plan['Fecha']).'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -405,4 +406,5 @@ $arrInasHoras = db_select_array (false, $SIS_query, 'trabajadores_cartas_amonest
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

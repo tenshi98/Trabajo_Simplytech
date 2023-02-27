@@ -33,12 +33,12 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 }
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
-			
+
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
 }else{
-	
+
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'idSistema, Nombre AS NombreEquipo', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowEquipo');
 
@@ -49,7 +49,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$SIS_order = 'FechaSistema ASC,HoraSistema ASC LIMIT 10000';
 	$arrEquipos = array();
 	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos');
-	
+
 	/*************************************************************/
 	//Predios
 	$SIS_query = '
@@ -66,14 +66,14 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$SIS_order = 'cross_predios_listado_zonas.idZona ASC, cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC';
 	$arrPredios = array();
 	$arrPredios = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPredios');
-	
+
 	//Se filtra por zona
 	filtrar($arrPredios, 'idZona');
 	//se recorre
 	$arrCuarteles = array();
 	foreach ($arrPredios as $todaszonas=>$zonas) {
 		/*foreach ($zonas as $puntos) {
-			
+
 		}*/
 		$arrCuarteles[$todaszonas]['Predio']    = $zonas[0]['Predio'];
 		$arrCuarteles[$todaszonas]['Nombre']    = $zonas[0]['Nombre'];
@@ -109,7 +109,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			
 			//Se obtiene la fecha
 			$Temp_1 .= "'".Fecha_estandar($med['FechaSistema'])." ".$med['HoraSistema']."',";
-			
+
 			if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){$arrData[1]['Value'] .= ", ".$med['Sensor_1'];       }else{ $arrData[1]['Value'] = $med['Sensor_1'];}
 			if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){$arrData[2]['Value'] .= ", ".$med['Sensor_2'];       }else{ $arrData[2]['Value'] = $med['Sensor_2'];}
 			if(isset($arrData[3]['Value'])&&$arrData[3]['Value']!=''){$arrData[3]['Value'] .= ", ".$med['Sensor_3'];       }else{ $arrData[3]['Value'] = $med['Sensor_3'];}
@@ -119,7 +119,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$arrCuartel[$med['idZona']][$med['idSolicitud']]['Cuartel']    = $arrCuarteles[$med['idZona']]['Nombre'];
 			$arrCuartel[$med['idZona']][$med['idSolicitud']]['Hectarea']   = $arrCuarteles[$med['idZona']]['Hectareas'];
 			$arrCuartel[$med['idZona']][$med['idSolicitud']]['Solicitud']  = $med['idSolicitud'];
-			
+
 			/*********************/
 			if(isset($arrCuartel[$med['idZona']][$med['idSolicitud']]['Kilometros'])){
 				$arrCuartel[$med['idZona']][$med['idSolicitud']]['Kilometros'] = $arrCuartel[$med['idZona']][$med['idSolicitud']]['Kilometros'] + $med['GeoMovimiento'];
@@ -161,10 +161,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$arrData[2]['Name'] = "'Caudal Izquierdo'";
 		$arrData[3]['Name'] = "'Nivel Estanque'";
 		$arrData[4]['Name'] = "'Velocidad'";
-		
-		
+
 		?>
-		
+
 		<style>
 			.my_marker {color: black;background-color:#1E90FF;border: solid 1px black;font-weight: 900;padding: 4px;top: -8px;}
 			.my_marker::after {content: "";position: absolute;top: 100%;left: 50%;transform: translate(-50%, 0%);border: solid 8px transparent;border-top-color: black;}
@@ -190,7 +189,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				<div class="table-responsive">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="row">
-							
+
 							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 								<div class="box box-blue box-solid">
 									<div class="box-header with-border">
@@ -205,7 +204,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									</div>
 								</div>
 							</div>
-							
+
 							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 								<div class="box box-blue box-solid">
 									<div class="box-header with-border">
@@ -220,7 +219,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									</div>
 								</div>
 							</div>
-							
+
 							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 								<div class="box box-blue box-solid">
 									<div class="box-header with-border">
@@ -235,7 +234,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									</div>
 								</div>
 							</div>
-							
+
 							<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 								<div class="box box-blue box-solid">
 									<div class="box-header with-border">
@@ -251,7 +250,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								</div>
 							</div>
 							<div class="clearfix"></div>
-							
+
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 								<div class="box">
 									<header>
@@ -318,27 +317,27 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; 
 								
 								 ?>
-								
+
 								<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
-								
+
 								<div id="map_canvas" style="width: 100%; height: 550px;"></div>
-								
+
 								<script>
-									
+
 									var map;
 									var marker;
-									
-									var locations = [ 
-										<?php foreach ( $arrEquipos as $pos ) { 
+
+									var locations = [
+										<?php foreach ( $arrEquipos as $pos ) {
 											if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){
 												echo "['".$pos['idTabla']."', ".$pos['GeoLatitud'].", ".$pos['GeoLongitud'].", ".$pos['Sensor_1'].", ".$pos['Sensor_2'].", ".$pos['idZona']."],"; 
 											}
-										}?>
+										} ?>
 									];
 
 									/* ************************************************************************** */
 									function initialize() {
-										
+
 										var myOptions = {
 											zoom: 16,
 											center: new google.maps.LatLng(locations[0][1], locations[0][2]),
@@ -349,7 +348,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 											mapTypeId: google.maps.MapTypeId.SATELLITE
 										};
 										map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-										
+
 										//Se llama a la ruta
 										RutasRealizadas();
 										//dibuja zonas
@@ -358,10 +357,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										dibuja_zona();
 								
 									}
-									
+
 									/* ************************************************************************** */
 									function RutasRealizadas() {
-										
+
 										var color    = '';
 										var color_1  = '#1E90FF'; //azul
 										var color_2  = '#FFE200'; //amarillo
@@ -369,7 +368,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										var color_4  = '#3c763d'; //verde
 										var in_lat   = 0;
 										var in_long  = 0;
-										
+
 										for(var i in locations){
 											//toma desde la segunda medicion
 											if(in_lat!=0 && in_long!=0){
@@ -409,7 +408,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 											in_long = locations[i][2];
 										}
 									}
-									
+
 									/* ************************************************************************** */
 									class MyMarker extends google.maps.OverlayView {
 										constructor(params) {
@@ -469,7 +468,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 											
 											?>
 																			
-											var path<?php echo $todaszonas;?> = [
+											var path<?php echo $todaszonas; ?> = [
 											
 												<?php
 												//Variables con la primera posicion
@@ -478,7 +477,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 																
 												foreach ($zonas as $puntos) {
 													if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){?>
-														{lat: <?php echo $puntos['Latitud'];?>, lng: <?php echo $puntos['Longitud'];?>},
+														{lat: <?php echo $puntos['Latitud']; ?>, lng: <?php echo $puntos['Longitud']; ?>},
 														<?php
 														if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){
 															$Latitud_x  = $puntos['Latitud'];
@@ -495,13 +494,13 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 												}
 												//se cierra la figura
 												if(isset($Longitud_x)&&$Longitud_x!=''){?>
-													{lat: <?php echo $Latitud_x;?>, lng: <?php echo $Longitud_x;?>} 
+													{lat: <?php echo $Latitud_x; ?>, lng: <?php echo $Longitud_x; ?>} 
 												<?php } ?>
 											];
 															
 											
 											polygons.push(new google.maps.Polygon({
-												paths: path<?php echo $todaszonas;?>,
+												paths: path<?php echo $todaszonas; ?>,
 												strokeColor: '#FF0000',
 												strokeOpacity: 0.8,
 												strokeWeight: 1,
@@ -518,26 +517,26 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 											?>
 											
 											
-											myLatlng = new google.maps.LatLng(<?php echo $Latitud_z_prom_2;?>, <?php echo $Longitud_z_prom_2;?>);
+											myLatlng = new google.maps.LatLng(<?php echo $Latitud_z_prom_2; ?>, <?php echo $Longitud_z_prom_2; ?>);
 															
 											var marker2 = new MyMarker({
 												position: myLatlng,
-												label: "<?php echo $zonas[0]['Nombre'];?>",
+												label: "<?php echo $zonas[0]['Nombre']; ?>",
 												zIndex:9999
 											});
 											marker2.setMap(map);
 											
 											
 											// When the mouse moves within the polygon, display the label and change the BG color.
-											google.maps.event.addListener(polygons[<?php echo $zcounter2;?>], "mousemove", function(event) {
-												polygons[<?php echo $zcounter2;?>].setOptions({
+											google.maps.event.addListener(polygons[<?php echo $zcounter2; ?>], "mousemove", function(event) {
+												polygons[<?php echo $zcounter2; ?>].setOptions({
 													fillColor: "#00FF00"
 												});
 											});
 
 											// WHen the mouse moves out of the polygon, hide the label and change the BG color.
-											google.maps.event.addListener(polygons[<?php echo $zcounter2;?>], "mouseout", function(event) {
-												polygons[<?php echo $zcounter2;?>].setOptions({
+											google.maps.event.addListener(polygons[<?php echo $zcounter2; ?>], "mouseout", function(event) {
+												polygons[<?php echo $zcounter2; ?>].setOptions({
 													fillColor: "#FF0000"
 												});
 											});
@@ -568,7 +567,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								/********************************************************************/
 								//solo mostrar aplicaciones
 								//if(isset($_GET['idOpciones'])&&$_GET['idOpciones']!=''&&$_GET['idOpciones']==1){
-									
+
 									/*******************************************************************************/
 									//las fechas
 									$Graphics_xData      ='var xData = [['.$Temp_1.'],['.$Temp_1.'],];';
@@ -585,7 +584,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									//los tipos de linea
 									$Graphics_lineDash   = "var lineDash = ['','',];";
 									//los anchos de la linea
-									$Graphics_lineWidth  = "var lineWidth = ['','',];";	
+									$Graphics_lineWidth  = "var lineWidth = ['','',];";
 
 									$gr_tittle = 'Grafico Caudal / Homogeneidad de '.$rowEquipo['NombreEquipo'];
 									$gr_unimed = 'Litros * Minutos';
@@ -606,7 +605,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									//los tipos de linea
 									$Graphics_lineDash   = "var lineDash = ['',];";
 									//los anchos de la linea
-									$Graphics_lineWidth  = "var lineWidth = ['',];";	
+									$Graphics_lineWidth  = "var lineWidth = ['',];";
 
 									$gr_tittle = 'Grafico Nivel Estanque de '.$rowEquipo['NombreEquipo'];
 									$gr_unimed = '% de llenado';
@@ -627,7 +626,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									//los tipos de linea
 									$Graphics_lineDash   = "var lineDash = ['',];";
 									//los anchos de la linea
-									$Graphics_lineWidth  = "var lineWidth = ['',];";	
+									$Graphics_lineWidth  = "var lineWidth = ['',];";
 
 									$gr_tittle = 'Grafico Velocidades de '.$rowEquipo['NombreEquipo'];
 									$gr_unimed = 'Km * hr';
@@ -635,31 +634,26 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									
 								//} 
 								?>
-					
+
 							<?php } ?>
 						</div>
 					</div>
-					
-					
-					
+
 				</div>
 			</div>
 		</div>
-	<?php }else{ 
+	<?php }else{
 		$Alert_Text  = 'No hay registros relacionados al equipo seleccionado entre las fechas ingresadas';
 		alert_post_data(4,2,2, $Alert_Text);
 	} ?>
 <?php } ?>
 
-
-
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-			
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //filtros
@@ -671,13 +665,14 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=1";//CrossChecking			
-} 
+	$z .= " AND telemetria_listado.idTab=1";//CrossChecking
+}
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 alert_post_data(2,1,1, $Alert_Text);
+
 ?>
-		
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -686,7 +681,7 @@ alert_post_data(2,1,1, $Alert_Text);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
@@ -712,8 +707,7 @@ alert_post_data(2,1,1, $Alert_Text);
 				//$Form_Inputs->form_select('Solo aplicaciones','idOpciones', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 
 				?>
-	   
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -724,12 +718,10 @@ alert_post_data(2,1,1, $Alert_Text);
 </div>
 <?php } ?>
 
-	
-
-          
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -118,7 +118,7 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 		echo '</div>
 		<div class="clearfix" style="margin-bottom:15px;"></div>';
 	}
-} 
+}
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -127,84 +127,83 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 		<div id="header"> Control Proceso Preembarque - T° y Estiba de Contenedores <?php if(isset($rowConso['idEstado'])&&$rowConso['idEstado']!=2){echo '('.$rowConso['Estado'].')';} ?></div>
 
 		<div id="customer">
-			
+
 			<table id="meta" class="pull-left" style="width:100%" >
 				<tbody>
 					<tr>
 						<td class="meta-head" colspan="3"><strong>DATOS MAESTROS</strong></td>
 						<td class="meta-head"></td>
 					</tr>
-					
-					
+
 					<tr><td class="meta-head" colspan="4"><strong>Cuerpo Identificacion</strong></td></tr>
 					<tr>
 						<td class="meta-head">Contenedor Nro.</td>
-						<td><?php if(isset($rowConso['CTNNombreCompañia'])&&$rowConso['CTNNombreCompañia']!=''){echo $rowConso['CTNNombreCompañia'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['CTNNombreCompañia'])&&$rowConso['CTNNombreCompañia']!=''){echo $rowConso['CTNNombreCompañia'];}else{echo 'Sin Datos';} ?></td>
 						<td class="meta-head">Nro. Del Informe</td>
-						<td><?php if(isset($rowConso['NInforme'])&&$rowConso['NInforme']!=''){echo $rowConso['NInforme'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['NInforme'])&&$rowConso['NInforme']!=''){echo $rowConso['NInforme'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha del informe</td>
-						<td><?php if(isset($rowConso['Creacion_fecha'])&&$rowConso['Creacion_fecha']!=''){echo fecha_estandar($rowConso['Creacion_fecha']);}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['Creacion_fecha'])&&$rowConso['Creacion_fecha']!=''){echo fecha_estandar($rowConso['Creacion_fecha']);}else{echo 'Sin Datos';} ?></td>
 						<td class="meta-head"></td>
 						<td></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Inicio del Embarque</td>
-						<td><?php if(isset($rowConso['FechaInicioEmbarque'])&&$rowConso['FechaInicioEmbarque']!=''){echo fecha_estandar($rowConso['FechaInicioEmbarque']);}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['FechaInicioEmbarque'])&&$rowConso['FechaInicioEmbarque']!=''){echo fecha_estandar($rowConso['FechaInicioEmbarque']);}else{echo 'Sin Datos';} ?></td>
 						<td class="meta-head">Hora Inicio Carga</td>
-						<td><?php if(isset($rowConso['HoraInicioCarga'])&&$rowConso['HoraInicioCarga']!=''){echo $rowConso['HoraInicioCarga'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['HoraInicioCarga'])&&$rowConso['HoraInicioCarga']!=''){echo $rowConso['HoraInicioCarga'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Termino del Embarque</td>
-						<td><?php if(isset($rowConso['FechaTerminoEmbarque'])&&$rowConso['FechaTerminoEmbarque']!=''){echo fecha_estandar($rowConso['FechaTerminoEmbarque']);}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['FechaTerminoEmbarque'])&&$rowConso['FechaTerminoEmbarque']!=''){echo fecha_estandar($rowConso['FechaTerminoEmbarque']);}else{echo 'Sin Datos';} ?></td>
 						<td class="meta-head">Hora Termino Carga</td>
-						<td><?php if(isset($rowConso['HoraTerminoCarga'])&&$rowConso['HoraTerminoCarga']!=''){echo $rowConso['HoraTerminoCarga'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['HoraTerminoCarga'])&&$rowConso['HoraTerminoCarga']!=''){echo $rowConso['HoraTerminoCarga'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Planta Despachadora</td>
-						<td><?php if(isset($rowConso['PlantaNombre'])&&$rowConso['PlantaNombre']!=''){echo $rowConso['PlantaCodigo'].' - '.$rowConso['PlantaNombre'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['PlantaNombre'])&&$rowConso['PlantaNombre']!=''){echo $rowConso['PlantaCodigo'].' - '.$rowConso['PlantaNombre'];}else{echo 'Sin Datos';} ?></td>
 						<td class="meta-head">Especie/Variedad</td>
-						<td><?php if(isset($rowConso['Especie'])&&$rowConso['Especie']!=''){echo $rowConso['Especie'].' '.$rowConso['Variedad'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['Especie'])&&$rowConso['Especie']!=''){echo $rowConso['Especie'].' '.$rowConso['Variedad'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Cantidad de Cajas</td>
-						<td><?php if(isset($rowConso['CantidadCajas'])&&$rowConso['CantidadCajas']!=''){echo $rowConso['CantidadCajas'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['CantidadCajas'])&&$rowConso['CantidadCajas']!=''){echo $rowConso['CantidadCajas'];}else{echo 'Sin Datos';} ?></td>
 						<td class="meta-head">N° Instructivo</td>
-						<td><?php if(isset($rowConso['InstructivoNombre'])&&$rowConso['InstructivoNombre']!=''){echo $rowConso['InstructivoCodigo'].' - '.$rowConso['InstructivoNombre'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['InstructivoNombre'])&&$rowConso['InstructivoNombre']!=''){echo $rowConso['InstructivoCodigo'].' - '.$rowConso['InstructivoNombre'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Naviera</td>
-						<td><?php if(isset($rowConso['NavieraNombre'])&&$rowConso['NavieraNombre']!=''){echo $rowConso['NavieraCodigo'].' - '.$rowConso['NavieraNombre'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['NavieraNombre'])&&$rowConso['NavieraNombre']!=''){echo $rowConso['NavieraCodigo'].' - '.$rowConso['NavieraNombre'];}else{echo 'Sin Datos';} ?></td>
 						<td class="meta-head">Puerto Embarque</td>
-						<td><?php if(isset($rowConso['EmbarqueNombre'])&&$rowConso['EmbarqueNombre']!=''){echo $rowConso['EmbarqueCodigo'].' - '.$rowConso['EmbarqueNombre'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['EmbarqueNombre'])&&$rowConso['EmbarqueNombre']!=''){echo $rowConso['EmbarqueCodigo'].' - '.$rowConso['EmbarqueNombre'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Puerto Destino</td>
-						<td><?php if(isset($rowConso['DestinoNombre'])&&$rowConso['DestinoNombre']!=''){echo $rowConso['DestinoCodigo'].' - '.$rowConso['DestinoNombre'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['DestinoNombre'])&&$rowConso['DestinoNombre']!=''){echo $rowConso['DestinoCodigo'].' - '.$rowConso['DestinoNombre'];}else{echo 'Sin Datos';} ?></td>
 						<td class="meta-head">Mercado</td>
-						<td><?php if(isset($rowConso['MercadoNombre'])&&$rowConso['MercadoNombre']!=''){echo $rowConso['MercadoCodigo'].' - '.$rowConso['MercadoNombre'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['MercadoNombre'])&&$rowConso['MercadoNombre']!=''){echo $rowConso['MercadoCodigo'].' - '.$rowConso['MercadoNombre'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Pais</td>
-						<td><?php if(isset($rowConso['PaisesNombre'])&&$rowConso['PaisesNombre']!=''){echo $rowConso['PaisesNombre'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['PaisesNombre'])&&$rowConso['PaisesNombre']!=''){echo $rowConso['PaisesNombre'];}else{echo 'Sin Datos';} ?></td>
 						<td class="meta-head">Recibidor</td>
-						<td><?php if(isset($rowConso['RecibidorNombre'])&&$rowConso['RecibidorNombre']!=''){echo $rowConso['RecibidorCodigo'].' - '.$rowConso['RecibidorNombre'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['RecibidorNombre'])&&$rowConso['RecibidorNombre']!=''){echo $rowConso['RecibidorCodigo'].' - '.$rowConso['RecibidorNombre'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					
 						
 					<tr><td class="meta-head" colspan="4"><strong>Cuerpo Identificacion Empresa Transportista</strong></td></tr>
 					<tr>
 						<td class="meta-head">Empresa Transportista</td>
-						<td><?php if(isset($rowConso['TransporteNombre'])&&$rowConso['TransporteNombre']!=''){echo $rowConso['TransporteCodigo'].' - '.$rowConso['TransporteNombre'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['TransporteNombre'])&&$rowConso['TransporteNombre']!=''){echo $rowConso['TransporteCodigo'].' - '.$rowConso['TransporteNombre'];}else{echo 'Sin Datos';} ?></td>
 						<td class="meta-head">Conductor</td>
-						<td><?php if(isset($rowConso['ChoferNombreRut'])&&$rowConso['ChoferNombreRut']!=''){echo $rowConso['ChoferNombreRut'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['ChoferNombreRut'])&&$rowConso['ChoferNombreRut']!=''){echo $rowConso['ChoferNombreRut'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Patente Camion</td>
-						<td><?php if(isset($rowConso['PatenteCamion'])&&$rowConso['PatenteCamion']!=''){echo $rowConso['PatenteCamion'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['PatenteCamion'])&&$rowConso['PatenteCamion']!=''){echo $rowConso['PatenteCamion'];}else{echo 'Sin Datos';} ?></td>
 						<td class="meta-head">Patente Carro</td>
-						<td><?php if(isset($rowConso['PatenteCarro'])&&$rowConso['PatenteCarro']!=''){echo $rowConso['PatenteCarro'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['PatenteCarro'])&&$rowConso['PatenteCarro']!=''){echo $rowConso['PatenteCarro'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 						
 						
@@ -212,25 +211,25 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 					<tr><td class="meta-head" colspan="4"><strong>Cuerpo Parametros Evaluados</strong></td></tr>
 					<tr>
 						<td class="meta-head">Condicion CTN</td>
-						<td><?php if(isset($rowConso['Condicion'])&&$rowConso['Condicion']!=''){echo $rowConso['Condicion'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['Condicion'])&&$rowConso['Condicion']!=''){echo $rowConso['Condicion'];}else{echo 'Sin Datos';} ?></td>
 						<td class="meta-head">Sellado Piso</td>
-						<td><?php if(isset($rowConso['Sellado'])&&$rowConso['Sellado']!=''){echo $rowConso['Sellado'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['Sellado'])&&$rowConso['Sellado']!=''){echo $rowConso['Sellado'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">T°Set Point</td>
-						<td><?php if(isset($rowConso['TSetPoint'])&&$rowConso['TSetPoint']!=''){echo Cantidades_decimales_justos($rowConso['TSetPoint']);}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['TSetPoint'])&&$rowConso['TSetPoint']!=''){echo Cantidades_decimales_justos($rowConso['TSetPoint']);}else{echo 'Sin Datos';} ?></td>
 						<td class="meta-head">T° Ventilacion</td>
-						<td><?php if(isset($rowConso['TSetPoint'])&&$rowConso['TSetPoint']!=''){echo Cantidades_decimales_justos($rowConso['TVentilacion']);}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['TSetPoint'])&&$rowConso['TSetPoint']!=''){echo Cantidades_decimales_justos($rowConso['TVentilacion']);}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">T° Ambiente</td>
-						<td><?php if(isset($rowConso['TAmbiente'])&&$rowConso['TAmbiente']!=''){echo Cantidades_decimales_justos($rowConso['TAmbiente']);}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['TAmbiente'])&&$rowConso['TAmbiente']!=''){echo Cantidades_decimales_justos($rowConso['TAmbiente']);}else{echo 'Sin Datos';} ?></td>
 						<td class="meta-head">Numero de sello</td>
-						<td><?php if(isset($rowConso['NumeroSello'])&&$rowConso['NumeroSello']!=''){echo $rowConso['NumeroSello'];}else{echo 'Sin Datos';}?></td>
+						<td><?php if(isset($rowConso['NumeroSello'])&&$rowConso['NumeroSello']!=''){echo $rowConso['NumeroSello'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Inspector</td>
-						<td colspan="3"><?php if(isset($rowConso['InspectorNombre'])&&$rowConso['InspectorNombre']!=''){echo $rowConso['InspectorNombre'].' '.$rowConso['InspectorApellido'];}else{echo 'Sin Datos';}?></td>
+						<td colspan="3"><?php if(isset($rowConso['InspectorNombre'])&&$rowConso['InspectorNombre']!=''){echo $rowConso['InspectorNombre'].' '.$rowConso['InspectorApellido'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					
 				
@@ -239,9 +238,9 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 					
 				</tbody>
 			</table>
-			
+
 		</div>
-		
+
 		<div class="row">
 			<?php 
 			filtrar($arrEstibas, 'Estiba');  
@@ -254,7 +253,7 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 							<h3 class="box-title"><span style="color: #333;">Estiba '.$categoria.'</span></h3>
 						</div>
 						<div class="box-body">
-							<div class="value">';?>
+							<div class="value">'; ?>
 							
 							
 								<table id="items" style="margin: 0;">
@@ -275,13 +274,13 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 										//recorro el lsiatdo entregado por la base de datos
 										foreach ($estibas as $estiba){ ?>
 											<tr class="item-row linea_punteada">
-												<td class="item-name"><?php echo $estiba['EstibaUbicacion'];?></td>
-												<td class="item-name"><?php echo $estiba['Posicion'];?></td>
-												<td class="item-name"><?php echo $estiba['Envase'];?></td>
-												<td class="item-name"><?php echo $estiba['NPallet'];?></td>
-												<td class="item-name"><?php echo Cantidades_decimales_justos($estiba['Temperatura']);?></td>
-												<td class="item-name"><?php echo $estiba['Termografo'];?></td>
-												<td class="item-name"><?php echo $estiba['NSerieSensor'];?></td>
+												<td class="item-name"><?php echo $estiba['EstibaUbicacion']; ?></td>
+												<td class="item-name"><?php echo $estiba['Posicion']; ?></td>
+												<td class="item-name"><?php echo $estiba['Envase']; ?></td>
+												<td class="item-name"><?php echo $estiba['NPallet']; ?></td>
+												<td class="item-name"><?php echo Cantidades_decimales_justos($estiba['Temperatura']); ?></td>
+												<td class="item-name"><?php echo $estiba['Termografo']; ?></td>
+												<td class="item-name"><?php echo $estiba['NSerieSensor']; ?></td>
 											</tr>
 										<?php } ?>
 
@@ -304,25 +303,24 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 			<tbody>
 				
 					
-				<td colspan="8" class="blank word_break"> 
-					<?php echo $rowConso['Observaciones'];?>
+				<td colspan="8" class="blank word_break">
+					<?php echo $rowConso['Observaciones']; ?>
 				</td>
-						
+
 				</tr>
 				<tr><td colspan="8" class="blank"><p>Observaciones</p></td></tr>
 
-				
 			</tbody>
 		</table>
     </div>
-    
+
 	<table id="items" style="margin-bottom: 20px;">
         <tbody>
-            
+
 			<tr class="invoice-total" bgcolor="#f1f1f1">
                 <td>Archivos Adjuntos</td>
             </tr>
-            
+
 			<?php 
 			filtrar($arrArchivos, 'Tipo');  
 			foreach($arrArchivos as $categoria=>$archivos){ 
@@ -335,7 +333,7 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 				<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2">
 					<img src="upload/<?php echo $arch['Nombre']; ?>" class="img-responsive">
 				</div>
-						
+
 			<?php 
 				}
 				echo '</div>';

@@ -83,7 +83,6 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 
 ?>
 
-
 <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 	<thead>
 		<tr role="row">
@@ -205,24 +204,24 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 				</td>
 				<?php if(isset($_GET['idTab'])&&$_GET['idTab']==1){ ?>
 					<td>
-						<?php echo $data['Nombre'];?><br/>
-						<?php echo fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];?>
+						<?php echo $data['Nombre']; ?><br/>
+						<?php echo fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora']; ?>
 					</td>
-					<td><?php echo Cantidades($data['GeoVelocidad'], 0);?> km/h</td>
-					<td><?php echo $xdata_3;?> %</td>
-					<td><?php echo $xdata_2;?> l/min</td>
-					<td><?php echo $xdata_1;?> l/min</td>
+					<td><?php echo Cantidades($data['GeoVelocidad'], 0); ?> km/h</td>
+					<td><?php echo $xdata_3; ?> %</td>
+					<td><?php echo $xdata_2; ?> l/min</td>
+					<td><?php echo $xdata_1; ?> l/min</td>
 				<?php }else{ ?>
 					<td colspan="5">
-						<?php echo $data['Nombre'];?><br/>
-						<?php echo fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];?>
+						<?php echo $data['Nombre']; ?><br/>
+						<?php echo fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora']; ?>
 					</td>
 				<?php } ?>
 
 				<td width="10">
 					<div class="btn-group" style="width: 70px;" >
-						<a href="view_telemetria_registro_ruta_transporte_ab.php?view=<?php echo simpleEncode($data['idTelemetria'], fecha_actual());?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
-						<button onclick="fncCenterMap('<?php echo $data['GeoLatitud'];?>', '<?php echo $data['GeoLongitud'];?>', '<?php echo $nicon;?>')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+						<a href="view_telemetria_registro_ruta_transporte_ab.php?view=<?php echo simpleEncode($data['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
+						<button onclick="fncCenterMap('<?php echo $data['GeoLatitud']; ?>', '<?php echo $data['GeoLongitud']; ?>', '<?php echo $nicon; ?>')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
 					</div>
 				</td>
 			</tr>
@@ -233,4 +232,4 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 	</tbody>
 </table>
 
-<?php widget_tooltipster();?>
+<?php widget_tooltipster(); ?>

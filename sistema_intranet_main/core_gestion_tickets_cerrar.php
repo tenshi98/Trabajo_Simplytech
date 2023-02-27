@@ -70,6 +70,7 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -357,9 +358,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 								<div class="btn-group" style="width: 105px;" >
 									<a href="<?php echo 'view_gestion_tickets.php?view='.simpleEncode($usuarios['idTicket'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 									<a href="<?php echo $location.'&id='.$usuarios['idTicket']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-									<?php 
+									<?php
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idTicket'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el ticket N°'. n_doc($usuarios['idTicket'], 8).'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el ticket N°'. n_doc($usuarios['idTicket'], 8).'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								</div>
 							</td>
@@ -376,7 +377,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	</div>
 </div>
 
-
 <?php } ?>
 
 <?php
@@ -384,4 +384,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

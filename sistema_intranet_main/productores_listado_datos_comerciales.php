@@ -56,10 +56,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+$rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productor', $rowdata['Nombre'], 'Editar Datos Comerciales');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productor', $rowdata['Nombre'], 'Editar Datos Comerciales'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -84,15 +84,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:240px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Rut)){              $x1  = $Rut;               }else{$x1  = $rowdata['Rut'];}
 					if(isset($RazonSocial)){      $x2  = $RazonSocial;       }else{$x2  = $rowdata['RazonSocial'];}
 					if(isset($Giro)){             $x3  = $Giro;              }else{$x3  = $rowdata['Giro'];}
 					if(isset($idRubro)){          $x4  = $idRubro;           }else{$x4  = $rowdata['idRubro'];}
-					
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x1, 2);
@@ -117,14 +116,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

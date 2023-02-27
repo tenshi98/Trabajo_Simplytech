@@ -299,8 +299,8 @@ array_push( $arrProductos,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -309,10 +309,11 @@ $z1 = "bodegas_arriendos_listado.idSistema=".$_SESSION['usuario']['basic_data'][
 $z2 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z1 .= " AND usuarios_bodegas_arriendos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$z1 .= " AND usuarios_bodegas_arriendos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
  
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -373,10 +374,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_date('F Devolucion Fin','F_Devolucion_fin', $x21, 1);
 				$Form_Inputs->form_select_filter('Equipo Arrendado','idEquipo', $x22, 1, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 0, '', $dbConn);
 				$Form_Inputs->form_select('Estado Devolucion','idEstadoDevolucion', $x23, 1, 'idEstadoDevolucion', 'Nombre', 'core_estado_devolucion', 0, '', $dbConn);
-				
-				
+
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -392,4 +392,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

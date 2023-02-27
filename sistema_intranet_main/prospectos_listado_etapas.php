@@ -105,18 +105,18 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_ckeditor('Observacion', 'Observacion', $x2, 2, 2);
 				//si existe archivo se mustra previsualizador
 				if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){?>
-        
+
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<h3>Archivo</h3>
 						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['Archivo'], ''); ?>
 					</div>
 					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_archivo='.$_GET['edit']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					<div class="clearfix"></div>
-					
+
 				<?php }else{
 					$Form_Inputs->form_multiple_upload('Seleccionar Archivo','Archivo', 1, '"jpg", "png", "gif", "jpeg", "bmp", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "txt", "rtf", "gz", "gzip", "7Z", "zip", "rar"');
 				}
-				
+
 				$Form_Inputs->form_input_hidden('idEtapaFide', $_GET['edit'], 2);
 				$Form_Inputs->form_input_hidden('FModificacion', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('HModificacion', hora_actual(), 2);
@@ -136,7 +136,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -146,7 +146,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idEtapa)){      $x1  = $idEtapa;        }else{$x1  = '';}
@@ -231,10 +231,11 @@ array_push( $arrEtapa,$row );
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Etapa Fidelizacion');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Etapa Fidelizacion'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar Etapa Fidelizacion</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar Etapa Fidelizacion</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -292,10 +293,9 @@ array_push( $arrEtapa,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php } ?>
 <?php
@@ -303,4 +303,5 @@ array_push( $arrEtapa,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

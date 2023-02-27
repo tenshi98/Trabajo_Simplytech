@@ -61,6 +61,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -95,7 +96,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } else{
+} else{
 // consulto los datos
 $rowdata = db_select_data (false, 'Nombre,id_Geo, id_Sensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
@@ -104,10 +105,11 @@ $arrGeocerca = array();
 $arrGeocerca = db_select_array (false, 'telemetria_listado_geocercas.idGeocerca,telemetria_geocercas.Nombre AS Geocerca', 'telemetria_listado_geocercas', 'LEFT JOIN `telemetria_geocercas` ON telemetria_geocercas.idZona = telemetria_listado_geocercas.idZona', 'telemetria_listado_geocercas.idTelemetria ='.$_GET['id'], 'telemetria_geocercas.Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGeocerca');
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Geocercas');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Geocercas'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Geocerca</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Geocerca</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -162,7 +164,7 @@ $arrGeocerca = db_select_array (false, 'telemetria_listado_geocercas.idGeocerca,
 								<div class="btn-group" style="width: 35px;" >
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del_geocerca='.simpleEncode($geo['idGeocerca'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar la geocerca '.$geo['Geocerca'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar la geocerca '.$geo['Geocerca'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -177,8 +179,8 @@ $arrGeocerca = db_select_array (false, 'telemetria_listado_geocercas.idGeocerca,
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -187,4 +189,5 @@ $arrGeocerca = db_select_array (false, 'telemetria_listado_geocercas.idGeocerca,
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

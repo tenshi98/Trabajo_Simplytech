@@ -43,27 +43,16 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Alumno borrado correct
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Se traen todos los datos de mi Alumno
-$query = "SELECT Fono1,Fono2, Fax, email, Web, Nombre,ApellidoPat 
-FROM `alumnos_listado`
-WHERE idAlumno = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+// consulto los datos
+$SIS_query = 'Fono1,Fono2, Fax, email, Web, Nombre,ApellidoPat';
+$SIS_join  = '';
+$SIS_where = 'idAlumno = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'alumnos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Alumno', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'], 'Editar Datos de contacto');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Alumno', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'], 'Editar Datos de contacto'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -89,15 +78,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Fono1)){            $x1 = $Fono1;             }else{$x1 = $rowdata['Fono1'];}
 					if(isset($Fono2)){            $x2 = $Fono2;             }else{$x2 = $rowdata['Fono2'];}
 					if(isset($Fax)){              $x3 = $Fax;               }else{$x3 = $rowdata['Fax'];}
 					if(isset($email)){            $x4 = $email;             }else{$x4 = $rowdata['email'];}
 					if(isset($Web)){              $x5 = $Web;               }else{$x5 = $rowdata['Web'];}
-					
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -106,8 +94,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_input_fax('Fax', 'Fax', $x3, 1);
 					$Form_Inputs->form_input_icon('Email', 'email', $x4, 1,'fa fa-envelope-o');
 					$Form_Inputs->form_input_icon('Web', 'Web', $x5, 1,'fa fa-internet-explorer');
-					
-	
+
 					$Form_Inputs->form_input_hidden('idAlumno', $_GET['id'], 2);
 					?>
 
@@ -123,14 +110,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

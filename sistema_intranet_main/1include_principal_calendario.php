@@ -87,14 +87,14 @@ $row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary">Datos de la Agenda</h2>
 						<p class="text-muted">
-							<strong>Autor: </strong><?php if($row_data['idUsuario']!=9999){echo $row_data['Autor'];}else{echo 'Sistema';}?><br/>
-							<strong>Titulo: </strong><?php echo $row_data['Titulo'];?><br/>
-							<strong>Fecha: </strong><?php echo fecha_estandar($row_data['Fecha']);?>
+							<strong>Autor: </strong><?php if($row_data['idUsuario']!=9999){echo $row_data['Autor'];}else{echo 'Sistema';} ?><br/>
+							<strong>Titulo: </strong><?php echo $row_data['Titulo']; ?><br/>
+							<strong>Fecha: </strong><?php echo fecha_estandar($row_data['Fecha']); ?>
 						</p>
 
 						<h2 class="text-primary">Mensaje</h2>
 						<div class="text-muted" style="white-space: normal;">
-							<?php echo $row_data['Cuerpo'];?>
+							<?php echo $row_data['Cuerpo']; ?>
 						</div>
 
 						<?php if ($row_data['idUsuario']!=9999){?>
@@ -102,10 +102,10 @@ $row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $
 								<a href="<?php echo $location.'&id='.$_GET["view"]; ?>" class="btn btn-default pull-right margin_width" >Editar Evento</a>
 								<?php
 								$ubicacion = $location.'&del='.simpleEncode($_GET['view'], fecha_actual());
-								$dialogo   = '¿Realmente deseas eliminar el registro?';?>
+								$dialogo   = '¿Realmente deseas eliminar el registro?'; ?>
 								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger pull-right margin_form_btn" ><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Evento</a>
 							</div>
-						<?php }?>
+						<?php } ?>
 
 					</div>
 					<div class="clearfix" style="margin-bottom:5px;"></div>
@@ -118,12 +118,12 @@ $row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
 if(isset($rowlevel['level'])&&$rowlevel['level']!=''){
 	validaPermisoUser($rowlevel['level'], 3, $dbConn);
@@ -257,7 +257,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado'
 											echo "<td class='fc-Dia fc-wed fc-widget-content fc-other-Mes fc-future fc-state-none'> </td>";
 										// mostramos el dia
 										}else{?>
-											<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';}?>">
+											<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';} ?>">
 												<div class="calendar_min">
 													<div class="fc-Dia-number"><?php echo $Dia; ?></div>
 													<div class="fc-Dia-content">
@@ -270,7 +270,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado'
 																	echo '<a class="event_calendar evcal_color1 word_break" href="'.$ver.'">'.cortar($evento['Titulo'], 20).'</a>';
 																}
 															}
-														}?>
+														} ?>
 													</div>
 												</div>
 											</td>

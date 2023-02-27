@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -216,7 +216,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			<strong>Datos Empresa</strong>
 			<address>
@@ -288,7 +288,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 						<td><strong>% Mojamiento</strong></td>
 						<td><strong>Vehiculos<br/>involucrados</strong></td>
 					</tr>
-					<?php 
+					<?php
 					//Variables
 					$TotalNPlantas          = 0;
 					$TotalCuartelHectareas  = 0;
@@ -400,26 +400,26 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 						<td><strong>Carencia<br/>ESCO</strong></td>
 						<td><strong>Tiempo<br/>Re-Ingreso</strong></td>
 					</tr>
-					<?php 
+					<?php
 					//Variable
 					$NProd = 0;
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') {
 						foreach ($arrProductos as $prod) {
 							$NProd++; ?>
-							
+
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><?php echo $prod['Objetivo'];?></td>
-								<td class="item-name"><i class="fa fa-flask" aria-hidden="true"></i> <?php echo $prod['ProductoNombre'];?></td>
-								<td class="item-name"><?php echo $prod['ProductoIngrediente'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['DosisRecomendada']).' '.$prod['Unimed'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['DosisAplicar']).' '.$prod['Unimed'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoExportador']);?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoCarencia']);?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoResidual']);?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoRetroactivo']);?></td>
+								<td class="item-name"><?php echo $prod['Objetivo']; ?></td>
+								<td class="item-name"><i class="fa fa-flask" aria-hidden="true"></i> <?php echo $prod['ProductoNombre']; ?></td>
+								<td class="item-name"><?php echo $prod['ProductoIngrediente']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['DosisRecomendada']).' '.$prod['Unimed']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['DosisAplicar']).' '.$prod['Unimed']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoExportador']); ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoCarencia']); ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoResidual']); ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoRetroactivo']); ?></td>
 							</tr>
-							<?php 
+							<?php
 						}
 					}else{
 						echo '<tr class="item-row linea_punteada"><td colspan="9">No hay Productos Quimicos Asignados</td></tr>';
@@ -443,7 +443,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 						<td><strong>Velocidad Promedio</strong></td>
 						<td><strong>Tiempo Aplicando</strong></td>
 					</tr>
-					<?php 
+					<?php
 					//Variables
 					$Capacidad  = 0;
 					$NTract     = 0;
@@ -453,18 +453,18 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 							//Se suman cantidades
 							$Capacidad = $Capacidad + $tract['TelemetriaCapacidad'];
 							$NTract++; ?>
-							
+
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><i class="fa fa-truck" aria-hidden="true"></i> <?php echo $tract['VehiculoNombre'];?></td>
-								<td class="item-name"><?php echo $tract['TelemetriaNombre'];?></td>
-								<td class="item-name"><?php echo $tract['Rut'].' '.$tract['Nombre'].' '.$tract['ApellidoPat'];?></td>
-								<td class="item-name"><?php echo $tract['Contratista'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($tract['TelemetriaCapacidad']);?></td>
-								<td class="item-name"><?php echo Cantidades($tract['Diferencia'], 0);?></td>
-								<td class="item-name"><?php echo Cantidades($tract['GeoVelocidadProm'],2);?></td>
-								<td class="item-name"><?php echo $tract['T_Aplicacion'];?></td>
+								<td class="item-name"><i class="fa fa-truck" aria-hidden="true"></i> <?php echo $tract['VehiculoNombre']; ?></td>
+								<td class="item-name"><?php echo $tract['TelemetriaNombre']; ?></td>
+								<td class="item-name"><?php echo $tract['Rut'].' '.$tract['Nombre'].' '.$tract['ApellidoPat']; ?></td>
+								<td class="item-name"><?php echo $tract['Contratista']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($tract['TelemetriaCapacidad']); ?></td>
+								<td class="item-name"><?php echo Cantidades($tract['Diferencia'], 0); ?></td>
+								<td class="item-name"><?php echo Cantidades($tract['GeoVelocidadProm'],2); ?></td>
+								<td class="item-name"><?php echo $tract['T_Aplicacion']; ?></td>
 							</tr>
-							<?php 
+							<?php
 						}
 					}else{
 						echo '<tr class="item-row linea_punteada"><td colspan="5">No hay Tractores Asignados</td></tr>';
@@ -485,28 +485,28 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 						<td><strong>Producto<br/>Quimico</strong></td>
 						<td><strong>Total Producto<br/>Quimico</strong></td>
 					</tr>
-					
+
 					<?php
 					//Variable
-					$nmb = 0; 
+					$nmb = 0;
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') {
 						foreach ($arrProductos as $prod) {
 							$PromedioCapacidad = $Capacidad/$NTract;
 							
 							?>
-							
+
 							<tr class="item-row linea_punteada">
-								<?php if($nmb==0){ ?><td class="item-name"  rowspan="<?php echo $NProd; ?>"><?php echo Cantidades_decimales_justos($Capacidad);?></td><?php } ?>
-								<?php if($nmb==0){ ?><td class="item-name"  rowspan="<?php echo $NProd; ?>"><?php echo Cantidades_decimales_justos($PromedioCapacidad);?></td><?php } ?>
+								<?php if($nmb==0){ ?><td class="item-name"  rowspan="<?php echo $NProd; ?>"><?php echo Cantidades_decimales_justos($Capacidad); ?></td><?php } ?>
+								<?php if($nmb==0){ ?><td class="item-name"  rowspan="<?php echo $NProd; ?>"><?php echo Cantidades_decimales_justos($PromedioCapacidad); ?></td><?php } ?>
 								<?php if($nmb==0){ ?><td class="item-name"  rowspan="<?php echo $NProd; ?>"><?php if($PromedioCapacidad!=0){echo Cantidades(($row_data['Mojamiento']*$TotalCuartelHectareas)/$PromedioCapacidad, 2);}else{echo '0';} ?></td><?php } ?>
-								
-								<td class="item-name"><i class="fa fa-flask" aria-hidden="true"></i> <?php echo $prod['ProductoNombre'];?></td>
-								<td class="item-name"><?php echo Cantidades((($row_data['Mojamiento']*$TotalCuartelHectareas)/100)*$prod['DosisAplicar'], 2).' '.$prod['Unimed'];?></td>
+
+								<td class="item-name"><i class="fa fa-flask" aria-hidden="true"></i> <?php echo $prod['ProductoNombre']; ?></td>
+								<td class="item-name"><?php echo Cantidades((($row_data['Mojamiento']*$TotalCuartelHectareas)/100)*$prod['DosisAplicar'], 2).' '.$prod['Unimed']; ?></td>
 	
 							</tr>
 	
-							<?php 
+							<?php
 							//se suma 1
 							$nmb++;
 						}
@@ -530,9 +530,9 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 					if ($arrMateriales!=false && !empty($arrMateriales) && $arrMateriales!='') {
 						foreach ($arrMateriales as $prod){ ?>
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><i class="fa fa-eyedropper" aria-hidden="true"></i> <?php echo $prod['Codigo'].' - '.$prod['Nombre'];?></td>
+								<td class="item-name"><i class="fa fa-eyedropper" aria-hidden="true"></i> <?php echo $prod['Codigo'].' - '.$prod['Nombre']; ?></td>
 							</tr>
-							<?php 
+							<?php
 						}
 					}else{
 						echo '<tr class="item-row linea_punteada"><td>No hay Materiales de Seguridad Asignados</td></tr>';
@@ -549,4 +549,5 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Print.php';
+
 ?>

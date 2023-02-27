@@ -93,8 +93,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -129,7 +130,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							<strong>Etapa Fidelizacion: </strong><?php echo $rowdata['Etapa']; ?>
 						</p>
 					</div>
-					
+
 				</div>
 			</div>
         </div>
@@ -138,14 +139,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -179,7 +180,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_hidden('idEstadoFidelizacion', 1, 2);
 				$Form_Inputs->form_input_hidden('idEtapa', 1, 2);	
 				?>
-								
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -218,7 +219,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 $SIS_where = "prospectos_transportistas_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //verifico que sea un administrador
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$SIS_where.= " AND prospectos_transportistas_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$SIS_where.= " AND prospectos_transportistas_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 /**********************************************************/
 //Se aplican los filtros
@@ -256,7 +257,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'prospectos_transportistas_lista
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Prospecto</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Prospecto</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -335,7 +336,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'prospectos_transportistas_lista
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idProspecto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idProspecto'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar al prospecto '.$usuarios['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar al prospecto '.$usuarios['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -353,7 +354,6 @@ $arrUsers = db_select_array (false, $SIS_query, 'prospectos_transportistas_lista
 	</div>
 </div>
 
-
 <?php } ?>
 
 <?php
@@ -361,4 +361,5 @@ $arrUsers = db_select_array (false, $SIS_query, 'prospectos_transportistas_lista
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

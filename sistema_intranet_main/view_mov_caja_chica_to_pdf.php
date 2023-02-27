@@ -26,7 +26,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -133,7 +133,7 @@ $html .= '
 										Fecha Real: '.Fecha_estandar($row_data['fecha_auto']).'<br/>
 										Fecha Ingresada: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 									</td>
-									
+
 									<td style="vertical-align: top;width:50%;">
 				
 									</td>';
@@ -151,7 +151,7 @@ $html .= '
 										Fecha Real: '.Fecha_estandar($row_data['fecha_auto']).'<br/>
 										Fecha Ingresada: '.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 									</td>
-									
+
 									<td style="vertical-align: top;width:50%;">
 										Trabajador
 										<strong>'.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat'].' '.$row_data['TrabajadorApellidoMat'].'</strong><br/>
@@ -200,7 +200,7 @@ $html .= '
 							$html .= '</tr>';
 						}
 					}
-					
+
 					//si existen productos
 					if ($arrDocumentos!=false && !empty($arrDocumentos) && $arrDocumentos!='') {
 						$html .= '<tr style="background-color: #f9f9f9;"><td colspan="3"><strong>Montos</strong></td></tr>';
@@ -254,7 +254,7 @@ $html .= '
 						</tr>
 					</tbody>
 				</table>';
-				
+
 				if($row_data['idTipo']==2){
 					$html .= '
 					<br/>
@@ -264,7 +264,7 @@ $html .= '
 					<br/>
 					<br/>
 					<br/>
-					
+
 					<table style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0">
 						<tbody>
 							<tr>
@@ -298,7 +298,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 		/************************************************************************/
 		//TCPDF
 		case 1:
-			
+
 			require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 			// create new PDF document
@@ -353,7 +353,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output(DeSanitizar($pdf_file), 'I');
-	
+
 			break;
 		/************************************************************************/
 		//DomPDF (Solo compatible con PHP 5.x)

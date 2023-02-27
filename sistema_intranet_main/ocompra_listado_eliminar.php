@@ -79,7 +79,7 @@ $SIS_where.= " AND ocompra_listado.idSistema=".$_SESSION['usuario']['basic_data'
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 //verifico que sea un administrador
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$SIS_where.="  AND ocompra_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$SIS_where.="  AND ocompra_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 /**********************************************************/
 //Se aplican los filtros
@@ -208,15 +208,15 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'ocompra_listado', $SIS_jo
 						<td><?php echo Fecha_estandar($sol['Creacion_fecha']); ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php 
+								<?php
 								$extra = '';
 								if(isset($sol['Solicitud'])&&$sol['Solicitud']==1){
 									$extra = '&soli=true';
-								}?>
+								} ?>
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($sol['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($sol['idOcompra'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la Orden de Compra N° '.$sol['idOcompra'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la Orden de Compra N° '.$sol['idOcompra'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -241,4 +241,5 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'ocompra_listado', $SIS_jo
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

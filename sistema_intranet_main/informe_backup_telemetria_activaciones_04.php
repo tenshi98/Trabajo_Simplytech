@@ -107,6 +107,7 @@ $arrMediciones = db_select_array (false, 'Fecha AS FechaConsultada'.$subquery, '
 
 /*******************************************************/
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<?php
 	$search .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
@@ -188,6 +189,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -224,7 +226,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				
 
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -240,4 +242,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

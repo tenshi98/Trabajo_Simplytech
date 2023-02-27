@@ -33,12 +33,12 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 }
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
-			
+
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
 }else{
-	
+
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowEquipo');
 
@@ -55,7 +55,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ruta del equipo <?php echo $rowEquipo['NombreEquipo'];?></h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ruta del equipo <?php echo $rowEquipo['NombreEquipo']; ?></h5>
 			</header>
 			<div class="table-responsive">
 
@@ -69,28 +69,28 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						}else{
 							$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
 							<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
-							
+
 							<div id="map_canvas" style="width: 100%; height: 550px;"></div>
-							
+
 							<script>
-								
+
 								var map;
 								var marker;
 								var speed = 500; // km/h
 								var delay = 100;
-								
-								var locations = [ 
-									<?php foreach ( $arrEquipos as $pos ) { 
+
+								var locations = [
+									<?php foreach ( $arrEquipos as $pos ) {
 										if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){?>
-										['<?php echo $pos['idTabla']; ?>', <?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>], 					
-									<?php } 
-									}?>
+										['<?php echo $pos['idTabla']; ?>', <?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>],
+									<?php }
+									} ?>
 									];
 
 
 								/* ************************************************************************** */
 								function initialize() {
-									
+
 									var myOptions = {
 										zoom: 12,
 										center: new google.maps.LatLng(locations[0][1], locations[0][2]),
@@ -101,7 +101,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										mapTypeId: google.maps.MapTypeId.ROADMAP
 									};
 									map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-									
+
 									//Se llama a la ruta
 									RutasAlternativas();
 									//Se llama al marcador y se anima
@@ -111,29 +111,28 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										animation 	: google.maps.Animation.DROP,
 										icon      	: "<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 									});
-									
+
 									google.maps.event.addListenerOnce(map, 'idle', function()
 									{
 										animateMarker(marker, [
 											<?php foreach ( $arrEquipos as $pos ) { ?>
-												[<?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>], 					
+												[<?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>],
 											<?php } ?>
 										], speed);
 									})
-							
 								}
-								
+
 								/* ************************************************************************** */
 								function RutasAlternativas() {
-									
+
 									var route=[];
 									var tmp;
-									
+
 									for(var i in locations){
 										tmp=new google.maps.LatLng(locations[i][1], locations[i][2]);
 										route.push(tmp);
 									}
-									
+
 									var drawn = new google.maps.Polyline({
 										map: map,
 										path: route,
@@ -149,33 +148,33 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									var km_h = km_h || 50;
 									coords.push([locations[0][1], locations[0][2]]);
 									goToPoint();
-									
+
 									function goToPoint(){
 										var lat = marker.position.lat();
 										var lng = marker.position.lng();
 										var step = (km_h * 1000 * delay) / 3600000; // in meters
-										
+
 										var dest = new google.maps.LatLng(
 										coords[target][0], coords[target][1]);
-										
+
 										var distance =
 										google.maps.geometry.spherical.computeDistanceBetween(
 										dest, marker.position); // in meters
-										
+
 										var numStep = distance / step;
 										let i = 0;
 										var deltaLat = (coords[target][0] - lat) / numStep;
 										var deltaLng = (coords[target][1] - lng) / numStep;
-										
+
 										function moveMarker(){
 											lat += deltaLat;
 											lng += deltaLng;
 											i += step;
-											
+
 											if (i < distance){
 												marker.setPosition(new google.maps.LatLng(lat, lng));
 												setTimeout(moveMarker, delay);
-											}else{ 
+											}else{
 												if(targetx==0){
 													marker.setPosition(dest);
 													target++;
@@ -184,15 +183,13 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 													targetx=1;
 												}
 											}
-											 
 										}
 										//centralizo el mapa en base al ultimo dato obtenido
 										map.panTo(marker.getPosition());
 										//muevo el marcador
 										moveMarker();
-										
+
 									}
-									
 								}
 								/* ************************************************************************** */
 								google.maps.event.addDomListener(window, "load", initialize());
@@ -207,15 +204,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 <?php } ?>
 
-
-
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-			
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //filtros
@@ -232,8 +226,9 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 alert_post_data(2,1,1, $Alert_Text);
-?>	
-	
+
+?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -242,7 +237,7 @@ alert_post_data(2,1,1, $Alert_Text);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
@@ -264,8 +259,7 @@ alert_post_data(2,1,1, $Alert_Text);
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				?>
-	   
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -276,12 +270,10 @@ alert_post_data(2,1,1, $Alert_Text);
 </div>
 <?php } ?>
 
-	
-
-          
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

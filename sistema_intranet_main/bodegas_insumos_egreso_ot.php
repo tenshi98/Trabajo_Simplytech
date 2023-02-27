@@ -60,7 +60,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 /**********************************************************/
 //Variable con la ubicacion
 $SIS_where = "bodegas_insumos_facturacion.idTipo=7 AND bodegas_insumos_facturacion.idOT!=0";//Solo egresos por OT
-$SIS_where.= " AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando	
+$SIS_where.= " AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando
 
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
@@ -171,4 +171,5 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

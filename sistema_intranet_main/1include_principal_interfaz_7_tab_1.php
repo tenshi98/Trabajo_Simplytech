@@ -10,7 +10,7 @@
 						<div class="row">
 							<div class="panel-body mnw700 of-a">
 								<div class="row">
-									
+
 									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 										<h5 style="color: #666;font-weight: 600 !important;">Operacional</h5>
 										<table class="table mbn covertable">
@@ -42,7 +42,7 @@
 											</tbody>
 										</table>
 									</div>
-									
+
 									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 										<h5 style="color: #666;font-weight: 600 !important;">Calendario</h5>
 										<table class="table mbn covertable">
@@ -62,7 +62,7 @@
 											</tbody>
 										</table>
 									</div>
-									
+
 									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 										<h5 style="color: #666;font-weight: 600 !important;">Tareas Pendientes</h5>
 										<table class="table mbn covertable">
@@ -124,6 +124,5 @@
 			</div>
 		</div>
 	</div>
-
 
 </div>

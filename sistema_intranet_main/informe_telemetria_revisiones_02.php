@@ -121,7 +121,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 							}
 									
 							?>
-							
+
 							<tr class="odd <?php echo $danger ?>">
 								<td><?php echo $equip['Sistema'] ?></td>
 								<td><?php echo $equip['Nombre'] ?></td>
@@ -142,9 +142,6 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 	</div>
 </div>
 
-
-
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -161,6 +158,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
  
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -184,10 +182,10 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x2, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -203,4 +201,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -106,7 +106,6 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 									
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -134,7 +133,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 								<th>Litros Aplicados</th>
 								<th>Litros x Hectarea</th>
 								<th>Alertas</th>
-								
+
 								<th width="10">Acciones</th>
 
 							</tr>
@@ -190,7 +189,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 $y = "idEstado=1";
 $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
- 
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -226,10 +225,10 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_number('N° Solicitud','NSolicitud', $x1, 1);
 				$Form_Inputs->form_select_depend1('Predio','idPredio', $x2, 1, 'idPredio', 'Nombre', 'cross_predios_listado', $x, 0,
-										 'Cuarteles','idZona', $x3, 1, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0, 
+										 'Cuarteles','idZona', $x3, 1, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x4, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x5, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 'Variedad','idProducto', $x5, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select('Estado','idEstado', $x6, 1, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
 		
@@ -244,7 +243,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_date('Fecha Terminada Desde','f_termino_desde', $x13, 1);
 				$Form_Inputs->form_date('Fecha Terminada Hasta','f_termino_hasta', $x14, 1);
 				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x15, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
-						
+
 				?>
 
 				<div class="form-group">
@@ -262,4 +261,5 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

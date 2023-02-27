@@ -163,7 +163,6 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 									
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -194,15 +193,15 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 								<th>N° Solicitud</th>
 								<th>Fecha</th>
 								<th>Predio</th>
-								
+
 								<th>Promedio</th>
-								
+
 								<th>Derecho</th>
 								<th>Izquierdo</th>
-								
+
 								<th>Totales</th>
 								<th>Pendientes</th>
-								
+
 								<th width="10">Acciones</th>
 							</tr>
 						</thead>
@@ -212,12 +211,12 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 									<td><?php echo n_doc($ot['NSolicitud'], 5); ?></td>
 									<td><?php echo Fecha_estandar($ot['f_cierre']); ?></td>
 									<td><?php echo $ot['PredioNombre']; ?></td>
-									
+
 									<td><?php echo Cantidades($ot['GeoVelocidadProm'], 1); ?></td>
-									
+
 									<td><?php echo Cantidades($ot['Sensor_1_Prom'], 2); ?></td>
 									<td><?php echo Cantidades($ot['Sensor_2_Prom'], 2); ?></td>
-									
+
 									<td><?php echo Cantidades($ot['CuartelCantPlantas'], 0); ?></td>
 									<td>
 										<?php 
@@ -247,7 +246,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 					</table>
 				</div>
 			</div>
-				
+
 			<?php foreach ($arrOTS as $categoria=>$subcategorias) { ?>
 				<div class="tab-pane fade" id="data_tab_<?php echo $categoria; ?>">
 					<div class="table-responsive">
@@ -272,23 +271,23 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 									<th>Cuartel</th>
 									<th>Especie</th>
 									<th>Variedad</th>
-									
+
 									<th>Minima</th>
 									<th>Maxima</th>
 									<th>Promedio</th>
 									<th>Programada</th>
-									
+
 									<th>Derecho</th>
 									<th>Izquierdo</th>
-									
+
 									<th>Totales</th>
-									
+
 									<th>Minima</th>
 									<th>Maxima</th>
-									
+
 									<th>Totales</th>
 									<th>Pendientes</th>
-									
+
 									<th width="10">Acciones</th>
 								</tr>
 							</thead>
@@ -347,7 +346,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 						
 						
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
-								
+
 							<thead>
 								<tr role="row">
 									<th colspan="14" style="text-align: center;"><strong>Monitoreo fuera de cuarteles</strong></th>
@@ -367,19 +366,19 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 									<th>Cuartel</th>
 									<th>Especie</th>
 									<th>Variedad</th>
-									
+
 									<th>Minima</th>
 									<th>Maxima</th>
 									<th>Promedio</th>
 									<th>Programada</th>
-									
+
 									<th>Recorrida</th>
-									
+
 									<th>Derecho</th>
 									<th>Izquierdo</th>
-									
+
 									<th>Totales</th>
-									
+
 									<th width="10">Acciones</th>
 								</tr>
 							</thead>
@@ -442,6 +441,7 @@ $y = "idEstado=1";
 $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -473,12 +473,12 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_number('N° Solicitud','NSolicitud', $x1, 1);
 				$Form_Inputs->form_select_depend1('Predio','idPredio', $x2, 1, 'idPredio', 'Nombre', 'cross_predios_listado', $x, 0,
-										 'Cuarteles','idZona', $x3, 1, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0, 
+										 'Cuarteles','idZona', $x3, 1, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select_filter('Temporada','idTemporada', $x4, 1, 'idTemporada', 'Codigo,Nombre', 'cross_checking_temporada', $y, '', $dbConn);
 				$Form_Inputs->form_select_filter('Estado Fenológico','idEstadoFen', $x5, 1, 'idEstadoFen', 'Codigo,Nombre', 'cross_checking_estado_fenologico', $y, '', $dbConn);
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x6, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x7, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 'Variedad','idProducto', $x7, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 
 				$Form_Inputs->form_select('Estado','idEstado', $x8, 2, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
@@ -490,10 +490,9 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_date('Fecha Terminada Hasta','f_termino_hasta', $x14, 1);
 
 				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x15, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
-						
+
 				?>
-				
-				
+
 				<script>
 					//oculto los div
 					document.getElementById('div_f_programacion_desde').style.display = 'none';
@@ -502,7 +501,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
 					document.getElementById('div_f_termino_desde').style.display = 'none';
 					document.getElementById('div_f_termino_hasta').style.display = 'none';
-						
+
 					$("#idEstado").on("change", function(){ //se ejecuta al cambiar valor del select
 						let idEstado = $(this).val(); //Asignamos el valor seleccionado
 						
@@ -590,4 +589,5 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

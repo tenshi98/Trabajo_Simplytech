@@ -79,7 +79,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Mantencion', $rowdata['Servicio'], 'Editar Firma');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Mantencion', $rowdata['Servicio'], 'Editar Firma'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -103,7 +103,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 
 				<?php if(isset($rowdata['Path_Firma'])&&$rowdata['Path_Firma']!=''){?>
-			
+
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<img src="upload/<?php echo $rowdata['Path_Firma'] ?>" width="100%" class="img-thumbnail" >
 						<br/>
@@ -114,7 +114,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				<?php }else{ ?>
 
 					<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
-					
+
 						<?php
 						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
@@ -124,12 +124,12 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf093; Subir Archivo" name="submit_firma"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf093; Subir Archivo" name="submit_firma">
 						</div>
-							  
+
 					</form>
 					<?php widget_validator(); ?>
-				<?php }?>
+				<?php } ?>
 			</div>
 		</div>
 	</div>
@@ -137,14 +137,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -308,13 +308,14 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php 
 	$vehiculo = $rowdata['Nombre'];
 	if(isset($rowdata['Patente'])&&$rowdata['Patente']!=''){
 		$vehiculo .= ' Patente '.$rowdata['Patente'];
 	}
-	echo widget_title('bg-aqua', 'fa-cog', 100, 'Vehiculo', $vehiculo, 'Resumen');?>
+	echo widget_title('bg-aqua', 'fa-cog', 100, 'Vehiculo', $vehiculo, 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -369,7 +370,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 						<li class=""><a href="<?php echo 'vehiculos_listado_doc_mantencion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Mantenciones</a></li>
 						<li class=""><a href="<?php echo 'vehiculos_listado_doc_trans_personas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Cert. Transporte Personas</a></li>
 						<li class=""><a href="<?php echo 'vehiculos_listado_doc_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Ficha Tecnica</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -384,7 +385,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/car_siluete.png">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
@@ -419,7 +420,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 							if(isset($rowdata['AprobacionEstado'])&&$rowdata['AprobacionEstado']!=''){
 								echo '<br/><strong>Proceso Aprobacion: </strong>'.$rowdata['AprobacionEstado'];
 								if(isset($rowdata['idProceso'])&&$rowdata['idProceso']==3){echo ' ('.$rowdata['AprobacionMotivo'].')';}
-							}?>
+							} ?>
 							
 							
 					
@@ -475,7 +476,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 												</div>
 											</div>
 										</div>
-									
+
 									<?php 
 									}
 								//si no existen cargas se muestra mensaje
@@ -529,7 +530,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
-								<?php 
+								<?php
 								//Fecha ultima mantencion
 								if(isset($rowdata['doc_mantencion'])&&$rowdata['doc_mantencion']!=''){
 									echo '
@@ -665,7 +666,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 										
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
         </div>
@@ -674,14 +675,14 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -843,8 +844,7 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'vehiculos_listado', $SIS_j
 				$Form_Inputs->form_input_text('Modelo', 'Modelo', $x4, 1);
 				$Form_Inputs->form_input_text('Patente', 'Patente', $x5, 1);
 				$Form_Inputs->form_select('Proceso','idProceso', $x6, 1, 'idProceso', 'Nombre', 'core_estado_aprobacion_vehiculos', 0, '', $dbConn);
-					
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 
@@ -929,7 +929,7 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'vehiculos_listado', $SIS_j
 						<td><?php echo $trab['Marca']; ?></td>
 						<td><?php echo $trab['Modelo']; ?></td>
 						<td><?php echo $trab['Tipo']; ?></td>
-						<td><label class="label <?php if(isset($trab['idEstado'])&&$trab['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $trab['Estado']; ?></label></td>
+						<td><label class="label <?php if(isset($trab['idEstado'])&&$trab['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $trab['Estado']; ?></label></td>
 						<td><?php echo $trab['Proceso']; ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $trab['RazonSocial']; ?></td><?php } ?>
 						<td>
@@ -938,7 +938,7 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'vehiculos_listado', $SIS_j
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$trab['idVehiculo']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($trab['idVehiculo'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el trabajador '.$trab['Nombre'].' '.$trab['Marca'].' '.$trab['Modelo'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el trabajador '.$trab['Nombre'].' '.$trab['Marca'].' '.$trab['Modelo'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -956,11 +956,11 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'vehiculos_listado', $SIS_j
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

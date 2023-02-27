@@ -16,7 +16,7 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Verifico la existencia de datos de base de datos
 if(isset($_GET['data_3'])&&isset($_GET['data_4'])&&isset($_GET['data_5'])&&isset($_GET['data_6'])){
-	
+
 	//Funcion para conectarse
 	function conectarDB ($servidor, $usuario, $password, $base_datos) {
 		$db_con = mysqli_connect($servidor, $usuario, $password, $base_datos);
@@ -51,7 +51,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -74,8 +73,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo 'https://'.$_GET['data_2'].$rowdata['Direccion_img']; ?>">
 							<?php }else{  ?>
 								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-							<?php }?>
-						<?php }?>
+							<?php } ?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<?php
@@ -102,7 +101,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						if(!$resultado){
 							//Genero numero aleatorio
 							$vardata = genera_password(8,'alfanumerico');
-											
+
 							//Guardo el error en una variable temporal
 							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
 							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
@@ -147,17 +146,17 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 														<tr class="odd">
 															<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>
 															<td><?php echo fecha_estandar($rowMed['SensoresFechaUso_'.$i]); ?></td>
-															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionC_'.$i]);?></td>	
-															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionMedC_'.$i]);?></td>	
-															<td><?php echo porcentaje($rowMed['SensoresAccionMedC_'.$i]/$rowMed['SensoresAccionC_'.$i]);?></td>
-															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionT_'.$i]/3600);?></td>	
-															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionMedT_'.$i]/3600);?></td>	
-															<td><?php echo porcentaje($rowMed['SensoresAccionMedT_'.$i]/$rowMed['SensoresAccionT_'.$i]);?></td>
-															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionAlerta_'.$i]);?></td>	
+															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionC_'.$i]); ?></td>	
+															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionMedC_'.$i]); ?></td>	
+															<td><?php echo porcentaje($rowMed['SensoresAccionMedC_'.$i]/$rowMed['SensoresAccionC_'.$i]); ?></td>
+															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionT_'.$i]/3600); ?></td>	
+															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionMedT_'.$i]/3600); ?></td>	
+															<td><?php echo porcentaje($rowMed['SensoresAccionMedT_'.$i]/$rowMed['SensoresAccionT_'.$i]); ?></td>
+															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionAlerta_'.$i]); ?></td>	
 														</tr>
 													<?php 	
 													}
-												}?>
+												} ?>
 														
 							 
 											</tbody>
@@ -167,7 +166,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							</div>
 						<?php } else{ ?>
 							<div style="margin-top:15px;">
-								<?php 
+								<?php
 								$Alert_Text  = 'No existen sensores configurados para la supervision';
 								alert_post_data(2,1,1, $Alert_Text);
 								?>
@@ -188,10 +187,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

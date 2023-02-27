@@ -76,7 +76,7 @@ $arrHistorial = db_select_array (false, 'clientes_listado_historial_contratos.Cr
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Editar Datos Contrato');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Editar Datos Contrato'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -106,8 +106,8 @@ $arrHistorial = db_select_array (false, 'clientes_listado_historial_contratos.Cr
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Contrato_Nombre)){               $x1   = $Contrato_Nombre;                 }else{$x1   = $rowdata['Contrato_Nombre'];}
 					if(isset($Contrato_Numero)){               $x2   = $Contrato_Numero;                 }else{$x2   = $rowdata['Contrato_Numero'];}
@@ -139,24 +139,24 @@ $arrHistorial = db_select_array (false, 'clientes_listado_historial_contratos.Cr
 					if(isset($idTab_15)){                      $x14 .= ','.$idTab_15;                    }else{$x14 .= ','.$rowdata['idTab_15'];}
 					
 					if(isset($Contrato_Obs)){                  $x15  = $Contrato_Obs;                    }else{$x15  = $rowdata['Contrato_Obs'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_tittle(3, 'Datos Basicos');
 					$Form_Inputs->form_input_text('Nombre del Contrato', 'Contrato_Nombre', $x1, 2);
 					$Form_Inputs->form_input_text('Numero o Codigo del Contrato', 'Contrato_Numero', $x2, 1);
 					$Form_Inputs->form_select('Renovación/finalización','Contrato_idPeriodo', $x3, 1, 'idPeriodo', 'Nombre', 'core_cross_cliente', 0, '', $dbConn);
-					
+
 					$Form_Inputs->form_tittle(3, 'Duracion');
 					$Form_Inputs->form_date('Fecha inicio Contrato','Contrato_Fecha_Ini', $x4, 1);
 					$Form_Inputs->form_date('Fecha termino Contrato','Contrato_Fecha_Term', $x5, 1);		
 					$Form_Inputs->form_select_n_auto('Duracion Contrato(Meses)','Contrato_N_Meses', $x6, 1, 1, 72);
-					
+
 					$Form_Inputs->form_tittle(3, 'Representante Legal');
 					$Form_Inputs->form_input_text('Nombre', 'Contrato_Representante_Legal', $x7, 1);
 					$Form_Inputs->form_input_rut('Rut', 'Contrato_Representante_Rut', $x8, 1);
 					$Form_Inputs->form_input_phone('Fono', 'Contrato_Representante_Fono', $x9, 1);
-					
+
 					$Form_Inputs->form_tittle(3, 'Valores');
 					$Form_Inputs->form_values('Valor Mensual', 'Contrato_Valor_Mensual', $x10, 1);
 					$Form_Inputs->form_values('Valor Anual', 'Contrato_Valor_Anual', $x11, 1);
@@ -168,7 +168,7 @@ $arrHistorial = db_select_array (false, 'clientes_listado_historial_contratos.Cr
 						$Form_Inputs->form_tittle(3, 'Servicios');
 						$Form_Inputs->form_checkbox_active('Unidad de Negocio','idTab', $x14, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
 					}
-					
+
 					$Form_Inputs->form_ckeditor('Observaciones','Contrato_Obs', $x15, 1, 2);
 					
 					
@@ -213,14 +213,14 @@ $arrHistorial = db_select_array (false, 'clientes_listado_historial_contratos.Cr
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

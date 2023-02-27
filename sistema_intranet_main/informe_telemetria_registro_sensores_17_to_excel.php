@@ -168,7 +168,7 @@ $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelaciona
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
-}else{	
+}else{
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo,cantSensores', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
 
@@ -192,7 +192,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	//consulto grupos
 	$rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$_GET['idGrupo'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowGrupo');
-	
+
 	/**********************************************************************************************************************************/
 	/*                                                          Ejecucion                                                             */
 	/**********************************************************************************************************************************/
@@ -207,32 +207,32 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								 ->setDescription("Document for Office 2007")
 								 ->setKeywords("office 2007")
 								 ->setCategory("office 2007 result file");
-		 
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A1', '')
 				->setCellValue('B1', '');
-	$x = 1;            
-	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
-		if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){ 
+	$x = 1;
+	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
+		if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 			$spreadsheet->setActiveSheetIndex(0)
 						->setCellValue($arrData[$x].'1', DeSanitizar($arrEquipos[0]['SensorNombre_'.$i]));
 			$x++;	
 		}
-	}           
+	}
 
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A2', 'Fecha')
-				->setCellValue('B2', 'Hora');                       
-	$x = 1;            
-	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
-		if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){ 
+				->setCellValue('B2', 'Hora');
+	$x = 1;
+	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
+		if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 			$spreadsheet->setActiveSheetIndex(0)
 						->setCellValue($arrData[$x].'2', 'Medicion');
 			$x++;			
 		}
 	}
-	 
-	$nn=3; 
+
+	$nn=3;
 
 	foreach ($arrEquipos as $rutas) { 
 		
@@ -241,8 +241,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$x_counter = 0;
 
 		//verifico la existencia de datos
-		for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
-			if($rutas['SensoresGrupo_'.$i]==$_GET['idGrupo']){	
+		for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
+			if($rutas['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 				if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]<99900){
 					//si se definio el minimo y maximo
 					if(isset($_GET['RangoMinimo'])&&$_GET['RangoMinimo']!=''&&isset($_GET['RangoMaximo'])&&$_GET['RangoMaximo']!=''){
@@ -254,7 +254,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				}
 			}
 		}
-		
+
 		//si se definio el minimo y maximo
 		if(isset($_GET['RangoMinimo'])&&$_GET['RangoMinimo']!=''&&isset($_GET['RangoMaximo'])&&$_GET['RangoMaximo']!=''){
 			if (isset($y_counter)&&$y_counter!=0&&isset($x_counter)&&$x_counter==0){ 
@@ -263,7 +263,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							->setCellValue('A'.$nn, $rutas['FechaSistema'])
 							->setCellValue('B'.$nn, $rutas['HoraSistema']); 
 						
-				for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
+				for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 					if($rutas['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 						if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]<99900){
 							$xdata=Cantidades_decimales_justos($rutas['SensorValue_'.$i]);
@@ -281,7 +281,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							->setCellValue('A'.$nn, $rutas['FechaSistema'])
 							->setCellValue('B'.$nn, $rutas['HoraSistema']); 
 						
-				for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
+				for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 					if($rutas['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 						if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]<99900){
 							$xdata=Cantidades_decimales_justos($rutas['SensorValue_'.$i]);
@@ -292,8 +292,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					}
 				}
 			}
-		} 
-		$nn++;			
+		}
+		$nn++;
 	}
 			 
 

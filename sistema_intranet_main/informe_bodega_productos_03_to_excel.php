@@ -25,15 +25,16 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 productos_listado.StockLimite,
 productos_listado.Nombre AS NombreProd,
 sistema_productos_uml.Nombre AS UnidadMedida,
 (SELECT SUM(Cantidad_ing) FROM bodegas_productos_facturacion_existencias WHERE idProducto = productos_listado.idProducto AND idBodega='.$_GET['idBodega'].'  LIMIT 1) AS stock_entrada,
-(SELECT SUM(Cantidad_eg) FROM bodegas_productos_facturacion_existencias WHERE idProducto = productos_listado.idProducto AND idBodega='.$_GET['idBodega'].' LIMIT 1) AS stock_salida,
+(SELECT SUM(Cantidad_eg) FROM bodegas_productos_facturacion_existencias  WHERE idProducto = productos_listado.idProducto AND idBodega='.$_GET['idBodega'].' LIMIT 1) AS stock_salida,
 (SELECT Nombre FROM bodegas_productos_listado WHERE idBodega='.$_GET['idBodega'].' LIMIT 1) AS NombreBodega';
 $SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
-$SIS_where = '';
+$SIS_where = 'productos_listado.idProducto!=0';
 $SIS_order = 'productos_listado.Nombre ASC';
 $arrProductos = array();
 $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
@@ -60,9 +61,9 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('C1', 'Stock Min')
             ->setCellValue('D1', 'Stock Actual')
             ->setCellValue('E1', 'Unidad de Medida');
-            
+
 $nn=2;
-foreach ($arrProductos as $productos) { 
+foreach ($arrProductos as $productos) {
 	$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];
 	if ($productos['StockLimite']>$stock_actual){$delta = 'Stock Bajo';}else{$delta = '';}
 
@@ -73,10 +74,8 @@ foreach ($arrProductos as $productos) {
 				->setCellValue('D'.$nn, cantidades_excel($stock_actual))
 				->setCellValue('E'.$nn, DeSanitizar($productos['UnidadMedida']));
 	$nn++;
-   
-} 
 
-
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle(cortar('Bodega '.DeSanitizar($arrProductos[0]['NombreBodega']), 25));

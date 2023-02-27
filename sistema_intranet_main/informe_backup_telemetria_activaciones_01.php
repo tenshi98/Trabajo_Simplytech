@@ -37,7 +37,7 @@ $SIS_where = 'idTabla!=0';
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){$idTelemetria = $_GET['idTelemetria'];}
-if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino']!=''){ 
+if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino']!=''){
 	$SIS_where.=" AND FechaSistema BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
 
@@ -78,7 +78,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<th>Fecha</th>
 							<th>Hora Inicio</th>
 							<th>Hora Termino</th>
-							
+
 						</tr>
 					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -102,8 +102,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -117,6 +117,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 alert_post_data(2,1,1, $Alert_Text);
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -147,7 +148,7 @@ alert_post_data(2,1,1, $Alert_Text);
 
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -163,4 +164,5 @@ alert_post_data(2,1,1, $Alert_Text);
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

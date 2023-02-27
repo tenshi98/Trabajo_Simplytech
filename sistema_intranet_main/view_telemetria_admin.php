@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -99,7 +99,7 @@ $arrFinalOpciones[0]  = 'No Asignado';
 $arrFinalUnimed[0]    = 'No Asignado';
 
 if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
-	
+
 	//numero sensores equipo
 	$subquery = '';
 	for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
@@ -169,7 +169,7 @@ if(isset($rowdata['idTrabajador'])&&$rowdata['idTrabajador']!=0){
 }
 
 if(isset($rowdata['idBodega'])&&$rowdata['idBodega']!=0){
-	
+
 	//se consulta
 	$SIS_query = '
 	productos_listado.StockLimite,
@@ -266,7 +266,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Equipo</h2>
@@ -325,7 +325,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 				<div class="tab-pane fade" id="mediciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">
-							
+
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
 								<?php if(isset($rowdata['id_Geo'])&&$rowdata['id_Geo']!=''&&$rowdata['id_Geo']==1){ ?>
 									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_flota_view_equipo_mediciones.php?view='.$X_Puntero.'&cantSensores='.$rowdata['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ultima Ubicacion</a>
@@ -350,7 +350,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 										</tr>
 									</thead>
 									<tbody role="alert" aria-live="polite" aria-relevant="all">
-										<tr class="odd <?php if($rowMed['GeoVelocidad'] > $rowdata['LimiteVelocidad']){echo 'danger';}?>">		
+										<tr class="odd <?php if($rowMed['GeoVelocidad'] > $rowdata['LimiteVelocidad']){echo 'danger';} ?>">		
 											<td>Velocidad</td>
 											<td><?php echo fecha_estandar($rowdata['LastUpdateFecha']).' - '.$rowdata['LastUpdateHora'].' hrs'; ?></td>
 											<td><?php echo Cantidades($rowMed['GeoVelocidad'], 0).' KM/h'; ?></td>
@@ -383,15 +383,15 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 											<tr class="odd <?php echo $s_alert; ?>">		
 												<td><?php echo 's'.$i ?></td>
 												<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>
-												<td><?php echo $arrFinalSensores[$rowMed['SensoresTipo_'.$i]];?></td>
-												<td><?php echo $arrFinalGrupos[$rowMed['SensoresGrupo_'.$i]];?></td>
+												<td><?php echo $arrFinalSensores[$rowMed['SensoresTipo_'.$i]]; ?></td>
+												<td><?php echo $arrFinalGrupos[$rowMed['SensoresGrupo_'.$i]]; ?></td>
 												<td><?php echo fecha_estandar($rowMed['LastUpdateFecha']).' - '.$rowMed['LastUpdateHora'].' hrs'; ?></td>
 												<td><?php 
 													if(isset($rowMed['SensoresMedActual_'.$i])&&$rowMed['SensoresMedActual_'.$i]<99900){
 														echo Cantidades_decimales_justos($rowMed['SensoresMedActual_'.$i]).$unimed;
 													}else{
 														echo 'Sin Datos';
-													}?>
+													} ?>
 												</td>
 											</tr>
 										<?php } ?>
@@ -402,7 +402,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 					</div>
 				</div>
 			<?php } ?>
-			
+
 			<?php if(isset($rowdata['idTrabajador'])&&$rowdata['idTrabajador']!=0){?>
 				<div class="tab-pane fade" id="trabajador">
 					<div class="wmd-panel">
@@ -412,7 +412,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 							<?php }else{  ?>
 								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-							<?php }?>
+							<?php } ?>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
@@ -454,7 +454,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 										<th>Stock Actual</th>
 									</tr>
 								</thead>
-											  
+
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
 									<?php foreach ($arrProductos as $productos) {
 										$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];
@@ -462,8 +462,8 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 											<tr class="odd <?php if ($productos['StockLimite']>$stock_actual){echo 'danger';} ?>">
 												<td><?php echo $productos['tipo_producto']; ?></td>
 												<td><?php echo $productos['NombreProd']; ?></td>
-												<td><?php echo Cantidades_decimales_justos($productos['StockLimite']); ?> <?php echo $productos['UnidadMedida'];?></td>
-												<td><?php echo Cantidades_decimales_justos($stock_actual) ?> <?php echo $productos['UnidadMedida'];?></td>
+												<td><?php echo Cantidades_decimales_justos($productos['StockLimite']); ?> <?php echo $productos['UnidadMedida']; ?></td>
+												<td><?php echo Cantidades_decimales_justos($stock_actual) ?> <?php echo $productos['UnidadMedida']; ?></td>
 											</tr>
 										<?php } ?>
 									<?php } ?>
@@ -478,12 +478,12 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 			<div class="tab-pane fade" id="alertas">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-							
+
 						<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
 							<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'.php?idTelemetria='.$X_Puntero.'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 							<div style="padding-bottom:10px;padding-top:10px;"></div>
 						</div>
-							
+
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 							<thead>
 								<tr role="row">
@@ -496,7 +496,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 									<?php if($rowdata['id_Geo']==1){ ?><th>Ubicacion</th><?php } ?>
 								</tr>
 							</thead>
-								
+
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($arrAlertas as $error) { 
 									//Guardo la unidad de medida
@@ -523,16 +523,16 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 					</div>
 				</div>
 			</div>
-				
+
 			<div class="tab-pane fade" id="flinea">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-							
+
 						<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
 							<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'.php?idTelemetria='.$X_Puntero.'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 							<div style="padding-bottom:10px;padding-top:10px;"></div>
 						</div>
-							
+
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 							<thead>
 								<tr role="row">
@@ -544,7 +544,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 									<?php if($rowdata['id_Geo']==1){ ?><th>Ubicacion</th><?php } ?>
 								</tr>
 							</thead>
-								
+
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($arrFlinea as $error) {  ?>
 									<tr>
@@ -574,7 +574,6 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 	</div>
 </div>
 
-
 <?php 
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
@@ -587,7 +586,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -597,14 +596,14 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -58,16 +58,18 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
+
+/*******************************************************/
 // consulto los datos
-$query = "SELECT  
-aguas_clientes_listado.email, 
+$SIS_query = '
+aguas_clientes_listado.email,
 aguas_clientes_listado.Nombre,
-aguas_clientes_listado.Rut, 
-aguas_clientes_listado.RazonSocial, 
-aguas_clientes_listado.fNacimiento, 
-aguas_clientes_listado.Direccion, 
-aguas_clientes_listado.Fono1, 
-aguas_clientes_listado.Fono2, 
+aguas_clientes_listado.Rut,
+aguas_clientes_listado.RazonSocial,
+aguas_clientes_listado.fNacimiento,
+aguas_clientes_listado.Direccion,
+aguas_clientes_listado.Fono1,
+aguas_clientes_listado.Fono2,
 aguas_clientes_listado.Fax,
 aguas_clientes_listado.PersonaContacto,
 aguas_clientes_listado.PersonaContacto_Fono,
@@ -94,9 +96,8 @@ comuna.Nombre AS nombre_comuna_fact,
 aguas_clientes_listado.DireccionFact,
 aguas_clientes_listado.RazonSocial,
 aguas_analisis_aguas_tipo_punto_muestreo.Nombre AS TipoPunto,
-aguas_analisis_sectores.Nombre AS Sector
-
-FROM `aguas_clientes_listado`
+aguas_analisis_sectores.Nombre AS Sector';
+$SIS_join  = '
 LEFT JOIN `core_estados`                              ON core_estados.idEstado                                      = aguas_clientes_listado.idEstado
 LEFT JOIN `core_ubicacion_ciudad`                     ON core_ubicacion_ciudad.idCiudad                             = aguas_clientes_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`                    ON core_ubicacion_comunas.idComuna                            = aguas_clientes_listado.idComuna
@@ -110,28 +111,14 @@ LEFT JOIN `aguas_clientes_facturable`                 ON aguas_clientes_facturab
 LEFT JOIN `core_ubicacion_ciudad`   ciudad            ON ciudad.idCiudad                                            = aguas_clientes_listado.idCiudadFact
 LEFT JOIN `core_ubicacion_comunas`  comuna            ON comuna.idComuna                                            = aguas_clientes_listado.idComunaFact
 LEFT JOIN `aguas_analisis_aguas_tipo_punto_muestreo`  ON aguas_analisis_aguas_tipo_punto_muestreo.idPuntoMuestreo   = aguas_clientes_listado.idPuntoMuestreo
-LEFT JOIN `aguas_analisis_sectores`                   ON aguas_analisis_sectores.idSector                           = aguas_clientes_listado.idSector
-
-WHERE aguas_clientes_listado.idCliente = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `aguas_analisis_sectores`                   ON aguas_analisis_sectores.idSector                           = aguas_clientes_listado.idSector';
+$SIS_where = 'aguas_clientes_listado.idCliente = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowdata['Identificador'], $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowdata['Identificador'], $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -172,7 +159,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
 								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
 							</p>
-										
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 							<p class="text-muted word_break">
 								<strong>Telefono Fijo : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
@@ -181,14 +168,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
 								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
 							</p>
-									
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Persona de Contacto</h2>
 							<p class="text-muted word_break">
 								<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
 								<strong>Telefono : </strong><?php echo formatPhone($rowdata['PersonaContacto_Fono']); ?><br/>
 								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
 							</p>
-									
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Facturacion</h2>
 							<p class="text-muted word_break">
 								<strong>Identificador : </strong><?php echo $rowdata['Identificador']; ?><br/>
@@ -205,7 +192,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								<strong>Rubro de la empresa : </strong><?php echo $rowdata['Rubro']; ?><br/>
 								<strong>Razon Social de la empresa : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
 							</p>
-									
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Medicion</h2>
 							<p class="text-muted word_break">
 								<strong>Sector : </strong><?php echo $rowdata['Sector']; ?><br/>
@@ -216,7 +203,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
-						<?php 
+						<?php
 							//se despliega mensaje en caso de no existir direccion
 							if($rowdata["latitud"]!=0 && $rowdata["longitud"]!=0){
 								echo mapa_from_gps($rowdata["latitud"], $rowdata["longitud"], $rowdata['Identificador'], $rowdata['Nombre'], $rowdata['Direccion'], $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
@@ -228,7 +215,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				
+
 			</div>
         </div>
 	</div>
@@ -236,14 +223,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -277,7 +264,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x8, 1,'fa fa-industry');
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -285,7 +272,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('idEstadoPago', 1, 2);
 				?>
-								
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -372,7 +359,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'aguas_clientes_listado', $SIS_j
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cliente</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cliente</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -395,7 +382,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'aguas_clientes_listado', $SIS_j
 				$Form_Inputs->form_select('Tipo de Cliente','idTipo', $x3, 1, 'idTipo', 'Nombre', 'aguas_clientes_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_select('Forma Facturacion','idFacturable', $x4, 1, 'idFacturable', 'Nombre', 'aguas_clientes_facturable', 0, '', $dbConn);
 				$Form_Inputs->form_select('Sector','idSector', $x5, 1, 'idSector', 'Nombre', 'aguas_analisis_sectores', 0, '', $dbConn);
-					
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 
@@ -471,7 +458,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'aguas_clientes_listado', $SIS_j
 						<td><?php echo $usuarios['Nombre']; ?></td>
 						<td><?php echo $usuarios['Tipo']; ?></td>
 						<td><?php echo $usuarios['DocFacturable']; ?></td>
-						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['estado']; ?></label></td>	
+						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $usuarios['estado']; ?></label></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
@@ -479,7 +466,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'aguas_clientes_listado', $SIS_j
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idCliente']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idCliente'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar al cliente '.$usuarios['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar al cliente '.$usuarios['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -497,7 +484,6 @@ $arrUsers = db_select_array (false, $SIS_query, 'aguas_clientes_listado', $SIS_j
 	</div>
 </div>
 
-
 <?php } ?>
 
 <?php
@@ -505,4 +491,5 @@ $arrUsers = db_select_array (false, $SIS_query, 'aguas_clientes_listado', $SIS_j
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

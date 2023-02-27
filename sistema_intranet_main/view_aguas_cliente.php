@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -227,14 +227,14 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
 								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
 							</p>
-										
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Persona de Contacto</h2>
 							<p class="text-muted word_break">
 								<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
 								<strong>Telefono : </strong><?php echo formatPhone($rowdata['PersonaContacto_Fono']); ?><br/>
 								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
 							</p>
-										
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Facturacion</h2>
 							<p class="text-muted word_break">
 								<strong>Identificador : </strong><?php echo $rowdata['Identificador']; ?><br/>
@@ -251,7 +251,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 								<strong>Rubro de la empresa : </strong><?php echo $rowdata['Rubro']; ?><br/>
 								<strong>Razon Social de la empresa : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
 							</p>
-										
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Medicion</h2>
 							<p class="text-muted word_break">
 								<strong>Sector : </strong><?php echo $rowdata['Sector']; ?><br/>
@@ -262,7 +262,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
-						<?php 
+						<?php
 							//se despliega mensaje en caso de no existir direccion
 							if($rowdata["latitud"]!=0 && $rowdata["longitud"]!=0){
 								echo mapa_from_gps($rowdata["latitud"], $rowdata["longitud"], $rowdata['Identificador'], $rowdata['Nombre'], $rowdata['Direccion'], $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
@@ -274,9 +274,9 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				
+
 			</div>
-			
+
 			<?php if($arrObservaciones!=false && !empty($arrObservaciones) && $arrObservaciones!=''){ ?>
 				<div class="tab-pane fade" id="observaciones">
 					<div class="wmd-panel">
@@ -303,11 +303,11 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 					</div>
 				</div>
 			<?php } ?>
-			
+
 			<?php if($arrConsumos!=false && !empty($arrConsumos) && $arrConsumos!=''){ ?>
 				<div class="tab-pane fade" id="Consumos">
 					<div class="wmd-panel">
-					
+
 						<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 						<script>
 							google.charts.load('current', {packages: ['corechart', 'bar']});
@@ -348,11 +348,11 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 							}
 						</script>
 						<div id="chart_div" style="height: 500px;"></div>
-						
+
 					</div>
 				</div>
 			<?php } ?>
-			
+
 			<?php if($arrPagos!=false && !empty($arrPagos) && $arrPagos!=''){ ?>
 				<div class="tab-pane fade" id="Pagos">
 					<div class="wmd-panel">
@@ -381,7 +381,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 					</div>
 				</div>
 			<?php } ?>
-			
+
 			<?php if($arrFacturaciones!=false && !empty($arrFacturaciones) && $arrFacturaciones!=''){ ?>
 				<div class="tab-pane fade" id="Facturaciones">
 					<div class="wmd-panel">
@@ -421,7 +421,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 					</div>
 				</div>
 			<?php } ?>
-			
+
 			<?php if($arrEventos!=false && !empty($arrEventos) && $arrEventos!=''){ ?>
 				<div class="tab-pane fade" id="Eventos">
 					<div class="wmd-panel">
@@ -450,7 +450,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 					</div>
 				</div>
 			<?php } ?>
-			
+
 			<?php if($arrOtrosCobros!=false && !empty($arrOtrosCobros) && $arrOtrosCobros!=''){ ?>
 				<div class="tab-pane fade" id="OtrosCobros">
 					<div class="wmd-panel">
@@ -494,7 +494,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -504,7 +504,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -513,4 +513,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

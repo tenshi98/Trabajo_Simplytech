@@ -105,7 +105,7 @@ $rowdata = db_select_data (false, $SIS_query, 'usuarios_observaciones', $SIS_joi
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -115,7 +115,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Observacion)){     $x1  = $Observacion;    }else{$x1  = '';}
@@ -139,9 +139,8 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 	</div>
 </div>
 
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['view'])){ 
+}elseif(!empty($_GET['view'])){
 // consulto los datos
 $SIS_query = '
 usuario_observado.Nombre AS nombre_cliente,
@@ -168,7 +167,7 @@ $rowdata = db_select_data (false, $SIS_query, 'usuarios_observaciones', $SIS_joi
 				<strong>Usuario : </strong><?php echo $rowdata['nombre_usuario']; ?><br/>
 				<strong>Fecha : </strong><?php echo Fecha_completa_alt($rowdata['Fecha']); ?>
             </p>
-                      
+
             <h2 class="text-primary">Observacion</h2>
             <p class="text-muted word_break">
 				<div class="text-muted well well-sm no-shadow">
@@ -176,8 +175,7 @@ $rowdata = db_select_data (false, $SIS_query, 'usuarios_observaciones', $SIS_joi
 					<div class="clearfix"></div>
 				</div>
 			</p>
-            
-        	
+
         </div>
 	</div>
 </div>
@@ -341,9 +339,9 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Observaciones');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Observaciones'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Observacion</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Observacion</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -407,7 +405,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$observaciones['idObservacion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($observaciones['idObservacion'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la observacion del usuario '.$observaciones['nombre_usuario'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la observacion del usuario '.$observaciones['nombre_usuario'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -422,8 +420,8 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -432,4 +430,5 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -34,7 +34,7 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['idCamara'])){ 
+if(!empty($_GET['idCamara'])){
 // Se trae el usuario
 $query = "SELECT Nombre,idSubconfiguracion, idTipoCamara, Config_usuario, Config_Password,
 Config_IP, Config_Puerto, Config_Web
@@ -91,7 +91,7 @@ array_push( $arrCamaras,$row );
 			foreach ($arrCamaras as $camara) {
 				//canal utilizado
 				$SIS_Config_Chanel    = $camara['Chanel'];
-					
+
 				//si existe subconfiguracion
 				if(isset($rowCamara['idSubconfiguracion'])&&$rowCamara['idSubconfiguracion']==1){
 
@@ -108,7 +108,7 @@ array_push( $arrCamaras,$row );
 					$direccion .= ':'.$SIS_Config_Password;
 					$direccion .= '@'.$SIS_Config_IP;
 					if(isset($SIS_Config_Puerto)&&$SIS_Config_Puerto!=''){$direccion .= ':'.$SIS_Config_Puerto;}
-					
+
 				//si no existe subconfihuracion
 				}elseif(isset($rowCamara['idSubconfiguracion'])&&$rowCamara['idSubconfiguracion']==2){
 
@@ -152,15 +152,15 @@ array_push( $arrCamaras,$row );
 				}
 			}
 			?>
-			
+
 		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -193,7 +193,7 @@ $SIS_join   = "";
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_where.= " AND usuarios_camaras.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
-	$SIS_join .= " INNER JOIN `usuarios_camaras` ON usuarios_camaras.idCamara = seguridad_camaras_listado.idCamara";	
+	$SIS_join .= " INNER JOIN `usuarios_camaras` ON usuarios_camaras.idCamara = seguridad_camaras_listado.idCamara";
 }
 $SIS_where .= " GROUP BY seguridad_camaras_listado.idCamara";				
 /**********************************************************/
@@ -277,4 +277,5 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $SIS
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

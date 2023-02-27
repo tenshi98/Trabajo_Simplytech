@@ -142,7 +142,7 @@ $arrGrupo = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos
 
 //guardo los grupos
 $Grupo = array();
-foreach ($arrGrupo as $sen) { 
+foreach ($arrGrupo as $sen) {
 	$Grupo[$sen['idGrupo']] = ' '.$sen['Nombre'];
 }
 
@@ -185,7 +185,7 @@ function crear_data($cantsens, $filtro, $idTelemetria, $f_inicio, $f_termino, $d
 			$consql .= ',STDDEV(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0)) AS MedDesStan_'.$i;
 		}
 	}
-	
+
 	/*******************************************************/
 	//Se traen todos los registros
 	$SIS_query = 'telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema'.$consql;
@@ -229,10 +229,10 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 }
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$SIS_join = "";	
+	$SIS_join = "";
 }else{
 	$SIS_join   = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-	$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 
 /*******************************************************/
@@ -254,13 +254,13 @@ foreach ($arrEquipos as $equipo) {
 	$spreadsheet->createSheet();
 	//Llamo a la funcion
 	$arrTemporal = crear_data($equipo['cantSensores'], $subf, $equipo['idTelemetria'], $_GET['f_inicio'], $_GET['f_termino'], $_GET['desde'], $_GET['hasta'] , $dbConn);
-	
+
 	/***********************************************************/
 	//Grupos de los sensores
 	$yy = 1;
-	for ($i = 1; $i <= $equipo['cantSensores']; $i++) { 
+	for ($i = 1; $i <= $equipo['cantSensores']; $i++) {
 		$grupo = '';
-		foreach ($arrGrupo as $sen) { 
+		foreach ($arrGrupo as $sen) {
 			if($arrTemporal[0]['SensoresGrupo_'.$i]==$sen['idGrupo']){
 				$grupo = $sen['Nombre'];
 			}
@@ -275,7 +275,7 @@ foreach ($arrEquipos as $equipo) {
 								$yy++;
 								$yy++;
 								$yy++;
-				//Si no se ven detalles	
+				//Si no se ven detalles
 				}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
 					$spreadsheet->setActiveSheetIndex($sheet)
 								->setCellValue($arrData[$yy].'1', DeSanitizar($arrTemporal[0]['SensorNombre_'.$i]).' ('.DeSanitizar($grupo).')');
@@ -291,7 +291,7 @@ foreach ($arrEquipos as $equipo) {
 							$yy++;
 							$yy++;
 							$yy++;
-			//Si no se ven detalles	
+			//Si no se ven detalles
 			}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
 				$spreadsheet->setActiveSheetIndex($sheet)
 							->setCellValue($arrData[$yy].'1', DeSanitizar($arrTemporal[0]['SensorNombre_'.$i]).' ('.DeSanitizar($grupo).')');
@@ -325,7 +325,7 @@ foreach ($arrEquipos as $equipo) {
 								$yy++;
 								$yy++;
 								$yy++;
-				//Si no se ven detalles	
+				//Si no se ven detalles
 				}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
 					$spreadsheet->setActiveSheetIndex($sheet)
 								->setCellValue($arrData[$yy].'2', 'Promedio');
@@ -348,7 +348,7 @@ foreach ($arrEquipos as $equipo) {
 							$yy++;
 							$yy++;
 							$yy++;
-			//Si no se ven detalles	
+			//Si no se ven detalles
 			}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
 				$spreadsheet->setActiveSheetIndex($sheet)
 							->setCellValue($arrData[$yy].'2', 'Promedio');
@@ -423,7 +423,7 @@ foreach ($arrEquipos as $equipo) {
 									$yy++;
 									$yy++;
 									$yy++;
-					//Si no se ven detalles	
+					//Si no se ven detalles
 					}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
 						$spreadsheet->setActiveSheetIndex($sheet)
 									->setCellValue($arrData[$yy].$nn, Cantidades($rutas['MedProm_'.$i], 2));

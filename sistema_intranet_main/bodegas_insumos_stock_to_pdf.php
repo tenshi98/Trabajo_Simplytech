@@ -54,8 +54,8 @@ $html .= '
 		</tr>
 	</thead>
 	<tbody>';
-							
-		foreach ($arrProductos as $productos) { 
+
+		foreach ($arrProductos as $productos) {
 			$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];					
 			$html .='<tr>
 						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.DeSanitizar($productos['NombreProd']).'</td>
@@ -63,7 +63,7 @@ $html .= '
 						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center" width="160">'.Cantidades_decimales_justos($stock_actual).' '.$productos['UnidadMedida'].'</td>
 					</tr>';
 		}
-							
+
 $html .='</tbody>
 </table>';
 
@@ -86,7 +86,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 		/************************************************************************/
 		//TCPDF
 		case 1:
-			
+
 			require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 			// create new PDF document
@@ -141,7 +141,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output(DeSanitizar($pdf_file), 'I');
-	
+
 			break;
 		/************************************************************************/
 		//DomPDF (Solo compatible con PHP 5.x)

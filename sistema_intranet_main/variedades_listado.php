@@ -92,8 +92,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Variedades', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Variedades', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -111,7 +112,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class=""><a href="<?php echo 'variedades_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 						<li class=""><a href="<?php echo 'variedades_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha</a></li>
 						<li class=""><a href="<?php echo 'variedades_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> HDS</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -126,7 +127,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/productos.jpg">
 						<?php }else{
 							echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowdata['Direccion_img']);
-						}?>
+						} ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Variedad</h2>
@@ -144,7 +145,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
-								<?php 
+								<?php
 								//Ficha Tecnica
 								if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
 									echo '
@@ -182,25 +183,24 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
 
-			
         </div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -216,13 +216,13 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				if(isset($Nombre)){         $x1  = $Nombre;           }else{$x1  = '';}
 				if(isset($idTipo)){         $x2  = $idTipo;           }else{$x2  = '';}
 				if(isset($idCategoria)){    $x3  = $idCategoria;      }else{$x3  = '';}
-					
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_select_filter('Grupo Especie','idTipo', $x2, 2, 'idTipo', 'Nombre', 'sistema_variedades_tipo', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Especie','idCategoria', $x3, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, '', $dbConn);
-					
+
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('idOpciones_1', 2, 2);
 				?>
@@ -319,7 +319,7 @@ $arrProductos = db_select_array (false, $SIS_query, 'variedades_listado', $SIS_j
 				if(isset($Nombre)){         $x1  = $Nombre;           }else{$x1  = '';}
 				if(isset($idTipo)){         $x2  = $idTipo;           }else{$x2  = '';}
 				if(isset($idCategoria)){    $x3  = $idCategoria;      }else{$x3  = '';}
-					
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
@@ -393,14 +393,14 @@ $arrProductos = db_select_array (false, $SIS_query, 'variedades_listado', $SIS_j
 						<td><?php echo $prod['Categoria']; ?></td>
 						<td><?php echo $prod['Tipo']; ?></td>
 						<td><?php echo $prod['NombreProd']; ?></td>
-						<td><label class="label <?php if(isset($prod['idEstado'])&&$prod['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $prod['Estado']; ?></label></td>
+						<td><label class="label <?php if(isset($prod['idEstado'])&&$prod['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $prod['Estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_variedades.php?view='.simpleEncode($prod['idProducto'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$prod['idProducto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($prod['idProducto'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la Variedad '.$prod['NombreProd'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la Variedad '.$prod['NombreProd'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -418,11 +418,11 @@ $arrProductos = db_select_array (false, $SIS_query, 'variedades_listado', $SIS_j
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

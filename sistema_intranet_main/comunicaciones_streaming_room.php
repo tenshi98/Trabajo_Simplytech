@@ -44,7 +44,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 ?>
 
-
 <script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/RTCMultiConnection/dist/RTCMultiConnection.js"></script>
 <script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/RTCMultiConnection/node_modules/out_adapter.js"></script>
 <script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/RTCMultiConnection/socket.io/socket.io.js"></script>
@@ -79,7 +78,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 .messaging .inbox_msg .chating .inbox_chat .type_msg .input_msg_write .write_msg {background: rgba(0, 0, 0, 0) none repeat scroll 0 0;border: medium none;color: #4c4c4c;font-size: 15px;min-height: 48px;width: 100%;padding-top: 5px;padding-right: 40px;padding-bottom: 5px;padding-left: 5px;}
 
 .messaging .inbox_msg {white-space: initial!important;}
-</style> 
+</style>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
@@ -114,32 +113,29 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						</div>
 					</div>
 					<div class="inbox_chat">
-									
+
 						<div class="msg_history chat-output" id="file-container" >
 							<br/>
 											
 										
 						</div>
-									
+
 						<div class="type_msg">
 							<div class="input_msg_write">
 								<input type="hidden" id="user-id"/>
 								<input type="text" disabled class="write_msg" placeholder="Escriba su mensaje" id="input-text-chat"/>
-								
+
 							</div>
 							<button id="share-file" disabled class="btn btn-success" style="width: 98%;margin-left: 1%;margin-right: 1%;"><i class="fa fa-file-o" aria-hidden="true"></i> Adjuntar Archivo</button>
-							
+
 						</div>
-										
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-
-
 
 <script>
 // ......................................................
@@ -219,11 +215,11 @@ var chatContainer = document.querySelector('.chat-output');
 
 function appendDIV(event) {
     var div = document.createElement('div');
-    var data = event.data || event;  
+    var data = event.data || event;
     div.innerHTML = '<div class="incoming_msg">'
 						+ '<div class="received_msg">'
 							+ '<div class="received_withd_msg">'
-								+ data	
+								+ data
 							+ '</div>'
 						+ '</div>'
 					+ '</div>';
@@ -449,10 +445,11 @@ if(navigator.connection &&
   alert('2G is not supported. Please use a better internet service.');
 }
 </script>
-   
+
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -32,9 +32,9 @@ $SIS_where = "telemetria_listado_historial_activaciones.idEstado=1";
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){$SIS_where.=" AND telemetria_listado_historial_activaciones.idTelemetria =".$_GET['idTelemetria'];}
-if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino']!=''){ 
+if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino']!=''){
 	$SIS_where.=" AND telemetria_listado_historial_activaciones.TimeStamp BETWEEN '".$_GET['F_inicio']." ".$_GET['H_inicio']."' AND '".$_GET['F_termino']." ".$_GET['H_termino']."'";
-}elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino']!=''){ 
+}elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino']!=''){
 	$SIS_where.=" AND telemetria_listado_historial_activaciones.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
 //verifico el numero de datos antes de hacer la consulta
@@ -96,7 +96,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				->setCellValue('H1', 'Tiempo Muerto')
 				->setCellValue('I1', 'Tiempo Perdido')
 				->setCellValue('J1', 'Sobre Tiempo');
-				
+
 	$nn=2;
 	filtrar($arrConsulta, 'EquipoNombre');
 	foreach($arrConsulta as $categoria=>$permisos){
@@ -123,7 +123,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			//Contrato Codigo
 			$Direccion          = $con['Direccion'];
 			$CodigoInterno      = $con['CodigoInterno'];
-			
+
 			/*****************************************************************/
 			//Verifico si esta dentro del mismo dia
 			if($fecha!=''&&$fecha==$con['EquipoFecha']){
@@ -203,7 +203,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				if($con['EquipoJornada_termino']>=$HoraTermino){
 					$TiempoPerdido = sumahoras($TiempoPerdido, restahoras($HoraTermino, $con['EquipoJornada_termino'] ));
 				}
-				
+
 				$spreadsheet->setActiveSheetIndex(0)
 							->setCellValue('A'.$nn, DeSanitizar($categoria))
 							->setCellValue('B'.$nn, DeSanitizar($CodigoInterno))

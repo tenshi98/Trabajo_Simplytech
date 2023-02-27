@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -121,7 +121,7 @@ $row_data = db_select_data (false, $SIS_query, 'analisis_listado', $SIS_join, $S
 //Se traen todas las unidades de medida
 $SIS_query = 'idUml,Nombre,Abreviatura';
 $SIS_join  = '';
-$SIS_where = '';
+$SIS_where = 'idUml!=0';
 $SIS_order = 'idUml ASC';
 $arrUnimed = array();
 $arrUnimed = db_select_array (false, $SIS_query, 'sistema_analisis_uml', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
@@ -130,7 +130,7 @@ $arrUnimed = db_select_array (false, $SIS_query, 'sistema_analisis_uml', $SIS_jo
 //Se consultan datos
 $SIS_query = 'idGrupo, Nombre';
 $SIS_join  = '';
-$SIS_where = '';
+$SIS_where = 'idGrupo!=0';
 $SIS_order = 'idGrupo ASC';
 $arrGrupo = array();
 $arrGrupo = db_select_array (false, $SIS_query, 'maquinas_listado_matriz_grupos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupo');
@@ -139,7 +139,7 @@ $arrGrupo = db_select_array (false, $SIS_query, 'maquinas_listado_matriz_grupos'
 //Se traen todos los productos
 $SIS_query = 'idProducto, Nombre';
 $SIS_join  = '';
-$SIS_where = '';
+$SIS_where = 'idProducto!=0';
 $SIS_order = 'Nombre ASC';
 $arrProducto = array();
 $arrProducto = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProducto');
@@ -148,7 +148,7 @@ $arrProducto = db_select_array (false, $SIS_query, 'productos_listado', $SIS_joi
 //Se traen todos los productos
 $SIS_query = 'idDispersancia, Nombre';
 $SIS_join  = '';
-$SIS_where = '';
+$SIS_where = 'idDispersancia!=0';
 $SIS_order = 'Nombre ASC';
 $arrDispersancia = array();
 $arrDispersancia = db_select_array (false, $SIS_query, 'core_analisis_dispersancia', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDispersancia');
@@ -157,7 +157,7 @@ $arrDispersancia = db_select_array (false, $SIS_query, 'core_analisis_dispersanc
 //Se traen todos los productos
 $SIS_query = 'idFlashPoint, Nombre';
 $SIS_join  = '';
-$SIS_where = '';
+$SIS_where = 'idFlashPoint!=0';
 $SIS_order = 'Nombre ASC';
 $arrFlashpoint = array();
 $arrFlashpoint = db_select_array (false, $SIS_query, 'core_analisis_flashpoint', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrFlashpoint');
@@ -190,8 +190,6 @@ foreach ($arrFlashpoint as $datos) {
 
 ?>
 
-
-	
 <section class="invoice">
 
 	<div class="row">
@@ -204,7 +202,7 @@ foreach ($arrFlashpoint as $datos) {
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<?php
 
 				//Si es interno muestro los datos de la empresa
@@ -304,7 +302,7 @@ foreach ($arrFlashpoint as $datos) {
 						$x_con++;
 					}
 				}
-					
+
 				//si hay items se muestra todo
 				if($x_con!=0){
 					
@@ -359,7 +357,7 @@ foreach ($arrFlashpoint as $datos) {
 											//variables alerta roja
 											$alert_lvl = 'color-red-dark'; //roja
 										}
-									
+
 									/***************************************************************/
 									}elseif($row_data['PuntoMedAceptable_'.$i]<$row_data['PuntoMedCondenatorio_'.$i]){
 										//alerta amarilla
@@ -377,7 +375,7 @@ foreach ($arrFlashpoint as $datos) {
 											//variables alerta roja
 											$alert_lvl = 'color-red-dark'; //roja
 										}
-										
+
 									}
 								
 									/*******************************/
@@ -430,14 +428,14 @@ foreach ($arrFlashpoint as $datos) {
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Diagnostico:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Analisis_obs_Diagnostico'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Analisis_obs_Diagnostico']; ?></p>
 		</div>
 	</div>
 
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Recomendaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Analisis_obs_Accion'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Analisis_obs_Accion']; ?></p>
 		</div>
 	</div>
 	
@@ -446,7 +444,6 @@ foreach ($arrFlashpoint as $datos) {
 	
       
 </section>
-
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
@@ -460,7 +457,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -470,7 +467,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -479,4 +476,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -26,7 +26,7 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['details_mensual'])){ 
+if(!empty($_GET['details_mensual'])){
 //Solo compras pagadas totalmente
 $z1 = "WHERE bodegas_arriendos_facturacion.idTipo=1"; //solo ventas
 $z2 = "WHERE bodegas_insumos_facturacion.idTipo=1";   //solo ventas
@@ -241,7 +241,9 @@ $Total_1 = 0;
 $Total_2 = 0;
 $Total_3 = 0;
 $Total_4 = 0;
+
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_14_to_excel_4.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
@@ -391,7 +393,7 @@ $Total_4 = 0;
 							<tr class="odd">
 								<td align="left"></td>
 								<td align="left"><?php echo numero_a_mes($prod['Creacion_mes']); ?></td>
-								
+
 								<td align="right"><?php if(isset($prod['Neto_1'])){echo valores($prod['Neto_1'],0);$Neto_1 = $Neto_1 + $prod['Neto_1'];} ?></td>
 								<td align="right"><?php if(isset($prod['Neto_2'])){echo valores($prod['Neto_2'],0);$Neto_2 = $Neto_2 + $prod['Neto_2'];} ?></td>
 								<td align="right"><?php if(isset($prod['Neto_3'])){echo valores($prod['Neto_3'],0);$Neto_3 = $Neto_3 + $prod['Neto_3'];} ?></td>
@@ -407,7 +409,7 @@ $Total_4 = 0;
 									echo valores($sub,0); 
 									?>
 								</td>
-								
+
 								<td align="right"><?php if(isset($prod['Total_1'])){echo valores($prod['Total_1'],0);$Total_1 = $Total_1 + $prod['Total_1'];} ?></td>
 								<td align="right"><?php if(isset($prod['Total_2'])){echo valores($prod['Total_2'],0);$Total_2 = $Total_2 + $prod['Total_2'];} ?></td>
 								<td align="right"><?php if(isset($prod['Total_3'])){echo valores($prod['Total_3'],0);$Total_3 = $Total_3 + $prod['Total_3'];} ?></td>
@@ -423,7 +425,7 @@ $Total_4 = 0;
 									echo valores($sub,0); 
 									?>
 								</td>
-								
+
 							</tr>
 							<?php } ?>
 						<?php } ?>
@@ -432,24 +434,24 @@ $Total_4 = 0;
 				  
 					
 					<tr class="invoice-total" bgcolor="#f1f1f1">
-						<td align="right" colspan="2"><strong>Totales</strong></td>    
-						<td align="right"><strong><?php echo Valores($Neto_1, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Neto_2, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Neto_3, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Neto_4, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0);?></strong></td>
+						<td align="right" colspan="2"><strong>Totales</strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_1, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_2, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_3, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_4, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0); ?></strong></td>
 
-						<td align="right"><strong><?php echo Valores($Total_1, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Total_2, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Total_3, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Total_4, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0);?></strong></td>
-						
+						<td align="right"><strong><?php echo Valores($Total_1, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_2, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_3, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_4, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0); ?></strong></td>
+
 					</tr>
 					<tr class="invoice-total" bgcolor="#f1f1f1">
-						<td align="right" colspan="2"><strong>Totales Generales</strong></td>    
-						<td align="right" colspan="5"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0);?></strong></td>
-						<td align="right" colspan="5"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0);?></strong></td>
+						<td align="right" colspan="2"><strong>Totales Generales</strong></td>
+						<td align="right" colspan="5"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0); ?></strong></td>
+						<td align="right" colspan="5"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0); ?></strong></td>
 					</tr>
 			                   
 				</tbody>
@@ -460,15 +462,15 @@ $Total_4 = 0;
   
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 	
 
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}elseif(!empty($_GET['details_diario'])){ 
+}elseif(!empty($_GET['details_diario'])){
 //Solo compras pagadas totalmente
 $z1 = "WHERE bodegas_arriendos_facturacion.idTipo=1"; //solo ventas
 $z2 = "WHERE bodegas_insumos_facturacion.idTipo=1";   //solo ventas
@@ -683,7 +685,9 @@ $Total_1 = 0;
 $Total_2 = 0;
 $Total_3 = 0;
 $Total_4 = 0;
+
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_14_to_excel_3.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
@@ -823,7 +827,7 @@ $Total_4 = 0;
 						<th>Productos</th>
 						<th>Servicios</th>
 						<th>Subtotal</th>
-						
+
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -834,7 +838,7 @@ $Total_4 = 0;
 							<tr class="odd">
 								<td align="left"></td>
 								<td align="left"><?php echo Fecha_estandar($prod['Creacion_fecha']); ?></td>
-								
+
 								<td align="right"><?php if(isset($prod['Neto_1'])){echo valores($prod['Neto_1'],0);$Neto_1 = $Neto_1 + $prod['Neto_1'];} ?></td>
 								<td align="right"><?php if(isset($prod['Neto_2'])){echo valores($prod['Neto_2'],0);$Neto_2 = $Neto_2 + $prod['Neto_2'];} ?></td>
 								<td align="right"><?php if(isset($prod['Neto_3'])){echo valores($prod['Neto_3'],0);$Neto_3 = $Neto_3 + $prod['Neto_3'];} ?></td>
@@ -850,7 +854,7 @@ $Total_4 = 0;
 									echo valores($sub,0); 
 									?>
 								</td>
-								
+
 								<td align="right"><?php if(isset($prod['Total_1'])){echo valores($prod['Total_1'],0);$Total_1 = $Total_1 + $prod['Total_1'];} ?></td>
 								<td align="right"><?php if(isset($prod['Total_2'])){echo valores($prod['Total_2'],0);$Total_2 = $Total_2 + $prod['Total_2'];} ?></td>
 								<td align="right"><?php if(isset($prod['Total_3'])){echo valores($prod['Total_3'],0);$Total_3 = $Total_3 + $prod['Total_3'];} ?></td>
@@ -876,23 +880,23 @@ $Total_4 = 0;
 					<tr class="invoice-total" bgcolor="#f1f1f1">
 						<td align="right" colspan="2"><strong>Totales</strong></td>    
 						
-						<td align="right"><strong><?php echo Valores($Neto_1, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Neto_2, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Neto_3, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Neto_4, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0);?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_1, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_2, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_3, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_4, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0); ?></strong></td>
 
-						<td align="right"><strong><?php echo Valores($Total_1, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Total_2, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Total_3, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Total_4, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0);?></strong></td>
-						
+						<td align="right"><strong><?php echo Valores($Total_1, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_2, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_3, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_4, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0); ?></strong></td>
+
 					</tr>
 					<tr class="invoice-total" bgcolor="#f1f1f1">
-						<td align="right" colspan="2"><strong>Totales Generales</strong></td>    
-						<td align="right" colspan="5"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0);?></strong></td>
-						<td align="right" colspan="5"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0);?></strong></td>
+						<td align="right" colspan="2"><strong>Totales Generales</strong></td>
+						<td align="right" colspan="5"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0); ?></strong></td>
+						<td align="right" colspan="5"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0); ?></strong></td>
 					</tr>
 			                   
 				</tbody>
@@ -903,13 +907,13 @@ $Total_4 = 0;
   
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-}elseif(!empty($_GET['details_semanal'])){ 
+}elseif(!empty($_GET['details_semanal'])){
 //Solo compras pagadas totalmente
 $z1 = "WHERE bodegas_arriendos_facturacion.idTipo=1"; //solo ventas
 $z2 = "WHERE bodegas_insumos_facturacion.idTipo=1";   //solo ventas
@@ -1124,7 +1128,9 @@ $Total_1 = 0;
 $Total_2 = 0;
 $Total_3 = 0;
 $Total_4 = 0;
+
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_14_to_excel_2.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
@@ -1274,7 +1280,7 @@ $Total_4 = 0;
 							<tr class="odd">
 								<td align="left"></td>
 								<td align="left"><?php echo $prod['Creacion_Semana']; ?></td>
-								
+
 								<td align="right"><?php if(isset($prod['Neto_1'])){echo valores($prod['Neto_1'],0);$Neto_1 = $Neto_1 + $prod['Neto_1'];} ?></td>
 								<td align="right"><?php if(isset($prod['Neto_2'])){echo valores($prod['Neto_2'],0);$Neto_2 = $Neto_2 + $prod['Neto_2'];} ?></td>
 								<td align="right"><?php if(isset($prod['Neto_3'])){echo valores($prod['Neto_3'],0);$Neto_3 = $Neto_3 + $prod['Neto_3'];} ?></td>
@@ -1290,7 +1296,7 @@ $Total_4 = 0;
 									echo valores($sub,0); 
 									?>
 								</td>
-								
+
 								<td align="right"><?php if(isset($prod['Total_1'])){echo valores($prod['Total_1'],0);$Total_1 = $Total_1 + $prod['Total_1'];} ?></td>
 								<td align="right"><?php if(isset($prod['Total_2'])){echo valores($prod['Total_2'],0);$Total_2 = $Total_2 + $prod['Total_2'];} ?></td>
 								<td align="right"><?php if(isset($prod['Total_3'])){echo valores($prod['Total_3'],0);$Total_3 = $Total_3 + $prod['Total_3'];} ?></td>
@@ -1306,7 +1312,7 @@ $Total_4 = 0;
 									echo valores($sub,0); 
 									?>
 								</td>
-								
+
 							</tr>
 							<?php } ?>
 						<?php } ?>
@@ -1315,24 +1321,24 @@ $Total_4 = 0;
 				  
 					
 					<tr class="invoice-total" bgcolor="#f1f1f1">
-						<td align="right" colspan="2"><strong>Totales</strong></td>    
-						<td align="right"><strong><?php echo Valores($Neto_1, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Neto_2, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Neto_3, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Neto_4, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0);?></strong></td>
+						<td align="right" colspan="2"><strong>Totales</strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_1, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_2, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_3, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_4, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0); ?></strong></td>
 
-						<td align="right"><strong><?php echo Valores($Total_1, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Total_2, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Total_3, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Total_4, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0);?></strong></td>
-						
+						<td align="right"><strong><?php echo Valores($Total_1, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_2, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_3, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_4, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0); ?></strong></td>
+
 					</tr>
 					<tr class="invoice-total" bgcolor="#f1f1f1">
-						<td align="right" colspan="2"><strong>Totales Generales</strong></td>    
-						<td align="right" colspan="5"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0);?></strong></td>
-						<td align="right" colspan="5"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0);?></strong></td>
+						<td align="right" colspan="2"><strong>Totales Generales</strong></td>
+						<td align="right" colspan="5"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0); ?></strong></td>
+						<td align="right" colspan="5"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0); ?></strong></td>
 					</tr>
 			                   
 				</tbody>
@@ -1343,8 +1349,8 @@ $Total_4 = 0;
   
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 	
 
@@ -1547,7 +1553,9 @@ $Total_1 = 0;
 $Total_2 = 0;
 $Total_3 = 0;
 $Total_4 = 0;
+
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_14_to_excel_1.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
@@ -1653,7 +1661,6 @@ $Total_4 = 0;
 	</div>
 </div>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -1691,7 +1698,7 @@ $Total_4 = 0;
 					<?php foreach ($arrCreativo as $prod) {?>
 						<tr class="odd">
 							<td align="left"><?php echo $prod['Proveedor']; ?></td>
-							
+
 							<td align="right"><?php if(isset($prod['Neto_1'])){echo valores($prod['Neto_1'],0);$Neto_1 = $Neto_1 + $prod['Neto_1'];} ?></td>
 							<td align="right"><?php if(isset($prod['Neto_2'])){echo valores($prod['Neto_2'],0);$Neto_2 = $Neto_2 + $prod['Neto_2'];} ?></td>
 							<td align="right"><?php if(isset($prod['Neto_3'])){echo valores($prod['Neto_3'],0);$Neto_3 = $Neto_3 + $prod['Neto_3'];} ?></td>
@@ -1707,7 +1714,7 @@ $Total_4 = 0;
 								echo valores($sub,0); 
 								?>
 							</td>
-							
+
 							<td align="right"><?php if(isset($prod['Total_1'])){echo valores($prod['Total_1'],0);$Total_1 = $Total_1 + $prod['Total_1'];} ?></td>
 							<td align="right"><?php if(isset($prod['Total_2'])){echo valores($prod['Total_2'],0);$Total_2 = $Total_2 + $prod['Total_2'];} ?></td>
 							<td align="right"><?php if(isset($prod['Total_3'])){echo valores($prod['Total_3'],0);$Total_3 = $Total_3 + $prod['Total_3'];} ?></td>
@@ -1723,7 +1730,7 @@ $Total_4 = 0;
 								echo valores($sub,0); 
 								?>
 							</td>
-							
+
 							<td>
 								<div class="btn-group" style="width: 105px;" >
 									<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&details_mensual='.$prod['idProveedor']; ?>" title="Ver detalle Mensual" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
@@ -1739,24 +1746,24 @@ $Total_4 = 0;
 					<tr class="invoice-total" bgcolor="#f1f1f1">
 						<td align="right"><strong>Totales</strong></td>    
 						
-						<td align="right"><strong><?php echo Valores($Neto_1, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Neto_2, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Neto_3, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Neto_4, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0);?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_1, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_2, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_3, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_4, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0); ?></strong></td>
 
-						<td align="right"><strong><?php echo Valores($Total_1, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Total_2, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Total_3, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Total_4, 0);?></strong></td>
-						<td align="right"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0);?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_1, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_2, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_3, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_4, 0); ?></strong></td>
+						<td align="right"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0); ?></strong></td>
 
 						<td></td>
 					</tr>
 					<tr class="invoice-total" bgcolor="#f1f1f1">
-						<td align="right"><strong>Totales Generales</strong></td>    
-						<td align="right" colspan="5"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0);?></strong></td>
-						<td align="right" colspan="5"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0);?></strong></td>
+						<td align="right"><strong>Totales Generales</strong></td>
+						<td align="right" colspan="5"><strong><?php echo Valores($Neto_1+$Neto_2+$Neto_3+$Neto_4, 0); ?></strong></td>
+						<td align="right" colspan="5"><strong><?php echo Valores($Total_1+$Total_2+$Total_3+$Total_4, 0); ?></strong></td>
 						<td></td>
 					</tr>
 			                   
@@ -1777,6 +1784,7 @@ $Total_4 = 0;
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -1799,7 +1807,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_filter('Estado de Pago','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estado_facturacion', 0, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x3, 1);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x4, 1);
-						
+
 				?>
 
 				<div class="form-group">
@@ -1817,4 +1825,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -52,9 +52,9 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'idEstado=1 AND idTipoUsuario!=1', '', $dbConn);
 				?>
-								
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Iniciar Sesion" name="submit">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Iniciar Sesion" name="submit">
 				</div>
 			</form>
 			<?php widget_validator(); ?>
@@ -70,4 +70,5 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

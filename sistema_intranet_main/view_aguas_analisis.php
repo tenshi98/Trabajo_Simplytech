@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -85,8 +85,8 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_aguas', $SIS_join,
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed dataTable">
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					
-					<tr class="odd"><td colspan="2">Datos Basicos</td></tr>	
+
+					<tr class="odd"><td colspan="2">Datos Basicos</td></tr>
 					<tr class="odd"><td>Fecha muestra:</td>             <td><?php echo fecha_estandar($rowdata['f_muestra']); ?></td></tr>
 					<tr class="odd"><td>Periodo muestra:</td>           <td><?php if($rowdata['f_muestra']!='0000-00-00'){echo fecha2Ano($rowdata['f_muestra']).fecha2NMes($rowdata['f_muestra']);} ?></td></tr>
 					<tr class="odd"><td>Fecha recibida:</td>            <td><?php echo fecha_estandar($rowdata['f_recibida']); ?></td></tr>
@@ -100,14 +100,14 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_aguas', $SIS_join,
 					<tr class="odd"><td>Parametro analizado:</td>       <td><?php echo $rowdata['Parametro']; ?></td></tr>
 					<tr class="odd"><td>Signo:</td>                     <td><?php echo $rowdata['Signo']; ?></td></tr>
 					<tr class="odd"><td>Valor Analisis:</td>            <td><?php echo $rowdata['valorAnalisis']; ?></td></tr>
-					
-					<tr class="odd"><td colspan="2">Datos del Cliente</td></tr>	
+
+					<tr class="odd"><td colspan="2">Datos del Cliente</td></tr>
 					<tr class="odd"><td>Sector:</td>                    <td><?php echo $rowdata['Sector']; ?></td></tr>
 					<tr class="odd"><td>Codigo Sector:</td>             <td><?php echo $rowdata['CodigoSector']; ?></td></tr>
 					<tr class="odd"><td>UTM Norte:</td>                 <td><?php echo $rowdata['UTM_norte']; ?></td></tr>
 					<tr class="odd"><td>UTM Este:</td>                  <td><?php echo $rowdata['UTM_este']; ?></td></tr>
 					<tr class="odd"><td>Tipo de Medicion:</td>          <td><?php echo $rowdata['PuntoMuestreo']; ?></td></tr>
-					
+
 					<tr class="odd"><td colspan="2">Otros Datos</td></tr>
 					<tr class="odd"><td>Codigo Proceso:</td>            <td><?php echo $rowdata['codigoProceso']; ?></td></tr>
 					<tr class="odd"><td>Codigo Archivo:</td>            <td><?php echo $rowdata['codigoArchivo']; ?></td></tr>
@@ -133,7 +133,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -143,7 +143,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -152,4 +152,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

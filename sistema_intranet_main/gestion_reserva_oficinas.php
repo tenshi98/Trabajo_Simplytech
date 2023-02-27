@@ -142,7 +142,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -165,7 +165,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				if(isset($Observaciones)){        $x8  = $Observaciones;        }else{$x8  = '';}
 
 				//En el caso de que exista un dato
-				if(isset($_GET['idOficina'])&&$_GET['idOficina']!='') {  
+				if(isset($_GET['idOficina'])&&$_GET['idOficina']!='') {
 					$x1  = fecha_actual();
 					$x2  = hora_actual();
 					$x3  = hora_actual();
@@ -251,10 +251,10 @@ $SIS_where.= " AND gestion_reserva_oficinas.idSistema=".$_SESSION['usuario']['ba
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {     
 	$SIS_where .= " AND gestion_reserva_oficinas.idUsuario = '".$_GET['idUsuario']."'";
 }
-if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){ 
+if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){
 	$SIS_where .= " AND gestion_reserva_oficinas.Hora_Inicio BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'";
 }
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){
 	$SIS_where .= " AND gestion_reserva_oficinas.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){                 $SIS_where .= " AND gestion_reserva_oficinas.idEstado='".$_GET['idEstado']."'";}
@@ -439,7 +439,7 @@ $arrReserva = db_select_array (false, $SIS_query, 'gestion_reserva_oficinas', $S
 							<td><?php echo $tipo['Hora_Inicio'].' - '.$tipo['Hora_Termino']; ?></td>
 							<td><?php echo $tipo['CantidadAsistentes'].' personas'; ?></td>
 							<td><?php echo $tipo['Cafeteria']; ?></td>
-							<td><label class="label <?php if(isset($tipo['idEstado'])&&$tipo['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $tipo['estado']; ?></label></td>	
+							<td><label class="label <?php if(isset($tipo['idEstado'])&&$tipo['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $tipo['estado']; ?></label></td>	
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
@@ -447,7 +447,7 @@ $arrReserva = db_select_array (false, $SIS_query, 'gestion_reserva_oficinas', $S
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idReserva']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($tipo['idReserva'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar la reserva de la oficina '.$tipo['Oficina'].' ?';?>
+										$dialogo   = '¿Realmente deseas eliminar la reserva de la oficina '.$tipo['Oficina'].' ?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -465,11 +465,11 @@ $arrReserva = db_select_array (false, $SIS_query, 'gestion_reserva_oficinas', $S
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

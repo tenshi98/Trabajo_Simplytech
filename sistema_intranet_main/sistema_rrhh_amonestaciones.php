@@ -113,7 +113,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -260,7 +260,7 @@ $arrAmonestacion = db_select_array (false, $SIS_query, 'sistema_rrhh_amonestacio
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$amon['idAmonestaciones']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($amon['idAmonestaciones'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el Tipo de Amonestacion '.$amon['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el Tipo de Amonestacion '.$amon['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -283,4 +283,5 @@ $arrAmonestacion = db_select_array (false, $SIS_query, 'sistema_rrhh_amonestacio
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

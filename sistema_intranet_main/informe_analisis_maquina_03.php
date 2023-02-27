@@ -29,7 +29,7 @@ if(!empty($_GET['submit_filter'])){
   
 
 //filtros
-$x = "WHERE maquinas_listado_matriz.idMatriz>=0";	
+$x = "WHERE maquinas_listado_matriz.idMatriz>=0";
 $y = "WHERE maquinas_listado.idMaquina>=0";
 $z = "WHERE analisis_listado.idAnalisis>=0";
 if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {     
@@ -44,7 +44,7 @@ if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != '')  {
 	$y .= " AND maquinas_listado_matriz.idMatriz = '".$_GET['idMaquina']."'";
 	$z .= " AND analisis_listado.idMatriz = '".$_GET['idMatriz']."'";
 }
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){
 	$z .= " AND analisis_listado.f_muestreo BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 /*********************************************************************/
@@ -208,7 +208,7 @@ array_push( $arrGrupo,$row );
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<?php
 
 			echo '
@@ -239,7 +239,7 @@ array_push( $arrGrupo,$row );
 					echo '
 					</address>
 				</div>';
-				
+
 				echo '
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa
@@ -425,8 +425,8 @@ array_push( $arrGrupo,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -435,6 +435,7 @@ array_push( $arrGrupo,$row );
 $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -454,7 +455,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Maquina','idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, 0,
-										 'Matriz de Analisis','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'maquinas_listado_matriz', 'idEstado=1', 0, 
+										 'Matriz de Analisis','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'maquinas_listado_matriz', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_date('Fecha Muestreo Inicio','f_inicio', $x3, 2);
 				$Form_Inputs->form_date('Fecha Muestreo Termino','f_termino', $x4, 2);
@@ -462,7 +463,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -478,4 +479,5 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

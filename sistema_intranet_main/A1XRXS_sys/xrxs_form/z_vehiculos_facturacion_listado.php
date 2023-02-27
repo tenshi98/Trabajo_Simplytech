@@ -334,8 +334,8 @@ require_once '0_validate_user_1.php';
 
 				if(isset($SIS_idSistema) && $SIS_idSistema!=''){    $SIS_data  = "'".$SIS_idSistema."'";    }else{$SIS_data  = "''";}
 				if(isset($SIS_idUsuario) && $SIS_idUsuario!=''){    $SIS_data .= ",'".$SIS_idUsuario."'";   }else{$SIS_data .= ",''";}
-				if(isset($SIS_Fecha) && $SIS_Fecha!= ''){  
-					$SIS_data .= ",'".$SIS_Fecha."'";  
+				if(isset($SIS_Fecha) && $SIS_Fecha!= ''){
+					$SIS_data .= ",'".$SIS_Fecha."'";
 					$SIS_data .= ",'".fecha2NMes($SIS_Fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($SIS_Fecha)."'";
 				}else{
@@ -452,7 +452,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'pago':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -513,7 +513,7 @@ require_once '0_validate_user_1.php';
 						$SIS_data .= ",PagoAno='".fecha2Ano($Pagofecha)."'";
 					}
 					//se verifica si se tiene algun pago anterior, si es asi se suman los montos
-					if(isset($montoPago) && $montoPago!=''){ 
+					if(isset($montoPago) && $montoPago!=''){
 						if(isset($rowdataold['montoPago']) && $rowdataold['montoPago']!=''){ 
 							$nuevoMonto = $rowdataold['montoPago'] + $montoPago;
 						}else{

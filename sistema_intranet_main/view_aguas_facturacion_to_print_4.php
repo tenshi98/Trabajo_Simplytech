@@ -22,14 +22,14 @@
 	<div class="invoice-info">
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 		<p class="well well-sm no-shadow" style="background-color: #fff;text-align: center;font-size: 16px !important;" >
-		
+
 		<?php echo $rowDatos['ClienteNombre']; ?><br>
 		<?php echo $rowDatos['ClienteDireccionFact'] ?><br>
 		<?php echo $rowDatos['ClienteComunaFact'] ?><br>
 		<br>
 		</p>
 	</div>
-		
+
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 		<p class="well well-sm no-shadow" style="background-color: #fff;text-align: center;margin-bottom: 1px;font-size: 14px !important;" >
 		N° Cliente: <?php echo $rowDatos['ClienteIdentificador'] ?>
@@ -45,7 +45,7 @@
 		}
 		?>
 		</p>
-		
+
 	</div>
 
 	</div>
@@ -73,19 +73,19 @@
 		<tr>
 			<td>Cargo Fijo Cliente</td>
 			<td></td>
-			<td align="right"><?php echo Valores($rowDatos['DetalleCargoFijoValor'], 0);?></td>
+			<td align="right"><?php echo Valores($rowDatos['DetalleCargoFijoValor'], 0); ?></td>
 		</tr>
 		<tr>
 			<td>Consumo Agua Potable</td>
-			<td align="center"><?php echo Cantidades($rowDatos['DetalleConsumoCantidad'], $ndecim);?></td>
-			<td align="right"><?php echo Valores($rowDatos['DetalleConsumoValor'], 0);?></td>
+			<td align="center"><?php echo Cantidades($rowDatos['DetalleConsumoCantidad'], $ndecim); ?></td>
+			<td align="right"><?php echo Valores($rowDatos['DetalleConsumoValor'], 0); ?></td>
 		</tr>
 		<tr>
 			<td>Recoleccion de Aguas Servidas</td>
-			<td align="center"><?php echo Cantidades($rowDatos['DetalleRecoleccionCantidad'], $ndecim);?></td>
-			<td align="right"><?php echo Valores($rowDatos['DetalleRecoleccionValor'], 0);?></td>
+			<td align="center"><?php echo Cantidades($rowDatos['DetalleRecoleccionCantidad'], $ndecim); ?></td>
+			<td align="right"><?php echo Valores($rowDatos['DetalleRecoleccionValor'], 0); ?></td>
 		</tr>
-			
+
 		<?php if(isset($rowDatos['DetalleVisitaCorte'])&&$rowDatos['DetalleVisitaCorte']!=0){?>
 			<tr>
 			<td colspan="2">Visita Corte</td>
@@ -116,12 +116,12 @@
 			<td align="right"><?php echo Valores($rowDatos['DetalleReposicion2Valor'], 0)?></td>
 			</tr>
 		<?php } ?>
-		
+
 		<tr>
 			<td colspan="2"><strong>SUBTOTAL SERVICIO</strong></td>
 			<td align="right"><strong><?php echo Valores($rowDatos['DetalleSubtotalServicio'], 0); ?></strong></td>
 		</tr>
-			
+
 		<?php if(isset($rowDatos['DetalleInteresDeuda'])&&$rowDatos['DetalleInteresDeuda']!=0){?>
 			<tr>
 			<td colspan="2">Interes Deuda</td>
@@ -166,13 +166,13 @@
 			<td align="right"><?php echo Valores($rowDatos['DetalleOtrosCargos5Valor'], 0)?></td>
 			</tr>
 		<?php } ?>
-		
+
 		<tr><td colspan="3"></td></tr>
 		<tr>
 			<td colspan="2"><strong>TOTAL VENTA</strong></td>
 			<td align="right"><strong><?php if($rowDatos['DetalleTotalVenta']>0){echo Valores($rowDatos['DetalleTotalVenta'], 0);}else{echo '0';} ?></strong></td>
 		</tr>
-		
+
 		<?php if(isset($rowDatos['DetalleSaldoFavor'])&&$rowDatos['DetalleSaldoFavor']!=0){?>
 			<tr>
 			<td colspan="2">Saldo a Favor</td>
@@ -194,7 +194,7 @@
 			<td colspan="2">TOTAL A PAGAR</td>
 			<td align="right"><?php if($rowDatos['DetalleTotalAPagar']>0){echo Valores($rowDatos['DetalleTotalAPagar'], 0);}else{echo '0';} ?></td>
 		</tr>
-			
+
 		</tbody>
 	</table>
 	</div>
@@ -224,7 +224,7 @@
 					
 			</div>
 			<div class="well well-sm no-shadow" style="background-color: #fff;">
-			
+
 			<p>
 				<div class="pull-left">Lectura Mes anterior <?php echo '('.Fecha_estandar($rowDatos['DetConsMesAnteriorFecha']).')'; ?></div>
 				<small class="pull-right"><?php echo valores_truncados($rowDatos['DetConsMesAnteriorCantidad']) ?> m3</small>
@@ -240,7 +240,7 @@
 			<br/>
 				<div class="pull-left">Adicionales por prorrateo</div>
 				<small class="pull-right">
-				<?php 
+				<?php
 					if($rowDatos['DetConsProrateo']>0){
 					$bla = $rowDatos['DetConsProrateoSigno'].' '.$rowDatos['DetConsProrateo'];
 					}elseif($rowDatos['DetConsProrateo']<0){
@@ -248,7 +248,7 @@
 					}else{
 					$bla = '(+) 0';
 					}
-					echo $bla.' m3';?>
+					echo $bla.' m3'; ?>
 				</small>	
 			<?php } ?>
 			<br/>
@@ -256,13 +256,13 @@
 				<small class="pull-right"><?php echo Cantidades($rowDatos['DetConsMesTotalCantidad'], $ndecim) ?> m3</small>
 			<br/>
 				<div class="pull-left">Proxima lectura estimada</div>
-				<small class="pull-right"><?php echo Fecha_estandar($rowDatos['DetConsFechaProxLectura']);?></small>
+				<small class="pull-right"><?php echo Fecha_estandar($rowDatos['DetConsFechaProxLectura']); ?></small>
 				<?php
 				//verificacion de remarcador
 				if(isset($rowDatos['ClienteRemarcador'])&&$rowDatos['ClienteRemarcador']!=''&&$rowDatos['ClienteRemarcador']!=0){?>
 				<br/>
 					<div class="pull-left">Prorrateo: </div>
-					<small class="pull-right"><?php echo $rowDatos['DetConsModalidad'];?></small>
+					<small class="pull-right"><?php echo $rowDatos['DetConsModalidad']; ?></small>
 				<?php } ?>
 			<br/>
 				<div class="pull-left">Emergencias 24 horas </div>
@@ -272,7 +272,7 @@
 				<small class="pull-right"><?php echo formatPhone($rowDatos['DetConsFonoConsultas']) ?></small>
 			</p>
 			</div>
-			
+
 		</div>
 
 
@@ -321,7 +321,7 @@
 				<br/>
 				<div class="pull-left">Diferencia medidor general</div>
 				<small class="pull-right">
-					<?php 
+					<?php
 					if($rowDatos['AguasInfDifMedGeneral']>0){
 					$bla = '(+)'.Cantidades($rowDatos['AguasInfDifMedGeneral'], 2);
 					}elseif($rowDatos['AguasInfDifMedGeneral']<0){
@@ -329,7 +329,7 @@
 					}else{
 					$bla = '(+)0';
 					}
-					echo $bla.' m3';?>
+					echo $bla.' m3'; ?>
 				</small>
 
 				<br/>
@@ -360,11 +360,11 @@
 				<div class="pull-left">Tarifas publicadas la nacion</div>
 				<small class="pull-right">26-05-2017</small>
 
-				<br/>	
+				<br/>
 				<div class="pull-left">Fecha emision</div>
-				<small class="pull-right"><?php echo Fecha_estandar($rowDatos['AguasInfFechaEmision']);?></small>
+				<small class="pull-right"><?php echo Fecha_estandar($rowDatos['AguasInfFechaEmision']); ?></small>
 
-				<br/>	
+				<br/>
 				<div class="pull-left">Ultimo pago</div>
 				<small class="pull-right">
 				<?php echo '('.valores($rowDatos['AguasInfUltimoPagoMonto'], 0).') ';
@@ -376,9 +376,9 @@
 					?>
 				</small>
 
-				<br/>	
+				<br/>
 				<div class="pull-left">Considera movimientos hasta</div>
-				<small class="pull-right"><?php echo Fecha_estandar($rowDatos['AguasInfMovimientosHasta']);?></small>
+				<small class="pull-right"><?php echo Fecha_estandar($rowDatos['AguasInfMovimientosHasta']); ?></small>
 			</p>
 			<div class="clearfix"></div>
 			

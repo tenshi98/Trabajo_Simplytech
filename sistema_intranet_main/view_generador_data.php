@@ -173,6 +173,7 @@ $arrGraficos = db_select_array (false, $SIS_query, 'telemetria_listado_tablarela
 
 /*******************************************************/
 /*******************************************************/
+// consulto los datos
 $SIS_query = 'SUM(Horas_'.$rowdata['SensorActivacionID'].') AS Sum_Horas';
 $SIS_where = "idTelemetria=".$X_Puntero." AND Fecha BETWEEN '".$Uso_FechaInicio."' AND '".$Uso_FechaTermino."'";
 //Obtengo los datos
@@ -388,7 +389,6 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 }
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -448,7 +448,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 											echo Cantidades($Vmonofasico, 2).' V';
 										}elseif($idVista==2){
 											echo Cantidades($VTrifasico, 2).' V';
-										}?>
+										} ?>
 									</span>
 								</div>
 							</div>
@@ -497,7 +497,6 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 	</div>
 </div>
 
-
 <?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
@@ -528,4 +527,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

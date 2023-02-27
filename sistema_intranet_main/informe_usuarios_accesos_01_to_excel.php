@@ -33,6 +33,7 @@ if(isset($_GET['Rango_Inicio']) && $_GET['Rango_Inicio'] != ''&&isset($_GET['Ran
 }
 
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 usuarios_accesos.Fecha,
 usuarios_accesos.Hora,
@@ -82,10 +83,8 @@ foreach ($arrAccesos as $acceso) {
 				->setCellValue('E'.$nn, $acceso['IP_Client'])
 				->setCellValue('F'.$nn, DeSanitizar($acceso['Agent_Transp']));
 	$nn++;
-   
-} 
 
-
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Informe Accesos');

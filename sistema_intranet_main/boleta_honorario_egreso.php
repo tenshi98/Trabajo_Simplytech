@@ -113,12 +113,12 @@ if(!empty($_GET['addFile'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
-			
+
 				<?php
 				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
-					
+
 				?>
 
 				<div class="form-group">
@@ -130,7 +130,7 @@ if(!empty($_GET['addFile'])){ ?>
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['editOtros'])){  ?>
@@ -159,7 +159,7 @@ if(!empty($_GET['addFile'])){ ?>
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_servicios"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_servicios">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -169,7 +169,7 @@ if(!empty($_GET['addFile'])){ ?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addServicio'])){  ?>
+} elseif(!empty($_GET['addServicio'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -193,7 +193,7 @@ if(!empty($_GET['addFile'])){ ?>
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_servicios"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_servicios">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -254,35 +254,35 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['view'])){
 $Form_Inputs = new Inputs();
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
 
-		<?php 
+		<?php
 		$ubicacion = $location.'&clear_all=true';
-		$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+		$dialogo   = '¿Realmente deseas eliminar todos los registros?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger dialogBox"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
 
 		<a href="<?php echo $location; ?>"  class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
-		<?php 		
+		<?php
 		$ubicacion = $location.'&view=true&eg_bodega=true';
-		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?<br/>Revise si los <strong>montos</strong> y <strong>cantidades</strong> coinciden con el documento ingresado.';?>
-		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
+		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?<br/>Revise si los <strong>montos</strong> y <strong>cantidades</strong> coinciden con el documento ingresado.'; ?>
+		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>
 
 	</div>
 	<div class="clearfix"></div>
-</div> 
+</div>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
 		<div id="header"> <?php echo $_SESSION['boleta_eg_basicos']['TipoDocumento']; ?></div>
 
-		
 		<div id="customer">
-			
+
 			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
@@ -328,26 +328,26 @@ $Form_Inputs = new Inputs();
 				if (isset($_SESSION['boleta_eg_servicios'])){
 					//recorro el lsiatdo entregado por la base de datos
 					foreach ($_SESSION['boleta_eg_servicios'] as $key => $producto){
-						$vtotal_neto = $vtotal_neto + $producto['vTotal'];?>
+						$vtotal_neto = $vtotal_neto + $producto['vTotal']; ?>
 						<tr class="item-row linea_punteada">
-							<td class="item-name" colspan="4"><?php echo $producto['Nombre'];?></td>
+							<td class="item-name" colspan="4"><?php echo $producto['Nombre']; ?></td>
 							<td class="item-name" align="right">
-								<?php echo valores($producto['vTotal'], 0);?>
+								<?php echo valores($producto['vTotal'], 0); ?>
 							</td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
 									<a href="<?php echo $location.'&editOtros='.$producto['idServicio']; ?>" title="Editar Servicio" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-									<?php 
+									<?php
 									$ubicacion = $location.'&del_servicios='.$producto['idServicio'];
-									$dialogo   = '¿Realmente deseas eliminar  '.$producto['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Servicio" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+									$dialogo   = '¿Realmente deseas eliminar  '.$producto['Nombre'].'?'; ?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Servicio" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
 					 <?php 	
 					}
 				}
-				echo '<tr id="hiderow"><td colspan="6"><a name="Ancla_obs"></a></td></tr>';?>
+				echo '<tr id="hiderow"><td colspan="6"><a name="Ancla_obs"></a></td></tr>'; ?>
 				
 				
 		
@@ -358,41 +358,41 @@ $Form_Inputs = new Inputs();
 				$_SESSION['boleta_eg_basicos']['valor_total']  = $vtotal_neto - ($vtotal_neto * ($_SESSION['boleta_eg_basicos']['Porc_Impuesto']/100));
 				?>
 					<tr class="invoice-total" bgcolor="#f1f1f1">
-						<td colspan="4" align="right"><strong>Total Honorarios</strong></td> 
-						<td align="right"><?php echo Valores($_SESSION['boleta_eg_basicos']['valor_neto'], 0);?></td>
+						<td colspan="4" align="right"><strong>Total Honorarios</strong></td>
+						<td align="right"><?php echo Valores($_SESSION['boleta_eg_basicos']['valor_neto'], 0); ?></td>
 						<td></td>
 					</tr>
 					<tr class="invoice-total" bgcolor="#f1f1f1">
-						<td colspan="4" align="right"><strong><?php echo $_SESSION['boleta_eg_basicos']['Porc_Impuesto'].'%'; ?> Impuesto Retenido</strong></td> 
-						<td align="right"><?php echo Valores($_SESSION['boleta_eg_basicos']['valor_imp'], 0);?></td>
+						<td colspan="4" align="right"><strong><?php echo $_SESSION['boleta_eg_basicos']['Porc_Impuesto'].'%'; ?> Impuesto Retenido</strong></td>
+						<td align="right"><?php echo Valores($_SESSION['boleta_eg_basicos']['valor_imp'], 0); ?></td>
 						<td></td>
 					</tr>
 					<tr class="invoice-total" bgcolor="#f1f1f1">
-						<td colspan="4" align="right"> <strong>Total</strong></td>    
-						<td align="right"><?php echo Valores($_SESSION['boleta_eg_basicos']['valor_total'], 0);?></td>
+						<td colspan="4" align="right"> <strong>Total</strong></td>
+						<td align="right"><?php echo Valores($_SESSION['boleta_eg_basicos']['valor_total'], 0); ?></td>
 						<td></td>
 					</tr>
-				
+
 			</tbody>
 		</table>
     </div>
-    
+
     <div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['boleta_eg_basicos']['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['boleta_eg_basicos']['Observaciones']; ?></p>
 		</div>
 	</div>
-    
+
     <table id="items" style="margin-bottom: 20px;">
         <tbody>
-            
+
 			<tr class="invoice-total" bgcolor="#f1f1f1">
                 <td colspan="5">Archivos Adjuntos</td>
                 <td width="160"><a href="<?php echo $location.'&addFile=true' ?>" title="Agregar Archivo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Archivos</a></td>
             </tr>
-            
-			<?php 
+
+			<?php
 			if (isset($_SESSION['boleta_eg_archivos'])){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
@@ -402,25 +402,23 @@ $Form_Inputs = new Inputs();
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $location.'&del_file='.$producto['idFile'];
-								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?'; ?>
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
-					 
-				 <?php 
+
+				 <?php
 				$numeral++;
 				}
-			}?>
+			} ?>
 
 		</tbody>
     </table>
 
-
 </div>
-
 
 <div class="clearfix"></div>
 
@@ -461,7 +459,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_hidden('idTipo', 2, 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
-						
+
 				?>
 
 				<div class="form-group">
@@ -548,12 +546,12 @@ $arrTipo = db_select_array (false, $SIS_query, 'boleta_honorarios_facturacion', 
 
 	<?php if ($rowlevel['level']>=3){ ?>
 		<?php if (isset($_SESSION['boleta_eg_basicos']['idCliente'])&&$_SESSION['boleta_eg_basicos']['idCliente']!=''){?>
-			
-			<?php 
+
+			<?php
 			$ubicacion = $location.'&clear_all=true';
-			$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+			$dialogo   = '¿Realmente deseas eliminar todos los registros?'; ?>
 			<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</a>
-			
+
 			<a href="<?php echo $location; ?>&view=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-arrow-right" aria-hidden="true"></i> Continuar Boletas de Honorarios</a>
 		<?php }else{ ?>
 			<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Ingresar Boletas de Honorarios</a>
@@ -638,7 +636,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'boleta_honorarios_facturacion', 
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
-								  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrTipo as $tipo) { ?>
 					<tr class="odd">
@@ -652,7 +650,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'boleta_honorarios_facturacion', 
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_boleta_honorarios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($tipo['idFacturacion'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la boleta de honorarios N° '.$tipo['N_Doc'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la boleta de honorarios N° '.$tipo['N_Doc'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -670,11 +668,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'boleta_honorarios_facturacion', 
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

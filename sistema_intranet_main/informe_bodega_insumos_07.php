@@ -152,7 +152,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$graficoMain[$xcontador]['mes'] = $xmes;
 		$graficoMain[$xcontador]['año'] = $xaño;
 		
-		foreach ($arrCategoria as $cat) { 
+		foreach ($arrCategoria as $cat) {
 			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $graficoMain[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']];}else{$graficoMain[$xcontador][$cat['idCategoria']] = 0;};
 		}
 									
@@ -162,7 +162,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$graficoMain[$xcontador]['mes'] = $xmes;
 		$graficoMain[$xcontador]['año'] = $xaño;
 		
-		foreach ($arrCategoria as $cat) { 
+		foreach ($arrCategoria as $cat) {
 			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $graficoMain[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']];}else{$graficoMain[$xcontador][$cat['idCategoria']] = 0;};
 		}	
 	}
@@ -242,7 +242,7 @@ foreach ($arrBodega as $bod) {
 			$grafico[$bod['idBodega']][$xcontador]['mes'] = $xmes;
 			$grafico[$bod['idBodega']][$xcontador]['año'] = $xaño;
 
-			foreach ($arrCategoria as $cat) { 
+			foreach ($arrCategoria as $cat) {
 				if(isset($mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']])){ $grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = $mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']];}else{$grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = 0;};
 			}
 										
@@ -251,17 +251,18 @@ foreach ($arrBodega as $bod) {
 			$xaño = $xaño-1;
 			$grafico[$bod['idBodega']][$xcontador]['mes'] = $xmes;
 			$grafico[$bod['idBodega']][$xcontador]['año'] = $xaño;
-			
-			foreach ($arrCategoria as $cat) { 
+
+			foreach ($arrCategoria as $cat) {
 				if(isset($mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']])){ $grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = $mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']];}else{$grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = 0;};
 			}
 		}
-		$xmes = $xmes-1;								
+		$xmes = $xmes-1;
 	}
 }
 
 
 ?>
+
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 		<?php
@@ -271,8 +272,7 @@ foreach ($arrBodega as $bod) {
 		<a target="new" href="<?php echo 'informe_bodega_insumos_07_to_excel.php?bla=bla'.$zz ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 	</div>
 </div>
-	
-	
+
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table']});</script>
 
@@ -300,12 +300,12 @@ foreach ($arrBodega as $bod) {
 				echo '</ul>';
 				?>
 			</header>
-			
+
 			<?php
 			echo '<div class="tab-content">';
 			
 				echo '<div class="tab-pane fade active in" id="tab_main">';
-					echo '<div class="wmd-panel">';?>
+					echo '<div class="wmd-panel">'; ?>
 
 						<script>
 							google.charts.setOnLoadCallback(graficoMain);
@@ -366,9 +366,9 @@ foreach ($arrBodega as $bod) {
 									<th>SubTotal</th>
 								</tr>
 							</thead>
-										  
+
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
-								<?php 
+								<?php
 								//Variables
 								$Total        = 0;
 								$SubTotal_1   = 0;
@@ -433,7 +433,7 @@ foreach ($arrBodega as $bod) {
 										<td align="right"><?php echo valores($graficoMain[12][$cat['idCategoria']], 0); ?></td>
 										<td align="right"><?php echo valores($SubTotalGen, 0);  ?></td>
 									</tr>
-								<?php } }?>
+								<?php } } ?>
 								<tr class="active">
 									<td align="right"><strong>Totales</strong></td>
 									<td align="right"><strong><?php echo valores($SubTotal_1, 0); ?></strong></td>
@@ -449,10 +449,10 @@ foreach ($arrBodega as $bod) {
 									<td align="right"><strong><?php echo valores($SubTotal_11, 0); ?></strong></td>
 									<td align="right"><strong><?php echo valores($SubTotal_12, 0); ?></strong></td>
 									<td align="right"><strong><?php echo valores($Total, 0); ?></strong></td>
-								</tr> 
+								</tr>
 							</tbody>
 						</table>
-					
+
 					<?php
 					echo '</div>';
 				echo '</div>';
@@ -464,18 +464,18 @@ foreach ($arrBodega as $bod) {
 			//recorremos el array para imprimirlo con formato HTML
 			foreach($arrExistencias as $empresa=>$datos) {
 				echo '<div class="tab-pane fade" id="tab_'.$datos[0]['BodegaID'].'">';
-					echo '<div class="wmd-panel">';?>
-					
-						<script>
-							google.charts.setOnLoadCallback(grafico_<?php echo $datos[0]['BodegaID'];?>);
+					echo '<div class="wmd-panel">'; ?>
 
-							function grafico_<?php echo $datos[0]['BodegaID'];?>() {
-								var data_<?php echo $datos[0]['BodegaID'];?> = new google.visualization.DataTable();
-								data_<?php echo $datos[0]['BodegaID'];?>.addColumn("string", "Mes"); 
+						<script>
+							google.charts.setOnLoadCallback(grafico_<?php echo $datos[0]['BodegaID']; ?>);
+
+							function grafico_<?php echo $datos[0]['BodegaID']; ?>() {
+								var data_<?php echo $datos[0]['BodegaID']; ?> = new google.visualization.DataTable();
+								data_<?php echo $datos[0]['BodegaID']; ?>.addColumn("string", "Mes"); 
 								<?php foreach ($arrCategoria as $cat) { ?>
-									data_<?php echo $datos[0]['BodegaID'];?>.addColumn("number", "<?php echo $cat['Nombre'];  ?>");
+									data_<?php echo $datos[0]['BodegaID']; ?>.addColumn("number", "<?php echo $cat['Nombre'];  ?>");
 								<?php } ?>
-								data_<?php echo $datos[0]['BodegaID'];?>.addRows([
+								data_<?php echo $datos[0]['BodegaID']; ?>.addRows([
 									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][1]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][1][$cat['idCategoria']]);} ?>],
 									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][2]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][2][$cat['idCategoria']]);} ?>],
 									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][3]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][3][$cat['idCategoria']]);} ?>],
@@ -491,20 +491,20 @@ foreach ($arrBodega as $bod) {
 									
 								]);
       
-								var options_<?php echo $datos[0]['BodegaID'];?> = {
+								var options_<?php echo $datos[0]['BodegaID']; ?> = {
 									title: 'Ingresos de la bodega <?php echo $empresa ?>',
 									isStacked: true,
 									hAxis: {title: 'Meses'},
 									vAxis: {title: 'Valores', minValue: 0}
 								};
 
-								var chart_<?php echo $datos[0]['BodegaID'];?> = new google.visualization.ColumnChart(document.getElementById('chart_<?php echo $datos[0]['BodegaID'];?>'));
-								chart_<?php echo $datos[0]['BodegaID'];?>.draw(data_<?php echo $datos[0]['BodegaID'];?>, options_<?php echo $datos[0]['BodegaID'];?>);
+								var chart_<?php echo $datos[0]['BodegaID']; ?> = new google.visualization.ColumnChart(document.getElementById('chart_<?php echo $datos[0]['BodegaID']; ?>'));
+								chart_<?php echo $datos[0]['BodegaID']; ?>.draw(data_<?php echo $datos[0]['BodegaID']; ?>, options_<?php echo $datos[0]['BodegaID']; ?>);
 							}
 						
 						
 						</script>
-						<div id="chart_<?php echo $datos[0]['BodegaID'];?>" style="height: 500px; width: 100%;"></div>
+						<div id="chart_<?php echo $datos[0]['BodegaID']; ?>" style="height: 500px; width: 100%;"></div>
 
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 							<thead>
@@ -525,9 +525,9 @@ foreach ($arrBodega as $bod) {
 									<th>SubTotal</th>
 								</tr>
 							</thead>
-										  
+
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
-								<?php 
+								<?php
 								//Variables
 								$Total        = 0;
 								$SubTotal_1   = 0;
@@ -570,7 +570,7 @@ foreach ($arrBodega as $bod) {
 									$SubTotal_10 = $SubTotal_10 + $grafico[$datos[0]['BodegaID']][10][$cat['idCategoria']];
 									$SubTotal_11 = $SubTotal_11 + $grafico[$datos[0]['BodegaID']][11][$cat['idCategoria']];
 									$SubTotal_12 = $SubTotal_12 + $grafico[$datos[0]['BodegaID']][12][$cat['idCategoria']];
-									
+
 									$Total = $Total + $SubTotalGen;
 									if($SubTotalGen!=0){
 									
@@ -607,10 +607,10 @@ foreach ($arrBodega as $bod) {
 									<td align="right"><strong><?php echo valores($SubTotal_11, 0); ?></strong></td>
 									<td align="right"><strong><?php echo valores($SubTotal_12, 0); ?></strong></td>
 									<td align="right"><strong><?php echo valores($Total, 0); ?></strong></td>
-								</tr> 
+								</tr>
 							</tbody>
 						</table>
-					
+
 					<?php
 					echo '</div>';
 				echo '</div>';
@@ -629,8 +629,8 @@ foreach ($arrBodega as $bod) {
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
@@ -641,6 +641,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -659,7 +660,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x1, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', $z1, $dbConn);
 
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -671,10 +672,10 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 </div>
 <?php } ?>
 
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

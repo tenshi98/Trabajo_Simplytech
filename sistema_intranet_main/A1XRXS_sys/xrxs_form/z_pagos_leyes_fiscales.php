@@ -151,7 +151,7 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-	
+
 		case 'new_pago':
 
 			//Se elimina la restriccion del sql 5.7
@@ -198,14 +198,14 @@ require_once '0_validate_user_1.php';
 				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['pagos_leyes_fiscales_basicos']['idSistema']       = $idSistema;      }else{$_SESSION['pagos_leyes_fiscales_basicos']['idSistema']       = '';}
 				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']       = $idUsuario;      }else{$_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']       = '';}
 				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']      = $fecha_auto;     }else{$_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']      = '';}
-				
+
 				$_SESSION['pagos_leyes_fiscales_basicos']['TotalGeneral']      = 0;
 				$_SESSION['pagos_leyes_fiscales_basicos']['TotalPagoGeneral']  = 0;
 
 				//Busco datos en la base de datos
 				$rowSaldo = db_select_data (false, 'Saldos_IVA_Actual', 'pagos_leyes_fiscales', '', 'idFactFiscal!=0 ORDER BY idFactFiscal DESC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				if(isset($rowSaldo['Saldos_IVA_Actual'])&&$rowSaldo['Saldos_IVA_Actual']!=''){ $_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior'] = $rowSaldo['Saldos_IVA_Actual'];   }else{ $_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior'] = 0;}
-				
+
 				$SIS_query = '
 				sistema_leyes_fiscales.Porcentaje_PPM,
 				sistema_leyes_fiscales.IVA_idCentroCosto,
@@ -286,10 +286,10 @@ require_once '0_validate_user_1.php';
 				$rowPPM   = db_select_data (false, $SIS_query, 'sistema_leyes_fiscales', $SIS_join, 'sistema_leyes_fiscales.idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				if(isset($rowPPM['Porcentaje_PPM'])&&$rowPPM['Porcentaje_PPM']!=''){    
 					$_SESSION['pagos_leyes_fiscales_basicos']['Porcentaje_PPM']      = $rowPPM['Porcentaje_PPM'];        
-				}else{ 
+				}else{
 					$_SESSION['pagos_leyes_fiscales_basicos']['Porcentaje_PPM']      = 0;
 				}
-				
+
 				$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idCentroCosto']      = $rowPPM['IVA_idCentroCosto'];
 				$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_1']          = $rowPPM['IVA_idLevel_1'];
 				$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_2']          = $rowPPM['IVA_idLevel_2'];
@@ -314,7 +314,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_3']      = $rowPPM['IMPRENT_idLevel_3'];
 				$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_4']      = $rowPPM['IMPRENT_idLevel_4'];
 				$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_5']      = $rowPPM['IMPRENT_idLevel_5'];
-				
+
 				if(isset($rowPPM['IVA_CC_Nombre'])&&$rowPPM['IVA_CC_Nombre']!=''){
 					$_SESSION['pagos_leyes_fiscales_basicos']['IVA_CC'] = $rowPPM['IVA_CC_Nombre'];
 					if(isset($rowPPM['IVA_CC_Level_1'])&&$rowPPM['IVA_CC_Level_1']!=''){$_SESSION['pagos_leyes_fiscales_basicos']['IVA_CC'] .= ' - '.$rowPPM['IVA_CC_Level_1'];}
@@ -382,7 +382,7 @@ require_once '0_validate_user_1.php';
 				$z6 = "idFactFiscal=0";   //solo las que no esten asignadas
 						
 				//Filtro Fecha
-				if(isset($Periodo_Ano)&&$Periodo_Ano!=''){ 
+				if(isset($Periodo_Ano)&&$Periodo_Ano!=''){
 					$z1.=" AND Creacion_ano='".$Periodo_Ano."'";
 					$z2.=" AND Creacion_ano='".$Periodo_Ano."'";
 					$z3.=" AND Creacion_ano='".$Periodo_Ano."'";
@@ -390,7 +390,7 @@ require_once '0_validate_user_1.php';
 					$z5.=" AND Creacion_ano='".$Periodo_Ano."'";
 					$z6.=" AND Creacion_ano='".$Periodo_Ano."'";
 				}
-				if(isset($Periodo_Mes)&&$Periodo_Mes!=''){ 
+				if(isset($Periodo_Mes)&&$Periodo_Mes!=''){
 					$z1.=" AND Creacion_mes='".$Periodo_Mes."'";
 					$z2.=" AND Creacion_mes='".$Periodo_Mes."'";
 					$z3.=" AND Creacion_mes='".$Periodo_Mes."'";
@@ -685,7 +685,7 @@ require_once '0_validate_user_1.php';
 				//redirijo
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
@@ -721,7 +721,7 @@ require_once '0_validate_user_1.php';
 			}
 			unset($_SESSION['pagos_leyes_fiscales_archivos']);
 
-			
+			//redirijo
 			header( 'Location: '.$location );
 			die;
 
@@ -773,14 +773,14 @@ require_once '0_validate_user_1.php';
 				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['pagos_leyes_fiscales_basicos']['idSistema']       = $idSistema;      }else{$_SESSION['pagos_leyes_fiscales_basicos']['idSistema']       = '';}
 				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']       = $idUsuario;      }else{$_SESSION['pagos_leyes_fiscales_basicos']['idUsuario']       = '';}
 				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']      = $fecha_auto;     }else{$_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']      = '';}
-				
+
 				$_SESSION['pagos_leyes_fiscales_basicos']['TotalGeneral']      = 0;
 				$_SESSION['pagos_leyes_fiscales_basicos']['TotalPagoGeneral']  = 0;
 
 				//Busco datos en la base de datos
 				$rowSaldo = db_select_data (false, 'Saldos_IVA_Actual', 'pagos_leyes_fiscales', '', 'idFactFiscal!=0 ORDER BY idFactFiscal DESC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				if(isset($rowSaldo['Saldos_IVA_Actual'])&&$rowSaldo['Saldos_IVA_Actual']!=''){ $_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior'] = $rowSaldo['Saldos_IVA_Actual'];   }else{ $_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior'] = 0;}
-				
+
 				$SIS_query = '
 				sistema_leyes_fiscales.Porcentaje_PPM,
 				sistema_leyes_fiscales.IVA_idCentroCosto,
@@ -861,10 +861,10 @@ require_once '0_validate_user_1.php';
 				$rowPPM   = db_select_data (false, $SIS_query, 'sistema_leyes_fiscales', $SIS_join, 'sistema_leyes_fiscales.idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				if(isset($rowPPM['Porcentaje_PPM'])&&$rowPPM['Porcentaje_PPM']!=''){    
 					$_SESSION['pagos_leyes_fiscales_basicos']['Porcentaje_PPM']      = $rowPPM['Porcentaje_PPM'];        
-				}else{ 
+				}else{
 					$_SESSION['pagos_leyes_fiscales_basicos']['Porcentaje_PPM']      = 0;
 				}
-				
+
 				$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idCentroCosto']      = $rowPPM['IVA_idCentroCosto'];
 				$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_1']          = $rowPPM['IVA_idLevel_1'];
 				$_SESSION['pagos_leyes_fiscales_basicos']['IVA_idLevel_2']          = $rowPPM['IVA_idLevel_2'];
@@ -889,7 +889,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_3']      = $rowPPM['IMPRENT_idLevel_3'];
 				$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_4']      = $rowPPM['IMPRENT_idLevel_4'];
 				$_SESSION['pagos_leyes_fiscales_basicos']['IMPRENT_idLevel_5']      = $rowPPM['IMPRENT_idLevel_5'];
-				
+
 				if(isset($rowPPM['IVA_CC_Nombre'])&&$rowPPM['IVA_CC_Nombre']!=''){
 					$_SESSION['pagos_leyes_fiscales_basicos']['IVA_CC'] = $rowPPM['IVA_CC_Nombre'];
 					if(isset($rowPPM['IVA_CC_Level_1'])&&$rowPPM['IVA_CC_Level_1']!=''){$_SESSION['pagos_leyes_fiscales_basicos']['IVA_CC'] .= ' - '.$rowPPM['IVA_CC_Level_1'];}
@@ -957,7 +957,7 @@ require_once '0_validate_user_1.php';
 				$z6 = "idFactFiscal=0";   //solo las que no esten asignadas
 						
 				//Filtro Fecha
-				if(isset($Periodo_Ano)&&$Periodo_Ano!=''){ 
+				if(isset($Periodo_Ano)&&$Periodo_Ano!=''){
 					$z1.=" AND Creacion_ano='".$Periodo_Ano."'";
 					$z2.=" AND Creacion_ano='".$Periodo_Ano."'";
 					$z3.=" AND Creacion_ano='".$Periodo_Ano."'";
@@ -965,7 +965,7 @@ require_once '0_validate_user_1.php';
 					$z5.=" AND Creacion_ano='".$Periodo_Ano."'";
 					$z6.=" AND Creacion_ano='".$Periodo_Ano."'";
 				}
-				if(isset($Periodo_Mes)&&$Periodo_Mes!=''){ 
+				if(isset($Periodo_Mes)&&$Periodo_Mes!=''){
 					$z1.=" AND Creacion_mes='".$Periodo_Mes."'";
 					$z2.=" AND Creacion_mes='".$Periodo_Mes."'";
 					$z3.=" AND Creacion_mes='".$Periodo_Mes."'";
@@ -1260,7 +1260,7 @@ require_once '0_validate_user_1.php';
 				//redirijo
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
@@ -1491,7 +1491,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -1647,7 +1647,7 @@ require_once '0_validate_user_1.php';
 			if(valores_comparables($_SESSION['pagos_leyes_fiscales_basicos']['ImpuestoRenta'])<valores_comparables($Mont_tot_4)){
 				$error['nPagos4'] = 'error/El monto ingresado en el pago del Impuesto a la Renta es superior al total a pagar ('.valores($_SESSION['pagos_leyes_fiscales_basicos']['ImpuestoRenta'], 0).'<'.valores($Mont_tot_4, 0).')';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -1753,7 +1753,7 @@ require_once '0_validate_user_1.php';
 					$error['basicos'] = 'error/No tiene asignado un pago PPM';
 				}
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -1770,8 +1770,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']!=''){                  $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']."'";            }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Ano']) && $_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Ano']!=''){                $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Ano']."'";           }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Mes']) && $_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Mes']!=''){                $SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Mes']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha']) && $_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha']."'";  
+				if(isset($_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha']) && $_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha'])."'";
@@ -2098,13 +2098,12 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['pagos_leyes_fiscales_pagos_trabajadores']);
 					unset($_SESSION['pagos_leyes_fiscales_formas_pago']);
 					unset($_SESSION['pagos_leyes_fiscales_archivos']);
-					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
 
 			}
-	
 
 		break;
 /*******************************************************************************************************************/

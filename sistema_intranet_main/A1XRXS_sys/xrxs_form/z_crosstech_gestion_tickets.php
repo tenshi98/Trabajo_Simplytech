@@ -243,7 +243,7 @@ require_once '0_validate_user_1.php';
 							}
 						}
 					}
-					
+
 					//se redirecciona
 					header( 'Location: '.$location.'&created=true' );
 					die;
@@ -452,7 +452,7 @@ require_once '0_validate_user_1.php';
 						
 						
 					}
-					
+
 					//se redirecciona
 					header( 'Location: '.$location.'&edited=true' );
 					die;

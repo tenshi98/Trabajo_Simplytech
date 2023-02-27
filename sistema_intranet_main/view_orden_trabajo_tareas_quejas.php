@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -70,7 +70,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SI
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<?php				
 		echo '
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 invoice-col">
@@ -94,7 +94,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SI
 		<div class="col-xs-12">
 			<div class="row">
 				<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-				<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Observaciones'];?></p>
+				<p class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Observaciones']; ?></p>
 			</div>
 		</div>
 	<?php } ?>
@@ -115,7 +115,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -125,7 +125,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -134,4 +134,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -128,7 +128,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ingreso borrado correc
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['addFile'])){ 
+if(!empty($_GET['addFile'])){
 // Se traen todos los datos del analisis
 $SIS_query = 'idAnalisis,Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,idSistema';
 $SIS_join  = '';
@@ -145,12 +145,12 @@ $row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecci
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
-			
+
 				<?php
 				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
-					
+
 				$Form_Inputs->form_input_hidden('idAnalisis', $row_data['idAnalisis'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $row_data['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -179,7 +179,7 @@ $row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecci
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['cloneMuestra'])){ 
+} elseif(!empty($_GET['cloneMuestra'])){
 //Armo cadena
 $SIS_query  = 'Nombre,idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, Validar_1, Validar_2, Validar_3';
 for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
@@ -198,7 +198,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 // Se trae un listado con todos los grupos
 $SIS_query = 'idGrupo, Nombre';
 $SIS_join  = '';
-$SIS_where = '';
+$SIS_where = 'idGrupo!=0';
 $SIS_order = 'Nombre ASC';
 $arrGrupo = array();
 $arrGrupo = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz_grupos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupo');
@@ -258,7 +258,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_number('Peso Caja', 'peso', $x9, 2);
 
 				$Form_Inputs->form_input_hidden('idAnalisis', $_GET['edit'], 2);
-					
+
 				$Form_Inputs->form_tittle(3, 'Datos Tipo Planilla');
 				foreach ($arrGrupo as $grupo) {
 					//Cuento si hay items dentro de la categoria
@@ -268,12 +268,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							$x_con++;
 						}
 					}
-					
+
 					//si hay items se muestra todo
 					if($x_con!=0){
-						
+
 						echo '<h4>'.$grupo['Nombre'].'</h4>';
-					
+
 						for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
 							if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
 								//Verifico el tipo de dato
@@ -322,8 +322,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 									case 11:
 										$Form_Inputs->form_input_validate($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, $rowdata['Validacion_'.$i]);
 										break;
-								
-									
+
 								}
 							}
 						}
@@ -357,7 +356,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['editMuestra'])){
+} elseif(!empty($_GET['editMuestra'])){
 //Armo cadena
 $SIS_query  = 'Nombre,idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, Validar_1, Validar_2, Validar_3';
 for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
@@ -376,7 +375,7 @@ $rowBorrame = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz',
 // Se trae un listado con todos los grupos
 $SIS_query = 'idGrupo, Nombre';
 $SIS_join  = '';
-$SIS_where = '';
+$SIS_where = 'idGrupo!=0';
 $SIS_order = 'Nombre ASC';
 $arrGrupo = array();
 $arrGrupo = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz_grupos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupo');
@@ -435,7 +434,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_select_filter('Productor','idProductor', $x1, 2, 'idProductor', 'Codigo,Nombre', 'productores_listado', $w, '', $dbConn);
 				$Form_Inputs->form_input_text('N° Folio / Pallet', 'n_folio_pallet', $x2, 2);
-				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x3, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $z, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x3, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $z, '', $dbConn);
 				$Form_Inputs->form_input_text('Lote', 'lote', $x4, 2);
 				$Form_Inputs->form_date('Fecha Embalaje','f_embalaje', $x5, 2);
 				$Form_Inputs->form_date('Fecha Cosecha','f_cosecha', $x6, 2);
@@ -445,7 +444,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 				$Form_Inputs->form_input_hidden('idMuestras', $rowMuestras['idMuestras'], 2);
 				$Form_Inputs->form_input_hidden('idAnalisis', $_GET['edit'], 2);
-					
+
 				$Form_Inputs->form_tittle(3, 'Datos Tipo Planilla');
 				foreach ($arrGrupo as $grupo) {
 					//Cuento si hay items dentro de la categoria
@@ -455,12 +454,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							$x_con++;
 						}
 					}
-					
+
 					//si hay items se muestra todo
 					if($x_con!=0){
-						
+
 						echo '<h4>'.$grupo['Nombre'].'</h4>';
-					
+
 						for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
 							if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
 								//Verifico el tipo de dato
@@ -509,8 +508,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 									case 11:
 										$Form_Inputs->form_input_validate($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $rowMuestras['Medida_'.$i], 1, $rowdata['Validacion_'.$i]);
 										break;
-								
-									
+
 								}
 							}
 						}
@@ -544,7 +542,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addMuestra'])){ 
+} elseif(!empty($_GET['addMuestra'])){
 //Armo cadena
 $SIS_query  = 'Nombre,idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, Validar_1, Validar_2, Validar_3';
 for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
@@ -563,7 +561,7 @@ $rowBorrame = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz',
 // Se trae un listado con todos los grupos
 $SIS_query = 'idGrupo, Nombre';
 $SIS_join  = '';
-$SIS_where = '';
+$SIS_where = 'idGrupo!=0';
 $SIS_order = 'Nombre ASC';
 $arrGrupo = array();
 $arrGrupo = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz_grupos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupo');
@@ -607,7 +605,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_select_filter('Productor','idProductor', $x1, 2, 'idProductor', 'Codigo,Nombre', 'productores_listado', $w, '', $dbConn);
 				$Form_Inputs->form_input_text('N° Folio / Pallet', 'n_folio_pallet', $x2, 2);
-				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x3, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $z, '', $dbConn);	
+				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x3, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $z, '', $dbConn);
 				$Form_Inputs->form_input_text('Lote', 'lote', $x4, 2);
 				$Form_Inputs->form_date('Fecha Embalaje','f_embalaje', $x5, 2);
 				$Form_Inputs->form_date('Fecha Cosecha','f_cosecha', $x6, 2);
@@ -616,7 +614,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_number('Peso Caja', 'peso', $x9, 2);
 
 				$Form_Inputs->form_input_hidden('idAnalisis', $_GET['edit'], 2);
-					
+
 				$Form_Inputs->form_tittle(3, 'Datos Tipo Planilla');
 				foreach ($arrGrupo as $grupo) {
 					//Cuento si hay items dentro de la categoria
@@ -626,12 +624,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							$x_con++;
 						}
 					}
-					
+
 					//si hay items se muestra todo
 					if($x_con!=0){
-						
+
 						echo '<h4>'.$grupo['Nombre'].'</h4>';
-					
+
 						for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
 							if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
 								//Verifico el tipo de dato
@@ -680,8 +678,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 									case 11:
 										$Form_Inputs->form_input_validate($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, $rowdata['Validacion_'.$i]);
 										break;
-								
-									
+
 								}
 							}
 						}
@@ -713,9 +710,9 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
+</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addMaquina'])){ 
+} elseif(!empty($_GET['addMaquina'])){
 // Se traen todos los datos del analisis
 $SIS_query = 'idAnalisis,Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,idSistema';
 $SIS_join  = '';
@@ -724,7 +721,8 @@ $row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecci
 
 /*****************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -760,9 +758,9 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				if(isset($row_data['idUbicacion_lvl_4'])&&$row_data['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $row_data['idUbicacion_lvl_4'], 2);}
 				if(isset($row_data['idUbicacion_lvl_5'])&&$row_data['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $row_data['idUbicacion_lvl_5'], 2);}
 				?>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_maq"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_maq">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -772,7 +770,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addTrab'])){ 
+} elseif(!empty($_GET['addTrab'])){
 // Se traen todos los datos del analisis
 $SIS_query = 'idAnalisis,Creacion_fecha,idTipo,Temporada,idCategoria,idProducto,idUbicacion,idUbicacion_lvl_1,idUbicacion_lvl_2,idUbicacion_lvl_3,idUbicacion_lvl_4,idUbicacion_lvl_5,idSistema';
 $SIS_join  = '';
@@ -797,7 +795,6 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = '';}
 
-				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador responsable','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
@@ -817,11 +814,11 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				if(isset($row_data['idUbicacion_lvl_3'])&&$row_data['idUbicacion_lvl_3']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_3', $row_data['idUbicacion_lvl_3'], 2);}
 				if(isset($row_data['idUbicacion_lvl_4'])&&$row_data['idUbicacion_lvl_4']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_4', $row_data['idUbicacion_lvl_4'], 2);}
 				if(isset($row_data['idUbicacion_lvl_5'])&&$row_data['idUbicacion_lvl_5']!=0){$Form_Inputs->form_input_hidden('idUbicacion_lvl_5', $row_data['idUbicacion_lvl_5'], 2);}
-				
+
 				?>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_trab"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_trab">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -865,10 +862,11 @@ foreach ($arrPermisos1 as $prod) {
 }
 foreach ($arrPermisos2 as $prod) {
 	$zx2 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
-}	
+}
 
 //verifico que sea un administrador
-$z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
+$z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -895,7 +893,6 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				if(isset($row_data['idUbicacion_lvl_4'])&&$row_data['idUbicacion_lvl_4']!=''){if(isset($idUbicacion_lvl_4)){   $x10 = $idUbicacion_lvl_4; }else{$x10 = $row_data['idUbicacion_lvl_4'];}}
 				if(isset($row_data['idUbicacion_lvl_5'])&&$row_data['idUbicacion_lvl_5']!=''){if(isset($idUbicacion_lvl_5)){   $x11 = $idUbicacion_lvl_5; }else{$x11 = $row_data['idUbicacion_lvl_5'];}}
 				if(isset($Observaciones)){       $x12 = $Observaciones;     }else{$x12 = $row_data['Observaciones'];}
-				
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -903,10 +900,10 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x2, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
 				$Form_Inputs->form_select_temporada_2('Temporada','Temporada', $x3, 2, ano_actual());
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x4, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', $zx1, 0,
-										 'Variedad','idProducto', $x5, 2, 'idProducto', 'Nombre', 'variedades_listado', $zx2, 0, 
+										 'Variedad','idProducto', $x5, 2, 'idProducto', 'Nombre', 'variedades_listado', $zx2, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x6,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  $z,   0,
-							                 'Nivel 1', 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
+							                 'Nivel 1', 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0,
 							                 'Nivel 2', 'idUbicacion_lvl_2',  $x8,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
 							                 'Nivel 3', 'idUbicacion_lvl_3',  $x9,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
 							                 'Nivel 4', 'idUbicacion_lvl_4',  $x10,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
@@ -932,7 +929,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['edit'])){
+} elseif(!empty($_GET['edit'])){
 // Se traen todos los datos del analisis
 $SIS_query = '
 cross_quality_registrar_inspecciones.fecha_auto,
@@ -949,7 +946,7 @@ variedades_listado.Nombre AS ProductoNombre,
 cross_quality_registrar_inspecciones.idCategoria,
 cross_quality_registrar_inspecciones.idTipo,
 cross_quality_registrar_inspecciones.idSistema,
-(SELECT 
+(SELECT
 cross_quality_calidad_matriz.cantPuntos
 FROM `sistema_variedades_categorias_matriz_calidad`
 LEFT JOIN `cross_quality_calidad_matriz` ON cross_quality_calidad_matriz.idMatriz = sistema_variedades_categorias_matriz_calidad.idMatriz
@@ -958,7 +955,7 @@ AND sistema_variedades_categorias_matriz_calidad.idProceso = cross_quality_regis
 AND sistema_variedades_categorias_matriz_calidad.idSistema = cross_quality_registrar_inspecciones.idSistema
 ) AS Producto_cantPuntos,
 
-(SELECT 
+(SELECT
 sistema_variedades_categorias_matriz_calidad.idMatriz
 FROM `sistema_variedades_categorias_matriz_calidad`
 LEFT JOIN `cross_quality_calidad_matriz` ON cross_quality_calidad_matriz.idMatriz = sistema_variedades_categorias_matriz_calidad.idMatriz
@@ -993,9 +990,9 @@ $row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecci
 $SIS_query = '
 cross_quality_registrar_inspecciones_trabajador.idTrabajadores,
 trabajadores_listado.Nombre,
-trabajadores_listado.ApellidoPat, 
+trabajadores_listado.ApellidoPat,
 trabajadores_listado.ApellidoMat,
-trabajadores_listado.Cargo, 
+trabajadores_listado.Cargo,
 trabajadores_listado.Rut';
 $SIS_join  = 'LEFT JOIN `trabajadores_listado` ON trabajadores_listado.idTrabajador = cross_quality_registrar_inspecciones_trabajador.idTrabajador';
 $SIS_where = 'cross_quality_registrar_inspecciones_trabajador.idAnalisis ='.$_GET['edit'];
@@ -1018,7 +1015,7 @@ $arrMaquinas = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 /***************************************************/
 // Se trae un listado con todas las muestras
 $SIS_query = '
-cross_quality_registrar_inspecciones_muestras.idMuestras, 
+cross_quality_registrar_inspecciones_muestras.idMuestras,
 cross_quality_registrar_inspecciones_muestras.n_folio_pallet,
 cross_quality_registrar_inspecciones_muestras.lote,
 productores_listado.Nombre AS ProductorNombre';
@@ -1036,7 +1033,7 @@ $SIS_where = 'idAnalisis ='.$_GET['edit'];
 $SIS_order = 'Nombre ASC';
 $arrArchivos = array();
 $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_inspecciones_archivo', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrArchivos');
-						
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -1045,7 +1042,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 		<div id="header"> <?php echo $row_data['TipoAnalisis']?></div>
 
 		<div id="customer">
-			
+
 			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
@@ -1080,7 +1077,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 						<td class="meta-head">Temporada</td>
 						<td colspan="2"><?php echo $row_data['Temporada'] ?></td>
 					</tr>
-					
+
 				</tbody>
 			</table>
 		</div>
@@ -1102,14 +1099,14 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 				<?php if ($arrTrabajadores!=false && !empty($arrTrabajadores) && $arrTrabajadores!='') {
 					foreach ($arrTrabajadores as $trab) { ?>
 						<tr class="item-row linea_punteada">
-							<td class="item-name"><?php echo $trab['Rut'];?></td>
-							<td class="item-name" colspan="3"><?php echo $trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'];?></td>
-							<td class="item-name"><?php echo $trab['Cargo'];?></td>
+							<td class="item-name"><?php echo $trab['Rut']; ?></td>
+							<td class="item-name" colspan="3"><?php echo $trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat']; ?></td>
+							<td class="item-name"><?php echo $trab['Cargo']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php 
+									<?php
 									$ubicacion = $new_location.'&del_trab='.simpleEncode($trab['idTrabajadores'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar al trabajador '.$trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar al trabajador '.$trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Trabajador" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 								</div>
 							</td>
@@ -1117,7 +1114,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 				<?php }
 				}else{
 					echo '<tr class="item-row linea_punteada"><td colspan="6">No hay trabajadores asignados</td></tr>';
-				}?>
+				} ?>
 				<tr id="hiderow"><td colspan="6"></td></tr>
 				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
@@ -1126,16 +1123,16 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 						<a href="<?php echo $new_location.'&addMaquina=true' ?>" title="Agregar Maquina" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Maquina</a>
 					</td>
 				</tr>
-				<?php 
+				<?php
 				if ($arrMaquinas!=false && !empty($arrMaquinas) && $arrMaquinas!='') {
 					foreach ($arrMaquinas as $maq) { ?>
 						<tr class="item-row linea_punteada">
-							<td class="item-name" colspan="5"><?php echo $maq['Codigo'].' - '.$maq['Nombre'];?></td>
+							<td class="item-name" colspan="5"><?php echo $maq['Codigo'].' - '.$maq['Nombre']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php 
+									<?php
 									$ubicacion = $new_location.'&del_maq='.simpleEncode($maq['idMaquinas'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar a Maquina '.$maq['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar a Maquina '.$maq['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Trabajador" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 								</div>
 							</td>
@@ -1158,22 +1155,22 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 					<td>Lote</td>
 					<td></td>
 				</tr>
-				<?php 
+				<?php
 				if ($arrMuestras!=false && !empty($arrMuestras) && $arrMuestras!='') {
 					//recorro el lsiatdo entregado por la base de datos
 					foreach ($arrMuestras as $muestra) { ?>
 						<tr class="item-row linea_punteada">
-							<td class="item-name" colspan="2"><?php echo $muestra['ProductorNombre'];?></td>
-							<td class="item-name" colspan="2"><?php echo $muestra['n_folio_pallet'];?></td>
-							<td class="item-name"><?php echo $muestra['lote'];?></td>
+							<td class="item-name" colspan="2"><?php echo $muestra['ProductorNombre']; ?></td>
+							<td class="item-name" colspan="2"><?php echo $muestra['n_folio_pallet']; ?></td>
+							<td class="item-name"><?php echo $muestra['lote']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
 									<a href="<?php echo $new_location.'&cloneMuestra='.$muestra['idMuestras'].'&cantPuntos='.$row_data['Producto_cantPuntos'].'&idCalidad='.$row_data['Producto_idCalidad']; ?>" title="Clonar Registro" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a>
 									<a href="<?php echo $new_location.'&editMuestra='.$muestra['idMuestras'].'&cantPuntos='.$row_data['Producto_cantPuntos'].'&idCalidad='.$row_data['Producto_idCalidad']; ?>" title="Editar Registro" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-									<?php 
+									<?php
 									$ubicacion = $new_location.'&del_muestra='.simpleEncode($muestra['idMuestras'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el registro ?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Registro" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+									$dialogo   = '¿Realmente deseas eliminar el registro ?'; ?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Registro" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -1185,26 +1182,25 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 				?>
 
 				<tr>
-					<td colspan="6" class="blank word_break"> 
-						<?php echo $row_data['Observaciones'];?>
+					<td colspan="6" class="blank word_break">
+						<?php echo $row_data['Observaciones']; ?>
 					</td>
 				</tr>
 				<tr><td colspan="6" class="blank"><p>Observaciones</p></td></tr>
 
-				
 			</tbody>
 		</table>
     </div>
-    
+
 	<table id="items" style="margin-bottom: 20px;">
         <tbody>
-            
+
 			<tr class="invoice-total" bgcolor="#f1f1f1">
                 <td colspan="5">Archivos Adjuntos</td>
                 <td width="160"><a href="<?php echo $new_location.'&addFile=true' ?>" title="Agregar Archivo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Archivos</a></td>
             </tr>
-            
-			<?php 
+
+			<?php
 			if ($arrArchivos!=false && !empty($arrArchivos) && $arrArchivos!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
@@ -1214,31 +1210,28 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $new_location.'&del_file='.simpleEncode($producto['idArchivo'], fecha_actual());
-								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?'; ?>
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
-					 
-				 <?php 
+
+				 <?php
 				$numeral++;
 				}
-			}?>
+			} ?>
 
 		</tbody>
     </table>
 
 </div>
 
-
-<div class="clearfix"></div>
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location.'?pagina=1' ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location.'?pagina=1' ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -1247,4 +1240,5 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -115,7 +115,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado_cargas', $SI
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -143,7 +143,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_date('FNacimiento','FNacimiento', $x5, 2);
 
 				$Form_Inputs->form_input_hidden('idTrabajador', $_GET['id'], 2);
-				$Form_Inputs->form_input_hidden('idEstado', 1, 2);?>
+				$Form_Inputs->form_input_hidden('idEstado', 1, 2); ?>
 
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
@@ -154,7 +154,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</div>
 	</div>
 </div>
-
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
@@ -185,9 +184,9 @@ $arrCargas = db_select_array (false, $SIS_query, 'trabajadores_listado_cargas', 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Cargas Familiares');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Cargas Familiares'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Carga Familiar</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Carga Familiar</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -239,13 +238,13 @@ $arrCargas = db_select_array (false, $SIS_query, 'trabajadores_listado_cargas', 
 						<td><?php echo $carga['Nombre'].' '.$carga['ApellidoPat'].' '.$carga['ApellidoMat']; ?></td>
 						<td><?php echo fecha_estandar($carga['FNacimiento']); ?></td>
 						<td><?php echo $carga['Sexo']; ?></td>
-						<td><label class="label <?php if(isset($carga['idEstado'])&&$carga['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $carga['Estado']; ?></label></td>
+						<td><label class="label <?php if(isset($carga['idEstado'])&&$carga['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $carga['Estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$carga['idCarga']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($carga['idCarga'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la carga '.$carga['Nombre'].' '.$carga['ApellidoPat'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la carga '.$carga['Nombre'].' '.$carga['ApellidoPat'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -260,8 +259,8 @@ $arrCargas = db_select_array (false, $SIS_query, 'trabajadores_listado_cargas', 
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -270,4 +269,5 @@ $arrCargas = db_select_array (false, $SIS_query, 'trabajadores_listado_cargas', 
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

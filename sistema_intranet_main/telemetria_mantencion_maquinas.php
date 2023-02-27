@@ -74,6 +74,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['clone_idMatriz'])){ 
 	
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -93,7 +94,7 @@ if(!empty($_GET['clone_idMatriz'])){
 
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['clone_idMatriz'], 2);
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c5; Clonar" name="clone_Matriz">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -107,7 +108,7 @@ if(!empty($_GET['clone_idMatriz'])){
 	
 	
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['mod'])){ 
+}elseif(!empty($_GET['mod'])){
 //Armo cadena
 $cadena  = 'PuntoNombre_'.$_GET['mod'].' AS Nombre';
 $cadena .= ',SensoresTipo_'.$_GET['mod'].' AS Sensor';
@@ -257,7 +258,7 @@ array_push( $arrTipos,$row );
 						<td><?php echo $rowdata['PuntoNombre_'.$i]; ?></td>
 						<td><?php foreach ($arrTipos as $tipo) { if($rowdata['SensoresTipo_'.$i]==$tipo['idSensores']){ echo $tipo['Nombre'];}} ?></td>
 						<td><?php foreach ($arrTipos as $tipo) { if($rowdata['SensoresTipo_'.$i]==$tipo['idSensores']){ echo $tipo['SensorFuncion'];}} ?></td>
-						<td><?php echo $rowdata['SensoresNumero_'.$i]; ?></td>	
+						<td><?php echo $rowdata['SensoresNumero_'.$i]; ?></td>
 						<td><?php echo $rowdata['SensoresValor_'.$i]; ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
@@ -276,11 +277,11 @@ array_push( $arrTipos,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['idMatriz_2'])){ 
+}elseif(!empty($_GET['idMatriz_2'])){
 // consulto los datos
 $query = "SELECT Nombre,cantPuntos, idSistema
 FROM `telemetria_mantencion_matriz`
@@ -318,15 +319,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_select_n_auto('N° Puntos Revision','cantPuntos', $x2, 2, 1, 72);
-					
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
-				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz_2'], 2);
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_mat"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_mat">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -342,6 +342,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 //verifico que sea un administrador
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -364,12 +365,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_n_auto('N° Puntos Revision','cantPuntos', $x2, 2, 1, 72);
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
-				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				?>
-	   
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_matriz"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_matriz">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -378,7 +379,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
                     
 		</div>
 	</div>
-</div> 
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
@@ -444,7 +445,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'telemetria_mantencion_matriz',
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Matriz</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Matriz</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -522,7 +523,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'telemetria_mantencion_matriz',
 					<tr class="odd">
 						<td><?php echo $maq['Nombre']; ?></td>
 						<td><?php echo $maq['cantPuntos']; ?></td>
-						<td><label class="label <?php if(isset($maq['idEstado'])&&$maq['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $maq['Estado']; ?></label></td>	
+						<td><label class="label <?php if(isset($maq['idEstado'])&&$maq['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $maq['Estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 140px;" >
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz_2='.$maq['idMatriz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
@@ -530,7 +531,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'telemetria_mantencion_matriz',
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz='.$maq['idMatriz']; ?>" title="Editar Matriz" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($maq['idMatriz'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la matriz '.$maq['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la matriz '.$maq['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -554,4 +555,5 @@ $arrMatriz = db_select_array (false, $SIS_query, 'telemetria_mantencion_matriz',
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

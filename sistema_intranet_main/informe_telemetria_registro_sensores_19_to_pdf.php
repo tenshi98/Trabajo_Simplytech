@@ -123,9 +123,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	}
 
 	$html .= '
-	<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">  
+	<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">
 		<thead>';
-			$html .='	
+			$html .='
 			<tr>
 				<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">Fecha</th>
 				<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">Hora</th>
@@ -164,7 +164,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			/************************************************************************/
 			//TCPDF
 			case 1:
-				
+
 				require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 				// create new PDF document
@@ -223,11 +223,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					// The '@' character is used to indicate that follows an image data stream and not an image file name
 					$pdf->Image('@'.$imgdata, 15, 30, 180, 120, 'PNG', '', '', true, 150, '', false, false, 1, false, false, false);
 				}
-				
+
 				$pdf->writeHTML($html, true, false, true, false, '');
 				$pdf->lastPage();
 				$pdf->Output(DeSanitizar($pdf_file), 'I');
-		
+
 				break;
 			/************************************************************************/
 			//DomPDF (Solo compatible con PHP 5.x)

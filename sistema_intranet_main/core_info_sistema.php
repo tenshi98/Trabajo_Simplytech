@@ -55,9 +55,6 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 
 ?>
 
-
-
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -74,7 +71,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 			
 			<div class="tab-pane fade active in" id="data1">
 				<div class="wmd-panel">
-					
+
 					<div class="table-responsive">
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 							<thead>
@@ -119,12 +116,12 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 										$horas_trans2 = multHoras('24:00:00',$n_dias);
 										$Tiempo = sumahoras($Tiempo,$horas_trans2);
 									}
-								}?>
+								} ?>
 								<tr class="odd"><td>Testeo horas transcurridas</td>     <td><?php echo $Tiempo; ?></td></tr>
 								<tr class="odd"><td>Testeo horas a segundos</td>        <td><?php echo '02:00:00 hora = '.horas2segundos('02:00:00'); ?></td></tr>
 								<tr class="odd"><td>Testeo horas a minutos</td>        <td><?php echo '02:00:00 hora = '.horas2minutos('02:00:00'); ?></td></tr>
 								<tr class="odd"><td>IP Cliente</td>                     <td><?php echo obtenerIpCliente(); ?></td></tr>
-								
+
 								<tr class="odd"><td>Agente de Transporte</td>           <td><?php echo obtenerSistOperativo().' - '.obtenerNavegador(); ?></td></tr>
 								<tr class="odd"><td>username = tenshi98</td>            <td><?php $username = 'tenshi98'; echo preg_replace("/[^a-zA-Z0-9_\-]+/","",$username); ?></td></tr>
 								<tr class="odd"><td>time()</td>                         <td><?php echo time(); ?></td></tr>
@@ -168,4 +165,5 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

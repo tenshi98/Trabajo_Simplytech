@@ -96,7 +96,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idComuna) && $idComuna != '')  {          $w .= " AND usuarios_listado.idComuna = '".$idComuna."'";}
 				if(isset($Direccion) && $Direccion != '')  {        $w .= " AND usuarios_listado.Direccion LIKE '%".$Direccion."%'";}
 				if(isset($idSistema) && $idSistema != '')  {        $w .= " AND usuarios_sistemas.idSistema = '".$idSistema."'";}
-				if(isset($rango_a) && $rango_a != ''&&isset($rango_b) && $rango_b!=''){ 
+				if(isset($rango_a) && $rango_a != ''&&isset($rango_b) && $rango_b!=''){
 					$w .= " AND usuarios_listado.fNacimiento BETWEEN '".$rango_a."' AND '".$rango_b."'";
 				}
 				//consulta

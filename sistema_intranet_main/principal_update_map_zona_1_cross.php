@@ -26,7 +26,7 @@ if(isset($_SESSION['usuario']['zona']['id_Geo'])&&$_SESSION['usuario']['zona']['
 	$id_Geo = $_SESSION['usuario']['zona']['id_Geo'];
 }else{
 	$id_Geo = 1;//seguimiento activo
-} 
+}
 //filtro
 $z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
 //solo los equipos que tengan el seguimiento activado
@@ -99,7 +99,6 @@ foreach ($arrUnimed as $data) {
 	$arrFinalUnimed[$data['idUniMed']] = $data['Nombre'];
 }
 ?>
-
 
 <script>
 	var HoraRefresco = '<?php echo hora_actual(); ?>';

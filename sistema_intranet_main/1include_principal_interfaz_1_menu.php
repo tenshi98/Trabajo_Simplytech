@@ -20,19 +20,19 @@ echo '
 		if($temp!=0){
 			echo '<li><a href="#Menu_tab_2" data-toggle="tab"><i class="fa fa-fw fa-bullseye" aria-hidden="true"></i> Telemetria</a></li>';
 		}
-		
+
 		//Bodegas					
 		$temp = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4] + $prm_x[5];
 		if($temp!=0){
 			echo '<li><a href="#Menu_tab_3" data-toggle="tab"><i class="fa fa-fw fa-cubes" aria-hidden="true"></i> Bodegas</a></li>';
 		}
-		
+
 		//Lubricacion
 		$temp = $prm_x[6] + $prm_x[10] + $prm_x[11];					
 		if($temp!=0) {
 			echo '<li><a href="#Menu_tab_4" data-toggle="tab"><i class="fa fa-fw fa-cubes" aria-hidden="true"></i> Operaciones x Contrato</a></li>';
 		}
-		
+
 		//Repositorio
 		if($n_permisos['idOpcionesGen_9']=='1' OR $idTipoUsuario==1){
 			echo '<li><a href="#Menu_tab_5" data-toggle="tab"><i class="fa fa-database" aria-hidden="true"></i> Repositorio</a></li>';
@@ -43,7 +43,7 @@ echo '
 		if($temp!=0) { 
 			echo '<li><a href="#Menu_tab_6" data-toggle="tab"><i class="fa fa-truck" aria-hidden="true"></i> Cross Shipping</a></li>';
 		}
-		
+
 		//Cross Checking
 		$temp = $prm_x[38] + $prm_x[39] + $prm_x[40] + $prm_x[41];					
 		if($temp!=0) { 
@@ -61,4 +61,5 @@ echo '
 echo '
 	</ul>
 </div>';
+
 ?>

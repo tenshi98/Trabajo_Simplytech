@@ -26,7 +26,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -194,7 +194,7 @@ $html = '
 							$html .= '</tr>';
 						}
 					}
-					
+
 					//si existen productos
 					if ($arrDocumentos!=false && !empty($arrDocumentos) && $arrDocumentos!='') {
 						$html .= '<tr class="active"><td colspan="3"><strong>Montos</strong></td></tr>';
@@ -259,4 +259,5 @@ echo $html;
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Print.php';
+
 ?>

@@ -255,7 +255,7 @@ require_once '0_validate_user_1.php';
 				//se consultan los estados de pago de los clientes
 				$SIS_query = 'idEstadoPago, Nombre';
 				$SIS_join  = '';
-				$SIS_where = '';
+				$SIS_where = 'idEstadoPago!=0';
 				$SIS_order = 0;
 				$arrEstados = array();
 				$arrEstados = db_select_array (false, $SIS_query, 'aguas_clientes_estadopago', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

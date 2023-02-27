@@ -52,8 +52,9 @@ $SIS_where = 'idSistema ='.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Datos Basicos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Datos Basicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -78,7 +79,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 						<li class="active"><a href="<?php echo 'core_sistemas_crosstech.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >CrossTech</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_crossenergy.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >CrossEnergy</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_social.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -86,8 +87,8 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($CrossTech_HoraPrevRev)){        $x1  = $CrossTech_HoraPrevRev;        }else{$x1  = $rowdata['CrossTech_HoraPrevRev'];}
 					if(isset($CrossTech_HoraPrevision)){      $x2  = $CrossTech_HoraPrevision;      }else{$x2  = $rowdata['CrossTech_HoraPrevision'];}
@@ -102,7 +103,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 					if(isset($CrossTech_FechaTempMax)){       $x11 = $CrossTech_FechaTempMax;       }else{$x11 = $rowdata['CrossTech_FechaTempMax'];}
 					if(isset($CrossTech_DiasTempMin)){        $x12 = $CrossTech_DiasTempMin;        }else{$x12 = $rowdata['CrossTech_DiasTempMin'];}
 					if(isset($CrossTech_FechaDiasTempMin)){   $x13 = $CrossTech_FechaDiasTempMin;   }else{$x13 = $rowdata['CrossTech_FechaDiasTempMin'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_tittle(3, 'Temperatura Proyectada');
@@ -112,14 +113,14 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 					$Form_Inputs->form_input_number_spinner('Temperatura Minima Envio Correo','CrossTech_HeladaTemp', $x4, 0, 100, '0.01', 2, 2);
 					$Form_Inputs->form_time('Hora Inicio envio correo','CrossTech_HeladaMailHoraIni', $x5, 2, 1);
 					$Form_Inputs->form_time('Hora Termino envio correo','CrossTech_HeladaMailHoraTerm', $x6, 2, 1);
-					
+
 					$Form_Inputs->form_tittle(3, 'Unidades de Frio');
 					$Form_Inputs->form_date('Fecha a contar desde','CrossTech_FechaUnidadFrio', $x7, 2);
-					
+
 					$Form_Inputs->form_tittle(3, 'Horas bajo x Grados');
 					$Form_Inputs->form_input_number_spinner('Horas Temp Min','CrossTech_TempMin', $x8, -100, 100, '0.01', 2, 2);
 					$Form_Inputs->form_date('Fecha Horas Temp Min','CrossTech_FechaTempMin', $x9, 2);
-					
+
 					$Form_Inputs->form_tittle(3, 'Horas sobre x Grados');
 					$Form_Inputs->form_input_number_spinner('Horas Temp Max','CrossTech_TempMax', $x10, -100, 100, '0.01', 2, 2);
 					$Form_Inputs->form_date('Fecha a contar desde','CrossTech_FechaTempMax', $x11, 2);
@@ -153,14 +154,14 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

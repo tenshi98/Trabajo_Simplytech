@@ -36,15 +36,15 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 	$SIS_where .="(telemetria_listado_crossenergy_dia.FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
 $SIS_where .=" AND telemetria_listado_crossenergy_dia.idTelemetria=".$_GET['idTelemetria'];
-			
+
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_crossenergy_dia', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
-			
+
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
 }else{
-	
+
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo, cantSensores', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowEquipo');
 
@@ -168,8 +168,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$m_table .= '<td><strong>'.cantidades($arrDataTotal[$x]['Value'], 2).'</strong></td>';
 	}
 	$m_table .= '</tr>';
-	
-	/******************************************/  
+
+	/******************************************/
 	//variables
 	/*$Graphics_xData       = 'var xData = [';
 	$Graphics_yData       = 'var yData = [';
@@ -239,7 +239,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	?>
 
 	<style>
-	#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif';?>");background-repeat: no-repeat;background-position: center;}
+	#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif'; ?>");background-repeat: no-repeat;background-position: center;}
 	</style>
 	<div id="loading"></div>
 	<script>
@@ -250,7 +250,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		
 							
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Resumen Dia', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo']);?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Resumen Dia', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo']); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
 			<?php
 			$search2 = '&submit_filter=Filtrar';
@@ -260,15 +260,15 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			if(isset($_GET['inform_unimed'])&&$_GET['inform_unimed']!=''){$search2.= '&inform_unimed='.$_GET['inform_trans'];}
 			?>
 			<a target="new" href="<?php echo 'informe_crossenergy_02.php?bla=bla'.$search.$search2 ; ?>" class="btn btn-sm btn-metis-1 pull-right margin_width"><i class="fa fa-area-chart" aria-hidden="true"></i> Ir a Resumen Hora</a>
-			
+
 			<a target="new" href="<?php echo 'informe_crossenergy_01_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
-			
+
 			<?php if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 				<input class="btn btn-sm btn-metis-3 pull-right margin_width fa-input" type="button" onclick="Export()" value="&#xf1c1; Exportar a PDF"/>
 			<?php }else{ ?>
 				<a target="new" href="<?php echo 'informe_crossenergy_01_to_pdf.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
 			<?php } ?>
-			
+
 		</div>
 	</div>
 	<div class="clearfix"></div>
@@ -276,12 +276,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	<?php 
 	//Se verifica si se pidieron los graficos
 	if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
-		
+
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">
 				<header>
 					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-					<h5> 
+					<h5>
 						<?php
 						//si se envian los datos desde afuera
 						if(isset($_GET['inform_trans'])&&$_GET['inform_trans']!=''){
@@ -295,7 +295,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				</header>
 				<div class="table-responsive" id="grf">	
 					
-					<?php 
+					<?php
 					//si se envian los datos desde afuera
 					if(isset($_GET['inform_tittle'])&&$_GET['inform_tittle']!=''&&isset($_GET['inform_unimed'])&&$_GET['inform_unimed']!=''){
 						$gr_tittle = $_GET['inform_tittle'];
@@ -328,16 +328,15 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 				<?php if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){?>   <input type="hidden" name="h_inicio"   id="h_inicio"  value="<?php echo $_GET['h_inicio']; ?>" /><?php } ?>
 				<?php if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){?> <input type="hidden" name="h_termino"  id="h_termino" value="<?php echo $_GET['h_termino']; ?>" /><?php } ?>
-				
-				
+
 				<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
-			
+
 			</form>
 
 			<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>
 			<script>
 				var node = document.getElementById('graphLinear_1');
-				
+
 				function sendDatatoSRV(img) {
 					$('#img_adj').val(img);
 					//$('#img_adj').val($('#img-out').html());
@@ -363,7 +362,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								console.error('oops, something went wrong!', error);
 								alert('No se puede exportar!');
 								document.getElementById("loading").style.display = "none";
-							});		
+							});
 						}
 					, 3000);
 				}
@@ -377,7 +376,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 				<h5>Tabla de Datos Grupo <?php echo $rowGrupo['Nombre']; ?></h5>
-				
+
 			</header>
 			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -397,10 +396,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-			
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Filtro de busqueda
@@ -417,8 +416,9 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 alert_post_data(2,1,1, $Alert_Text);
+
 ?>
-		
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -466,11 +466,10 @@ alert_post_data(2,1,1, $Alert_Text);
 </div>
 <?php } ?>
 
-	
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

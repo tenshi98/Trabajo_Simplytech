@@ -61,10 +61,11 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Editar Datos Basicos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Editar Datos Basicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -93,7 +94,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<?php if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -101,8 +102,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Codigo)){           $x1  = $Codigo;          }else{$x1  = $rowdata['Codigo'];}
 					if(isset($Nombre)){           $x2  = $Nombre;          }else{$x2  = $rowdata['Nombre'];}
@@ -110,7 +111,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					if(isset($Serie)){            $x4  = $Serie;           }else{$x4  = $rowdata['Serie'];}
 					if(isset($Fabricante)){       $x5  = $Fabricante;      }else{$x5  = $rowdata['Fabricante'];}
 					if(isset($fincorporacion)){   $x6  = $fincorporacion;  }else{$x6  = $rowdata['fincorporacion'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_text('Codigo', 'Codigo', $x1, 1);
@@ -142,10 +143,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	<div class="clearfix"></div>
 </div>
 
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -291,7 +291,7 @@ if(!empty($_GET['addFile'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idSistema)){   $x1  = $idSistema;  }else{$x1  = '';}
@@ -323,10 +323,10 @@ if(!empty($_GET['addFile'])){ ?>
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['editDoc'])){ 
+}elseif(!empty($_GET['editDoc'])){
 //Traigo los datos del producto previamente seleccionado
 $SIS_query = 'idDocPago, NDocPago, Fpago, vTotal, idSistema';
 $SIS_join  = '';
@@ -373,7 +373,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_documentos', $SIS
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_documento"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_documento">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -383,7 +383,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_documentos', $SIS
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addDoc'])){  ?>
+} elseif(!empty($_GET['addDoc'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -422,7 +422,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_documentos', $SIS
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_documento"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_documento">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -468,7 +468,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_bolet
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_boleta_emp"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_boleta_emp">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -478,7 +478,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_bolet
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addBoletaEmp'])){ ?>
+} elseif(!empty($_GET['addBoletaEmp'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -506,7 +506,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_bolet
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_boleta_emp"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_boleta_emp">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -516,7 +516,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_bolet
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['editBoleta'])){	
+}elseif(!empty($_GET['editBoleta'])){
 //se consiltan los datos
 $SIS_query = 'idTrabajador, N_Doc, Descripcion, Valor';
 $SIS_join  = '';
@@ -559,7 +559,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_boleta"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_boleta">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -569,9 +569,9 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addBoleta'])){  
+} elseif(!empty($_GET['addBoleta'])){  
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";?>
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -603,7 +603,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_boleta"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_boleta">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -685,10 +685,9 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros
 						document.getElementById("div_Cantidad_fake").style.display = 'none';
 					<?php } ?>
 				</script>
-				
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_otros"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_otros">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -698,7 +697,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addOtros'])){  ?>
+} elseif(!empty($_GET['addOtros'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -744,7 +743,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_otros"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_otros">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -753,7 +752,6 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros
 		</div>
 	</div>
 </div>
-
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['editServicios'])){  
@@ -824,8 +822,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_servi
 				/**************************************/
 				
 				?>
-				
-				
+
 				<script>
 					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){?>
 						document.getElementById("div_idServicio").style.display = 'none';
@@ -839,10 +836,9 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_servi
 						document.getElementById("div_Cantidad_fake").style.display = 'none';
 					<?php } ?>
 				</script>
-				
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_servicio"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_servicio">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -852,7 +848,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_servi
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addServicios'])){  ?>
+} elseif(!empty($_GET['addServicios'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -898,7 +894,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_servi
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_servicio"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_servicio">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -990,10 +986,9 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_arrie
 						document.getElementById("div_Cantidad_fake").style.display = 'none';
 					<?php } ?>
 				</script>
-				
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_arriendo"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_arriendo">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -1003,7 +998,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_arrie
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addArriendo'])){  ?>
+} elseif(!empty($_GET['addArriendo'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -1049,7 +1044,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_arrie
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_arriendo"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_arriendo">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -1124,7 +1119,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
-				
+
 				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 
@@ -1155,10 +1150,9 @@ foreach ($arrPermisos as $prod) {
 						document.getElementById("div_Cantidad_fake").style.display = 'none';
 					<?php } ?>
 				</script>
-				
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_ins"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_ins">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -1168,7 +1162,7 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addIns'])){  
+} elseif(!empty($_GET['addIns'])){  
 //Se revisan los permisos a los productos
 $SIS_query = 'idProducto';
 $SIS_join  = '';
@@ -1211,7 +1205,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '');
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
-				
+
 				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 
@@ -1229,7 +1223,7 @@ foreach ($arrPermisos as $prod) {
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_ins"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_ins">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -1239,7 +1233,7 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['editProd'])){  
+} elseif(!empty($_GET['editProd'])){  
 //Traigo los datos del producto previamente seleccionado
 $SIS_query = '
 ocompra_listado_existencias_productos.idProducto, 
@@ -1270,7 +1264,7 @@ $arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos',  $
 $zx1 = "idProducto=0";
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
-} 
+}
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -1303,7 +1297,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario',Cantidades_decimales_justos($rowdata['vUnitario']));
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', Cantidades_decimales_justos($rowdata['vUnitario']), 2);
-				
+
 				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 
@@ -1334,9 +1328,9 @@ foreach ($arrPermisos as $prod) {
 						document.getElementById("div_Cantidad_fake").style.display = 'none';
 					<?php } ?>
 				</script>
-			
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_prod"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_prod">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -1388,7 +1382,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_disabled('Valor Unitario Neto','Unitario', '');
 				$Form_Inputs->form_input_number('Valor Total Neto', 'vTotal', $x3, 2);
 				$Form_Inputs->form_input_hidden('vUnitario', '', 2);
-				
+
 				echo prod_print_value('productos_listado', 'idProducto', 'unimed', 'proveedor', $dbConn); 
 				echo operacion_input('Cantidad', 'vTotal', 'Unitario', 'vUnitario', 4);
 				
@@ -1406,9 +1400,9 @@ foreach ($arrPermisos as $prod) {
 				/**************************************/
 
 				?>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -1690,11 +1684,11 @@ $total = 0;
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<?php
 	$ubicacion = $new_location.'&view='.$_GET['view'].'&ing_ocompra='.$_GET['view'];
-	$dialogo   = '¿Desea terminar el documento?';?>
-	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary pull-right margin_form_btn" ><i class="fa fa-check-square-o" aria-hidden="true"></i>  Ingresar Documento</a>			
+	$dialogo   = '¿Desea terminar el documento?'; ?>
+	<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary pull-right margin_form_btn" ><i class="fa fa-check-square-o" aria-hidden="true"></i>  Ingresar Documento</a>
 
 	<div class="clearfix"></div>
-</div> 
+</div>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
@@ -1744,7 +1738,7 @@ $total = 0;
 
     <table id="items">
         <tbody>
-            
+
 			<tr>
                 <th colspan="5">Detalle</th>
                 <th width="160">Acciones</th>
@@ -1758,39 +1752,39 @@ $total = 0;
 					<?php } ?>
 				</td>
 			</tr>
-			<?php 
+			<?php
 			if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrProductos as $prod) {?>
 					<tr class="item-row linea_punteada">
 						<td class="item-name" colspan="2">
-							<?php echo $prod['Nombre'];?>
+							<?php echo $prod['Nombre']; ?>
 						</td>
 						<td class="item-name">
-							<?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unidad'];?>
+							<?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unidad']; ?>
 						</td>
 						<td class="item-name">
-							<?php echo valores($prod['vUnitario'], 0).' x '.$prod['Unidad'];?>
+							<?php echo valores($prod['vUnitario'], 0).' x '.$prod['Unidad']; ?>
 						</td>
 						<td class="item-name">
-							<?php echo valores($prod['vTotal'], 0);?>
+							<?php echo valores($prod['vTotal'], 0); ?>
 						</td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<a href="<?php echo $new_location.'&editProd='.$prod['idExistencia']; ?>" title="Editar Producto" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<a href="<?php echo 'view_precios.php?type='.simpleEncode( 1, fecha_actual()).'&view='.simpleEncode($prod['idProducto'], fecha_actual()); ?>" title="Ver Variacion Precios Producto" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
 								<?php if(!isset($_GET['soli']) OR $_GET['soli']==''){ ?>
-									<?php 
+									<?php
 									$ubicacion = $new_location.'&del_prod='.simpleEncode($prod['idExistencia'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el producto '.$prod['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Producto" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+									$dialogo   = '¿Realmente deseas eliminar el producto '.$prod['Nombre'].'?'; ?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Producto" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>
 					</tr>
 			<?php }
-			}?>
-			
+			} ?>
+
 			<tr class="item-row fact_tittle">
 				<td colspan="5">Insumos a Solicitar</td>
 				<td>
@@ -1799,39 +1793,39 @@ $total = 0;
 					<?php } ?>
 				</td>
 			</tr>
-			<?php 
+			<?php
 			if ($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrInsumos as $prod) {?>
 					<tr class="item-row linea_punteada">
 						<td class="item-name" colspan="2">
-							<?php echo $prod['Nombre'];?>
+							<?php echo $prod['Nombre']; ?>
 						</td>
 						<td class="item-name">
-							<?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unidad'];?>
+							<?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unidad']; ?>
 						</td>
 						<td class="item-name">
-							<?php echo valores($prod['vUnitario'], 0).' x '.$prod['Unidad'];?>
+							<?php echo valores($prod['vUnitario'], 0).' x '.$prod['Unidad']; ?>
 						</td>
 						<td class="item-name">
-							<?php echo valores($prod['vTotal'], 0);?>
+							<?php echo valores($prod['vTotal'], 0); ?>
 						</td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<a href="<?php echo $new_location.'&editIns='.$prod['idExistencia']; ?>" title="Editar Insumo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<a href="<?php echo 'view_precios.php?type='.simpleEncode( 2, fecha_actual()).'&view='.simpleEncode($prod['idProducto'], fecha_actual()); ?>" title="Ver Variacion Precios Insumo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
 										<?php if(!isset($_GET['soli']) OR $_GET['soli']==''){ ?>
-									<?php 
+									<?php
 									$ubicacion = $new_location.'&del_ins='.simpleEncode($prod['idExistencia'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el producto '.$prod['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Insumo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+									$dialogo   = '¿Realmente deseas eliminar el producto '.$prod['Nombre'].'?'; ?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Insumo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>
 					</tr>
 			<?php }
-			}?>
-			
+			} ?>
+
 			<tr class="item-row fact_tittle">
 				<td colspan="5">Arriendo de equipos a Solicitar</td>
 				<td>
@@ -1840,7 +1834,7 @@ $total = 0;
 					<?php } ?>
 				</td>
 			</tr>
-			<?php 
+			<?php
 			if ($arrArriendos!=false && !empty($arrArriendos) && $arrArriendos!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrArriendos as $prod){?>
@@ -1849,23 +1843,23 @@ $total = 0;
 							<?php echo $prod['Nombre']; ?>
 						</td>
 						<td class="item-name">
-							<?php  echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia'];?>
+							<?php  echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?>
 						</td>
 						<td class="item-name">
-							<?php echo valores($prod['vUnitario'], 0).' x '.$prod['Frecuencia'];?>
+							<?php echo valores($prod['vUnitario'], 0).' x '.$prod['Frecuencia']; ?>
 						</td>
 						<td class="item-name">
-							<?php echo valores($prod['vTotal'], 0);?>
-						</td>	
+							<?php echo valores($prod['vTotal'], 0); ?>
+						</td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<a href="<?php echo $new_location.'&editArriendo='.$prod['idExistencia']; ?>" title="Editar Arriendo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<a href="<?php echo 'view_precios.php?type='.simpleEncode( 3, fecha_actual()).'&view='.simpleEncode($prod['idEquipo'], fecha_actual()); ?>" title="Ver Variacion Precios Arriendo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
 								<?php if(!isset($_GET['soli']) OR $_GET['soli']==''){ ?>
-									<?php 
+									<?php
 									$ubicacion = $new_location.'&del_arriendo='.simpleEncode($prod['idExistencia'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el arriendo '.$prod['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Arriendo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+									$dialogo   = '¿Realmente deseas eliminar el arriendo '.$prod['Nombre'].'?'; ?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Arriendo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>
@@ -1873,8 +1867,8 @@ $total = 0;
 				 <?php 
 					
 				}
-			}?>
-			
+			} ?>
+
 			<tr class="item-row fact_tittle">
 				<td colspan="5">Servicios a Solicitar</td>
 				<td>
@@ -1883,7 +1877,7 @@ $total = 0;
 					<?php } ?>
 				</td>
 			</tr>
-			<?php 
+			<?php
 			if ($arrServicios!=false && !empty($arrServicios) && $arrServicios!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrServicios as $prod){?>
@@ -1892,31 +1886,31 @@ $total = 0;
 							<?php echo $prod['Nombre']; ?>
 						</td>
 						<td class="item-name">
-							<?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia'];?>
+							<?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?>
 						</td>
 						<td class="item-name">
-							<?php echo valores($prod['vUnitario'], 0).' x '.$prod['Frecuencia'];?>
+							<?php echo valores($prod['vUnitario'], 0).' x '.$prod['Frecuencia']; ?>
 						</td>
 						<td class="item-name">
-							<?php echo valores($prod['vTotal'], 0);?>
+							<?php echo valores($prod['vTotal'], 0); ?>
 						</td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<a href="<?php echo $new_location.'&editServicios='.$prod['idExistencia']; ?>" title="Editar Servicio" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<a href="<?php echo 'view_precios.php?type='.simpleEncode( 4, fecha_actual()).'&view='.simpleEncode($prod['idServicio'], fecha_actual()); ?>" title="Ver Variacion Precios Servicio" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
 								<?php if(!isset($_GET['soli']) OR $_GET['soli']==''){ ?>
-									<?php 
+									<?php
 									$ubicacion = $new_location.'&del_servicio='.simpleEncode($prod['idExistencia'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el servicio '.$prod['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Servicio" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+									$dialogo   = '¿Realmente deseas eliminar el servicio '.$prod['Nombre'].'?'; ?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Servicio" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>
 					</tr>
 				 <?php 
 				}
-			}?>
-			
+			} ?>
+
 			<tr class="item-row fact_tittle">
 				<td colspan="5">Otros a Solicitar</td>
 				<td>
@@ -1925,29 +1919,29 @@ $total = 0;
 					<?php } ?>
 				</td>
 			</tr>
-			<?php 
+			<?php
 			if ($arrOtros!=false && !empty($arrOtros) && $arrOtros!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrOtros as $prod){?>
 					<tr class="item-row linea_punteada">
-						<td class="item-name" colspan="2"><?php echo $prod['Nombre'];?></td>
+						<td class="item-name" colspan="2"><?php echo $prod['Nombre']; ?></td>
 						<td class="item-name">
 							<?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?>
 						</td>
 						<td class="item-name">
-							<?php echo valores($prod['vUnitario'], 0).' x '.$prod['Frecuencia'];?>
+							<?php echo valores($prod['vUnitario'], 0).' x '.$prod['Frecuencia']; ?>
 						</td>
 						<td class="item-name">
-							<?php echo valores($prod['vTotal'], 0);?>
+							<?php echo valores($prod['vTotal'], 0); ?>
 						</td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<a href="<?php echo $new_location.'&editOtros='.$prod['idExistencia']; ?>" title="Editar Otros" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php if(!isset($_GET['soli']) OR $_GET['soli']==''){ ?>
-									<?php 
+									<?php
 									$ubicacion = $new_location.'&del_otros='.simpleEncode($prod['idExistencia'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar  '.$prod['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Otros" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+									$dialogo   = '¿Realmente deseas eliminar  '.$prod['Nombre'].'?'; ?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Otros" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>
@@ -1955,8 +1949,8 @@ $total = 0;
 				 <?php 
 					
 				}
-			}?>
-			
+			} ?>
+
 			<tr class="item-row fact_tittle">
 				<td colspan="5">Boletas de Honorarios Trabajadores</td>
 				<td>
@@ -1965,7 +1959,7 @@ $total = 0;
 					<?php } ?>
 				</td>
 			</tr>
-			<?php 
+			<?php
 			if ($arrBoletas!=false && !empty($arrBoletas) && $arrBoletas!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrBoletas as $prod){?>
@@ -1978,18 +1972,18 @@ $total = 0;
 							<div class="btn-group" style="width: 70px;" >
 								<a href="<?php echo $new_location.'&editBoleta='.$prod['idExistencia']; ?>" title="Editar Boleta" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php if(!isset($_GET['soli']) OR $_GET['soli']==''){ ?>
-									<?php 
+									<?php
 									$ubicacion = $new_location.'&del_boleta='.simpleEncode($prod['idExistencia'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la boleta del trabajador '.$prod['TrabNombre'].' '.$prod['TrabApellidoPat'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Boleta" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+									$dialogo   = '¿Realmente deseas eliminar la boleta del trabajador '.$prod['TrabNombre'].' '.$prod['TrabApellidoPat'].'?'; ?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Boleta" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>
 					</tr>
 				 <?php 	
 				}
-			}?>
-			
+			} ?>
+
 			<tr class="item-row fact_tittle">
 				<td colspan="5">Boletas de Honorarios Empresas</td>
 				<td>
@@ -1998,7 +1992,7 @@ $total = 0;
 					<?php } ?>
 				</td>
 			</tr>
-			<?php 
+			<?php
 			if ($arrBoletasEmp!=false && !empty($arrBoletasEmp) && $arrBoletasEmp!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrBoletasEmp as $prod){?>
@@ -2009,25 +2003,25 @@ $total = 0;
 							<div class="btn-group" style="width: 70px;" >
 								<a href="<?php echo $new_location.'&editBoletaEmp='.$prod['idExistencia']; ?>" title="Editar Boleta" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php if(!isset($_GET['soli']) OR $_GET['soli']==''){ ?>
-									<?php 
+									<?php
 									$ubicacion = $new_location.'&del_boleta_emp='.simpleEncode($prod['idExistencia'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la boleta de la empresa?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Boleta" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+									$dialogo   = '¿Realmente deseas eliminar la boleta de la empresa?'; ?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Boleta" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>
 					</tr>
 				 <?php 	
 				}
-			}?>
-			
+			} ?>
+
 			<tr id="hiderow">
                 <td colspan="6"><a name="Ancla_obs"></a></td>
             </tr>
 			
             <tr>
-				<td colspan="6" class="blank word_break"> 
-					<?php echo $rowdata['Observaciones'];?>
+				<td colspan="6" class="blank word_break">
+					<?php echo $rowdata['Observaciones']; ?>
 				</td>
             </tr>
             <tr>
@@ -2060,11 +2054,11 @@ $total = 0;
 						case 1:
 						?>
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><?php echo $producto['Prod_Sistema'];?></td>
-								<td class="item-name"><?php echo n_doc($producto['Prod_idSolicitud'], 5);?></td>
+								<td class="item-name"><?php echo $producto['Prod_Sistema']; ?></td>
+								<td class="item-name"><?php echo n_doc($producto['Prod_idSolicitud'], 5); ?></td>
 								<td class="item-name">Productos</td>
-								<td class="item-name"><?php echo $producto['Prod_Nombre'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Prod_Cantidad']).' '.$producto['Prod_Medida'];?></td>
+								<td class="item-name"><?php echo $producto['Prod_Nombre']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Prod_Cantidad']).' '.$producto['Prod_Medida']; ?></td>
 								<td class="item-name">
 									<div class="btn-group" style="width: 35px;" >
 										<?php 
@@ -2075,8 +2069,8 @@ $total = 0;
 										$ubicacion .= '&del_sol_type='.$producto['Type'];
 										$ubicacion .= '&del_sol_prod='.$producto['Prod_Soli'];
 										$ubicacion .= '&del_sol_cant='.Cantidades_decimales_justos($producto['Prod_Cantidad']);
-										$dialogo   = '¿Realmente deseas eliminar la solicitud de '.$producto['Prod_Nombre'].' por '.Cantidades_decimales_justos($producto['Prod_Cantidad']).' '.$producto['Prod_Medida'].' ?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+										$dialogo   = '¿Realmente deseas eliminar la solicitud de '.$producto['Prod_Nombre'].' por '.Cantidades_decimales_justos($producto['Prod_Cantidad']).' '.$producto['Prod_Medida'].' ?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									</div>
 								</td>
 							</tr>
@@ -2087,11 +2081,11 @@ $total = 0;
 						case 2:
 							?>
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><?php echo $producto['Ins_Sistema'];?></td>
-								<td class="item-name"><?php echo n_doc($producto['Ins_idSolicitud'], 5);?></td>
+								<td class="item-name"><?php echo $producto['Ins_Sistema']; ?></td>
+								<td class="item-name"><?php echo n_doc($producto['Ins_idSolicitud'], 5); ?></td>
 								<td class="item-name">Insumos</td>
-								<td class="item-name"><?php echo $producto['Ins_Nombre'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Ins_Cantidad']).' '.$producto['Ins_Medida'];?></td>
+								<td class="item-name"><?php echo $producto['Ins_Nombre']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Ins_Cantidad']).' '.$producto['Ins_Medida']; ?></td>
 								<td class="item-name">
 									<div class="btn-group" style="width: 35px;" >
 										<?php 
@@ -2102,8 +2096,8 @@ $total = 0;
 										$ubicacion .= '&del_sol_type='.$producto['Type'];
 										$ubicacion .= '&del_sol_prod='.$producto['Ins_Soli'];
 										$ubicacion .= '&del_sol_cant='.Cantidades_decimales_justos($producto['Ins_Cantidad']);
-										$dialogo   = '¿Realmente deseas eliminar la solicitud de '.$producto['Ins_Nombre'].' por '.Cantidades_decimales_justos($producto['Ins_Cantidad']).' '.$producto['Ins_Medida'].' ?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+										$dialogo   = '¿Realmente deseas eliminar la solicitud de '.$producto['Ins_Nombre'].' por '.Cantidades_decimales_justos($producto['Ins_Cantidad']).' '.$producto['Ins_Medida'].' ?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									</div>
 								</td>
 							</tr>
@@ -2114,11 +2108,11 @@ $total = 0;
 						case 3:
 							?>
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><?php echo $producto['Arri_Sistema'];?></td>
-								<td class="item-name"><?php echo n_doc($producto['Arri_idSolicitud'], 5);?></td>
+								<td class="item-name"><?php echo $producto['Arri_Sistema']; ?></td>
+								<td class="item-name"><?php echo n_doc($producto['Arri_idSolicitud'], 5); ?></td>
 								<td class="item-name">Arriendos</td>
-								<td class="item-name"><?php echo $producto['Arri_Nombre'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Arri_Cantidad']).' '.$producto['Arri_Medida'];?></td>
+								<td class="item-name"><?php echo $producto['Arri_Nombre']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Arri_Cantidad']).' '.$producto['Arri_Medida']; ?></td>
 								<td class="item-name">
 									<div class="btn-group" style="width: 35px;" >
 										<?php 
@@ -2129,8 +2123,8 @@ $total = 0;
 										$ubicacion .= '&del_sol_type='.$producto['Type'];
 										$ubicacion .= '&del_sol_prod='.$producto['Arri_Soli'];
 										$ubicacion .= '&del_sol_cant='.Cantidades_decimales_justos($producto['Arri_Cantidad']);
-										$dialogo   = '¿Realmente deseas eliminar la solicitud de '.$producto['Arri_Nombre'].' por '.Cantidades_decimales_justos($producto['Arri_Cantidad']).' '.$producto['Arri_Medida'].' ?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+										$dialogo   = '¿Realmente deseas eliminar la solicitud de '.$producto['Arri_Nombre'].' por '.Cantidades_decimales_justos($producto['Arri_Cantidad']).' '.$producto['Arri_Medida'].' ?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									</div>
 								</td>
 							</tr>
@@ -2141,11 +2135,11 @@ $total = 0;
 						case 4:
 							?>
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><?php echo $producto['Serv_Sistema'];?></td>
-								<td class="item-name"><?php echo n_doc($producto['Serv_idSolicitud'], 5);?></td>
+								<td class="item-name"><?php echo $producto['Serv_Sistema']; ?></td>
+								<td class="item-name"><?php echo n_doc($producto['Serv_idSolicitud'], 5); ?></td>
 								<td class="item-name">Servicios</td>
-								<td class="item-name"><?php echo $producto['Serv_Nombre'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Serv_Cantidad']).' '.$producto['Serv_Medida'];?></td>
+								<td class="item-name"><?php echo $producto['Serv_Nombre']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Serv_Cantidad']).' '.$producto['Serv_Medida']; ?></td>
 								<td class="item-name">
 									<div class="btn-group" style="width: 35px;" >
 										<?php 
@@ -2156,8 +2150,8 @@ $total = 0;
 										$ubicacion .= '&del_sol_type='.$producto['Type'];
 										$ubicacion .= '&del_sol_prod='.$producto['Serv_Soli'];
 										$ubicacion .= '&del_sol_cant='.Cantidades_decimales_justos($producto['Serv_Cantidad']);
-										$dialogo   = '¿Realmente deseas eliminar la solicitud de '.$producto['Serv_Nombre'].' por '.Cantidades_decimales_justos($producto['Serv_Cantidad']).' '.$producto['Serv_Medida'].' ?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+										$dialogo   = '¿Realmente deseas eliminar la solicitud de '.$producto['Serv_Nombre'].' por '.Cantidades_decimales_justos($producto['Serv_Cantidad']).' '.$producto['Serv_Medida'].' ?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									</div>
 								</td>
 							</tr>
@@ -2168,11 +2162,11 @@ $total = 0;
 						case 5:
 							?>
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><?php echo $producto['Otro_Sistema'];?></td>
-								<td class="item-name"><?php echo n_doc($producto['Otro_idSolicitud'], 5);?></td>
+								<td class="item-name"><?php echo $producto['Otro_Sistema']; ?></td>
+								<td class="item-name"><?php echo n_doc($producto['Otro_idSolicitud'], 5); ?></td>
 								<td class="item-name">Otros</td>
-								<td class="item-name"><?php echo $producto['Otro_Nombre'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Otro_Cantidad']).' '.$producto['Otro_Medida'];?></td>
+								<td class="item-name"><?php echo $producto['Otro_Nombre']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Otro_Cantidad']).' '.$producto['Otro_Medida']; ?></td>
 								<td class="item-name">
 									<div class="btn-group" style="width: 35px;" >
 										<?php 
@@ -2183,8 +2177,8 @@ $total = 0;
 										$ubicacion .= '&del_sol_type='.$producto['Type'];
 										$ubicacion .= '&del_sol_prod='.$producto['Otro_Soli'];
 										$ubicacion .= '&del_sol_cant='.Cantidades_decimales_justos($producto['Otro_Cantidad']);
-										$dialogo   = '¿Realmente deseas eliminar la solicitud de '.$producto['Otro_Nombre'].' por '.Cantidades_decimales_justos($producto['Otro_Cantidad']).' '.$producto['Otro_Medida'].' ?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+										$dialogo   = '¿Realmente deseas eliminar la solicitud de '.$producto['Otro_Nombre'].' por '.Cantidades_decimales_justos($producto['Otro_Cantidad']).' '.$producto['Otro_Medida'].' ?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Solicitud" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									</div>
 								</td>
 							</tr>
@@ -2198,13 +2192,13 @@ $total = 0;
 	
    	<table id="items">
         <tbody>
-            
+
 			<tr>
                 <th colspan="5">Documentos Acompañantes</th>
                 <th width="160"><a href="<?php echo $new_location.'&addDoc=true' ?>" title="Agregar Documento" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Documento</a></th>
             </tr>
-            
-			<?php 
+
+			<?php
 			if ($arrDocumentos!=false && !empty($arrDocumentos) && $arrDocumentos!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
@@ -2214,31 +2208,31 @@ $total = 0;
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<a href="<?php echo $new_location.'&editDoc='.$prod['idDocumento']; ?>" title="Editar Documento" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $new_location.'&del_documento='.simpleEncode($prod['idDocumento'], fecha_actual());
-								$dialogo   = '¿Realmente deseas eliminar el documento '.$prod['Documento'].' N°'.str_replace('"','',$prod['NDocPago']).'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Documento" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+								$dialogo   = '¿Realmente deseas eliminar el documento '.$prod['Documento'].' N°'.str_replace('"','',$prod['NDocPago']).'?'; ?>
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Documento" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
-					 
-				 <?php 
+
+				 <?php
 				$numeral++;
 				}
-			}?>
+			} ?>
 
 		</tbody>
     </table>
-    
+
     <table id="items" style="margin-bottom: 20px;">
         <tbody>
-            
+
 			<tr>
                 <th colspan="5">Archivos Adjuntos</th>
                 <th width="160"><a href="<?php echo $new_location.'&addFile=true' ?>" title="Agregar Archivo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Archivos</a></th>
             </tr>
-            
-			<?php 
+
+			<?php
 			if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
@@ -2249,27 +2243,25 @@ $total = 0;
 							<div class="btn-group" style="width: 105px;" >
 								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 								<a href="<?php echo '1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $new_location.'&del_file='.simpleEncode($producto['idFile'], fecha_actual());
-								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?'; ?>
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
-					 
-				 <?php 
+
+				 <?php
 				$numeral++;
 				}
-			}?>
+			} ?>
 
 		</tbody>
     </table>
-		
-</div>
-
 
 </div>
 
+</div>
 
 <?php } ?>
 <?php
@@ -2277,4 +2269,5 @@ $total = 0;
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

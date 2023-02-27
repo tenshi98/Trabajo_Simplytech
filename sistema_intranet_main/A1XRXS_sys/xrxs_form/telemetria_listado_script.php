@@ -183,18 +183,18 @@ require_once '0_validate_user_1.php';
 									if(isset($pinMode) && $pinMode!=''){                 $SIS_data .= ",pinMode='".$pinMode."'";}
 									if(isset($idModificado) && $idModificado!=''){       $SIS_data .= ",idModificado='".$idModificado."'";}
 									$SIS_data .= "ScriptFile='".$sufijo.$_FILES['ScriptFile']['name']."'";
-									
+
 									/*******************************************************/
 									//se actualizan los datos
 									$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_script', 'idScript = "'.$idScript.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 									//Si ejecuto correctamente la consulta
 									if($resultado==true){
 										
 										//redirijo
 										header( 'Location: '.$location.'&edited=true' );
 										die;
-										
+
 									}
 									
 							

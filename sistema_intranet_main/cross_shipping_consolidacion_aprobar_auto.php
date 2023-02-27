@@ -63,6 +63,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Documento borrado corr
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['consolidacion_rechazo'])){ ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -97,7 +98,8 @@ if(!empty($_GET['consolidacion_rechazo'])){ ?>
 </div> 
 	
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['consolidacion_nula'])){ ?>
+} elseif(!empty($_GET['consolidacion_nula'])){ ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -132,7 +134,7 @@ if(!empty($_GET['consolidacion_rechazo'])){ ?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['view'])){	 
+} elseif(!empty($_GET['view'])){	 
 // Se trae el listado de quienes aprueban la OC
 $arrAprobado = array();
 $query = "SELECT 
@@ -182,14 +184,14 @@ array_push( $arrAprobado,$row );
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<tr class="odd">
-						<td>Acciones</td>	
+						<td>Acciones</td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<a href="<?php echo $location.'&consolidacion_rechazo='.$_GET['view']; ?>" title="Rechazar Consolidacion" class="btn btn-danger btn-sm tooltip"><i class="fa fa-times" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&consolidacion_nula='.$_GET['view']; ?>" title="Anular Consolidacion" class="btn btn-danger btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php //Confirmacion
 								$ubicacion = $location.'&consolidacion_aprobar='.$_GET['view'];
-								$dialogo   = '¿Realmente deseas aprobar la Consolidacion?';?>
+								$dialogo   = '¿Realmente deseas aprobar la Consolidacion?'; ?>
 								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Aprobar Consolidacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>
 							</div>
 						</td>
@@ -202,7 +204,7 @@ array_push( $arrAprobado,$row );
 								<?php
 								if(isset($apro['C_apro'])&&$apro['C_apro']==1){
 									echo 'Aprobada el '.fecha_estandar($apro['FechaApro']).' a las '.$apro['HoraApro'].' hrs';
-								}?>
+								} ?>
 							</td>
 						</tr>
 					<?php } ?>
@@ -217,8 +219,8 @@ array_push( $arrAprobado,$row );
 	  
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
@@ -311,7 +313,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha del informe','Creacion_fecha', $x1, 1);
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x2, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x3, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 'Variedad','idProducto', $x3, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_text('Contenedor Nro.', 'CTNNombreCompañia', $x4, 1);
 
@@ -403,11 +405,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -340,7 +340,7 @@ if($row_data['MontoPagado']!=0){?>
 								<?php foreach ($arrPagosProv as $pagos) { ?>
 									<tr class="odd">
 										<td><?php echo $pagos['UsuarioPago']; ?></td>
-										<td><?php echo $pagos['Nombre'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];}?></td>
+										<td><?php echo $pagos['Nombre'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];} ?></td>
 										<td><?php echo fecha_estandar($pagos['F_Pago']); ?></td>
 										<td align="right" style="padding-right: 22px !important;"><?php echo Valores($pagos['MontoPagado'], 0); ?></td>
 									</tr>
@@ -348,7 +348,7 @@ if($row_data['MontoPagado']!=0){?>
 								<?php foreach ($arrPagosClien as $pagos) { ?>
 									<tr class="odd">
 										<td><?php echo $pagos['UsuarioPago']; ?></td>
-										<td><?php echo $pagos['Nombre'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];}?></td>
+										<td><?php echo $pagos['Nombre'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];} ?></td>
 										<td><?php echo fecha_estandar($pagos['F_Pago']); ?></td>
 										<td align="right" style="padding-right: 22px !important;"><?php echo Valores($pagos['MontoPagado'], 0); ?></td>
 									</tr>
@@ -884,7 +884,7 @@ if($row_data['MontoPagado']!=0){?>
 				echo '</div>';
 
 				break;
-		}?>
+		} ?>
 
 	</div>
 
@@ -905,7 +905,7 @@ if($row_data['MontoPagado']!=0){?>
 						<tr class="active"><td colspan="5"><strong>Productos</strong></td></tr>
 						<?php foreach ($arrProductos as $prod) {?>
 							<tr>
-								<td><?php echo '<strong>'.$prod['NombreBodega'].'</strong> - '.$prod['Nombre'];?></td>
+								<td><?php echo '<strong>'.$prod['NombreBodega'].'</strong> - '.$prod['Nombre']; ?></td>
 								<?php
 								//Verifico la existencia de la abreviatura de la unidad de medida
 								if(isset($prod['UnimedAbrev'])&&$prod['UnimedAbrev']!=''){
@@ -920,9 +920,9 @@ if($row_data['MontoPagado']!=0){?>
 								if(isset($prod['Cantidad_eg'])&&$prod['Cantidad_eg']!=0){
 									echo '<td align="right"></td>';
 									echo '<td align="right">'.Cantidades_decimales_justos($prod['Cantidad_eg']).' '.$prodUnimed.'</td>';
-								}?>
-								<td align="right"><?php echo Valores(Cantidades_decimales_justos($prod['Valor']), 0).' x '.$prodUnimed;?></td>
-								<td align="right"><?php echo Valores(Cantidades_decimales_justos($prod['ValorTotal']), 0);?></td>
+								} ?>
+								<td align="right"><?php echo Valores(Cantidades_decimales_justos($prod['Valor']), 0).' x '.$prodUnimed; ?></td>
+								<td align="right"><?php echo Valores(Cantidades_decimales_justos($prod['ValorTotal']), 0); ?></td>
 							</tr>
 						<?php } ?>
 					<?php } ?>
@@ -930,8 +930,8 @@ if($row_data['MontoPagado']!=0){?>
 						<tr class="active"><td colspan="5"><strong>Guias de Despacho</strong></td></tr>
 						<?php foreach ($arrGuias as $guia) { ?>
 							<tr>
-								<td colspan="4"><?php echo 'Guia de Despacho N°'.$guia['N_Doc'];?></td>
-								<td align="right"><?php echo Valores($guia['ValorNeto'], 0);?></td>
+								<td colspan="4"><?php echo 'Guia de Despacho N°'.$guia['N_Doc']; ?></td>
+								<td align="right"><?php echo Valores($guia['ValorNeto'], 0); ?></td>
 							</tr>
 						<?php } ?>
 					<?php } ?>
@@ -939,8 +939,8 @@ if($row_data['MontoPagado']!=0){?>
 						<tr class="active"><td colspan="5"><strong>Otros</strong></td></tr>
 						<?php foreach ($arrOtros as $otro) { ?>
 							<tr>
-								<td colspan="4"><?php echo $otro['Nombre'];?></td>
-								<td align="right"><?php echo Valores($otro['vTotal'], 0);?></td>
+								<td colspan="4"><?php echo $otro['Nombre']; ?></td>
+								<td align="right"><?php echo Valores($otro['vTotal'], 0); ?></td>
 							</tr>
 						<?php } ?>
 					<?php } ?>
@@ -1041,7 +1041,7 @@ if($row_data['MontoPagado']!=0){?>
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
 		</div>
 	</div>
 
@@ -1080,7 +1080,6 @@ if($row_data['MontoPagado']!=0){?>
 	</div>
 
 </section>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 
@@ -1160,4 +1159,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -24,7 +24,6 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -3626,4 +3625,5 @@ require_once 'core/Web.Header.Main.php';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -132,11 +132,11 @@ require_once '0_validate_user_1.php';
 									if(isset($idAmonestaciones) && $idAmonestaciones!=''){  $SIS_data .= ",'".$idAmonestaciones."'"; }else{$SIS_data .= ",''";}
 									if(isset($Observacion) && $Observacion!=''){            $SIS_data .= ",'".$Observacion."'";      }else{$SIS_data .= ",''";}
 									$SIS_data .= ",'".$sufijo.$_FILES['File_Amonestacion']['name']."'";
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idSistema, idTrabajador, idUsuario, Fecha_ingreso, Fecha, idAmonestaciones, Observacion,File_Amonestacion';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_cartas_amonestacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 									//Si ejecuto correctamente la consulta
 									if($ultimo_id!=0){
 										//redirijo
@@ -252,7 +252,7 @@ require_once '0_validate_user_1.php';
 									if(isset($idAmonestaciones) && $idAmonestaciones!=''){  $SIS_data .= ",idAmonestaciones='".$idAmonestaciones."'";}
 									if(isset($Observacion) && $Observacion!=''){            $SIS_data .= ",Observacion='".$Observacion."'";}
 									$SIS_data .= ",File_Amonestacion='".$sufijo.$_FILES['File_Amonestacion']['name']."'";
-									
+
 									/*******************************************************/
 									//se actualizan los datos
 									$resultado = db_update_data (false, $SIS_data, 'trabajadores_cartas_amonestacion', 'idCartaAmo = "'.$idCartaAmo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -261,9 +261,8 @@ require_once '0_validate_user_1.php';
 										
 										header( 'Location: '.$location.'&edited=true' );
 										die;
-										
+
 									}
-									
 								}else {
 									$error['File_Amonestacion']     = 'error/Ocurrio un error al mover el archivo';
 								}

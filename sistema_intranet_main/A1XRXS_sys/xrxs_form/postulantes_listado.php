@@ -541,7 +541,7 @@ require_once '0_validate_user_1.php';
 								foreach ($arrSexo as $data) {   $arrSexoMod[$data['Nombre']]['ID']   = $data['idSexo'];}
 								foreach ($arrCiudad as $data) { $arrCiudadMod[$data['Nombre']]['ID'] = $data['idCiudad'];}
 								foreach ($arrComuna as $data) { $arrComunaMod[$data['Nombre']]['ID'] = $data['idComuna'];}
-								
+
 								/*******************************************************************/
 								//Cargo el archivo
 								$spreadsheet = IOFactory::load($_FILES['FilePostulante']['tmp_name']);

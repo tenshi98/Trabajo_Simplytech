@@ -23,7 +23,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 		<title>Preview Tema</title>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		
+
 		<!-- WEB FONT -->
 		<?php
 		//verifica la capa de desarrollo
@@ -33,7 +33,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 		if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 			echo '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIB_assets/lib/font-awesome/css/font-awesome.min.css">';
 			//echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
-			
+
 		////////////////////////////////////////////////////////////////////////////////
 		//si estoy en ambiente de produccion
 		}else{
@@ -41,7 +41,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 			echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
 		}
 		?>
-		
+
 		<!-- CSS Base -->
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/font-awesome-animation/font-awesome-animation.min.css">
@@ -82,11 +82,11 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/country_picker/js/bootstrap-select.min.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/plotly_js/dist/plotly.min.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/plotly_js/dist/plotly-locale-es-ar.js"></script>
-		
+
 		<!-- Icono de la pagina -->
 		<link rel="icon" type="image/png" href="img/mifavicon.png" />
 	</head>
- 
+
   <body>
     <div id="wrap">
       <div id="top">
@@ -100,12 +100,12 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
                 <span class="icon-bar"></span>
               </button>
               <a href="principal.php" class="navbar-brand">
-                <?php require_once 'core/logo_empresa.php';?>
+                <?php require_once 'core/logo_empresa.php'; ?>
               </a>
             </header>
-            <?php require_once 'core/infobox.php';?>
+            <?php require_once 'core/infobox.php'; ?>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
-              <?php require_once 'core/menu_top.php';?>
+              <?php require_once 'core/menu_top.php'; ?>
             </div>
           </div>
         </nav>
@@ -116,8 +116,8 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
         </header>
       </div>
       <div id="left">
-       <?php require_once 'core/userbox.php';?> 
-       <?php require_once 'core/menu.php';?> 
+       <?php require_once 'core/userbox.php'; ?>
+       <?php require_once 'core/menu.php'; ?>
       </div>
       <div id="content">
         <div class="outer">
@@ -125,7 +125,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 
 
 				<h3>Preview Formularios</h3>
-							
+
 				<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 					<div class="box dark">
 						<header>
@@ -134,8 +134,8 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 						</header>
 						<div class="body">
 							<form class="form-horizontal" id="form1" name="form1" novalidate>
-							
-								<?php 
+
+								<?php
 								//Se verifican si existen los datos
 								if(isset($Nombre)){         $x1  = $Nombre;           }else{$x1  = '';}
 								if(isset($idTipo)){         $x2  = $idTipo;           }else{$x2  = '';}
@@ -152,15 +152,15 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 								$Form_Inputs->form_input_text('Marca', 'Marca', $x4, 2);
 								$Form_Inputs->form_select_filter('Unidad de Medida','idUml', $x5, 2, 'idUml', 'Nombre', 'sistema_productos_uml', 0, '', $dbConn);
 								$Form_Inputs->form_select_filter('Tipo Producto','idTipoProducto', $x6, 2, 'idTipoProducto', 'Nombre', 'core_tipo_producto', 0, '', $dbConn);
-								
+
 								$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 								?>
-								
+
 								<div class="form-group">
 									<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" >
 									<a href="#" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 								</div>
-									  
+
 							</form>
 							<?php widget_validator(); ?>
 						</div>
@@ -180,7 +180,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 				$arrComunas = db_select_array (false, $SIS_query, 'core_ubicacion_comunas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrComunas');
 
 				?>
-						
+
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="box">
 						<header>
@@ -205,11 +205,11 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 										<td>
 											<div class="btn-group" style="width: 70px;" >
 												<a href="#" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-												<?php 
+												<?php
 												$ubicacion = '';
-												$dialogo   = '¿Realmente deseas eliminar la comuna de '.$comunas['nombre_comuna'].'?';?>
+												$dialogo   = '¿Realmente deseas eliminar la comuna de '.$comunas['nombre_comuna'].'?'; ?>
 												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-																		
+
 											</div>
 										</td>
 									</tr>
@@ -221,10 +221,10 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 				</div>
             </div>
         </div>
-      </div> 
+      </div>
     </div>
     <footer id="footer">
-	<p><?php echo ano_actual();?> &copy; <?php echo DB_EMPRESA_NAME ?> Todos los derechos reservados.</p>
+	<p><?php echo ano_actual(); ?> &copy; <?php echo DB_EMPRESA_NAME ?> Todos los derechos reservados.</p>
 </footer>
 
 <!--Otros archivos javascript -->

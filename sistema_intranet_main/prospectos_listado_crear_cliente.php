@@ -58,10 +58,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+$rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Editar Datos Basicos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Editar Datos Basicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -89,8 +89,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Contrato_Nombre)){           $x1 = $Contrato_Nombre;           }else{$x1 = '';}
 					if(isset($Contrato_Numero)){           $x2 = $Contrato_Numero;           }else{$x2 = '';}
@@ -110,7 +110,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_values('Valor Mensual', 'Contrato_Valor_Mensual', $x5, 2);
 					$Form_Inputs->form_values('Valor Anual', 'Contrato_Valor_Anual', $x6, 1);
 					$Form_Inputs->form_ckeditor('Observaciones','Contrato_Obs', $x7, 1, 2);
-					
+
 					$Form_Inputs->form_input_hidden('idProspecto', $_GET['id'], 2);
 					
 					?>
@@ -127,14 +127,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

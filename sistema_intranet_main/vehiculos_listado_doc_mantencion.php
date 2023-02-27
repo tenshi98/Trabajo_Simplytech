@@ -62,7 +62,7 @@ if(!empty($_GET['new_mant'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
-					
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($doc_fecha_mantencion)){  $x1  = $doc_fecha_mantencion;   }else{$x1  = '';}
@@ -88,7 +88,7 @@ if(!empty($_GET['new_mant'])){ ?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } else{
+} else{
 // consulto los datos
 $query = "SELECT Nombre,Patente,idOpciones_1,idOpciones_2,idOpciones_3,idOpciones_4,idOpciones_5, idOpciones_6,
 idOpciones_7, idOpciones_8, doc_mantencion, doc_fecha_mantencion
@@ -203,6 +203,7 @@ $colegios    = $rowdatax['tran_12'];
 $todos = $telemetria + $bodega + $ruta + $trabajador + $pasajeros + $peonetas + $colegios;
 
 $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -211,7 +212,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 	if(isset($rowdata['Patente'])&&$rowdata['Patente']!=''){
 		$vehiculo .= ' Patente '.$rowdata['Patente'];
 	}
-	echo widget_title('bg-aqua', 'fa-cog', 100, 'Vehiculo', $vehiculo, 'Editar Mantenciones');?>
+	echo widget_title('bg-aqua', 'fa-cog', 100, 'Vehiculo', $vehiculo, 'Editar Mantenciones'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -267,7 +268,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 						<li class="active"><a href="<?php echo 'vehiculos_listado_doc_mantencion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Mantenciones</a></li>
 						<li class=""><a href="<?php echo 'vehiculos_listado_doc_trans_personas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Cert. Transporte Personas</a></li>
 						<li class=""><a href="<?php echo 'vehiculos_listado_doc_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Ficha Tecnica</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -276,13 +277,13 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 
 				<?php if(isset($rowdata['doc_mantencion'])&&$rowdata['doc_mantencion']!=''){?>
-        
+
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<h3>Archivo</h3>
 						<p>Fecha de Vencimiento: <?php echo fecha_estandar($rowdata['doc_fecha_mantencion']); ?></p>
 						<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['doc_mantencion'], ''); ?>
 					</div>
-					
+
 				<?php } ?>
 			</div>
 			
@@ -321,7 +322,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 											<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($tipo['doc_mantencion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 											<?php 
 											$ubicacion = $new_location.'&del_doc_mantencion='.simpleEncode($tipo['idMantenciones'], fecha_actual());
-											$dialogo   = '¿Realmente deseas eliminar el documento '.$tipo['doc_mantencion'].'?';?>
+											$dialogo   = '¿Realmente deseas eliminar el documento '.$tipo['doc_mantencion'].'?'; ?>
 											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 										</div>
 									</td>
@@ -342,8 +343,8 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -352,4 +353,5 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

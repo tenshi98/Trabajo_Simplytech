@@ -49,7 +49,6 @@ $Archivo3 = '1_logs_error_log_php.txt';
 	
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -144,7 +143,7 @@ $Archivo3 = '1_logs_error_log_php.txt';
 						</tbody>
 					</table>
 				</div>
-				
+
 			</div>
 
 			<div class="tab-pane fade" id="data3">
@@ -191,7 +190,7 @@ $Archivo3 = '1_logs_error_log_php.txt';
 						</tbody>
 					</table>
 				</div>
-				
+
 			</div>
 			
 			
@@ -210,4 +209,5 @@ $Archivo3 = '1_logs_error_log_php.txt';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

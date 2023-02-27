@@ -65,6 +65,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['clone_idMaquina'])){ 
 	
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -84,7 +85,7 @@ if(!empty($_GET['clone_idMaquina'])){
 
 				$Form_Inputs->form_input_hidden('idMaquina', $_GET['clone_idMaquina'], 2);
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c5; Clonar" name="clone_Maquina">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -605,10 +606,9 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -632,7 +632,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 						<?php if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
 							<li class=""><a href="<?php echo 'unidad_negocio_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -646,7 +646,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
@@ -659,13 +659,13 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							<strong>Fabricante : </strong><?php echo $rowdata['Fabricante']; ?><br/>
 							<strong>Fecha incorporacion : </strong><?php echo fecha_estandar($rowdata['fincorporacion']); ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
-							<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=''){echo '<strong>Ubicacion : </strong>'.$rowdata['Ubicacion'];}?>
-							<?php if(isset($rowdata['Ubicacion_lvl_1'])&&$rowdata['Ubicacion_lvl_1']!=''){echo ' - '.$rowdata['Ubicacion_lvl_1'];}?>
-							<?php if(isset($rowdata['Ubicacion_lvl_2'])&&$rowdata['Ubicacion_lvl_2']!=''){echo ' - '.$rowdata['Ubicacion_lvl_2'];}?>
-							<?php if(isset($rowdata['Ubicacion_lvl_3'])&&$rowdata['Ubicacion_lvl_3']!=''){echo ' - '.$rowdata['Ubicacion_lvl_3'];}?>
-							<?php if(isset($rowdata['Ubicacion_lvl_4'])&&$rowdata['Ubicacion_lvl_4']!=''){echo ' - '.$rowdata['Ubicacion_lvl_4'];}?>
-							<?php if(isset($rowdata['Ubicacion_lvl_5'])&&$rowdata['Ubicacion_lvl_5']!=''){echo ' - '.$rowdata['Ubicacion_lvl_5'];}?>
-							
+							<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=''){echo '<strong>Ubicacion : </strong>'.$rowdata['Ubicacion'];} ?>
+							<?php if(isset($rowdata['Ubicacion_lvl_1'])&&$rowdata['Ubicacion_lvl_1']!=''){echo ' - '.$rowdata['Ubicacion_lvl_1'];} ?>
+							<?php if(isset($rowdata['Ubicacion_lvl_2'])&&$rowdata['Ubicacion_lvl_2']!=''){echo ' - '.$rowdata['Ubicacion_lvl_2'];} ?>
+							<?php if(isset($rowdata['Ubicacion_lvl_3'])&&$rowdata['Ubicacion_lvl_3']!=''){echo ' - '.$rowdata['Ubicacion_lvl_3'];} ?>
+							<?php if(isset($rowdata['Ubicacion_lvl_4'])&&$rowdata['Ubicacion_lvl_4']!=''){echo ' - '.$rowdata['Ubicacion_lvl_4'];} ?>
+							<?php if(isset($rowdata['Ubicacion_lvl_5'])&&$rowdata['Ubicacion_lvl_5']!=''){echo ' - '.$rowdata['Ubicacion_lvl_5'];} ?>
+
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Configuracion</h2>
@@ -680,7 +680,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
-								<?php 
+								<?php
 								//Ficha Tecnica
 								if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
 									echo '
@@ -718,7 +718,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 						
 					</div>
 					<div class="clearfix"></div>
-					
+
 					<?php if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -756,10 +756,10 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							</tbody>
 						</table>
 					<?php } ?>
-					
+
 				</div>
 			</div>
-		
+
 		</div>
 	</div>
 </div>	
@@ -774,7 +774,6 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 	<div class="clearfix"></div>
 </div>
 
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
@@ -783,6 +782,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //verifico que sea un administrador
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -812,9 +812,9 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_hidden('idConfig_1', 2, 2);
 				$Form_Inputs->form_input_hidden('idConfig_2', 2, 2);
 				?>
-	   
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_Maquina"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_Maquina">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -823,7 +823,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
                     
 		</div>
 	</div>
-</div> 
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
@@ -898,7 +898,7 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Maquina</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Maquina</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -931,7 +931,7 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
             <?php widget_validator(); ?>
         </div>
 	</div>
-</div> 
+</div>
 <div class="clearfix"></div> 
                                  
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -986,7 +986,7 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
 						<td><?php echo $maq['Cliente']; ?></td>
 						<td><?php echo $maq['Codigo']; ?></td>
 						<td><?php echo $maq['Nombre']; ?></td>
-						<td><label class="label <?php if(isset($maq['idEstado'])&&$maq['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $maq['Estado']; ?></label></td>
+						<td><label class="label <?php if(isset($maq['idEstado'])&&$maq['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $maq['Estado']; ?></label></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $maq['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 140px;" >
@@ -995,7 +995,7 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$maq['idMaquina']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($maq['idMaquina'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el registro '.$maq['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el registro '.$maq['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -1013,11 +1013,11 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

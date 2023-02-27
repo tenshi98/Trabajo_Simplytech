@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -99,20 +99,20 @@ filtrar($arrOTS, 'idTelemetria');
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Detalle Tractores</h5>
 			<ul class="nav nav-tabs pull-right">
-				<?php 
+				<?php
 				$ssx = 0;
 				foreach ($arrOTS as $categoria=>$subcategorias) { ?>
-					<li class="<?php if($ssx==0){echo 'active';}?>"><a href="#data_tab_<?php echo $categoria; ?>" data-toggle="tab"><?php echo $subcategorias[0]['TractorNombre']; ?></a></li>
+					<li class="<?php if($ssx==0){echo 'active';} ?>"><a href="#data_tab_<?php echo $categoria; ?>" data-toggle="tab"><?php echo $subcategorias[0]['TractorNombre']; ?></a></li>
 				<?php $ssx++; } ?>
 			</ul>
 
 		</header>
 		<div class="tab-content">
-			
-			<?php 
+
+			<?php
 			$ssx = 0;
 			foreach ($arrOTS as $categoria=>$subcategorias) { ?>
-				<div class="tab-pane fade <?php if($ssx==0){echo 'active in';}?>" id="data_tab_<?php echo $categoria; ?>">
+				<div class="tab-pane fade <?php if($ssx==0){echo 'active in';} ?>" id="data_tab_<?php echo $categoria; ?>">
 					<div class="table-responsive">
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 							<thead>
@@ -133,18 +133,18 @@ filtrar($arrOTS, 'idTelemetria');
 									<th>Cuartel</th>
 									<th>Especie</th>
 									<th>Variedad</th>
-									
+
 									<th>Minima</th>
 									<th>Maxima</th>
 									<th>Promedio</th>
 									<th>Programada</th>
-									
+
 									<th>Derecho</th>
 									<th>Izquierdo</th>
-									
+
 									<th>Minima</th>
 									<th>Maxima</th>
-									
+
 									<th>Totales</th>
 									<th>Pendientes</th>
 								</tr>
@@ -178,7 +178,7 @@ filtrar($arrOTS, 'idTelemetria');
 							</tbody>
 						</table>
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
-								
+
 							<thead>
 								<tr role="row">
 									<th colspan="14" style="text-align: center;"><strong>Monitoreo fuera de cuarteles</strong></th>
@@ -197,14 +197,14 @@ filtrar($arrOTS, 'idTelemetria');
 									<th>Cuartel</th>
 									<th>Especie</th>
 									<th>Variedad</th>
-									
+
 									<th>Minima</th>
 									<th>Maxima</th>
 									<th>Promedio</th>
 									<th>Programada</th>
-									
+
 									<th>Recorrida</th>
-									
+
 									<th>Derecho</th>
 									<th>Izquierdo</th>
 								</tr>
@@ -243,7 +243,6 @@ filtrar($arrOTS, 'idTelemetria');
 	</div>
 </div>
 
-
 <?php 
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
@@ -256,7 +255,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -266,7 +265,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 <?php
@@ -274,4 +273,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

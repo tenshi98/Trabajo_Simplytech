@@ -102,7 +102,7 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-	
+
 		case 'new_ingreso':
 
 			//Se elimina la restriccion del sql 5.7
@@ -150,7 +150,6 @@ require_once '0_validate_user_1.php';
 				// Se guardan los datos
 				if(isset($rowTipoDocumento['Nombre'])&&$rowTipoDocumento['Nombre']!=''){  $_SESSION['caja_ing_basicos']['TipoDocumento']  = $rowTipoDocumento['Nombre'];}
 				if(isset($rowCaja['Nombre'])&&$rowCaja['Nombre']!=''){             $_SESSION['caja_ing_basicos']['Caja']           = $rowCaja['Nombre'];}
-				
 
 				//Se guardan los datos basicos del formulario recien llenado
 				if(isset($idCajaChica)&&$idCajaChica!=''){        $_SESSION['caja_ing_basicos']['idCajaChica']     = $idCajaChica;     }else{$_SESSION['caja_ing_basicos']['idCajaChica']     = '';}
@@ -165,7 +164,7 @@ require_once '0_validate_user_1.php';
 
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
@@ -196,7 +195,7 @@ require_once '0_validate_user_1.php';
 			}
 			unset($_SESSION['caja_ing_archivos']);
 
-			
+			//redirijo
 			header( 'Location: '.$location );
 			die;
 
@@ -306,7 +305,7 @@ require_once '0_validate_user_1.php';
 				/*****************************************/
 				// Se guardan los datos
 				if(isset($rowDocPago['Nombre'])&&$rowDocPago['Nombre']!=''){  $_SESSION['caja_ing_documentos'][$oldItemID]['DocPago']  = $rowDocPago['Nombre'];}else{$_SESSION['caja_ing_documentos'][$oldItemID]['DocPago']  = '';}
-				
+
 				$_SESSION['caja_ing_documentos'][$oldItemID]['bvar']      = $oldItemID;
 				$_SESSION['caja_ing_documentos'][$oldItemID]['idDocPago'] = $idDocPago;
 				$_SESSION['caja_ing_documentos'][$oldItemID]['N_Doc']     = $N_Doc;
@@ -349,7 +348,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -481,7 +480,7 @@ require_once '0_validate_user_1.php';
 			if(isset($n_data1)&&$n_data1==0){
 				$error['trabajos'] = 'error/No se han asignado documentos';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -493,8 +492,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['caja_ing_basicos']['idTipo']) && $_SESSION['caja_ing_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['caja_ing_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['caja_ing_basicos']['idEstado']) && $_SESSION['caja_ing_basicos']['idEstado']!=''){       $SIS_data .= ",'".$_SESSION['caja_ing_basicos']['idEstado']."'";      }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['caja_ing_basicos']['fecha_auto']) && $_SESSION['caja_ing_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['caja_ing_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['caja_ing_basicos']['Creacion_fecha']) && $_SESSION['caja_ing_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['caja_ing_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['caja_ing_basicos']['Creacion_fecha']) && $_SESSION['caja_ing_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['caja_ing_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['caja_ing_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['caja_ing_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['caja_ing_basicos']['Creacion_fecha'])."'";
@@ -517,7 +516,7 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de los trabajadores	
-					if (isset($_SESSION['caja_ing_documentos'])){		
+					if (isset($_SESSION['caja_ing_documentos'])){
 						foreach ($_SESSION['caja_ing_documentos'] as $key => $producto){
 
 							//filtros
@@ -527,8 +526,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['caja_ing_basicos']['idUsuario']) && $_SESSION['caja_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['caja_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['caja_ing_basicos']['idTipo']) && $_SESSION['caja_ing_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['caja_ing_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['caja_ing_basicos']['fecha_auto']) && $_SESSION['caja_ing_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['caja_ing_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['caja_ing_basicos']['Creacion_fecha']) && $_SESSION['caja_ing_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['caja_ing_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['caja_ing_basicos']['Creacion_fecha']) && $_SESSION['caja_ing_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['caja_ing_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['caja_ing_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['caja_ing_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -559,8 +558,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['caja_ing_basicos']['idCajaChica']) && $_SESSION['caja_ing_basicos']['idCajaChica']!=''){ $SIS_data .= ",'".$_SESSION['caja_ing_basicos']['idCajaChica']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['caja_ing_basicos']['idSistema']) && $_SESSION['caja_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['caja_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['caja_ing_basicos']['idUsuario']) && $_SESSION['caja_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['caja_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['caja_ing_basicos']['Creacion_fecha']) && $_SESSION['caja_ing_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['caja_ing_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['caja_ing_basicos']['Creacion_fecha']) && $_SESSION['caja_ing_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['caja_ing_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['caja_ing_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['caja_ing_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -604,21 +603,19 @@ require_once '0_validate_user_1.php';
 					/*******************************************************/
 					//se actualizan los datos
 					$resultado = db_update_data (false, $SIS_data, 'caja_chica_listado', 'idCajaChica = "'.$_SESSION['caja_ing_basicos']['idCajaChica'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
-					
+
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos
 					unset($_SESSION['caja_ing_basicos']);
 					unset($_SESSION['caja_ing_documentos']);
 					unset($_SESSION['caja_ing_temporal']);
 					unset($_SESSION['caja_ing_archivos']);
-					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
 
 			}
-	
 
 		break;
 
@@ -628,7 +625,7 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-	
+
 		case 'new_egreso':
 
 			//Se elimina la restriccion del sql 5.7
@@ -702,7 +699,7 @@ require_once '0_validate_user_1.php';
 
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
@@ -733,7 +730,7 @@ require_once '0_validate_user_1.php';
 			}
 			unset($_SESSION['caja_eg_archivos']);
 
-			
+			//redirijo
 			header( 'Location: '.$location );
 			die;
 
@@ -872,7 +869,7 @@ require_once '0_validate_user_1.php';
 				/*****************************************/
 				// Se guardan los datos
 				if(isset($rowDocPago['Nombre'])&&$rowDocPago['Nombre']!=''){  $_SESSION['caja_eg_documentos'][$oldItemID]['DocPago']  = $rowDocPago['Nombre'];}else{$_SESSION['caja_eg_documentos'][$oldItemID]['DocPago']  = '';}
-				
+
 				$_SESSION['caja_eg_documentos'][$oldItemID]['bvar']      = $oldItemID;
 				$_SESSION['caja_eg_documentos'][$oldItemID]['idDocPago'] = $idDocPago;
 				$_SESSION['caja_eg_documentos'][$oldItemID]['N_Doc']     = $N_Doc;
@@ -915,7 +912,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -1048,7 +1045,7 @@ require_once '0_validate_user_1.php';
 			if(isset($n_data1)&&$n_data1==0){
 				$error['trabajos'] = 'error/No se han asignado documentos';
 			}
-			
+
 			/*********************************************************************/
 			//Consulto el saldo para poder sumarlo
 			$rowResultado = db_select_data (false, 'MontoActual', 'caja_chica_listado', '', 'idCajaChica ='.$_SESSION['caja_eg_basicos']['idCajaChica'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1057,7 +1054,7 @@ require_once '0_validate_user_1.php';
 			if($rowResultado['MontoActual'] < $_SESSION['caja_eg_basicos']['Valor']){
 				$error['trabajos'] = 'error/El valor total del egreso es superior al saldo, solo hay '.valores($rowResultado['MontoActual'], 0);
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -1069,8 +1066,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['caja_eg_basicos']['idTipo']) && $_SESSION['caja_eg_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['caja_eg_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['caja_eg_basicos']['idEstado']) && $_SESSION['caja_eg_basicos']['idEstado']!=''){       $SIS_data .= ",'".$_SESSION['caja_eg_basicos']['idEstado']."'";      }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['caja_eg_basicos']['fecha_auto']) && $_SESSION['caja_eg_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['caja_eg_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['caja_eg_basicos']['Creacion_fecha']) && $_SESSION['caja_eg_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['caja_eg_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['caja_eg_basicos']['Creacion_fecha']) && $_SESSION['caja_eg_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['caja_eg_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['caja_eg_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['caja_eg_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['caja_eg_basicos']['Creacion_fecha'])."'";
@@ -1094,7 +1091,7 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de los trabajadores	
-					if (isset($_SESSION['caja_eg_documentos'])){		
+					if (isset($_SESSION['caja_eg_documentos'])){
 						foreach ($_SESSION['caja_eg_documentos'] as $key => $producto){
 
 							//filtros
@@ -1104,8 +1101,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['caja_eg_basicos']['idUsuario']) && $_SESSION['caja_eg_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['caja_eg_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['caja_eg_basicos']['idTipo']) && $_SESSION['caja_eg_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['caja_eg_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['caja_eg_basicos']['fecha_auto']) && $_SESSION['caja_eg_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['caja_eg_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['caja_eg_basicos']['Creacion_fecha']) && $_SESSION['caja_eg_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['caja_eg_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['caja_eg_basicos']['Creacion_fecha']) && $_SESSION['caja_eg_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['caja_eg_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['caja_eg_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['caja_eg_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1136,8 +1133,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['caja_eg_basicos']['idCajaChica']) && $_SESSION['caja_eg_basicos']['idCajaChica']!=''){ $SIS_data .= ",'".$_SESSION['caja_eg_basicos']['idCajaChica']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['caja_eg_basicos']['idSistema']) && $_SESSION['caja_eg_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['caja_eg_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['caja_eg_basicos']['idUsuario']) && $_SESSION['caja_eg_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['caja_eg_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['caja_eg_basicos']['Creacion_fecha']) && $_SESSION['caja_eg_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['caja_eg_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['caja_eg_basicos']['Creacion_fecha']) && $_SESSION['caja_eg_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['caja_eg_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['caja_eg_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['caja_eg_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1189,13 +1186,12 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['caja_eg_documentos']);
 					unset($_SESSION['caja_eg_temporal']);
 					unset($_SESSION['caja_eg_archivos']);
-					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
 
 			}
-	
 
 		break;
 /*******************************************************************************************************************/
@@ -1204,7 +1200,7 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-	
+
 		case 'new_rendicion':
 
 			//Se elimina la restriccion del sql 5.7
@@ -1279,7 +1275,7 @@ require_once '0_validate_user_1.php';
 
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
@@ -1311,7 +1307,7 @@ require_once '0_validate_user_1.php';
 			}
 			unset($_SESSION['caja_rend_archivos']);
 
-			
+			//redirijo
 			header( 'Location: '.$location );
 			die;
 
@@ -1393,7 +1389,7 @@ require_once '0_validate_user_1.php';
 					$idInterno++;
 				}
 			}
-			
+
 			/*********************************************************************/
 			//Consulto el saldo para poder sumarlo
 			$rowResultado = db_select_data (false, 'Valor, ValorDevolucion', 'caja_chica_facturacion', '', 'idFacturacion ='.$_SESSION['caja_rend_basicos']['idFacturacionRelacionada'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1415,7 +1411,7 @@ require_once '0_validate_user_1.php';
 				/*****************************************/
 				// Se guardan los datos
 				if(isset($rowDocPago['Nombre'])&&$rowDocPago['Nombre']!=''){  $_SESSION['caja_rend_documentos'][$idInterno]['DocPago']  = $rowDocPago['Nombre'];}else{$_SESSION['caja_rend_documentos'][$idInterno]['DocPago']  = '';}
-				
+
 				$_SESSION['caja_rend_documentos'][$idInterno]['bvar']      = $idInterno;
 				$_SESSION['caja_rend_documentos'][$idInterno]['idDocPago'] = $idDocPago;
 				$_SESSION['caja_rend_documentos'][$idInterno]['N_Doc']     = $N_Doc;
@@ -1454,7 +1450,7 @@ require_once '0_validate_user_1.php';
 				/*****************************************/
 				// Se guardan los datos
 				if(isset($rowDocPago['Nombre'])&&$rowDocPago['Nombre']!=''){  $_SESSION['caja_rend_documentos'][$oldItemID]['DocPago']  = $rowDocPago['Nombre'];}else{$_SESSION['caja_rend_documentos'][$oldItemID]['DocPago']  = '';}
-				
+
 				$_SESSION['caja_rend_documentos'][$oldItemID]['bvar']      = $oldItemID;
 				$_SESSION['caja_rend_documentos'][$oldItemID]['idDocPago'] = $idDocPago;
 				$_SESSION['caja_rend_documentos'][$oldItemID]['N_Doc']     = $N_Doc;
@@ -1494,7 +1490,7 @@ require_once '0_validate_user_1.php';
 					$idInterno++;
 				}
 			}
-			
+
 			/*********************************************************************/
 			//Consulto el saldo para poder sumarlo
 			$rowResultado = db_select_data (false, 'Valor, ValorDevolucion', 'caja_chica_facturacion', '', 'idFacturacion ='.$_SESSION['caja_rend_basicos']['idFacturacionRelacionada'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1576,7 +1572,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -1709,7 +1705,7 @@ require_once '0_validate_user_1.php';
 			if(isset($n_data1)&&$n_data1==0){
 				$error['trabajos'] = 'error/No se han asignado documentos';
 			}
-			
+
 			/*********************************************************************/
 			//Consulto el saldo para poder sumarlo
 			$rowResultado = db_select_data (false, 'Valor, ValorDevolucion', 'caja_chica_facturacion', '', 'idFacturacion ='.$_SESSION['caja_rend_basicos']['idFacturacionRelacionada'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1718,7 +1714,7 @@ require_once '0_validate_user_1.php';
 			if(($rowResultado['Valor']-$rowResultado['ValorDevolucion']) < $_SESSION['caja_rend_basicos']['Valor']){
 				$error['trabajos'] = 'error/El valor total de la rendicion es superior al del saldo del documento relacionado, solo son '.valores($rowResultado['Valor']-$rowResultado['ValorDevolucion'], 0).' como maximo';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -1730,8 +1726,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['caja_rend_basicos']['idTipo']) && $_SESSION['caja_rend_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['caja_rend_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['caja_rend_basicos']['idEstado']) && $_SESSION['caja_rend_basicos']['idEstado']!=''){       $SIS_data .= ",'".$_SESSION['caja_rend_basicos']['idEstado']."'";      }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['caja_rend_basicos']['fecha_auto']) && $_SESSION['caja_rend_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['caja_rend_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['caja_rend_basicos']['Creacion_fecha']) && $_SESSION['caja_rend_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['caja_rend_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['caja_rend_basicos']['Creacion_fecha']) && $_SESSION['caja_rend_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['caja_rend_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['caja_rend_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['caja_rend_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['caja_rend_basicos']['Creacion_fecha'])."'";
@@ -1755,7 +1751,7 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de los trabajadores	
-					if (isset($_SESSION['caja_rend_items'])){		
+					if (isset($_SESSION['caja_rend_items'])){
 						foreach ($_SESSION['caja_rend_items'] as $key => $producto){
 
 							//filtros
@@ -1765,8 +1761,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['caja_rend_basicos']['idUsuario']) && $_SESSION['caja_rend_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['caja_rend_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['caja_rend_basicos']['idTipo']) && $_SESSION['caja_rend_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['caja_rend_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['caja_rend_basicos']['fecha_auto']) && $_SESSION['caja_rend_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['caja_rend_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['caja_rend_basicos']['Creacion_fecha']) && $_SESSION['caja_rend_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['caja_rend_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['caja_rend_basicos']['Creacion_fecha']) && $_SESSION['caja_rend_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['caja_rend_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['caja_rend_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['caja_rend_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1791,7 +1787,7 @@ require_once '0_validate_user_1.php';
 					$subDevolucion = 0;
 
 					//Se guardan los datos de los documentos utilizados
-					if (isset($_SESSION['caja_rend_documentos'])){		
+					if (isset($_SESSION['caja_rend_documentos'])){
 						foreach ($_SESSION['caja_rend_documentos'] as $key => $producto){
 
 							//filtros
@@ -1801,8 +1797,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['caja_rend_basicos']['idUsuario']) && $_SESSION['caja_rend_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['caja_rend_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['caja_rend_basicos']['idTipo']) && $_SESSION['caja_rend_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['caja_rend_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['caja_rend_basicos']['fecha_auto']) && $_SESSION['caja_rend_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['caja_rend_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['caja_rend_basicos']['Creacion_fecha']) && $_SESSION['caja_rend_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['caja_rend_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['caja_rend_basicos']['Creacion_fecha']) && $_SESSION['caja_rend_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['caja_rend_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['caja_rend_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['caja_rend_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1838,8 +1834,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['caja_rend_basicos']['idCajaChica']) && $_SESSION['caja_rend_basicos']['idCajaChica']!=''){ $SIS_data .= ",'".$_SESSION['caja_rend_basicos']['idCajaChica']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['caja_rend_basicos']['idSistema']) && $_SESSION['caja_rend_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['caja_rend_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['caja_rend_basicos']['idUsuario']) && $_SESSION['caja_rend_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['caja_rend_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['caja_rend_basicos']['Creacion_fecha']) && $_SESSION['caja_rend_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['caja_rend_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['caja_rend_basicos']['Creacion_fecha']) && $_SESSION['caja_rend_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['caja_rend_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['caja_rend_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['caja_rend_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1883,8 +1879,7 @@ require_once '0_validate_user_1.php';
 					/*******************************************************/
 					//se actualizan los datos
 					$resultado = db_update_data (false, $SIS_data, 'caja_chica_listado', 'idCajaChica = "'.$_SESSION['caja_rend_basicos']['idCajaChica'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
-					
+
 					/*********************************************************************/
 					//Consulto el documento relacionado para poder sumarle el valor de la devolucion
 					$rowResultado = db_select_data (false, 'Valor, ValorDevolucion', 'caja_chica_facturacion', '', 'idFacturacion ='.$_SESSION['caja_rend_basicos']['idFacturacionRelacionada'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1907,13 +1902,12 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['caja_rend_documentos']);
 					unset($_SESSION['caja_rend_temporal']);
 					unset($_SESSION['caja_rend_archivos']);
-					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
 
 			}
-	
 
 		break;
 
@@ -1924,7 +1918,7 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-	
+
 		case 'new_rendida':
 
 			//Se elimina la restriccion del sql 5.7
@@ -2027,7 +2021,7 @@ require_once '0_validate_user_1.php';
 
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
@@ -2059,7 +2053,7 @@ require_once '0_validate_user_1.php';
 			}
 			unset($_SESSION['caja_rendida_archivos']);
 
-			
+			//redirijo
 			header( 'Location: '.$location );
 			die;
 
@@ -2179,7 +2173,7 @@ require_once '0_validate_user_1.php';
 				/*****************************************/
 				// Se guardan los datos
 				if(isset($rowDocPago['Nombre'])&&$rowDocPago['Nombre']!=''){  $_SESSION['caja_rendida_documentos'][$idInterno]['DocPago']  = $rowDocPago['Nombre'];}else{$_SESSION['caja_rendida_documentos'][$idInterno]['DocPago']  = '';}
-				
+
 				$_SESSION['caja_rendida_documentos'][$idInterno]['bvar']      = $idInterno;
 				$_SESSION['caja_rendida_documentos'][$idInterno]['idDocPago'] = $idDocPago;
 				$_SESSION['caja_rendida_documentos'][$idInterno]['N_Doc']     = $N_Doc;
@@ -2312,7 +2306,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -2463,8 +2457,8 @@ require_once '0_validate_user_1.php';
 				$SIS_data .= ",'2'" ;
 				if(isset($_SESSION['caja_rendida_basicos']['idEstado']) && $_SESSION['caja_rendida_basicos']['idEstado']!=''){       $SIS_data .= ",'".$_SESSION['caja_rendida_basicos']['idEstado']."'";      }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['caja_rendida_basicos']['fecha_auto']) && $_SESSION['caja_rendida_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['caja_rendida_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['caja_rendida_basicos']['Creacion_fecha']) && $_SESSION['caja_rendida_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['caja_rendida_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['caja_rendida_basicos']['Creacion_fecha']) && $_SESSION['caja_rendida_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['caja_rendida_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['caja_rendida_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['caja_rendida_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['caja_rendida_basicos']['Creacion_fecha'])."'";
@@ -2492,7 +2486,7 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de los trabajadores	
-					if (isset($_SESSION['caja_rendida_documentos'])){		
+					if (isset($_SESSION['caja_rendida_documentos'])){
 						foreach ($_SESSION['caja_rendida_documentos'] as $key => $producto){
 
 							//filtros
@@ -2502,8 +2496,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['caja_rendida_basicos']['idUsuario']) && $_SESSION['caja_rendida_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['caja_rendida_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
 							$SIS_data .= ",'2'" ;
 							if(isset($_SESSION['caja_rendida_basicos']['fecha_auto']) && $_SESSION['caja_rendida_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['caja_rendida_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['caja_rendida_basicos']['Creacion_fecha']) && $_SESSION['caja_rendida_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['caja_rendida_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['caja_rendida_basicos']['Creacion_fecha']) && $_SESSION['caja_rendida_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['caja_rendida_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['caja_rendida_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['caja_rendida_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -2552,8 +2546,7 @@ require_once '0_validate_user_1.php';
 					/*******************************************************/
 					//se actualizan los datos
 					$resultado = db_update_data (false, $SIS_data, 'caja_chica_listado', 'idCajaChica = "'.$_SESSION['caja_rendida_basicos']['idCajaChica'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
-					
+
 					//////////////////////////////////////////////////////////////////////////
 					//Rendicion
 					//Se guardan los datos basicos
@@ -2613,7 +2606,7 @@ require_once '0_validate_user_1.php';
 								}
 								if(isset($producto['Item']) && $producto['Item']!=''){    $SIS_data .= ",'".$producto['Item']."'";   }else{$SIS_data .= ",''";}
 								if(isset($producto['Valor']) && $producto['Valor']!=''){  $SIS_data .= ",'".$producto['Valor']."'";  }else{$SIS_data .= ",''";}
-								
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idFacturacion, idCajaChica, idSistema, idUsuario, idTipo, fecha_auto, 
 								Creacion_fecha, Creacion_mes, Creacion_ano, Item, Valor';
@@ -2644,7 +2637,7 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",''";
 								}
 								if(isset($producto['Nombre']) && $producto['Nombre']!=''){    $SIS_data .= ",'".$producto['Nombre']."'";     }else{$SIS_data .= ",''";}
-								
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idFacturacion, idCajaChica, idSistema, idUsuario, Creacion_fecha,
 								Creacion_mes, Creacion_ano, Nombre';
@@ -2682,7 +2675,6 @@ require_once '0_validate_user_1.php';
 				}
 
 			}
-	
 
 		break;
 /*******************************************************************************************************************/

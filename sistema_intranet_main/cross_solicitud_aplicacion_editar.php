@@ -160,7 +160,7 @@ if(!empty($_GET['addDetalle'])){?>
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_add_detalle"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_add_detalle">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -192,7 +192,7 @@ if(!empty($_GET['addDetalle'])){?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_date('Fecha Cierre Cuartel','f_cierre', $x1, 2);	
+				$Form_Inputs->form_date('Fecha Cierre Cuartel','f_cierre', $x1, 2);
 				$Form_Inputs->form_select('Ejecucion','idEjecucion', $x2, 2, 'idEjecucion', 'Nombre', 'core_estado_ejecucion', 0, '', $dbConn);
 				$Form_Inputs->form_input_number_spinner('Distancia Recorrida Km','GeoDistance', $x3, 0, 500000, '0.1', 1, 1);
 				$Form_Inputs->form_input_number_spinner('Vel. Promedio Tractor Km/hr','VelPromedio', $x4, 0, 50, '0.1', 1, 1);
@@ -210,10 +210,10 @@ if(!empty($_GET['addDetalle'])){?>
 					document.getElementById('div_VelPromedio').style.display = 'none';
 					document.getElementById('div_LitrosAplicados').style.display = 'none';
 					//document.getElementById('div_T_Aplicacion').style.display = 'none';
-						
+
 					$("#idEjecucion").on("change", function(){ //se ejecuta al cambiar valor del select
 						let idEjecucion = $(this).val(); //Asignamos el valor seleccionado
-					
+
 						//No ejecutado
 						if(idEjecucion == 1){
 							document.getElementById('div_GeoDistance').style.display = '';
@@ -238,7 +238,7 @@ if(!empty($_GET['addDetalle'])){?>
 				</script>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_close_cuartel"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_close_cuartel">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -248,7 +248,7 @@ if(!empty($_GET['addDetalle'])){?>
 	</div>
 </div><?php */ ?>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['edit_prod'])){ 
+}elseif(!empty($_GET['edit_prod'])){
 // consulto los datos
 $SIS_query = 'idProducto, DosisAplicar, Objetivo';
 $SIS_join  = '';
@@ -298,7 +298,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 				?>
 
 				<script>
-					
+
 					<?php
 					foreach ($arrTipo as $tipo) {
 						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
@@ -315,7 +315,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 							document.getElementById("escribeme2").value = eval("id_med_" + Componente);
 						}
 					}
-					
+
 					$(document).ready(function(){
 						let Componente = document.getElementById("idProducto").value;
 						if (Componente != "") {
@@ -325,9 +325,9 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 						}
 					});
 				</script>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_producto"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_producto">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -337,7 +337,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['add_prod'])){ 
+} elseif(!empty($_GET['add_prod'])){
 // consulto los datos
 $SIS_query = '
 productos_listado.idProducto, 
@@ -380,7 +380,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 				?>
 
 				<script>
-					
+
 					<?php
 					foreach ($arrTipo as $tipo) {
 						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
@@ -397,7 +397,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 							document.getElementById("escribeme2").value = eval("id_med_" + Componente);
 						}
 					}
-					
+
 					$(document).ready(function(){
 						let Componente = document.getElementById("idProducto").value;
 						if (Componente != "") {
@@ -407,9 +407,9 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 						}
 					});
 				</script>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_producto"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_producto">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -419,7 +419,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['edit_trac'])){
+} elseif(!empty($_GET['edit_trac'])){
 // consulto los datos
 $SIS_query = 'idVehiculo, idTelemetria, idTrabajador';
 $SIS_join  = '';
@@ -436,7 +436,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$w .= " AND telemetria_listado.idTab=1";//CrossChecking					
+	$w .= " AND telemetria_listado.idTab=1";//CrossChecking		
 }	
 ?>
 
@@ -473,7 +473,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_tractor"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_tractor">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -483,7 +483,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['add_trac'])){
+} elseif(!empty($_GET['add_trac'])){
 $w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND telemetria_listado.idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
@@ -493,7 +493,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$w .= " AND telemetria_listado.idTab=1";//CrossChecking					
+	$w .= " AND telemetria_listado.idTab=1";//CrossChecking		
 }
 			
 ?>
@@ -528,10 +528,9 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				$Form_Inputs->form_input_hidden('idCuarteles', $_GET['cuartel_id'], 2);
 
 				?>
-				
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_tractor"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_tractor">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -603,7 +602,7 @@ if(isset($row_data_ini['idProducto'])&&$row_data_ini['idProducto']!=0){$z.= " AN
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_cuartel"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_cuartel">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -613,7 +612,7 @@ if(isset($row_data_ini['idProducto'])&&$row_data_ini['idProducto']!=0){$z.= " AN
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addCuartel'])){ 
+} elseif(!empty($_GET['addCuartel'])){
 // consulto los datos
 $SIS_query = 'idPredio, idCategoria, idProducto, Mojamiento, VelTractor, VelViento, TempMin, TempMax, HumTempMax';
 $SIS_join  = '';
@@ -644,11 +643,11 @@ $w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSiste
 $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$w .= " AND telemetria_listado.idTab=1";//CrossChecking					
+	$w .= " AND telemetria_listado.idTab=1";//CrossChecking		
 }
 		
 ?>
@@ -728,7 +727,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 							document.getElementById("escribeme2").value = eval("id_med_" + Componente);
 						}
 					}
-					
+
 					$(document).ready(function(){
 						let Componente = document.getElementById("idProducto").value;
 						if (Componente != "") {
@@ -738,9 +737,9 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 						}
 					});
 				</script>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_cuartel"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_cuartel">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -750,7 +749,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addMaterial'])){ ?>
+} elseif(!empty($_GET['addMaterial'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -768,14 +767,13 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Material de Seguridad','idMatSeguridad', $x1, 2, 'idMatSeguridad', 'Nombre', 'cross_checking_materiales_seguridad', 'idEstado=1', '', $dbConn);
-					
+
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
 
 				?>
-				
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_material"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_material">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -904,9 +902,9 @@ $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
+</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } else { 
+} else {
 /**********************************************/
 // consulto los datos
 $SIS_query = '
@@ -1204,7 +1202,7 @@ foreach ($arrProductos as $prod) {
 							<td><?php echo $row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat']?></td>
 						</tr>
 					<?php } ?>
-					
+
 				</tbody>
 			</table>
 		</div>
@@ -1224,20 +1222,20 @@ foreach ($arrProductos as $prod) {
 						<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']!=3){ ?><a href="<?php echo $location.'&addMaterial=true' ?>" title="Agregar Materiales" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Materiales</a><?php } ?>
 					</td>
 				</tr>
-				<?php 
+				<?php
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrMateriales!=false && !empty($arrMateriales) && $arrMateriales!='') {
 						foreach ($arrMateriales as $prod) {?>
 						
 							<tr class="item-row linea_punteada">
-								<td class="item-name" colspan="6"><i class="fa fa-eyedropper" aria-hidden="true"></i> <?php echo $prod['Nombre'];?></td>
-								<td class="item-name" colspan="2"><?php echo $prod['Codigo'];?></td>
+								<td class="item-name" colspan="6"><i class="fa fa-eyedropper" aria-hidden="true"></i> <?php echo $prod['Nombre']; ?></td>
+								<td class="item-name" colspan="2"><?php echo $prod['Codigo']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
 										<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']!=3&&isset($cuartel['idEstado'])&&$cuartel['idEstado']==1){ ?>
 											<?php 
 											$ubicacion = $location.'&del_material='.simpleEncode($prod['idMatSeg'], fecha_actual());
-											$dialogo   = '¿Realmente deseas eliminar el material de seguridad '.$prod['Nombre'].'?';?>
+											$dialogo   = '¿Realmente deseas eliminar el material de seguridad '.$prod['Nombre'].'?'; ?>
 											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Cuartel" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 										<?php } ?>
 									</div>
@@ -1260,19 +1258,19 @@ foreach ($arrProductos as $prod) {
 						<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']!=3){ ?><a href="<?php echo $location.'&addCuartel=true' ?>" title="Agregar Cuartel" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Cuartel</a><?php } ?>
 					</td>			
 				</tr>
-				<?php 
+				<?php
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrCuarteles!=false && !empty($arrCuarteles) && $arrCuarteles!='') {
 						foreach ($arrCuarteles as $cuartel) { ?>
 							<tr class="item-row linea_punteada" style="background: #eee;">
 								<td class="item-name"><?php echo $cuartel['CuartelNombre'];if(isset($cuartel['idEstado'])&&$cuartel['idEstado']==2){ echo '(Cerrado el '.fecha_estandar($cuartel['f_cierre']).')';} ?></td>
-								<td class="item-name"><?php echo $cuartel['CuartelEspecie'].' '.$cuartel['CuartelVariedad'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['Mojamiento']).' L/ha';?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['VelTractor']).' Km/hr';?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['VelViento']).' Km/hr';?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['TempMin']).' °';?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['TempMax']).' °';?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['HumTempMax']).' %';?></td>
+								<td class="item-name"><?php echo $cuartel['CuartelEspecie'].' '.$cuartel['CuartelVariedad']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['Mojamiento']).' L/ha'; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['VelTractor']).' Km/hr'; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['VelViento']).' Km/hr'; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['TempMin']).' °'; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['TempMax']).' °'; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['HumTempMax']).' %'; ?></td>
 								<td>
 									<div class="btn-group" style="width: 140px;">
 										<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']!=3&&isset($cuartel['idEstado'])&&$cuartel['idEstado']==1){ ?>
@@ -1286,7 +1284,7 @@ foreach ($arrProductos as $prod) {
 											<?php }*/ ?>
 											<?php 
 											$ubicacion = $location.'&del_cuartel='.simpleEncode($cuartel['idCuarteles'], fecha_actual());
-											$dialogo   = '¿Realmente deseas eliminar el cuartel '.$cuartel['CuartelNombre'].'?';?>
+											$dialogo   = '¿Realmente deseas eliminar el cuartel '.$cuartel['CuartelNombre'].'?'; ?>
 											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Cuartel" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 										<?php } ?>
 									</div>
@@ -1296,18 +1294,18 @@ foreach ($arrProductos as $prod) {
 							if($arrTrac[$cuartel['idCuarteles']]){
 								//Se recorren los tractores
 								foreach ($arrTrac[$cuartel['idCuarteles']] as $tract){?>
-									
+
 									<tr class="item-row linea_punteada">
-										<td class="item-name" colspan="2"><i class="fa fa-truck" aria-hidden="true"></i> <?php echo '<strong>Tractor: </strong>'.$tract['Nombre'];?></td>
-										<td class="item-name" colspan="4"><?php echo '<strong>Equipo Aplicación: </strong>'.$tract['VehiculoNombre'];?></td>
-										<td class="item-name" colspan="2"><?php echo '<strong>Trabajador: </strong>'.$tract['Trabajador'];?></td>
+										<td class="item-name" colspan="2"><i class="fa fa-truck" aria-hidden="true"></i> <?php echo '<strong>Tractor: </strong>'.$tract['Nombre']; ?></td>
+										<td class="item-name" colspan="4"><?php echo '<strong>Equipo Aplicación: </strong>'.$tract['VehiculoNombre']; ?></td>
+										<td class="item-name" colspan="2"><?php echo '<strong>Trabajador: </strong>'.$tract['Trabajador']; ?></td>
 										<td>
 											<div class="btn-group" style="width: 70px;" >
 												<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']!=3&&isset($cuartel['idEstado'])&&$cuartel['idEstado']==1){ ?>
 													<a href="<?php echo $location.'&cuartel_id='.$cuartel['idCuarteles'].'&edit_trac='.$tract['idTractores']; ?>" title="Editar Tractor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 													<?php 
 													$ubicacion = $location.'&cuartel_id='.$cuartel['idCuarteles'].'&del_trac='.simpleEncode($tract['idTractores'], fecha_actual());
-													$dialogo   = '¿Realmente deseas eliminar el tractor '.$tract['Nombre'].'?';?>
+													$dialogo   = '¿Realmente deseas eliminar el tractor '.$tract['Nombre'].'?'; ?>
 													<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Tractor" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 												<?php } ?>
 											</div>
@@ -1319,16 +1317,16 @@ foreach ($arrProductos as $prod) {
 							if($arrProd[$cuartel['idCuarteles']]){
 								//Se recorren los quimicos a utilizar
 								foreach ($arrProd[$cuartel['idCuarteles']] as $prod){?>
-									
+
 									<tr class="item-row linea_punteada">
 										<td class="item-name" colspan="5">
 											<i class="fa fa-flask" aria-hidden="true"></i>
-											<?php echo '<strong>Producto Químico: </strong>'.$prod['Producto'];?><br/>
-											<?php echo '<strong>Objetivo: </strong>'.$prod['Objetivo'];?><br/>
+											<?php echo '<strong>Producto Químico: </strong>'.$prod['Producto']; ?><br/>
+											<?php echo '<strong>Objetivo: </strong>'.$prod['Objetivo']; ?><br/>
 										</td>
 										<td class="item-name" colspan="3">
-											<?php echo '<strong>Dosis Recomendada: </strong>'.Cantidades_decimales_justos($prod['DosisRecomendada']).' '.$prod['Unimed'];?><br/>
-											<?php echo '<strong>Dosis a aplicar: </strong>'.Cantidades_decimales_justos($prod['DosisAplicar']).' '.$prod['Unimed'];?><br/>
+											<?php echo '<strong>Dosis Recomendada: </strong>'.Cantidades_decimales_justos($prod['DosisRecomendada']).' '.$prod['Unimed']; ?><br/>
+											<?php echo '<strong>Dosis a aplicar: </strong>'.Cantidades_decimales_justos($prod['DosisAplicar']).' '.$prod['Unimed']; ?><br/>
 										</td>
 										<td>
 											<div class="btn-group" style="width: 70px;" >
@@ -1336,13 +1334,13 @@ foreach ($arrProductos as $prod) {
 													<a href="<?php echo $location.'&cuartel_id='.$cuartel['idCuarteles'].'&edit_prod='.$prod['idProdQuim']; ?>" title="Editar Producto Quimico" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 													<?php 
 													$ubicacion = $location.'&cuartel_id='.$cuartel['idCuarteles'].'&del_prod='.simpleEncode($prod['idProdQuim'], fecha_actual());
-													$dialogo   = '¿Realmente deseas eliminar el producto '.$prod['Producto'].'?';?>
+													$dialogo   = '¿Realmente deseas eliminar el producto '.$prod['Producto'].'?'; ?>
 													<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Producto" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 												<?php } ?>
 											</div>
 										</td>
 								</tr>
-							
+
 								<?php
 								}
 							}
@@ -1394,4 +1392,5 @@ foreach ($arrProductos as $prod) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

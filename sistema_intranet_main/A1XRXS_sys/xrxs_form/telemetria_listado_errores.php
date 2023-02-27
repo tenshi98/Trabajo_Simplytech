@@ -42,7 +42,7 @@ require_once '0_validate_user_1.php';
 				if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
 					$SIS_where .= " AND Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 				}
-				
+
 				$rowCuenta = db_select_data (false, $SIS_query, 'telemetria_listado_errores', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/******************************************************************/

@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -239,7 +239,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 <div class="col-xs-12">
 	<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive">
 		<div id="page-wrap">
-			<div id="header"> ORDEN DE TRABAJO N° <?php echo n_doc($X_Puntero, 8);?></div>
+			<div id="header"> ORDEN DE TRABAJO N° <?php echo n_doc($X_Puntero, 8); ?></div>
 		
 			<div id="customer">
 
@@ -281,39 +281,39 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 						<?php if($rowdata['f_creacion']!='0000-00-00'){?>
 							<tr>
 								<td class="meta-head">Fecha creacion</td>
-								<td><?php if($rowdata['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_creacion']);}?></td>
+								<td><?php if($rowdata['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_creacion']);} ?></td>
 							</tr>
-						<?php }?>
+						<?php } ?>
 						<?php if($rowdata['f_programacion']!='0000-00-00'){?>
 							<tr>
 								<td class="meta-head">Fecha programada</td>
-								<td><?php if($rowdata['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_programacion']);}?></td>
+								<td><?php if($rowdata['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_programacion']);} ?></td>
 							</tr>
-						<?php }?>
+						<?php } ?>
 						<?php if($rowdata['f_termino']!='0000-00-00'){?>
 							<tr>
 								<td class="meta-head">Fecha termino</td>
-								<td><?php if($rowdata['f_termino']!='0000-00-00'){echo Fecha_estandar($rowdata['f_termino']);}?></td>
+								<td><?php if($rowdata['f_termino']!='0000-00-00'){echo Fecha_estandar($rowdata['f_termino']);} ?></td>
 							</tr>
-						<?php }?>
+						<?php } ?>
 						<?php if($rowdata['hora_Inicio']!='00:00:00'){?>
 							<tr>
 								<td class="meta-head">Hora inicio</td>
-								<td><?php if($rowdata['hora_Inicio']!='00:00:00'){echo $rowdata['hora_Inicio'];}?></td>
+								<td><?php if($rowdata['hora_Inicio']!='00:00:00'){echo $rowdata['hora_Inicio'];} ?></td>
 							</tr>
-						<?php }?>
+						<?php } ?>
 						<?php if($rowdata['hora_Termino']!='00:00:00'){?>
 							<tr>
 								<td class="meta-head">Hora termino</td>
-								<td><?php if($rowdata['hora_Termino']!='00:00:00'){echo $rowdata['hora_Termino'];}?></td>
+								<td><?php if($rowdata['hora_Termino']!='00:00:00'){echo $rowdata['hora_Termino'];} ?></td>
 							</tr>
-						<?php }?>
+						<?php } ?>
 					</tbody>
 				</table>
 			</div>
 			<table id="items">
 				<tbody>
-					
+
 					<tr><th colspan="6">Detalle</th></tr>		  
 					
 					<?php 
@@ -322,16 +322,16 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 						<tr class="item-row fact_tittle"><td colspan="6">Trabajadores</td></tr>
 						<?php foreach ($arrTrabajadores as $trab) {  ?>
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><?php echo $trab['Rut'];?></td>
-								<td class="item-name" colspan="4"><?php echo $trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'];?></td>
-								<td class="item-name"><?php echo $trab['Cargo'];?></td> 
+								<td class="item-name"><?php echo $trab['Rut']; ?></td>
+								<td class="item-name" colspan="4"><?php echo $trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat']; ?></td>
+								<td class="item-name"><?php echo $trab['Cargo']; ?></td>
 							</tr>
-						<?php }?>
+						<?php } ?>
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
 					/**********************************************************************************/
 					if($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!='') { ?>
-						<tr class="item-row fact_tittle"><td colspan="6">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td></tr>
+						<tr class="item-row fact_tittle"><td colspan="6">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td></tr>
 						<?php foreach ($arrInsumos as $insumos) {
 							if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){?>
 								<tr class="item-row linea_punteada">
@@ -345,7 +345,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 					<?php } 
 					/**********************************************************************************/
 					if($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') { ?>
-						<tr class="item-row fact_tittle"><td colspan="6">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td></tr>
+						<tr class="item-row fact_tittle"><td colspan="6">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td></tr>
 						<?php foreach ($arrProductos as $prod) {
 							if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){?>
 								<tr class="item-row linea_punteada">
@@ -359,7 +359,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 					<?php } 
 					/**********************************************************************************/
 					if($arrTarea!=false && !empty($arrTarea) && $arrTarea!='') { ?>
-						<tr class="item-row fact_tittle"><td colspan="6">Trabajos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';}?></td></tr>
+						<tr class="item-row fact_tittle"><td colspan="6">Trabajos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';} ?></td></tr>
 						<?php foreach ($arrTarea as $tarea) {  
 							$s_tarea = $tarea['LicitacionLVL_1'];
 							if(isset($tarea['LicitacionLVL_2'])&&$tarea['LicitacionLVL_2']!=''){$s_tarea .= ' - '.$tarea['LicitacionLVL_2'];}
@@ -389,15 +389,15 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 							?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name">
-									<strong>Estado: </strong><?php echo $tarea['EstadoTarea'];?>
+									<strong>Estado: </strong><?php echo $tarea['EstadoTarea']; ?>
 								</td>
 								<td class="item-name" colspan="5">
-									<strong>Licitacion: </strong><?php echo $tarea['Licitacion'];?><br/>
+									<strong>Licitacion: </strong><?php echo $tarea['Licitacion']; ?><br/>
 									<strong>Tarea: </strong><?php echo $s_tarea; ?><br/>
-									<strong>Observacion: </strong><?php echo $tarea['Observacion'];?>
+									<strong>Observacion: </strong><?php echo $tarea['Observacion']; ?>
 								</td>
 							</tr>
-							
+
 							<?php if($arrArchivos!=false && !empty($arrArchivos) && $arrArchivos!=''){ 
 								$zxcv = 0;
 								foreach ($arrArchivos as $key => $arch) {
@@ -423,7 +423,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 									</tr>
 								<?php } ?>
 							<?php } ?>
-							
+
 						<?php } ?>
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
@@ -432,7 +432,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 					
 					<tr><td colspan="6" class="blank"><p><?php echo $rowdata['Observaciones']?></p></td></tr>
 					<tr><td colspan="6" class="blank"><p>Observacion</p></td></tr>
-					
+
 				</tbody>
 			</table>
 			<div class="clearfix"></div>
@@ -493,7 +493,6 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 
 </div>
 
-
 <?php 
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
@@ -506,7 +505,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -516,7 +515,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -527,4 +526,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -68,24 +68,15 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
+
+/*******************************************************/
 // consulto los datos
-$query = "SELECT Ano, idMes, UTM, UTA, ValorPuntos, Mensual, Acumulado, DoceMeses
-FROM `aguas_mediciones_ipc`
-WHERE idIPC = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	?>
+$SIS_query = 'Ano, idMes, UTM, UTA, ValorPuntos, Mensual, Acumulado, DoceMeses';
+$SIS_join  = '';
+$SIS_where = 'idIPC = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_ipc', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -135,9 +126,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -227,14 +218,14 @@ $SIS_where = "aguas_mediciones_ipc.idIPC!=0";
 $SIS_where.= " AND aguas_mediciones_ipc.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; //Verifico el tipo de usuario que esta ingresando
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Ano']) && $_GET['Ano']!=''){            $SIS_where .= " AND aguas_mediciones_ipc.Ano='".$_GET['Ano']."'";}
-if(isset($_GET['idMes']) && $_GET['idMes']!=''){        $SIS_where .= " AND aguas_mediciones_ipc.idMes='".$_GET['idMes']."'";}
-if(isset($_GET['UTM']) && $_GET['UTM']!=''){            $SIS_where .= " AND aguas_mediciones_ipc.UTM='".$_GET['UTM']."'";}
-if(isset($_GET['UTA']) && $_GET['UTA']!=''){            $SIS_where .= " AND aguas_mediciones_ipc.UTA='".$_GET['UTA']."'";}
+if(isset($_GET['Ano']) && $_GET['Ano']!=''){                   $SIS_where .= " AND aguas_mediciones_ipc.Ano='".$_GET['Ano']."'";}
+if(isset($_GET['idMes']) && $_GET['idMes']!=''){               $SIS_where .= " AND aguas_mediciones_ipc.idMes='".$_GET['idMes']."'";}
+if(isset($_GET['UTM']) && $_GET['UTM']!=''){                   $SIS_where .= " AND aguas_mediciones_ipc.UTM='".$_GET['UTM']."'";}
+if(isset($_GET['UTA']) && $_GET['UTA']!=''){                   $SIS_where .= " AND aguas_mediciones_ipc.UTA='".$_GET['UTA']."'";}
 if(isset($_GET['ValorPuntos']) && $_GET['ValorPuntos']!=''){   $SIS_where .= " AND aguas_mediciones_ipc.ValorPuntos='".$_GET['ValorPuntos']."'";}
-if(isset($_GET['Mensual']) && $_GET['Mensual']!=''){    $SIS_where .= " AND aguas_mediciones_ipc.Mensual='".$_GET['Mensual']."'";}
-if(isset($_GET['Acumulado']) && $_GET['Acumulado']!=''){$SIS_where .= " AND aguas_mediciones_ipc.Acumulado='".$_GET['Acumulado']."'";}
-if(isset($_GET['DoceMeses']) && $_GET['DoceMeses']!=''){$SIS_where .= " AND aguas_mediciones_ipc.DoceMeses='".$_GET['DoceMeses']."'";}
+if(isset($_GET['Mensual']) && $_GET['Mensual']!=''){           $SIS_where .= " AND aguas_mediciones_ipc.Mensual='".$_GET['Mensual']."'";}
+if(isset($_GET['Acumulado']) && $_GET['Acumulado']!=''){       $SIS_where .= " AND aguas_mediciones_ipc.Acumulado='".$_GET['Acumulado']."'";}
+if(isset($_GET['DoceMeses']) && $_GET['DoceMeses']!=''){       $SIS_where .= " AND aguas_mediciones_ipc.DoceMeses='".$_GET['DoceMeses']."'";}
 
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
@@ -245,8 +236,8 @@ $total_paginas = ceil($cuenta_registros / $cant_reg);
 $SIS_query = '
 aguas_mediciones_ipc.idIPC,
 aguas_mediciones_ipc.Ano,
-aguas_mediciones_ipc.UTM, 
-aguas_mediciones_ipc.UTA, 
+aguas_mediciones_ipc.UTM,
+aguas_mediciones_ipc.UTA,
 aguas_mediciones_ipc.ValorPuntos,
 aguas_mediciones_ipc.Mensual,
 aguas_mediciones_ipc.Acumulado,
@@ -392,29 +383,29 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_ipc', $SIS_join,
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-				<?php foreach ($arrUML as $uml) { ?>
-					<tr class="odd">
-						<td><?php echo $uml['Ano']; ?></td>
-						<td><?php echo $uml['Mes']; ?></td>
-						<td><?php echo Cantidades_decimales_justos($uml['UTM']); ?></td>
-						<td><?php echo Cantidades_decimales_justos($uml['UTA']); ?></td>
-						<td><?php echo Cantidades_decimales_justos($uml['ValorPuntos']); ?></td>
-						<td><?php echo Cantidades_decimales_justos($uml['Mensual']); ?></td>
-						<td><?php echo Cantidades_decimales_justos($uml['Acumulado']); ?></td>
-						<td><?php echo Cantidades_decimales_justos($uml['DoceMeses']); ?></td>
-						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $uml['sistema']; ?></td><?php } ?>
-						<td>
-							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$uml['idIPC']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.simpleEncode($uml['idIPC'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el IPC del '.$uml['Ano'].' '.$uml['Mes'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>
-							</div>
-						</td>
-					</tr>
-				<?php } ?>
+					<?php foreach ($arrUML as $uml) { ?>
+						<tr class="odd">
+							<td><?php echo $uml['Ano']; ?></td>
+							<td><?php echo $uml['Mes']; ?></td>
+							<td><?php echo Cantidades_decimales_justos($uml['UTM']); ?></td>
+							<td><?php echo Cantidades_decimales_justos($uml['UTA']); ?></td>
+							<td><?php echo Cantidades_decimales_justos($uml['ValorPuntos']); ?></td>
+							<td><?php echo Cantidades_decimales_justos($uml['Mensual']); ?></td>
+							<td><?php echo Cantidades_decimales_justos($uml['Acumulado']); ?></td>
+							<td><?php echo Cantidades_decimales_justos($uml['DoceMeses']); ?></td>
+							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $uml['sistema']; ?></td><?php } ?>
+							<td>
+								<div class="btn-group" style="width: 70px;" >
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$uml['idIPC']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=4){
+										$ubicacion = $location.'&del='.simpleEncode($uml['idIPC'], fecha_actual());
+										$dialogo   = '¿Realmente deseas eliminar el IPC del '.$uml['Ano'].' '.$uml['Mes'].'?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<?php } ?>
+								</div>
+							</td>
+						</tr>
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -431,4 +422,5 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_ipc', $SIS_join,
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

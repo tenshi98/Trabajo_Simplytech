@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 
@@ -170,7 +170,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 				if(isset($rowdata['Trabajador_Banco'])&&$rowdata['Trabajador_Banco']!=''){              $Trabajador_Banco            = $rowdata['Trabajador_Banco'];            }else{$Trabajador_Banco             = 'Sin datos';}
 				if(isset($rowdata['Trabajador_TipoCuenta'])&&$rowdata['Trabajador_TipoCuenta']!=''){    $Trabajador_TipoCuenta       = $rowdata['Trabajador_TipoCuenta'];       }else{$Trabajador_TipoCuenta        = 'Sin datos';}
 				if(isset($rowdata['Trabajador_NCuenta'])&&$rowdata['Trabajador_NCuenta']!=''){          $Trabajador_NCuenta          = $rowdata['Trabajador_NCuenta'];          }else{$Trabajador_NCuenta           = 'Sin datos';}
-				
+
 				?>
 				
 				doc.setData({
@@ -224,4 +224,5 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -36,10 +36,10 @@ $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelaciona
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
-}else{	
+}else{
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo,cantSensores', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
-	
+
 	/****************************************************************/
 	//numero sensores equipo
 	$consql = '';
@@ -72,7 +72,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$SIS_where .= ' OR idGrupo='.$sub['idGrupo'];
 		}	
 	}
-	
+
 	//consulto grupos
 	$arrGrupos = array();
 	$arrGrupos = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', $SIS_where, 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
@@ -169,7 +169,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								 ->setDescription("Document for Office 2007")
 								 ->setKeywords("office 2007")
 								 ->setCategory("office 2007 result file");
-		 
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A1', 'Fecha')
 				->setCellValue('B1', 'Hora')

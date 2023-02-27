@@ -125,8 +125,9 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrRutasAlt,$row );
 }
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta Alternativa', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta Alternativa', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -137,7 +138,7 @@ array_push( $arrRutasAlt,$row );
 				<li class="active"><a href="<?php echo 'vehiculos_ruta_alternativa.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class=""><a href="<?php echo 'vehiculos_ruta_alternativa_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class=""><a href="<?php echo 'vehiculos_ruta_alternativa_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
-				
+
 			</ul>
 		</header>
         <div class="tab-content">
@@ -169,20 +170,20 @@ array_push( $arrRutasAlt,$row );
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 								RutasAlternativas();
 							}
-							
+
 							/* ************************************************************************** */
 							function RutasAlternativas() {
 								
 								var route1=[];
 								var route2=[];
 								var tmp;
-								
+
 								var locations1 = [ 
 								<?php foreach ( $arrRutas as $pos ) { ?>
 									['<?php echo $pos['idUbicaciones']; ?>', <?php echo $pos['Latitud']; ?>, <?php echo $pos['Longitud']; ?>], 					
 								<?php } ?>
 								];
-								
+
 								var locations2 = [ 
 								<?php foreach ( $arrRutasAlt as $pos ) { ?>
 									['<?php echo $pos['idUbicaciones']; ?>', <?php echo $pos['Latitud']; ?>, <?php echo $pos['Longitud']; ?>], 					
@@ -206,7 +207,7 @@ array_push( $arrRutasAlt,$row );
 									strokeOpacity: 1,
 									strokeWeight: 5
 								});
-								
+
 								var drawn = new google.maps.Polyline({
 									map: map,
 									path: route2,
@@ -224,9 +225,9 @@ array_push( $arrRutasAlt,$row );
 								  content: ''
 								});
 								var marcadores = [
-								<?php 
+								<?php
 								$in=0;
-								foreach ($arrRutas as $pos) { 
+								foreach ($arrRutas as $pos) {
 										if($in==0){
 											$in=1;
 										}else{
@@ -241,9 +242,9 @@ array_push( $arrRutasAlt,$row );
 								  contenido: "<?php echo $pos['direccion']; ?>"
 								}
 								<?php } ?>
-								<?php 
+								<?php
 								$in=0;
-								foreach ($arrRutasAlt as $pos) { 
+								foreach ($arrRutasAlt as $pos) {
 										if($in==0){
 											echo ',';
 										}else{
@@ -283,7 +284,7 @@ array_push( $arrRutasAlt,$row );
 									});
 								  })(marker, contenido);
 								}
-								
+
 								// *
 								// START INFOWINDOW CUSTOMIZE.
 								// The google.maps.event.addListener() event expects
@@ -348,8 +349,8 @@ array_push( $arrRutasAlt,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -358,7 +359,7 @@ array_push( $arrRutasAlt,$row );
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];?>
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -393,7 +394,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];?>
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
-				
+
 					<script>
 						document.getElementById('div_Fecha').style.display = 'none';
 						document.getElementById('div_idDia').style.display = 'none';
@@ -642,7 +643,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'vehiculos_ruta_alternativa', $S
 								<?php if ($rowlevel['level']>=4){
 									//se verifica que el usuario no sea uno mismo
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idRutaAlt'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el equipo '.$usuarios['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el equipo '.$usuarios['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -670,4 +671,5 @@ $arrUsers = db_select_array (false, $SIS_query, 'vehiculos_ruta_alternativa', $S
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

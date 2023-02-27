@@ -54,11 +54,12 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Evento borrado correct
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 
 //Include de la presentacion
-include '1include_principal_calendario.php';?>
+include '1include_principal_calendario.php'; ?>
         
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

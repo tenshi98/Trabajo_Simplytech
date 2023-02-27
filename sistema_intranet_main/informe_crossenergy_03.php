@@ -30,12 +30,12 @@ $SIS_where = 'idTelemetria = '.$_GET['idTelemetria'].' AND (FechaSistema BETWEEN
 
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_crossenergy_hora', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
-			
+
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
 }else{
-	
+
 	//numero sensores equipo
 	$N_Maximo_Sensores = 20;
 	$subquery_1 = 'Nombre,cantSensores';
@@ -126,8 +126,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 				<h5>Estado del Equipo <?php echo $rowdata['Nombre']; ?></h5>
 			</header>
-			<div class="table-responsive" id="grf">	
-				<?php 
+			<div class="table-responsive" id="grf">
+				<?php
 					$Titulo = 'Potencia hora punta (Periodo: '.$_GET['f_inicio'].' al '.$_GET['f_termino'].' / Horario: '.$_GET['h_inicio'].'-'.$_GET['h_termino'].')';
 					echo GraphBarr_1('graphBarra_1', $Titulo, 'Fecha', 'kW', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 0); 
 				?>			
@@ -141,10 +141,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-			
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Filtro de busqueda
@@ -160,7 +160,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 }
 
 ?>
-		
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -206,11 +206,10 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 </div>
 <?php } ?>
 
-	
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

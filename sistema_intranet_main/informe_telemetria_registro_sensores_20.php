@@ -68,7 +68,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$SIS_order = 'FechaSistema ASC, HoraSistema ASC LIMIT 10000';
 	$arrEquipos = array();
 	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos');
-	
+
 	/**********************************************************************/
 	//Se traen todos los grupos
 	$arrGrupo = array();
@@ -76,7 +76,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	//guardo los grupos
 	$Grupo = array();
-	foreach ($arrGrupo as $sen) { 
+	foreach ($arrGrupo as $sen) {
 		$Grupo[$sen['idGrupo']] = $sen['Nombre'];
 	}
 
@@ -86,7 +86,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$m_table        = '';
 	$arrTableTemp   = array();
 	$arrTable       = array();
-	
+
 	/****************************************************************/
 	//titulo de la tabla
 	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
@@ -99,14 +99,14 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			}
 		}
 	}
-	
+
 	//variables
 	$posit           = 0;
 	$Ult_diaInicio   = '';
 	$Ult_diaTermino  = '';
 	$Ult_horaInicio  = '';
 	$Ult_horaTermino = '';
-		
+
 	//se arman datos
 	foreach ($arrEquipos as $fac) {
 		//variable
@@ -217,8 +217,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$new_table2 = str_replace($healthy, $yummy, $table2);
 			
 	
-	} 
-	
+	}
+
 	//recorro los registros
 	for ($x = 1; $x < $posit; $x++) {
 		$m_table .= '<tr class="odd">';
@@ -228,7 +228,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$m_table .= $arrTable[$x]['Contenido'];
 		$m_table .= '</tr>';	
 	}
-	
+
 	//Ultima linea
 	$HorasTrans  = horas_transcurridas($Ult_diaInicio, $Ult_diaTermino, $Ult_horaInicio, $Ult_horaTermino);
 	$m_table .= '<tr class="odd">';
@@ -241,7 +241,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	?>
 						
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apertura Puertas', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe del equipo '.$rowEquipo['NombreEquipo']);?>
+		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apertura Puertas', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe del equipo '.$rowEquipo['NombreEquipo']); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
 			<a target="new" href="<?php echo 'informe_telemetria_registro_sensores_20_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 			<a target="new" href="<?php echo 'informe_telemetria_registro_sensores_20_to_pdf.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
@@ -252,7 +252,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>	
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 				<h5>Informe equipo <?php echo $rowEquipo['NombreEquipo']; ?></h5>
 			</header>
 			<div class="table-responsive">
@@ -275,10 +275,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-			
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //filtros
@@ -295,8 +295,9 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 alert_post_data(2,1,1, $Alert_Text);
+
 ?>
-		
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -339,11 +340,10 @@ alert_post_data(2,1,1, $Alert_Text);
 </div>
 <?php } ?>
 
-	
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

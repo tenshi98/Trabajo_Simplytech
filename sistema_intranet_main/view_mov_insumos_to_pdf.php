@@ -26,7 +26,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -269,7 +269,7 @@ $html .= '
 										Contacto: '.$row_data['PersonaContactoProveedor'].'<br/>
 										Giro de la Empresa: '.$row_data['GiroProveedor'].'
 									</td>
-									
+
 									<td style="vertical-align: top;width:33%;">
 										Empresa Destino
 											<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -339,7 +339,7 @@ $html .= '
 										Rut: '.$row_data['SistemaOrigenRut'].'<br/>
 										Email: '.$row_data['SistemaOrigenEmail'].'
 									</td>
-									
+
 									<td style="vertical-align: top;width:33%;">
 										Empresa Destino
 										<strong>'.$row_data['NombreCliente'].'</strong><br/>
@@ -353,7 +353,7 @@ $html .= '
 										Contacto: '.$row_data['PersonaContactoCliente'].'<br/>
 										Giro de la Empresa: '.$row_data['GiroCliente'].'
 									</td>
-									
+
 									<td style="vertical-align: top;width:33%;">
 										<strong>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</strong><br/>
 										<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
@@ -448,11 +448,11 @@ $html .= '
 										Rut: '.$row_data['SistemaOrigenRut'].'<br/>
 										Email: '.$row_data['SistemaOrigenEmail'].'
 									</td>
-									
+
 									<td style="vertical-align: top;width:33%;">
 										
 									</td>
-									
+
 									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 										<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 										<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>
@@ -481,11 +481,11 @@ $html .= '
 										Rut: '.$row_data['SistemaOrigenRut'].'<br/>
 										Email: '.$row_data['SistemaOrigenEmail'].'
 									</td>
-									
+
 									<td style="vertical-align: top;width:33%;">
 										
 									</td>
-									
+
 									<td style="vertical-align: top;width:33%;">
 										<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 										<strong>Bodega Origen: </strong>'.$row_data['BodegaDesde'].'<br/>
@@ -551,11 +551,11 @@ $html .= '
 										Rut: '.$row_data['SistemaOrigenRut'].'<br/>
 										Email: '.$row_data['SistemaOrigenEmail'].'
 									</td>
-									
+
 									<td style="vertical-align: top;width:33%;">
 										
 									</td>
-									
+
 									<td style="vertical-align: top;width:33%;">
 										<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 										<strong>Bodega utilizada:</strong> '.$row_data['BodegaDesde'].'<br/>
@@ -624,7 +624,7 @@ $html .= '
 										Contacto: '.$row_data['PersonaContactoProveedor'].'<br/>
 										Giro de la Empresa: '.$row_data['GiroProveedor'].'
 									</td>
-									
+
 									<td style="vertical-align: top;width:33%;">
 										Empresa Destino
 											<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -693,7 +693,7 @@ $html .= '
 								}
 								$html .= '<td align="right" style="vertical-align: top;">'.Valores(Cantidades_decimales_justos($prod['ValorTraspaso']), 0).' x '.$prodUnimed.'</td>';
 								$html .= '<td align="right">'.Valores(Cantidades_decimales_justos($prod['ValorTotal']), 0).'</td>
-							
+
 							</tr>';
 						} 
 					}
@@ -707,7 +707,7 @@ $html .= '
 							</tr>';
 						} 
 					}
-					
+
 					//si existen guias
 					if ($arrOtros!=false && !empty($arrOtros) && $arrOtros!='') {
 						$html .= '<tr style="background-color: #f9f9f9;"><td colspan="5"><strong>Otros</strong></td></tr>';
@@ -718,7 +718,7 @@ $html .= '
 							</tr>';
 						} 
 					}
-					
+
 					//Recorro y guard el nombre de los impuestos 
 					if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
@@ -728,7 +728,7 @@ $html .= '
 					}
 					foreach ($arrDescuentos as $descuentos) {
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong>Descuento: '.$descuentos['Nombre'].'</strong></td> 
+							<td colspan="4" align="right"><strong>Descuento: '.$descuentos['Nombre'].'</strong></td>
 							<td align="right">'.Valores($descuentos['vTotal'], 0).'</td>
 						</tr>';
 					}
@@ -740,70 +740,70 @@ $html .= '
 					}
 					if(isset($row_data['Impuesto_01'])&&$row_data['Impuesto_01']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4"  align="right"><strong>'.$impuestos[0]['nimp'].'</strong></td> 
+							<td colspan="4"  align="right"><strong>'.$impuestos[0]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_01'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto_02'])&&$row_data['Impuesto_02']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4"  align="right"><strong>'.$impuestos[1]['nimp'].'</strong></td> 
+							<td colspan="4"  align="right"><strong>'.$impuestos[1]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_02'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto_03'])&&$row_data['Impuesto_03']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4"  align="right"><strong>'.$impuestos[2]['nimp'].'</strong></td> 
+							<td colspan="4"  align="right"><strong>'.$impuestos[2]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_03'], 0).'</td>
 						</tr>';
 					} 
 					if(isset($row_data['Impuesto_04'])&&$row_data['Impuesto_04']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4"  align="right"><strong>'.$impuestos[3]['nimp'].'</strong></td> 
+							<td colspan="4"  align="right"><strong>'.$impuestos[3]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_04'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto_05'])&&$row_data['Impuesto_05']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4"  align="right"><strong>'.$impuestos[4]['nimp'].'</strong></td> 
+							<td colspan="4"  align="right"><strong>'.$impuestos[4]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_05'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto_06'])&&$row_data['Impuesto_06']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4"  align="right"><strong>'.$impuestos[5]['nimp'].'</strong></td> 
+							<td colspan="4"  align="right"><strong>'.$impuestos[5]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_06'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto_07'])&&$row_data['Impuesto_07']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4"  align="right"><strong>'.$impuestos[6]['nimp'].'</strong></td> 
+							<td colspan="4"  align="right"><strong>'.$impuestos[6]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_07'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto_08'])&&$row_data['Impuesto_08']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4"  align="right"><strong>'.$impuestos[7]['nimp'].'</strong></td> 
+							<td colspan="4"  align="right"><strong>'.$impuestos[7]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_08'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto_09'])&&$row_data['Impuesto_09']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4"  align="right"><strong>'.$impuestos[8]['nimp'].'</strong></td> 
+							<td colspan="4"  align="right"><strong>'.$impuestos[8]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_09'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto_10'])&&$row_data['Impuesto_10']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4"  align="right"><strong>'.$impuestos[9]['nimp'].'</strong></td> 
+							<td colspan="4"  align="right"><strong>'.$impuestos[9]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_10'], 0).'</td>
 						</tr>';
 					} 
 					if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4"  align="right"><strong>Total</strong></td> 
+							<td colspan="4"  align="right"><strong>Total</strong></td>
 							<td align="right">'.Valores($row_data['ValorTotal'], 0).'</td>
 						</tr>';
-					} 
+					}
 				$html .= '
 					</tbody>
 				</table>
@@ -821,7 +821,7 @@ $html .= '
 						</tr>
 					</tbody>
 				</table>';
-				
+
 				if($row_data['idTipo']==6){
 					$html .= '
 					<br/>
@@ -831,7 +831,7 @@ $html .= '
 					<br/>
 					<br/>
 					<br/>
-					
+
 					<table style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0">
 						<tbody>
 							<tr>
@@ -850,7 +850,7 @@ $html .= '
 					<br/>
 					<br/>
 					<br/>
-					
+
 					<table style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0">
 						<tbody>
 							<tr>
@@ -884,7 +884,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 		/************************************************************************/
 		//TCPDF
 		case 1:
-			
+
 			require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 			// create new PDF document
@@ -939,7 +939,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output(DeSanitizar($pdf_file), 'I');
-	
+
 			break;
 		/************************************************************************/
 		//DomPDF (Solo compatible con PHP 5.x)

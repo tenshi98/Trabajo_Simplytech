@@ -56,10 +56,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+$rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Variedades', $rowdata['Nombre'], 'Editar Datos Basicos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Variedades', $rowdata['Nombre'], 'Editar Datos Basicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -77,7 +77,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 						<li class=""><a href="<?php echo 'variedades_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 						<li class=""><a href="<?php echo 'variedades_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha</a></li>
 						<li class=""><a href="<?php echo 'variedades_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> HDS</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -85,15 +85,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post"  id="form1" name="form1" novalidate>
-					
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Nombre)){         $x1  = $Nombre;           }else{$x1  = $rowdata['Nombre'];}
 					if(isset($idTipo)){         $x2  = $idTipo;           }else{$x2  = $rowdata['idTipo'];}
 					if(isset($idCategoria)){    $x3  = $idCategoria;      }else{$x3  = $rowdata['idCategoria'];}
 					if(isset($Codigo)){         $x4  = $Codigo;           }else{$x4  = $rowdata['Codigo'];}
 					if(isset($MaxAplicacion)){  $x5  = $MaxAplicacion;    }else{$x5  = $rowdata['MaxAplicacion'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -104,8 +104,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 				
 					$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
 					?>
-					
-					<div class="form-group">	
+
+					<div class="form-group">
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
@@ -117,14 +117,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

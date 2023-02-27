@@ -198,13 +198,13 @@ require_once '0_validate_user_1.php';
 									if(isset($PersonaReunion) && $PersonaReunion!=''){        $SIS_data .= ",'".$PersonaReunion."'";     }else{$SIS_data .= ",''";}
 									if(isset($idEstado) && $idEstado!=''){                   $SIS_data .= ",'".$idEstado."'";           }else{$SIS_data .= ",''";}
 									$SIS_data .= ",'".$sufijo.$_FILES['Direccion_img']['name']."'";
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idSistema, idUsuario, Fecha, Hora, HoraSalida, Nombre,Rut, 
 									NDocCedula, Destino, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3,
 									idUbicacion_lvl_4, idUbicacion_lvl_5, PersonaReunion, idEstado, Direccion_img';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'seguridad_accesos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 									//Si ejecuto correctamente la consulta
 									if($ultimo_id!=0){
 										//redirijo
@@ -377,7 +377,7 @@ require_once '0_validate_user_1.php';
 									if(isset($PersonaReunion) && $PersonaReunion!=''){        $SIS_data .= ",PersonaReunion='".$PersonaReunion."'";}
 									if(isset($idEstado) && $idEstado!=''){                   $SIS_data .= ",idEstado='".$idEstado."'";}
 									$SIS_data .= ",Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'";
-									
+
 									/*******************************************************/
 									//se actualizan los datos
 									$resultado = db_update_data (false, $SIS_data, 'seguridad_accesos', 'idAcceso = "'.$idAcceso.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -386,9 +386,8 @@ require_once '0_validate_user_1.php';
 										
 										header( 'Location: '.$location.'&edited=true' );
 										die;
-										
+
 									}
-									
 								}else {
 									$error['Direccion_img']     = 'error/Ocurrio un error al mover el archivo';
 								}

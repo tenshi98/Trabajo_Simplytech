@@ -62,43 +62,43 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
 		case 'del_insumo_ex':
-		
+
 			//Borro todas las sesiones
 			unset($_SESSION['pago_clientes_insumos'][$_GET['del_insumo_ex']]);
 
 			header( 'Location: '.$location.'&next=true' );
 			die;
-		
+
 		break;
 /*******************************************************************************************************************/
 		case 'del_producto_ex':
-		
+
 			//Borro todas las sesiones
 			unset($_SESSION['pago_clientes_productos'][$_GET['del_producto_ex']]);
 
 			header( 'Location: '.$location.'&next=true' );
 			die;
-		
+
 		break;
 /*******************************************************************************************************************/
 		case 'del_arriendo_ex':
-		
+
 			//Borro todas las sesiones
 			unset($_SESSION['pago_clientes_arriendo'][$_GET['del_arriendo_ex']]);
 
 			header( 'Location: '.$location.'&next=true' );
 			die;
-		
+
 		break;
 /*******************************************************************************************************************/
 		case 'del_servicio_ex':
-		
+
 			//Borro todas las sesiones
 			unset($_SESSION['pago_clientes_servicio'][$_GET['del_servicio_ex']]);
 
 			header( 'Location: '.$location.'&next=true' );
 			die;
-		
+
 		break;
 /*******************************************************************************************************************/
 		case 'pago_general':
@@ -163,7 +163,7 @@ require_once '0_validate_user_1.php';
 								}else{
 									$SIS_data .= ",idEstado='1'" ;
 								}
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_insumos_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -216,11 +216,11 @@ require_once '0_validate_user_1.php';
 									if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",'".$idUsuario."'";       }else{ $SIS_data .= ",''"; }
 									if(isset($idSistema) && $idSistema!=''){             $SIS_data .= ",'".$idSistema."'";       }else{ $SIS_data .= ",''"; }
 									if(isset($idCliente) && $idCliente!=''){             $SIS_data .= ",'".$idCliente."'";       }else{ $SIS_data .= ",''"; }
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idTipo, idFacturacion, idDocPago, N_DocPago, F_Pago, F_Pago_dia, F_Pago_Semana, F_Pago_mes, F_Pago_ano, MontoPagado, montoPactado, idUsuario, idSistema, idCliente';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_facturas_clientes', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 								
 								
@@ -297,7 +297,7 @@ require_once '0_validate_user_1.php';
 								}else{
 									$SIS_data .= ",idEstado='1'" ;
 								}
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_productos_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -350,11 +350,11 @@ require_once '0_validate_user_1.php';
 									if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",'".$idUsuario."'";       }else{ $SIS_data .= ",''"; }
 									if(isset($idSistema) && $idSistema!=''){             $SIS_data .= ",'".$idSistema."'";       }else{ $SIS_data .= ",''"; }
 									if(isset($idCliente) && $idCliente!=''){             $SIS_data .= ",'".$idCliente."'";       }else{ $SIS_data .= ",''"; }
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idTipo, idFacturacion, idDocPago, N_DocPago, F_Pago, F_Pago_dia, F_Pago_Semana, F_Pago_mes, F_Pago_ano, MontoPagado, montoPactado, idUsuario, idSistema, idCliente';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_facturas_clientes', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 								
 							}elseif(isset($tipo['idDocumentos'])&&$tipo['idDocumentos']==3){
@@ -430,7 +430,7 @@ require_once '0_validate_user_1.php';
 								}else{
 									$SIS_data .= ",idEstado='1'" ;
 								}
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_arriendos_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -483,11 +483,11 @@ require_once '0_validate_user_1.php';
 									if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",'".$idUsuario."'";       }else{ $SIS_data .= ",''"; }
 									if(isset($idSistema) && $idSistema!=''){             $SIS_data .= ",'".$idSistema."'";       }else{ $SIS_data .= ",''"; }
 									if(isset($idCliente) && $idCliente!=''){             $SIS_data .= ",'".$idCliente."'";       }else{ $SIS_data .= ",''"; }
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idTipo, idFacturacion, idDocPago, N_DocPago, F_Pago, F_Pago_dia, F_Pago_Semana, F_Pago_mes, F_Pago_ano, MontoPagado, montoPactado, idUsuario, idSistema, idCliente';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_facturas_clientes', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 								
 								
@@ -564,7 +564,7 @@ require_once '0_validate_user_1.php';
 								}else{
 									$SIS_data .= ",idEstado='1'" ;
 								}
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_servicios_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -617,11 +617,11 @@ require_once '0_validate_user_1.php';
 									if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",'".$idUsuario."'";       }else{ $SIS_data .= ",''"; }
 									if(isset($idSistema) && $idSistema!=''){             $SIS_data .= ",'".$idSistema."'";       }else{ $SIS_data .= ",''"; }
 									if(isset($idCliente) && $idCliente!=''){             $SIS_data .= ",'".$idCliente."'";       }else{ $SIS_data .= ",''"; }
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idTipo, idFacturacion, idDocPago, N_DocPago, F_Pago, F_Pago_dia, F_Pago_Semana, F_Pago_mes, F_Pago_ano, MontoPagado, montoPactado, idUsuario, idSistema, idCliente';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_facturas_clientes', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 								
 							}elseif(isset($tipo['idDocumentos'])&&$tipo['idDocumentos']==3){

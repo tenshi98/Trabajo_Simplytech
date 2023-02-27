@@ -140,8 +140,9 @@ array_push( $arrCamaras,$row );
 }
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Grupo Camaras', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Grupo Camaras', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -173,7 +174,7 @@ array_push( $arrCamaras,$row );
 								<strong>Estado : </strong><?php echo $rowdata['estado']; ?><br/>
 								<strong>Subconfiguracion : </strong><?php echo $rowdata['Subconfiguracion']; ?>
 							</p>
-										
+
 							<?php if(isset($rowdata['idSubconfiguracion'])&&$rowdata['idSubconfiguracion']==2){ ?>
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Subconfiguracion</h2>
 								<p class="text-muted word_break">
@@ -184,7 +185,7 @@ array_push( $arrCamaras,$row );
 									<strong>Puerto : </strong><?php echo $rowdata['Config_Puerto']; ?><br/>
 								</p>
 							<?php } ?>
-							
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Listado Camaras</h2>
 							<table  class="table table-bordered">
 								<thead>
@@ -207,12 +208,12 @@ array_push( $arrCamaras,$row );
 												<td><?php echo $zona['Config_Password']; ?></td>
 												<td><?php echo $zona['Config_IP']; ?></td>
 											<?php } ?>
-											<td><label class="label <?php if(isset($zona['idEstado'])&&$zona['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $zona['estado']; ?></label></td>	
+											<td><label class="label <?php if(isset($zona['idEstado'])&&$zona['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $zona['estado']; ?></label></td>	
 										</tr>
 									<?php } ?>
 								</tbody>
 							</table>
-							
+
 							<br/>
 
 						</div>
@@ -220,7 +221,7 @@ array_push( $arrCamaras,$row );
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
-						<?php 
+						<?php
 							//se arma la direccion
 							$direccion = "";
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
@@ -237,7 +238,7 @@ array_push( $arrCamaras,$row );
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				
+
 			</div>
         </div>
 	</div>
@@ -245,14 +246,14 @@ array_push( $arrCamaras,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -277,9 +278,9 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('idSubconfiguracion', 1, 2);
-					
+
 				?>
-			
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -469,7 +470,7 @@ $arrCamaras = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $
 						<td><?php echo $usuarios['Nombre']; ?></td>
 						<td><?php echo $usuarios['N_Camaras']; ?></td>
 						<td><?php echo $usuarios['Subconfiguracion']; ?></td>
-						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['estado']; ?></label></td>	
+						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $usuarios['estado']; ?></label></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
@@ -478,7 +479,7 @@ $arrCamaras = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $
 								<?php if ($rowlevel['level']>=4){
 									//se verifica que el usuario no sea uno mismo
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idCamara'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el Predio '.$usuarios['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el Predio '.$usuarios['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -506,4 +507,5 @@ $arrCamaras = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -50,7 +50,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelaciona
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo <?php echo $rowdata['EquipoNombre']; ?></h5>
-						
+
 		</header>
 		<div class="table-responsive">
 			<?php 
@@ -202,4 +202,5 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelaciona
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

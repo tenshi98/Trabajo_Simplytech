@@ -63,7 +63,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$SIS_order = 'FechaSistema ASC, HoraSistema ASC LIMIT 10000';
 	$arrEquipos = array();
 	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos');
-	
+
 	/**********************************************************************/
 	//Se traen todos los grupos
 	$arrGrupo = array();
@@ -71,7 +71,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	//guardo los grupos
 	$Grupo = array();
-	foreach ($arrGrupo as $sen) { 
+	foreach ($arrGrupo as $sen) {
 		$Grupo[$sen['idGrupo']] = $sen['Nombre'];
 	}
 
@@ -81,7 +81,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$m_table        = '';
 	$arrTableTemp   = array();
 	$arrTable       = array();
-	
+
 	/****************************************************************/
 	//titulo de la tabla
 	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
@@ -94,14 +94,14 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			}
 		}
 	}
-	
+
 	//variables
 	$posit           = 0;
 	$Ult_diaInicio   = '';
 	$Ult_diaTermino  = '';
 	$Ult_horaInicio  = '';
 	$Ult_horaTermino = '';
-		
+
 	//se arman datos
 	foreach ($arrEquipos as $fac) {
 		//variable
@@ -166,13 +166,13 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$Ult_horaInicio  = $fac['HoraSistema'];
 			
 		}
-		
+
 		//Guardo el ultimo registro
 		$Ult_diaTermino  = $fac['FechaSistema'];
 		$Ult_horaTermino = $fac['HoraSistema'];
 		
-	} 
-	
+	}
+
 	//recorro los registros
 	for ($x = 1; $x < $posit; $x++) {
 		$m_table .= '<tr class="odd">';
@@ -184,7 +184,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$m_table .= $arrTable[$x]['Contenido'];
 		$m_table .= '</tr>';	
 	}
-	
+
 	//Ultima linea
 	$HorasTrans  = horas_transcurridas($Ult_diaInicio, $Ult_diaTermino, $Ult_horaInicio, $Ult_horaTermino);
 	$m_table .= '<tr class="odd">';
@@ -195,7 +195,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$m_table .= '<td>'.$HorasTrans.'</td>';
 	$m_table .= $table2;
 	$m_table .= '</tr>';
-	
+
 	/********************************************************************/
 	//Se define el contenido del PDF
 	$html = '
@@ -204,9 +204,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	</style>';
 
 	$html .= '
-	<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">  
+	<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">
 		<thead>';
-			$html .='	
+			$html .='
 			<tr>
 				<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">Fecha Inicio</th>
 				<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">Hora Inicio</th>
@@ -247,7 +247,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			/************************************************************************/
 			//TCPDF
 			case 1:
-				
+
 				require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 				// create new PDF document
@@ -302,7 +302,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				$pdf->writeHTML($html, true, false, true, false, '');
 				$pdf->lastPage();
 				$pdf->Output(DeSanitizar($pdf_file), 'I');
-		
+
 				break;
 			/************************************************************************/
 			//DomPDF (Solo compatible con PHP 5.x)

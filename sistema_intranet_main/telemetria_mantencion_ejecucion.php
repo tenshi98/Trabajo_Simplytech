@@ -190,7 +190,6 @@ echo '
 
 ?>
 
-
 <div id="ContenedorX">
 
 	<section class="invoice">
@@ -203,7 +202,7 @@ echo '
 				</h2>
 			</div>
 		</div>
-		
+
 		<div class="row invoice-info">
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 				<strong>Datos Mantencion</strong>
@@ -215,7 +214,7 @@ echo '
 			</div>
 					
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
-						
+
 			</div>
 		</div>
 		
@@ -269,7 +268,7 @@ echo '
 		
 
 		<div class="clearfix"></div>
-		
+
 		<div class="row" style="margin-top:15px;">
 			<div class="col-xs-12">
 
@@ -289,19 +288,18 @@ echo '
 		  
 	</section>
 
-
 </div>
 
 
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
@@ -309,7 +307,7 @@ $w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSiste
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }	 
 ?>
 
@@ -450,11 +448,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join,
 	</div>
 </div>
 <div class="clearfix"></div>
-                     
 
-
-
-                                
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -520,4 +514,5 @@ $arrUsers = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join,
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

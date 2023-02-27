@@ -154,7 +154,7 @@ foreach ($arrTabMenu as $tab) {
 			</ul>
 		</header>
 		<div class="tab-content">
-			
+
 			<?php
 				//si los segundos no estan configurados
 				if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
@@ -182,15 +182,15 @@ foreach ($arrTabMenu as $tab) {
 				
 
 				?>
-			
+
 		</div>
 	</div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

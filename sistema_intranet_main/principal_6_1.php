@@ -138,7 +138,6 @@ foreach ($arrTabMenu as $tab) {
 .noborderbox .header .nav-tabs > li.active > a:hover, .noborderbox .header .nav-tabs > li.active > a:focus{color: #333 !important;}
 </style>
 
-
 <div class="">
 	<div class="box noborderbox">
 		<header class="header">
@@ -188,7 +187,7 @@ foreach ($arrTabMenu as $tab) {
 							
 						
 						?>
-						
+
 					</div>
 				</div>
 			</div>
@@ -201,4 +200,5 @@ foreach ($arrTabMenu as $tab) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

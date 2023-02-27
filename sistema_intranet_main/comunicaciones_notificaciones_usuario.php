@@ -53,7 +53,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Notificacion borrada c
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- if(!empty($_GET['detalle'])){ 
+if(!empty($_GET['detalle'])){
 // consulto los datos
 $arrNotificaciones = array();
 $query = "SELECT 
@@ -95,7 +95,7 @@ array_push( $arrNotificaciones,$row );
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo $arrNotificaciones[0]['Titulo'];?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo $arrNotificaciones[0]['Titulo']; ?></h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -137,7 +137,7 @@ $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-}?>
+} ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -318,7 +318,7 @@ $arrNotificaciones = db_select_array (false, $SIS_query, 'principal_notificacion
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&detalle='.$noti['idNotificaciones']; ?>" title="Ver detalle leidos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($noti['idNotificaciones'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la notificacion '.$noti['Titulo'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la notificacion '.$noti['Titulo'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -336,11 +336,11 @@ $arrNotificaciones = db_select_array (false, $SIS_query, 'principal_notificacion
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -19,7 +19,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 //Cargamos la ubicacion original
@@ -345,7 +345,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 
 				<div class="row">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-						<?php 
+						<?php
 							//$Titulo = 'Potencia hora punta (Periodo: '.$Grafico_FechaInicio.' al '.$Grafico_FechaTermino.')';
 							$Titulo = '';
 							echo GraphLinear_1('graphLinear_1', $Titulo, 'Fecha', 'Voltaje', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
@@ -354,7 +354,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 				</div>
 
 				<div class="row">
-					
+
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
@@ -370,7 +370,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_crossenergy_01.php?f_inicio='.$Curso_FechaInicio.'&f_termino='.$Curso_FechaTermino.'&h_inicio='.$Curso_HoraInicio.'&h_termino='.$Curso_HoraTermino.'&idTelemetria='.$X_Puntero.'&idGrupo='.$idGrupoConsumoMesCurso.'&idGrafico=1&submit_filter=Filtrar&inform_trans=Consumo mes actual&inform_tittle=Consumo kW/h.&inform_unimed=kW/h.'; ?>" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-						
+
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
@@ -386,11 +386,11 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_crossenergy_01.php?f_inicio='.$Habil_FechaInicio.'&f_termino='.$Habil_FechaTermino.'&h_inicio='.$Habil_HoraInicio.'&h_termino='.$Habil_HoraTermino.'&idTelemetria='.$X_Puntero.'&idGrupo='.$idGrupoConsumoMesHabil.'&idGrafico=1&submit_filter=Filtrar&inform_trans=Consumo últimos 30 días&inform_tittle=Consumo kW/h.&inform_unimed=kW/h.'; ?>" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-					
+
 				</div>
 
 				<div class="row">
-					
+
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
@@ -406,7 +406,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_crossenergy_04.php?f_inicio='.$Informes_4_FechaInicio.'&f_termino='.$Informes_4_FechaTermino.'&h_inicio='.$Informes_4_HoraInicio.'&h_termino='.$Informes_4_HoraTermino.'&idTelemetria='.$X_Puntero.'&idGrupo='.$idGrupoPotencia.'&submit_filter=Filtrar'; ?>" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-						
+
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
@@ -427,10 +427,9 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 
 
 				</div>
-				
-				
+
 				<div class="row">
-					
+
 					<?php /* ?>
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<div class="box box-blue box-solid">
@@ -448,7 +447,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_19.php?f_inicio='.$Informes_FechaInicio.'&f_termino='.$Informes_FechaTermino.'&h_inicio='.$Informes_HoraInicio.'&h_termino='.$Informes_HoraTermino.'&idTelemetria='.$X_Puntero.'&idGrupo='.$idGrupoVmonofasico.'&idGrafico=1&submit_filter=Filtrar&inform_tittle=Voltaje monofásico&inform_unimed=Volt'; ?>" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
 					<?php */ ?>
-					
+
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
@@ -464,7 +463,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_19.php?f_inicio='.$Informes_FechaInicio.'&f_termino='.$Informes_FechaTermino.'&h_inicio='.$Informes_HoraInicio.'&h_termino='.$Informes_HoraTermino.'&idTelemetria='.$X_Puntero.'&idGrupo='.$idGrupoVTrifasico.'&idGrafico=1&submit_filter=Filtrar&inform_tittle=Voltaje trifásico&inform_unimed=Volt'; ?>" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-					
+
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
@@ -512,7 +511,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -522,7 +521,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -531,4 +530,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

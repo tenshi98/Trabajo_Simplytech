@@ -212,7 +212,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 .text-muted {white-space: initial;}
 </style>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -248,7 +248,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 						<?php } ?>
 
 						<p class="text-muted">
-							<strong>Estado : </strong><label class="label <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $rowdata['Estado']; ?></label><br/>
+							<strong>Estado : </strong><label class="label <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $rowdata['Estado']; ?></label><br/>
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
 							<strong>Dominio : </strong><?php echo $rowdata['Domain']; ?><br/>
 						</p>
@@ -313,17 +313,17 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 							<strong>Mostrar enlaces en el Footer : </strong><?php echo $rowdata['Footer_Links']; ?><br/>
 							<strong>Mostrar servicios en el Footer : </strong><?php echo $rowdata['Footer_Services']; ?><br/>
 							<strong>Mostrar suscripcion en el Footer : </strong><?php echo $rowdata['Footer_Letters']; ?><br/>
-							
+
 							<strong>Usuario SMTP : </strong><?php echo $rowdata['Config_SMTP_mailUsername']; ?><br/>
 							<strong>Contraseña del usuario SMTP : </strong><?php echo $rowdata['Config_SMTP_mailPassword']; ?><br/>
 							<strong>Host del correo SMTP : </strong><?php echo $rowdata['Config_SMTP_Host']; ?><br/>
 							<strong>Puerto del correo SMTP : </strong><?php echo $rowdata['Config_SMTP_Port']; ?><br/>
 							<strong>Protocolo de seguridad del correo SMTP : </strong><?php echo $rowdata['Config_SMTP_Secure']; ?><br/>
-							
+
 						</p>
 
 					</div>
-					
+
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 
 						<?php if(isset($rowdata['Config_Menu'])&&$rowdata['Config_Menu']==1){ ?>
@@ -346,7 +346,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 												<td><?php echo $menu['idPosicion']; ?></td>
 												<td><?php echo $menu['Nombre']; ?></td>
 												<td><?php echo $menu['Link']; ?></td>
-												<td><label class="label <?php if(isset($menu['idEstado'])&&$menu['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $menu['Estado']; ?></label></td>
+												<td><label class="label <?php if(isset($menu['idEstado'])&&$menu['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $menu['Estado']; ?></label></td>
 												<td><?php echo $menu['NewTab']; ?></td>
 												<td><?php echo $menu['Popup']; ?></td>
 											</tr>
@@ -376,7 +376,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 												<td><?php echo $menu['idPosicion']; ?></td>
 												<td><?php echo $menu['Nombre']; ?></td>
 												<td><?php echo $menu['Link']; ?></td>
-												<td><label class="label <?php if(isset($menu['idEstado'])&&$menu['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $menu['Estado']; ?></label></td>
+												<td><label class="label <?php if(isset($menu['idEstado'])&&$menu['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $menu['Estado']; ?></label></td>
 												<td><?php echo $menu['NewTab']; ?></td>
 												<td><?php echo $menu['Popup']; ?></td>
 											</tr>
@@ -403,7 +403,7 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 												<td><?php echo $menu['idPosicion']; ?></td>
 												<td><?php echo $menu['Imagen']; ?></td>
 												<td><?php echo $menu['Titulo']; ?></td>
-												<td><label class="label <?php if(isset($menu['idEstado'])&&$menu['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $menu['Estado']; ?></label></td>
+												<td><label class="label <?php if(isset($menu['idEstado'])&&$menu['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $menu['Estado']; ?></label></td>
 											</tr>
 										<?php } ?>
 									</tbody>
@@ -433,17 +433,17 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 											<tr class="odd">
 												<td><?php echo $tipos['idPosicion']; ?></td>
 												<td><?php echo $tipos['Titulo']; ?></td>
-												<td><label class="label <?php if(isset($tipos['idEstado'])&&$tipos['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $tipos['Estado']; ?></label></td>
+												<td><label class="label <?php if(isset($tipos['idEstado'])&&$tipos['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $tipos['Estado']; ?></label></td>
 											</tr>
 										<?php } ?>
 									<?php } ?>
 								</tbody>
 							</table>
 						</div>
-						
+
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
         </div>
@@ -452,14 +452,14 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -576,7 +576,7 @@ $arrSitio = db_select_array (false, $SIS_query, 'sitios_listado', $SIS_join, $SI
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
-					
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 
@@ -628,7 +628,7 @@ $arrSitio = db_select_array (false, $SIS_query, 'sitios_listado', $SIS_join, $SI
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.simpleEncode($trab['idSitio'], fecha_actual()); ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($trab['idSitio'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el sitio '.$trab['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el sitio '.$trab['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -646,11 +646,11 @@ $arrSitio = db_select_array (false, $SIS_query, 'sitios_listado', $SIS_join, $SI
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

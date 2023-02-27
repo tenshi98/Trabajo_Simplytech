@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -99,7 +99,7 @@ $arrVideo = db_select_array (false, $SIS_query, 'cursos_listado_videoconferencia
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-					
+
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/training.jpg">
 					</div>
@@ -152,7 +152,7 @@ $arrVideo = db_select_array (false, $SIS_query, 'cursos_listado_videoconferencia
 									<th>Nombre</th>
 									<th>Profesor</th>
 									<th>Horario</th>
-									
+
 									<th>Lunes</th>
 									<th>Martes</th>
 									<th>Miercoles</th>
@@ -184,8 +184,7 @@ $arrVideo = db_select_array (false, $SIS_query, 'cursos_listado_videoconferencia
 				
 					</div>
 					<div class="clearfix"></div>
-					
-					
+
 					</div>
 				</div>
 			</div>
@@ -219,7 +218,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -229,7 +228,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -238,4 +237,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

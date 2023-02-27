@@ -82,7 +82,7 @@ foreach ($arrUnimed as $sen) {
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary">Datos del Equipo</h2>
@@ -135,7 +135,7 @@ foreach ($arrUnimed as $sen) {
 						if(!$resultado){
 							//Genero numero aleatorio
 							$vardata = genera_password(8,'alfanumerico');
-											
+
 							//Guardo el error en una variable temporal
 							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
 							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
@@ -147,13 +147,13 @@ foreach ($arrUnimed as $sen) {
 						?>
 
 						<div class="table-responsive">
-							
+
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
 								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.simpleDecode($_GET['view'], fecha_actual()).'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ubicacion</a>
 								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_2.php?view='.simpleDecode($_GET['view'], fecha_actual()); ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Sensores</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
-							
+
 								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 									<thead>
 										<tr role="row">
@@ -178,7 +178,7 @@ foreach ($arrUnimed as $sen) {
 														echo Cantidades_decimales_justos($rowMed['SensoresMedActual_'.$i]).$unimed;
 													}else{
 														echo 'Sin Datos';
-													}?>
+													} ?>
 													</td>
 												</tr>
 											<?php } ?>
@@ -231,7 +231,7 @@ foreach ($arrUnimed as $sen) {
 						if(!$resultado){
 							//Genero numero aleatorio
 							$vardata = genera_password(8,'alfanumerico');
-											
+
 							//Guardo el error en una variable temporal
 							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
 							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
@@ -245,7 +245,7 @@ foreach ($arrUnimed as $sen) {
 						?>
 
 						<div class="table-responsive">
-							
+
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
 								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_2.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
@@ -264,7 +264,7 @@ foreach ($arrUnimed as $sen) {
 										<th>Ubicacion</th> 
 									</tr>
 								</thead>
-								
+
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
 									<?php foreach ($arrAlertas as $error) { 
 										//Guardo la unidad de medida
@@ -307,7 +307,7 @@ foreach ($arrUnimed as $sen) {
 						if(!$resultado){
 							//Genero numero aleatorio
 							$vardata = genera_password(8,'alfanumerico');
-											
+
 							//Guardo el error en una variable temporal
 							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
 							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
@@ -320,7 +320,7 @@ foreach ($arrUnimed as $sen) {
 						?>
 
 						<div class="table-responsive">
-							
+
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
 								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_2.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
@@ -338,7 +338,7 @@ foreach ($arrUnimed as $sen) {
 										<th>Ubicacion</th> 
 									</tr>
 								</thead>
-								
+
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
 									<?php foreach ($arrFlinea as $error) {  ?>
 										<tr>
@@ -366,10 +366,10 @@ foreach ($arrUnimed as $sen) {
 	</div>
 </div>
 
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

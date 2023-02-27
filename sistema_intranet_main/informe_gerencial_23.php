@@ -68,9 +68,9 @@ $z2.=" GROUP BY ".$table_2.".idTipo, ".$table_2.".idProducto, ".$table_2.".Creac
 $z3.=" GROUP BY ".$table_3.".idTipo, ".$table_3.".idProducto, ".$table_3.".Creacion_mes, ".$sub_table_3.".idUsoIVA";
 $z4.=" GROUP BY ".$table_4.".idTipo, ".$table_4.".idServicio, ".$table_4.".Creacion_mes, ".$sub_table_4.".idUsoIVA";
 $z5.=" GROUP BY idTipo, Creacion_mes";
-$z6.=" GROUP BY Creacion_mes";	
-$z7.=" GROUP BY Creacion_mes";	
-$z8.=" GROUP BY Pago_mes";	
+$z6.=" GROUP BY Creacion_mes";
+$z7.=" GROUP BY Creacion_mes";
+$z8.=" GROUP BY Pago_mes";
 $z9.=" GROUP BY Pago_mes";						
 /*************************************************************************************************/
 //filtro
@@ -295,7 +295,6 @@ foreach ($arrTemporal_9 as $trab) {
 
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -304,7 +303,7 @@ foreach ($arrTemporal_9 as $trab) {
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">			  
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					
+
 					<tr class="odd" style="background-color: #d2d2d2;">
 						<td></td>
 						<td><strong>Enero</strong></td>
@@ -379,8 +378,8 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 						<td></td>
-					</tr>	
-					<?php 
+					</tr>
+					<?php
 					//recorro
 					foreach ($arrArriendos as $trab) { 
 						//creo variables en 0
@@ -389,14 +388,14 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotalSIVA[$i] = 0;
 						}
 						for ($i = 1; $i <= 12; $i++) {
-							if(isset($arrTemp_1[2][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_1[2][$trab['Ident']][$i]['ConIVA']!=''){  
-								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_1[2][$trab['Ident']][$i]['ConIVA'];  
-								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_1[2][$trab['Ident']][$i]['ConIVA'];  
+							if(isset($arrTemp_1[2][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_1[2][$trab['Ident']][$i]['ConIVA']!=''){
+								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_1[2][$trab['Ident']][$i]['ConIVA'];
+								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_1[2][$trab['Ident']][$i]['ConIVA'];
 								$arrTotColIngCIVA[$i] = $arrTotColIngCIVA[$i]  + $arrTemp_1[2][$trab['Ident']][$i]['ConIVA']; 
 							} 
-							if(isset($arrTemp_1[2][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_1[2][$trab['Ident']][$i]['SinIVA']!=''){  
-								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_1[2][$trab['Ident']][$i]['SinIVA'];  
-								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_1[2][$trab['Ident']][$i]['SinIVA'];  
+							if(isset($arrTemp_1[2][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_1[2][$trab['Ident']][$i]['SinIVA']!=''){
+								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_1[2][$trab['Ident']][$i]['SinIVA'];
+								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_1[2][$trab['Ident']][$i]['SinIVA'];
 								$arrTotColIngSIVA[$i] = $arrTotColIngSIVA[$i]  + $arrTemp_1[2][$trab['Ident']][$i]['SinIVA']; 
 							} 
 						}
@@ -436,8 +435,8 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 						<td></td>
-					</tr>	
-					<?php 
+					</tr>
+					<?php
 					//recorro
 					foreach ($arrInsumos as $trab) { 
 						//creo variables en 0
@@ -446,14 +445,14 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotalSIVA[$i] = 0;
 						}
 						for ($i = 1; $i <= 12; $i++) {
-							if(isset($arrTemp_2[2][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_2[2][$trab['Ident']][$i]['ConIVA']!=''){  
-								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_2[2][$trab['Ident']][$i]['ConIVA'];  
-								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_2[2][$trab['Ident']][$i]['ConIVA'];  
+							if(isset($arrTemp_2[2][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_2[2][$trab['Ident']][$i]['ConIVA']!=''){
+								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_2[2][$trab['Ident']][$i]['ConIVA'];
+								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_2[2][$trab['Ident']][$i]['ConIVA'];
 								$arrTotColIngCIVA[$i] = $arrTotColIngCIVA[$i]  + $arrTemp_2[2][$trab['Ident']][$i]['ConIVA']; 
 							} 
-							if(isset($arrTemp_2[2][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_2[2][$trab['Ident']][$i]['SinIVA']!=''){  
-								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_2[2][$trab['Ident']][$i]['SinIVA'];  
-								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_2[2][$trab['Ident']][$i]['SinIVA'];  
+							if(isset($arrTemp_2[2][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_2[2][$trab['Ident']][$i]['SinIVA']!=''){
+								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_2[2][$trab['Ident']][$i]['SinIVA'];
+								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_2[2][$trab['Ident']][$i]['SinIVA'];
 								$arrTotColIngSIVA[$i] = $arrTotColIngSIVA[$i]  + $arrTemp_2[2][$trab['Ident']][$i]['SinIVA']; 
 							} 
 						}
@@ -493,8 +492,8 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 						<td></td>
-					</tr>	
-					<?php 
+					</tr>
+					<?php
 					//recorro
 					foreach ($arrProductos as $trab) { 
 						//creo variables en 0
@@ -503,14 +502,14 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotalSIVA[$i] = 0;
 						}
 						for ($i = 1; $i <= 12; $i++) {
-							if(isset($arrTemp_3[2][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_3[2][$trab['Ident']][$i]['ConIVA']!=''){  
-								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_3[2][$trab['Ident']][$i]['ConIVA'];  
-								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_3[2][$trab['Ident']][$i]['ConIVA'];  
+							if(isset($arrTemp_3[2][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_3[2][$trab['Ident']][$i]['ConIVA']!=''){
+								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_3[2][$trab['Ident']][$i]['ConIVA'];
+								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_3[2][$trab['Ident']][$i]['ConIVA'];
 								$arrTotColIngCIVA[$i] = $arrTotColIngCIVA[$i]  + $arrTemp_3[2][$trab['Ident']][$i]['ConIVA']; 
 							} 
-							if(isset($arrTemp_3[2][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_3[2][$trab['Ident']][$i]['SinIVA']!=''){  
-								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_3[2][$trab['Ident']][$i]['SinIVA'];  
-								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_3[2][$trab['Ident']][$i]['SinIVA'];  
+							if(isset($arrTemp_3[2][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_3[2][$trab['Ident']][$i]['SinIVA']!=''){
+								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_3[2][$trab['Ident']][$i]['SinIVA'];
+								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_3[2][$trab['Ident']][$i]['SinIVA'];
 								$arrTotColIngSIVA[$i] = $arrTotColIngSIVA[$i]  + $arrTemp_3[2][$trab['Ident']][$i]['SinIVA']; 
 							} 
 						}
@@ -550,8 +549,8 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 						<td></td>
-					</tr>	
-					<?php 
+					</tr>
+					<?php
 					//recorro
 					foreach ($arrServicios as $trab) { 
 						//creo variables en 0
@@ -560,14 +559,14 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotalSIVA[$i] = 0;
 						}
 						for ($i = 1; $i <= 12; $i++) {
-							if(isset($arrTemp_4[2][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_4[2][$trab['Ident']][$i]['ConIVA']!=''){  
-								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_4[2][$trab['Ident']][$i]['ConIVA'];  
-								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_4[2][$trab['Ident']][$i]['ConIVA'];  
+							if(isset($arrTemp_4[2][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_4[2][$trab['Ident']][$i]['ConIVA']!=''){
+								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_4[2][$trab['Ident']][$i]['ConIVA'];
+								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_4[2][$trab['Ident']][$i]['ConIVA'];
 								$arrTotColIngCIVA[$i] = $arrTotColIngCIVA[$i]  + $arrTemp_4[2][$trab['Ident']][$i]['ConIVA']; 
 							} 
-							if(isset($arrTemp_4[2][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_4[2][$trab['Ident']][$i]['SinIVA']!=''){  
-								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_4[2][$trab['Ident']][$i]['SinIVA'];  
-								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_4[2][$trab['Ident']][$i]['SinIVA'];  
+							if(isset($arrTemp_4[2][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_4[2][$trab['Ident']][$i]['SinIVA']!=''){
+								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_4[2][$trab['Ident']][$i]['SinIVA'];
+								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_4[2][$trab['Ident']][$i]['SinIVA'];
 								$arrTotColIngSIVA[$i] = $arrTotColIngSIVA[$i]  + $arrTemp_4[2][$trab['Ident']][$i]['SinIVA']; 
 							} 
 						}
@@ -651,8 +650,7 @@ foreach ($arrTemporal_9 as $trab) {
 					<tr class="odd" style="background-color: #ffffff;">
 						<td colspan="14"></td>
 					</tr>
-					
-					
+
 					<?php ///////////////////////////////////////////////////////////////////?>
 					<?php ///////////////////////////////////////////////////////////////////?>
 					<?php ///////////////////////////////////////////////////////////////////?>
@@ -689,8 +687,8 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 						<td></td>
-					</tr>	
-					<?php 
+					</tr>
+					<?php
 					//recorro
 					foreach ($arrArriendos as $trab) { 
 						//creo variables en 0
@@ -699,14 +697,14 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotalSIVA[$i] = 0;
 						}
 						for ($i = 1; $i <= 12; $i++) {
-							if(isset($arrTemp_1[1][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_1[1][$trab['Ident']][$i]['ConIVA']!=''){  
-								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_1[1][$trab['Ident']][$i]['ConIVA'];  
-								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_1[1][$trab['Ident']][$i]['ConIVA'];  
+							if(isset($arrTemp_1[1][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_1[1][$trab['Ident']][$i]['ConIVA']!=''){
+								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_1[1][$trab['Ident']][$i]['ConIVA'];
+								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_1[1][$trab['Ident']][$i]['ConIVA'];
 								$arrTotColEgCIVA[$i]  = $arrTotColEgCIVA[$i] + $arrTemp_1[1][$trab['Ident']][$i]['ConIVA']; 
 							} 
-							if(isset($arrTemp_1[1][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_1[1][$trab['Ident']][$i]['SinIVA']!=''){  
-								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_1[1][$trab['Ident']][$i]['SinIVA'];  
-								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_1[1][$trab['Ident']][$i]['SinIVA'];  
+							if(isset($arrTemp_1[1][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_1[1][$trab['Ident']][$i]['SinIVA']!=''){
+								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_1[1][$trab['Ident']][$i]['SinIVA'];
+								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_1[1][$trab['Ident']][$i]['SinIVA'];
 								$arrTotColEgSIVA[$i]  = $arrTotColEgSIVA[$i] + $arrTemp_1[1][$trab['Ident']][$i]['SinIVA']; 
 							} 
 						}
@@ -746,8 +744,8 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 						<td></td>
-					</tr>	
-					<?php 
+					</tr>
+					<?php
 					//recorro
 					foreach ($arrInsumos as $trab) { 
 						//creo variables en 0
@@ -756,14 +754,14 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotalSIVA[$i] = 0;
 						}
 						for ($i = 1; $i <= 12; $i++) {
-							if(isset($arrTemp_2[1][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_2[1][$trab['Ident']][$i]['ConIVA']!=''){  
-								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_2[1][$trab['Ident']][$i]['ConIVA'];  
-								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_2[1][$trab['Ident']][$i]['ConIVA'];  
+							if(isset($arrTemp_2[1][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_2[1][$trab['Ident']][$i]['ConIVA']!=''){
+								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_2[1][$trab['Ident']][$i]['ConIVA'];
+								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_2[1][$trab['Ident']][$i]['ConIVA'];
 								$arrTotColEgCIVA[$i]  = $arrTotColEgCIVA[$i] + $arrTemp_2[1][$trab['Ident']][$i]['ConIVA']; 
 							} 
-							if(isset($arrTemp_2[1][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_2[1][$trab['Ident']][$i]['SinIVA']!=''){  
-								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_2[1][$trab['Ident']][$i]['SinIVA'];  
-								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_2[1][$trab['Ident']][$i]['SinIVA'];  
+							if(isset($arrTemp_2[1][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_2[1][$trab['Ident']][$i]['SinIVA']!=''){
+								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_2[1][$trab['Ident']][$i]['SinIVA'];
+								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_2[1][$trab['Ident']][$i]['SinIVA'];
 								$arrTotColEgSIVA[$i]  = $arrTotColEgSIVA[$i] + $arrTemp_2[1][$trab['Ident']][$i]['SinIVA']; 
 							} 
 						}
@@ -803,8 +801,8 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 						<td></td>
-					</tr>	
-					<?php 
+					</tr>
+					<?php
 					//recorro
 					foreach ($arrProductos as $trab) { 
 						//creo variables en 0
@@ -813,14 +811,14 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotalSIVA[$i] = 0;
 						}
 						for ($i = 1; $i <= 12; $i++) {
-							if(isset($arrTemp_3[1][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_3[1][$trab['Ident']][$i]['ConIVA']!=''){  
-								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_3[1][$trab['Ident']][$i]['ConIVA'];  
-								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_3[1][$trab['Ident']][$i]['ConIVA'];  
+							if(isset($arrTemp_3[1][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_3[1][$trab['Ident']][$i]['ConIVA']!=''){
+								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_3[1][$trab['Ident']][$i]['ConIVA'];
+								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_3[1][$trab['Ident']][$i]['ConIVA'];
 								$arrTotColEgCIVA[$i]  = $arrTotColEgCIVA[$i] + $arrTemp_3[1][$trab['Ident']][$i]['ConIVA']; 
 							} 
-							if(isset($arrTemp_3[1][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_3[1][$trab['Ident']][$i]['SinIVA']!=''){  
-								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_3[1][$trab['Ident']][$i]['SinIVA'];  
-								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_3[1][$trab['Ident']][$i]['SinIVA'];  
+							if(isset($arrTemp_3[1][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_3[1][$trab['Ident']][$i]['SinIVA']!=''){
+								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_3[1][$trab['Ident']][$i]['SinIVA'];
+								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_3[1][$trab['Ident']][$i]['SinIVA'];
 								$arrTotColEgSIVA[$i]  = $arrTotColEgSIVA[$i] + $arrTemp_3[1][$trab['Ident']][$i]['SinIVA']; 
 							} 
 						}
@@ -860,8 +858,8 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 						<td></td>
 						<td></td>
-					</tr>	
-					<?php 
+					</tr>
+					<?php
 					//recorro
 					foreach ($arrServicios as $trab) { 
 						//creo variables en 0
@@ -870,14 +868,14 @@ foreach ($arrTemporal_9 as $trab) {
 							$arrTotalSIVA[$i] = 0;
 						}
 						for ($i = 1; $i <= 12; $i++) {
-							if(isset($arrTemp_4[1][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_4[1][$trab['Ident']][$i]['ConIVA']!=''){  
-								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_4[1][$trab['Ident']][$i]['ConIVA'];  
-								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_4[1][$trab['Ident']][$i]['ConIVA'];  
+							if(isset($arrTemp_4[1][$trab['Ident']][$i]['ConIVA'])&&$arrTemp_4[1][$trab['Ident']][$i]['ConIVA']!=''){
+								$arrTotalCIVA[$i]     = $arrTotalCIVA[$i] + $arrTemp_4[1][$trab['Ident']][$i]['ConIVA'];
+								$arrTotalCIVA[13]     = $arrTotalCIVA[13] + $arrTemp_4[1][$trab['Ident']][$i]['ConIVA'];
 								$arrTotColEgCIVA[$i]  = $arrTotColEgCIVA[$i] + $arrTemp_4[1][$trab['Ident']][$i]['ConIVA']; 
 							} 
-							if(isset($arrTemp_4[1][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_4[1][$trab['Ident']][$i]['SinIVA']!=''){  
-								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_4[1][$trab['Ident']][$i]['SinIVA'];  
-								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_4[1][$trab['Ident']][$i]['SinIVA'];  
+							if(isset($arrTemp_4[1][$trab['Ident']][$i]['SinIVA'])&&$arrTemp_4[1][$trab['Ident']][$i]['SinIVA']!=''){
+								$arrTotalSIVA[$i]     = $arrTotalSIVA[$i] + $arrTemp_4[1][$trab['Ident']][$i]['SinIVA'];
+								$arrTotalSIVA[13]     = $arrTotalSIVA[13] + $arrTemp_4[1][$trab['Ident']][$i]['SinIVA'];
 								$arrTotColEgSIVA[$i]  = $arrTotColEgSIVA[$i] + $arrTemp_4[1][$trab['Ident']][$i]['SinIVA']; 
 							} 
 						}
@@ -961,7 +959,7 @@ foreach ($arrTemporal_9 as $trab) {
 					<tr class="odd" style="background-color: #ffffff;">
 						<td colspan="14"></td>
 					</tr>
-						
+
 					<?php ///////////////////////////////////////////////////////////////////?>
 					<?php ///////////////////////////////////////////////////////////////////?>
 					<?php ///////////////////////////////////////////////////////////////////?>
@@ -983,7 +981,7 @@ foreach ($arrTemporal_9 as $trab) {
 						<td></td>
 					</tr>
 					<?php ///////////////////////////////////////////////////////////////////?>
-					<?php 
+					<?php
 					//creo variables en 0
 					for ($i = 1; $i <= 13; $i++) {
 						$arrTotGastos[$i] = 0;
@@ -1005,7 +1003,7 @@ foreach ($arrTemporal_9 as $trab) {
 						echo '</tr>';
 					} ?>
 					<?php ///////////////////////////////////////////////////////////////////?>
-					<?php 
+					<?php
 					//creo variables en 0
 					for ($i = 1; $i <= 13; $i++) {
 						$arrTotGastos[$i] = 0;
@@ -1047,9 +1045,9 @@ foreach ($arrTemporal_9 as $trab) {
 								echo '<td align="right">'.valores($arrTotGastos[$i], 0).'</td>';
 							}
 						echo '</tr>';
-					}?>
+					} ?>
 					<?php ///////////////////////////////////////////////////////////////////?>
-					<?php 
+					<?php
 					//creo variables en 0
 					for ($i = 1; $i <= 13; $i++) {
 						$arrTotGastos[$i] = 0;
@@ -1071,7 +1069,7 @@ foreach ($arrTemporal_9 as $trab) {
 						echo '</tr>';
 					} ?>
 					<?php ///////////////////////////////////////////////////////////////////?>
-					<?php 
+					<?php
 					//creo variables en 0
 					for ($i = 1; $i <= 13; $i++) {
 						$arrTotGastos[$i] = 0;
@@ -1117,7 +1115,7 @@ foreach ($arrTemporal_9 as $trab) {
 					<tr class="odd" style="background-color: #ffffff;">
 						<td colspan="14"></td>
 					</tr>
-					
+
 					<?php ///////////////////////////////////////////////////////////////////?>
 					<?php ///////////////////////////////////////////////////////////////////?>
 					<?php ///////////////////////////////////////////////////////////////////?>
@@ -1155,7 +1153,6 @@ foreach ($arrTemporal_9 as $trab) {
 	</div>
 </div>
 
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -1167,6 +1164,7 @@ foreach ($arrTemporal_9 as $trab) {
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -1183,7 +1181,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Año','Creacion_ano', $x1, 2, 2016, ano_actual());
-						
+
 				?>
 
 				<div class="form-group">
@@ -1201,4 +1199,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

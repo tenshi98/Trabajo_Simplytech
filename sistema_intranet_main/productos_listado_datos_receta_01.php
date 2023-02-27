@@ -155,7 +155,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Producto','idProductoRel', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
-				
+
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -185,9 +185,9 @@ foreach ($arrPermisos as $prod) {
 						}
 					}
 				</script>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_newprod"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_newprod">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -254,7 +254,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Producto','idProductoRel', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
-				
+
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -285,7 +285,7 @@ foreach ($arrPermisos as $prod) {
 						}
 					}
 				</script>
-			  
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -298,7 +298,7 @@ foreach ($arrPermisos as $prod) {
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['editProd'])){
+} elseif(!empty($_GET['editProd'])){
 //Se traen los datos
 $SIS_query = 'sistema_productos_uml.Nombre AS Unimed';
 $SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
@@ -349,7 +349,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
-				
+
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -376,9 +376,9 @@ foreach ($arrPermisos as $prod) {
 						}
 					}
 				</script>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_prod"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_prod">
 					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new2=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -388,7 +388,7 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['addProd'])){ 
+}elseif(!empty($_GET['addProd'])){
 //Se revisan los permisos a los productos
 $SIS_query = 'idProducto';
 $SIS_join  = '';
@@ -433,7 +433,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Number', $x2, 2);
-				
+
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -460,9 +460,9 @@ foreach ($arrPermisos as $prod) {
 						}
 					}
 				</script>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod">
 					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new2=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -472,7 +472,7 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['new2'])){ 
+}elseif(!empty($_GET['new2'])){
 // Se traen todos los datos del producto
 $SIS_query = '
 productos_listado.Nombre,
@@ -542,31 +542,31 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 								foreach ($_SESSION['receta_productos'] as $key => $producto){
 									if($prod['idProducto']==$producto['idProducto']){
 										//Sumo las cantidades
-										$total = $total + $producto['Number'];?>
+										$total = $total + $producto['Number']; ?>
 										<tr class="item-row linea_punteada">
 											<td class="item-name">
-												<?php echo $prod['Nombre'];?>
+												<?php echo $prod['Nombre']; ?>
 											</td>
 											<td class="item-name"  width="120">
-												<?php echo Cantidades_decimales_justos($producto['Number']).' '.$prod['Unimed'];?>
+												<?php echo Cantidades_decimales_justos($producto['Number']).' '.$prod['Unimed']; ?>
 											</td>
 											<td class="item-name"  width="120">
-												<?php echo Cantidades_decimales_justos($producto['Number']/$_SESSION['receta']['medida']).' '.$prod['Unimed'];?>
+												<?php echo Cantidades_decimales_justos($producto['Number']/$_SESSION['receta']['medida']).' '.$prod['Unimed']; ?>
 											</td>
 											<td>
 												<div class="btn-group" style="width: 70px;" >
 													<a href="<?php echo $new_location.'&id='.$_GET['id'].'&editProd='.$producto['idProducto']; ?>" title="Editar Cantidad" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 													<?php 
 													$ubicacion = $new_location.'&id='.$_GET['id'].'&del_prod='.$producto['idProducto'];
-													$dialogo   = '¿Realmente deseas eliminar el Producto '.str_replace('"','',$prod['Nombre']).'?';?>
-													<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Dato" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+													$dialogo   = '¿Realmente deseas eliminar el Producto '.str_replace('"','',$prod['Nombre']).'?'; ?>
+													<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Dato" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
 							  <?php }
 								}
 							}
-						}?>
+						} ?>
 						<tr>
 							<td class="meta-head" align="right"><strong>Total</strong></td>
 							<td class="meta-head"><strong><?php echo $total.' '.$rowdata['Unidad']; ?></strong></td>
@@ -578,17 +578,16 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 			</div>
 		</div>
 	</div>
-	
-	
-</div>	
+
+</div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 
 	<?php if($_SESSION['receta']['medida']==$total){ ?>
-		<?php 		
+		<?php
 		$ubicacion = $new_location.'&id='.$_GET['id'].'&finalizar=true';
-		$dialogo   = '¿Realmente desea ingresar el documento, una vez terminado no podra realizar cambios?';?>
+		$dialogo   = '¿Realmente desea ingresar el documento, una vez terminado no podra realizar cambios?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary pull-right margin_form_btn" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
 	<?php } ?>
 
@@ -600,7 +599,7 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -610,7 +609,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($medida)){     $x1  = $medida;    }else{$x1  = '';}
@@ -623,7 +622,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf178; Siguiente" name="submit_1">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf178; Siguiente" name="submit_1">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
@@ -663,7 +662,7 @@ $arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Receta');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Receta'); ?>
 	<?php
 	$conteoRecetas  = 0;
 	$total = 0;
@@ -676,11 +675,11 @@ $arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join
 	//Se revisa si existen Productos dentro de la receta
 	if($conteoRecetas==0){ ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-			<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Receta</a><?php }?>
+			<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Receta</a><?php } ?>
 		</div>
 	<?php } elseif($total<1){?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-			<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&newProd=true'; ?>" class="btn btn-default pull-right margin_width" >Agregar Materia Prima</a><?php }?>
+			<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&newProd=true'; ?>" class="btn btn-default pull-right margin_width" >Agregar Materia Prima</a><?php } ?>
 		</div>
 	<?php } ?>
 </div>
@@ -713,7 +712,7 @@ $arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join
 						<?php if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
 							<li class=""><a href="<?php echo 'productos_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Sistema CROSS</a></li>
 						<?php } ?>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -730,21 +729,21 @@ $arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrRecetas as $receta) { ?>
 					<tr class="odd">
-						<td><?php echo $receta['NombreProd'];?></td>
-						<td><?php echo Cantidades_decimales_justos($receta['Cantidad']).' '.$receta['UnidadMedida']; ?></td>	
+						<td><?php echo $receta['NombreProd']; ?></td>
+						<td><?php echo Cantidades_decimales_justos($receta['Cantidad']).' '.$receta['UnidadMedida']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$receta['idReceta']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=3){
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del_receta='.simpleEncode($receta['idReceta'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el producto '.$receta['NombreProd'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el producto '.$receta['NombreProd'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>
 					</tr>
 				<?php } ?>
-				
+
 					<tr class="odd">
 						<td align="right"><strong>Total</strong></td>
 						<td><strong><?php echo Cantidades_decimales_justos($total).' '.$rowdata['UnidadMedida']; ?></strong></td>		
@@ -758,8 +757,8 @@ $arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -768,4 +767,5 @@ $arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

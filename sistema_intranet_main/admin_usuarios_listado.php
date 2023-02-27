@@ -18,14 +18,14 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['usuario']) && $_GET['usuario']!=''){        $location .= "&usuario=".$_GET['usuario'];              $search .= "&usuario=".$_GET['usuario'];}
+if(isset($_GET['usuario']) && $_GET['usuario']!=''){               $location .= "&usuario=".$_GET['usuario'];              $search .= "&usuario=".$_GET['usuario'];}
 if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario']!=''){   $location .= "&idTipoUsuario=".$_GET['idTipoUsuario'];  $search .= "&idTipoUsuario=".$_GET['idTipoUsuario'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){          $location .= "&Nombre=".$_GET['Nombre'];                $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['Fono']) && $_GET['Fono']!=''){              $location .= "&Fono=".$_GET['Fono'];                    $search .= "&Fono=".$_GET['Fono'];}
-if(isset($_GET['email']) && $_GET['email']!=''){            $location .= "&email=".$_GET['email'];                  $search .= "&email=".$_GET['email'];}
-if(isset($_GET['Rut']) && $_GET['Rut']!=''){                $location .= "&Rut=".$_GET['Rut'];                      $search .= "&Rut=".$_GET['Rut'];}
-if(isset($_GET['fNacimiento']) && $_GET['fNacimiento']!=''){$location .= "&fNacimiento=".$_GET['fNacimiento'];      $search .= "&fNacimiento=".$_GET['fNacimiento'];}
-if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){    $location .= "&idSistema=".$_GET['idSistema'];          $search .= "&idSistema=".$_GET['idSistema'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){                 $location .= "&Nombre=".$_GET['Nombre'];                $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['Fono']) && $_GET['Fono']!=''){                     $location .= "&Fono=".$_GET['Fono'];                    $search .= "&Fono=".$_GET['Fono'];}
+if(isset($_GET['email']) && $_GET['email']!=''){                   $location .= "&email=".$_GET['email'];                  $search .= "&email=".$_GET['email'];}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){                       $location .= "&Rut=".$_GET['Rut'];                      $search .= "&Rut=".$_GET['Rut'];}
+if(isset($_GET['fNacimiento']) && $_GET['fNacimiento']!=''){       $location .= "&fNacimiento=".$_GET['fNacimiento'];      $search .= "&fNacimiento=".$_GET['fNacimiento'];}
+if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){           $location .= "&idSistema=".$_GET['idSistema'];          $search .= "&idSistema=".$_GET['idSistema'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -83,7 +83,7 @@ $arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas',$SIS_join
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -108,7 +108,7 @@ $arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas',$SIS_join
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Perfil</h2>
@@ -138,8 +138,7 @@ $arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas',$SIS_join
 							<?php } ?>
 						</p>
 					</div>
-					
-			
+
 				</div>
 			</div>
         </div>
@@ -148,8 +147,8 @@ $arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas',$SIS_join
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -184,12 +183,12 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 $SIS_where = "usuarios_listado.idTipoUsuario!=1";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['usuario']) && $_GET['usuario']!=''){       $SIS_where .= " AND usuarios_listado.usuario LIKE '%".EstandarizarInput($_GET['usuario'])."%'";}
+if(isset($_GET['usuario']) && $_GET['usuario']!=''){              $SIS_where .= " AND usuarios_listado.usuario LIKE '%".EstandarizarInput($_GET['usuario'])."%'";}
 if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario']!=''){  $SIS_where .= " AND usuarios_listado.idTipoUsuario=".$_GET['idTipoUsuario'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $SIS_where .= " AND usuarios_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
-if(isset($_GET['Fono']) && $_GET['Fono']!=''){             $SIS_where .= " AND usuarios_listado.Fono LIKE '%".EstandarizarInput($_GET['Fono'])."%'";}
-if(isset($_GET['email']) && $_GET['email']!=''){           $SIS_where .= " AND usuarios_listado.email LIKE '%".EstandarizarInput($_GET['email'])."%'";}
-if(isset($_GET['Rut']) && $_GET['Rut']!=''){               $SIS_where .= " AND usuarios_listado.Rut LIKE '%".EstandarizarInput($_GET['Rut'])."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){                $SIS_where .= " AND usuarios_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['Fono']) && $_GET['Fono']!=''){                    $SIS_where .= " AND usuarios_listado.Fono LIKE '%".EstandarizarInput($_GET['Fono'])."%'";}
+if(isset($_GET['email']) && $_GET['email']!=''){                  $SIS_where .= " AND usuarios_listado.email LIKE '%".EstandarizarInput($_GET['email'])."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){                      $SIS_where .= " AND usuarios_listado.Rut LIKE '%".EstandarizarInput($_GET['Rut'])."%'";}
 if(isset($_GET['fNacimiento']) && $_GET['fNacimiento']!=''){      $SIS_where .= " AND usuarios_listado.fNacimiento='".$_GET['fNacimiento']."'";}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
@@ -217,11 +216,10 @@ usuarios_sistemas.idUsuario,
 usuarios_sistemas.idSistema,
 core_sistemas.Nombre AS Sistema';
 $SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = usuarios_sistemas.idSistema';
-$SIS_where = '';
+$SIS_where = 'usuarios_sistemas.idUsuario!=0';
 $SIS_order = 'core_sistemas.Nombre ASC';
 $arrSistemas = array();
 $arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas',$SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrSistemas');
-
 
 $arrSystem = array();
 foreach ($arrSistemas as $sis) {
@@ -230,6 +228,7 @@ foreach ($arrSistemas as $sis) {
 }
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
@@ -281,11 +280,7 @@ foreach ($arrSistemas as $sis) {
 	</div>
 </div>
 <div class="clearfix"></div>
-                     
 
-
-
-                                
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -354,7 +349,7 @@ foreach ($arrSistemas as $sis) {
 								<td><?php echo $usuarios['usuario']; ?></td>
 								<td><?php echo $usuarios['Nombre']; ?></td>
 								<td><?php echo $usuarios['tipo']; ?></td>
-								<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['estado']; ?></label></td>	
+								<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $usuarios['estado']; ?></label></td>	
 								<td>
 									<?php
 									if(isset($arrSystem[$usuarios['idUsuario']])){
@@ -364,7 +359,7 @@ foreach ($arrSistemas as $sis) {
 									}
 									?>
 								</td>
-										
+
 								<td>
 									<div class="btn-group" style="width: 70px;" >
 										<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_usuario.php?view='.simpleEncode($usuarios['idUsuario'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
@@ -392,4 +387,5 @@ foreach ($arrSistemas as $sis) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -277,7 +277,7 @@ $usrfil .= $responsables;
 				<div class="clearfix"></div>
 				<div id="insert_tarea"></div>
 
-				<?php $Form_Inputs->input_hidden('idTareas', simpleDecode($_GET['view'], fecha_actual()), 2);?>
+				<?php $Form_Inputs->input_hidden('idTareas', simpleDecode($_GET['view'], fecha_actual()), 2); ?>
 
 				<div class="form-group" style="margin-top:10px;">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_tarea">
@@ -298,7 +298,7 @@ $usrfil .= $responsables;
 
 		<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->input_hold('text','Observacion','Observacion[]', '', 1);?>
+				<?php $Form_Inputs->input_hold('text','Observacion','Observacion[]', '', 1); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
@@ -382,7 +382,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				<div class="clearfix"></div>
 				<div id="insert_responsable"></div>
 
-				<?php $Form_Inputs->input_hidden('idTareas', simpleDecode($_GET['view'], fecha_actual()), 2);?>
+				<?php $Form_Inputs->input_hidden('idTareas', simpleDecode($_GET['view'], fecha_actual()), 2); ?>
 
 				<div class="form-group" style="margin-top:10px;">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_responsable">
@@ -448,7 +448,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	});
 
 </script>
-
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['modBase'])){
@@ -613,7 +612,6 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 	<div class="clearfix"></div>
 </div>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive" style="margin-bottom:30px!important;">
 
 	<div id="page-wrap">
@@ -684,7 +682,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 					<td colspan="6">Tarea</td>
 				</tr>
 				<tr class="item-row linea_punteada" style="white-space: initial;">
-					<td class="item-name" colspan="6"><?php echo $rowdata['Observaciones'];?></td>
+					<td class="item-name" colspan="6"><?php echo $rowdata['Observaciones']; ?></td>
 				</tr>
 				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
@@ -700,7 +698,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 				if($arrRepresentantes!=false && !empty($arrRepresentantes) && $arrRepresentantes!='') {
 					foreach ($arrRepresentantes as $resp) { ?>
 						<tr class="item-row linea_punteada">
-							<td class="item-name" colspan="6"><?php echo $resp['Nombre'];?></td>
+							<td class="item-name" colspan="6"><?php echo $resp['Nombre']; ?></td>
 						</tr>
 					 <?php
 					}
@@ -723,7 +721,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 					foreach ($arrTareas as $tarea) { ?>
 						<tr class="item-row linea_punteada" style="white-space: initial;">
 							<td class="item-name" colspan="4"><?php echo '<strong>'.$tarea['Usuario'].': </strong>'.$tarea['Observacion']; ?></td>
-							<td class="item-name" width="160"><?php echo $tarea['EstadoTarea'];?></td>
+							<td class="item-name" width="160"><?php echo $tarea['EstadoTarea']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
 									<?php if(isset($tarea['idEstadoTarea'])&&$tarea['idEstadoTarea']==1&&($_SESSION['usuario']['basic_data']['idUsuario']==$tarea['idUsuario'] OR $_SESSION['usuario']['basic_data']['idUsuario']==$rowdata['idUsuario'])){ ?>
@@ -755,7 +753,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 					</tr>
 					<?php
 				}
-			}?>
+			} ?>
 			</tbody>
 		</table>
 	</div>
@@ -794,4 +792,5 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

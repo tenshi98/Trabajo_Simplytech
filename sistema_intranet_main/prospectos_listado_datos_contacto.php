@@ -56,10 +56,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+$rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Editar Datos de contacto');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Editar Datos de contacto'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -87,15 +87,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Fono1)){            $x1 = $Fono1;             }else{$x1 = $rowdata['Fono1'];}
 					if(isset($Fono2)){            $x2 = $Fono2;             }else{$x2 = $rowdata['Fono2'];}
 					if(isset($Fax)){              $x3 = $Fax;               }else{$x3 = $rowdata['Fax'];}
 					if(isset($email)){            $x4 = $email;             }else{$x4 = $rowdata['email'];}
 					if(isset($Web)){              $x5 = $Web;               }else{$x5 = $rowdata['Web'];}
-					
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -104,8 +103,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_input_fax('Fax', 'Fax', $x3, 1);
 					$Form_Inputs->form_input_icon('Email', 'email', $x4, 1,'fa fa-envelope-o');
 					$Form_Inputs->form_input_icon('Web', 'Web', $x5, 1,'fa fa-internet-explorer');
-					
-	
+
 					$Form_Inputs->form_input_hidden('idProspecto', $_GET['id'], 2);
 					$Form_Inputs->form_input_hidden('FModificacion', fecha_actual(), 2);
 					$Form_Inputs->form_input_hidden('HModificacion', hora_actual(), 2);
@@ -124,14 +122,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -69,7 +69,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Evento borrado correct
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['infract_post'])){ 
+if(!empty($_GET['infract_post'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 /******************************************************************************/
@@ -118,7 +118,7 @@ $ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['idEventoPeligro'])){ 
+}elseif(!empty($_GET['idEventoPeligro'])){
 //Se filtra la tabla a revisar
 //peligro
 if(isset($_GET['idTipofil'])&&$_GET['idTipofil']==1){
@@ -260,55 +260,54 @@ array_push( $arrReportes,$row );
 			<span class="sr-only">Toggle Dropdown</span>
 		</button>
 		<ul class="dropdown-menu dropdown-menu-right">
-			<?php 
+			<?php
 			$ubicacion  = $location.'&validate=true';
 			$ubicacion .= '&idTipofil='.$_GET['idTipofil'];
 			$ubicacion .= '&idComentario='.$_GET['idComentario'];
 			$ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
 			$ubicacion .= '&idCreador='.$arrReportes[0]['ComentarioIdCliente'];
-			$dialogo    = '¿Va a validar Post?';?>
+			$dialogo    = '¿Va a validar Post?'; ?>
 			<li><a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')"><i class="fa fa-check-square-o" aria-hidden="true"></i> Validar Comentario</a></li>
-			
-			<?php 
+
+			<?php
 			$ubicacion  = $location.'&disabled=true';
 			$ubicacion .= '&idTipofil='.$_GET['idTipofil'];
 			$ubicacion .= '&idComentario='.$_GET['idComentario'];
 			$ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
 			$ubicacion .= '&idCreador='.$arrReportes[0]['ComentarioIdCliente'];
-			$dialogo    = '¿Va a banear al usuario creador del Post?';?>
+			$dialogo    = '¿Va a banear al usuario creador del Post?'; ?>
 			<li><a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')"><i class="fa fa-check-square-o" aria-hidden="true"></i> Desactivar Creador Comentario</a></li>
-			
-			<?php 
+
+			<?php
 			$ubicacion  = $location.'&banned=true';
 			$ubicacion .= '&idTipofil='.$_GET['idTipofil'];
 			$ubicacion .= '&idComentario='.$_GET['idComentario'];
 			$ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
 			$ubicacion .= '&idCreador='.$arrReportes[0]['ComentarioIdCliente'];
-			$dialogo    = '¿Va a banear al usuario creador del Post?';?>
+			$dialogo    = '¿Va a banear al usuario creador del Post?'; ?>
 			<li><a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')"><i class="fa fa-check-square-o" aria-hidden="true"></i> Banear Creador Comentario</a></li>
-			
-			<?php 
+
+			<?php
 			$ubicacion  = $location.'&infract_post=true';
 			$ubicacion .= '&idTipofil='.$_GET['idTipofil'];
 			$ubicacion .= '&idComentario='.$_GET['idComentario'];
 			$ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
-			$ubicacion .= '&idCreador='.$arrReportes[0]['ComentarioIdCliente'];?>
+			$ubicacion .= '&idCreador='.$arrReportes[0]['ComentarioIdCliente']; ?>
 			<li><a href="<?php echo $ubicacion; ?>"><i class="fa fa-rss" aria-hidden="true"></i> Notificar Infraccion Creador Post</a></li>
-			
+
 			<?php 
 			/*
 			<li role="separator" class="divider"></li>
-			
+
 			<li><a href="#"><i class="fa fa-rss" aria-hidden="true"></i> Notificar Infraccion Creador Reporte</a></li>
 			*/ ?>
-		
+
 		</ul>
 	</div>
 	<a href="<?php echo $location; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
 	<div class="clearfix"></div>
 </div>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -359,7 +358,7 @@ array_push( $arrReportes,$row );
 						}else{
 							$Alert_Text = 'No tiene una direccion definida';
 							alert_post_data(4,2,2, $Alert_Text);
-						}?>
+						} ?>
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -399,7 +398,7 @@ array_push( $arrReportes,$row );
 							<th>Descripcion</th>
 							<th width="10">Acciones</th>
 						</tr>
-					</thead>	
+					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<tr class="odd">
 							<td colspan="3" class="word_break">
@@ -416,11 +415,11 @@ array_push( $arrReportes,$row );
 								<td class="word_break"><?php echo $report['Comentario']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<?php 
+										<?php
 										$ubicacion  = $location.'&infract_post=true';
 										$ubicacion .= '&idTipofil='.$_GET['idTipofil'];
 										$ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
-										$ubicacion .= '&idCreador='.$report['idCliente'];?>
+										$ubicacion .= '&idCreador='.$report['idCliente']; ?>
 										<?php if ($rowlevel['level']>=2){?><a href="<?php echo $ubicacion; ?>" title="Notificar Infraccion Creador Reporte" class="btn btn-success btn-sm tooltip"><i class="fa fa-rss" aria-hidden="true"></i></a><?php } ?>
 									</div>
 								</td>
@@ -429,7 +428,7 @@ array_push( $arrReportes,$row );
 					</tbody>
 				</table>
 			</div>
-			
+
 		</div>
 	</div>
 </div>	
@@ -598,11 +597,11 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

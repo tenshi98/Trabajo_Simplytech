@@ -45,13 +45,13 @@ if (!empty($_GET['ini'])){
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport"              content="width=device-width, initial-scale=1, user-scalable=no">
 		<meta http-equiv="Content-Type"    content="text/html; charset=UTF-8">
-		
+
 		<!-- Informacion del sitio-->
 		<title>Seleccion Plataforma</title>
 		<meta name="description"           content="">
 		<meta name="author"                content="">
 		<meta name="keywords"              content="">
-		
+
 		<!-- WEB FONT -->
 		<?php
 		//verifica la capa de desarrollo
@@ -61,7 +61,7 @@ if (!empty($_GET['ini'])){
 		if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 			echo '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIB_assets/lib/font-awesome/css/font-awesome.min.css">';
 			//echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
-			
+
 		////////////////////////////////////////////////////////////////////////////////
 		//si estoy en ambiente de produccion
 		}else{
@@ -69,7 +69,7 @@ if (!empty($_GET['ini'])){
 			echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
 		}
 		?>
-		
+
 		<!-- CSS Base -->
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/font-awesome-animation/font-awesome-animation.min.css">
@@ -111,7 +111,7 @@ if (!empty($_GET['ini'])){
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/country_picker/js/bootstrap-select.min.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/plotly_js/dist/plotly.min.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/plotly_js/dist/plotly-locale-es-ar.js"></script>
-		
+
 		<!-- Favicons-->
 		<?php
 		//Favicon Personalizado
@@ -133,13 +133,13 @@ if (!empty($_GET['ini'])){
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="<?php echo DB_SITE_REPO ?>/LIB_assets/img/favicons/apple-touch-icon-114x114-precomposed.png">
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="<?php echo DB_SITE_REPO ?>/LIB_assets/img/favicons/apple-touch-icon-144x144-precomposed.png">
 		<?php } ?>
-		
+
 		<!-- Correcciones CSS -->
 		<style>
 			.login {background-image: none !important;background-color: #1A1A1A !important;}
 			.bx_shad{-webkit-box-shadow: 0px 0px 31px 6px rgba(0,0,0,1);-moz-box-shadow: 0px 0px 31px 6px rgba(0,0,0,1);box-shadow: 0px 0px 31px 6px rgba(0,0,0,1);}
 		</style>
-		
+
 		<!-- Burbuja de ayuda -->
 		<?php widget_tooltipster(); ?>
 	</head>
@@ -187,7 +187,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 <div class="container">
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			
+
 		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo DB_SOFT_NAME; ?></h5>
@@ -207,7 +207,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 							<img class="img-circle" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 							<?php }else{  ?>
 								<img class="img-circle" alt="Imagen Referencia" src="upload/<?php echo $_SESSION['usuario']['basic_data']['Direccion_img']; ?>">
-							<?php }?>
+							<?php } ?>
 						</div>
 						<div class="usercard-footer">
 							<div class="row">
@@ -232,7 +232,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 										<th>Interfaz</th>
 										<th width="10">Acciones</th>
 									</tr>
-									<?php echo widget_sherlock(1, 3, 'TableFiltered');?>
+									<?php echo widget_sherlock(1, 3, 'TableFiltered'); ?>
 								</thead>
 								<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 									<?php foreach ($arrSistemas as $sis) { ?>

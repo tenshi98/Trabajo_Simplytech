@@ -91,10 +91,8 @@ foreach ($arrErrores as $error) {
 				->setCellValue('E'.$nn, $error['Hora_termino'])
 				->setCellValue('F'.$nn, $error['Tiempo']);
 	$nn++;
-   
-} 
 
-
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Resumen de Fuera de Linea');

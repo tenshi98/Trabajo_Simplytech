@@ -61,6 +61,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Documento borrado corr
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['compra_rechazo'])){ ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -96,7 +97,8 @@ if(!empty($_GET['compra_rechazo'])){ ?>
 </div> 
 	
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['compra_nula'])){ ?>
+} elseif(!empty($_GET['compra_nula'])){ ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -132,7 +134,7 @@ if(!empty($_GET['compra_rechazo'])){ ?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['view'])){	 
+} elseif(!empty($_GET['view'])){	 
 // Se trae el listado de quienes aprueban la OC
 $arrAprobado = array();
 $query = "SELECT 
@@ -182,14 +184,14 @@ array_push( $arrAprobado,$row );
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<tr class="odd">
-						<td>Acciones</td>	
+						<td>Acciones</td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<a href="<?php echo $location.'&compra_rechazo='.$_GET['view']; ?>" title="Rechazar Orden" class="btn btn-danger btn-sm tooltip"><i class="fa fa-times" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&compra_nula='.$_GET['view']; ?>" title="Anular Orden" class="btn btn-danger btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php //Confirmacion
 								$ubicacion = $location.'&compra_aprobar='.$_GET['view'];
-								$dialogo   = '¿Realmente deseas aprobar la Orden de Compra n '.n_doc($_GET['view'], 5).'?';?>
+								$dialogo   = '¿Realmente deseas aprobar la Orden de Compra n '.n_doc($_GET['view'], 5).'?'; ?>
 								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Aprobar Orden" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>
 							</div>
 						</td>
@@ -202,7 +204,7 @@ array_push( $arrAprobado,$row );
 								<?php
 								if(isset($apro['C_apro'])&&$apro['C_apro']==1){
 									echo 'Aprobada el '.fecha_estandar($apro['FechaApro']).' a las '.$apro['HoraApro'].' hrs';
-								}?>
+								} ?>
 							</td>
 						</tr>
 					<?php } ?>
@@ -218,8 +220,8 @@ array_push( $arrAprobado,$row );
 	  
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
@@ -395,11 +397,11 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'ocompra_listado', $SIS_jo
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

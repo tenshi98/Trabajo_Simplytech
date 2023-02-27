@@ -127,8 +127,8 @@ foreach ($arrErrores as $error) {
 				->setCellValue('G'.$nn, $error['Valor_max'])
 				->setCellValue('H'.$nn, $arrUnimedX[$error['SensoresUniMed_'.$error['Sensor']]]);
 	$nn++;
-   
-} 
+
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Resumen de Alertas');

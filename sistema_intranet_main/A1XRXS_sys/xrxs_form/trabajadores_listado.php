@@ -637,7 +637,7 @@ require_once '0_validate_user_1.php';
 							}
 							//se eliminan las imagenes de la memoria
 							imagedestroy($imgBase);
-											
+
 							//Filtro para idSistema
 							$SIS_data = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'";
 
@@ -1150,7 +1150,7 @@ require_once '0_validate_user_1.php';
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				if ($_FILES["File_Licencia"]["error"] > 0){
 					$error['File_Licencia'] = 'error/'.uploadPHPError($_FILES["File_Licencia"]["error"]);
 				} else {
@@ -1198,7 +1198,7 @@ require_once '0_validate_user_1.php';
 									
 									header( 'Location: '.$location );
 									die;
-									
+
 								}
 								
 							} else {
@@ -1375,7 +1375,7 @@ require_once '0_validate_user_1.php';
 					
 					if ($_FILES['FileTrabajador']["error"] > 0){
 						$error['FileTrabajador'] = 'error/'.uploadPHPError($_FILES["FileTrabajador"]["error"]);
-						
+
 					} else {
 
 						//Se verifican las extensiones de los archivos
@@ -1418,7 +1418,7 @@ require_once '0_validate_user_1.php';
 										$Post_Email    = $worksheet->getCellByColumnAndRow(10,  $row)->getValue();
 										$Post_Fono     = $worksheet->getCellByColumnAndRow(6,   $row)->getValue();
 										$Post_Sueldo   = $worksheet->getCellByColumnAndRow(16,  $row)->getValue();
-										
+
 										//si la celda no esta vacia
 										if($Post_Nombre!=''){
 											//si existe el rut
@@ -1453,7 +1453,7 @@ require_once '0_validate_user_1.php';
 									}
 								}
 							}
-							
+
 							/*******************************************************************/
 							//generacion de errores
 							if($ndata_1 > 0) {  $error['ndata_1']  = 'error/Revisar los trabajadores, uno no tiene rut';}
@@ -1461,7 +1461,7 @@ require_once '0_validate_user_1.php';
 							if($ndata_3 > 0) {  $error['ndata_3']  = 'error/Revisar los trabajadores, uno de los Email ingresado no es valido';}
 							if($ndata_4 > 0) {  $error['ndata_3']  = 'error/Revisar los trabajadores, uno de los Telefonos ingresado no es valido';}
 							if($ndata_5 > 0) {  $error['ndata_3']  = 'error/Revisar los trabajadores, uno de los sueldos ingresado no es valido';}
-							
+
 							/*******************************************************************/
 							//Si no hay errores ejecuto el codigo
 							if(empty($error)){
@@ -1633,7 +1633,7 @@ require_once '0_validate_user_1.php';
 										}
 									}
 								}
-								
+
 								//redirijo
 								header( 'Location: '.$location.'&created=true' );
 								die;

@@ -143,11 +143,11 @@ require_once '0_validate_user_1.php';
 									if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",'".$Fecha."'";        }else{$SIS_data .= ",''";}
 									if(isset($Observacion) && $Observacion!=''){ $SIS_data .= ",'".$Observacion."'";   }else{$SIS_data .= ",''";}
 									$SIS_data .= ",'".$sufijo.$_FILES['Archivo']['name']."'";
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idProspecto, idUsuario, idEtapa, Fecha, Observacion, Archivo';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'prospectos_etapa_fidelizacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 									//Si ejecuto correctamente la consulta
 									if($ultimo_id!=0){
 										//Actualizo los datos
@@ -165,7 +165,7 @@ require_once '0_validate_user_1.php';
 											//redirijo
 											header( 'Location: '.$location.'&created=true' );
 											die;
-											
+
 										}
 									}
 								}else {
@@ -297,7 +297,7 @@ require_once '0_validate_user_1.php';
 									if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
 									if(isset($Observacion) && $Observacion!=''){   $SIS_data .= ",Observacion='".$Observacion."'";}
 									$SIS_data .= ",Archivo='".$sufijo.$_FILES['Archivo']['name']."'";
-									
+
 									/*******************************************************/
 									//se actualizan los datos
 									$resultado = db_update_data (false, $SIS_data, 'prospectos_etapa_fidelizacion', 'idEtapaFide = "'.$idEtapaFide.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

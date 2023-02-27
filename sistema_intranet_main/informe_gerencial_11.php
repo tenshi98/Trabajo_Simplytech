@@ -35,7 +35,7 @@ if(isset($_GET['Ano'])){   $Ano = $_GET['Ano'];   } else { $Ano  = ano_actual();
 //Filtros
 $z= "WHERE orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
-if(isset($Ano)&&$Ano!=''){ 
+if(isset($Ano)&&$Ano!=''){
 	$z.=" AND orden_trabajo_listado.progAno=".$Ano;
 }
 
@@ -64,7 +64,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCountOT,$row );
-} 
+}
 
 //Se verifica que las ot esten terminadas
 $z.= " AND orden_trabajo_listado.idEstado=2";
@@ -94,7 +94,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCountType,$row );
-} 
+}
 
 // Se cuentan las ot generadas por maquina
 $arrCountMaq = array();
@@ -126,7 +126,7 @@ array_push( $arrCountMaq,$row );
 
 //filtros 
 $z= "WHERE orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']."  AND orden_trabajo_listado_trabajos.idEstado=2";
-if(isset($Ano)&&$Ano!=''){ 
+if(isset($Ano)&&$Ano!=''){
 	$z.=" AND orden_trabajo_listado.progAno=".$Ano;
 }
 
@@ -206,7 +206,7 @@ array_push( $arrOT2,$row );
 
 //filtros
 $z= "WHERE orden_trabajo_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND orden_trabajo_listado.idEstado=2";
-if(isset($Ano)&&$Ano!=''){ 
+if(isset($Ano)&&$Ano!=''){
 	$z.=" AND orden_trabajo_listado.progAno=".$Ano;
 }
 // Se trae un listado con todos los elementos
@@ -277,7 +277,7 @@ array_push( $arrInsumos2,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<div class="">	
+	<div class="">
 		<div id="calendar_content" class="body">
 			<div id="calendar" class="fc fc-ltr">
 				<table class="fc-header" style="width:100%">
@@ -317,7 +317,7 @@ array_push( $arrInsumos2,$row );
 							<th width="120">Total</th>
 						</tr>
 					</thead>
-									  
+
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<?php 
 						$total = 0;
@@ -373,7 +373,7 @@ array_push( $arrInsumos2,$row );
 
 
 
-<div class="row">	
+<div class="row">
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
@@ -387,7 +387,7 @@ array_push( $arrInsumos2,$row );
 							<th width="120">Total</th>
 						</tr>
 					</thead>
-									  
+
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<?php 
 						$total = 0;
@@ -435,7 +435,7 @@ array_push( $arrInsumos2,$row );
 				  }
 				</script>
 				<div id="piechart_3d_2" style="width: 100%; height: 300px;"></div>
-				
+
 			</div>
 		</div>
 	</div>
@@ -457,7 +457,7 @@ array_push( $arrInsumos2,$row );
 							<th width="120">Total</th>
 						</tr>
 					</thead>
-									  
+
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<?php 
 						$total = 0;
@@ -505,7 +505,7 @@ array_push( $arrInsumos2,$row );
 				  }
 				</script>
 				<div id="piechart_3d_3" style="width: 100%; height: 300px;"></div>
-				
+
 			</div>
 		</div>
 	</div>
@@ -541,7 +541,7 @@ array_push( $arrInsumos2,$row );
 							if($cantidad!=0){ ?>
 								<tr class="odd">
 									<td><?php echo $consumos['Producto']; ?></td>
-									<td><?php echo Cantidades_decimales_justos_alt($cantidad).' '.$consumos['Uml'];?></td>
+									<td><?php echo Cantidades_decimales_justos_alt($cantidad).' '.$consumos['Uml']; ?></td>
 									<td align="right"><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
 								</tr>
 						<?php 
@@ -570,7 +570,7 @@ array_push( $arrInsumos2,$row );
 							if(isset($consumos['Grasa_relubricacion'])&&$consumos['Grasa_relubricacion']!=0){ $cantidad = $consumos['Grasa_relubricacion'];}
 							if(isset($consumos['Aceite'])&&$consumos['Aceite']!=0){                        $cantidad = $consumos['Aceite'];}
 							if(isset($consumos['Cantidad'])&&$consumos['Cantidad']!=0){                    $cantidad = $consumos['Cantidad'];}
-							
+
 							if($cantidad!=0){ ?>
 							
 							,['<?php echo $consumos['Producto']; ?>',     <?php echo Cantidades_decimales_justos($cantidad*$consumos['ValorIngreso']); ?>]
@@ -589,13 +589,13 @@ array_push( $arrInsumos2,$row );
 				  }
 				</script>
 				<div id="piechart_3d_4" style="width: 100%; height: 300px;"></div>
-				
+
 			</div>
 		</div>
 	</div>
 </div>
 
-<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=4){?> 
+<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=4){?>
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">
@@ -628,7 +628,7 @@ array_push( $arrInsumos2,$row );
 									if($cantidad!=0){ ?>
 										<tr class="odd">
 											<td><?php echo $consumos['Producto']; ?></td>
-											<td><?php echo Cantidades_decimales_justos_alt($cantidad).' '.$consumos['Uml'];?></td>
+											<td><?php echo Cantidades_decimales_justos_alt($cantidad).' '.$consumos['Uml']; ?></td>
 											<td align="right"><?php echo valores($consumos['ValorIngreso'], 0); ?></td>
 											<td align="right"><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
 										</tr>
@@ -645,7 +645,6 @@ array_push( $arrInsumos2,$row );
 		</div>
 	</div>
 <?php } ?>
-
 
 <div class="row">
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -669,7 +668,7 @@ array_push( $arrInsumos2,$row );
 						foreach ($arrInsumos as $consumos) { ?>
 							<tr class="odd">
 								<td><?php echo $consumos['NombreInsumo']; ?></td>
-								<td><?php echo Cantidades_decimales_justos_alt($consumos['Cantidad']).' '.$consumos['Unidad'];?></td>
+								<td><?php echo Cantidades_decimales_justos_alt($consumos['Cantidad']).' '.$consumos['Unidad']; ?></td>
 								<td align="right"><?php echo valores($consumos['Cantidad']*$consumos['ValorIngreso'], 0); ?></td>
 							</tr>
 						<?php }  ?>                    
@@ -705,13 +704,13 @@ array_push( $arrInsumos2,$row );
 				  }
 				</script>
 				<div id="piechart_3d_5" style="width: 100%; height: 300px;"></div>
-				
+
 			</div>
 		</div>
 	</div>
 </div>
 
-<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=4){?> 
+<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=4){?>
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">
@@ -740,7 +739,7 @@ array_push( $arrInsumos2,$row );
 										<tr class="odd">
 											<td><?php echo $consumos['Maquina']; ?></td>
 											<td><?php echo $consumos['NombreInsumo']; ?></td>
-											<td><?php echo Cantidades_decimales_justos_alt($consumos['Cantidad']).' '.$consumos['Unidad'];?></td>
+											<td><?php echo Cantidades_decimales_justos_alt($consumos['Cantidad']).' '.$consumos['Unidad']; ?></td>
 											<td align="right"><?php echo valores($consumos['ValorIngreso'], 0); ?></td>
 											<td align="right"><?php echo valores($consumos['Cantidad']*$consumos['ValorIngreso'], 0); ?></td>
 										</tr>
@@ -763,4 +762,5 @@ array_push( $arrInsumos2,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -101,7 +101,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Datos Basicos
 			<address>
@@ -129,7 +129,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 				<strong>Hora Termino:</strong> <?php echo $row_data['HoraTerminoProgramada']; ?><br/>
 			</address>
 		</div>
-		
+
 	</div>
 
 	<div class="">
@@ -144,12 +144,12 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 					<?php if ($arrPersonas!=false && !empty($arrPersonas) && $arrPersonas!='') { ?>
 						<?php foreach ($arrPersonas as $otro) { ?>
 							<tr>
-								<td><?php echo $otro['Nombre'];?></td>
-								<td><?php echo $otro['Rut'];?></td>
-								<td><?php echo $otro['NDocCedula'];?></td>
-								<td><?php echo Fecha_estandar($otro['Fecha']);?></td>
-								<td><?php echo $otro['HoraEntrada'].' - '.$otro['HoraSalida'];?></td>
-								<td><?php echo $otro['Estado'];?></td>
+								<td><?php echo $otro['Nombre']; ?></td>
+								<td><?php echo $otro['Rut']; ?></td>
+								<td><?php echo $otro['NDocCedula']; ?></td>
+								<td><?php echo Fecha_estandar($otro['Fecha']); ?></td>
+								<td><?php echo $otro['HoraEntrada'].' - '.$otro['HoraSalida']; ?></td>
+								<td><?php echo $otro['Estado']; ?></td>
 							</tr>
 						<?php } ?>
 					<?php } ?>
@@ -214,7 +214,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -224,7 +224,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -233,4 +233,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

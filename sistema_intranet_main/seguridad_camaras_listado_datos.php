@@ -59,10 +59,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+$rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Grupo Camaras', $rowdata['Nombre'], 'Editar Datos Basicos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Grupo Camaras', $rowdata['Nombre'], 'Editar Datos Basicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -79,7 +79,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;min-height:500px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 					<?php  
 					//Se verifican si existen los datos
 					if(isset($Nombre)){              $x1  = $Nombre;               }else{$x1  = $rowdata['Nombre'];}
@@ -97,7 +97,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					if(isset($Config_Web)){          $x13 = $Config_Web;           }else{$x13 = $rowdata['Config_Web'];}
 					//IP en caso de no existir
 					if(!isset($x11) OR $x11=='') { $x11 = obtenerIpCliente();}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_text('Nombre del Grupo Camaras', 'Nombre', $x1, 1);
@@ -122,7 +122,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					
 					
 					?>
-					
+
 					<script>
 						//oculto los div
 						document.getElementById('div_idTipoCamara').style.display = 'none';
@@ -273,14 +273,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

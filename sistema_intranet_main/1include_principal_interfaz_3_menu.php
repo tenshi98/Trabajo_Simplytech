@@ -33,7 +33,7 @@
 				echo '<li><a href="#Menu_tab_5" data-toggle="tab"><i class="fa fa-database" aria-hidden="true"></i> Repositorio</a></li>';
 				$count_tab++;
 			}
-			
+
 			/**************************************************/
 			if($count_tab==5){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';}
 			//Cross Shipping
@@ -42,7 +42,7 @@
 				echo '<li><a href="#Menu_tab_6" data-toggle="tab"><i class="fa fa-truck" aria-hidden="true"></i> Cross Shipping</a></li>';
 				$count_tab++;
 			}
-			
+
 			/**************************************************/
 			if($count_tab==5){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';}
 			//Cross Checking
@@ -51,7 +51,7 @@
 				echo '<li><a href="#Menu_tab_7" data-toggle="tab"><i class="fa fa-map-marker" aria-hidden="true"></i> Cross Checking</a></li>';
 				$count_tab++;
 			}
-			
+
 			/**************************************************/
 			if($count_tab==5){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';}
 			//Facturacion Furgones
@@ -60,7 +60,7 @@
 				echo '<li><a href="#Menu_tab_8" data-toggle="tab"><i class="fa fa-usd" aria-hidden="true"></i> Facturacion Furgones</a></li>';
 				$count_tab++;
 			}
-			
+
 			/**************************************************/
 			if($count_tab==5){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';}
 			//Facturacion Furgones

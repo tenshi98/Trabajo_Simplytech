@@ -43,7 +43,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 	$SIS_where.=" AND vehiculos_listado_error_detenciones.idVehiculo='".$_GET['idVehiculo']."'";
 }
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where.=" AND vehiculos_listado_error_detenciones.idSistema=".$_GET['idSistema'];	
+$SIS_where.=" AND vehiculos_listado_error_detenciones.idSistema=".$_GET['idSistema'];
 $SIS_order = 'idDetencion DESC';
 $arrErrores = array();
 $arrErrores = db_select_array (false, $SIS_query, 'vehiculos_listado_error_detenciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrErrores');
@@ -67,7 +67,7 @@ $html .= '
 		</tr>
 	</thead>
 	<tbody>';
-							
+
 		foreach ($arrErrores as $error) {
 							
 				$html .='
@@ -81,7 +81,7 @@ $html .= '
 
 							
 		}
-							
+
 $html .='</tbody>
 </table>';
    
@@ -103,7 +103,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 		/************************************************************************/
 		//TCPDF
 		case 1:
-			
+
 			require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 			// create new PDF document
@@ -158,7 +158,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output(DeSanitizar($pdf_file), 'I');
-	
+
 			break;
 		/************************************************************************/
 		//DomPDF (Solo compatible con PHP 5.x)

@@ -57,6 +57,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );
 } ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<?php
 	$zz  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
@@ -91,8 +92,8 @@ array_push( $arrProductos,$row );
 					if ($stock_actual!=0){ ?>
 						<tr class="odd <?php if ($productos['StockLimite']>$stock_actual){echo 'danger';} ?>">
 							<td><?php echo $productos['NombreProd']; ?></td>
-							<td><?php echo Cantidades_decimales_justos($productos['StockLimite']); ?> <?php echo $productos['UnidadMedida'];?></td>
-							<td><?php echo Cantidades_decimales_justos($stock_actual).' '.$productos['UnidadMedida'];?></td>
+							<td><?php echo Cantidades_decimales_justos($productos['StockLimite']); ?> <?php echo $productos['UnidadMedida']; ?></td>
+							<td><?php echo Cantidades_decimales_justos($stock_actual).' '.$productos['UnidadMedida']; ?></td>
 							<td align="right"><?php echo Valores($productos['ValorIngreso'], 0); ?></td>
 							<td align="right"><?php echo Valores($stock_actual*$productos['ValorIngreso'], 0); ?></td>
 						</tr>
@@ -106,8 +107,8 @@ array_push( $arrProductos,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -119,6 +120,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
  
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -136,7 +138,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_join_filter('Bodega','idBodega', $x1, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', 'usuarios_bodegas_insumos', $z, $dbConn);
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -152,4 +154,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

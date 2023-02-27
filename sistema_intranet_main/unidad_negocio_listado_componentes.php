@@ -104,7 +104,7 @@ if (isset($_GET['clone_comp'])){ $error['clone_comp'] = 'sucess/Componente clona
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['addTrabajo'])){ 
+if(!empty($_GET['addTrabajo'])){
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -140,7 +140,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 	 
 //Se filtran solo las ramas de la licitacion, no las subramas con los datos
-$w = 'idUtilizable=1';	 
+$w = 'idUtilizable=1';
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -214,9 +215,9 @@ $w = 'idUtilizable=1';
 				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
 				$Form_Inputs->form_input_hidden('addTrabajo', $_GET['addTrabajo'], 2);
 				?>
-			
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_addTrabajo"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_addTrabajo">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -345,7 +346,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_text('Saf', 'Saf', $x9, 1);
 				$Form_Inputs->form_input_text('Numero', 'Numero', $x10, 1);
 				$Form_Inputs->form_select_depend1('Tareas Relacionadas','idSubTipo', $x11, 1, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, 0,
-										 'Producto utilizado','idProducto', $x12, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, 0, 
+										 'Producto utilizado','idProducto', $x12, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_number('Grasa inicial','Grasa_inicial', $x13, 1);
 				$Form_Inputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x14, 1);
@@ -400,8 +401,7 @@ foreach ($arrPermisos as $prod) {
 				}
 				?>
 				</script>
-				
-				
+
 				<script>
 				document.getElementById("idProducto").onchange = function() {myFunction()};
 
@@ -414,7 +414,7 @@ foreach ($arrPermisos as $prod) {
 					}
 				}
 				</script>
-					
+
 				<script>
 					/**********************************************************************/
 					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
@@ -767,7 +767,7 @@ foreach ($arrPermisos as $prod) {
 					
 					   		
 				</script>
-	   
+
 				<div class="form-group">
 				
 					
@@ -798,7 +798,7 @@ foreach ($arrPermisos as $prod) {
 					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){$Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
 			
 				
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -809,7 +809,7 @@ foreach ($arrPermisos as $prod) {
 </div>
 <?php
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['editimg'])){ 
+}elseif(!empty($_GET['editimg'])){
 // consulto los datos
 $query = "SELECT 
 maquinas_listado_level_".$_GET['lvl'].".Nombre,
@@ -841,7 +841,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Modificar imagen de <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
 		<div class="body">
-			
+
 			<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
         
 				<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
@@ -857,8 +857,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<?php }else{ ?>
 
 				<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
-					
-					<?php 
+
+					<?php
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_multiple_upload('Seleccionar archivo','Direccion_img', 1, '"jpg", "png", "gif", "jpeg"');
@@ -897,14 +897,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){$Form_Inputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
 						<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){$Form_Inputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
 						<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){$Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
-					
-						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_img"> 
+
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_img">
 						<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 					</div>
 							  
 				</form>
 				<?php widget_validator(); ?>
-			<?php }?>
+			<?php } ?>
 			
 			
 			      
@@ -993,7 +993,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_text('Saf', 'Saf', $x9, 1);
 				$Form_Inputs->form_input_text('Numero', 'Numero', $x10, 1);
 				$Form_Inputs->form_select_depend1('Tareas Relacionadas','idSubTipo', $x11, 1, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, 0,
-										 'Producto utilizado','idProducto', $x12, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, 0, 
+										 'Producto utilizado','idProducto', $x12, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_number('Grasa inicial','Grasa_inicial', $x13, 1);
 				$Form_Inputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x14, 1);
@@ -1061,7 +1061,7 @@ foreach ($arrPermisos as $prod) {
 					}
 				}
 				</script>
-					
+
 				<script>
 					//Se ocultan todos los input
 					document.getElementById('div_Modelo').style.display = 'none';
@@ -1079,7 +1079,7 @@ foreach ($arrPermisos as $prod) {
 					document.getElementById('div_idUml').style.display = 'none';
 					document.getElementById('div_Frecuencia').style.display = 'none';
 					document.getElementById('div_idFrecuencia').style.display = 'none';
-					
+
 					$("#idUtilizable").on("change", function(){ 
 						let TipoComp = $(this).val(); 
 						
@@ -1258,10 +1258,9 @@ foreach ($arrPermisos as $prod) {
 					
 					   		
 				</script>
-	   
+
 				<div class="form-group">
-					
-					
+
 					<?php if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){  $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);} ?>
 					<?php if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){  $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);} ?>
 					<?php if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){  $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);} ?>
@@ -1445,7 +1444,7 @@ for ($i = 1; $i <= $nmax; $i++) {
 /*********************************************************************/
 $array3d = array();
 foreach($arrItemizado as $key) {
-	
+
 	//Creo Variables para la rejilla
 	for ($i = 1; $i <= $nmax; $i++) {
 
@@ -1803,14 +1802,14 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowdata['Nombre'], 'Componentes');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowdata['Nombre'], 'Componentes'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Componente</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Componente</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -1834,13 +1833,13 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 						<?php if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
 							<li class=""><a href="<?php echo 'unidad_negocio_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
-						
+
 					</ul>
                 </li>
 			</ul>
 		</header>
         <div class="table-responsive">
-			
+
 			<?php //Se imprime el arbol
 			echo arrayToUL($array3d, $TipoMaq, $Trabajo, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'], $nmax);
 			?>
@@ -1863,15 +1862,15 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 					});		
 				});
 			</script>
-			
+
 		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -1880,4 +1879,5 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

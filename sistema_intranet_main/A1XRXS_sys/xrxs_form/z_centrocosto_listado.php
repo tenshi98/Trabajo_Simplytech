@@ -20,7 +20,7 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idEstado']))           $idEstado            = $_POST['idEstado'];
 
 	if (!empty($_POST['lvl']))                $lvl                 = $_POST['lvl'];
-	
+
 	//formulariopara el itemizado
 	//Traspaso de valores input a variables
 	$idLevel = array();
@@ -231,7 +231,7 @@ require_once '0_validate_user_1.php';
 				for ($i = 1; $i <= $nmax; $i++) {
 					$resultado = db_delete_data (false, 'centrocosto_listado_level_'.$i, 'idCentroCosto = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
-					
+
 				//redirijo
 				header( 'Location: '.$location.'&deleted=true' );
 				die;
@@ -267,7 +267,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idSistema) && $idSistema!=''){           $SIS_data  = "'".$idSistema."'";       }else{$SIS_data  = "''";}
 				if(isset($idCentroCosto) && $idCentroCosto!=''){   $SIS_data .= ",'".$idCentroCosto."'";  }else{$SIS_data .= ",''";}
 				if(isset($Nombre) && $Nombre!=''){                $SIS_data .= ",'".$Nombre."'";         }else{$SIS_data .= ",''";}
-				
+
 				$xbla = '';
 				for ($i = 2; $i <= $lvl; $i++) {
 					//Ubico correctamente el puntero
@@ -358,7 +358,7 @@ require_once '0_validate_user_1.php';
 					$resultado = db_delete_data (false, 'centrocosto_listado_level_'.$i, 'idLevel_'.$_GET['lvl'].' = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					
 				}
-					
+
 				//redirijo
 				header( 'Location: '.$location.'&deleted=true' );
 				die;

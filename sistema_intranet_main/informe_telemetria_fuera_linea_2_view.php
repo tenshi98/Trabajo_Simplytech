@@ -37,13 +37,12 @@ require_once 'core/Web.Header.Views.php';
 
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>
-						
+
 		</header>
 		<div class="table-responsive">
 			<?php 
@@ -209,4 +208,5 @@ require_once 'core/Web.Header.Views.php';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

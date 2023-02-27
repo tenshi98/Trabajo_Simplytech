@@ -210,7 +210,7 @@ $Form_Inputs = new Inputs();
 			<h3>
 				<strong>Proveedor : </strong><?php echo $row_data['Proveedor']; ?><br/>
 			</h3>
-			<hr>	
+			<hr>
 		</div>
 	</div>
 <?php } ?>
@@ -270,7 +270,7 @@ $Form_Inputs = new Inputs();
 											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											<?php if ($rowlevel['level']>=2){
 												$ubicacion = $location.'&del_insumo_ex='.$tipo['idFacturacion'];
-												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?';?>
+												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?'; ?>
 												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php } ?>
 										</div>
@@ -348,7 +348,7 @@ $Form_Inputs = new Inputs();
 											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											<?php if ($rowlevel['level']>=2){
 												$ubicacion = $location.'&del_producto_ex='.$tipo['idFacturacion'];
-												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?';?>
+												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?'; ?>
 												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php } ?>
 										</div>
@@ -382,7 +382,7 @@ $Form_Inputs = new Inputs();
 									<?php }else{ ?>
 										<td align="right"><?php echo valores($tipo['ValorTotal'], 0);$Total = $Total + $tipo['ValorTotal']; ?></td>
 										<td align="right"><?php echo valores($tipo['MontoPagado'], 0);$MontoCancelado = $MontoCancelado + $tipo['MontoPagado']; ?></td>
-										<td align="right"><?php echo valores($tipo['MontoNC'], 0);$TotalNCUtilizado = $TotalNCUtilizado + $tipo['MontoNC'];?></td>
+										<td align="right"><?php echo valores($tipo['MontoNC'], 0);$TotalNCUtilizado = $TotalNCUtilizado + $tipo['MontoNC']; ?></td>
 										<td align="right"><?php echo valores($tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']), 0);$TotalDeuda = $TotalDeuda + $tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']); ?></td>
 										<td align="right"></td>
 										<td align="right">
@@ -426,7 +426,7 @@ $Form_Inputs = new Inputs();
 											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											<?php if ($rowlevel['level']>=2){
 												$ubicacion = $location.'&del_arriendo_ex='.$tipo['idFacturacion'];
-												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?';?>
+												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?'; ?>
 												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php } ?>
 										</div>
@@ -460,7 +460,7 @@ $Form_Inputs = new Inputs();
 									<?php }else{ ?>
 										<td align="right"><?php echo valores($tipo['ValorTotal'], 0);$Total = $Total + $tipo['ValorTotal']; ?></td>
 										<td align="right"><?php echo valores($tipo['MontoPagado'], 0);$MontoCancelado = $MontoCancelado + $tipo['MontoPagado']; ?></td>
-										<td align="right"><?php echo valores($tipo['MontoNC'], 0);$TotalNCUtilizado = $TotalNCUtilizado + $tipo['MontoNC'];?></td>
+										<td align="right"><?php echo valores($tipo['MontoNC'], 0);$TotalNCUtilizado = $TotalNCUtilizado + $tipo['MontoNC']; ?></td>
 										<td align="right"><?php echo valores($tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']), 0);$TotalDeuda = $TotalDeuda + $tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']); ?></td>
 										<td align="right"></td>
 										<td align="right">
@@ -504,7 +504,7 @@ $Form_Inputs = new Inputs();
 											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											<?php if ($rowlevel['level']>=2){
 												$ubicacion = $location.'&del_servicio_ex='.$tipo['idFacturacion'];
-												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?';?>
+												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?'; ?>
 												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php } ?>
 										</div>
@@ -538,7 +538,7 @@ $Form_Inputs = new Inputs();
 									<?php }else{ ?>
 										<td align="right"><?php echo valores($tipo['ValorTotal'], 0);$Total = $Total + $tipo['ValorTotal']; ?></td>
 										<td align="right"><?php echo valores($tipo['MontoPagado'], 0);$MontoCancelado = $MontoCancelado + $tipo['MontoPagado']; ?></td>
-										<td align="right"><?php echo valores($tipo['MontoNC'], 0);$TotalNCUtilizado = $TotalNCUtilizado + $tipo['MontoNC'];?></td>
+										<td align="right"><?php echo valores($tipo['MontoNC'], 0);$TotalNCUtilizado = $TotalNCUtilizado + $tipo['MontoNC']; ?></td>
 										<td align="right"><?php echo valores($tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']), 0);$TotalDeuda = $TotalDeuda + $tipo['ValorTotal']-($tipo['MontoPagado']+$tipo['MontoNC']); ?></td>
 										<td align="right"></td>
 										<td align="right">
@@ -627,7 +627,7 @@ $Form_Inputs = new Inputs();
 		//Verificaciones
 		if (pago_x != "") { ok++; }else{ alert("No ha ingresado un valor de pago");}
 		if (pago>maxs){ok--;alert("El valor que intenta cancelar es superior al maximo permitido");}
-		
+
 		//Guardo el dato y refresco la pagina
 		if(ok==1){
 			saveData(level, number, pago);
@@ -646,7 +646,7 @@ $Form_Inputs = new Inputs();
 		//Verificaciones
 		if (pago_x != "") { ok++; }else{ alert("No ha ingresado un valor de pago");}
 		if (pago>maxs){ok--;alert("El valor que intenta cancelar es superior al maximo permitido");}
-		
+
 		//Guardo el dato y refresco la pagina
 		if(ok==1){
 			saveData(level, number, pago);
@@ -771,8 +771,8 @@ $Form_Inputs = new Inputs();
 			</header>
 			<div class="body">
 				<form class="form-horizontal" method="post" name="form1" id="form1">
-					
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($F_Pago)){     $x1  = $F_Pago;   }else{$x1  = '';}
 				
@@ -783,17 +783,17 @@ $Form_Inputs = new Inputs();
 					$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 						
 					?>
-						
+
 					<div class="form-group">
-						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf283; Cerrar Factura" name="submit_form"> 
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf283; Cerrar Factura" name="submit_form">
 					</div>
-				</form>		
+				</form>
 			</div>
 		</div>
-	</div> 
+	</div>
 <?php }else{ ?>
 
-	<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0&&isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalDeuda!=0&&$TotalGeneral!=0){ ?>	
+	<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0&&isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalDeuda!=0&&$TotalGeneral!=0){ ?>
 		<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 
 			<div class="box">
@@ -803,7 +803,7 @@ $Form_Inputs = new Inputs();
 				</header>
 				<div class="body">
 					<form class="form-horizontal" method="post" name="form1" id="form1">
-					
+
 						<?php
 						//Se verifican si existen los datos
 						if(isset($idDocPago)){         $x1  = $idDocPago;          }else{$x1  = '';}
@@ -833,9 +833,9 @@ $Form_Inputs = new Inputs();
 							<input type="submit" id="submitCadastroHidden" style="display: none;" name="submit_form">
 							<input type="button" id="submitBtn" data-toggle="modal" data-target="#confirm-submit"  class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf283; Ingresar Pago" name="submit2">
 						</div>
-							  
+
 					</form>
-							
+
 				</div>
 			</div>
 
@@ -861,7 +861,7 @@ $Form_Inputs = new Inputs();
 				
 				$('#submitBtn').click(function() {
 					//Se verifica que todos los input tengan valores asignados
-					let ninput = <?php echo ($Registro_total-$Registro_ok);?>;
+					let ninput = <?php echo ($Registro_total-$Registro_ok); ?>;
 
 					//verifica el valor
 					let monto = <?php echo $TotalGeneral; ?>;
@@ -879,7 +879,7 @@ $Form_Inputs = new Inputs();
 				});
 
 			</script>
-			
+
 		</div>
 	<?php }elseif(isset($NC_Pendientes)&&$NC_Pendientes==0&&isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalDeuda==0&&$TotalGeneral==0){ ?>
 		<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
@@ -902,9 +902,9 @@ $Form_Inputs = new Inputs();
 						$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 							
 						?>
-							
+
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf283; Cerrar Factura" name="submit_form"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf283; Cerrar Factura" name="submit_form">
 						</div>
 					</form>		
 				</div>
@@ -1267,13 +1267,13 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTipo4,$row );
 }	
 
-?> 
+?>
 
 <?php if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){?>
 	<div class="row inbox"> 
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<h2><strong>Proveedor : </strong><?php echo $rowProveedor['Nombre']; ?></h2>
-			<hr>	
+			<hr>
 		</div>
 	</div>
 <?php } ?>
@@ -1527,13 +1527,13 @@ array_push( $arrTipo4,$row );
 		}
 		return '$ '+s; 
 	}
-	
+
 	//////////////////////////////////////////////////////////
 	function doSomething(level, number) {
 		$.get("pago_masivo_proveedor_execute.php?type="+level+"&idFacturacion="+number);
 		return false;
 	}
-	
+
 	//////////////////////////////////////////////////////////
 	function onToggle(level, number) {
 		
@@ -1648,6 +1648,7 @@ array_push( $arrTipo4,$row );
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
  
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -1668,7 +1669,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Rut,Nombre', 'proveedor_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select('Documento de Pago','idDocumentos', $x2, 1, 'idDocumentos', 'Nombre', 'core_documentos_mercantiles', 'idDocumentos!=1 AND idDocumentos!=3 AND idDocumentos!=4', '', $dbConn);
 				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_Doc', $x3, 1);
-					
+
 				?>
 
 				<div class="form-group">
@@ -1687,4 +1688,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

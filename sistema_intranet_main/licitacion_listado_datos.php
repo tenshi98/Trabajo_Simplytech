@@ -65,10 +65,11 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contrato', $rowdata['Nombre'], 'Editar Datos Basicos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contrato', $rowdata['Nombre'], 'Editar Datos Basicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -95,8 +96,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($idCliente)){             $x1  = $idCliente;           }else{$x1  = $rowdata['idCliente'];}
 					if(isset($Codigo)){                $x2  = $Codigo;              }else{$x2  = $rowdata['Codigo'];}
@@ -110,7 +111,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					if(isset($idBodegaIns)){           $x10 = $idBodegaIns;         }else{$x10 = $rowdata['idBodegaIns'];}
 					if(isset($idOpcionItem)){          $x11 = $idOpcionItem;        }else{$x11 = $rowdata['idOpcionItem'];}
 					if(isset($idAprobado)){            $x12 = $idAprobado;          }else{$x12 = $rowdata['idAprobado'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
@@ -125,7 +126,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_select('Bodega Insumos','idBodegaIns', $x10, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', $z, '', $dbConn);
 					$Form_Inputs->form_select('Utilizar Itemizado','idOpcionItem', $x11, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_select('Estado Aprobacion','idAprobado', $x12, 2, 'idEstado', 'Nombre', 'core_estado_aprobacion', 0, '', $dbConn);
-					
+
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idLicitacion', $_GET['id'], 2);
@@ -134,7 +135,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<script>
 						document.getElementById('div_ValorMensual').style.display = 'none';
 						document.getElementById('div_Presupuesto').style.display = 'none';
-								
+
 						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 									
 							let TipoLicitacion_val= $("#idTipoLicitacion").val();
@@ -154,7 +155,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							}
 											
 						});
-								
+
 						$("#idTipoLicitacion").on("change", function(){ //se ejecuta al cambiar valor del select
 							let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 							
@@ -196,4 +197,5 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

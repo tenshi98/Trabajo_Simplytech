@@ -129,7 +129,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x4, 2);
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x5, 2, 1);
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x6, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x7, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 'Variedad','idProducto', $x7, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_text('CantidadPallet', 'CantidadPallet', $x8, 2);
 
@@ -198,7 +198,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x4, 2);
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x5, 2, 1);
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x6, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x7, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 'Variedad','idProducto', $x7, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_text('CantidadPallet', 'CantidadPallet', $x8, 2);
 
@@ -355,7 +355,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x4, 1);
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x5, 1, 1);
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x6, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x7, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 'Variedad','idProducto', $x7, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_text('CantidadPallet', 'CantidadPallet', $x8, 1);
 
@@ -450,7 +450,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
-								  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrCategorias as $cat) { ?>
 					<tr class="odd">
@@ -468,7 +468,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$cat['idCiclo']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($cat['idCiclo'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el tracking del equipo '.$cat['Equipo'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el tracking del equipo '.$cat['Equipo'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -483,7 +483,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
-		
+
 	</div>
 </div>
 <?php } ?>
@@ -492,4 +492,5 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -144,7 +144,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha del informe','Creacion_fecha', $x1, 1);
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x2, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x3, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 'Variedad','idProducto', $x3, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_text('Contenedor Nro.', 'CTNNombreCompañia', $x4, 1);
 
@@ -222,7 +222,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_cross_shipping_consolidacion.php?view='.simpleEncode($tipo['idConsolidacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=3){
 									$ubicacion = $location.'&reversar='.simpleEncode($tipo['idConsolidacion'], fecha_actual());
-									$dialogo   = '¿Realmente deseas reversar la  Consolidacion '.$tipo['CTNNombreCompañia'].'?';?>
+									$dialogo   = '¿Realmente deseas reversar la  Consolidacion '.$tipo['CTNNombreCompañia'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Reversar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -240,11 +240,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -98,7 +98,7 @@ if(!empty($_GET['moddatos'])){ ?>
 				//Se verifican si existen los datos
 				if(isset($Fecha)){$x1  = $Fecha;          }else{$x1  = $_SESSION['vehiculos_basicos']['Fecha'];}
 				if(isset($Observaciones)){  $x2  = $Observaciones;  }else{$x2  = $_SESSION['vehiculos_basicos']['Observaciones'];}
-					
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha de Facturacion','Fecha', $x1, 2);
@@ -111,7 +111,7 @@ if(!empty($_GET['moddatos'])){ ?>
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_temp_datos"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_temp_datos">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -127,18 +127,18 @@ if(!empty($_GET['moddatos'])){ ?>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
 
-		<?php 
+		<?php
 		$ubicacion = $location.'&clear_all=true';
-		$dialogo   = '¿Realmente deseas eliminar todos los datos del documento en curso?';?>
+		$dialogo   = '¿Realmente deseas eliminar todos los datos del documento en curso?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
 										
 		<a href="<?php echo $location; ?>"  class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
-		<?php 
+		<?php
 		$ubicacion = $location.'&view=true&facturar=true';
-		$dialogo   = '¿Desea ingresar el documento?';?>
+		$dialogo   = '¿Desea ingresar el documento?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary"><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>
-		
+
 	</div>
 	<div class="clearfix"></div>
 </div> 
@@ -177,7 +177,7 @@ if(!empty($_GET['moddatos'])){ ?>
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td><?php echo Fecha_estandar($_SESSION['vehiculos_basicos']['Fecha']);?></td>
+						<td><?php echo Fecha_estandar($_SESSION['vehiculos_basicos']['Fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -193,7 +193,7 @@ if(!empty($_GET['moddatos'])){ ?>
 				</tr>
 
 				<?php if (isset($_SESSION['vehiculos_hijos'])){ ?>
-					
+
 					<tr class="item-row linea_punteada" bgcolor="#F0F0F0">
 						<td class="item-name"><strong>Vehiculo</strong></td>
 						<td class="item-name"><strong>Apoderado</strong></td>
@@ -201,7 +201,7 @@ if(!empty($_GET['moddatos'])){ ?>
 						<td width="120"  style="width:120px;"><strong>Acciones</strong></td>
 					</tr>
 	
-					<?php 
+					<?php
 					//recorro el lsiatdo entregado por la base de datos
 					foreach ($_SESSION['vehiculos_hijos'] as $key => $hijo){ ?>
 						<tr class="item-row linea_punteada">
@@ -212,9 +212,9 @@ if(!empty($_GET['moddatos'])){ ?>
 							<td width="120" style="width:120px;">
 								<div class="btn-group" style="width: 70px;" >
 									<a href="<?php echo 'view_apoderado.php?view='.simpleEncode($hijo['idApoderado'], fecha_actual()) ?>" title="Ver Datos Apoderado" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
-									<?php 
+									<?php
 									$ubicacion = $location.'&view=true&del_cliente='.$hijo['idHijos'];
-									$dialogo   = '¿Realmente deseas eliminar el dato '.$hijo['Hijo'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el dato '.$hijo['Hijo'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Cliente" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 								</div>
 							</td>
@@ -223,17 +223,16 @@ if(!empty($_GET['moddatos'])){ ?>
 
 					<tr id="hiderow"><td colspan="4"></td></tr>
 				<?php } ?>
-				
-				
+
 				<tr>
-					<td colspan="4" class="blank"> 
+					<td colspan="4" class="blank">
 						<p>
 							<?php 
 							if(isset($_SESSION['vehiculos_basicos']['Observaciones'])&&$_SESSION['vehiculos_basicos']['Observaciones']!=''){
 								echo $_SESSION['vehiculos_basicos']['Observaciones'];
 							}else{
 								echo 'Sin Observaciones';
-							}?>
+							} ?>
 						</p>
 					</td>
 				</tr>
@@ -243,7 +242,7 @@ if(!empty($_GET['moddatos'])){ ?>
 			</tbody>
 		</table>
 			<div class="clearfix"></div>
-			
+
 		</div>
 
 </div>
@@ -255,11 +254,10 @@ if(!empty($_GET['moddatos'])){ ?>
 	
 <div class="clearfix"></div>
 
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -395,7 +393,7 @@ $arrDatos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado',
             <?php widget_validator(); ?>
         </div>
 	</div>
-</div> 
+</div>
 <div class="clearfix"></div> 
                                  
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -436,7 +434,7 @@ $arrDatos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado',
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>	
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrDatos as $cont) { ?>
 					<tr class="odd">
@@ -467,4 +465,5 @@ $arrDatos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado',
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

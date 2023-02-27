@@ -42,7 +42,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = "backup_telemetria_listado_tablarelacionada_".$idTelemetria.".idTabla!=0";
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){
 	$SIS_where.=" AND backup_telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 			
@@ -55,7 +55,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
     //$consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
     //$consql .= ',telemetria_listado.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
     $consql .= ',backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.' AS SensorValue_'.$i;
-   
+
 }
 
 
@@ -82,13 +82,13 @@ $horaRef_2       = '';
 $horaRef_3       = '';
 //Se busca la temperatura real							
 foreach($arrConsulta as $temp) {
-	
+
 	//variables
 	$Temperatura          = $temp['SensorValue_1'];
 	$Temperatura_min      = $rowdata['TempMinima'];
 	$Temperatura_actMaq   = $temp['SensorValue_'.$rowdata['EquipoSensorActivacionID']];
 	$Temperatura_actConf  = $rowdata['EquipoSensorActivacionValor'];
-	
+
 	/*---------------------Funcionamiento---------------------*/
 	//si la hora de referencia esta vacia
 	//si esta activo
@@ -104,7 +104,7 @@ foreach($arrConsulta as $temp) {
 			$horaRef_3       = $temp['HoraSistema'];
 		}
 	}
-	
+
 	//si la temperatura es inferior a la temperatura actual
 	if(isset($Temperatura)&&$Temperatura<=$Temperatura_min){
 		
@@ -147,7 +147,7 @@ foreach($arrConsulta as $temp) {
 			$DuracionHelada  = $DuracionHelada + $Minutos;
 			$horaRef_1       = $temp['HoraSistema'];
 		}
-		
+
 		//se crean variables en caso de no existir
 		if(!isset($arrEvento[$nevento]['TempMinima'])){  $arrEvento[$nevento]['TempMinima']  = 1000;}
 		if(!isset($arrEvento[$nevento]['TempMaxima'])){  $arrEvento[$nevento]['TempMaxima']  = -1000;}
@@ -157,7 +157,7 @@ foreach($arrConsulta as $temp) {
 
 		$arrEvento[$nevento]['FechaTermino'] = $temp['FechaSistema'];
 		$arrEvento[$nevento]['HoraTermino']  = $temp['HoraSistema'];
-			
+
 		//Guardo la temperatura Minima
 		if(isset($Temperatura)&&$Temperatura<$arrEvento[$nevento]['TempMinima']){
 			$arrEvento[$nevento]['TempMinima'] = $Temperatura;
@@ -179,9 +179,10 @@ foreach($arrConsulta as $temp) {
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="row">
-		
+
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 			<div class="box box-blue box-solid">
 				<div class="box-header with-border">
@@ -224,17 +225,16 @@ foreach($arrConsulta as $temp) {
 				</div>
 			</div>
 		</div>
-		
+
 	</div>
 </div>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5> Graficos</h5>
-						
+
 		</header>
 		<div class="table-responsive">
 			<?php
@@ -261,7 +261,7 @@ foreach($arrConsulta as $temp) {
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<p><span class="label label-default" style="background-color:#4285F4;">+</span> Temperatura (Grados Celsius)</p>
 				<p><span class="label label-default" style="background-color:#DB4437;">+</span> Funcionamiento (1:On - 0:Off)</p>
-				
+
 			</div>		
 		</div>
 	</div>
@@ -303,10 +303,10 @@ foreach($arrConsulta as $temp) {
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-			
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Filtro de busqueda
@@ -319,7 +319,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$z .= " AND telemetria_listado.idTab=4";//CrossWeather			
-} ?>	
+} ?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -328,7 +328,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
@@ -344,7 +344,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x3, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x3, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
-				}?>        
+				} ?>        
 	   
 				
 				<div class="form-group">
@@ -357,12 +357,10 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 </div>
 <?php } ?>
 
-	
-
-          
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

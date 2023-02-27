@@ -27,7 +27,7 @@ $SIS_where  = "telemetria_listado_error_fuera_linea.idFueraLinea>0";
 $SIS_where .= " AND telemetria_listado.id_Geo='1'";
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$SIS_where .= " AND telemetria_listado.idTab=1";//CrossChecking				
+	$SIS_where .= " AND telemetria_listado.idTab=1";//CrossChecking	
 }
 $zn = '';
 //verifico si existen los parametros de fecha
@@ -78,7 +78,7 @@ $html .= '
 		</tr>
 	</thead>
 	<tbody>';
-							
+
 		foreach ($arrErrores as $error) {
 							
 				$html .='
@@ -94,7 +94,7 @@ $html .= '
 				
 							
 		}
-							
+
 $html .='</tbody>
 </table>';
    
@@ -116,7 +116,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 		/************************************************************************/
 		//TCPDF
 		case 1:
-			
+
 			require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 			// create new PDF document
@@ -171,7 +171,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output(DeSanitizar($pdf_file), 'I');
-	
+
 			break;
 		/************************************************************************/
 		//DomPDF (Solo compatible con PHP 5.x)

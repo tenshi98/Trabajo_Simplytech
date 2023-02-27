@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -58,7 +58,7 @@ foreach ($arrTractores as $trac) {
 	$subquery .= ',GeoMovimiento';
 	$subquery .= ',GeoVelocidad';
 	//se recorre deacuerdo a la cantidad de sensores
-	for ($i = 1; $i <= $trac['cantSensores']; $i++) { 
+	for ($i = 1; $i <= $trac['cantSensores']; $i++) {
 		$subquery .= ',Sensor_'.$i;
 	}
 	/****************************************/
@@ -139,7 +139,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 					.my_marker {color: white;background-color: black;border: solid 1px black;font-weight: 900;padding: 4px;top: -8px;}
 					.my_marker::after {content: "";position: absolute;top: 100%;left: 50%;transform: translate(-50%, 0%);border: solid 8px transparent;border-top-color: black;}
 				</style>
-			
+
 				<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=visualization"></script>
 				<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 				<script>
@@ -210,7 +210,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 					function dibuja_zona() {
 								
 						var polygons = [];
-						<?php 
+						<?php
 						//variables
 						$Latitud_z       = 0;
 						$Longitud_z      = 0;
@@ -299,7 +299,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 							});
 							';
 
-							$zcounter2++;		
+							$zcounter2++;
 						}
 								
 						//Centralizado del mapa
@@ -356,7 +356,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -366,7 +366,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -375,4 +375,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

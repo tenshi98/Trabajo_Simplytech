@@ -62,17 +62,19 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
+
+/*******************************************************/
 // consulto los datos
-$query = "SELECT  
-alumnos_listado.email, 
+$SIS_query = '
+alumnos_listado.email,
 alumnos_listado.Nombre,
-alumnos_listado.ApellidoPat, 
-alumnos_listado.ApellidoMat, 
-alumnos_listado.Rut, 
-alumnos_listado.fNacimiento, 
-alumnos_listado.Direccion, 
-alumnos_listado.Fono1, 
-alumnos_listado.Fono2, 
+alumnos_listado.ApellidoPat,
+alumnos_listado.ApellidoMat,
+alumnos_listado.Rut,
+alumnos_listado.fNacimiento,
+alumnos_listado.Direccion,
+alumnos_listado.Fono1,
+alumnos_listado.Fono2,
 alumnos_listado.Fax,
 alumnos_listado.PersonaContacto,
 alumnos_listado.PersonaContacto_Fono,
@@ -83,34 +85,20 @@ core_ubicacion_ciudad.Nombre AS nombre_region,
 core_ubicacion_comunas.Nombre AS nombre_comuna,
 core_estados.Nombre AS estado,
 core_sistemas.Nombre AS sistema,
-cursos_listado.Nombre AS Curso
-
-FROM `alumnos_listado`
+cursos_listado.Nombre AS Curso';
+$SIS_join  = '
 LEFT JOIN `core_estados`              ON core_estados.idEstado                    = alumnos_listado.idEstado
 LEFT JOIN `core_ubicacion_ciudad`     ON core_ubicacion_ciudad.idCiudad           = alumnos_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`    ON core_ubicacion_comunas.idComuna          = alumnos_listado.idComuna
 LEFT JOIN `core_sistemas`             ON core_sistemas.idSistema                  = alumnos_listado.idSistema
-LEFT JOIN `cursos_listado`            ON cursos_listado.idCurso                   = alumnos_listado.idCurso
-WHERE alumnos_listado.idAlumno = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+LEFT JOIN `cursos_listado`            ON cursos_listado.idCurso                   = alumnos_listado.idCurso';
+$SIS_where = 'alumnos_listado.idAlumno = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'alumnos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Alumno', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Alumno', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -142,7 +130,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary">Datos Basicos</h2>
@@ -186,8 +174,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -196,6 +184,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //filtro para el curso
 $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -325,7 +314,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Alumno</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Alumno</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -421,24 +410,24 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrUsers as $usuarios){ ?>
-					<tr class="odd">
-						<td><?php echo $usuarios['Rut']; ?></td>
-						<td><?php echo $usuarios['ApellidoPat'].' '.$usuarios['ApellidoMat'].', '.$usuarios['Nombre']; ?></td>
-						<td><?php echo $usuarios['Curso']; ?></td>
-						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['estado']; ?></label></td>	
-						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
-						<td>
-							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_alumno.php?view='.simpleEncode($usuarios['idAlumno'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idAlumno']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.simpleEncode($usuarios['idAlumno'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar al cliente '.$usuarios['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>
-							</div>
-						</td>
-					</tr>
+						<tr class="odd">
+							<td><?php echo $usuarios['Rut']; ?></td>
+							<td><?php echo $usuarios['ApellidoPat'].' '.$usuarios['ApellidoMat'].', '.$usuarios['Nombre']; ?></td>
+							<td><?php echo $usuarios['Curso']; ?></td>
+							<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $usuarios['estado']; ?></label></td>	
+							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
+							<td>
+								<div class="btn-group" style="width: 105px;" >
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_alumno.php?view='.simpleEncode($usuarios['idAlumno'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idAlumno']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=4){
+										$ubicacion = $location.'&del='.simpleEncode($usuarios['idAlumno'], fecha_actual());
+										$dialogo   = '¿Realmente deseas eliminar al cliente '.$usuarios['Nombre'].'?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<?php } ?>
+								</div>
+							</td>
+						</tr>
 					<?php } ?>
 				</tbody>
 			</table>
@@ -458,4 +447,5 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

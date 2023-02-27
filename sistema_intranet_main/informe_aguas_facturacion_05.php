@@ -96,7 +96,7 @@ array_push( $arrFacturacion,$row );
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Facturacion fecha <?php echo Fecha_estandar($arrFacturacion[0]['Fecha']);?></h5>
+			<h5>Facturacion fecha <?php echo Fecha_estandar($arrFacturacion[0]['Fecha']); ?></h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -215,13 +215,13 @@ array_push( $arrFacturacion,$row );
 
 							<td><?php echo $fact['DetalleConsumoCantidad']; ?></td>
 							<td><?php echo $fact['DetalleConsumoValor']; ?></td>
-							<td <?php if($ErrorConsumo!=''){echo 'class="danger"';}else{echo 'class="success"';}?>>
+							<td <?php if($ErrorConsumo!=''){echo 'class="danger"';}else{echo 'class="success"';} ?>>
 								<?php echo $fact['DetalleConsumoCantidad'].' * '.$fact['AguasInfMetroAgua'].' = <strong>'.$RevConsumo.'</strong>'; ?>
 							</td>
 
 							<td><?php echo $fact['DetalleRecoleccionCantidad']; ?></td>
 							<td><?php echo $fact['DetalleRecoleccionValor']; ?></td>
-							<td <?php if($ErrorRecoleccion!=''){echo 'class="danger"';}else{echo 'class="success"';}?>>
+							<td <?php if($ErrorRecoleccion!=''){echo 'class="danger"';}else{echo 'class="success"';} ?>>
 								<?php echo $fact['DetalleRecoleccionCantidad'].' * '.$fact['AguasInfMetroRecolecion'].' = <strong>'.$RevRecoleccion.'</strong>'; ?>
 							</td>
 
@@ -231,7 +231,7 @@ array_push( $arrFacturacion,$row );
 							<td><?php echo $fact['DetalleReposicion1Valor']; ?></td>
 							<td><?php echo $fact['DetalleReposicion2Valor']; ?></td>
 							<td><?php echo $fact['DetalleSubtotalServicio']; ?></td>
-							<td <?php if($ErrorSubtotalServicio!=''){echo 'class="danger"';}else{echo 'class="success"';}?>>
+							<td <?php if($ErrorSubtotalServicio!=''){echo 'class="danger"';}else{echo 'class="success"';} ?>>
 								<?php echo $fact['DetalleCargoFijoValor'].' + '.$RevConsumo.' + '.$RevRecoleccion.' + '.$fact['DetalleVisitaCorte'].' + '.$fact['DetalleCorte1Valor'].' + '.$fact['DetalleCorte2Valor'].' + '.$fact['DetalleReposicion1Valor'].' + '.$fact['DetalleReposicion2Valor'].' = <strong>'.$RevSubtotalServicio.'</strong>'; ?>
 							</td>
 
@@ -239,14 +239,14 @@ array_push( $arrFacturacion,$row );
 							<td class="success" ><?php
 								if(isset($fact['DetalleSaldoAnterior'])&&$fact['DetalleSaldoAnterior']!=0){
 									echo '((((('.$fecha_facturacion.'-'.$fecha_vencimiento.')-1) * '.$fact['DetalleSaldoAnterior'].' * '.cantidades($fact['intAnual'], 2).')/36000)*1.19) = <strong>'.$SaldoAnterior.'</strong>'; 
-								}?>
+								} ?>
 							</td>
 							<td class="success" ><?php
 								if($fact['AguasInfUltimoPagoFecha'] > $fecha_vencimiento){
 									echo '((((('.$fact['AguasInfUltimoPagoFecha'].'-'.$fecha_vencimiento.')-1) * '.$fact['TotalPagarAnterior'].' * '.cantidades($fact['intAnual'], 2).')/36000)*1.19) = <strong>'.$PagoFueraFecha.'</strong>'; 
-								}?>
+								} ?>
 							</td>
-							<td <?php if($ErrorIntereses!=''){echo 'class="danger"';}else{echo 'class="success"';}?>>
+							<td <?php if($ErrorIntereses!=''){echo 'class="danger"';}else{echo 'class="success"';} ?>>
 							<?php echo $SaldoAnterior.' + '.$PagoFueraFecha.' = <strong>'.$RevIntereses.'</strong>'; ?>
 							</td>
 							<td><?php echo $fact['DetalleOtrosCargos1Valor']; ?></td>
@@ -256,13 +256,13 @@ array_push( $arrFacturacion,$row );
 							<td><?php echo $fact['DetalleOtrosCargos5Valor']; ?></td>
 
 							<td><?php echo $fact['DetalleTotalVenta']; ?></td>
-							<td <?php if($ErrorTotalVenta!=''){echo 'class="danger"';}else{echo 'class="success"';}?>>
+							<td <?php if($ErrorTotalVenta!=''){echo 'class="danger"';}else{echo 'class="success"';} ?>>
 								<?php echo $RevSubtotalServicio.' + '.$RevIntereses.' + '.$fact['DetalleOtrosCargos1Valor'].' + '.$fact['DetalleOtrosCargos2Valor'].' + '.$fact['DetalleOtrosCargos3Valor'].' + '.$fact['DetalleOtrosCargos4Valor'].' + '.$fact['DetalleOtrosCargos5Valor'].' = <strong>'.$RevTotalVenta.'</strong>'; ?>
 							</td>
 							<td><?php echo $fact['DetalleSaldoFavor']; ?></td>
 							<td><?php echo $fact['DetalleSaldoAnterior']; ?></td>
 							<td><?php echo $fact['DetalleTotalAPagar']; ?></td>
-							<td <?php if($ErrorTotalAPagar!=''){echo 'class="danger"';}else{echo 'class="success"';}?>>
+							<td <?php if($ErrorTotalAPagar!=''){echo 'class="danger"';}else{echo 'class="success"';} ?>>
 								<?php echo $RevTotalVenta.' + '.$fact['DetalleSaldoAnterior'].' - '.$fact['DetalleSaldoFavor'].' = <strong>'.$RevTotalAPagar.'</strong>'; ?>
 							</td>
 
@@ -278,12 +278,13 @@ array_push( $arrFacturacion,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -320,4 +321,5 @@ array_push( $arrFacturacion,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

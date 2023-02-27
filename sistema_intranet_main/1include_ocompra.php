@@ -260,7 +260,7 @@ foreach ($arrHistorial as $doc){
 	</div>
 	<div class="clearfix" style="margin-bottom:15px;"></div>
 <?php } ?>
-		
+
 <section class="invoice">
 
 	<div class="row">
@@ -273,7 +273,7 @@ foreach ($arrHistorial as $doc){
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<?php 
 		echo '
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
@@ -287,8 +287,7 @@ foreach ($arrHistorial as $doc){
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-				
-				
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Receptora
 					<address>
@@ -411,7 +410,7 @@ foreach ($arrHistorial as $doc){
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
 		</div>
 	</div>
 	
@@ -429,7 +428,7 @@ foreach ($arrHistorial as $doc){
 				<th>Usuario</th>
 				<th>Observacion</th>
 			</tr>			  
-			<?php 
+			<?php
 			if (isset($arrHistorial)){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrHistorial as $doc){?>
@@ -440,10 +439,10 @@ foreach ($arrHistorial as $doc){
 					</tr>
 				 <?php 	
 				}
-			}?>
+			} ?>
 		</tbody>
     </table>
-    
+
 	<?php if ($arrSolMat!=false && !empty($arrSolMat) && $arrSolMat!='') { ?>
 		<table id="items">
 			<tbody>
@@ -465,10 +464,10 @@ foreach ($arrHistorial as $doc){
 						case 1:
 						?>
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><?php echo $producto['Prod_Sistema'];?></td>
-								<td class="item-name"><?php echo n_doc($producto['Prod_idSolicitud'], 5);?></td>
-								<td class="item-name"><?php echo $producto['Prod_Nombre'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Prod_Cantidad']).' '.$producto['Prod_Medida'];?></td>
+								<td class="item-name"><?php echo $producto['Prod_Sistema']; ?></td>
+								<td class="item-name"><?php echo n_doc($producto['Prod_idSolicitud'], 5); ?></td>
+								<td class="item-name"><?php echo $producto['Prod_Nombre']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Prod_Cantidad']).' '.$producto['Prod_Medida']; ?></td>
 							</tr>
 						<?php
 							break;
@@ -477,10 +476,10 @@ foreach ($arrHistorial as $doc){
 						case 2:
 							?>
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><?php echo $producto['Ins_Sistema'];?></td>
-								<td class="item-name"><?php echo n_doc($producto['Ins_idSolicitud'], 5);?></td>
-								<td class="item-name"><?php echo $producto['Ins_Nombre'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Ins_Cantidad']).' '.$producto['Ins_Medida'];?></td>
+								<td class="item-name"><?php echo $producto['Ins_Sistema']; ?></td>
+								<td class="item-name"><?php echo n_doc($producto['Ins_idSolicitud'], 5); ?></td>
+								<td class="item-name"><?php echo $producto['Ins_Nombre']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Ins_Cantidad']).' '.$producto['Ins_Medida']; ?></td>
 							</tr>
 						<?php
 							break;
@@ -489,10 +488,10 @@ foreach ($arrHistorial as $doc){
 						case 3:
 							?>
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><?php echo $producto['Arri_Sistema'];?></td>
-								<td class="item-name"><?php echo n_doc($producto['Arri_idSolicitud'], 5);?></td>
-								<td class="item-name"><?php echo $producto['Arri_Nombre'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Arri_Cantidad']).' '.$producto['Arri_Medida'];?></td>
+								<td class="item-name"><?php echo $producto['Arri_Sistema']; ?></td>
+								<td class="item-name"><?php echo n_doc($producto['Arri_idSolicitud'], 5); ?></td>
+								<td class="item-name"><?php echo $producto['Arri_Nombre']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Arri_Cantidad']).' '.$producto['Arri_Medida']; ?></td>
 							</tr>
 						<?php
 							break;
@@ -501,10 +500,10 @@ foreach ($arrHistorial as $doc){
 						case 4:
 							?>
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><?php echo $producto['Serv_Sistema'];?></td>
-								<td class="item-name"><?php echo n_doc($producto['Serv_idSolicitud'], 5);?></td>
-								<td class="item-name"><?php echo $producto['Serv_Nombre'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Serv_Cantidad']).' '.$producto['Serv_Medida'];?></td>
+								<td class="item-name"><?php echo $producto['Serv_Sistema']; ?></td>
+								<td class="item-name"><?php echo n_doc($producto['Serv_idSolicitud'], 5); ?></td>
+								<td class="item-name"><?php echo $producto['Serv_Nombre']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($producto['Serv_Cantidad']).' '.$producto['Serv_Medida']; ?></td>
 							</tr>
 						<?php
 							break;
@@ -518,23 +517,23 @@ foreach ($arrHistorial as $doc){
 	<table id="items">
         <tbody>
 			<tr><th>Documentos Acompañantes</th></tr>		  
-			<?php 
+			<?php
 			if (isset($arrDocumentos)){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrDocumentos as $doc){?>
 					<tr class="item-row">
 						<td><?php echo $doc['Documento'].' N°'.$doc['NDocPago'].' por '.valores($doc['vTotal'], 0).' (Pago para el '.fecha_estandar($doc['Fpago']).')'; ?></td>
 					</tr>
-					 
+
 				 <?php 	
 				}
-			}?>
+			} ?>
 		</tbody>
     </table>
     <table id="items">
         <tbody>
 			<tr><th colspan="6">Archivos Adjuntos</th></tr>		  
-			<?php 
+			<?php
 			if (isset($arrArchivo)){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrArchivo as $producto){?>
@@ -547,10 +546,10 @@ foreach ($arrHistorial as $doc){
 							</div>
 						</td>
 					</tr>
-					 
+
 				 <?php 	
 				}
-			}?>
+			} ?>
 		</tbody>
     </table>
 </div>

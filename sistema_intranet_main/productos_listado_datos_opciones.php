@@ -48,7 +48,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Opciones');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Opciones'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -79,7 +79,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 						<?php if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
 							<li class=""><a href="<?php echo 'productos_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Sistema CROSS</a></li>
 						<?php } ?>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -87,21 +87,21 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post"  id="form1" name="form1" novalidate>
-					
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($idOpciones_1)){  $x1  = $idOpciones_1;   }else{$x1  = $rowdata['idOpciones_1'];}
 					if(isset($idOpciones_2)){  $x2  = $idOpciones_2;   }else{$x2  = $rowdata['idOpciones_2'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select('Sistema Mantenlubric','idOpciones_1', $x1, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_select('Sistema Cross','idOpciones_2', $x2, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-					
+
 					$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
 					?>
-					
-					<div class="form-group">	
+
+					<div class="form-group">
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
@@ -113,8 +113,8 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php
@@ -122,4 +122,5 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

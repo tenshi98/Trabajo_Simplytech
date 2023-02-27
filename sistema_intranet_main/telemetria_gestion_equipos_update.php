@@ -138,7 +138,7 @@ foreach ($arrGrupos as $sen) {
 									<td>Grupo</td>	
 									<td colspan="2">Mediciones</td>
 								</tr>
-								
+
 								<?php
 								$arrGruposTitulo = array();
 								$n_sensores = 0;
@@ -163,7 +163,7 @@ foreach ($arrGrupos as $sen) {
 									$arrGruposTitulo[$Titulo][$i]['valor']       = $rowDatos['SensoresMedActual_'.$i];
 									$arrGruposTitulo[$Titulo][$i]['unimed']      = $unimed;
 								}
-								
+
 								//Ordenamiento por titulo de grupo
 								$names = array();
 								foreach ($arrGruposTitulo as $titulo=>$items) {
@@ -186,7 +186,7 @@ foreach ($arrGrupos as $sen) {
 									?>
 									<tr class="odd">
 										<td><?php echo $titulo ?></td>	
-										<?php foreach($items as $datos) { 
+										<?php foreach($items as $datos) {
 											if($y==1){
 												$columna_a .= $datos['Descripcion'].'<br/>';
 												//Verifico que el dato no sea 99900
@@ -206,17 +206,17 @@ foreach ($arrGrupos as $sen) {
 												$unimed_col2 = $datos['unimed'];
 												$y=1;
 											}
-										}?> 
+										} ?> 
 										
 										<td><?php echo $columna_a ?></td>
 										<td><?php echo $columna_b ?></td>	
 									</tr>
-									
+
 									<?php if($rowDatos['idOpcionesGen_3']==1){ ?>
 										<tr class="odd">
 											<td>Promedio</td>
 											<td><?php if($ntotal_col1!=0){echo Cantidades_decimales_justos($total_col1/$ntotal_col1).$unimed_col1;} ?></td>
-											<td><?php if($ntotal_col2!=0){echo Cantidades_decimales_justos($total_col2/$ntotal_col2).$unimed_col2;} ?></td>		
+											<td><?php if($ntotal_col2!=0){echo Cantidades_decimales_justos($total_col2/$ntotal_col2).$unimed_col2;} ?></td>
 										</tr>
 									<?php } ?>
 										

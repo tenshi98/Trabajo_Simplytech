@@ -28,7 +28,7 @@ $SIS_where = "telemetria_listado_error_detenciones.idDetencion>0";
 $SIS_where.= " AND telemetria_listado_error_detenciones.idSistema=".$_GET['idSistema'];	
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$SIS_where.= " AND telemetria_listado.idTab=1";//CrossChecking			
+	$SIS_where.= " AND telemetria_listado.idTab=1";//CrossChecking
 }
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
@@ -46,7 +46,7 @@ if(isset($_GET['idOpciones'])&&$_GET['idOpciones']!=''){
 $SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_detenciones.idTelemetria';
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_error_detenciones.idTelemetria ";
-	$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 // Se trae un listado con todos los elementos
 $SIS_query = '
@@ -73,7 +73,7 @@ $spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
- 
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Nombre Equipo')
@@ -90,10 +90,8 @@ foreach ($arrErrores as $error) {
 				->setCellValue('C'.$nn, $error['Hora'])
 				->setCellValue('D'.$nn, $error['Tiempo']);
 	$nn++;
-   
-} 
 
-
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Detenciones');

@@ -108,7 +108,7 @@ if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $location .= "&Nombre
 				</h2>
 			</div>
 		</div>
-		
+
 		<div class="row invoice-info">
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 				<strong>Datos Mantencion</strong>
@@ -120,7 +120,7 @@ if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $location .= "&Nombre
 			</div>
 					
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
-						
+
 			</div>
 		</div>
 		
@@ -176,7 +176,7 @@ if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $location .= "&Nombre
 		
 
 		<div class="clearfix"></div>
-		
+
 		<div class="row" style="margin-top:15px;">
 			<div class="col-xs-12">
 

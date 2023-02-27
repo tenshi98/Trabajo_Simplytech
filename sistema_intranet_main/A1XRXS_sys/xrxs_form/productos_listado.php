@@ -441,7 +441,7 @@ require_once '0_validate_user_1.php';
 										$max_width = 150;
 										$max_height = 100;
 									break;
-									
+
 								}
 								imageAlphaBlending($img_base, false);
 								imageSaveAlpha($img_base, true);
@@ -516,19 +516,19 @@ require_once '0_validate_user_1.php';
 										$dest_x = ( $img_base_width / 2 ) - ( $img_logo_width / 2 );
 										$dest_y = ( $img_base_height / 2 ) - ( $img_logo_height / 2 );
 									break;
-									
+
 									//Cubo Carton 1x2x1
 									case 13:
 										$dest_x = ( $img_base_width / 2 ) - ( $img_logo_width / 2 );
 										$dest_y = ( $img_base_height / 2 ) - ( $img_logo_height / 2 );
 									break;
-									
+
 									//Cubo Carton 2x2x1
 									case 14:
 										$dest_x = ( $img_base_width / 2 ) - ( $img_logo_width / 2 );
 										$dest_y = ( $img_base_height / 2 ) - ( $img_logo_height / 2 );
 									break;
-									
+
 									//Cubo Madera 1x1x1
 									case 15:
 										$dest_x = ( $img_base_width / 2 ) - ( $img_logo_width / 2 );
@@ -540,19 +540,19 @@ require_once '0_validate_user_1.php';
 										$dest_x = ( $img_base_width / 2 ) - ( $img_logo_width / 2 );
 										$dest_y = ( $img_base_height / 2 ) - ( $img_logo_height / 2 );
 									break;
-									
+
 									//Cubo Madera 1x2x1
 									case 17:
 										$dest_x = ( $img_base_width / 2 ) - ( $img_logo_width / 2 );
 										$dest_y = ( $img_base_height / 2 ) - ( $img_logo_height / 2 );
 									break;
-									
+
 									//Cubo Madera 2x2x1
 									case 18:
 										$dest_x = ( $img_base_width / 2 ) - ( $img_logo_width / 2 );
 										$dest_y = ( $img_base_height / 2 ) - ( $img_logo_height / 2 );
 									break;
-									
+
 								}
 
 								//se crea la imagen 
@@ -569,7 +569,7 @@ require_once '0_validate_user_1.php';
 								}catch(Exception $e) {
 									//guardar el dato en un archivo log
 								}
-								
+
 								//se eliminan las imagenes de la memoria
 								imagedestroy($img_base);
 								imagedestroy($img_logo);
@@ -598,7 +598,7 @@ require_once '0_validate_user_1.php';
 										$imgBase = imagecreatefrompng('upload/xxxsxx_'.$_FILES['Direccion_img']['name']);
 										break;
 								}
-								
+
 								//se reescala la imagen en caso de ser necesario
 								$imgBase_width = imagesx( $imgBase );
 								$imgBase_height = imagesy( $imgBase );
@@ -653,7 +653,7 @@ require_once '0_validate_user_1.php';
 						$result=1;
 
 						if ($result==1){
-								
+
 							//Filtro para idSistema
 							$SIS_data = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'";
 							if(isset($idTipoImagen) && $idTipoImagen!=''){       $SIS_data .= ",idTipoImagen='".$idTipoImagen."'";}

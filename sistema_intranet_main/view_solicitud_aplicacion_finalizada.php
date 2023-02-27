@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 $X_idZona = simpleDecode($_GET['idZona'], fecha_actual());
@@ -82,7 +82,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	LEFT JOIN `cross_solicitud_aplicacion_listado_tractores`   ON cross_solicitud_aplicacion_listado_tractores.idCuarteles   = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles';
 	$SIS_where = 'cross_solicitud_aplicacion_listado.idSolicitud = '.$row_data['idSolicitud'].' AND cross_solicitud_aplicacion_listado_cuarteles.idZona = '.$X_idZona.' GROUP BY cross_solicitud_aplicacion_listado.idSolicitud ORDER BY cross_solicitud_aplicacion_listado.idSolicitud DESC';
 	$rowSolicitud = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowSolicitud');
-		
+
 	/*****************************************/
 	// consulto los datos
 	$SIS_query = '
@@ -104,7 +104,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	$rec_x           = '';
 	$marker_loc      = '';
 	$arrMedTractores = array();
-		
+
 	//Recorro las mediciones
 	foreach ($arrTractores as $trac) {
 		//Se crean variables vacias
@@ -122,7 +122,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 		$subquery .= ',GeoMovimiento';
 		$subquery .= ',GeoVelocidad';
 		//se recorre deacuerdo a la cantidad de sensores
-		for ($i = 1; $i <= $trac['cantSensores']; $i++) { 
+		for ($i = 1; $i <= $trac['cantSensores']; $i++) {
 			$subquery .= ',Sensor_'.$i;
 		}
 		//consulta
@@ -193,7 +193,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	$SIS_order = 'cross_predios_listado_zonas.idZona ASC, cross_predios_listado_zonas_ubicaciones.idUbicaciones ASC';
 	$arrZonas = array();
 	$arrZonas = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrZonas');
-	
+
 	/**************************************/
 	// consulto los datos
 	$SIS_query = '
@@ -281,7 +281,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 
 	</style>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
-		
+
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 		<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table', 'gauge']});</script>
 		<?php
@@ -291,27 +291,27 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 			alert_post_data(4,2,2, $Alert_Text);
 		}else{
 			$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-			
+
 			<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=visualization"></script>
 		<?php } ?>
 		<style>
 			.my_marker {color: white;background-color: black;border: solid 1px black;font-weight: 900;padding: 4px;top: -8px;}
 			.my_marker::after {content: "";position: absolute;top: 100%;left: 50%;transform: translate(-50%, 0%);border: solid 8px transparent;border-top-color: black;}
 		</style>
-			
+
 		<?php
 		//Variables
 		$Cent_zonaLatitud   = $arrZonas[0]['Latitud'];
 		$Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
-		
+
 		?>
-		
+
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box noborderbox">
 				<header class="header">
 					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-					<h5><?php if(isset($arrTractoresData[0]['CuartelNombre'])&&$arrTractoresData[0]['CuartelNombre']!=''){echo 'Cuartel '.$arrTractoresData[0]['CuartelNombre'];}?></h5>
-					
+					<h5><?php if(isset($arrTractoresData[0]['CuartelNombre'])&&$arrTractoresData[0]['CuartelNombre']!=''){echo 'Cuartel '.$arrTractoresData[0]['CuartelNombre'];} ?></h5>
+
 					<ul class="nav nav-tabs pull-right">
 						<li class="active"><a href="#resumen"   aria-controls="resumen"   role="tab" data-toggle="tab"><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 						<?php
@@ -335,7 +335,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 										echo '<span style="color: #3c763d;"><i class="fa fa-check" aria-hidden="true"></i> '.$trac['VehiculoNombre'].'</span>';
 									}else{
 										echo '<span style="color: #a94442;"><i class="fa fa-times" aria-hidden="true"></i> '.$trac['VehiculoNombre'].'</span>';
-									}?>
+									} ?>
 								</a>
 							</li>
 							<?php $xcounter++;
@@ -383,7 +383,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							var options_gauge               = "";
 							//var options_aplicadas           = "";
 							var options_mojamiento          = "";
-											
+
 							//carga de los graficos	
 							google.charts.setOnLoadCallback(Chart_velocidades);
 							google.charts.setOnLoadCallback(Chart_litros_aplicados);
@@ -449,7 +449,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								//se llama funcion de dibujo
 								draw_mojamiento('.cantidades($Porcen_Mojamiento,0).', '.cantidades($MojamientoHectarea,0).');
 							}
-							
+
 							/********************************************************************/
 							//dibujado de los graficos
 							//Velocidades
@@ -920,10 +920,10 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							</div>
 						</div>
 					</div>
-					
+
 					<?php foreach($arrTractores as $trac) { ?>		  
 						<div role="tabpanel" class="tab-pane fade" id="equipo_<?php echo $trac['idTelemetria']; ?>">
-							
+
 							<div class="">
 								<div class="col-xs-12 table-responsive">
 									<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -966,18 +966,18 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 												$sum_LitrosAplicados    = 0;
 												$sum_TiempoAplicacion   = '00:00:00';
 												
-												foreach ($arrTractoresData as $tractda) { 
+												foreach ($arrTractoresData as $tractda) {
 													if(isset($trac['idTelemetria'])&&isset($tractda['idTelemetria'])&&$trac['idTelemetria']==$tractda['idTelemetria']){
 														?>
 														
 														<tr class="item-row linea_punteada">
 															
-															<td class="item-name"><?php echo $tractda['CuartelNombre'];?></td>
+															<td class="item-name"><?php echo $tractda['CuartelNombre']; ?></td>
 															
-															<td class="item-name"><?php echo Cantidades($tractda['VelocidadProg'], 1);?></td>
-															<td class="item-name"><?php echo Cantidades($tractda['VelocidadMin'], 1);?></td>
-															<td class="item-name"><?php echo Cantidades($tractda['VelocidadMax'], 1);?></td>
-															<td class="item-name"><?php echo Cantidades($tractda['VelocidadProm'], 1);?></td>
+															<td class="item-name"><?php echo Cantidades($tractda['VelocidadProg'], 1); ?></td>
+															<td class="item-name"><?php echo Cantidades($tractda['VelocidadMin'], 1); ?></td>
+															<td class="item-name"><?php echo Cantidades($tractda['VelocidadMax'], 1); ?></td>
+															<td class="item-name"><?php echo Cantidades($tractda['VelocidadProm'], 1); ?></td>
 															
 															<?php
 															$total_caudal = $tractda['PromCaudalIzq'] + $tractda['PromCaudalDer'];
@@ -988,11 +988,11 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 															}
 															?>
 															
-															<td class="item-name"><?php echo Cantidades($total_caudal, 2);?></td>
-															<td class="item-name"><?php echo Cantidades($correccion, 2).' %';?></td>
+															<td class="item-name"><?php echo Cantidades($total_caudal, 2); ?></td>
+															<td class="item-name"><?php echo Cantidades($correccion, 2).' %'; ?></td>
 															
-															<td class="item-name"><?php echo Cantidades($tractda['LitrosAplicados'], 2);?></td>
-															<td class="item-name"><?php echo $tractda['TiempoAplicacion'];?></td>
+															<td class="item-name"><?php echo Cantidades($tractda['LitrosAplicados'], 2); ?></td>
+															<td class="item-name"><?php echo $tractda['TiempoAplicacion']; ?></td>
 															
 															<td>
 																<div class="btn-group" style="width: 70px;" >
@@ -1016,7 +1016,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 														$sum_TiempoAplicacion   = sumahoras($sum_TiempoAplicacion,$tractda['TiempoAplicacion']);	
 														
 													}
-												}?>
+												} ?>
 												<tr class="item-row linea_punteada">
 													<td class="item-name"><strong>Totales</strong></td>
 															
@@ -1028,8 +1028,8 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 													<td class="item-name"><strong><?php if($xcounter!=0){echo Cantidades($sum_total_caudal/$xcounter, 2);}else{echo '0';} ?></strong></td>
 													<td class="item-name"><strong><?php if($xcounter!=0){echo Cantidades($sum_correccion_caudal/$xcounter, 2).' %';}else{echo '0 %';} ?></strong></td>
 															
-													<td class="item-name"><strong><?php echo Cantidades($sum_LitrosAplicados, 2);?></strong></td>
-													<td class="item-name"><strong><?php echo $sum_TiempoAplicacion;?></strong></td>
+													<td class="item-name"><strong><?php echo Cantidades($sum_LitrosAplicados, 2); ?></strong></td>
+													<td class="item-name"><strong><?php echo $sum_TiempoAplicacion; ?></strong></td>
 															
 													<td></td>
 															
@@ -1038,7 +1038,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 												<?php 
 											}else{
 												echo '<tr class="item-row linea_punteada"><td colspan="10">No hay Cuarteles Recorridos</td></tr>';
-											}?>
+											} ?>
 										</tbody>
 									</table>
 								</div>
@@ -1168,7 +1168,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -1178,7 +1178,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -1187,4 +1187,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

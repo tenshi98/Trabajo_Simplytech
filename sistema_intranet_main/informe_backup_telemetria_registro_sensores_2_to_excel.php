@@ -40,7 +40,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 }else{
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
-		
+
 	/****************************************/
 	//consulto
 	$SIS_query = '
@@ -62,7 +62,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	/****************************************/
 	//Se trae grupo
 	$rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$arrEquipos[0]['SensorGrupo'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowGrupo');
-	
+
 	/**********************************************************************************************************************************/
 	/*                                                          Ejecucion                                                             */
 	/**********************************************************************************************************************************/
@@ -77,28 +77,27 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								 ->setDescription("Document for Office 2007")
 								 ->setKeywords("office 2007")
 								 ->setCategory("office 2007 result file");
-	 
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A1', 'Informe Sensor '.$rowGrupo['Nombre'].' '.$arrEquipos[0]['SensorNombre']);
-				
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A3', 'Fecha')
 				->setCellValue('B3', 'Hora')
-				->setCellValue('C3', 'Medicion'); 					
-	 
+				->setCellValue('C3', 'Medicion');
+
 	$x = 4;
-	foreach ($arrEquipos as $rutas) { 
+	foreach ($arrEquipos as $rutas) {
 		if(isset($rutas['SensorValue'])&&$rutas['SensorValue']<99900){$xdata=Cantidades_decimales_justos($rutas['SensorValue']).' '.DeSanitizar($rutas['Unimed']);}else{$xdata='Sin Datos';}
-		
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$x, $rutas['FechaSistema'])
 					->setCellValue('B'.$x, $rutas['HoraSistema'])
-					->setCellValue('C'.$x, $xdata); 
-						
+					->setCellValue('C'.$x, $xdata);
+
 		//Sumo 1
 		$x++;
 	}
-					
 
 	// Rename worksheet
 	$spreadsheet->getActiveSheet()->setTitle('Registro Sensores');

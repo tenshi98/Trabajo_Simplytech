@@ -100,7 +100,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Contrato borrado corre
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['edit_itemizado'])){ 
+if(!empty($_GET['edit_itemizado'])){
 // consulto los datos
 $query = "SELECT Nombre,Codigo, idUtilizable, idFrecuencia, Cantidad, TiempoProgramado, idTrabajo, Valor, ValorTotal
 FROM `licitacion_listado_level_".$_GET['lvl']."`
@@ -121,6 +121,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	 
  
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -249,7 +250,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							
 							
 				</script>
-	   
+
 				<div class="form-group">
 				
 					
@@ -280,7 +281,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){$Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
 			
 				
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel">
 					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -397,10 +398,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							
 							
 				</script>
-	   
+
 				<div class="form-group">
-					
-					
+
 					<?php if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){  $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);} ?>
 					<?php if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){  $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);} ?>
 					<?php if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){  $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);} ?>
@@ -445,7 +445,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
  
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['itemizado'])){ 
+}elseif(!empty($_GET['itemizado'])){
 // consulto los datos
 $query = "SELECT Nombre,idSistema
 FROM `licitacion_listado`
@@ -545,7 +545,7 @@ foreach($arrTipos as $tipo) {
 
 $array3d = array();
 foreach($arrLicitacion as $key) {
-	
+
 	//Creo Variables para la rejilla
 	for ($i = 1; $i <= $nmax; $i++) {
 		$d[$i]  = $key['LVL_'.$i.'_id'];   
@@ -772,9 +772,10 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
     echo '</ul>';
 }	
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'].'&new_itemizado=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'].'&new_itemizado=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -785,7 +786,7 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Itemizado Contrato <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
-			
+
 			<?php //Se imprime el arbol
 			echo arrayToUL($array3d, $TipoMaq, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'], $nmax);
 			?>
@@ -798,8 +799,8 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 <a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
-</div>	
-	
+</div>
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['status'])){
 // consulto los datos
@@ -824,8 +825,8 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
-?>
 
+?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -918,7 +919,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($idBodegaIns)){           $x10 = $idBodegaIns;         }else{$x10 = $rowdata['idBodegaIns'];}
 				if(isset($idOpcionItem)){          $x11 = $idOpcionItem;        }else{$x11 = $rowdata['idOpcionItem'];}
 				if(isset($idAprobado)){            $x12 = $idAprobado;          }else{$x12 = $rowdata['idAprobado'];}
-					
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 1);
@@ -932,7 +933,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select('Bodega Insumos','idBodegaIns', $x10, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select('Utilizar Itemizado','idOpcionItem', $x11, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_select('Estado Aprobacion','idAprobado', $x12, 2, 'idEstado', 'Nombre', 'core_estado_aprobacion', 0, '', $dbConn);
-					
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idLicitacion', $_GET['edit'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2); 
@@ -1000,6 +1001,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //verifico que sea un administrador
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -1010,7 +1012,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Codigo)){                $x1  = $Codigo;              }else{$x1  = '';}
@@ -1042,8 +1044,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_hidden('idAprobado', 2, 2);
 				$Form_Inputs->form_input_hidden('idCliente', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				
-				
+
 				?>
 
 				<script>
@@ -1141,10 +1142,11 @@ array_push( $arrArea,$row );
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Proyecto', $rowdata['Nombre'], 'Contratos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Proyecto', $rowdata['Nombre'], 'Contratos'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Contrato</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Contrato</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -1189,7 +1191,7 @@ array_push( $arrArea,$row );
 					<tr class="odd">
 						<td><?php echo $area['Codigo']; ?></td>
 						<td><?php echo $area['Nombre']; ?></td>
-						<td><label class="label <?php if(isset($area['idEstado'])&&$area['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $area['Estado']; ?></label></td>
+						<td><label class="label <?php if(isset($area['idEstado'])&&$area['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $area['Estado']; ?></label></td>
 						<td><?php echo $area['EstadoAprobacion']; ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $area['sistema']; ?></td><?php } ?>
 						<td>
@@ -1202,7 +1204,7 @@ array_push( $arrArea,$row );
 								<?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $new_location.'&del='.simpleEncode($area['idLicitacion'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el registro '.$area['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el registro '.$area['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -1219,8 +1221,8 @@ array_push( $arrArea,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -1229,4 +1231,5 @@ array_push( $arrArea,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

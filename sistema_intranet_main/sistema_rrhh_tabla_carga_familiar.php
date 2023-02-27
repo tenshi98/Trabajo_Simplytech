@@ -83,7 +83,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_values('Valor Desde', 'Valor_Desde', $x2, 1);
 				$Form_Inputs->form_values('Valor Hasta', 'Valor_Hasta', $x3, 2);
 				$Form_Inputs->form_values('Valor Pago', 'Valor_Pago', $x4, 1);
-					
+
 				$Form_Inputs->form_input_hidden('idTablaCarga', $_GET['id'], 2);
 				?>
 
@@ -121,7 +121,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrAmonestacion,$row );
-}?>
+} ?>
                    
                                  
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -165,4 +165,5 @@ array_push( $arrAmonestacion,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

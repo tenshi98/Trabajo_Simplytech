@@ -61,6 +61,7 @@ $arrMediciones = db_select_array (false, $SIS_query, 'backup_telemetria_listado_
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -97,7 +98,6 @@ $arrMediciones = db_select_array (false, $SIS_query, 'backup_telemetria_listado_
 	</div>
 </div>
 
-
 <?php if(isset($_GET['return'])&&$_GET['return']!=''){?>
 	<div class="clearfix"></div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
@@ -112,4 +112,5 @@ $arrMediciones = db_select_array (false, $SIS_query, 'backup_telemetria_listado_
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

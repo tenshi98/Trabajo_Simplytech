@@ -217,7 +217,7 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 											?>
 											<a class="btn btn-sm btn-info locked_active" href="#">OFF</a>
 											<a class="btn btn-sm btn-default unlocked_inactive" onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')">ON</a>
-										<?php }?>
+										<?php } ?>
 									</div>
 								</td>
 							</tr>
@@ -237,4 +237,5 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 require_once 'core/Web.Footer.Views.php';
 //cuadro mensajes
 widget_avgrund();
+
 ?>

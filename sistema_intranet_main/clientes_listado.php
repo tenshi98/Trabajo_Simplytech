@@ -167,8 +167,9 @@ foreach ($arrTabs as $tab) {
 }
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -204,11 +205,11 @@ foreach ($arrTabs as $tab) {
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 							<p class="text-muted word_break">
 								<strong>Tipo de Cliente : </strong><?php echo $rowdata['tipoCliente']; ?><br/>
-								<?php 
+								<?php
 								//Si el cliente es una empresa
 								if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){?>
 									<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<?php 
+								<?php
 								//si es una persona
 								}else{?>
 									<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>
@@ -221,8 +222,8 @@ foreach ($arrTabs as $tab) {
 								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
 								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
 							</p>
-								
-							<?php 
+
+							<?php
 							//Si el cliente es una empresa
 							if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){?>
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
@@ -233,7 +234,7 @@ foreach ($arrTabs as $tab) {
 									<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?><br/>
 								</p>
 							<?php } ?>
-										
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 							<p class="text-muted word_break">
 								<strong>Telefono Fijo : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
@@ -242,7 +243,7 @@ foreach ($arrTabs as $tab) {
 								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
 								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
 							</p>
-									
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Persona de Contacto</h2>
 							<p class="text-muted word_break">
 								<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
@@ -250,7 +251,7 @@ foreach ($arrTabs as $tab) {
 								<strong>Telefono : </strong><?php echo formatPhone($rowdata['PersonaContacto_Fono']); ?><br/>
 								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
 							</p>
-							
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Contrato</h2>
 							<p class="text-muted word_break">
 								<strong>Nombre : </strong><?php echo $rowdata['Contrato_Nombre']; ?><br/>
@@ -272,7 +273,7 @@ foreach ($arrTabs as $tab) {
 									<div class="clearfix"></div>
 								</div>
 							</p>
-							
+
 							<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){?>
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Unidades de Negocio</h2>
 								<p class="text-muted word_break">
@@ -302,7 +303,7 @@ foreach ($arrTabs as $tab) {
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
-						<?php 
+						<?php
 							//se arma la direccion
 							$direccion = "";
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
@@ -327,12 +328,12 @@ foreach ($arrTabs as $tab) {
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
@@ -366,7 +367,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x8, 1,'fa fa-industry');
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -375,7 +376,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_hidden('password', 1234, 2);
 				$Form_Inputs->form_input_hidden('new_folder', 1, 2);
 				?>
-								
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -501,7 +502,7 @@ foreach ($arrTabs as $tab) {
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cliente</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cliente</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -544,13 +545,13 @@ foreach ($arrTabs as $tab) {
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
 				//Solo para plataforma Intranet
 				if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){
 					$Form_Inputs->form_checkbox_active('Unidad de Negocio','idTab', $x10, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
 				}
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 
@@ -619,7 +620,7 @@ foreach ($arrTabs as $tab) {
 					<tr class="odd">
 						<td><?php echo $cliente['Rut']; ?></td>
 						<td><?php echo $cliente['Nombre']; ?></td>
-						<td><label class="label <?php if(isset($cliente['idEstado'])&&$cliente['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $cliente['estado']; ?></label></td>	
+						<td><label class="label <?php if(isset($cliente['idEstado'])&&$cliente['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $cliente['estado']; ?></label></td>
 						<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){ ?>	
 							<td>
 								<?php 
@@ -648,7 +649,7 @@ foreach ($arrTabs as $tab) {
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$cliente['idCliente']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($cliente['idCliente'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar al cliente '.$cliente['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar al cliente '.$cliente['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -666,7 +667,6 @@ foreach ($arrTabs as $tab) {
 	</div>
 </div>
 
-
 <?php } ?>
 
 <?php
@@ -674,4 +674,5 @@ foreach ($arrTabs as $tab) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

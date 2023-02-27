@@ -62,7 +62,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Carga borrada correcta
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- if(!empty($_GET['id'])){
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 //filtro
@@ -127,7 +127,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idCarga', $_GET['id'], 2);
 				?>
-			
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -392,7 +392,7 @@ $arrCarga = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_joi
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$carga['idCarga']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($carga['idCarga'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la carga BAM con fecha '.$carga['FechaCarga'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la carga BAM con fecha '.$carga['FechaCarga'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -415,4 +415,5 @@ $arrCarga = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_joi
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

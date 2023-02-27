@@ -22,7 +22,7 @@ echo '<div class="wrapper">';
 					<div class="logo"></div>
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-					<div id="card_weather">	
+					<div id="card_weather">
 					</div>
 				</div>
 			</div>
@@ -37,7 +37,7 @@ echo '<div class="wrapper">';
 					<div class="logo"></div>
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
-					<div id="card_weather">	
+					<div id="card_weather">
 					</div>
 				</div>
 				<div class="wolf"></div>
@@ -54,8 +54,7 @@ echo '<div class="wrapper">';
 			</div>
 		</div>';
 	}
-	
-	
+
 	/******************************* Meteo *******************************/		
 	//se llama a la libreria			
 	echo '

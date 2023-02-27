@@ -277,7 +277,7 @@ foreach ($arrOTS as $ot) {
 	}else{
 		$VariedadNombre = 'Todas las variedades';
 	}
-	
+
 	/**************************************************************/
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($ot['NombrePredio']))

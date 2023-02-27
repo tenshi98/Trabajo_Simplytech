@@ -84,7 +84,7 @@ $spreadsheet->setActiveSheetIndex(0)
             
 
 $nn=2;
-foreach ($arrProductos as $productos) { 
+foreach ($arrProductos as $productos) {
 	$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];
 	if ($productos['StockLimite']>$stock_actual){$delta = 'Stock Bajo';}else{$delta = '';}
 	if ($stock_actual!=0&&$productos['NombreProd']!=''){
@@ -97,9 +97,7 @@ foreach ($arrProductos as $productos) {
 		$nn++;
 	}         
    
-} 
-
-
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle(cortar('Bodega '.DeSanitizar($arrProductos[0]['NombreBodega']), 25));

@@ -22,7 +22,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
     $consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
     $consql .= ',telemetria_listado.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
     $consql .= ',telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.Sensor_'.$i.' AS SensorValue_'.$i;
-   
+
 }
 //Se traen todos los registros
 $SIS_query = ' 
@@ -44,13 +44,12 @@ $arrRutas = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacio
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script>google.charts.load('current', {'packages':['line','corechart']});</script>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5> Graficos de <?php echo simpleDecode($_GET['titulo'], fecha_actual()); ?></h5>
-						
+
 		</header>
 		<div class="table-responsive">
 
@@ -93,7 +92,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacio
 							}
 
 							//Si es temperatura
-							if($Temperatura_N!=0){  
+							if($Temperatura_N!=0){
 								$New_Temperatura     = $Temperatura/$Temperatura_N; 
 							}else{
 								$New_Temperatura     = 0;

@@ -58,10 +58,11 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Editar Ubicacion');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Editar Ubicacion'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -90,7 +91,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<?php if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -98,8 +99,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($idUbicacion)){   $x1  = $idUbicacion;   }else{$x1  = $rowdata['idUbicacion'];}
 					if(isset($idLevel_1)){     $x2  = $idLevel_1;     }else{$x2  = $rowdata['idUbicacion_lvl_1'];}
@@ -107,11 +108,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					if(isset($idLevel_3)){     $x4  = $idLevel_3;     }else{$x4  = $rowdata['idUbicacion_lvl_3'];}
 					if(isset($idLevel_4)){     $x5  = $idLevel_4;     }else{$x5  = $rowdata['idUbicacion_lvl_4'];}
 					if(isset($idLevel_5)){     $x6  = $idLevel_5;     }else{$x6  = $rowdata['idUbicacion_lvl_5'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x1,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1',   0,
-							                 'Nivel 1', 'idUbicacion_lvl_1',  $x2,  2,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
+							                 'Nivel 1', 'idUbicacion_lvl_1',  $x2,  2,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0,
 							                 'Nivel 2', 'idUbicacion_lvl_2',  $x3,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
 							                 'Nivel 3', 'idUbicacion_lvl_3',  $x4,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
 							                 'Nivel 4', 'idUbicacion_lvl_4',  $x5,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
@@ -140,10 +141,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	<div class="clearfix"></div>
 </div>
 
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

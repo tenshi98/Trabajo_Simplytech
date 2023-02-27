@@ -152,7 +152,6 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', 
 </div>
 <div class="clearfix"></div>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -268,6 +267,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', 
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -317,7 +317,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x12, 1);
 				$Form_Inputs->form_date('Fecha Pagada Desde','f_inicio_p', $x13, 1);
 				$Form_Inputs->form_date('Fecha Pagada Hasta','f_termino_p', $x14, 1);
-						
+
 				?>
 
 				<div class="form-group">
@@ -335,4 +335,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

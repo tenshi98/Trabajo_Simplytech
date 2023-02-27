@@ -120,7 +120,7 @@ foreach ($arrTipo1 as $tipo) {
 				->setCellValue('F'.$nn, $tipo['ValorTotal'])
 				->setCellValue('G'.$nn, $tipo['MontoPagado']);
 	$nn++;
-   
+
 } 
 /********************************************************/
 $spreadsheet->setActiveSheetIndex(0)
@@ -137,7 +137,7 @@ foreach ($arrTipo2 as $tipo) {
 				->setCellValue('F'.$nn, $tipo['ValorTotal'])
 				->setCellValue('G'.$nn, $tipo['MontoPagado']);
 	$nn++;
-   
+
 }
 /********************************************************/
 $spreadsheet->setActiveSheetIndex(0)
@@ -154,7 +154,7 @@ foreach ($arrTipo3 as $tipo) {
 				->setCellValue('F'.$nn, $tipo['ValorTotal'])
 				->setCellValue('G'.$nn, $tipo['MontoPagado']);
 	$nn++;
-   
+
 }
 /********************************************************/
 $spreadsheet->setActiveSheetIndex(0)
@@ -171,7 +171,7 @@ foreach ($arrTipo4 as $tipo) {
 				->setCellValue('F'.$nn, $tipo['ValorTotal'])
 				->setCellValue('G'.$nn, $tipo['MontoPagado']);
 	$nn++;
-   
+
 }
 
 

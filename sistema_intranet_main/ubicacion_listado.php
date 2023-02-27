@@ -132,7 +132,7 @@ array_push( $arrLicitacion,$row );
 
 $array3d = array();
 foreach($arrLicitacion as $key) {
-	
+
 	//Creo Variables para la rejilla
 	for ($i = 1; $i <= $nmax; $i++) {
 		$d[$i]  = $key['LVL_'.$i.'_id'];   
@@ -208,10 +208,9 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ubicacion', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ubicacion', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -237,11 +236,11 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<tr class="odd">
 								<td>Nombre</td>
-								<td><?php echo $rowdata['Nombre'];?></td>
+								<td><?php echo $rowdata['Nombre']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Estado</td>
-								<td><?php echo $rowdata['Estado'];?></td>
+								<td><?php echo $rowdata['Estado']; ?></td>
 							</tr>
 							<tr>
 								<td colspan="2" style="background-color: #ccc;">Itemizado</td>
@@ -275,11 +274,10 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 	<div class="clearfix"></div>
 </div>
 
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -299,12 +297,12 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
-				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				?>
-	   
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_Licitacion"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_Licitacion">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -313,7 +311,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
                     
 		</div>
 	</div>
-</div> 
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
@@ -380,7 +378,7 @@ $arrArea = db_select_array (false, $SIS_query, 'ubicacion_listado', $SIS_join, $
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Ubicacion</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Ubicacion</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -450,7 +448,7 @@ $arrArea = db_select_array (false, $SIS_query, 'ubicacion_listado', $SIS_join, $
 					<?php foreach ($arrArea as $area) { ?>
 						<tr class="odd">
 							<td><?php echo $area['Nombre']; ?></td>
-							<td><label class="label <?php if(isset($area['idEstado'])&&$area['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $area['Estado']; ?></label></td>
+							<td><label class="label <?php if(isset($area['idEstado'])&&$area['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $area['Estado']; ?></label></td>
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $area['sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
@@ -458,7 +456,7 @@ $arrArea = db_select_array (false, $SIS_query, 'ubicacion_listado', $SIS_join, $
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$area['idUbicacion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($area['idUbicacion'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar el registro '.$area['Nombre'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar el registro '.$area['Nombre'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -476,11 +474,11 @@ $arrArea = db_select_array (false, $SIS_query, 'ubicacion_listado', $SIS_join, $
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

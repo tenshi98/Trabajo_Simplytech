@@ -76,7 +76,7 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 				Predio: <?php echo$arrMediciones[0]['PredioNombre']; ?><br/>
 				Cuartel: <?php echo$arrMediciones[0]['CuartelNombre']; ?><br/>
 			</address>
-		</div>	
+		</div>
 	</div>
 
 	<div class="row">
@@ -110,7 +110,7 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 						foreach ($arrMediciones as $med) {
 							$pres = $med['CantidadMuestra'];
 							echo '{location: new google.maps.LatLng('.$med['GeoLatitud'].', '.$med['GeoLongitud'].'), weight: '.$pres.'},';
-						}?>
+						} ?>
 					];
 
 					var heatmap = new google.maps.visualization.HeatmapLayer({
@@ -122,7 +122,7 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 					function dibuja_zona() {
 								
 						var triangleCoords = [
-							<?php 
+							<?php
 							//Variables con la primera posicion
 							$Latitud_x = '';
 							$Longitud_x = '';
@@ -175,4 +175,5 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

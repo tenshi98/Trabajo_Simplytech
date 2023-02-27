@@ -121,7 +121,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 
 <script>
 	var locations = [ 
-		<?php 
+		<?php
 		$ordenx = 0;
 		foreach ( $arrEquipo as $pos ) {
 			$ordenx++; ?>

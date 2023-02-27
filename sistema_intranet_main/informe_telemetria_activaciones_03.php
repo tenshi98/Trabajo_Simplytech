@@ -38,9 +38,9 @@ $SIS_where = 'telemetria_listado_historial_activaciones.idEstado=1';
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){$SIS_where.=" AND telemetria_listado_historial_activaciones.idTelemetria =".$_GET['idTelemetria'];}
-if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino']!=''){ 
+if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino']!=''){
 	$SIS_where.=" AND telemetria_listado_historial_activaciones.TimeStamp BETWEEN '".$_GET['F_inicio']." ".$_GET['H_inicio']."' AND '".$_GET['F_termino']." ".$_GET['H_termino']."'";
-}elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino']!=''){ 
+}elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino']!=''){
 	$SIS_where.=" AND telemetria_listado_historial_activaciones.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
 
@@ -169,7 +169,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					
 									  
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
-								<?php 
+								<?php
 								//Variables
 								$fecha              = '';
 								$HoraInicio         = '00:00:00';
@@ -349,9 +349,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									$l_mp   = $con['EquipoMicroparada'];
 									$l_v1   = $con['EquipoValor'];
 									$l_v2   = $con['EquipoActivacionValor'];
-									
+
 								}
-								
+
 								/**********************************************************************************/
 								//ultimo dato
 								//Calculo colacion
@@ -415,6 +415,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -451,7 +452,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				
 
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -467,4 +468,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

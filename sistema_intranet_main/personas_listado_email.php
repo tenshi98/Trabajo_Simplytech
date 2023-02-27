@@ -108,7 +108,7 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado_email', $SIS_joi
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -118,7 +118,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Email)){          $x1 = $Email;         }else{$x1 = '';}
@@ -164,9 +164,9 @@ $arrMails = db_select_array (false, $SIS_query, 'personas_listado_email', $SIS_j
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Personas', $rowdata['Nombre'].' '.$rowdata['ApellidoPaterno'].' '.$rowdata['ApellidoMaterno'], 'Emails');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Personas', $rowdata['Nombre'].' '.$rowdata['ApellidoPaterno'].' '.$rowdata['ApellidoMaterno'], 'Emails'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Email</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Email</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -208,7 +208,7 @@ $arrMails = db_select_array (false, $SIS_query, 'personas_listado_email', $SIS_j
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$mails['idEmail']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($mails['idEmail'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el email '.$mails['Email'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el email '.$mails['Email'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -223,8 +223,8 @@ $arrMails = db_select_array (false, $SIS_query, 'personas_listado_email', $SIS_j
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -233,4 +233,5 @@ $arrMails = db_select_array (false, $SIS_query, 'personas_listado_email', $SIS_j
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

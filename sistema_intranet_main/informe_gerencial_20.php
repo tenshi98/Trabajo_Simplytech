@@ -78,7 +78,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCountOT,$row );
-} 
+}
 
 //Se verifica que las ot esten terminadas
 $z.= " AND orden_trabajo_listado.idEstado=2";
@@ -108,7 +108,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCountType,$row );
-} 
+}
 
 // Se cuentan las ot generadas por maquina
 $arrCountMaq = array();
@@ -313,7 +313,7 @@ array_push( $arrInsumos2,$row );
 							<th width="120">Total</th>
 						</tr>
 					</thead>
-									  
+
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<?php 
 						$total = 0;
@@ -369,7 +369,7 @@ array_push( $arrInsumos2,$row );
 
 
 
-<div class="row">	
+<div class="row">
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
 			<header>
@@ -383,7 +383,7 @@ array_push( $arrInsumos2,$row );
 							<th width="120">Total</th>
 						</tr>
 					</thead>
-									  
+
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<?php 
 						$total = 0;
@@ -431,7 +431,7 @@ array_push( $arrInsumos2,$row );
 				  }
 				</script>
 				<div id="piechart_3d_2" style="width: 100%; height: 300px;"></div>
-				
+
 			</div>
 		</div>
 	</div>
@@ -453,7 +453,7 @@ array_push( $arrInsumos2,$row );
 							<th width="120">Total</th>
 						</tr>
 					</thead>
-									  
+
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<?php 
 						$total = 0;
@@ -501,7 +501,7 @@ array_push( $arrInsumos2,$row );
 				  }
 				</script>
 				<div id="piechart_3d_3" style="width: 100%; height: 300px;"></div>
-				
+
 			</div>
 		</div>
 	</div>
@@ -537,7 +537,7 @@ array_push( $arrInsumos2,$row );
 							if($cantidad!=0){ ?>
 								<tr class="odd">
 									<td><?php echo $consumos['Producto']; ?></td>
-									<td><?php echo Cantidades_decimales_justos_alt($cantidad).' '.$consumos['Uml'];?></td>
+									<td><?php echo Cantidades_decimales_justos_alt($cantidad).' '.$consumos['Uml']; ?></td>
 									<td align="right"><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
 								</tr>
 						<?php 
@@ -566,7 +566,7 @@ array_push( $arrInsumos2,$row );
 							if(isset($consumos['Grasa_relubricacion'])&&$consumos['Grasa_relubricacion']!=0){ $cantidad = $consumos['Grasa_relubricacion'];}
 							if(isset($consumos['Aceite'])&&$consumos['Aceite']!=0){                        $cantidad = $consumos['Aceite'];}
 							if(isset($consumos['Cantidad'])&&$consumos['Cantidad']!=0){                    $cantidad = $consumos['Cantidad'];}
-							
+
 							if($cantidad!=0){ ?>
 							
 							,['<?php echo $consumos['Producto']; ?>',     <?php echo Cantidades_decimales_justos($cantidad*$consumos['ValorIngreso']); ?>]
@@ -585,13 +585,13 @@ array_push( $arrInsumos2,$row );
 				  }
 				</script>
 				<div id="piechart_3d_4" style="width: 100%; height: 300px;"></div>
-				
+
 			</div>
 		</div>
 	</div>
 </div>
 
-<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=4){?> 
+<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=4){?>
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">
@@ -624,7 +624,7 @@ array_push( $arrInsumos2,$row );
 									if($cantidad!=0){ ?>
 										<tr class="odd">
 											<td><?php echo $consumos['Producto']; ?></td>
-											<td><?php echo Cantidades_decimales_justos_alt($cantidad).' '.$consumos['Uml'];?></td>
+											<td><?php echo Cantidades_decimales_justos_alt($cantidad).' '.$consumos['Uml']; ?></td>
 											<td align="right"><?php echo valores($consumos['ValorIngreso'], 0); ?></td>
 											<td align="right"><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
 										</tr>
@@ -641,7 +641,6 @@ array_push( $arrInsumos2,$row );
 		</div>
 	</div>
 <?php } ?>
-
 
 <div class="row">
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -665,7 +664,7 @@ array_push( $arrInsumos2,$row );
 						foreach ($arrInsumos as $consumos) { ?>
 							<tr class="odd">
 								<td><?php echo $consumos['NombreInsumo']; ?></td>
-								<td><?php echo Cantidades_decimales_justos_alt($consumos['Cantidad']).' '.$consumos['Unidad'];?></td>
+								<td><?php echo Cantidades_decimales_justos_alt($consumos['Cantidad']).' '.$consumos['Unidad']; ?></td>
 								<td align="right"><?php echo valores($consumos['Cantidad']*$consumos['ValorIngreso'], 0); ?></td>
 							</tr>
 						<?php }  ?>                    
@@ -701,13 +700,13 @@ array_push( $arrInsumos2,$row );
 				  }
 				</script>
 				<div id="piechart_3d_5" style="width: 100%; height: 300px;"></div>
-				
+
 			</div>
 		</div>
 	</div>
 </div>
 
-<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=4){?> 
+<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=4){?>
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">
@@ -736,7 +735,7 @@ array_push( $arrInsumos2,$row );
 										<tr class="odd">
 											<td><?php echo $consumos['Maquina']; ?></td>
 											<td><?php echo $consumos['NombreInsumo']; ?></td>
-											<td><?php echo Cantidades_decimales_justos_alt($consumos['Cantidad']).' '.$consumos['Unidad'];?></td>
+											<td><?php echo Cantidades_decimales_justos_alt($consumos['Cantidad']).' '.$consumos['Unidad']; ?></td>
 											<td align="right"><?php echo valores($consumos['ValorIngreso'], 0); ?></td>
 											<td align="right"><?php echo valores($consumos['Cantidad']*$consumos['ValorIngreso'], 0); ?></td>
 										</tr>
@@ -763,7 +762,9 @@ array_push( $arrInsumos2,$row );
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -784,9 +785,9 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x2, 2);
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x3, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
-						
+
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -802,4 +803,5 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

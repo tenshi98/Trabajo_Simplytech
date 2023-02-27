@@ -127,8 +127,9 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 	
 }
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -159,7 +160,7 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 						<?php if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
 							<li class=""><a href="<?php echo 'productos_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Sistema CROSS</a></li>
 						<?php } ?>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -174,7 +175,7 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/productos.jpg">
 						<?php }else{
 							echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowdata['Direccion_img']);
-						}?>
+						} ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Producto</h2>
@@ -187,16 +188,16 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 							<strong>Tipo de Producto : </strong><?php echo $rowdata['TipoProd']; ?><br/>
 							<strong>Unidad de medida : </strong><?php echo $rowdata['Unidad']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
-							
+
 							<strong>Ingredientes Activos : </strong><br/><?php echo $rowdata['IngredienteActivo']; ?><br/>
-							
+
 							<strong>Dosis Recomendada : </strong><?php echo Cantidades_decimales_justos($rowdata['DosisRecomendada']); ?><br/>
 							<strong>Carencia Etiqueta : </strong><?php echo Cantidades_decimales_justos($rowdata['CarenciaExportador']); ?><br/>
 							<strong>Carencia ASOEX : </strong><?php echo $rowdata['Carencia']; ?><br/>
 							<strong>Carencia TESCO : </strong><?php echo Cantidades_decimales_justos($rowdata['EfectoResidual']); ?><br/>
 							<strong>Tiempo Re-Ingreso : </strong><?php echo Cantidades_decimales_justos($rowdata['EfectoRetroactivo']); ?><br/>
 							<strong>Aporte Nutricional : </strong><?php echo $rowdata['AporteNutricional']; ?><br/>
-							
+
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Configuracion</h2>
@@ -233,22 +234,22 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 						<?php if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Receta</h2>
 							<table  class="table table-bordered">
-								<?php 
+								<?php
 								$total = 0;
 								foreach ($arrRecetas as $receta) {
 									$total = $total + $receta['Cantidad']; ?>
 									<tr class="item-row">
 										<td><?php echo $receta['NombreProd']; ?></td>
-										<td width="90"><?php echo Cantidades_decimales_justos_alt($receta['Cantidad']).' '.$receta['UnidadMedida'];?></td>
+										<td width="90"><?php echo Cantidades_decimales_justos_alt($receta['Cantidad']).' '.$receta['UnidadMedida']; ?></td>
 									</tr>
-								<?php }?>
+								<?php } ?>
 							</table>
 						<?php } ?>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
-								<?php 
+								<?php
 								//Ficha Tecnica
 								if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
 									echo '
@@ -286,25 +287,24 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 						
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
 
-			
         </div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -325,7 +325,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				if(isset($idTipoProducto)){ $x6  = $idTipoProducto;   }else{$x6  = '';}
 				if(isset($idTipoReceta)){   $x7  = $idTipoReceta;     }else{$x7  = '';}
 				if(isset($idSubTipo)){      $x8  = $idSubTipo;        }else{$x8  = '';}
-					
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -336,16 +336,15 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_select('Tipo Producto','idTipoProducto', $x6, 2, 'idTipoProducto', 'Nombre', 'core_tipo_producto', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Receta','idTipoReceta', $x7, 1, 'idTipoReceta', 'Nombre', 'core_tipo_receta', 0, '', $dbConn);
 				//$Form_Inputs->form_select('Tareas Relacionadas','idSubTipo', $x8, 2, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, '', $dbConn);
-					
+
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('idOpciones_1', 2, 2);
 				$Form_Inputs->form_input_hidden('idOpciones_2', 2, 2);
 				?>
-				
-				
+
 				<script>
 					document.getElementById('div_idTipoReceta').style.display = 'none';
-					
+
 					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 						
 						$("#idTipoProducto").on("change", function(){ //se ejecuta al cambiar valor del select
@@ -504,7 +503,7 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 				if(isset($idTipoReceta)){   $x7  = $idTipoReceta;     }else{$x7  = '';}
 				if(isset($idSubTipo)){      $x8  = $idSubTipo;        }else{$x8  = '';}
 				if(isset($idEstado)){       $x9  = $idEstado;         }else{$x9  = '';}
-					
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
@@ -633,21 +632,21 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 										
 								}
 							
-							}?>
+							} ?>
 						</td>
 						<td><?php echo $prod['Categoria']; ?></td>
 						<td><?php echo $prod['Tipo']; ?></td>
 						<td><?php echo $prod['TipoProd']; ?></td>
 						<td><?php echo $prod['NombreProd']; ?></td>
 						<td><?php echo $prod['UnidadMedida']; ?></td>
-						<td><label class="label <?php if(isset($prod['idEstado'])&&$prod['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $prod['Estado']; ?></label></td>
+						<td><label class="label <?php if(isset($prod['idEstado'])&&$prod['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $prod['Estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_productos.php?view='.simpleEncode($prod['idProducto'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$prod['idProducto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($prod['idProducto'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el Producto '.$prod['NombreProd'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el Producto '.$prod['NombreProd'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -665,11 +664,11 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -127,8 +127,7 @@ foreach ($arrFacturacion as $fact) {
 
 	}
 
-}?>
-
+} ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<?php
@@ -139,7 +138,6 @@ foreach ($arrFacturacion as $fact) {
 	<a target="new" href="<?php echo 'informe_aguas_sis_PR02701_to_excel.php?bla=bla'.$zz ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 	<a target="new" href="<?php echo 'informe_aguas_sis_PR02701_to_xml.php?bla=bla'.$zz ; ?>" class="btn btn-sm btn-warning pull-right margin_width"><i class="fa fa-file-code-o" aria-hidden="true"></i> Exportar a XML</a>
 </div>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -200,7 +198,7 @@ foreach ($arrFacturacion as $fact) {
 							<?php
 							}
 						}
-					}?>
+					} ?>
 
 					<tr class="odd">
 						<td colspan="13"></td>
@@ -230,12 +228,13 @@ foreach ($arrFacturacion as $fact) {
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -272,4 +271,5 @@ foreach ($arrFacturacion as $fact) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

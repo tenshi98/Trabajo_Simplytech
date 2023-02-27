@@ -500,7 +500,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -630,7 +630,7 @@ require_once '0_validate_user_1.php';
 
 				}
 			}
-			
+
 			/*********************************************************/
 			//Se revisan los datos de validacion
 			if(isset($Resolucion_1)&&isset($rev_Resolucion_1)){
@@ -651,7 +651,7 @@ require_once '0_validate_user_1.php';
 				}
 					
 			}
-			
+
 			/*********************************************************/
 			//Se revisan los datos de validacion
 			if(isset($Resolucion_2)&&isset($rev_Resolucion_2)){
@@ -672,7 +672,7 @@ require_once '0_validate_user_1.php';
 				}
 					
 			}
-			
+
 			/*********************************************************/
 			//Se revisan los datos de validacion
 			if(isset($Resolucion_3)&&isset($rev_Resolucion_3)){
@@ -754,7 +754,7 @@ require_once '0_validate_user_1.php';
 
 				}
 			}
-			
+
 			/*********************************************************/
 			//Se revisan los datos de validacion
 			if(isset($Resolucion_1)&&isset($rev_Resolucion_1)){
@@ -775,7 +775,7 @@ require_once '0_validate_user_1.php';
 				}
 					
 			}
-			
+
 			/*********************************************************/
 			//Se revisan los datos de validacion
 			if(isset($Resolucion_2)&&isset($rev_Resolucion_2)){
@@ -796,7 +796,7 @@ require_once '0_validate_user_1.php';
 				}
 					
 			}
-			
+
 			/*********************************************************/
 			//Se revisan los datos de validacion
 			if(isset($Resolucion_3)&&isset($rev_Resolucion_3)){
@@ -924,7 +924,7 @@ require_once '0_validate_user_1.php';
 			if(isset($n_data3)&&$n_data3==0){
 				$error['trabajos3'] = 'error/No se han asignado muestras';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -933,8 +933,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['cross_quality_reg_insp_basicos']['idSistema']) && $_SESSION['cross_quality_reg_insp_basicos']['idSistema']!=''){      $SIS_data  = "'".$_SESSION['cross_quality_reg_insp_basicos']['idSistema']."'";    }else{$SIS_data  = "''";}
 				if(isset($_SESSION['cross_quality_reg_insp_basicos']['idUsuario']) && $_SESSION['cross_quality_reg_insp_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['idUsuario']."'";   }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']) && $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) && $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) && $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
@@ -967,7 +967,7 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de los trabajadores	
-					if(isset($_SESSION['cross_quality_reg_insp_trabajadores'])){		
+					if(isset($_SESSION['cross_quality_reg_insp_trabajadores'])){
 						foreach ($_SESSION['cross_quality_reg_insp_trabajadores'] as $key => $producto){
 
 							//filtros
@@ -975,8 +975,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['idSistema']) && $_SESSION['cross_quality_reg_insp_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['idSistema']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['idUsuario']) && $_SESSION['cross_quality_reg_insp_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['idUsuario']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']) && $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) && $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) && $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NSemana($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
@@ -1010,7 +1010,7 @@ require_once '0_validate_user_1.php';
 
 					/*********************************************************************/
 					//Se guardan los datos de las maquinas	
-					if(isset($_SESSION['cross_quality_reg_insp_maquinas'])){		
+					if(isset($_SESSION['cross_quality_reg_insp_maquinas'])){
 						foreach ($_SESSION['cross_quality_reg_insp_maquinas'] as $key => $producto){
 
 							//filtros
@@ -1018,8 +1018,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['idSistema']) && $_SESSION['cross_quality_reg_insp_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['idSistema']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['idUsuario']) && $_SESSION['cross_quality_reg_insp_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['idUsuario']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']) && $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) && $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) && $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NSemana($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
@@ -1053,7 +1053,7 @@ require_once '0_validate_user_1.php';
 
 					/*********************************************************************/
 					//Se guardan los datos de las muestras	
-					if(isset($_SESSION['cross_quality_reg_insp_muestras'])){		
+					if(isset($_SESSION['cross_quality_reg_insp_muestras'])){
 						foreach ($_SESSION['cross_quality_reg_insp_muestras'] as $key => $producto){
 
 							//filtros
@@ -1085,7 +1085,7 @@ require_once '0_validate_user_1.php';
 					}
 					/*********************************************************************/
 					//Archivos
-					if(isset($_SESSION['cross_quality_reg_insp_archivos'])){		
+					if(isset($_SESSION['cross_quality_reg_insp_archivos'])){
 						foreach ($_SESSION['cross_quality_reg_insp_archivos'] as $key => $producto){
 
 							//filtros
@@ -1093,8 +1093,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['idSistema']) && $_SESSION['cross_quality_reg_insp_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['idSistema']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['idUsuario']) && $_SESSION['cross_quality_reg_insp_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['idUsuario']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']) && $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) && $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) && $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NSemana($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
@@ -1142,7 +1142,6 @@ require_once '0_validate_user_1.php';
 				}
 
 			}
-	
 
 		break;
 
@@ -1252,7 +1251,7 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				$SIS_data = "idAnalisis='".$idAnalisis."'";
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_Semana='".fecha2NSemana($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
@@ -1317,8 +1316,8 @@ require_once '0_validate_user_1.php';
 				if(isset($idSistema) && $idSistema!=''){            $SIS_data .= ",'".$idSistema."'";   }else{$SIS_data .= ",''";}
 				if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",'".$idUsuario."'";   }else{$SIS_data .= ",''";}
 				if(isset($fecha_auto) && $fecha_auto!=''){          $SIS_data .= ",'".$fecha_auto."'";  }else{$SIS_data .= ",''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
-					$SIS_data .= ",'".$Creacion_fecha."'";  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
+					$SIS_data .= ",'".$Creacion_fecha."'";
 					$SIS_data .= ",'".fecha2NSemana($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'";
@@ -1427,8 +1426,8 @@ require_once '0_validate_user_1.php';
 				if(isset($idSistema) && $idSistema!=''){            $SIS_data .= ",'".$idSistema."'";   }else{$SIS_data .= ",''";}
 				if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",'".$idUsuario."'";   }else{$SIS_data .= ",''";}
 				if(isset($fecha_auto) && $fecha_auto!=''){          $SIS_data .= ",'".$fecha_auto."'";  }else{$SIS_data .= ",''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
-					$SIS_data .= ",'".$Creacion_fecha."'";  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
+					$SIS_data .= ",'".$Creacion_fecha."'";
 					$SIS_data .= ",'".fecha2NSemana($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'";
@@ -1522,7 +1521,7 @@ require_once '0_validate_user_1.php';
 			
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -1593,14 +1592,14 @@ require_once '0_validate_user_1.php';
 									if(isset($idUbicacion_lvl_4) && $idUbicacion_lvl_4!=''){      $SIS_data .= ",'".$idUbicacion_lvl_4."'";  }else{$SIS_data .= ",''";}
 									if(isset($idUbicacion_lvl_5) && $idUbicacion_lvl_5!=''){      $SIS_data .= ",'".$idUbicacion_lvl_5."'";  }else{$SIS_data .= ",''";}
 									$SIS_data .= ",'".$sufijo.$_FILES['exFile']['name']."'";
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idAnalisis, idSistema,
 									idUsuario, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo,
 									Temporada, idCategoria, idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2,
 									idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, Nombre';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_quality_registrar_inspecciones_archivo', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 									//Si ejecuto correctamente la consulta
 									if($ultimo_id!=0){
 										//redirijo
@@ -1878,7 +1877,7 @@ require_once '0_validate_user_1.php';
 			if(isset($n_data3)&&$n_data3==0){
 				$error['trabajos3'] = 'error/No se han asignado muestras';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -1887,8 +1886,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['cross_quality_reg_insp_basicos']['idSistema']) && $_SESSION['cross_quality_reg_insp_basicos']['idSistema']!=''){      $SIS_data  = "'".$_SESSION['cross_quality_reg_insp_basicos']['idSistema']."'";    }else{$SIS_data  = "''";}
 				if(isset($_SESSION['cross_quality_reg_insp_basicos']['idUsuario']) && $_SESSION['cross_quality_reg_insp_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['idUsuario']."'";   }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']) && $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) && $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) && $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
@@ -1921,7 +1920,7 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de los trabajadores	
-					if(isset($_SESSION['cross_quality_reg_insp_trabajadores'])){		
+					if(isset($_SESSION['cross_quality_reg_insp_trabajadores'])){
 						foreach ($_SESSION['cross_quality_reg_insp_trabajadores'] as $key => $producto){
 
 							//filtros
@@ -1929,8 +1928,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['idSistema']) && $_SESSION['cross_quality_reg_insp_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['idSistema']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['idUsuario']) && $_SESSION['cross_quality_reg_insp_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['idUsuario']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']) && $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) && $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) && $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NSemana($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
@@ -1964,7 +1963,7 @@ require_once '0_validate_user_1.php';
 
 					/*********************************************************************/
 					//Se guardan los datos de las maquinas	
-					if(isset($_SESSION['cross_quality_reg_insp_maquinas'])){		
+					if(isset($_SESSION['cross_quality_reg_insp_maquinas'])){
 						foreach ($_SESSION['cross_quality_reg_insp_maquinas'] as $key => $producto){
 
 							//filtros
@@ -1972,8 +1971,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['idSistema']) && $_SESSION['cross_quality_reg_insp_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['idSistema']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['idUsuario']) && $_SESSION['cross_quality_reg_insp_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['idUsuario']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']) && $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) && $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) && $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NSemana($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
@@ -2007,7 +2006,7 @@ require_once '0_validate_user_1.php';
 
 					/*********************************************************************/
 					//Se guardan los datos de las muestras	
-					if(isset($_SESSION['cross_quality_reg_insp_muestras'])){		
+					if(isset($_SESSION['cross_quality_reg_insp_muestras'])){
 						foreach ($_SESSION['cross_quality_reg_insp_muestras'] as $key => $producto){
 
 							//filtros
@@ -2036,7 +2035,7 @@ require_once '0_validate_user_1.php';
 					}
 					/*********************************************************************/
 					//Archivos
-					if(isset($_SESSION['cross_quality_reg_insp_archivos'])){		
+					if(isset($_SESSION['cross_quality_reg_insp_archivos'])){
 						foreach ($_SESSION['cross_quality_reg_insp_archivos'] as $key => $producto){
 
 							//filtros
@@ -2044,8 +2043,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['idSistema']) && $_SESSION['cross_quality_reg_insp_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['idSistema']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['idUsuario']) && $_SESSION['cross_quality_reg_insp_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['idUsuario']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']) && $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) && $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) && $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NSemana($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha'])."'";
@@ -2093,7 +2092,6 @@ require_once '0_validate_user_1.php';
 				}
 
 			}
-	
 
 		break;
 /*******************************************************************************************************************/

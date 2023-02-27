@@ -229,8 +229,9 @@ $arrEXOpciones[0] = 'No Asignado';
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -278,7 +279,7 @@ $arrEXOpciones[0] = 'No Asignado';
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Equipo</h2>
@@ -310,7 +311,7 @@ $arrEXOpciones[0] = 'No Asignado';
 							<strong class="color-red-dark">Funciones</strong><br/>
 							<?php if(isset($rowdata['Geo'])&&$rowdata['Geo']!=''){?>                        <strong>Geolocalizacion : </strong><?php echo $rowdata['Geo']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Sensores'])&&$rowdata['Sensores']!=''){?>              <strong>Sensores : </strong><?php echo $rowdata['Sensores'].' ';if($rowdata['id_Sensores']==1){echo '('.$rowdata['cantSensores'].' Sensores)';} ?><br/><?php } ?>
-							<?php if(isset($rowdata['Predio'])&&$rowdata['Predio']!=''){?>                  <strong>Utilizacion de Predios : </strong><?php echo $rowdata['Predio'];?><br/><?php } ?>
+							<?php if(isset($rowdata['Predio'])&&$rowdata['Predio']!=''){?>                  <strong>Utilizacion de Predios : </strong><?php echo $rowdata['Predio']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Backup'])&&$rowdata['Backup']!=''){?>                  <strong>Utilizacion de Backup : </strong><?php echo $rowdata['Backup'].' ';if(isset($rowdata['NregBackup'])&&$rowdata['NregBackup']!=''&&$rowdata['NregBackup']!=0){echo '('.$rowdata['NregBackup'].' Registros)';} ?><br/><?php } ?>
 							<?php if(isset($rowdata['Generador'])&&$rowdata['Generador']!=''){?>            <strong>Generador Electrico : </strong><?php echo $rowdata['Generador'].' ';if(isset($rowdata['GeneradorNombre'])&&$rowdata['GeneradorNombre']!=''){echo'('.$rowdata['GeneradorNombre'].' instaladado el '.fecha_estandar($rowdata['GeneradorFecha']).')';} ?><br/><?php } ?>
 							<?php if(isset($rowdata['AlertaTemprana'])&&$rowdata['AlertaTemprana']!=''){?>  <strong>Alerta Temprana : </strong><?php echo $rowdata['AlertaTemprana']; ?><br/><?php } ?>
@@ -391,14 +392,14 @@ $arrEXOpciones[0] = 'No Asignado';
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -510,7 +511,9 @@ LEFT JOIN `core_telemetria_tabs`    ON core_telemetria_tabs.idTab          = tel
 $SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrEquipos = array();
 $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos');
+
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
@@ -636,7 +639,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 						<td><?php echo $equip['Nombre']; ?></td>
 						<td><?php echo $equip['Identificador']; ?></td>
 						<td><?php echo $equip['NumSerie']; ?></td>
-						<td><label class="label <?php if(isset($equip['idEstado'])&&$equip['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $equip['Estado']; ?></label></td>
+						<td><label class="label <?php if(isset($equip['idEstado'])&&$equip['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $equip['Estado']; ?></label></td>
 						<td><?php echo $equip['Geo']; ?></td>
 						<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){?><td><?php echo $equip['Tab']; ?></td><?php } ?>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $equip['sistema']; ?></td><?php } ?>
@@ -648,7 +651,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 								<?php if ($rowlevel['level']>=4){
 									//se verifica que el usuario no sea uno mismo
 									$ubicacion = $location.'&del='.simpleEncode($equip['idTelemetria'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el equipo '.$equip['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el equipo '.$equip['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -672,4 +675,5 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

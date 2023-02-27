@@ -30,14 +30,14 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
 //se recorre deacuerdo a la cantidad de sensores
 $subquery = '';
 $Nsens = 6;
-for ($i = 1; $i <= $Nsens; $i++) { 
+for ($i = 1; $i <= $Nsens; $i++) {
 	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Prom';
 	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Min';
 	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Max';
@@ -91,7 +91,7 @@ $subquery .= ',GeoLongitud';
 $subquery .= ',GeoMovimiento';
 $subquery .= ',GeoVelocidad';
 //se recorre deacuerdo a la cantidad de sensores
-for ($i = 1; $i <= $row_data['cantSensores']; $i++) { 
+for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
 	$subquery .= ',Sensor_'.$i;
 }
 					
@@ -127,7 +127,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<?php echo '
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Identificacion</strong>
@@ -177,10 +177,10 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 				<tbody>
 					<?php for ($i = 1; $i <= $row_data['cantSensores']; $i++) {  ?>
 						<tr>
-							<td><?php echo $row_data['Sensor_'.$i.'_Nombre'];?></td>
-							<td><?php echo $row_data['Sensor_'.$i.'_Min'];?></td>
-							<td><?php echo $row_data['Sensor_'.$i.'_Max'];?></td>
-							<td><?php echo $row_data['Sensor_'.$i.'_Prom'];?></td>
+							<td><?php echo $row_data['Sensor_'.$i.'_Nombre']; ?></td>
+							<td><?php echo $row_data['Sensor_'.$i.'_Min']; ?></td>
+							<td><?php echo $row_data['Sensor_'.$i.'_Max']; ?></td>
+							<td><?php echo $row_data['Sensor_'.$i.'_Prom']; ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -385,7 +385,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 								$pres = $med['Sensor_1'] + $med['Sensor_2'];
 								echo '{location: new google.maps.LatLng('.$med['GeoLatitud'].', '.$med['GeoLongitud'].'), weight: '.$pres.'},';
 							}
-						}?>
+						} ?>
 					];
 
 					var heatmap = new google.maps.visualization.HeatmapLayer({
@@ -397,7 +397,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 					function dibuja_zona() {
 								
 						var triangleCoords = [
-							<?php 
+							<?php
 							//Variables con la primera posicion
 							$Latitud_x = '';
 							$Longitud_x = '';
@@ -451,7 +451,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -461,7 +461,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -470,4 +470,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

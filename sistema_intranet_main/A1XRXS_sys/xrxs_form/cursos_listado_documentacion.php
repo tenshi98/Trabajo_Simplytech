@@ -139,7 +139,7 @@ require_once '0_validate_user_1.php';
 								if(isset($idCurso) && $idCurso!=''){  $SIS_data  = "'".$idCurso."'";   }else{$SIS_data  = "''";}
 								if(isset($File) && $File!=''){        $SIS_data .= ",'".$File."'";     }else{$SIS_data .= ",''";}
 								if(isset($Semana) && $Semana!=''){    $SIS_data .= ",'".$Semana."'";   }else{$SIS_data .= ",''";}
-								
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idCurso, File, Semana';
 								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cursos_listado_documentacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

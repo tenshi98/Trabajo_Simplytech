@@ -181,6 +181,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );
 } ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<a target="new" href="<?php echo 'informe_bodega_productos_05_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
@@ -282,8 +283,8 @@ array_push( $arrProductos,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -322,6 +323,7 @@ foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -376,10 +378,9 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_date('F Pago Ini','F_Pago_ini', $x18, 1);
 				$Form_Inputs->form_date('F Pago Fin','F_Pago_fin', $x19, 1);
 				$Form_Inputs->form_select_filter('Insumo','idProducto', $x20, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
-				
-				
+
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -395,4 +396,5 @@ foreach ($arrPermisos as $prod) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

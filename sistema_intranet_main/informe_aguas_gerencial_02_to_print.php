@@ -98,8 +98,8 @@ require_once 'core/Web.Header.PrintFact.php';
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					
-					<?php 
+
+					<?php
 					//Variables
 					$x1 = 0;
 					$x2 = 0;
@@ -110,7 +110,7 @@ require_once 'core/Web.Header.PrintFact.php';
 					$x7 = 0;
 					$x8 = 0;
 					$x9 = 0;
-					
+
 					$rev = 0;
 					//Se recorre la tabla
 					foreach ($arrFacturacion as $fact) {  
@@ -122,7 +122,7 @@ require_once 'core/Web.Header.PrintFact.php';
 							<td><?php echo numero_a_mes($fact['mesActual']).' '.$fact['anoActual']; ?></td>
 							<td><?php echo $fact['nClientes']; ?></td>
 							<td><?php echo $fact['M3Consumidos'].' M3'; ?></td>
-							
+
 							<td align="right" class="active"><?php echo Valores($fact['DetalleSubtotalServicio'], 0); ?></td>
 							<td align="right" class="active"><?php echo Valores($fact['DetalleInteresDeuda'], 0); ?></td>
 							<td align="right" class="active"><?php echo Valores($OtrosCargos, 0); ?></td>
@@ -167,7 +167,6 @@ require_once 'core/Web.Header.PrintFact.php';
 	</div>
 </div>
 
-
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['corechart']});</script>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -175,7 +174,7 @@ require_once 'core/Web.Header.PrintFact.php';
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5> Graficos </h5>
-			
+
 		</header>
 		<div class="table-responsive">
 			<script>
@@ -251,7 +250,7 @@ require_once 'core/Web.Header.PrintFact.php';
 			</script>
 			<div id="curve_chart_1" style="height: 500px"></div>
 			<div id="curve_chart_2" style="height: 500px"></div>
-			
+
 		</div>
 	</div>
 </div>
@@ -261,4 +260,5 @@ require_once 'core/Web.Header.PrintFact.php';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Print.php';
+
 ?>

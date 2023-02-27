@@ -53,7 +53,7 @@ if (isset($_GET['edited'])){ $error['edited'] = 'sucess/Orden de Trabajo cerrada
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['cerrar'])){ 
+if(!empty($_GET['cerrar'])){
 //Se traen los datos de la ot
 $query = "SELECT Observaciones
 FROM `orden_trabajo_tareas_listado`
@@ -99,7 +99,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf023; Cerrar" name="submit_cerrar"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf023; Cerrar" name="submit_cerrar">
 					<a href="<?php echo $location.'&submit_filter=Filtrar'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -110,7 +110,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['submit_filter'])){
+} elseif(!empty($_GET['submit_filter'])){
 //Verifico el tipo de usuario que esta ingresando
 $z  = "WHERE orden_trabajo_tareas_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $z .= " AND orden_trabajo_tareas_listado.idEstado = 2"; //solo las que estan en ejecucion (o tienen algo hecho)
@@ -219,7 +219,6 @@ array_push( $arrOTS,$row );
 	</div>
 </div>
 
-
 <div class="clearfix"></div>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -228,6 +227,7 @@ array_push( $arrOTS,$row );
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else { ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -265,8 +265,7 @@ array_push( $arrOTS,$row );
 				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x8, 1, 'idTipo', 'Nombre', 'core_ot_motivos_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Programacion Desde','f_programacion_inicio', $x9, 1);
 				$Form_Inputs->form_date('Fecha Programacion Hasta','f_programacion_termino', $x10, 1);
-				
-				
+
 				?>
 
 				<div class="form-group">
@@ -284,4 +283,5 @@ array_push( $arrOTS,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

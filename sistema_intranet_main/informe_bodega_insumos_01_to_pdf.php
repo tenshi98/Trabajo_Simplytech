@@ -29,10 +29,10 @@ insumos_listado.ValorIngreso,
 insumos_listado.Nombre AS NombreProd,
 sistema_productos_uml.Nombre AS UnidadMedida,
 (SELECT SUM(Cantidad_ing) FROM bodegas_insumos_facturacion_existencias WHERE idProducto = insumos_listado.idProducto AND idBodega='.$_GET['idBodega'].'  LIMIT 1) AS stock_entrada,
-(SELECT SUM(Cantidad_eg) FROM bodegas_insumos_facturacion_existencias WHERE idProducto = insumos_listado.idProducto AND idBodega='.$_GET['idBodega'].' LIMIT 1) AS stock_salida,
+(SELECT SUM(Cantidad_eg) FROM bodegas_insumos_facturacion_existencias  WHERE idProducto = insumos_listado.idProducto AND idBodega='.$_GET['idBodega'].' LIMIT 1) AS stock_salida,
 (SELECT Nombre FROM bodegas_insumos_listado WHERE idBodega='.$_GET['idBodega'].' LIMIT 1) AS NombreBodega';
 $SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml';
-$SIS_where = '';
+$SIS_where = 'insumos_listado.idProducto!=0';
 $SIS_order = 'insumos_listado.Nombre ASC';
 $arrProductos = array();
 $arrProductos = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
@@ -57,12 +57,12 @@ $html .= '
 		</tr>
 	</thead>
 	<tbody>';
-							
-		foreach ($arrProductos as $productos) { 
+
+		foreach ($arrProductos as $productos) {
 			$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];
 			if ($stock_actual!=0){
 				if ($productos['StockLimite']>$stock_actual){$delta = 'background-color: #c3c3c3;';}else{$delta = '';}
-									
+
 				$html .='<tr style="'.$delta.'">
 							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.DeSanitizar($productos['NombreProd']).'</td>
 							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($productos['StockLimite']).' '.DeSanitizar($productos['UnidadMedida']).'</td>
@@ -72,10 +72,9 @@ $html .= '
 						</tr>';
 			}
 		}
-							
+
 $html .='</tbody>
 </table>';
- 
 
 //============================================================+
 // END OF FILE
@@ -99,7 +98,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 		/************************************************************************/
 		//TCPDF
 		case 1:
-			
+
 			require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 			// create new PDF document
@@ -154,7 +153,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output(DeSanitizar($pdf_file), 'I');
-	
+
 			break;
 		/************************************************************************/
 		//DomPDF (Solo compatible con PHP 5.x)

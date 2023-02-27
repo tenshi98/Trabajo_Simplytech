@@ -46,7 +46,7 @@ require_once 'core/Web.Header.Views.php';
 			<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>
 		</header>
 		<div class="table-responsive">
-			<?php 
+			<?php
 			$explanation2 .= '<strong>Tiempo: </strong>'.$rowdata['Tiempo'].' hrs<br/>';
 							
 			//Si no existe una ID se utiliza una por defecto
@@ -211,4 +211,5 @@ require_once 'core/Web.Header.Views.php';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -116,7 +116,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -283,7 +283,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'cross_shipping_mercado', $
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$cat['idMercado']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($cat['idMercado'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el mercado '.$cat['NombrePlanta'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el mercado '.$cat['NombrePlanta'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -298,7 +298,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'cross_shipping_mercado', $
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
-		
+
 	</div>
 </div>
 <?php } ?>
@@ -307,4 +307,5 @@ $arrCategorias = db_select_array (false, $SIS_query, 'cross_shipping_mercado', $
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

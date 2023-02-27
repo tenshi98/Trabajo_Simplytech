@@ -56,10 +56,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+$rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Vecino', $rowdata['Nombre'], 'Editar Datos de contacto');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Vecino', $rowdata['Nombre'], 'Editar Datos de contacto'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -88,8 +88,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($idCompartir)){      $x1 = $idCompartir;       }else{$x1 = $rowdata['idCompartir'];}
 					if(isset($Fono1)){            $x2 = $Fono1;             }else{$x2 = $rowdata['Fono1'];}
@@ -97,7 +97,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					if(isset($Fax)){              $x4 = $Fax;               }else{$x4 = $rowdata['Fax'];}
 					if(isset($email)){            $x5 = $email;             }else{$x5 = $rowdata['email'];}
 					if(isset($Web)){              $x6 = $Web;               }else{$x6 = $rowdata['Web'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select('¿Compartir Datos de Contacto?','idCompartir', $x1, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
@@ -106,7 +106,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_input_fax('Fax', 'Fax', $x4, 1);
 					$Form_Inputs->form_input_icon('Email', 'email', $x5, 1,'fa fa-envelope-o');
 					$Form_Inputs->form_input_icon('Web', 'Web', $x6, 1,'fa fa-internet-explorer');
-					
+
 					$Form_Inputs->form_input_hidden('idCliente', $_GET['id'], 2);
 
 					?>
@@ -123,14 +123,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

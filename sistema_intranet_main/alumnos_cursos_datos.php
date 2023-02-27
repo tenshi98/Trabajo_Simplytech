@@ -43,27 +43,15 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Apoderado borrado corr
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
-$query = "SELECT Nombre,Semanas, F_inicio, F_termino, idSistema
-FROM `alumnos_cursos`
-WHERE idCurso = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre,Semanas, F_inicio, F_termino, idSistema';
+$SIS_join  = '';
+$SIS_where = 'idCurso = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'alumnos_cursos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Asignatura', $rowdata['Nombre'], 'Editar Datos Basicos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Asignatura', $rowdata['Nombre'], 'Editar Datos Basicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -87,21 +75,20 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-					<?php 
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Nombre)){      $x2  = $Nombre;      }else{$x2  = $rowdata['Nombre'];}
 					/*if(isset($Semanas)){     $x3  = $Semanas;     }else{$x3  = $rowdata['Semanas'];}
 					if(isset($F_inicio)){    $x4  = $F_inicio;    }else{$x4  = $rowdata['F_inicio'];}
 					if(isset($F_termino)){   $x5  = $F_termino;   }else{$x5  = $rowdata['F_termino'];}*/
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
 					/*$Form_Inputs->form_select_n_auto('Semanas de Duracion','Semanas', $x3, 2, 1, 50);
 					$Form_Inputs->form_date('F. Inicio','F_inicio', $x4, 1);
 					$Form_Inputs->form_date('F. Termino','F_termino', $x5, 1);*/
-					
-					
+
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idCurso', $_GET['id'], 2);
@@ -119,14 +106,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

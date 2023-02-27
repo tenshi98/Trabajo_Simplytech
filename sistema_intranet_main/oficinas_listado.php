@@ -124,7 +124,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -151,7 +151,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				?>
-								
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -234,7 +234,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'oficinas_listado', $SIS_join, $
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Sala de Reuniones</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Sala de Reuniones</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -255,7 +255,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'oficinas_listado', $SIS_join, $
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 1);
 				$Form_Inputs->form_input_text('Ubicacion', 'Ubicacion', $x3, 1);
 				$Form_Inputs->form_input_number('Capacidad','Capacidad', $x4, 1);
-					
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 
@@ -323,14 +323,14 @@ $arrUsers = db_select_array (false, $SIS_query, 'oficinas_listado', $SIS_join, $
 						<td><?php echo $usuarios['Nombre']; ?></td>
 						<td><?php echo $usuarios['Ubicacion']; ?></td>
 						<td><?php echo $usuarios['Capacidad'].' Personas'; ?></td>
-						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['estado']; ?></label></td>	
+						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $usuarios['estado']; ?></label></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idOficina']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idOficina'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la oficina '.$usuarios['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la oficina '.$usuarios['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -348,7 +348,6 @@ $arrUsers = db_select_array (false, $SIS_query, 'oficinas_listado', $SIS_join, $
 	</div>
 </div>
 
-
 <?php } ?>
 
 <?php
@@ -356,4 +355,5 @@ $arrUsers = db_select_array (false, $SIS_query, 'oficinas_listado', $SIS_join, $
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

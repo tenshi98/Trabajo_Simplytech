@@ -57,10 +57,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+$rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especie', $rowdata['Nombre'], 'Editar Datos Basicos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especie', $rowdata['Nombre'], 'Editar Datos Basicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -83,19 +83,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Nombre)){                      $x1  = $Nombre;                      }else{$x1  = $rowdata['Nombre'];}
 					if(isset($Temp_optima_min)){             $x2  = $Temp_optima_min;             }else{$x2  = Cantidades_decimales_justos($rowdata['Temp_optima_min']);}
 					if(isset($Temp_optima_max)){             $x3  = $Temp_optima_max;             }else{$x3  = Cantidades_decimales_justos($rowdata['Temp_optima_max']);}
 					if(isset($Temp_optima_margen_critico)){  $x4  = $Temp_optima_margen_critico;  }else{$x4  = Cantidades_decimales_justos($rowdata['Temp_optima_margen_critico']);}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_tittle(3, 'Datos Basicos');
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-					
+
 					$Form_Inputs->form_tittle(3, 'Temperaturas Optimas');
 					$Form_Inputs->form_input_number('Temp. Optima Min', 'Temp_optima_min', $x2, 1);
 					$Form_Inputs->form_input_number('Temp. Optima Max', 'Temp_optima_max', $x3, 1);
@@ -117,8 +117,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php
@@ -126,4 +126,5 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

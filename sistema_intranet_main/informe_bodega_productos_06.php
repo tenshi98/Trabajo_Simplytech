@@ -134,7 +134,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
 		
-		foreach ($arrCategoria as $cat) { 
+		foreach ($arrCategoria as $cat) {
 			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $grafico[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']];}else{$grafico[$xcontador][$cat['idCategoria']] = 0;};
 		}
 									
@@ -144,7 +144,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
 		
-		foreach ($arrCategoria as $cat) { 
+		foreach ($arrCategoria as $cat) {
 			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $grafico[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']];}else{$grafico[$xcontador][$cat['idCategoria']] = 0;};
 		}	
 	}
@@ -180,7 +180,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 					</thead>
 								  
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
-						<?php 
+						<?php
 						//Variables
 						$Total = 0;
 						foreach ($arrCategoria as $cat) { 
@@ -206,14 +206,13 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 						<tr class="odd">
 							<td align="right" colspan="13"><strong>Total General</strong></td>
 							<td align="right"><?php echo valores($Total, 0); ?></td>
-						</tr> 
+						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
-	
-	
+
 <?php
 /**********************************************************/
 // Se trae un listado con los valores de las existencias actuales	
@@ -306,7 +305,7 @@ foreach ($arrExistencias as $existencias) {
 
 $grafico = array();
 //recorro las bodegas
-foreach ($arrBodegas as $bod) { 
+foreach ($arrBodegas as $bod) {
 	$xmes = mes_actual();
 	$xaño = ano_actual();
 	$xbodegas = $bod['idBodega'];
@@ -316,8 +315,8 @@ foreach ($arrBodegas as $bod) {
 		if($xmes>0){
 			$grafico[$xbodegas][$xcontador]['mes'] = $xmes;
 			$grafico[$xbodegas][$xcontador]['año'] = $xaño;
-			
-			foreach ($arrCategoria as $cat) { 
+
+			foreach ($arrCategoria as $cat) {
 				if(isset($mes[$xbodegas][$xaño][$xmes][$cat['idCategoria']])){ $grafico[$xbodegas][$xcontador][$cat['idCategoria']] = $mes[$xbodegas][$xaño][$xmes][$cat['idCategoria']];}else{$grafico[$xbodegas][$xcontador][$cat['idCategoria']] = 0;};
 			}
 										
@@ -326,21 +325,21 @@ foreach ($arrBodegas as $bod) {
 			$xaño = $xaño-1;
 			$grafico[$xbodegas][$xcontador]['mes'] = $xmes;
 			$grafico[$xbodegas][$xcontador]['año'] = $xaño;
-			
-			foreach ($arrCategoria as $cat) { 
+
+			foreach ($arrCategoria as $cat) {
 				if(isset($mes[$xbodegas][$xaño][$xmes][$cat['idCategoria']])){ $grafico[$xbodegas][$xcontador][$cat['idCategoria']] = $mes[$xbodegas][$xaño][$xmes][$cat['idCategoria']];}else{$grafico[$xbodegas][$xcontador][$cat['idCategoria']] = 0;};
 			}
 		}
-		$xmes = $xmes-1;								
+		$xmes = $xmes-1;
 	}
 }
 
 /*********************************/
-foreach ($arrBodegas as $bod) { 
-	
+foreach ($arrBodegas as $bod) {
+
 	//Sumo
 	$Total = 0;
-	foreach ($arrCategoria as $cat) { 
+	foreach ($arrCategoria as $cat) {
 		$SubTotal = 0;
 		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][1][$cat['idCategoria']];
 		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][2][$cat['idCategoria']]; 
@@ -385,9 +384,9 @@ foreach ($arrBodegas as $bod) {
 								<th>SubTotal</th>
 							</tr>
 						</thead>
-									  
+
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
-							<?php 
+							<?php
 							//Variables
 							$Total = 0;
 							foreach ($arrCategoria as $cat) { 
@@ -413,7 +412,7 @@ foreach ($arrBodegas as $bod) {
 							<tr class="odd">
 								<td align="right" colspan="13"><strong>Total General</strong></td>
 								<td align="right"><?php echo valores($Total, 0); ?></td>
-							</tr> 
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -426,17 +425,18 @@ foreach ($arrBodegas as $bod) {
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 $z1 = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];  
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z1 .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$z1 .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -455,7 +455,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select_join_filter('Bodega Origen','idBodegaOrigen', $x1, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', 'usuarios_bodegas_productos', $z1, $dbConn);
 
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -467,10 +467,10 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 </div>
 <?php } ?>
 
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

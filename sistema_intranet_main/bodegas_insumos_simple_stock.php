@@ -73,6 +73,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );
 }
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<?php
 	$zz  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
@@ -82,7 +83,6 @@ array_push( $arrProductos,$row );
 	<a target="new" href="<?php echo 'bodegas_insumos_simple_stock_to_pdf.php?bla=bla'.$zz ; ?>"   class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
 	<a target="new" href="<?php echo 'bodegas_insumos_simple_stock_to_print.php?bla=bla'.$zz ; ?>" class="btn btn-sm btn-metis-5 pull-right margin_width"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>
 </div>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -100,13 +100,13 @@ array_push( $arrProductos,$row );
 				</thead>
 							  
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-				<?php foreach ($arrProductos as $productos) { 
+				<?php foreach ($arrProductos as $productos) {
 					$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];
 					if ($stock_actual!=0&&$productos['NombreProd']!=''){?>
 					<tr class="odd <?php if ($productos['StockLimite']>$stock_actual){echo 'danger';} ?>">
 						<td><?php echo $productos['NombreProd']; ?></td>
-						<td><?php echo Cantidades_decimales_justos($productos['StockLimite']); ?> <?php echo $productos['UnidadMedida'];?></td>
-						<td><?php echo Cantidades_decimales_justos($stock_actual) ?> <?php echo $productos['UnidadMedida'];?></td>
+						<td><?php echo Cantidades_decimales_justos($productos['StockLimite']); ?> <?php echo $productos['UnidadMedida']; ?></td>
+						<td><?php echo Cantidades_decimales_justos($stock_actual) ?> <?php echo $productos['UnidadMedida']; ?></td>
 					</tr>
 				<?php } } ?>         
 				</tbody>
@@ -117,8 +117,8 @@ array_push( $arrProductos,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -150,7 +150,7 @@ $SIS_join  = "";
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_where.= " AND usuarios_bodegas_insumos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
-	$SIS_join .= "INNER JOIN `usuarios_bodegas_insumos` ON usuarios_bodegas_insumos.idBodega = bodegas_insumos_listado.idBodega";	
+	$SIS_join .= "INNER JOIN `usuarios_bodegas_insumos` ON usuarios_bodegas_insumos.idBodega = bodegas_insumos_listado.idBodega";
 }
 $SIS_where.= " GROUP BY bodegas_insumos_listado.idBodega";
 
@@ -235,4 +235,5 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_listado', $SIS_j
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -86,8 +86,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Tarjetas', $rowdata['CardNombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Tarjetas', $rowdata['CardNombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -110,7 +111,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/card.jpg">
 						<?php }else{
 							echo '<img src="upload/'.$rowdata['Direccion_img'].'" style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia"  >';
-						}?>
+						} ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de la tarjeta</h2>
@@ -122,25 +123,24 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						</p>
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
 
-			
         </div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -157,12 +157,12 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				if(isset($idCardType)){   $x2  = $idCardType;   }else{$x2  = '';}
 				if(isset($idPosition)){   $x3  = $idPosition;   }else{$x3  = '';}
 				if(isset($idCardImage)){  $x4  = $idCardImage;  }else{$x4  = '';}
-					
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_select_depend1('Tipo Tarjeta','idCardType', $x2, 2, 'idCardType', 'Nombre', 'core_card_type', 0, 0,
-										 'Posicion Texto','idPosition', $x3, 2, 'idPosition', 'Nombre', 'core_card_position', 0, 0, 
+										 'Posicion Texto','idPosition', $x3, 2, 'idPosition', 'Nombre', 'core_card_position', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select('Uso Avatar','idCardImage', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				?>
@@ -259,7 +259,7 @@ $arrProductos = db_select_array (false, $SIS_query, 'card_listado', $SIS_join, $
 				if(isset($Nombre)){        $x1  = $Nombre;          }else{$x1  = '';}
 				if(isset($idCardImage)){   $x2  = $idCardImage;     }else{$x2  = '';}
 				if(isset($idCardType)){    $x3  = $idCardType;      }else{$x3  = '';}
-					
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
@@ -336,7 +336,7 @@ $arrProductos = db_select_array (false, $SIS_query, 'card_listado', $SIS_join, $
 								<img class="img-round" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/productos.jpg" style="height:30px; width:50px;">
 							<?php }else{
 								echo '<img class="img-round" src="upload/'.$prod['Direccion_img'].'" style="height:30px; width:50px;">';
-							}?>
+							} ?>
 						</td>
 						<td><?php echo $prod['CardNombre']; ?></td>
 						<td><?php echo $prod['Imagen']; ?></td>
@@ -347,7 +347,7 @@ $arrProductos = db_select_array (false, $SIS_query, 'card_listado', $SIS_join, $
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$prod['idCard']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($prod['idCard'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el Tarjeta '.$prod['CardNombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el Tarjeta '.$prod['CardNombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -365,11 +365,11 @@ $arrProductos = db_select_array (false, $SIS_query, 'card_listado', $SIS_join, $
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

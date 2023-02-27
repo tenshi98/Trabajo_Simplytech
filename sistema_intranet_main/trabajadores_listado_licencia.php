@@ -73,10 +73,11 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Licencia Conducir');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Licencia Conducir'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -101,7 +102,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class=""><a href="<?php echo 'trabajadores_listado_antecedentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Antecedentes</a></li>
 						<li class=""><a href="<?php echo 'trabajadores_listado_carnet.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Carnet</a></li>
 						<li class=""><a href="<?php echo 'trabajadores_listado_rhtm.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Permiso Trabajo Menor Edad</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -109,14 +110,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($idTipoLicencia)){               $x1 = $idTipoLicencia;                }else{$x1 = $rowdata['idTipoLicencia'];}
 					if(isset($CA_Licencia)){                  $x2 = $CA_Licencia;                   }else{$x2 = $rowdata['CA_Licencia'];}
 					if(isset($LicenciaFechaControlUltimo)){   $x3 = $LicenciaFechaControlUltimo;    }else{$x3 = $rowdata['LicenciaFechaControlUltimo'];}
 					if(isset($LicenciaFechaControl)){         $x4 = $LicenciaFechaControl;          }else{$x4 = $rowdata['LicenciaFechaControl'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select('Tipo Licencia','idTipoLicencia', $x1, 2, 'idTipoLicencia', 'Nombre', 'core_tipos_licencia_conducir', 0, '', $dbConn);
@@ -131,15 +132,15 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						echo '</div>
 						<a href="'.$new_location.'&id='.$_GET['id'].'&del_File_Licencia='.$_GET['id'].'" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 						<div class="clearfix"></div>';
-					
+
 					}else{
 
 						//se dibujan los inputs
 						$Form_Inputs->form_tittle(3, 'Permiso de Circulacion');
 						$Form_Inputs->form_multiple_upload('Seleccionar archivo','File_Licencia', 1, '"doc","docx","pdf","jpg", "png", "gif", "jpeg"');
-						
+
 					}
-					
+
 					$Form_Inputs->form_input_hidden('idTrabajador', $_GET['id'], 2);
 					?>
 
@@ -155,14 +156,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

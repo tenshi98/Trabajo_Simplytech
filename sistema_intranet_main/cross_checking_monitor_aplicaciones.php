@@ -89,7 +89,7 @@ foreach ($arrSolicitud as $sol) {
 	?>
 </div>
 */ ?>
-		
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -111,7 +111,7 @@ foreach ($arrSolicitud as $sol) {
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php for ($i = 0; $i < $max_counter; $i++) { ?>
 						<tr class="odd">
-												
+
 							<td><?php if(isset($arrProgramadas[$i]['idSolicitud'])&&$arrProgramadas[$i]['idSolicitud']!=''){echo $arrProgramadas[$i]['NSolicitud'];} ?></td>
 							<td><?php if(isset($arrProgramadas[$i]['idSolicitud'])&&$arrProgramadas[$i]['idSolicitud']!=''){echo $arrProgramadas[$i]['Fecha'];} ?></td>
 							<td><?php if(isset($arrProgramadas[$i]['idSolicitud'])&&$arrProgramadas[$i]['idSolicitud']!=''){echo $arrProgramadas[$i]['Predio'];} ?></td>
@@ -167,4 +167,5 @@ foreach ($arrSolicitud as $sol) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

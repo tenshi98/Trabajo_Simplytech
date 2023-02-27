@@ -57,7 +57,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Mantencion borrada cor
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- if(!empty($_GET['id'])){
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 //filtro
@@ -188,7 +188,7 @@ array_push( $arrArchivos,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Servicio'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Servicio'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -244,7 +244,7 @@ array_push( $arrArchivos,$row );
 						<p class="text-muted">
 							<strong>Servicio : </strong><?php echo $rowdata['Servicio']; ?><br/>
 							<strong>Opciones : </strong>
-								<?php 
+								<?php
 								$ntot = 0;
 								if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[1]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[1]['Nombre'];$ntot++;}}
 								if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==2){if($ntot!=0){echo ' - '.$arrOpcionesDisplay[2]['Nombre'];$ntot++;}else{echo $arrOpcionesDisplay[2]['Nombre'];$ntot++;}}
@@ -261,20 +261,20 @@ array_push( $arrArchivos,$row );
 									<td><?php echo $equipo['Identificador']; ?></td>
 									<td><?php echo $equipo['Equipo']; ?></td>
 								</tr>
-							<?php }?>
+							<?php } ?>
 						</table>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Diagnostico tecnico y acciones realizadas</h2>
-						<div class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Resumen'];?></div>
+						<div class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Resumen']; ?></div>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Resumen de Visita</h2>
-						<div class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Resolucion'];?></div>
+						<div class="text-muted well well-sm no-shadow" ><?php echo $rowdata['Resolucion']; ?></div>
 						
 						
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos Adjuntos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
-								<?php 
+								<?php
 								//Ficha Tecnica
 								foreach ($arrArchivos as $archivo) {
 									echo '
@@ -297,7 +297,7 @@ array_push( $arrArchivos,$row );
 
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
         </div>
@@ -306,14 +306,15 @@ array_push( $arrArchivos,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -572,7 +573,7 @@ foreach ($arrOpciones as $mant) {
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$mant['idMantencion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($mant['idMantencion'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la mantencion N° '.$mant['idMantencion'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la mantencion N° '.$mant['idMantencion'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -596,4 +597,5 @@ foreach ($arrOpciones as $mant) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

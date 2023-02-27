@@ -38,7 +38,7 @@ if (isset($_GET['created'])){ $error['created'] = 'sucess/Pago Realizado correct
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['pagar'])){ 
+if(!empty($_GET['pagar'])){
 //obtengo los datos del cliente
 $query = "SELECT Nombre,ApellidoPat, ApellidoMat
 FROM `apoderados_listado`
@@ -79,14 +79,15 @@ if(!$resultado){
 					
 }
 $rowFacturacion = mysqli_fetch_assoc ($resultado);
+
 ?>
  
  
 
-<div class="row inbox"> 
+<div class="row inbox">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h2><strong>Apoderado : </strong><?php echo $rowCliente['Nombre'].' '.$rowCliente['ApellidoPat'].' '.$rowCliente['ApellidoMat']; ?></h2>
-		<hr>	
+		<hr>
 	</div>
 </div>
  
@@ -105,27 +106,27 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 		
 			</li>
 			<li class="list-group-item">
-					
+
 				<div class="pull-left">TOTAL A PAGAR</div>
 				<small class="pull-right"><strong><?php echo Valores($rowFacturacion['MontoPactado'], 0); ?></strong></small>
 				<br/>
 					
 			</li>
 		</ul>
-		
+
 	</div>
 		
 	
 	
 	
 	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-			
+
 		<ul class="list-group inbox-options">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
 				<li class="list-group-item"><i class="fa fa-inbox" aria-hidden="true"></i>  Pago</li>
 				<li class="list-group-item">		
-					<?php 
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Pagofecha)){    $x1  = $Pagofecha;     }else{$x1  = '';}
 					if(isset($idTipoPago)){   $x2  = $idTipoPago;    }else{$x2  = '';}
@@ -142,7 +143,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 								<input value="'.Valores($rowFacturacion['MontoPactado'], 0).'" type="text" placeholder="Unidad de Medida" class="form-control"  name="unimed" id="unimed" disabled >
 							</div>
 						</div>';
-						
+
 					$Form_Inputs->form_input_hidden('idUsuarioPago', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 					$Form_Inputs->form_input_hidden('idApoderado', $_GET['idApoderado'], 2);
 					$Form_Inputs->form_input_hidden('idFacturacionDetalle', $rowFacturacion['idFacturacionDetalle'], 2);
@@ -174,10 +175,10 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
 <a href="<?php echo $location.'&submit=Buscar&idApoderado='.$_GET['idApoderado']; ?>"  class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
-</div> 
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['submit'])){ 
+} elseif(!empty($_GET['submit'])){
 //obtengo los datos del cliente
 $query = "SELECT Nombre,ApellidoPat, ApellidoMat
 FROM `apoderados_listado`
@@ -252,10 +253,10 @@ array_push( $arrFacturaciones,$row );
 					 
 ?>
 
-<div class="row inbox"> 
+<div class="row inbox">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h2><strong>Apoderado : </strong><?php echo $rowCliente['Nombre'].' '.$rowCliente['ApellidoPat'].' '.$rowCliente['ApellidoMat']; ?></h2>
-		<hr>	
+		<hr>
 	</div>
 </div>
 
@@ -317,14 +318,14 @@ array_push( $arrFacturaciones,$row );
 				</li>
 
 				<li class="list-group-item">
-					
+
 					<div class="pull-left">TOTAL A PAGAR</div>
 					<small class="pull-right"><strong><?php echo Valores($rowFacturacion['MontoPactado'], 0); ?></strong></small>
 					<br/>
-					
+
 				</li>
 			</ul>
-		
+
 		</div>
 								
 	</div>
@@ -350,6 +351,7 @@ array_push( $arrFacturaciones,$row );
 } else  {
 //filtro sistema
 $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -393,4 +395,5 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

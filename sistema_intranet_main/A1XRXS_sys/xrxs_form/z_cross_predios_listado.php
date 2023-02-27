@@ -91,7 +91,7 @@ require_once '0_validate_user_1.php';
 					
 					if ($_FILES['FilePredio']["error"] > 0){
 						$error['FilePredio'] = 'error/'.uploadPHPError($_FILES["FilePredio"]["error"]);
-						
+
 					} else {
 
 						//Se verifican las extensiones de los archivos
@@ -130,7 +130,7 @@ require_once '0_validate_user_1.php';
 										$Predio_Ciudad    = $worksheet->getCellByColumnAndRow(3,  $row)->getValue();
 										$Predio_Comuna    = $worksheet->getCellByColumnAndRow(4,  $row)->getValue();
 										$Predio_Direccion = $worksheet->getCellByColumnAndRow(5,  $row)->getValue();
-										
+
 										//si la celda no esta vacia
 										if($Predio_Nombre!=''){
 											//verifico si el predio ingresado en el excel existe
@@ -150,12 +150,12 @@ require_once '0_validate_user_1.php';
 									}
 								}
 							}
-							
+
 							/*******************************************************************/
 							//generacion de errores
 							if($ndata_1 > 0) {  $error['ndata_1']  = 'error/El predio ingresado ya existe en el sistema';}
 							if($nPredios > 1) { $error['nPredios'] = 'error/Esta tratando de ingresar mas de un predio';}
-							
+
 							/*******************************************************************/
 							//Si no hay errores ejecuto el codigo
 							if(empty($error)){
@@ -178,7 +178,7 @@ require_once '0_validate_user_1.php';
 								if(isset($idCiudad) && $idCiudad!=''){                  $SIS_data .= ",'".$idCiudad."'";          }else{$SIS_data .= ",''";}
 								if(isset($idComuna) && $idComuna!=''){                  $SIS_data .= ",'".$idComuna."'";          }else{$SIS_data .= ",''";}
 								if(isset($Predio_Direccion) && $Predio_Direccion!=''){  $SIS_data .= ",'".$Predio_Direccion."'";  }else{$SIS_data .= ",''";}
-								
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idSistema, idEstado, Nombre,idPais, idCiudad, idComuna, Direccion';
 								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_predios_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -191,12 +191,12 @@ require_once '0_validate_user_1.php';
 									$arrVariedades = array();
 									$arrEstadoProd = array();
 									$arrEstado     = array();
-									
+
 									$arrEspecies   = db_select_array (false, 'idCategoria,Nombre', 'sistema_variedades_categorias', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									$arrVariedades = db_select_array (false, 'idProducto,Nombre', 'variedades_listado', '', 'idEstado=1', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									$arrEstadoProd = db_select_array (false, 'idEstadoProd,Nombre', 'core_cross_estados_productivos', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									$arrEstado     = db_select_array (false, 'idEstado,Nombre', 'core_estados', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 									//recorro los datos
 									$arrEspeciesMod   = array();
 									$arrVariedadesMod = array();
@@ -206,7 +206,7 @@ require_once '0_validate_user_1.php';
 									foreach ($arrVariedades as $data) { $arrVariedadesMod[$data['Nombre']]['idProducto']   = $data['idProducto'];}
 									foreach ($arrEstadoProd as $data) { $arrEstadoProdMod[$data['Nombre']]['idEstadoProd'] = $data['idEstadoProd'];}
 									foreach ($arrEstado as $data) {     $arrEstadoMod[$data['Nombre']]['idEstado']         = $data['idEstado'];}
-									
+
 									//Cargo el archivo
 									$spreadsheet = IOFactory::load($_FILES['FilePredio']['tmp_name']);
 									//Obtengo los nombres de las hojas
@@ -279,7 +279,7 @@ require_once '0_validate_user_1.php';
 											}
 										}
 									}
-									
+
 									//redirijo
 									header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 									die;

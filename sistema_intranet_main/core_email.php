@@ -45,4 +45,5 @@ echo widget_rainloop('idCorreos', '?admin');
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

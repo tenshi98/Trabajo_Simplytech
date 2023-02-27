@@ -171,7 +171,7 @@ foreach ($arrSistemas as $sistema) {
 			$xaño = $xaño-1;
 			$grafico_prod[$sistema['idSistema']][$xcontador]['mes'] = $xmes;
 			$grafico_prod[$sistema['idSistema']][$xcontador]['año'] = $xaño;
-			
+
 			if(isset($mes_prod[$sistema['idSistema']][$xaño][$xmes]['tipo1'])){ $grafico_prod[$sistema['idSistema']][$xcontador]['tipo1'] = $mes_prod[$sistema['idSistema']][$xaño][$xmes]['tipo1'];}else{$grafico_prod[$sistema['idSistema']][$xcontador]['tipo1'] = 0;};
 			if(isset($mes_prod[$sistema['idSistema']][$xaño][$xmes]['tipo2'])){ $grafico_prod[$sistema['idSistema']][$xcontador]['tipo2'] = $mes_prod[$sistema['idSistema']][$xaño][$xmes]['tipo2'];}else{$grafico_prod[$sistema['idSistema']][$xcontador]['tipo2'] = 0;};
 			if(isset($mes_prod[$sistema['idSistema']][$xaño][$xmes]['tipo3'])){ $grafico_prod[$sistema['idSistema']][$xcontador]['tipo3'] = $mes_prod[$sistema['idSistema']][$xaño][$xmes]['tipo3'];}else{$grafico_prod[$sistema['idSistema']][$xcontador]['tipo3'] = 0;};
@@ -183,7 +183,7 @@ foreach ($arrSistemas as $sistema) {
 			if(isset($mes_prod[$sistema['idSistema']][$xaño][$xmes]['tipo9'])){ $grafico_prod[$sistema['idSistema']][$xcontador]['tipo9'] = $mes_prod[$sistema['idSistema']][$xaño][$xmes]['tipo9'];}else{$grafico_prod[$sistema['idSistema']][$xcontador]['tipo9'] = 0;};
 				
 		}
-		$xmes = $xmes-1;								
+		$xmes = $xmes-1;
 	}
 }
 
@@ -319,7 +319,7 @@ foreach ($arrSistemas as $sistema) {
 			$xaño = $xaño-1;
 			$grafico_ins[$sistema['idSistema']][$xcontador]['mes'] = $xmes;
 			$grafico_ins[$sistema['idSistema']][$xcontador]['año'] = $xaño;
-			
+
 			if(isset($mes_ins[$sistema['idSistema']][$xaño][$xmes]['tipo1'])){ $grafico_ins[$sistema['idSistema']][$xcontador]['tipo1'] = $mes_ins[$sistema['idSistema']][$xaño][$xmes]['tipo1'];}else{$grafico_ins[$sistema['idSistema']][$xcontador]['tipo1'] = 0;};
 			if(isset($mes_ins[$sistema['idSistema']][$xaño][$xmes]['tipo2'])){ $grafico_ins[$sistema['idSistema']][$xcontador]['tipo2'] = $mes_ins[$sistema['idSistema']][$xaño][$xmes]['tipo2'];}else{$grafico_ins[$sistema['idSistema']][$xcontador]['tipo2'] = 0;};
 			if(isset($mes_ins[$sistema['idSistema']][$xaño][$xmes]['tipo3'])){ $grafico_ins[$sistema['idSistema']][$xcontador]['tipo3'] = $mes_ins[$sistema['idSistema']][$xaño][$xmes]['tipo3'];}else{$grafico_ins[$sistema['idSistema']][$xcontador]['tipo3'] = 0;};
@@ -331,7 +331,7 @@ foreach ($arrSistemas as $sistema) {
 			if(isset($mes_ins[$sistema['idSistema']][$xaño][$xmes]['tipo9'])){ $grafico_ins[$sistema['idSistema']][$xcontador]['tipo9'] = $mes_ins[$sistema['idSistema']][$xaño][$xmes]['tipo9'];}else{$grafico_ins[$sistema['idSistema']][$xcontador]['tipo9'] = 0;};
 				
 		}
-		$xmes = $xmes-1;								
+		$xmes = $xmes-1;
 	}
 }
 
@@ -422,12 +422,12 @@ foreach ($arrSistemas as $sistema) {
 			$xaño = $xaño-1;
 			$grafico_arrie[$sistema['idSistema']][$xcontador]['mes'] = $xmes;
 			$grafico_arrie[$sistema['idSistema']][$xcontador]['año'] = $xaño;
-			
+
 			if(isset($mes_arrie[$sistema['idSistema']][$xaño][$xmes]['tipo1'])){ $grafico_arrie[$sistema['idSistema']][$xcontador]['tipo1'] = $mes_arrie[$sistema['idSistema']][$xaño][$xmes]['tipo1'];}else{$grafico_arrie[$sistema['idSistema']][$xcontador]['tipo1'] = 0;};
 			if(isset($mes_arrie[$sistema['idSistema']][$xaño][$xmes]['tipo2'])){ $grafico_arrie[$sistema['idSistema']][$xcontador]['tipo2'] = $mes_arrie[$sistema['idSistema']][$xaño][$xmes]['tipo2'];}else{$grafico_arrie[$sistema['idSistema']][$xcontador]['tipo2'] = 0;};
 				
 		}
-		$xmes = $xmes-1;								
+		$xmes = $xmes-1;
 	}
 }
 
@@ -469,16 +469,16 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 			</ul>
 		</header>
         <div class="tab-content">
-			
+
 			<?php 
 			//variable
 			$sis_count = 1;
 			//arreglo
 			foreach ($arrSistemas as $sistema) { 
 				$sis_act = '';
-				if($sis_count==1){$sis_act = 'active in';}else{$sis_act = '';}?>
+				if($sis_count==1){$sis_act = 'active in';}else{$sis_act = '';} ?>
 				<div class="tab-pane fade <?php echo $sis_act; ?>" id="tab_sis_<?php echo $sis_count; ?>">
-					
+
 					<h3 class="supertittle text-primary">Productos</h3>
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="box">
@@ -505,7 +505,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 								</ul>
 							</header>
 							<div class="tab-content">
-								
+
 								<div class="tab-pane fade active in" id="tab_prod_1_<?php echo $sis_count; ?>">
 									<div class="wmd-panel">
 										<div class="table-responsive">
@@ -521,7 +521,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="tab-pane fade" id="tab_prod_2_<?php echo $sis_count; ?>">
 									<div class="wmd-panel">
 										<div class="table-responsive">
@@ -571,7 +571,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 										</div>
 									</div>
 								</div>
-								
+
 								<?php if($s_prod_Ventas=='true'){ ?>
 									<div class="tab-pane fade" id="tab_prod_3_<?php echo $sis_count; ?>">
 										<div class="wmd-panel">
@@ -1009,8 +1009,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 							</div>
 						</div>
 					</div>
-					
-					
+
 					<div class="clearfix"></div>
 					<h3 class="supertittle text-primary">Insumos</h3>
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -1038,7 +1037,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 								</ul>
 							</header>
 							<div class="tab-content">
-								
+
 								<div class="tab-pane fade active in" id="tab_ins_1_<?php echo $sis_count; ?>">
 									<div class="wmd-panel">
 										<div class="table-responsive">
@@ -1055,7 +1054,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="tab-pane fade" id="tab_ins_2_<?php echo $sis_count; ?>">
 									<div class="wmd-panel">
 										<div class="table-responsive">
@@ -1105,7 +1104,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 										</div>
 									</div>
 								</div>
-								
+
 								<?php if($s_ins_Ventas=='true'){ ?>
 									<div class="tab-pane fade" id="tab_ins_3_<?php echo $sis_count; ?>">
 										<div class="wmd-panel">
@@ -1563,7 +1562,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 								</ul>
 							</header>
 							<div class="tab-content">
-								
+
 								<div class="tab-pane fade active in" id="tab_arr_1_<?php echo $sis_count; ?>">
 									<div class="wmd-panel">
 										<div class="table-responsive">
@@ -1580,7 +1579,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 										</div>
 									</div>
 								</div>
-								
+
 								<div class="tab-pane fade" id="tab_arr_2_<?php echo $sis_count; ?>">
 									<div class="wmd-panel">
 										<div class="table-responsive">
@@ -1630,7 +1629,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 										</div>
 									</div>
 								</div>
-								
+
 								<?php if($s_arri_Ventas=='true'){ ?>
 									<div class="tab-pane fade" id="tab_arr_3_<?php echo $sis_count; ?>">
 										<div class="wmd-panel">
@@ -1695,7 +1694,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 					
 					
 				</div>
-			<?php 
+			<?php
 			$sis_count++;	
 			} ?>
 			
@@ -1716,4 +1715,5 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -289,57 +289,57 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 		
 							<tr class="odd">
 								<td width="200">Codigo Contrato</td>
-								<td><?php echo $rowdata['Codigo'];?></td>
+								<td><?php echo $rowdata['Codigo']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Nombre Contrato</td>
-								<td><?php echo $rowdata['Nombre'];?></td>
+								<td><?php echo $rowdata['Nombre']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Sistema</td>
-								<td><?php echo $rowdata['Sistema'];?></td>
+								<td><?php echo $rowdata['Sistema']; ?></td>
 							</tr>
 							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){?>
 								<tr class="odd">
 									<td>Cliente</td>
-									<td><?php echo $rowdata['Cliente'];?></td>
+									<td><?php echo $rowdata['Cliente']; ?></td>
 								</tr>
 							<?php } ?>
 							<tr class="odd">
 								<td>Duracion</td>
-								<td><?php echo 'Del '.Fecha_estandar($rowdata['FechaInicio']).' al '.Fecha_estandar($rowdata['FechaTermino']);?></td>
+								<td><?php echo 'Del '.Fecha_estandar($rowdata['FechaInicio']).' al '.Fecha_estandar($rowdata['FechaTermino']); ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Tipo de Contrato</td>
-								<td><?php echo $rowdata['TipoLicitacion'];?></td>
+								<td><?php echo $rowdata['TipoLicitacion']; ?></td>
 							</tr>
 							<?php if(isset($rowdata['idTipoLicitacion'])&&$rowdata['idTipoLicitacion']==1){ ?>
 								<tr class="odd">
 									<td>Valor Mensual</td>
-									<td align="right"><?php echo Valores($rowdata['ValorMensual'], 0);?></td>
+									<td align="right"><?php echo Valores($rowdata['ValorMensual'], 0); ?></td>
 								</tr>
 							<?php } ?>
 							<?php if(isset($rowdata['idTipoLicitacion'])&&$rowdata['idTipoLicitacion']==2){ ?>
 								<tr class="odd">
 									<td>Presupuesto</td>
-									<td align="right"><?php echo Valores($rowdata['Presupuesto'], 0);?></td>
+									<td align="right"><?php echo Valores($rowdata['Presupuesto'], 0); ?></td>
 								</tr>
 							<?php } ?>
 							<tr class="odd">
 								<td>Estado</td>
-								<td><?php echo $rowdata['Estado'];?></td>
+								<td><?php echo $rowdata['Estado']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Estado Aprobacion</td>
-								<td><?php echo $rowdata['Aprobacion'];?></td>
+								<td><?php echo $rowdata['Aprobacion']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Bodega Productos Utilizada</td>
-								<td><?php echo $rowdata['BodegaProductos'];?></td>
+								<td><?php echo $rowdata['BodegaProductos']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Bodega Insumos Utilizada</td>
-								<td><?php echo $rowdata['BodegaInsumos'];?></td>
+								<td><?php echo $rowdata['BodegaInsumos']; ?></td>
 							</tr>
 							<?php if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){ ?>
 								<tr>
@@ -369,7 +369,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 			</div>
 		</div>
 	</div>
-</div>	
+</div>
 
 <?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
@@ -407,7 +407,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -417,7 +417,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -426,4 +426,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

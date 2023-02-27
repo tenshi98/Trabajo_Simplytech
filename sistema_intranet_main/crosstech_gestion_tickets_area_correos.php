@@ -58,7 +58,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Correo borrado correct
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- if(!empty($_GET['id'])){
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 //Verifico el tipo de usuario que esta ingresando
@@ -107,7 +107,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 				$Form_Inputs->form_input_hidden('idCorreos', $_GET['id'], 2);
 				?>
-			
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -128,7 +128,7 @@ $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-}?>
+} ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -314,7 +314,7 @@ $arrComunas = db_select_array (false, $SIS_query, 'crosstech_gestion_tickets_are
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$comunas['idCorreos']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($comunas['idCorreos'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el correo '.$comunas['NombreEmail'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el correo '.$comunas['NombreEmail'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -337,4 +337,5 @@ $arrComunas = db_select_array (false, $SIS_query, 'crosstech_gestion_tickets_are
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

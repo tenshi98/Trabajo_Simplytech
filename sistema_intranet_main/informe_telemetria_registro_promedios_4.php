@@ -53,7 +53,7 @@ $arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unid
 
 //guardo las unidades de medida
 $Unimed = array();
-foreach ($arrUnimed as $sen) { 
+foreach ($arrUnimed as $sen) {
 	$Unimed[$sen['idUniMed']] = ' '.$sen['Nombre'];
 }
 /**********************************************************************/
@@ -63,7 +63,7 @@ $arrGrupo = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos
 
 //guardo los grupos
 $Grupo = array();
-foreach ($arrGrupo as $sen) { 
+foreach ($arrGrupo as $sen) {
 	$Grupo[$sen['idGrupo']] = ' '.$sen['Nombre'];
 }
 
@@ -108,7 +108,7 @@ function crear_data($cantsens, $filtro, $idTelemetria, $f_inicio, $f_termino, $d
 			$consql .= ',STDDEV(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0)) AS MedDesStan_'.$i;
 		}
 	}
-	
+
 	/*******************************************************/
 	//Se traen todos los registros
 	$SIS_query = 'telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema'.$consql;
@@ -123,10 +123,10 @@ function crear_data($cantsens, $filtro, $idTelemetria, $f_inicio, $f_termino, $d
 }
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<a target="new" href="<?php echo 'informe_telemetria_registro_promedios_4_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
-
 
 <?php
 /*******************************************************/
@@ -144,10 +144,10 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 }
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$SIS_join = "";	
+	$SIS_join = "";
 }else{
 	$SIS_join   = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-	$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 
 /*******************************************************/
@@ -170,8 +170,8 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 				<?php
 					$stemp = 'active';
 					$xcounter = 1;
-					foreach ($arrEquipos as $equipo) { 
-						if($xcounter==4){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';} 
+					foreach ($arrEquipos as $equipo) {
+						if($xcounter==4){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';}
 						echo '<li class="'.$stemp.'"><a href="#tab_'.$equipo['idTelemetria'].'" data-toggle="tab"><i class="fa fa-map-marker" aria-hidden="true"></i> '.cortar($equipo['NombreEquipo'], 15).'</a></li>';
 						$stemp = '';
 						$xcounter++;
@@ -187,7 +187,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 				//Llamo a la funcion
 				$arrTemporal = crear_data($equipo['cantSensores'], $subf, $equipo['idTelemetria'], $_GET['f_inicio'], $_GET['f_termino'], $_GET['desde'], $_GET['hasta'] , $dbConn); ?>
 
-				<div class="tab-pane fade <?php echo $stemp; ?>" id="tab_<?php echo $equipo['idTelemetria']; $stemp = '';?>">
+				<div class="tab-pane fade <?php echo $stemp; ?>" id="tab_<?php echo $equipo['idTelemetria']; $stemp = ''; ?>">
 					<div class="wmd-panel">
 						<div class="table-responsive">
 						
@@ -259,7 +259,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 										//Armo los datos
 										$gr_tittle = $arrData[$i]['SensorNombre'].' ('.$arrData[$i]['Grupo'].')';
 										$gr_unimed = $arrData[$i]['Unimed'];
-										
+
 										//variables
 										$Graphics_xData       = 'var xData = [';
 										$Graphics_yData       = 'var yData = [';
@@ -328,7 +328,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 													echo '<th style="text-align:center">'.$SensorNombre.' ('.$SensorGrupo.')</th>';	
 												}
 											}
-										}?>
+										} ?>
 									</tr>
 									<tr class="odd">
 										<th>Fecha</th>
@@ -345,7 +345,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 													echo '<th>Promedio</th>';
 												}
 											}
-										}?>
+										} ?>
 									</tr>
 									<?php 
 									//recorro los datos del equipo
@@ -390,10 +390,10 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-			
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //filtros
@@ -411,8 +411,9 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 alert_post_data(2,1,1, $Alert_Text);
+
 ?>
-			
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -421,7 +422,7 @@ alert_post_data(2,1,1, $Alert_Text);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
@@ -450,13 +451,12 @@ alert_post_data(2,1,1, $Alert_Text);
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 2, $dbConn);
-				$Form_Inputs->form_select('Ver Otros Datos','idDetalle', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				$Form_Inputs->form_select('Ver Graficos','idGraficos', $x7, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Ver Otros Datos','idDetalle', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_select('Ver Graficos','idGraficos', $x7, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Valores Desde','desde', $x8, 1);
 				$Form_Inputs->form_input_number('Valores Hasta','hasta', $x9, 1);
 				?>
-	   
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -467,12 +467,10 @@ alert_post_data(2,1,1, $Alert_Text);
 </div>
 <?php } ?>
 
-	
-
-          
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

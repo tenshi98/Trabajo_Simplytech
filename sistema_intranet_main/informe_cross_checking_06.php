@@ -120,6 +120,7 @@ $arrOTS = array();
 $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOTS');
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<?php
 	$search .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
@@ -143,7 +144,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 			<div class="tab-pane fade active in" id="datos">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-					
+
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 							<thead>
 								<tr role="row">
@@ -171,7 +172,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 									<th>PH</th>	
 								</tr>
 							</thead>
-											  
+
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php
 									foreach ($arrOTS as $temp) {
@@ -196,7 +197,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 											$litrosxhectarea = $temp['LitrosAplicados'] / $temp['CuartelHectareas'];
 										}else{
 											$litrosxhectarea = 0;
-										}?>
+										} ?>
 											
 									<tr class="odd">
 										<td><?php echo $temp['PredioNombre']; ?></td>
@@ -235,9 +236,6 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 	</div>
 </div>
 
-
-
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -256,6 +254,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
   
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -287,7 +286,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Temporada','idTemporada', $x4, 1, 'idTemporada', 'Codigo,Nombre', 'cross_checking_temporada', $y, '', $dbConn);
 				$Form_Inputs->form_select_depend1('Predio','idPredio', $x2, 1, 'idPredio', 'Nombre', 'cross_predios_listado', $x, 0,
-										 'Cuarteles','idZona', $x3, 1, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0, 
+										 'Cuarteles','idZona', $x3, 1, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select_filter('N° Solicitud','NSolicitud', $x1, 1, 'NSolicitud', 'NSolicitud', 'cross_solicitud_aplicacion_listado', $w, '', $dbConn);
 				$Form_Inputs->form_select('Estado','idEstado', $x15, 2, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
@@ -304,7 +303,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_number('N° Solicitud','NSolicitud', $x1, 1);
 				$Form_Inputs->form_select_filter('Estado Fenológico','idEstadoFen', $x5, 1, 'idEstadoFen', 'Codigo,Nombre', 'cross_checking_estado_fenologico', $y, '', $dbConn);
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x6, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x7, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 'Variedad','idProducto', $x7, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
 										 $dbConn, 'form1');*/	
 				?>
 
@@ -316,7 +315,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
 					document.getElementById('div_f_termino_desde').style.display = 'none';
 					document.getElementById('div_f_termino_hasta').style.display = 'none';
-						
+
 					$("#idEstado").on("change", function(){ //se ejecuta al cambiar valor del select
 						let idEstado = $(this).val(); //Asignamos el valor seleccionado
 						
@@ -404,4 +403,5 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

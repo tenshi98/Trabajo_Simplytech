@@ -176,7 +176,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Datos Personales');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Datos Personales'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -220,8 +220,8 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Nombre)){         $x1  = $Nombre;         }else{$x1  = $rowdata['Nombre'];}
 					if(isset($Fono)){           $x2  = $Fono;           }else{$x2  = $rowdata['Fono'];}
@@ -231,7 +231,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 					if(isset($idCiudad)){       $x6  = $idCiudad;       }else{$x6  = $rowdata['idCiudad'];}
 					if(isset($idComuna)){       $x7  = $idComuna;       }else{$x7  = $rowdata['idComuna'];}
 					if(isset($Direccion)){      $x8  = $Direccion;      }else{$x8  = $rowdata['Direccion'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -261,14 +261,14 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

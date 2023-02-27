@@ -184,7 +184,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								 ->setDescription("Document for Office 2007")
 								 ->setKeywords("office 2007")
 								 ->setCategory("office 2007 result file");
-		 
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A1', 'Fecha')
 				->setCellValue('B1', 'Hora');
@@ -214,7 +214,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		}
 		$count++;	
 	}
-	 
+
 	$nn=2; 
 	foreach ($arrEquipos as $fac) {
 		//columna inicial

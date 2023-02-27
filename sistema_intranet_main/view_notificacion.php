@@ -19,7 +19,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], '123333');
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], '123333');
 }
 //Cargamos la ubicacion original
@@ -77,25 +77,25 @@ $row_data = db_select_data (false, $SIS_query, 'principal_notificaciones_listado
 
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
-					
+
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="margin-bottom:5px;">
 						<?php if ($row_data['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $row_data['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 						<p class="text-muted">
 							<strong>Autor: </strong><?php echo $row_data['Nombre']; ?><br/>
-							<strong>Titulo: </strong><?php echo $row_data['Titulo'];?><br/>
-							<strong>Fecha: </strong><?php echo fecha_estandar($row_data['Fecha']);?>
+							<strong>Titulo: </strong><?php echo $row_data['Titulo']; ?><br/>
+							<strong>Fecha: </strong><?php echo fecha_estandar($row_data['Fecha']); ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Mensaje</h2>
-						<p class="text-muted" style="white-space: normal;"><?php echo $row_data['Notificacion'];?></p>
-					
+						<p class="text-muted" style="white-space: normal;"><?php echo $row_data['Notificacion']; ?></p>
+
 						<?php
 						//Si esta activo el nomolestar
 						if(isset($_GET['noMol'])&&$_GET['noMol']!=''){
@@ -133,10 +133,10 @@ $row_data = db_select_data (false, $SIS_query, 'principal_notificaciones_listado
 							}
 						}
 						?>
-					
+
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
         </div>
@@ -158,7 +158,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -168,7 +168,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -179,4 +179,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

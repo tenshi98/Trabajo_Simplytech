@@ -91,7 +91,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listad
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_persona"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_persona">
 					<a href="<?php echo $location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -108,7 +108,7 @@ $SIS_query = 'idEstado';
 $SIS_join  = '';
 $SIS_where = 'idAcceso ='.$_GET['id'];
 $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
-	 
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -142,7 +142,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['id'])){
+} elseif(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -198,7 +198,7 @@ $SIS_where = 'idAcceso ='.$_GET['id'];
 $SIS_order = 'Nombre ASC';
 $arrArchivo = array();
 $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrArchivo');
- 
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -206,9 +206,8 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 	<div id="page-wrap">
 		<div id="header"> Nomina de Control de Accesos</div>
 
-		
 		<div id="customer">
-			
+
 			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
@@ -255,11 +254,11 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 					</tr>
 					<tr>
 						<td class="meta-head">Hora Inicio</td>
-						<td colspan="2"><?php echo $row_data['HoraInicioProgramada'];?></td>
+						<td colspan="2"><?php echo $row_data['HoraInicioProgramada']; ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Hora Termino</td>
-						<td colspan="2"><?php echo $row_data['HoraTerminoProgramada'];?></td>
+						<td colspan="2"><?php echo $row_data['HoraTerminoProgramada']; ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -282,9 +281,9 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 					//recorro el lsiatdo entregado por la base de datos
 					foreach ($arrPersonas as $persona) { ?>
 						<tr class="item-row linea_punteada">
-							<td class="item-name" colspan="3"><?php echo $persona['Nombre'];?></td>
-							<td class="item-name" align="right"><?php echo $persona['Rut'];?></td>
-							<td class="item-name" align="right"><?php echo 'N Doc '.$persona['NDocCedula'];?></td>
+							<td class="item-name" colspan="3"><?php echo $persona['Nombre']; ?></td>
+							<td class="item-name" align="right"><?php echo $persona['Rut']; ?></td>
+							<td class="item-name" align="right"><?php echo 'N Doc '.$persona['NDocCedula']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
 									<a href="<?php echo $location.'&id='.$_GET['id'].'&editPersona='.$persona['idNomina']; ?>" title="Editar Persona" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
@@ -298,16 +297,16 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 			</tbody>
 		</table>
     </div>
-    
+
     <table id="items" style="margin-bottom: 20px;">
         <tbody>
-            
+
 			<tr class="invoice-total" bgcolor="#f1f1f1">
                 <td colspan="5">Archivos Adjuntos</td>
                 <td width="160"></td>
             </tr>
-            
-			<?php 
+
+			<?php
 			if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
@@ -320,18 +319,16 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 							</div>
 						</td>
 					</tr>
-					 
-				 <?php 
+
+				 <?php
 				$numeral++;
 				}
-			}?>
+			} ?>
 
 		</tbody>
     </table>
 
-
 </div>
-
 
 <div class="clearfix"></div>
 
@@ -384,13 +381,13 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {     
 	$SIS_where .= " AND seguridad_accesos_nominas.idUsuario = '".$_GET['idUsuario']."'";
 }
-if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){ 
+if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){
 	$SIS_where .= " AND seguridad_accesos_nominas.HoraInicioProgramada BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'";
 }
-if(isset($_GET['h_salida_inicio']) && $_GET['h_salida_inicio'] != ''&&isset($_GET['h_salida_termino']) && $_GET['h_salida_termino']!=''){ 
+if(isset($_GET['h_salida_inicio']) && $_GET['h_salida_inicio'] != ''&&isset($_GET['h_salida_termino']) && $_GET['h_salida_termino']!=''){
 	$SIS_where .= " AND seguridad_accesos_nominas.HoraTerminoProgramada BETWEEN '".$_GET['h_salida_inicio']."' AND '".$_GET['h_salida_termino']."'";
 }
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){
 	$SIS_where .= " AND seguridad_accesos_nominas.FechaProgramada BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
 if(isset($_GET['idUbicacion']) && $_GET['idUbicacion']!=''){        $SIS_where .= " AND seguridad_accesos_nominas.idUbicacion='".$_GET['idUbicacion']."'";}
@@ -491,7 +488,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 												  $dbConn, 'form1');
 				$Form_Inputs->form_input_text('Persona Reunion', 'PersonaReunion', $x14, 1);
 				$Form_Inputs->form_select('Estado','idEstado', $x15, 1, 'idEstado', 'Nombre', 'core_estado_caja', 0, '', $dbConn);
-					
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 
@@ -584,7 +581,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 								?>
 							</td>
 							<td><?php echo $tipo['PersonaReunion']; ?></td>
-							<td><label class="label <?php if(isset($tipo['idEstado'])&&$tipo['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $tipo['Estado']; ?></label></td>	
+							<td><label class="label <?php if(isset($tipo['idEstado'])&&$tipo['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $tipo['Estado']; ?></label></td>	
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
@@ -611,4 +608,5 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

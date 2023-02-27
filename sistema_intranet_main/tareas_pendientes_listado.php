@@ -248,7 +248,7 @@ $usrfil .= $responsables;
 
 		<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->input_hold('text','Observacion','Observacion[]', '', 1);?>
+				<?php $Form_Inputs->input_hold('text','Observacion','Observacion[]', '', 1); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
@@ -448,20 +448,19 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 
 		<?php
 		$ubicacion = $location.'&clear_all=true';
-		$dialogo   = '¿Realmente deseas eliminar todos los datos de la OT en curso?';?>
+		$dialogo   = '¿Realmente deseas eliminar todos los datos de la OT en curso?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
 
 		<a href="<?php echo $location; ?>"  class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
 		<?php
 		$ubicacion = $location.'&view=true&crear_tarea=true';
-		$dialogo   = '¿Desea crear ingresar el documento, tenga en cuenta que no podra realizar mas modificaciones una vez creada?';?>
+		$dialogo   = '¿Desea crear ingresar el documento, tenga en cuenta que no podra realizar mas modificaciones una vez creada?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary"><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Tarea</a>
 
 	</div>
 	<div class="clearfix"></div>
 </div>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive" style="margin-bottom:30px!important;">
 
@@ -513,7 +512,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 					<td colspan="6">Tarea</td>
 				</tr>
 				<tr class="item-row linea_punteada" style="white-space: initial;">
-					<td class="item-name" colspan="6"><?php echo $_SESSION['tareas_basicos']['Observaciones'];?></td>
+					<td class="item-name" colspan="6"><?php echo $_SESSION['tareas_basicos']['Observaciones']; ?></td>
 				</tr>
 				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
@@ -525,12 +524,12 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				if (isset($_SESSION['tareas_responsables'])){
 					foreach ($_SESSION['tareas_responsables'] as $key => $resp){ ?>
 						<tr class="item-row linea_punteada">
-							<td class="item-name" colspan="5"><?php echo $resp['Responsables'];?></td>
+							<td class="item-name" colspan="5"><?php echo $resp['Responsables']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
 									<?php
 									$ubicacion = $location.'&del_responsable='.$resp['idResponsable'];
-									$dialogo   = '¿Realmente deseas eliminar al responsable '.$resp['Responsables'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar al responsable '.$resp['Responsables'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Responsable" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 								</div>
 							</td>
@@ -553,12 +552,12 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				if (isset($_SESSION['tareas_tareas'])){
 					foreach ($_SESSION['tareas_tareas'] as $key => $tarea){ ?>
 						<tr class="item-row linea_punteada" style="white-space: initial;">
-							<td class="item-name" colspan="5"><?php echo '<strong>'.$tarea['Responsables'].': </strong>'.$tarea['Observacion'];?></td>
+							<td class="item-name" colspan="5"><?php echo '<strong>'.$tarea['Responsables'].': </strong>'.$tarea['Observacion']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
 									<?php
 									$ubicacion = $location.'&del_tarea='.$tarea['idInterno'];
-									$dialogo   = '¿Realmente deseas eliminar el trabajo '.$tarea['Observacion'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el trabajo '.$tarea['Observacion'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Responsable" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 								</div>
 							</td>
@@ -584,8 +583,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($archivo['NombreArchivo'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
 								<?php
 								$ubicacion = $location.'&del_file='.$archivo['idFile'];
-								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$archivo['NombreArchivo']).'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$archivo['NombreArchivo']).'?'; ?>
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
@@ -598,14 +597,13 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</table>
 	</div>
 
-
 </div>
-
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -732,14 +730,14 @@ $arrTareas = db_select_array (false, $SIS_query, 'tareas_pendientes_listado', $S
 
 		<?php
 		$ubicacion = $location.'&clear_all=true';
-		$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+		$dialogo   = '¿Realmente deseas eliminar todos los registros?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</a>
 
 		<a href="<?php echo $location; ?>&view=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-arrow-right" aria-hidden="true"></i> Continuar Tarea Pendiente</a>
 	<?php }else{ ?>
 		<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Tarea Pendiente</a>
 	<?php }
-	 }?>
+	 } ?>
 </div>
 <div class="clearfix"></div>
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
@@ -848,7 +846,7 @@ $arrTareas = db_select_array (false, $SIS_query, 'tareas_pendientes_listado', $S
 								<?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&delete_tarea='.simpleEncode($ot['idTareas'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la tarea '.$ot['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la tarea '.$ot['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -872,4 +870,5 @@ $arrTareas = db_select_array (false, $SIS_query, 'tareas_pendientes_listado', $S
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

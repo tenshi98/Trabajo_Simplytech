@@ -189,7 +189,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join,
 					<tr class="odd">
 						<td><?php echo $usuarios['Nombre']; ?></td>
 						<td><?php echo $usuarios['Identificador']; ?></td>
-						<td><label class="label <?php if(isset($usuarios['idEstadoEncendido'])&&$usuarios['idEstadoEncendido']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['EstadoEncendido']; ?></label></td>
+						<td><label class="label <?php if(isset($usuarios['idEstadoEncendido'])&&$usuarios['idEstadoEncendido']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $usuarios['EstadoEncendido']; ?></label></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
@@ -222,4 +222,5 @@ $arrUsers = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join,
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

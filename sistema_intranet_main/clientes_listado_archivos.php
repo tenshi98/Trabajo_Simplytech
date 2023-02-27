@@ -46,10 +46,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+$rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Agregar Archivos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Agregar Archivos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -77,7 +77,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 			</ul>
 		</header>
         <div class="table-responsive">
-			
+
 			<?php
 			$Rut = $rowdata['Rut'];
 			$Rut = str_replace(' ', '', $Rut);//elimino espacios
@@ -89,21 +89,21 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 			echo file_explorer(2, 'connector_cliente_archivos', DB_SITE_MAIN_PATH, $ruta, 3);
 
 			?>
-			
+
 		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

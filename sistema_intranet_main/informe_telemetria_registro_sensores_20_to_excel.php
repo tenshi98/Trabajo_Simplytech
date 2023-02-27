@@ -167,7 +167,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$arrData[$xx] = "DX";$xx++;
 	$arrData[$xx] = "DY";$xx++;
 	$arrData[$xx] = "DZ";$xx++;
-	
+
 	/****************************************************************/
 	$consql = '';
 	for ($i = 1; $i <= 72; $i++) {
@@ -193,7 +193,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$SIS_order = 'FechaSistema ASC, HoraSistema ASC LIMIT 10000';
 	$arrEquipos = array();
 	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos');
-	
+
 	/**********************************************************************/
 	//Se traen todos los grupos
 	$arrGrupo = array();
@@ -201,7 +201,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	//guardo los grupos
 	$Grupo = array();
-	foreach ($arrGrupo as $sen) { 
+	foreach ($arrGrupo as $sen) {
 		$Grupo[$sen['idGrupo']] = $sen['Nombre'];
 	}
 
@@ -215,7 +215,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$arrTable       = array();
 	$arrTable2      = array();
 	$arrTable3      = array();
-	
+
 	/**********************************************************************************************************************************/
 	/*                                                          Ejecucion                                                             */
 	/**********************************************************************************************************************************/
@@ -230,7 +230,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								 ->setDescription("Document for Office 2007")
 								 ->setKeywords("office 2007")
 								 ->setCategory("office 2007 result file");
-	 
+
 	//titulo
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A1', 'Fecha Inicio')
@@ -238,9 +238,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				->setCellValue('C1', 'Fecha Termino')
 				->setCellValue('D1', 'Hora Termino')
 				->setCellValue('E1', 'Duracion');
-	
+
 	//titulo de la tabla
-	$x = 1;            
+	$x = 1;
 	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 		//Verifico la unidad de medida
 		if(isset($rowEquipo['SensoresUniMed_'.$i])&&$rowEquipo['SensoresUniMed_'.$i]==12){
@@ -253,7 +253,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			}
 		}
 	}
-	
+
 	//variables
 	$posit           = 0;
 	$Ult_diaInicio   = '';
@@ -261,7 +261,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$Ult_horaInicio  = '';
 	$Ult_horaTermino = '';
 	$Maincount       = 0;
-		
+
 	//se arman datos
 	foreach ($arrEquipos as $fac) {
 		//variable
@@ -338,8 +338,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$arrTable3[$x]['Contenido']  = $arrTableTemp3[$x];		
 		}
 
-	} 
-	
+	}
+
 	/****************************************************************/
 	//conteo
 	$nn=2;
@@ -357,10 +357,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$spreadsheet->setActiveSheetIndex(0)
 						->setCellValue($arrData[$x].$nn, DeSanitizar($arrTable2[$y][$x]['Contenido']));
 		}
-		
+
 		$nn++;	
 	}
-	
+
 	/*****************************************************************/
 	$HorasTrans  = horas_transcurridas($Ult_diaInicio, $Ult_diaTermino, $Ult_horaInicio, $Ult_horaTermino);
 	$spreadsheet->setActiveSheetIndex(0)
@@ -374,7 +374,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue($arrData[$x].$nn, DeSanitizar($arrTable3[$x]['Contenido']));
 	}
-	
+
 	// Rename worksheet
 	$spreadsheet->getActiveSheet()->setTitle(DeSanitizar($rowEquipo['NombreEquipo']));
 

@@ -18,7 +18,7 @@
 	}else{
 		$frm_Edit = '';
 	} ?>
-		
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
@@ -50,7 +50,7 @@
 								<?php } ?>
 							</tbody>
 						</table>
-						
+
 					</div>
 					<div class="col-xs-12 col-sm-6 col-md-9 col-lg-9">
 						<div class="row">

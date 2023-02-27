@@ -72,7 +72,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 		$subquery .= ',SensoresActivo_'.$i;
 		$subquery .= ',SensoresMedActual_'.$i;
 	}
-	
+
 	// consulto los datos
 	$SIS_query = 'Nombre,id_Geo, id_Sensores,cantSensores,LastUpdateFecha,LastUpdateHora, GeoVelocidad'.$subquery;
 	$SIS_join  = '';
@@ -106,7 +106,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 
 			<div class="tab-pane fade active in" id="basicos">
 
-				<?php 
+				<?php
 				$explanation  = '<strong>Nombre : </strong>'.$rowdata['Nombre'].'<br/>';
 				if(isset($rowdata['IdentificadorEmpresa'])&&$rowdata['IdentificadorEmpresa']!=''){$explanation .= '<strong>Identificador Empresa : </strong>'.$rowdata['IdentificadorEmpresa'].'<br/>';}
 				$explanation .= '<br/>Datos de Configuracion<br/>';
@@ -131,7 +131,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 				<div class="tab-pane fade" id="mediciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">
-							
+
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
 								<?php if(isset($rowMed['id_Geo'])&&$rowMed['id_Geo']!=''&&$rowMed['id_Geo']==1){ ?>
 									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_flota_view_equipo_mediciones.php?view='.simpleDecode($_GET['view'], fecha_actual()).'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ultima Ubicacion</a>
@@ -143,7 +143,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 								<?php } ?>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
-							
+
 							<?php if(isset($rowdata['LimiteVelocidad'])&&$rowdata['LimiteVelocidad']!=0){?>
 								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 									<thead>
@@ -155,7 +155,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 										</tr>
 									</thead>
 									<tbody role="alert" aria-live="polite" aria-relevant="all">
-										<tr class="odd <?php if($rowMed['GeoVelocidad'] > $rowdata['LimiteVelocidad']){echo 'danger';}?>">		
+										<tr class="odd <?php if($rowMed['GeoVelocidad'] > $rowdata['LimiteVelocidad']){echo 'danger';} ?>">		
 											<td>Velocidad</td>
 											<td><?php echo fecha_estandar($rowMed['LastUpdateFecha']).' - '.$rowMed['LastUpdateHora'].' hrs'; ?></td>
 											<td><?php echo Cantidades($rowMed['GeoVelocidad'], 0).' KM/h'; ?></td>
@@ -180,7 +180,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 										<?php for ($i = 1; $i <= $rowdata['cantSensores']; $i++) { 
 											//solo sensores activos
 											if(isset($rowMed['SensoresActivo_'.$i])&&$rowMed['SensoresActivo_'.$i]==1){ 
-												$unimed = ' '.$arrFinalUnimed[$rowMed['SensoresUniMed_'.$i]];?>
+												$unimed = ' '.$arrFinalUnimed[$rowMed['SensoresUniMed_'.$i]]; ?>
 												<tr class="odd">
 													<td><?php echo 's'.$i ?></td>
 													<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>
@@ -190,7 +190,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 														echo Cantidades_decimales_justos($rowMed['SensoresMedActual_'.$i]).$unimed;
 													}else{
 														echo 'Sin Datos';
-													}?>
+													} ?>
 													</td>
 												</tr>
 											<?php } ?>
@@ -202,18 +202,18 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 					</div>
 				</div>
 			<?php } ?>
-			
+
 			<?php if($arrAlertas!=false && !empty($arrAlertas) && $arrAlertas!=''){ ?>
 				<div class="tab-pane fade" id="alertas">
 					<div class="wmd-panel">
 
 						<div class="table-responsive">
-							
+
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
 								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
-							
+
 							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 								<thead>
 									<tr role="row">
@@ -228,7 +228,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 										<?php } ?>
 									</tr>
 								</thead>
-								
+
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
 									<?php foreach ($arrAlertas as $error) { 
 											//Guardo la unidad de medida
@@ -256,13 +256,13 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 					</div>
 				</div>
 			<?php } ?>
-			
+
 			<?php if($arrFlinea!=false && !empty($arrFlinea) && $arrFlinea!=''){ ?>
 				<div class="tab-pane fade" id="flinea">
 					<div class="wmd-panel">
 
 						<div class="table-responsive">
-							
+
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
 								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
@@ -282,7 +282,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 										<?php } ?>
 									</tr>
 								</thead>
-								
+
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
 									<?php foreach ($arrFlinea as $error) {  ?>
 										<tr>
@@ -313,10 +313,10 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 	</div>
 </div>
 
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

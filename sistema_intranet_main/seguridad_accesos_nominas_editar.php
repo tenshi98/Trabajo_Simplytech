@@ -80,14 +80,14 @@ if(!empty($_GET['addFile'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
-			
+
 				<?php
 				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
 
 				$Form_Inputs->form_input_hidden('idAcceso', $_GET['id'], 2);
-					
+
 				?>
 
 				<div class="form-group">
@@ -99,7 +99,7 @@ if(!empty($_GET['addFile'])){ ?>
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['editPersona'])){  
@@ -137,7 +137,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listad
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_persona"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_persona">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -147,7 +147,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listad
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addPersona'])){  ?>
+} elseif(!empty($_GET['addPersona'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -176,7 +176,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listad
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_persona"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_persona">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -246,7 +246,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['id'])){ 
+} elseif(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 // consulto los datos
@@ -302,7 +302,7 @@ $SIS_where = 'idAcceso ='.$_GET['id'];
 $SIS_order = 'Nombre ASC';
 $arrArchivo = array();
 $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_archivos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrArchivo');
-	 
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -310,9 +310,8 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 	<div id="page-wrap">
 		<div id="header"> Nomina de Control de Accesos</div>
 
-		
 		<div id="customer">
-			
+
 			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
@@ -359,11 +358,11 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 					</tr>
 					<tr>
 						<td class="meta-head">Hora Inicio</td>
-						<td colspan="2"><?php echo $row_data['HoraInicioProgramada'];?></td>
+						<td colspan="2"><?php echo $row_data['HoraInicioProgramada']; ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Hora Termino</td>
-						<td colspan="2"><?php echo $row_data['HoraTerminoProgramada'];?></td>
+						<td colspan="2"><?php echo $row_data['HoraTerminoProgramada']; ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -386,16 +385,16 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 					//recorro el lsiatdo entregado por la base de datos
 					foreach ($arrPersonas as $persona) { ?>
 						<tr class="item-row linea_punteada">
-							<td class="item-name" colspan="3"><?php echo $persona['Nombre'];?></td>
-							<td class="item-name" align="right"><?php echo $persona['Rut'];?></td>
-							<td class="item-name" align="right"><?php echo 'N Doc '.$persona['NDocCedula'];?></td>
+							<td class="item-name" colspan="3"><?php echo $persona['Nombre']; ?></td>
+							<td class="item-name" align="right"><?php echo $persona['Rut']; ?></td>
+							<td class="item-name" align="right"><?php echo 'N Doc '.$persona['NDocCedula']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
 									<a href="<?php echo $location.'&editPersona='.$persona['idNomina']; ?>" title="Editar Persona" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-									<?php 
+									<?php
 									$ubicacion = $location.'&del_persona='.simpleEncode($persona['idNomina'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar a '.$persona['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Persona" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+									$dialogo   = '¿Realmente deseas eliminar a '.$persona['Nombre'].'?'; ?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Persona" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -406,16 +405,16 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 			</tbody>
 		</table>
     </div>
-    
+
     <table id="items" style="margin-bottom: 20px;">
         <tbody>
-            
+
 			<tr class="invoice-total" bgcolor="#f1f1f1">
                 <td colspan="5">Archivos Adjuntos</td>
                 <td width="160"><a href="<?php echo $location.'&addFile=true' ?>" title="Agregar Archivo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Archivos</a></td>
             </tr>
-            
-			<?php 
+
+			<?php
 			if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
@@ -425,27 +424,23 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $location.'&del_file='.simpleEncode($producto['idFile'], fecha_actual());
-								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?'; ?>
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
-					 
-				 <?php 
+
+				 <?php
 				$numeral++;
 				}
-			}?>
+			} ?>
 
 		</tbody>
     </table>
 
-
 </div>
-
-
-<div class="clearfix"></div>
 
 <div class="clearfix"></div>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -459,4 +454,5 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

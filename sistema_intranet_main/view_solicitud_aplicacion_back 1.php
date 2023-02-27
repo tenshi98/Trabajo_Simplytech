@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -89,7 +89,7 @@ WHERE cross_solicitud_aplicacion_listado.idSolicitud = ".$X_Puntero;
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
 if(!$resultado){
-	
+
 	//variables
 	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
@@ -121,7 +121,7 @@ WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud = ".$X_Puntero;
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
 if(!$resultado){
-	
+
 	//variables
 	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
@@ -258,7 +258,7 @@ array_push( $arrHistorial,$row );
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<?php echo '
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Empresa Origen</strong>
@@ -301,7 +301,7 @@ array_push( $arrHistorial,$row );
 		<div class="col-xs-12 table-responsive">
 			<table class="table">
 				<tbody>
-					
+
 					<?php /**********************************************************************************/?>
 					<tr class="active">
 						<td><strong>Cuarteles</strong></td>
@@ -311,27 +311,27 @@ array_push( $arrHistorial,$row );
 						<td><strong>Temp Min</strong></td>
 						<td><strong>Temp Max</strong></td>
 					</tr>
-					<?php 
+					<?php
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrCuarteles) {
 						foreach ($arrCuarteles as $cuartel) { ?>
-							
+
 							<tr class="item-row linea_punteada" style="background: #eee;">
 								<td class="item-name"><?php echo $cuartel['Cuartel'];if(isset($cuartel['idEstado'])&&$cuartel['idEstado']==2){ echo '(Cerrado el '.fecha_estandar($cuartel['f_cierre']).')';} ?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['Mojamiento']).' L/ha';?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['VelTractor']).' Km/hr';?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['VelViento']).' Km/hr';?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['TempMin']).' °';?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['TempMax']).' °';?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['Mojamiento']).' L/ha'; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['VelTractor']).' Km/hr'; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['VelViento']).' Km/hr'; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['TempMin']).' °'; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['TempMax']).' °'; ?></td>
 							</tr>
 							<?php 
 							if($arrTrac[$cuartel['idCuarteles']]){
 								//Se recorren los tractores
 								foreach ($arrTrac[$cuartel['idCuarteles']] as $tract){ ?>
 									<tr class="item-row linea_punteada">
-										<td class="item-name" colspan="2"><i class="fa fa-truck" aria-hidden="true"></i> <?php echo '<strong>Tractor: </strong>'.$tract['VehiculoNombre'];?></td>
-										<td class="item-name" colspan="2"><?php echo '<strong>Equipo Aplicación: </strong>'.$tract['Nombre'];?></td>
-										<td class="item-name" colspan="2"><?php echo '<strong>Trabajador: </strong>'.$tract['Trabajador'];?></td>
+										<td class="item-name" colspan="2"><i class="fa fa-truck" aria-hidden="true"></i> <?php echo '<strong>Tractor: </strong>'.$tract['VehiculoNombre']; ?></td>
+										<td class="item-name" colspan="2"><?php echo '<strong>Equipo Aplicación: </strong>'.$tract['Nombre']; ?></td>
+										<td class="item-name" colspan="2"><?php echo '<strong>Trabajador: </strong>'.$tract['Trabajador']; ?></td>
 									</tr>
 								<?php
 								}
@@ -339,19 +339,19 @@ array_push( $arrHistorial,$row );
 							if($arrProd[$cuartel['idCuarteles']]){
 								//Se recorren los quimicos a utilizar
 								foreach ($arrProd[$cuartel['idCuarteles']] as $prod){?>
-									
+
 									<tr class="item-row linea_punteada">
 										<td class="item-name" colspan="3">
 											<i class="fa fa-flask" aria-hidden="true"></i>
-											<?php echo '<strong>Producto Químico: </strong>'.$prod['Producto'];?><br/>
-											<?php echo '<strong>Objetivo: </strong>'.$prod['Objetivo'];?><br/>
+											<?php echo '<strong>Producto Químico: </strong>'.$prod['Producto']; ?><br/>
+											<?php echo '<strong>Objetivo: </strong>'.$prod['Objetivo']; ?><br/>
 										</td>
 										<td class="item-name" colspan="3">
-											<?php echo '<strong>Dosis Recomendada: </strong>'.Cantidades_decimales_justos($prod['DosisRecomendada']).' '.$prod['Unimed'];?><br/>
-											<?php echo '<strong>Dosis a aplicar: </strong>'.Cantidades_decimales_justos($prod['DosisAplicar']).' '.$prod['Unimed'];?><br/>
+											<?php echo '<strong>Dosis Recomendada: </strong>'.Cantidades_decimales_justos($prod['DosisRecomendada']).' '.$prod['Unimed']; ?><br/>
+											<?php echo '<strong>Dosis a aplicar: </strong>'.Cantidades_decimales_justos($prod['DosisAplicar']).' '.$prod['Unimed']; ?><br/>
 										</td>
 									</tr>
-							
+
 								<?php
 								}
 							}
@@ -370,7 +370,7 @@ array_push( $arrHistorial,$row );
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
 		</div>
 	</div>
 	
@@ -390,7 +390,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -400,7 +400,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -409,4 +409,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

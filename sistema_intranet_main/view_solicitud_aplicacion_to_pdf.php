@@ -26,7 +26,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -348,14 +348,14 @@ $html .= '
 							
 							if($LitrosApliXhect!=0){$ndatax1 = porcentaje($LitrosApliXhect/$cuartel['Mojamiento']);}else{ $ndatax1 = '0 %';}
 							
-							$html .= '<tr>';  
-								$html .= '<td>'.$cuartel['EspecieNombre'].' - '.$cuartel['VariedadNombre'].'</td>';  
-								$html .= '<td>'.$cuartel['NSolicitud'].'</td>';  
-								$html .= '<td>'.$s_Icon.' '.$cuartel['CuartelNombre'].$cierre.'</td>';  
-								$html .= '<td>'.Cantidades($S_VelPromedio,1).'</td>';  
-								$html .= '<td>'.Cantidades($cuartel['Mojamiento'],0).'</td>';  
-								$html .= '<td>'.Cantidades($S_LitrosAplicados,1).'</td>';  
-								$html .= '<td>'.Cantidades($LitrosApliXhect,1).'</td>';  
+							$html .= '<tr>';
+								$html .= '<td>'.$cuartel['EspecieNombre'].' - '.$cuartel['VariedadNombre'].'</td>';
+								$html .= '<td>'.$cuartel['NSolicitud'].'</td>';
+								$html .= '<td>'.$s_Icon.' '.$cuartel['CuartelNombre'].$cierre.'</td>';
+								$html .= '<td>'.Cantidades($S_VelPromedio,1).'</td>';
+								$html .= '<td>'.Cantidades($cuartel['Mojamiento'],0).'</td>';
+								$html .= '<td>'.Cantidades($S_LitrosAplicados,1).'</td>';
+								$html .= '<td>'.Cantidades($LitrosApliXhect,1).'</td>';
 								$html .= '<td>'.$ndatax1.'</td>'; 
 								$html .= '<td>';
 									if ($arrTracxCuartel!=false && !empty($arrTracxCuartel) && $arrTracxCuartel!='') {
@@ -570,7 +570,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 		/************************************************************************/
 		//TCPDF
 		case 1:
-			
+
 			require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 			// create new PDF document
@@ -625,7 +625,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output(DeSanitizar($pdf_file), 'I');
-	
+
 			break;
 		/************************************************************************/
 		//DomPDF (Solo compatible con PHP 5.x)

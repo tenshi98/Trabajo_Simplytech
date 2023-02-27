@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -54,7 +54,7 @@ $rowdata = db_select_data (false, $SIS_query, 'prospectos_etapa_fidelizacion', $
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>		
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Ver Datos de la Etapa</h5>
 		</header>
         <div class="body">
@@ -65,7 +65,7 @@ $rowdata = db_select_data (false, $SIS_query, 'prospectos_etapa_fidelizacion', $
 				<strong>Usuario : </strong><?php echo $rowdata['nombre_usuario']; ?><br/>
 				<strong>Fecha : </strong><?php echo Fecha_completa_alt($rowdata['Fecha']); ?>
             </p>
-                      
+
             <h2 class="text-primary">Observacion</h2>
             <p class="text-muted word_break">
 				<div class="text-muted well well-sm no-shadow">
@@ -86,7 +86,6 @@ $rowdata = db_select_data (false, $SIS_query, 'prospectos_etapa_fidelizacion', $
 	</div>
 </div>
 
-
 <?php 
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
@@ -99,7 +98,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -109,7 +108,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -118,4 +117,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

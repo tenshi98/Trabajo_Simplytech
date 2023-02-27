@@ -214,7 +214,7 @@ require_once 'core/Web.Header.Main.php';
 				$Form_Inputs->form_select_disabled('form_select_disabled 1','form_select_disabled1', $x49, 1, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', $dbConn);
 				$Form_Inputs->form_select_disabled('form_select_disabled 2','form_select_disabled2', $x50, 2, 'idEquipo', 'Nombre', 'equipos_arriendo_listado', 'idEstado=1', $dbConn);
 				$Form_Inputs->form_select_n_auto('form_select_n_auto','form_select_n_auto1', $x51, 1, 1, 72);
-				$Form_Inputs->form_select_n_auto('form_select_n_auto','form_select_n_auto2', $x52, 2, 1, 72);	
+				$Form_Inputs->form_select_n_auto('form_select_n_auto','form_select_n_auto2', $x52, 2, 1, 72);
 				$Form_Inputs->form_select_country('form_select_country','form_select_country1', $x53, 1, $dbConn);
 				$Form_Inputs->form_select_country('form_select_country','form_select_country2', $x54, 2, $dbConn);
 				$Form_Inputs->form_select_depend1('Select dependientes 1 a','idCiudad', $x55, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
@@ -256,7 +256,7 @@ require_once 'core/Web.Header.Main.php';
 				
 			
 				?>
-			  
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_tarea"> 
 				</div>
@@ -272,4 +272,5 @@ require_once 'core/Web.Header.Main.php';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

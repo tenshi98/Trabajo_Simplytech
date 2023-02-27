@@ -76,7 +76,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTemporal,$row );
-} 
+}
 //Se crea arreglo
 $arrProvIns = array();
 foreach ($arrTemporal as $temp) {
@@ -107,9 +107,10 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrDocumentos,$row );
-} 
+}
 //Variables
 $TotalGeneral = 0;
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -132,13 +133,13 @@ $TotalGeneral = 0;
 						} 
 						//Total de celdas
 						$cel = $nFormPago + 2;
-						$title = $nFormPago + 5;?>
+						$title = $nFormPago + 5; ?>
 						<th>Total</th>
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php 
+					<?php
 					$TotalCat = 0;
 					//Se recorren los datos
 					foreach ($arrProvIns as $key => $prod){
@@ -176,8 +177,8 @@ $TotalGeneral = 0;
 				  
 					
 					<tr class="invoice-total" bgcolor="#f1f1f1">
-						<td colspan="<?php echo $cel; ?>" align="right"> <strong>Total General</strong></td>    
-						<td align="right"><?php echo Valores($TotalGeneral, 0);?></td>
+						<td colspan="<?php echo $cel; ?>" align="right"> <strong>Total General</strong></td>
+						<td align="right"><?php echo Valores($TotalGeneral, 0); ?></td>
 						<td></td>
 					</tr>
 			                   
@@ -198,6 +199,7 @@ $TotalGeneral = 0;
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -220,7 +222,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_filter('Documento de Pago','idDocPago', $x2, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Pago Inicio','f_inicio_pago', $x3, 1);
 				$Form_Inputs->form_date('Fecha Pago Termino','f_termino_pago', $x4, 1);
-						
+
 				?>
 
 				<div class="form-group">
@@ -238,4 +240,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -26,7 +26,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -276,7 +276,7 @@ $html .= '
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Inspector</td>
 							<td style="vertical-align: top; width:30%;" colspan="3">'.$rowConso['InspectorNombre'].' '.$rowConso['InspectorApellido'].'</td>
 						</tr>
-					
+
 					</tbody>
 				</table>
 
@@ -330,9 +330,7 @@ $html .= '
 						</tr>
 					</tbody>
 				</table>
-				
-				
-				
+
 				<br/>
 				<br/>
 
@@ -358,7 +356,7 @@ $html .= '
 						</tr>';		  
 						
 					
-						filtrar($arrArchivos, 'Tipo');  
+						filtrar($arrArchivos, 'Tipo');
 						foreach($arrArchivos as $categoria=>$archivos){ 
 							$html .= '<tr><td colspan="8"  style="background-color:#DDD"><strong>'.$categoria.'</strong></td></tr>';
 							$html .= '<tr>';
@@ -406,7 +404,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 		/************************************************************************/
 		//TCPDF
 		case 1:
-			
+
 			require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 			// create new PDF document
@@ -462,7 +460,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output(DeSanitizar($pdf_file), 'I');
-	
+
 			break;
 		/************************************************************************/
 		//DomPDF (Solo compatible con PHP 5.x)

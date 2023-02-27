@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -88,7 +88,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'orden_trabajo_eventos_listad
 							<strong>Fecha : </strong><?php echo $rowdata['Fecha']; ?><br/>
 							<strong>Hora : </strong><?php echo $rowdata['Hora']; ?><br/>
 							<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?><br/>
-							
+
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Observacion</h2>
@@ -118,20 +118,16 @@ $arrArchivos = db_select_array (false, $SIS_query, 'orden_trabajo_eventos_listad
 								?>
 							</tbody>
 						</table>
-						
 
-						
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
 
-			
         </div>
 	</div>
 </div>
-
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
@@ -145,7 +141,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -155,7 +151,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -164,4 +160,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

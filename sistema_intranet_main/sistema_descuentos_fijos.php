@@ -113,7 +113,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -261,7 +261,7 @@ $arrAFP = db_select_array (false, $SIS_query, 'sistema_descuentos_fijos', $SIS_j
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$afp['idDescuentoFijo']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($afp['idDescuentoFijo'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el bono '.$afp['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el bono '.$afp['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -284,4 +284,5 @@ $arrAFP = db_select_array (false, $SIS_query, 'sistema_descuentos_fijos', $SIS_j
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

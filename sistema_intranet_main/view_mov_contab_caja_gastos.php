@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -106,7 +106,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Datos basicos
 			<address>
@@ -114,7 +114,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 				<strong>Rut: </strong><?php echo $row_data['TrabajadorRut']; ?><br/>
 				<strong>Cargo: </strong><?php echo $row_data['TrabajadorCargo']; ?><br/>
 				<strong>Fono: </strong><?php echo formatPhone($row_data['TrabajadorFono']); ?><br/>
-			
+
 			</address>
 		</div>
 				
@@ -123,7 +123,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 			<address>
 				<strong>Fecha Creacion: </strong><?php echo fecha_estandar($row_data['Creacion_fecha']); ?><br/>
 				<strong>Fecha Ingreso: </strong><?php echo fecha_estandar($row_data['fecha_auto']); ?><br/>
-				<strong>Usuario: </strong><?php echo $row_data['Usuario']; ?><br/>	
+				<strong>Usuario: </strong><?php echo $row_data['Usuario']; ?><br/>
 				<strong>Sistema: </strong><?php echo $row_data['CajaSistema']; ?><br/>
 			</address>			
 		</div>
@@ -155,10 +155,10 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					
+
 					<?php if(isset($row_data['Valor'])&&$row_data['Valor']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td align="right" colspan="3"><strong>Total</strong></td> 
+							<td align="right" colspan="3"><strong>Total</strong></td>
 							<td align="right"><?php echo Valores($row_data['Valor'], 0); ?></td>
 						</tr>
 					<?php } ?>
@@ -171,7 +171,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
 		</div>
 	</div>
 
@@ -252,7 +252,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -262,7 +262,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 <?php
@@ -270,4 +270,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

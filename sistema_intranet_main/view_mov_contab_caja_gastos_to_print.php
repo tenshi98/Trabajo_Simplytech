@@ -26,7 +26,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -97,7 +97,7 @@ $html = '
 			<address>
 				<strong>Fecha Creacion: </strong>'.fecha_estandar($row_data['Creacion_fecha']).'<br/>
 				<strong>Fecha Ingreso: </strong>'.fecha_estandar($row_data['fecha_auto']).'<br/>
-				<strong>Usuario: </strong>'.$row_data['Usuario'].'<br/>	
+				<strong>Usuario: </strong>'.$row_data['Usuario'].'<br/>
 				<strong>Sistema: </strong>'.$row_data['CajaSistema'].'<br/>
 			</address>
 		</div>
@@ -156,4 +156,5 @@ echo $html;
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Print.php';
+
 ?>

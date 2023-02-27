@@ -62,7 +62,7 @@ sistema_variedades_categorias.Nombre,
 (SELECT COUNT(idSisProd) FROM core_sistemas_variedades_categorias WHERE idCategoria = sistema_variedades_categorias.idCategoria AND idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'].' LIMIT 1) AS contar,
 (SELECT idSisProd        FROM core_sistemas_variedades_categorias WHERE idCategoria = sistema_variedades_categorias.idCategoria AND idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'].' LIMIT 1) AS idpermiso';
 $SIS_join  = '';
-$SIS_where = '';
+$SIS_where = 'idCategoria!=0';
 $SIS_order = 'sistema_variedades_categorias.Nombre ASC';
 $arrProductos = array();
 $arrProductos = db_select_array (false, $SIS_query, 'sistema_variedades_categorias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
@@ -155,7 +155,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Especies Usadas');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Especies Usadas'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -163,35 +163,35 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class=""><a href="<?php echo 'admin_datos.php';?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
-				<li class=""><a href="<?php echo 'admin_datos_datos.php';?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'admin_datos_datos_contacto.php';?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
+				<li class=""><a href="<?php echo 'admin_datos.php'; ?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
+				<li class=""><a href="<?php echo 'admin_datos_datos.php'; ?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'admin_datos_datos_contacto.php'; ?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'admin_datos_datos_contrato.php';?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Datos Contrato</a></li>
-						<li class=""><a href="<?php echo 'admin_datos_datos_configuracion.php';?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
-						<li class=""><a href="<?php echo 'admin_datos_datos_temas.php';?>" ><i class="fa fa-tags" aria-hidden="true"></i> Temas</a></li>
-						<li class=""><a href="<?php echo 'admin_datos_datos_facturacion.php';?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Facturacion</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_contrato.php'; ?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Datos Contrato</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_configuracion.php'; ?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_temas.php'; ?>" ><i class="fa fa-tags" aria-hidden="true"></i> Temas</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_facturacion.php'; ?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Facturacion</a></li>
 						<?php if(isset($Count_OT)&&$Count_OT!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_ot.php';?>" ><i class="fa fa-cogs" aria-hidden="true"></i> OT</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_ot.php'; ?>" ><i class="fa fa-cogs" aria-hidden="true"></i> OT</a></li>
 						<?php } ?>
-						<li class=""><a href="<?php echo 'admin_datos_datos_imagen.php';?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Logo</a></li>
+						<li class=""><a href="<?php echo 'admin_datos_datos_imagen.php'; ?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Logo</a></li>
 						<?php if(isset($Count_OC)&&$Count_OC!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_oc.php';?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador OC</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_oc.php'; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador OC</a></li>
 						<?php } ?>
 						<?php if(isset($Count_productos)&&$Count_productos!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_productos.php';?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Productos Usados</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_productos.php'; ?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Productos Usados</a></li>
 						<?php } ?>
 						<?php if(isset($Count_insumos)&&$Count_insumos!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_insumos.php';?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Insumos Usados</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_insumos.php'; ?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Insumos Usados</a></li>
 						<?php } ?>
 						<?php if(isset($Count_Variedades)&&$Count_Variedades!=0){?>
-							<li class="active"><a href="<?php echo 'admin_datos_datos_variedades_especies.php';?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Especies</a></li>
-							<li class=""><a href="<?php echo 'admin_datos_datos_variedades_nombres.php';?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Variedades</a></li>
+							<li class="active"><a href="<?php echo 'admin_datos_datos_variedades_especies.php'; ?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Especies</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_variedades_nombres.php'; ?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Variedades</a></li>
 						<?php } ?>
 						<?php if(isset($Count_Shipping)&&$Count_Shipping!=0){?>
-							<li class=""><a href="<?php echo 'admin_datos_datos_cross.php';?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador CrossShipping</a></li>
+							<li class=""><a href="<?php echo 'admin_datos_datos_cross.php'; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador CrossShipping</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'admin_datos_datos_social.php'; ?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
 					</ul>
@@ -205,7 +205,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						<th>Nombre</th>
 						<th width="10">Acciones</th>
 					</tr>
-					<?php echo widget_sherlock(1, 2, 'TableFiltered');?>
+					<?php echo widget_sherlock(1, 2, 'TableFiltered'); ?>
 				</thead>
 
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
@@ -234,14 +234,14 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

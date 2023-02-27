@@ -45,11 +45,11 @@ if(isset($_GET['idUsuario'])&&$_GET['idUsuario']!=''){
 				
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idHistorial', 'telemetria_listado_alarmas_perso_historial', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
-			
+
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
-}else{	
+}else{
 	//se traen lo datos del equipo
 	$SIS_query = '
 	telemetria_listado.Nombre AS EquipoTel,
@@ -178,4 +178,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -63,24 +63,15 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
+
+/*******************************************************/
 // consulto los datos
-$query = "SELECT Nombre,Codigo, Rango_min, Rango_max
-FROM `aguas_analisis_parametros`
-WHERE idParametros = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	?>
+$SIS_query = 'Nombre,Codigo, Rango_min, Rango_max';
+$SIS_join  = '';
+$SIS_where = 'idParametros = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_parametros', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -122,9 +113,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -195,7 +186,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = "aguas_analisis_parametros.idParametros!=0";
-$SIS_where.= " AND aguas_analisis_parametros.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando	
+$SIS_where.= " AND aguas_analisis_parametros.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){    $SIS_where .= " AND aguas_analisis_parametros.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
@@ -329,7 +320,7 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_analisis_parametros', $SIS_
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$uml['idParametros']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($uml['idParametros'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el parametro '.$uml['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el parametro '.$uml['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -352,4 +343,5 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_analisis_parametros', $SIS_
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

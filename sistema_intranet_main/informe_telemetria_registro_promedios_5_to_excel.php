@@ -145,7 +145,7 @@ foreach ($arrTemporal as $fac) {
 											
 	if($Temperatura_N!=0){  $New_Temperatura = $Temperatura/$Temperatura_N; }else{$New_Temperatura = 0;}
 	if($Humedad_N!=0){      $New_Humedad     = $Humedad/$Humedad_N;         }else{$New_Humedad = 0;}
-	
+
 	//omite la linea mientras alguna de las variables contenga datos
 	if($Temperatura_N!=0 OR $Humedad_N!=0){
 		$spreadsheet->setActiveSheetIndex(0)

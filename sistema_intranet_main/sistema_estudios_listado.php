@@ -93,7 +93,6 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 				//Se verifican si existen los datos
 				if(isset($idEstudioCat)){    $x1  = $idEstudioCat;    }else{$x1  = $rowdata['idEstudioCat'];}
 				if(isset($Nombre)){          $x2  = $Nombre;          }else{$x2  = $rowdata['Nombre'];}
-				
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -102,7 +101,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 				$Form_Inputs->form_input_hidden('idEstudio', $_GET['id'], 2);
 				?>
-			
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -282,7 +281,7 @@ $arrComunas = db_select_array (false, $SIS_query, 'sistema_estudios_listado', $S
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$comunas['idEstudio']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($comunas['idEstudio'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el estudio '.$comunas['NombreEstudio'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el estudio '.$comunas['NombreEstudio'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -305,4 +304,5 @@ $arrComunas = db_select_array (false, $SIS_query, 'sistema_estudios_listado', $S
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -27,7 +27,7 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 	//se genera ubicacion fisica dentro del servidor
 	$Ubication  = '/home/crosstech/public_html/power_engine/sistema_intranet_crosstech/ClientFiles/'.$_GET['Ubication'].'/';
 	$File       = $_GET['File'];
-	
+
 	//desde
 	$data1  = substr($File, $pos1, 14);
 	$fecha1 = substr($data1, 0, 8);
@@ -45,12 +45,12 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 					
 	//se transforma y se crea archivo
 	$cmd = 'ffmpeg -y -i '.$FileOriginal.' -vcodec libx264 -crf 24 '.$FileFinal;
-	
+
 	//error_log($cmd, 0);
 	
 	
 	shell_exec($cmd);
-	
+
 	/*
 	 * sudo yum install epel-release
 	 * sudo yum localinstall --nogpgcheck https://download1.rpmfusion.org/free/el/rpmfusion-free-release-7.noarch.rpm
@@ -80,16 +80,16 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport"              content="width=device-width, initial-scale=1, user-scalable=no">
 		<meta http-equiv="Content-Type"    content="text/html; charset=UTF-8">
-		
+
 		<!-- Informacion del sitio-->
 		<title>Descarga</title>
 		<meta name="description"           content="">
 		<meta name="author"                content="">
 		<meta name="keywords"              content="">
-		
+
 		<!-- WEB FONT -->
 		<link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		
+
 		<!-- CSS Base -->
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/font-awesome-animation/font-awesome-animation.min.css">
@@ -98,10 +98,10 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/css/my_style.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/css/my_colors.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/css/my_corrections.css">
-		
+
 		<!-- Javascript -->
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/js/main.min.js"></script>
-			
+
 		<!-- Favicons-->
 		<?php
 		//Favicon Personalizado
@@ -128,7 +128,7 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 	</head>
 
 	<body class="transform">
-		
+
 		<style>
 			.transform {background-image: none !important;background-color: #1A1A1A !important;}
 			.buttonDownload {display: inline-block;position: relative;padding: 10px 25px;background-color: #8b00ff;color: white;font-family: sans-serif;text-decoration: none;font-size: 0.9em;text-align: center;text-indent: 15px;}
@@ -164,9 +164,9 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 
 		</style>
 		<br/>
-		
+
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<?php 
+			<?php
 			$Alert_Text = 'Descargue el archivo en Formato MP4.';
 			alert_post_data(1,1,1, $Alert_Text);
 			?>
@@ -182,7 +182,7 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 		</div>
 
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<?php 
+			<?php
 			$Alert_Text = 'En algunos casos el archivo transformado no reproduce sonido, puede descargar el archivo original y reproducirlo con VLC Player.';
 			alert_post_data(4,1,1, $Alert_Text);
 			?>
@@ -196,11 +196,11 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 			?>
 			<a href="<?php echo DB_SITE_MAIN.'/1download.php?dir='.simpleEncode($Directorio, fecha_actual()).'&file='.simpleEncode($Archivo, fecha_actual()); ?>" title="Descargar Archivo Original" class="buttonDownload">Descargar Archivo Original</a>
 		</div>
-		
+
 		<!--Otros archivos javascript -->
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/main.min.js"></script>
-		
+
 	</body>
 </html>
 

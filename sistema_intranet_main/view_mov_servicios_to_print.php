@@ -26,7 +26,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -411,7 +411,7 @@ $html .= '
 							</tr>';
 						} 
 					}
-					
+
 					//si existen guias
 					if ($arrOtros!=false && !empty($arrOtros) && $arrOtros!='') {
 						$html .= '<tr style="background-color: #f9f9f9;"><td colspan="5"><strong>Otros</strong></td></tr>';
@@ -437,7 +437,7 @@ $html .= '
 					}
 					foreach ($arrDescuentos as $descuentos) {
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong>Descuento: '.$descuentos['Nombre'].'</strong></td> 
+							<td colspan="4" align="right"><strong>Descuento: '.$descuentos['Nombre'].'</strong></td>
 							<td align="right">'.Valores($descuentos['vTotal'], 0).'</td>
 						</tr>';
 					}
@@ -449,61 +449,61 @@ $html .= '
 					}
 					if(isset($row_data['Impuesto_01'])&&$row_data['Impuesto_01']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong>'.$impuestos[0]['nimp'].'</strong></td> 
+							<td colspan="4" align="right"><strong>'.$impuestos[0]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_01'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto_02'])&&$row_data['Impuesto_02']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong>'.$impuestos[1]['nimp'].'</strong></td> 
+							<td colspan="4" align="right"><strong>'.$impuestos[1]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_02'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto_03'])&&$row_data['Impuesto_03']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong>'.$impuestos[2]['nimp'].'</strong></td> 
+							<td colspan="4" align="right"><strong>'.$impuestos[2]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_03'], 0).'</td>
 						</tr>';
 					} 
 					if(isset($row_data['Impuesto_04'])&&$row_data['Impuesto_04']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong>'.$impuestos[3]['nimp'].'</strong></td> 
+							<td colspan="4" align="right"><strong>'.$impuestos[3]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_04'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto_05'])&&$row_data['Impuesto_05']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong>'.$impuestos[4]['nimp'].'</strong></td> 
+							<td colspan="4" align="right"><strong>'.$impuestos[4]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_05'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto_06'])&&$row_data['Impuesto_06']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong>'.$impuestos[5]['nimp'].'</strong></td> 
+							<td colspan="4" align="right"><strong>'.$impuestos[5]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_06'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto_07'])&&$row_data['Impuesto_07']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong>'.$impuestos[6]['nimp'].'</strong></td> 
+							<td colspan="4" align="right"><strong>'.$impuestos[6]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_07'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto_08'])&&$row_data['Impuesto_08']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong>'.$impuestos[7]['nimp'].'</strong></td> 
+							<td colspan="4" align="right"><strong>'.$impuestos[7]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_08'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto_09'])&&$row_data['Impuesto_09']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong>'.$impuestos[8]['nimp'].'</strong></td> 
+							<td colspan="4" align="right"><strong>'.$impuestos[8]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_09'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto_10'])&&$row_data['Impuesto_10']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong>'.$impuestos[9]['nimp'].'</strong></td> 
+							<td colspan="4" align="right"><strong>'.$impuestos[9]['nimp'].'</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto_10'], 0).'</td>
 						</tr>';
 					} 
@@ -513,10 +513,10 @@ $html .= '
 							<td align="right">'.Valores($row_data['ValorTotal'], 0).'</td>
 						</tr>';
 					}
-				
+
 				$html .= '</tbody>
 			</table>
-			
+
 		</div>
 	</div>
 
@@ -540,4 +540,5 @@ echo $html;
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Print.php';
+
 ?>

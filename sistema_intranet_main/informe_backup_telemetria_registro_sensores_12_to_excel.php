@@ -40,7 +40,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 }else{
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo,cantSensores', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
-	
+
 	//numero sensores equipo
 	$consql = '';
 	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
@@ -58,10 +58,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$SIS_order = 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema ASC, backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.HoraSistema ASC LIMIT 10000';
 	$arrEquipos = array();
 	$arrEquipos = db_select_array (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos');
-	
+
 	//Se trae el dato del grupo
 	$rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$_GET['idGrupo'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowGrupo');
-	
+
 	/**********************************************************************************************************************************/
 	/*                                                          Ejecucion                                                             */
 	/**********************************************************************************************************************************/
@@ -76,7 +76,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								 ->setDescription("Document for Office 2007")
 								 ->setKeywords("office 2007")
 								 ->setCategory("office 2007 result file");
-	 
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A1', 'Fecha')
 				->setCellValue('B1', 'Hora')
@@ -108,7 +108,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 												
 		if($Temperatura_N!=0){  $New_Temperatura = $Temperatura/$Temperatura_N; }else{$New_Temperatura = 0;}
 		if($Humedad_N!=0){      $New_Humedad     = $Humedad/$Humedad_N;         }else{$New_Humedad = 0;}
-		
+
 		//omite la linea mientras alguna de las variables contenga datos
 		if($Temperatura_N!=0 OR $Humedad_N!=0){
 			$spreadsheet->setActiveSheetIndex(0)

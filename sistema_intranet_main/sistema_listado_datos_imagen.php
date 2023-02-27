@@ -177,7 +177,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Logo');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Logo'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -191,29 +191,29 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'sistema_listado_datos_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Datos Contrato</a></li>
-						<li class=""><a href="<?php echo 'sistema_listado_datos_temas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-tags" aria-hidden="true"></i> Temas</a></li>
-						<li class=""><a href="<?php echo 'sistema_listado_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'sistema_listado_datos_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Datos Contrato</a></li>
+						<li class=""><a href="<?php echo 'sistema_listado_datos_temas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-tags" aria-hidden="true"></i> Temas</a></li>
+						<li class=""><a href="<?php echo 'sistema_listado_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<?php if(isset($Count_OT)&&$Count_OT!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-cogs" aria-hidden="true"></i> OT</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-cogs" aria-hidden="true"></i> OT</a></li>
 						<?php } ?>
-						<li class="active"><a href="<?php echo 'sistema_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Logo</a></li>
+						<li class="active"><a href="<?php echo 'sistema_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Logo</a></li>
 						<?php if(isset($Count_OC)&&$Count_OC!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_oc.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador OC</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_oc.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador OC</a></li>
 						<?php } ?>
 						<?php if(isset($Count_productos)&&$Count_productos!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_productos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Productos Usados</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_productos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Productos Usados</a></li>
 						<?php } ?>
 						<?php if(isset($Count_insumos)&&$Count_insumos!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_insumos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Insumos Usados</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_insumos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Insumos Usados</a></li>
 						<?php } ?>
 						<?php if(isset($Count_Variedades)&&$Count_Variedades!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_variedades_especies.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Especies</a></li>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_variedades_nombres.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Variedades</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_variedades_especies.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Especies</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_variedades_nombres.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Variedades</a></li>
 						<?php } ?>
 						<?php if(isset($Count_Shipping)&&$Count_Shipping!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador CrossShipping</a></li>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_cross_aprobadas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Cross Shipping Correos Aprobados</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador CrossShipping</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_cross_aprobadas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Cross Shipping Correos Aprobados</a></li>
 						<?php } ?>
 					</ul>
                 </li>
@@ -223,36 +223,34 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 
 				<?php if(isset($rowdata['Config_imgLogo'])&&$rowdata['Config_imgLogo']!=''){?>
-        
+
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<img src="upload/<?php echo $rowdata['Config_imgLogo'] ?>" width="100%" class="img-thumbnail" >
 						<br/>
 						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_img='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Imagen</a>
 					</div>
 					<div class="clearfix"></div>
-					
+
 				<?php }else{ ?>
 
 					<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
-					
+
 						<?php
 						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_multiple_upload('Seleccionar archivo','Config_imgLogo', 1, '"jpg", "png", "gif", "jpeg"');
-					
+
 						$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
 						?>
 
 						<div class="form-group">
 							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf093; Subir Archivo" name="submit_edit">
 						</div>
-							  
+
 					</form>
 					<?php widget_validator(); ?>
 				<?php } ?>
-				
-				
-				
+
 			</div>
 		</div>
 	</div>
@@ -260,14 +258,14 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

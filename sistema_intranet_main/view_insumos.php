@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -107,6 +107,7 @@ foreach ($arrPromedioProd as $productos) {
 	}
 }
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -128,7 +129,7 @@ foreach ($arrPromedioProd as $productos) {
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/productos.jpg">
 						<?php }else{
 							echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowdata['Direccion_img']);	
-						}?>
+						} ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Producto</h2>
@@ -154,7 +155,7 @@ foreach ($arrPromedioProd as $productos) {
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<p class="text-muted">
-							<?php 
+							<?php
 							//Ficha Tecnica
 							if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
 								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Ficha Tecnica</a>';
@@ -175,7 +176,7 @@ foreach ($arrPromedioProd as $productos) {
 			<div class="tab-pane fade" id="movimientos">
 				<div class="wmd-panel">
 					<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-					
+
 					<div class="table-responsive">		
 						<script>
 							google.charts.load('current', {'packages':['corechart']});
@@ -247,7 +248,7 @@ foreach ($arrPromedioProd as $productos) {
 						<div id="curve_chart1" style="height: 500px"></div>
 											
 					</div>
-					
+
 					<div class="table-responsive">
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 							<thead>
@@ -262,7 +263,7 @@ foreach ($arrPromedioProd as $productos) {
 		  
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<?php foreach ($arrProductos as $productos) { ?>
-								
+
 								<tr class="odd">
 									<td>
 										<div class="btn-group" style="width: 35px;" >
@@ -272,8 +273,8 @@ foreach ($arrPromedioProd as $productos) {
 									</td>
 									<td><?php echo $productos['NombreBodega']; ?></td>
 									<td><?php echo Fecha_estandar($productos['Creacion_fecha']); ?></td>
-									<td><?php echo Cantidades_decimales_justos($productos['Cantidad_ing']).' '.$productos['UnidadMedida'];?></td>
-									<td><?php echo Cantidades_decimales_justos($productos['Cantidad_eg']).' '.$productos['UnidadMedida'];?></td>
+									<td><?php echo Cantidades_decimales_justos($productos['Cantidad_ing']).' '.$productos['UnidadMedida']; ?></td>
+									<td><?php echo Cantidades_decimales_justos($productos['Cantidad_eg']).' '.$productos['UnidadMedida']; ?></td>
 						
 								</tr>
 							<?php } ?>
@@ -300,7 +301,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -310,7 +311,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -319,4 +320,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

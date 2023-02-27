@@ -227,6 +227,7 @@ if(isset($x_graph_count)&&$x_graph_count!=0){
 }
 
 echo $widget;
+
 ?>
 
 

@@ -87,7 +87,7 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-	
+
 		case 'new_ingreso':
 
 			//Se elimina la restriccion del sql 5.7
@@ -103,7 +103,7 @@ require_once '0_validate_user_1.php';
 			//Consulto los nombres y los sueldos de los trabajadores
 			$arrTrabajador = array();
 			$arrTrabajador = db_select_array (false, 'idTipoContratoTrab, idTipoContrato, horas_pactadas, idAFP, idSalud', 'trabajadores_listado', '', 'idEstado = 1', 'idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 			//verificacion de errores
 			foreach ($arrTrabajador as $trab) {
 				if(isset($trab['idTipoContratoTrab'])&&$trab['idTipoContratoTrab']==0){  $ndata_1++;}
@@ -164,7 +164,6 @@ require_once '0_validate_user_1.php';
 				if(isset($TopeSegCesantia)&&$TopeSegCesantia!=''){  $_SESSION['fact_sueldos_basicos']['TopeSegCesantia']  = $TopeSegCesantia; }else{$_SESSION['fact_sueldos_basicos']['TopeSegCesantia']  = '';}
 				if(isset($TopeAPVMensual)&&$TopeAPVMensual!=''){    $_SESSION['fact_sueldos_basicos']['TopeAPVMensual']   = $TopeAPVMensual;  }else{$_SESSION['fact_sueldos_basicos']['TopeAPVMensual']   = '';}
 				if(isset($TopeDepConv)&&$TopeDepConv!=''){          $_SESSION['fact_sueldos_basicos']['TopeDepConv']      = $TopeDepConv;     }else{$_SESSION['fact_sueldos_basicos']['TopeDepConv']      = '';}
-				
 
 				//Consulto los nombres y los sueldos de los trabajadores
 				$SIS_query = '
@@ -192,7 +191,7 @@ require_once '0_validate_user_1.php';
 				trabajadores_listado.MontoCotSaludExtra,
 
 				trabajadores_listado.Nombre,
-				trabajadores_listado.ApellidoPat, 
+				trabajadores_listado.ApellidoPat,
 				trabajadores_listado.ApellidoMat,
 				trabajadores_listado.Rut,
 				trabajadores_listado.F_Inicio_Contrato,
@@ -221,7 +220,7 @@ require_once '0_validate_user_1.php';
 				centrocosto_listado_level_3.Nombre AS CentroCosto_Level_3,
 				centrocosto_listado_level_4.Nombre AS CentroCosto_Level_4,
 				centrocosto_listado_level_5.Nombre AS CentroCosto_Level_5,
-				
+
 				sistema_mutual.Nombre AS MutualNombre,
 				sistema_mutual.Porcentaje AS MutualPorcentaje,
 				core_sistemas_opciones.Nombre AS CotizacionExtra';
@@ -242,12 +241,12 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'trabajadores_listado.ApellidoPat ASC, trabajadores_listado.ApellidoMat ASC, trabajadores_listado.Nombre ASC';
 				$arrTrabajador = array();
 				$arrTrabajador = db_select_array (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				/************************************/
 				//Inasistencias
 				$arrInasistenciaDias = array();
 				$arrInasistenciaDias = db_select_array (false, 'idTrabajador, COUNT(idTrabajador)AS Cuenta', 'trabajadores_inasistencias_dias', '', 'idUso=1 AND Creacion_fecha BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'" GROUP BY idTrabajador', 'idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//Dias de inasistencia
 				foreach ($arrInasistenciaDias as $inasis) {
 					$_SESSION['fact_sueldos_sueldos'][$inasis['idTrabajador']]['diasInasistencia'] = $inasis['Cuenta'];
@@ -256,7 +255,7 @@ require_once '0_validate_user_1.php';
 				//Licencias
 				$arrLicencias = array();
 				$arrLicencias = db_select_array (false, 'idTrabajador, SUM(N_Dias)AS Cuenta', 'trabajadores_licencias', '', 'idUso=1 AND Fecha_inicio BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'" GROUP BY idTrabajador', 'idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//Licencias
 				foreach ($arrLicencias as $lic) {
 					$_SESSION['fact_sueldos_sueldos'][$lic['idTrabajador']]['diasLicencias'] = $lic['Cuenta'];
@@ -265,7 +264,7 @@ require_once '0_validate_user_1.php';
 				//Bonos Fijos
 				$arrBonoFijo = array();
 				$arrBonoFijo = db_select_array (false, 'trabajadores_listado_bonos_fijos.idBonoFijo, trabajadores_listado_bonos_fijos.idTrabajador, trabajadores_listado_bonos_fijos.Monto, sistema_bonos_fijos.Nombre,sistema_bonos_fijos.idTipo', 'trabajadores_listado_bonos_fijos', 'LEFT JOIN `sistema_bonos_fijos` ON sistema_bonos_fijos.idBonoFijo = trabajadores_listado_bonos_fijos.idBonoFijo', '', 'trabajadores_listado_bonos_fijos.idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//Bonos Fijos
 				foreach ($arrBonoFijo as $bono) {
 					$_SESSION['fact_sueldos_sueldos'][$bono['idTrabajador']]['BonoFijo'][$bono['idBonoFijo']]['idBonoFijo']  = $bono['idBonoFijo'];
@@ -277,7 +276,7 @@ require_once '0_validate_user_1.php';
 				//Bonos por turnos
 				$arrBonoTurno = array();
 				$arrBonoTurno = db_select_array (false, 'trabajadores_horas_extras_facturacion_turnos.idServicios,trabajadores_horas_extras_facturacion_turnos.idTrabajador, trabajadores_horas_extras_facturacion_turnos.idTurnos, core_horas_extras_turnos.Nombre,core_horas_extras_turnos.Valor', 'trabajadores_horas_extras_facturacion_turnos', 'LEFT JOIN `core_horas_extras_turnos` ON core_horas_extras_turnos.idTurnos = trabajadores_horas_extras_facturacion_turnos.idTurnos', 'trabajadores_horas_extras_facturacion_turnos.idUso=1 AND trabajadores_horas_extras_facturacion_turnos.Creacion_fecha BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'"', 'trabajadores_horas_extras_facturacion_turnos.idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//Bonos por turnos
 				foreach ($arrBonoTurno as $bono) {
 					$_SESSION['fact_sueldos_sueldos'][$bono['idTrabajador']]['BonoTurno'][$bono['idTurnos']]['idServicios']  = $bono['idServicios'];
@@ -289,7 +288,7 @@ require_once '0_validate_user_1.php';
 				//Bonos Temporales
 				$arrBonoTemporal = array();
 				$arrBonoTemporal = db_select_array (false, 'trabajadores_bonos_temporales.idBonoTemporal,trabajadores_bonos_temporales.idTrabajador, trabajadores_bonos_temporales.Monto, sistema_bonos_temporales.Nombre,sistema_bonos_temporales.idTipo', 'trabajadores_bonos_temporales', 'LEFT JOIN `sistema_bonos_temporales` ON sistema_bonos_temporales.idBonoTemporal = trabajadores_bonos_temporales.idBonoTemporal', 'trabajadores_bonos_temporales.idUso=1 AND trabajadores_bonos_temporales.Creacion_fecha BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'"', 'trabajadores_bonos_temporales.idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//Bonos Temporales
 				foreach ($arrBonoTemporal as $bono) {
 					$_SESSION['fact_sueldos_sueldos'][$bono['idTrabajador']]['BonoTemporal'][$bono['idBonoTemporal']]['idBonoTemporal']  = $bono['idBonoTemporal'];
@@ -317,7 +316,7 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'trabajadores_horas_extras_mensuales_facturacion_horas.idTrabajador ASC, trabajadores_horas_extras_mensuales_facturacion_horas.idPorcentaje ASC';
 				$arrHorasExtras = array();
 				$arrHorasExtras = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_mensuales_facturacion_horas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-										
+
 				//Horas Extras
 				foreach ($arrHorasExtras as $bono) {
 					$_SESSION['fact_sueldos_sueldos'][$bono['idTrabajador']]['HorasExtras'][$bono['idPorcentaje']]['idPorcentaje']   = $bono['idPorcentaje'];
@@ -350,24 +349,24 @@ require_once '0_validate_user_1.php';
 							$_SESSION['fact_sueldos_sueldos'][$bono['idTrabajador']]['HorasExtras'][$bono['idPorcentaje']]['ValorHora'] = $trab['SueldoHora'];
 							$_SESSION['fact_sueldos_sueldos'][$bono['idTrabajador']]['HorasExtras'][$bono['idPorcentaje']]['TotalHora'] = $trab['SueldoHora']*$bono['Horas'];
 						break;
-					
+
 					}
 				}
 				/************************************/
 				//Valor de las cargas familiares
 				$arrTablaCargas = array();
 				$arrTablaCargas = db_select_array (false, 'idTablaCarga, Tramo, Valor_Desde, Valor_Hasta, Valor_Pago', 'sistema_rrhh_tabla_carga_familiar', '', '', 'idTablaCarga ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				/************************************/
 				//Valor de las cargas familiares
 				$arrSeguro = array();
 				$arrSeguro = db_select_array (false, 'idTipoContrato,Porc_Empleador,Porc_Trabajador', 'sistema_rrhh_tabla_seguro_cesantia', '', '', 'idTablaSeguro ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				/************************************/
 				//Valor de las cargas familiares
 				$arrImpuestoRenta = array();
 				$arrImpuestoRenta = db_select_array (false, 'UTM_Desde, UTM_Hasta, Tasa, Rebaja', 'sistema_rrhh_tabla_iusc', '', '', 'idTablaImpuesto ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				/************************************/
 				//Bonos Fijos
 				$SIS_query = '
@@ -384,7 +383,7 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'trabajadores_listado_descuentos_fijos.idTrabajador ASC';
 				$arrDescuentoFijo = array();
 				$arrDescuentoFijo = db_select_array (false, $SIS_query, 'trabajadores_listado_descuentos_fijos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//Bonos Fijos
 				foreach ($arrDescuentoFijo as $desc) {
 					//Verifico si alguno de los descuentos es superior
@@ -403,7 +402,7 @@ require_once '0_validate_user_1.php';
 							$_SESSION['fact_sueldos_sueldos'][$desc['idTrabajador']]['DescuentoFijo'][$desc['idDescuentoFijo']]['DescuentoMonto']   = $_SESSION['fact_sueldos_basicos']['TopeAPVMensual'];
 							$_SESSION['fact_sueldos_sueldos'][$desc['idTrabajador']]['DescuentoFijo'][$desc['idDescuentoFijo']]['DescuentoIDAFP']   = $desc['idAFP'];
 						}
-					//Deposito Convenido	
+					//Deposito Convenido
 					}elseif($desc['idDescuentoFijo']==2){
 						//Si el monto establecido es inferior al tope
 						if($desc['Monto']<=$_SESSION['fact_sueldos_basicos']['TopeDepConv']){
@@ -425,7 +424,7 @@ require_once '0_validate_user_1.php';
 				//Anticipos
 				$arrAnticipos = array();
 				$arrAnticipos = db_select_array (false, 'idAnticipos, Creacion_fecha, idTrabajador, Monto', 'trabajadores_descuentos_anticipos', '', 'idUso=1 AND Creacion_fecha BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'"', 'idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//Anticipos
 				foreach ($arrAnticipos as $anticipo) {
 					$_SESSION['fact_sueldos_sueldos'][$anticipo['idTrabajador']]['Anticipo'][$anticipo['idAnticipos']]['Creacion_fecha']  = $anticipo['Creacion_fecha'];
@@ -434,11 +433,11 @@ require_once '0_validate_user_1.php';
 				/************************************/
 				//Descuento Cuota
 				$SIS_query = '
-				trabajadores_descuentos_cuotas_listado.idCuotas, 
-				trabajadores_descuentos_cuotas_listado.idTrabajador, 
-				trabajadores_descuentos_cuotas_listado.Fecha, 
-				trabajadores_descuentos_cuotas_listado.nCuota, 
-				trabajadores_descuentos_cuotas_listado.TotalCuotas, 
+				trabajadores_descuentos_cuotas_listado.idCuotas,
+				trabajadores_descuentos_cuotas_listado.idTrabajador,
+				trabajadores_descuentos_cuotas_listado.Fecha,
+				trabajadores_descuentos_cuotas_listado.nCuota,
+				trabajadores_descuentos_cuotas_listado.TotalCuotas,
 				trabajadores_descuentos_cuotas_listado.monto_cuotas,
 				trabajadores_descuentos_cuotas_tipos.Nombre AS Tipo';
 				$SIS_join  = '
@@ -448,7 +447,7 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'trabajadores_descuentos_cuotas_listado.idTrabajador ASC';
 				$arrDescuentoCuota = array();
 				$arrDescuentoCuota = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuotas_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//Descuento Cuota
 				foreach ($arrDescuentoCuota as $cuota) {
 					$_SESSION['fact_sueldos_sueldos'][$cuota['idTrabajador']]['Cuotas'][$cuota['idCuotas']]['Fecha']         = $cuota['Fecha'];
@@ -468,16 +467,14 @@ require_once '0_validate_user_1.php';
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['idTipoContratoTrab']   = $trab['idTipoContratoTrab'];  //Tipo Contrato
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['horas_pactadas']       = $trab['horas_pactadas'];      //Horas por semana pactado
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Gratificacion']        = $trab['Gratificacion'];       //Gratificacion
-					
+
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['idCentroCosto']        = $trab['idCentroCosto'];       //idCentroCosto
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['idLevel_1']            = $trab['idLevel_1'];           //idLevel_1
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['idLevel_2']            = $trab['idLevel_2'];           //idLevel_2
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['idLevel_3']            = $trab['idLevel_3'];           //idLevel_3
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['idLevel_4']            = $trab['idLevel_4'];           //idLevel_4
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['idLevel_5']            = $trab['idLevel_5'];           //idLevel_5
-					
-					
-					
+
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['CentroCosto']          = '';  //CentroCosto
 					if(isset($trab['CentroCosto_Nombre'])&&$trab['CentroCosto_Nombre']!=''){   $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['CentroCosto']  = $trab['CentroCosto_Nombre'];}
 					if(isset($trab['CentroCosto_Level_1'])&&$trab['CentroCosto_Level_1']!=''){ $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['CentroCosto'] .= ' - '.$trab['CentroCosto_Level_1'];}
@@ -547,7 +544,7 @@ require_once '0_validate_user_1.php';
 						if(isset($_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['BonoTurno'][$x]['BonoMonto'])&&$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['BonoTurno'][$x]['BonoMonto']!=0){
 							$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalBonoTurno'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalBonoTurno'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['BonoTurno'][$x]['BonoMonto'];
 						}
-					}  
+					}
 					//Calculo Total Bonos Temporales(100  bonos estimados en el sistema)
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalBonoTemporalAfecto']   = 0;
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalBonoTemporalNoAfecto'] = 0;
@@ -583,7 +580,7 @@ require_once '0_validate_user_1.php';
 							$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalCargasFamiliares'] = $tabla['Valor_Pago']*$trab['N_cargas'];
 						}
 					}
-					
+
 					//Calculo del Sueldo imponible
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] = 0;
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoPagado'];
@@ -593,11 +590,11 @@ require_once '0_validate_user_1.php';
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalBonoTemporalAfecto'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalHorasExtras'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalCargasFamiliares'];
-					
+
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoNoImponible'] = 0;
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoNoImponible'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoNoImponible'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalBonoFijoNoAfecto'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoNoImponible'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoNoImponible'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalBonoTemporalNoAfecto'];
-					
+
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalHaberes'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoNoImponible'];
 					/************************************************************************************************/
 					/*                                            Deberes                                           */
@@ -619,9 +616,8 @@ require_once '0_validate_user_1.php';
 						}else{
 							$Sueldo_Imp = $_SESSION['fact_sueldos_basicos']['TopeImpAFP'];
 						}
-						
-						
-					//Si esta en el IPS	
+
+					//Si esta en el IPS
 					}elseif($trab['AFP_IPS']==1){
 						//Verifico si es un trabajador dependiente
 						if($trab['idTipoTrabajador']==1){
@@ -660,22 +656,21 @@ require_once '0_validate_user_1.php';
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionMonto']      = $trab['MontoCotSaludExtra'];  //MontoCotSaludExtra
 					//Si hay porcentaje
 					if(isset($trab['PorcCotSaludExtra'])&&$trab['PorcCotSaludExtra']!=0){
-						$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionValor'] = ($Sueldo_Imp/100)*$trab['PorcCotSaludExtra'];  
-					//si hay monto	
+						$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionValor'] = ($Sueldo_Imp/100)*$trab['PorcCotSaludExtra'];
+					//si hay monto
 					}elseif(isset($trab['MontoCotSaludExtra'])&&$trab['MontoCotSaludExtra']!=0){
-						$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionValor'] = $trab['MontoCotSaludExtra']; 
-					//si no hay nada	
+						$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionValor'] = $trab['MontoCotSaludExtra'];
+					//si no hay nada
 					}else{
-						$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionValor'] = 0; 
+						$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionValor'] = 0;
 					}
-					
+
 					//MUTUAL
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Mutual_id']         = $trab['idMutual'];          //idMutual
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Mutual_Nombre']     = $trab['MutualNombre'];      //MutualNombre
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Mutual_Porcentaje'] = $trab['MutualPorcentaje'];  //MutualPorcentaje
-					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Mutual_Valor']      = ($Sueldo_Imp/100)*$trab['MutualPorcentaje'];  
-					
-					
+					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Mutual_Valor']      = ($Sueldo_Imp/100)*$trab['MutualPorcentaje'];
+
 					//TRABAJO PESADO
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TrabajoPesado_Id']          = $trab['idTipoTrabajo'];            //idTipoTrabajo
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TrabajoPesado_Porcentaje']  = $trab['PorcentajeTrabajoPesado'];  //Porcentaje Trabajo Pesado
@@ -685,7 +680,7 @@ require_once '0_validate_user_1.php';
 					}else{
 						$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TrabajoPesado_Valor'] = 0;
 					}
-					
+
 					//Se suman todos los descuentos
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = 0;
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_Total'];
@@ -700,7 +695,6 @@ require_once '0_validate_user_1.php';
 							$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['DescuentoFijo'][$x]['DescuentoMonto'];
 						}
 					}
-					
 
 					//Recorro la tabla para establecer el valor del seguro de cesantia
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SegCesantia_Empleador']  = 0;
@@ -729,7 +723,7 @@ require_once '0_validate_user_1.php';
 						}
 					}
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['ImpuestoRenta'];
-						
+
 					//Calculo de los otros descuentos
 					if(!empty($_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Anticipo'])){
 						foreach ($_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Anticipo'] as $key => $producto){
@@ -741,11 +735,10 @@ require_once '0_validate_user_1.php';
 							$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] + $producto['monto_cuotas'];
 						}
 					}
-					
+
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalAPagar'] = 0;
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalAPagar'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalHaberes'] - $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'];
-					
-					
+
 					/***********************************************************/
 					/*                    No Guardables                        */
 					/***********************************************************/
@@ -757,18 +750,13 @@ require_once '0_validate_user_1.php';
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TrabajadorCargo']     = $trab['Cargo'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SistemaNombre']       = $trab['SistemaNombre'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SistemaRut']          = $trab['SistemaRut'];
-					
-
 
 				}
-				
-				
-				
-				
-				
+
+				//redirijo
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
@@ -799,7 +787,7 @@ require_once '0_validate_user_1.php';
 			}
 			unset($_SESSION['fact_sueldos_archivos']);
 
-			
+			//redirijo
 			header( 'Location: '.$location );
 			die;
 
@@ -881,7 +869,6 @@ require_once '0_validate_user_1.php';
 				if(isset($TopeSegCesantia)&&$TopeSegCesantia!=''){  $_SESSION['fact_sueldos_basicos']['TopeSegCesantia']  = $TopeSegCesantia; }else{$_SESSION['fact_sueldos_basicos']['TopeSegCesantia']  = '';}
 				if(isset($TopeAPVMensual)&&$TopeAPVMensual!=''){    $_SESSION['fact_sueldos_basicos']['TopeAPVMensual']   = $TopeAPVMensual;  }else{$_SESSION['fact_sueldos_basicos']['TopeAPVMensual']   = '';}
 				if(isset($TopeDepConv)&&$TopeDepConv!=''){          $_SESSION['fact_sueldos_basicos']['TopeDepConv']      = $TopeDepConv;     }else{$_SESSION['fact_sueldos_basicos']['TopeDepConv']      = '';}
-				
 
 				//Consulto los nombres y los sueldos de los trabajadores
 				$SIS_query = '
@@ -909,7 +896,7 @@ require_once '0_validate_user_1.php';
 				trabajadores_listado.MontoCotSaludExtra,
 
 				trabajadores_listado.Nombre,
-				trabajadores_listado.ApellidoPat, 
+				trabajadores_listado.ApellidoPat,
 				trabajadores_listado.ApellidoMat,
 				trabajadores_listado.Rut,
 				trabajadores_listado.F_Inicio_Contrato,
@@ -938,7 +925,7 @@ require_once '0_validate_user_1.php';
 				centrocosto_listado_level_3.Nombre AS CentroCosto_Level_3,
 				centrocosto_listado_level_4.Nombre AS CentroCosto_Level_4,
 				centrocosto_listado_level_5.Nombre AS CentroCosto_Level_5,
-				
+
 				sistema_mutual.Nombre AS MutualNombre,
 				sistema_mutual.Porcentaje AS MutualPorcentaje,
 				core_sistemas_opciones.Nombre AS CotizacionExtra';
@@ -959,12 +946,12 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'trabajadores_listado.ApellidoPat ASC, trabajadores_listado.ApellidoMat ASC, trabajadores_listado.Nombre ASC';
 				$arrTrabajador = array();
 				$arrTrabajador = db_select_array (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				/************************************/
 				//Inasistencias
 				$arrInasistenciaDias = array();
 				$arrInasistenciaDias = db_select_array (false, 'idTrabajador, COUNT(idTrabajador)AS Cuenta', 'trabajadores_inasistencias_dias', '', 'idUso=1 AND Creacion_fecha BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'" GROUP BY idTrabajador', 'idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//Dias de inasistencia
 				foreach ($arrInasistenciaDias as $inasis) {
 					$_SESSION['fact_sueldos_sueldos'][$inasis['idTrabajador']]['diasInasistencia'] = $inasis['Cuenta'];
@@ -973,7 +960,7 @@ require_once '0_validate_user_1.php';
 				//Licencias
 				$arrLicencias = array();
 				$arrLicencias = db_select_array (false, 'idTrabajador, SUM(N_Dias)AS Cuenta', 'trabajadores_licencias', '', 'idUso=1 AND Fecha_inicio BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'" GROUP BY idTrabajador', 'idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//Licencias
 				foreach ($arrLicencias as $lic) {
 					$_SESSION['fact_sueldos_sueldos'][$lic['idTrabajador']]['diasLicencias'] = $lic['Cuenta'];
@@ -982,7 +969,7 @@ require_once '0_validate_user_1.php';
 				//Bonos Fijos
 				$arrBonoFijo = array();
 				$arrBonoFijo = db_select_array (false, 'trabajadores_listado_bonos_fijos.idBonoFijo, trabajadores_listado_bonos_fijos.idTrabajador, trabajadores_listado_bonos_fijos.Monto, sistema_bonos_fijos.Nombre,sistema_bonos_fijos.idTipo', 'trabajadores_listado_bonos_fijos', 'LEFT JOIN `sistema_bonos_fijos` ON sistema_bonos_fijos.idBonoFijo = trabajadores_listado_bonos_fijos.idBonoFijo', '', 'trabajadores_listado_bonos_fijos.idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//Bonos Fijos
 				foreach ($arrBonoFijo as $bono) {
 					$_SESSION['fact_sueldos_sueldos'][$bono['idTrabajador']]['BonoFijo'][$bono['idBonoFijo']]['idBonoFijo']  = $bono['idBonoFijo'];
@@ -994,7 +981,7 @@ require_once '0_validate_user_1.php';
 				//Bonos por turnos
 				$arrBonoTurno = array();
 				$arrBonoTurno = db_select_array (false, 'trabajadores_horas_extras_facturacion_turnos.idServicios,trabajadores_horas_extras_facturacion_turnos.idTrabajador, trabajadores_horas_extras_facturacion_turnos.idTurnos, core_horas_extras_turnos.Nombre,core_horas_extras_turnos.Valor', 'trabajadores_horas_extras_facturacion_turnos', 'LEFT JOIN `core_horas_extras_turnos` ON core_horas_extras_turnos.idTurnos = trabajadores_horas_extras_facturacion_turnos.idTurnos', 'trabajadores_horas_extras_facturacion_turnos.idUso=1 AND trabajadores_horas_extras_facturacion_turnos.Creacion_fecha BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'"', 'trabajadores_horas_extras_facturacion_turnos.idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//Bonos por turnos
 				foreach ($arrBonoTurno as $bono) {
 					$_SESSION['fact_sueldos_sueldos'][$bono['idTrabajador']]['BonoTurno'][$bono['idTurnos']]['idServicios']  = $bono['idServicios'];
@@ -1006,7 +993,7 @@ require_once '0_validate_user_1.php';
 				//Bonos Temporales
 				$arrBonoTemporal = array();
 				$arrBonoTemporal = db_select_array (false, 'trabajadores_bonos_temporales.idBonoTemporal,trabajadores_bonos_temporales.idTrabajador, trabajadores_bonos_temporales.Monto, sistema_bonos_temporales.Nombre,sistema_bonos_temporales.idTipo', 'trabajadores_bonos_temporales', 'LEFT JOIN `sistema_bonos_temporales` ON sistema_bonos_temporales.idBonoTemporal = trabajadores_bonos_temporales.idBonoTemporal', 'trabajadores_bonos_temporales.idUso=1 AND trabajadores_bonos_temporales.Creacion_fecha BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'"', 'trabajadores_bonos_temporales.idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//Bonos Temporales
 				foreach ($arrBonoTemporal as $bono) {
 					$_SESSION['fact_sueldos_sueldos'][$bono['idTrabajador']]['BonoTemporal'][$bono['idBonoTemporal']]['idBonoTemporal']  = $bono['idBonoTemporal'];
@@ -1034,7 +1021,7 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'trabajadores_horas_extras_mensuales_facturacion_horas.idTrabajador ASC, trabajadores_horas_extras_mensuales_facturacion_horas.idPorcentaje ASC';
 				$arrHorasExtras = array();
 				$arrHorasExtras = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_mensuales_facturacion_horas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-										
+
 				//Horas Extras
 				foreach ($arrHorasExtras as $bono) {
 					$_SESSION['fact_sueldos_sueldos'][$bono['idTrabajador']]['HorasExtras'][$bono['idPorcentaje']]['idPorcentaje']   = $bono['idPorcentaje'];
@@ -1067,24 +1054,24 @@ require_once '0_validate_user_1.php';
 							$_SESSION['fact_sueldos_sueldos'][$bono['idTrabajador']]['HorasExtras'][$bono['idPorcentaje']]['ValorHora'] = $trab['SueldoHora'];
 							$_SESSION['fact_sueldos_sueldos'][$bono['idTrabajador']]['HorasExtras'][$bono['idPorcentaje']]['TotalHora'] = $trab['SueldoHora']*$bono['Horas'];
 						break;
-					
+
 					}
 				}
 				/************************************/
 				//Valor de las cargas familiares
 				$arrTablaCargas = array();
 				$arrTablaCargas = db_select_array (false, 'idTablaCarga, Tramo, Valor_Desde, Valor_Hasta, Valor_Pago', 'sistema_rrhh_tabla_carga_familiar', '', '', 'idTablaCarga ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				/************************************/
 				//Valor de las cargas familiares
 				$arrSeguro = array();
 				$arrSeguro = db_select_array (false, 'idTipoContrato,Porc_Empleador,Porc_Trabajador', 'sistema_rrhh_tabla_seguro_cesantia', '', '', 'idTablaSeguro ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				/************************************/
 				//Valor de las cargas familiares
 				$arrImpuestoRenta = array();
 				$arrImpuestoRenta = db_select_array (false, 'UTM_Desde, UTM_Hasta, Tasa, Rebaja', 'sistema_rrhh_tabla_iusc', '', '', 'idTablaImpuesto ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				/************************************/
 				//Bonos Fijos
 				$SIS_query = '
@@ -1101,7 +1088,7 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'trabajadores_listado_descuentos_fijos.idTrabajador ASC';
 				$arrDescuentoFijo = array();
 				$arrDescuentoFijo = db_select_array (false, $SIS_query, 'trabajadores_listado_descuentos_fijos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//Bonos Fijos
 				foreach ($arrDescuentoFijo as $desc) {
 					//Verifico si alguno de los descuentos es superior
@@ -1120,7 +1107,7 @@ require_once '0_validate_user_1.php';
 							$_SESSION['fact_sueldos_sueldos'][$desc['idTrabajador']]['DescuentoFijo'][$desc['idDescuentoFijo']]['DescuentoMonto']   = $_SESSION['fact_sueldos_basicos']['TopeAPVMensual'];
 							$_SESSION['fact_sueldos_sueldos'][$desc['idTrabajador']]['DescuentoFijo'][$desc['idDescuentoFijo']]['DescuentoIDAFP']   = $desc['idAFP'];
 						}
-					//Deposito Convenido	
+					//Deposito Convenido
 					}elseif($desc['idDescuentoFijo']==2){
 						//Si el monto establecido es inferior al tope
 						if($desc['Monto']<=$_SESSION['fact_sueldos_basicos']['TopeDepConv']){
@@ -1142,7 +1129,7 @@ require_once '0_validate_user_1.php';
 				//Anticipos
 				$arrAnticipos = array();
 				$arrAnticipos = db_select_array (false, 'idAnticipos, Creacion_fecha, idTrabajador, Monto', 'trabajadores_descuentos_anticipos', '', 'idUso=1 AND Creacion_fecha BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'"', 'idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//Anticipos
 				foreach ($arrAnticipos as $anticipo) {
 					$_SESSION['fact_sueldos_sueldos'][$anticipo['idTrabajador']]['Anticipo'][$anticipo['idAnticipos']]['Creacion_fecha']  = $anticipo['Creacion_fecha'];
@@ -1151,11 +1138,11 @@ require_once '0_validate_user_1.php';
 				/************************************/
 				//Descuento Cuota
 				$SIS_query = '
-				trabajadores_descuentos_cuotas_listado.idCuotas, 
-				trabajadores_descuentos_cuotas_listado.idTrabajador, 
-				trabajadores_descuentos_cuotas_listado.Fecha, 
-				trabajadores_descuentos_cuotas_listado.nCuota, 
-				trabajadores_descuentos_cuotas_listado.TotalCuotas, 
+				trabajadores_descuentos_cuotas_listado.idCuotas,
+				trabajadores_descuentos_cuotas_listado.idTrabajador,
+				trabajadores_descuentos_cuotas_listado.Fecha,
+				trabajadores_descuentos_cuotas_listado.nCuota,
+				trabajadores_descuentos_cuotas_listado.TotalCuotas,
 				trabajadores_descuentos_cuotas_listado.monto_cuotas,
 				trabajadores_descuentos_cuotas_tipos.Nombre AS Tipo';
 				$SIS_join  = '
@@ -1165,7 +1152,7 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'trabajadores_descuentos_cuotas_listado.idTrabajador ASC';
 				$arrDescuentoCuota = array();
 				$arrDescuentoCuota = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuotas_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//Descuento Cuota
 				foreach ($arrDescuentoCuota as $cuota) {
 					$_SESSION['fact_sueldos_sueldos'][$cuota['idTrabajador']]['Cuotas'][$cuota['idCuotas']]['Fecha']         = $cuota['Fecha'];
@@ -1185,16 +1172,14 @@ require_once '0_validate_user_1.php';
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['idTipoContratoTrab']   = $trab['idTipoContratoTrab'];  //Tipo Contrato
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['horas_pactadas']       = $trab['horas_pactadas'];      //Horas por semana pactado
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Gratificacion']        = $trab['Gratificacion'];       //Gratificacion
-					
+
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['idCentroCosto']        = $trab['idCentroCosto'];       //idCentroCosto
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['idLevel_1']            = $trab['idLevel_1'];           //idLevel_1
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['idLevel_2']            = $trab['idLevel_2'];           //idLevel_2
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['idLevel_3']            = $trab['idLevel_3'];           //idLevel_3
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['idLevel_4']            = $trab['idLevel_4'];           //idLevel_4
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['idLevel_5']            = $trab['idLevel_5'];           //idLevel_5
-					
-					
-					
+
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['CentroCosto']          = '';  //CentroCosto
 					if(isset($trab['CentroCosto_Nombre'])&&$trab['CentroCosto_Nombre']!=''){   $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['CentroCosto']  = $trab['CentroCosto_Nombre'];}
 					if(isset($trab['CentroCosto_Level_1'])&&$trab['CentroCosto_Level_1']!=''){ $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['CentroCosto'] .= ' - '.$trab['CentroCosto_Level_1'];}
@@ -1264,7 +1249,7 @@ require_once '0_validate_user_1.php';
 						if(isset($_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['BonoTurno'][$x]['BonoMonto'])&&$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['BonoTurno'][$x]['BonoMonto']!=0){
 							$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalBonoTurno'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalBonoTurno'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['BonoTurno'][$x]['BonoMonto'];
 						}
-					}  
+					}
 					//Calculo Total Bonos Temporales(100  bonos estimados en el sistema)
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalBonoTemporalAfecto']   = 0;
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalBonoTemporalNoAfecto'] = 0;
@@ -1300,7 +1285,7 @@ require_once '0_validate_user_1.php';
 							$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalCargasFamiliares'] = $tabla['Valor_Pago']*$trab['N_cargas'];
 						}
 					}
-					
+
 					//Calculo del Sueldo imponible
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] = 0;
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoPagado'];
@@ -1310,11 +1295,11 @@ require_once '0_validate_user_1.php';
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalBonoTemporalAfecto'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalHorasExtras'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalCargasFamiliares'];
-					
+
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoNoImponible'] = 0;
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoNoImponible'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoNoImponible'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalBonoFijoNoAfecto'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoNoImponible'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoNoImponible'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalBonoTemporalNoAfecto'];
-					
+
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalHaberes'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoImponible'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SueldoNoImponible'];
 					/************************************************************************************************/
 					/*                                            Deberes                                           */
@@ -1336,9 +1321,8 @@ require_once '0_validate_user_1.php';
 						}else{
 							$Sueldo_Imp = $_SESSION['fact_sueldos_basicos']['TopeImpAFP'];
 						}
-						
-						
-					//Si esta en el IPS	
+
+					//Si esta en el IPS
 					}elseif($trab['AFP_IPS']==1){
 						//Verifico si es un trabajador dependiente
 						if($trab['idTipoTrabajador']==1){
@@ -1377,22 +1361,21 @@ require_once '0_validate_user_1.php';
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionMonto']      = $trab['MontoCotSaludExtra'];  //MontoCotSaludExtra
 					//Si hay porcentaje
 					if(isset($trab['PorcCotSaludExtra'])&&$trab['PorcCotSaludExtra']!=0){
-						$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionValor'] = ($Sueldo_Imp/100)*$trab['PorcCotSaludExtra'];  
-					//si hay monto	
+						$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionValor'] = ($Sueldo_Imp/100)*$trab['PorcCotSaludExtra'];
+					//si hay monto
 					}elseif(isset($trab['MontoCotSaludExtra'])&&$trab['MontoCotSaludExtra']!=0){
-						$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionValor'] = $trab['MontoCotSaludExtra']; 
-					//si no hay nada	
+						$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionValor'] = $trab['MontoCotSaludExtra'];
+					//si no hay nada
 					}else{
-						$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionValor'] = 0; 
+						$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_CotizacionValor'] = 0;
 					}
-					
+
 					//MUTUAL
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Mutual_id']         = $trab['idMutual'];          //idMutual
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Mutual_Nombre']     = $trab['MutualNombre'];      //MutualNombre
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Mutual_Porcentaje'] = $trab['MutualPorcentaje'];  //MutualPorcentaje
-					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Mutual_Valor']      = ($Sueldo_Imp/100)*$trab['MutualPorcentaje'];  
-					
-					
+					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Mutual_Valor']      = ($Sueldo_Imp/100)*$trab['MutualPorcentaje'];
+
 					//TRABAJO PESADO
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TrabajoPesado_Id']          = $trab['idTipoTrabajo'];            //idTipoTrabajo
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TrabajoPesado_Porcentaje']  = $trab['PorcentajeTrabajoPesado'];  //Porcentaje Trabajo Pesado
@@ -1402,7 +1385,7 @@ require_once '0_validate_user_1.php';
 					}else{
 						$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TrabajoPesado_Valor'] = 0;
 					}
-					
+
 					//Se suman todos los descuentos
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = 0;
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Salud_Total'];
@@ -1417,7 +1400,6 @@ require_once '0_validate_user_1.php';
 							$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['DescuentoFijo'][$x]['DescuentoMonto'];
 						}
 					}
-					
 
 					//Recorro la tabla para establecer el valor del seguro de cesantia
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SegCesantia_Empleador']  = 0;
@@ -1446,7 +1428,7 @@ require_once '0_validate_user_1.php';
 						}
 					}
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['ImpuestoRenta'];
-						
+
 					//Calculo de los otros descuentos
 					if(!empty($_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Anticipo'])){
 						foreach ($_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['Anticipo'] as $key => $producto){
@@ -1458,11 +1440,10 @@ require_once '0_validate_user_1.php';
 							$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'] + $producto['monto_cuotas'];
 						}
 					}
-					
+
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalAPagar'] = 0;
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalAPagar'] = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalHaberes'] - $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalDescuentos'];
-					
-					
+
 					/***********************************************************/
 					/*                    No Guardables                        */
 					/***********************************************************/
@@ -1474,26 +1455,21 @@ require_once '0_validate_user_1.php';
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TrabajadorCargo']     = $trab['Cargo'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SistemaNombre']       = $trab['SistemaNombre'];
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['SistemaRut']          = $trab['SistemaRut'];
-					
-
 
 				}
-				
-				
-				
-				
-				
+
+				//redirijo
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
 
 /*******************************************************************************************************************/
-	
+
 		case 'del_trab':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -1502,7 +1478,7 @@ require_once '0_validate_user_1.php';
 
 			header( 'Location: '.$location.'&view=true' );
 			die;
-		
+
 		break;
 /*******************************************************************************************************************/
 		case 'new_file':
@@ -1522,7 +1498,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -1647,7 +1623,7 @@ require_once '0_validate_user_1.php';
 				$error['basicos'] = 'error/No tiene datos basicos asignados al ingreso de bodega';
 			}
 
-			if(!isset($_SESSION['fact_sueldos_sueldos'])){     
+			if(!isset($_SESSION['fact_sueldos_sueldos'])){
 				$error['impuesto']  = 'error/No se han seleccionado trabajadores';
 			}
 			//Se verifican que existan trabajadores
@@ -1660,7 +1636,7 @@ require_once '0_validate_user_1.php';
 			if(isset($n_data)&&$n_data==0){
 				$error['trabajos'] = 'error/No se han seleccionado trabajadores';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -1669,8 +1645,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['fact_sueldos_basicos']['idSistema']) && $_SESSION['fact_sueldos_basicos']['idSistema']!=''){      $SIS_data  = "'".$_SESSION['fact_sueldos_basicos']['idSistema']."'";   }else{$SIS_data  = "''";}
 				if(isset($_SESSION['fact_sueldos_basicos']['idUsuario']) && $_SESSION['fact_sueldos_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['fact_sueldos_basicos']['fecha_auto']) && $_SESSION['fact_sueldos_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['fecha_auto']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['fact_sueldos_basicos']['Creacion_fecha']) && $_SESSION['fact_sueldos_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['fact_sueldos_basicos']['Creacion_fecha']) && $_SESSION['fact_sueldos_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['fact_sueldos_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['fact_sueldos_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['fact_sueldos_basicos']['Creacion_fecha'])."'";
@@ -1680,17 +1656,17 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['fact_sueldos_basicos']['Fecha_desde']) && $_SESSION['fact_sueldos_basicos']['Fecha_desde']!=''){  $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['Fecha_desde']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['fact_sueldos_basicos']['Fecha_hasta']) && $_SESSION['fact_sueldos_basicos']['Fecha_hasta']!=''){  $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['Fecha_hasta']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['fact_sueldos_basicos']['Fecha_desde']) && $_SESSION['fact_sueldos_basicos']['Fecha_desde']!=''){         $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['Fecha_desde']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['fact_sueldos_basicos']['Fecha_hasta']) && $_SESSION['fact_sueldos_basicos']['Fecha_hasta']!=''){         $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['Fecha_hasta']."'";      }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['fact_sueldos_basicos']['Observaciones']) && $_SESSION['fact_sueldos_basicos']['Observaciones']!=''){     $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['Observaciones']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['fact_sueldos_basicos']['UF']) && $_SESSION['fact_sueldos_basicos']['UF']!=''){                    $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['UF']."'";               }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['fact_sueldos_basicos']['UTM']) && $_SESSION['fact_sueldos_basicos']['UTM']!=''){                  $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['UTM']."'";              }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['fact_sueldos_basicos']['IMM']) && $_SESSION['fact_sueldos_basicos']['IMM']!=''){                  $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['IMM']."'";              }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['fact_sueldos_basicos']['TopeImpAFP']) && $_SESSION['fact_sueldos_basicos']['TopeImpAFP']!=''){    $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['TopeImpAFP']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['fact_sueldos_basicos']['TopeImpIPS']) && $_SESSION['fact_sueldos_basicos']['TopeImpIPS']!=''){    $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['TopeImpIPS']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['fact_sueldos_basicos']['UF']) && $_SESSION['fact_sueldos_basicos']['UF']!=''){                           $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['UF']."'";               }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['fact_sueldos_basicos']['UTM']) && $_SESSION['fact_sueldos_basicos']['UTM']!=''){                         $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['UTM']."'";              }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['fact_sueldos_basicos']['IMM']) && $_SESSION['fact_sueldos_basicos']['IMM']!=''){                         $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['IMM']."'";              }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['fact_sueldos_basicos']['TopeImpAFP']) && $_SESSION['fact_sueldos_basicos']['TopeImpAFP']!=''){           $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['TopeImpAFP']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['fact_sueldos_basicos']['TopeImpIPS']) && $_SESSION['fact_sueldos_basicos']['TopeImpIPS']!=''){           $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['TopeImpIPS']."'";       }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['fact_sueldos_basicos']['TopeSegCesantia']) && $_SESSION['fact_sueldos_basicos']['TopeSegCesantia']!=''){ $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['TopeSegCesantia']."'";  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['fact_sueldos_basicos']['TopeAPVMensual']) && $_SESSION['fact_sueldos_basicos']['TopeAPVMensual']!=''){   $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['TopeAPVMensual']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['fact_sueldos_basicos']['TopeDepConv']) && $_SESSION['fact_sueldos_basicos']['TopeDepConv']!=''){  $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['TopeDepConv']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['fact_sueldos_basicos']['TopeDepConv']) && $_SESSION['fact_sueldos_basicos']['TopeDepConv']!=''){         $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['TopeDepConv']."'";      }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema, idUsuario, fecha_auto, Creacion_fecha,
@@ -1702,17 +1678,17 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 
 					/*********************************************************************/
-					//Se guardan los datos de los productos	
-					if(isset($_SESSION['fact_sueldos_sueldos'])){		
+					//Se guardan los datos de los productos
+					if(isset($_SESSION['fact_sueldos_sueldos'])){
 						foreach ($_SESSION['fact_sueldos_sueldos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                     $SIS_data  = "'".$ultimo_id."'";                                       }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                              $SIS_data  = "'".$ultimo_id."'";                                       }else{$SIS_data  = "''";}
 							if(isset($_SESSION['fact_sueldos_basicos']['idSistema']) && $_SESSION['fact_sueldos_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['idSistema']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['fact_sueldos_basicos']['idUsuario']) && $_SESSION['fact_sueldos_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['fact_sueldos_basicos']['fecha_auto']) && $_SESSION['fact_sueldos_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['fecha_auto']."'"; }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['fact_sueldos_basicos']['Creacion_fecha']) && $_SESSION['fact_sueldos_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['fact_sueldos_basicos']['Creacion_fecha']) && $_SESSION['fact_sueldos_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NSemana($_SESSION['fact_sueldos_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['fact_sueldos_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['fact_sueldos_basicos']['Creacion_fecha'])."'";
@@ -1722,84 +1698,84 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($_SESSION['fact_sueldos_basicos']['Fecha_desde']) && $_SESSION['fact_sueldos_basicos']['Fecha_desde']!=''){  $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['Fecha_desde']."'";      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['fact_sueldos_basicos']['Fecha_hasta']) && $_SESSION['fact_sueldos_basicos']['Fecha_hasta']!=''){  $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['Fecha_hasta']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['fact_sueldos_basicos']['Fecha_desde']) && $_SESSION['fact_sueldos_basicos']['Fecha_desde']!=''){         $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['Fecha_desde']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['fact_sueldos_basicos']['Fecha_hasta']) && $_SESSION['fact_sueldos_basicos']['Fecha_hasta']!=''){         $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['Fecha_hasta']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['fact_sueldos_basicos']['Observaciones']) && $_SESSION['fact_sueldos_basicos']['Observaciones']!=''){     $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['Observaciones']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['fact_sueldos_basicos']['UF']) && $_SESSION['fact_sueldos_basicos']['UF']!=''){                    $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['UF']."'";               }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['fact_sueldos_basicos']['UTM']) && $_SESSION['fact_sueldos_basicos']['UTM']!=''){                  $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['UTM']."'";              }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['fact_sueldos_basicos']['IMM']) && $_SESSION['fact_sueldos_basicos']['IMM']!=''){                  $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['IMM']."'";              }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['fact_sueldos_basicos']['TopeImpAFP']) && $_SESSION['fact_sueldos_basicos']['TopeImpAFP']!=''){    $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['TopeImpAFP']."'";       }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['fact_sueldos_basicos']['TopeImpIPS']) && $_SESSION['fact_sueldos_basicos']['TopeImpIPS']!=''){    $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['TopeImpIPS']."'";       }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['fact_sueldos_basicos']['UF']) && $_SESSION['fact_sueldos_basicos']['UF']!=''){                           $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['UF']."'";               }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['fact_sueldos_basicos']['UTM']) && $_SESSION['fact_sueldos_basicos']['UTM']!=''){                         $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['UTM']."'";              }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['fact_sueldos_basicos']['IMM']) && $_SESSION['fact_sueldos_basicos']['IMM']!=''){                         $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['IMM']."'";              }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['fact_sueldos_basicos']['TopeImpAFP']) && $_SESSION['fact_sueldos_basicos']['TopeImpAFP']!=''){           $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['TopeImpAFP']."'";       }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['fact_sueldos_basicos']['TopeImpIPS']) && $_SESSION['fact_sueldos_basicos']['TopeImpIPS']!=''){           $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['TopeImpIPS']."'";       }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['fact_sueldos_basicos']['TopeSegCesantia']) && $_SESSION['fact_sueldos_basicos']['TopeSegCesantia']!=''){ $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['TopeSegCesantia']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['fact_sueldos_basicos']['TopeAPVMensual']) && $_SESSION['fact_sueldos_basicos']['TopeAPVMensual']!=''){   $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['TopeAPVMensual']."'";   }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['fact_sueldos_basicos']['TopeDepConv']) && $_SESSION['fact_sueldos_basicos']['TopeDepConv']!=''){  $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['TopeDepConv']."'";      }else{$SIS_data .= ",''";}
-							
-							if(isset($producto['idTrabajador']) && $producto['idTrabajador']!=''){                       $SIS_data .= ",'".$producto['idTrabajador']."'";                  }else{$SIS_data .= ",''";}
-							if(isset($producto['idTipoContratoTrab']) && $producto['idTipoContratoTrab']!=''){           $SIS_data .= ",'".$producto['idTipoContratoTrab']."'";            }else{$SIS_data .= ",''";}
-							if(isset($producto['TipoContratoTrab']) && $producto['TipoContratoTrab']!=''){               $SIS_data .= ",'".$producto['TipoContratoTrab']."'";              }else{$SIS_data .= ",''";}
-							if(isset($producto['horas_pactadas']) && $producto['horas_pactadas']!=''){                   $SIS_data .= ",'".$producto['horas_pactadas']."'";                }else{$SIS_data .= ",''";}
-							if(isset($producto['Gratificacion']) && $producto['Gratificacion']!=''){                     $SIS_data .= ",'".$producto['Gratificacion']."'";                 }else{$SIS_data .= ",''";}
-							if(isset($producto['TrabajadorNombre']) && $producto['TrabajadorNombre']!=''){               $SIS_data .= ",'".$producto['TrabajadorNombre']."'";              }else{$SIS_data .= ",''";}
-							if(isset($producto['TrabajadorRut']) && $producto['TrabajadorRut']!=''){                     $SIS_data .= ",'".$producto['TrabajadorRut']."'";                 }else{$SIS_data .= ",''";}
-							if(isset($producto['TrabajadorEmail']) && $producto['TrabajadorEmail']!=''){                 $SIS_data .= ",'".$producto['TrabajadorEmail']."'";               }else{$SIS_data .= ",''";}
-							if(isset($producto['TrabajadorContrato']) && $producto['TrabajadorContrato']!=''){           $SIS_data .= ",'".$producto['TrabajadorContrato']."'";            }else{$SIS_data .= ",''";}
-							if(isset($producto['TrabajadorCargo']) && $producto['TrabajadorCargo']!=''){                 $SIS_data .= ",'".$producto['TrabajadorCargo']."'";               }else{$SIS_data .= ",''";}
-							if(isset($producto['SistemaNombre']) && $producto['SistemaNombre']!=''){                     $SIS_data .= ",'".$producto['SistemaNombre']."'";                 }else{$SIS_data .= ",''";}
-							if(isset($producto['SistemaRut']) && $producto['SistemaRut']!=''){                           $SIS_data .= ",'".$producto['SistemaRut']."'";                    }else{$SIS_data .= ",''";}
-							if(isset($producto['SueldoPactado']) && $producto['SueldoPactado']!=''){                     $SIS_data .= ",'".$producto['SueldoPactado']."'";                 }else{$SIS_data .= ",''";}
-							if(isset($producto['DiasPactados']) && $producto['DiasPactados']!=''){                       $SIS_data .= ",'".$producto['DiasPactados']."'";                  }else{$SIS_data .= ",''";}
-							if(isset($producto['DiasTrabajados']) && $producto['DiasTrabajados']!=''){                   $SIS_data .= ",'".$producto['DiasTrabajados']."'";                }else{$SIS_data .= ",''";}
-							if(isset($producto['diasInasistencia']) && $producto['diasInasistencia']!=''){               $SIS_data .= ",'".$producto['diasInasistencia']."'";              }else{$SIS_data .= ",''";}
-							if(isset($producto['diasLicencias']) && $producto['diasLicencias']!=''){                     $SIS_data .= ",'".$producto['diasLicencias']."'";                 }else{$SIS_data .= ",''";}
-							if(isset($producto['SueldoPagado']) && $producto['SueldoPagado']!=''){                       $SIS_data .= ",'".$producto['SueldoPagado']."'";                  }else{$SIS_data .= ",''";}
-							if(isset($producto['TotalBonoFijoAfecto']) && $producto['TotalBonoFijoAfecto']!=''){         $SIS_data .= ",'".$producto['TotalBonoFijoAfecto']."'";           }else{$SIS_data .= ",''";}
-							if(isset($producto['TotalBonoFijoNoAfecto']) && $producto['TotalBonoFijoNoAfecto']!=''){     $SIS_data .= ",'".$producto['TotalBonoFijoNoAfecto']."'";         }else{$SIS_data .= ",''";}
-							if(isset($producto['TotalBonoTurno']) && $producto['TotalBonoTurno']!=''){                   $SIS_data .= ",'".$producto['TotalBonoTurno']."'";                }else{$SIS_data .= ",''";}
-							if(isset($producto['TotalBonoTemporalAfecto']) && $producto['TotalBonoTemporalAfecto']!=''){ $SIS_data .= ",'".$producto['TotalBonoTemporalAfecto']."'";       }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['fact_sueldos_basicos']['TopeDepConv']) && $_SESSION['fact_sueldos_basicos']['TopeDepConv']!=''){         $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['TopeDepConv']."'";      }else{$SIS_data .= ",''";}
+
+							if(isset($producto['idTrabajador']) && $producto['idTrabajador']!=''){                              $SIS_data .= ",'".$producto['idTrabajador']."'";                  }else{$SIS_data .= ",''";}
+							if(isset($producto['idTipoContratoTrab']) && $producto['idTipoContratoTrab']!=''){                  $SIS_data .= ",'".$producto['idTipoContratoTrab']."'";            }else{$SIS_data .= ",''";}
+							if(isset($producto['TipoContratoTrab']) && $producto['TipoContratoTrab']!=''){                      $SIS_data .= ",'".$producto['TipoContratoTrab']."'";              }else{$SIS_data .= ",''";}
+							if(isset($producto['horas_pactadas']) && $producto['horas_pactadas']!=''){                          $SIS_data .= ",'".$producto['horas_pactadas']."'";                }else{$SIS_data .= ",''";}
+							if(isset($producto['Gratificacion']) && $producto['Gratificacion']!=''){                            $SIS_data .= ",'".$producto['Gratificacion']."'";                 }else{$SIS_data .= ",''";}
+							if(isset($producto['TrabajadorNombre']) && $producto['TrabajadorNombre']!=''){                      $SIS_data .= ",'".$producto['TrabajadorNombre']."'";              }else{$SIS_data .= ",''";}
+							if(isset($producto['TrabajadorRut']) && $producto['TrabajadorRut']!=''){                            $SIS_data .= ",'".$producto['TrabajadorRut']."'";                 }else{$SIS_data .= ",''";}
+							if(isset($producto['TrabajadorEmail']) && $producto['TrabajadorEmail']!=''){                        $SIS_data .= ",'".$producto['TrabajadorEmail']."'";               }else{$SIS_data .= ",''";}
+							if(isset($producto['TrabajadorContrato']) && $producto['TrabajadorContrato']!=''){                  $SIS_data .= ",'".$producto['TrabajadorContrato']."'";            }else{$SIS_data .= ",''";}
+							if(isset($producto['TrabajadorCargo']) && $producto['TrabajadorCargo']!=''){                        $SIS_data .= ",'".$producto['TrabajadorCargo']."'";               }else{$SIS_data .= ",''";}
+							if(isset($producto['SistemaNombre']) && $producto['SistemaNombre']!=''){                            $SIS_data .= ",'".$producto['SistemaNombre']."'";                 }else{$SIS_data .= ",''";}
+							if(isset($producto['SistemaRut']) && $producto['SistemaRut']!=''){                                  $SIS_data .= ",'".$producto['SistemaRut']."'";                    }else{$SIS_data .= ",''";}
+							if(isset($producto['SueldoPactado']) && $producto['SueldoPactado']!=''){                            $SIS_data .= ",'".$producto['SueldoPactado']."'";                 }else{$SIS_data .= ",''";}
+							if(isset($producto['DiasPactados']) && $producto['DiasPactados']!=''){                              $SIS_data .= ",'".$producto['DiasPactados']."'";                  }else{$SIS_data .= ",''";}
+							if(isset($producto['DiasTrabajados']) && $producto['DiasTrabajados']!=''){                          $SIS_data .= ",'".$producto['DiasTrabajados']."'";                }else{$SIS_data .= ",''";}
+							if(isset($producto['diasInasistencia']) && $producto['diasInasistencia']!=''){                      $SIS_data .= ",'".$producto['diasInasistencia']."'";              }else{$SIS_data .= ",''";}
+							if(isset($producto['diasLicencias']) && $producto['diasLicencias']!=''){                            $SIS_data .= ",'".$producto['diasLicencias']."'";                 }else{$SIS_data .= ",''";}
+							if(isset($producto['SueldoPagado']) && $producto['SueldoPagado']!=''){                              $SIS_data .= ",'".$producto['SueldoPagado']."'";                  }else{$SIS_data .= ",''";}
+							if(isset($producto['TotalBonoFijoAfecto']) && $producto['TotalBonoFijoAfecto']!=''){                $SIS_data .= ",'".$producto['TotalBonoFijoAfecto']."'";           }else{$SIS_data .= ",''";}
+							if(isset($producto['TotalBonoFijoNoAfecto']) && $producto['TotalBonoFijoNoAfecto']!=''){            $SIS_data .= ",'".$producto['TotalBonoFijoNoAfecto']."'";         }else{$SIS_data .= ",''";}
+							if(isset($producto['TotalBonoTurno']) && $producto['TotalBonoTurno']!=''){                          $SIS_data .= ",'".$producto['TotalBonoTurno']."'";                }else{$SIS_data .= ",''";}
+							if(isset($producto['TotalBonoTemporalAfecto']) && $producto['TotalBonoTemporalAfecto']!=''){        $SIS_data .= ",'".$producto['TotalBonoTemporalAfecto']."'";       }else{$SIS_data .= ",''";}
 							if(isset($producto['TotalBonoTemporalNoAfecto']) && $producto['TotalBonoTemporalNoAfecto']!=''){    $SIS_data .= ",'".$producto['TotalBonoTemporalNoAfecto']."'";     }else{$SIS_data .= ",''";}
-							if(isset($producto['TotalHorasExtras']) && $producto['TotalHorasExtras']!=''){               $SIS_data .= ",'".$producto['TotalHorasExtras']."'";              }else{$SIS_data .= ",''";}
-							if(isset($producto['Cargas_n']) && $producto['Cargas_n']!=''){                               $SIS_data .= ",'".$producto['Cargas_n']."'";                      }else{$SIS_data .= ",''";}
-							if(isset($producto['Cargas_valor']) && $producto['Cargas_valor']!=''){                       $SIS_data .= ",'".$producto['Cargas_valor']."'";                  }else{$SIS_data .= ",''";}
-							if(isset($producto['Cargas_idTramo']) && $producto['Cargas_idTramo']!=''){                   $SIS_data .= ",'".$producto['Cargas_idTramo']."'";                }else{$SIS_data .= ",''";}
-							if(isset($producto['Cargas_tramo']) && $producto['Cargas_tramo']!=''){                       $SIS_data .= ",'".$producto['Cargas_tramo']."'";                  }else{$SIS_data .= ",''";}
-							if(isset($producto['TotalCargasFamiliares']) && $producto['TotalCargasFamiliares']!=''){     $SIS_data .= ",'".$producto['TotalCargasFamiliares']."'";         }else{$SIS_data .= ",''";}
-							if(isset($producto['SueldoImponible']) && $producto['SueldoImponible']!=''){                 $SIS_data .= ",'".$producto['SueldoImponible']."'";               }else{$SIS_data .= ",''";}
-							if(isset($producto['SueldoNoImponible']) && $producto['SueldoNoImponible']!=''){             $SIS_data .= ",'".$producto['SueldoNoImponible']."'";             }else{$SIS_data .= ",''";}
-							if(isset($producto['TotalHaberes']) && $producto['TotalHaberes']!=''){                       $SIS_data .= ",'".$producto['TotalHaberes']."'";                  }else{$SIS_data .= ",''";}
-							if(isset($producto['AFP_idAFP']) && $producto['AFP_idAFP']!=''){                             $SIS_data .= ",'".$producto['AFP_idAFP']."'";                     }else{$SIS_data .= ",''";}
-							if(isset($producto['AFP_Nombre']) && $producto['AFP_Nombre']!=''){                           $SIS_data .= ",'".$producto['AFP_Nombre']."'";                    }else{$SIS_data .= ",''";}
-							if(isset($producto['AFP_Porcentaje']) && $producto['AFP_Porcentaje']!=''){                   $SIS_data .= ",'".$producto['AFP_Porcentaje']."'";                }else{$SIS_data .= ",''";}
-							if(isset($producto['AFP_Total']) && $producto['AFP_Total']!=''){                             $SIS_data .= ",'".$producto['AFP_Total']."'";                     }else{$SIS_data .= ",''";}
-							if(isset($producto['AFP_SIS']) && $producto['AFP_SIS']!=''){                                 $SIS_data .= ",'".$producto['AFP_SIS']."'";                       }else{$SIS_data .= ",''";}
-							if(isset($producto['Salud_idAFP']) && $producto['Salud_idAFP']!=''){                         $SIS_data .= ",'".$producto['Salud_idAFP']."'";                   }else{$SIS_data .= ",''";}
-							if(isset($producto['Salud_Nombre']) && $producto['Salud_Nombre']!=''){                       $SIS_data .= ",'".$producto['Salud_Nombre']."'";                  }else{$SIS_data .= ",''";}
-							if(isset($producto['Salud_Porcentaje']) && $producto['Salud_Porcentaje']!=''){               $SIS_data .= ",'".$producto['Salud_Porcentaje']."'";              }else{$SIS_data .= ",''";}
-							if(isset($producto['Salud_Total']) && $producto['Salud_Total']!=''){                         $SIS_data .= ",'".$producto['Salud_Total']."'";                   }else{$SIS_data .= ",''";}
-							if(isset($producto['TotalDescuentos']) && $producto['TotalDescuentos']!=''){                 $SIS_data .= ",'".$producto['TotalDescuentos']."'";               }else{$SIS_data .= ",''";}
-							if(isset($producto['SegCesantia_Empleador']) && $producto['SegCesantia_Empleador']!=''){     $SIS_data .= ",'".$producto['SegCesantia_Empleador']."'";         }else{$SIS_data .= ",''";}
-							if(isset($producto['SegCesantia_Trabajador']) && $producto['SegCesantia_Trabajador']!=''){   $SIS_data .= ",'".$producto['SegCesantia_Trabajador']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['ImpuestoRenta']) && $producto['ImpuestoRenta']!=''){                     $SIS_data .= ",'".$producto['ImpuestoRenta']."'";                 }else{$SIS_data .= ",''";}
-							if(isset($producto['RentaAfecta']) && $producto['RentaAfecta']!=''){                         $SIS_data .= ",'".$producto['RentaAfecta']."'";                   }else{$SIS_data .= ",''";}
-							if(isset($producto['TotalAPagar']) && $producto['TotalAPagar']!=''){                         $SIS_data .= ",'".$producto['TotalAPagar']."'";                   }else{$SIS_data .= ",''";}
-							if(isset($producto['idCentroCosto']) && $producto['idCentroCosto']!=''){                     $SIS_data .= ",'".$producto['idCentroCosto']."'";                 }else{$SIS_data .= ",''";}
-							if(isset($producto['idLevel_1']) && $producto['idLevel_1']!=''){                             $SIS_data .= ",'".$producto['idLevel_1']."'";                     }else{$SIS_data .= ",''";}
-							if(isset($producto['idLevel_2']) && $producto['idLevel_2']!=''){                             $SIS_data .= ",'".$producto['idLevel_2']."'";                     }else{$SIS_data .= ",''";}
-							if(isset($producto['idLevel_3']) && $producto['idLevel_3']!=''){                             $SIS_data .= ",'".$producto['idLevel_3']."'";                     }else{$SIS_data .= ",''";}
-							if(isset($producto['idLevel_4']) && $producto['idLevel_4']!=''){                             $SIS_data .= ",'".$producto['idLevel_4']."'";                     }else{$SIS_data .= ",''";}
-							if(isset($producto['idLevel_5']) && $producto['idLevel_5']!=''){                             $SIS_data .= ",'".$producto['idLevel_5']."'";                     }else{$SIS_data .= ",''";}
-							if(isset($producto['CentroCosto']) && $producto['CentroCosto']!=''){                         $SIS_data .= ",'".$producto['CentroCosto']."'";                   }else{$SIS_data .= ",''";}
-							if(isset($producto['TrabajoPesado_Id']) && $producto['TrabajoPesado_Id']!=''){               $SIS_data .= ",'".$producto['TrabajoPesado_Id']."'";              }else{$SIS_data .= ",''";}
+							if(isset($producto['TotalHorasExtras']) && $producto['TotalHorasExtras']!=''){                      $SIS_data .= ",'".$producto['TotalHorasExtras']."'";              }else{$SIS_data .= ",''";}
+							if(isset($producto['Cargas_n']) && $producto['Cargas_n']!=''){                                      $SIS_data .= ",'".$producto['Cargas_n']."'";                      }else{$SIS_data .= ",''";}
+							if(isset($producto['Cargas_valor']) && $producto['Cargas_valor']!=''){                              $SIS_data .= ",'".$producto['Cargas_valor']."'";                  }else{$SIS_data .= ",''";}
+							if(isset($producto['Cargas_idTramo']) && $producto['Cargas_idTramo']!=''){                          $SIS_data .= ",'".$producto['Cargas_idTramo']."'";                }else{$SIS_data .= ",''";}
+							if(isset($producto['Cargas_tramo']) && $producto['Cargas_tramo']!=''){                              $SIS_data .= ",'".$producto['Cargas_tramo']."'";                  }else{$SIS_data .= ",''";}
+							if(isset($producto['TotalCargasFamiliares']) && $producto['TotalCargasFamiliares']!=''){            $SIS_data .= ",'".$producto['TotalCargasFamiliares']."'";         }else{$SIS_data .= ",''";}
+							if(isset($producto['SueldoImponible']) && $producto['SueldoImponible']!=''){                        $SIS_data .= ",'".$producto['SueldoImponible']."'";               }else{$SIS_data .= ",''";}
+							if(isset($producto['SueldoNoImponible']) && $producto['SueldoNoImponible']!=''){                    $SIS_data .= ",'".$producto['SueldoNoImponible']."'";             }else{$SIS_data .= ",''";}
+							if(isset($producto['TotalHaberes']) && $producto['TotalHaberes']!=''){                              $SIS_data .= ",'".$producto['TotalHaberes']."'";                  }else{$SIS_data .= ",''";}
+							if(isset($producto['AFP_idAFP']) && $producto['AFP_idAFP']!=''){                                    $SIS_data .= ",'".$producto['AFP_idAFP']."'";                     }else{$SIS_data .= ",''";}
+							if(isset($producto['AFP_Nombre']) && $producto['AFP_Nombre']!=''){                                  $SIS_data .= ",'".$producto['AFP_Nombre']."'";                    }else{$SIS_data .= ",''";}
+							if(isset($producto['AFP_Porcentaje']) && $producto['AFP_Porcentaje']!=''){                          $SIS_data .= ",'".$producto['AFP_Porcentaje']."'";                }else{$SIS_data .= ",''";}
+							if(isset($producto['AFP_Total']) && $producto['AFP_Total']!=''){                                    $SIS_data .= ",'".$producto['AFP_Total']."'";                     }else{$SIS_data .= ",''";}
+							if(isset($producto['AFP_SIS']) && $producto['AFP_SIS']!=''){                                        $SIS_data .= ",'".$producto['AFP_SIS']."'";                       }else{$SIS_data .= ",''";}
+							if(isset($producto['Salud_idAFP']) && $producto['Salud_idAFP']!=''){                                $SIS_data .= ",'".$producto['Salud_idAFP']."'";                   }else{$SIS_data .= ",''";}
+							if(isset($producto['Salud_Nombre']) && $producto['Salud_Nombre']!=''){                              $SIS_data .= ",'".$producto['Salud_Nombre']."'";                  }else{$SIS_data .= ",''";}
+							if(isset($producto['Salud_Porcentaje']) && $producto['Salud_Porcentaje']!=''){                      $SIS_data .= ",'".$producto['Salud_Porcentaje']."'";              }else{$SIS_data .= ",''";}
+							if(isset($producto['Salud_Total']) && $producto['Salud_Total']!=''){                                $SIS_data .= ",'".$producto['Salud_Total']."'";                   }else{$SIS_data .= ",''";}
+							if(isset($producto['TotalDescuentos']) && $producto['TotalDescuentos']!=''){                        $SIS_data .= ",'".$producto['TotalDescuentos']."'";               }else{$SIS_data .= ",''";}
+							if(isset($producto['SegCesantia_Empleador']) && $producto['SegCesantia_Empleador']!=''){            $SIS_data .= ",'".$producto['SegCesantia_Empleador']."'";         }else{$SIS_data .= ",''";}
+							if(isset($producto['SegCesantia_Trabajador']) && $producto['SegCesantia_Trabajador']!=''){          $SIS_data .= ",'".$producto['SegCesantia_Trabajador']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['ImpuestoRenta']) && $producto['ImpuestoRenta']!=''){                            $SIS_data .= ",'".$producto['ImpuestoRenta']."'";                 }else{$SIS_data .= ",''";}
+							if(isset($producto['RentaAfecta']) && $producto['RentaAfecta']!=''){                                $SIS_data .= ",'".$producto['RentaAfecta']."'";                   }else{$SIS_data .= ",''";}
+							if(isset($producto['TotalAPagar']) && $producto['TotalAPagar']!=''){                                $SIS_data .= ",'".$producto['TotalAPagar']."'";                   }else{$SIS_data .= ",''";}
+							if(isset($producto['idCentroCosto']) && $producto['idCentroCosto']!=''){                            $SIS_data .= ",'".$producto['idCentroCosto']."'";                 }else{$SIS_data .= ",''";}
+							if(isset($producto['idLevel_1']) && $producto['idLevel_1']!=''){                                    $SIS_data .= ",'".$producto['idLevel_1']."'";                     }else{$SIS_data .= ",''";}
+							if(isset($producto['idLevel_2']) && $producto['idLevel_2']!=''){                                    $SIS_data .= ",'".$producto['idLevel_2']."'";                     }else{$SIS_data .= ",''";}
+							if(isset($producto['idLevel_3']) && $producto['idLevel_3']!=''){                                    $SIS_data .= ",'".$producto['idLevel_3']."'";                     }else{$SIS_data .= ",''";}
+							if(isset($producto['idLevel_4']) && $producto['idLevel_4']!=''){                                    $SIS_data .= ",'".$producto['idLevel_4']."'";                     }else{$SIS_data .= ",''";}
+							if(isset($producto['idLevel_5']) && $producto['idLevel_5']!=''){                                    $SIS_data .= ",'".$producto['idLevel_5']."'";                     }else{$SIS_data .= ",''";}
+							if(isset($producto['CentroCosto']) && $producto['CentroCosto']!=''){                                $SIS_data .= ",'".$producto['CentroCosto']."'";                   }else{$SIS_data .= ",''";}
+							if(isset($producto['TrabajoPesado_Id']) && $producto['TrabajoPesado_Id']!=''){                      $SIS_data .= ",'".$producto['TrabajoPesado_Id']."'";              }else{$SIS_data .= ",''";}
 							if(isset($producto['TrabajoPesado_Porcentaje']) && $producto['TrabajoPesado_Porcentaje']!=''){      $SIS_data .= ",'".$producto['TrabajoPesado_Porcentaje']."'";      }else{$SIS_data .= ",''";}
-							if(isset($producto['TrabajoPesado_Valor']) && $producto['TrabajoPesado_Valor']!=''){         $SIS_data .= ",'".$producto['TrabajoPesado_Valor']."'";           }else{$SIS_data .= ",''";}
-							if(isset($producto['Mutual_id']) && $producto['Mutual_id']!=''){                             $SIS_data .= ",'".$producto['Mutual_id']."'";                     }else{$SIS_data .= ",''";}
-							if(isset($producto['Mutual_Nombre']) && $producto['Mutual_Nombre']!=''){                     $SIS_data .= ",'".$producto['Mutual_Nombre']."'";                 }else{$SIS_data .= ",''";}
-							if(isset($producto['Mutual_Porcentaje']) && $producto['Mutual_Porcentaje']!=''){             $SIS_data .= ",'".$producto['Mutual_Porcentaje']."'";             }else{$SIS_data .= ",''";}
-							if(isset($producto['Mutual_Valor']) && $producto['Mutual_Valor']!=''){                       $SIS_data .= ",'".$producto['Mutual_Valor']."'";                  }else{$SIS_data .= ",''";}
-							if(isset($producto['Salud_idCotizacion']) && $producto['Salud_idCotizacion']!=''){           $SIS_data .= ",'".$producto['Salud_idCotizacion']."'";            }else{$SIS_data .= ",''";}
+							if(isset($producto['TrabajoPesado_Valor']) && $producto['TrabajoPesado_Valor']!=''){                $SIS_data .= ",'".$producto['TrabajoPesado_Valor']."'";           }else{$SIS_data .= ",''";}
+							if(isset($producto['Mutual_id']) && $producto['Mutual_id']!=''){                                    $SIS_data .= ",'".$producto['Mutual_id']."'";                     }else{$SIS_data .= ",''";}
+							if(isset($producto['Mutual_Nombre']) && $producto['Mutual_Nombre']!=''){                            $SIS_data .= ",'".$producto['Mutual_Nombre']."'";                 }else{$SIS_data .= ",''";}
+							if(isset($producto['Mutual_Porcentaje']) && $producto['Mutual_Porcentaje']!=''){                    $SIS_data .= ",'".$producto['Mutual_Porcentaje']."'";             }else{$SIS_data .= ",''";}
+							if(isset($producto['Mutual_Valor']) && $producto['Mutual_Valor']!=''){                              $SIS_data .= ",'".$producto['Mutual_Valor']."'";                  }else{$SIS_data .= ",''";}
+							if(isset($producto['Salud_idCotizacion']) && $producto['Salud_idCotizacion']!=''){                  $SIS_data .= ",'".$producto['Salud_idCotizacion']."'";            }else{$SIS_data .= ",''";}
 							if(isset($producto['Salud_CotizacionPorcentaje']) && $producto['Salud_CotizacionPorcentaje']!=''){  $SIS_data .= ",'".$producto['Salud_CotizacionPorcentaje']."'";    }else{$SIS_data .= ",''";}
-							if(isset($producto['Salud_CotizacionValor']) && $producto['Salud_CotizacionValor']!=''){     $SIS_data .= ",'".$producto['Salud_CotizacionValor']."'";         }else{$SIS_data .= ",''";}
+							if(isset($producto['Salud_CotizacionValor']) && $producto['Salud_CotizacionValor']!=''){            $SIS_data .= ",'".$producto['Salud_CotizacionValor']."'";         }else{$SIS_data .= ",''";}
 							$SIS_data .= ",'1'" ;//estado no pagado
-							
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idSistema, idUsuario, fecha_auto, Creacion_fecha,
 							Creacion_Semana, Creacion_mes, Creacion_ano, Fecha_desde, Fecha_hasta, Observaciones, UF, UTM, IMM,
@@ -1827,15 +1803,15 @@ require_once '0_validate_user_1.php';
 									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoFijo'][$x]['idBonoFijo']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoFijo'][$x]['idBonoFijo']!=''){    $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoFijo'][$x]['idBonoFijo']."'";    }else{$SIS_data .= ",''";}
 									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoFijo'][$x]['BonoNombre']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoFijo'][$x]['BonoNombre']!=''){    $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoFijo'][$x]['BonoNombre']."'";    }else{$SIS_data .= ",''";}
 									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoFijo'][$x]['BonoMonto']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoFijo'][$x]['BonoMonto']!=''){      $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoFijo'][$x]['BonoMonto']."'";     }else{$SIS_data .= ",''";}
-									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoFijo'][$x]['BonoTipo']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoFijo'][$x]['BonoTipo']!=''){ $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoFijo'][$x]['BonoTipo']."'";      }else{$SIS_data .= ",''";}
-									
+									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoFijo'][$x]['BonoTipo']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoFijo'][$x]['BonoTipo']!=''){        $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoFijo'][$x]['BonoTipo']."'";      }else{$SIS_data .= ",''";}
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idFactTrab, idBonoFijo, BonoNombre,BonoMonto, BonoTipo';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'rrhh_sueldos_facturacion_trabajadores_bonofijo', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 							}
-							
+
 							/*****************************************************************************/
 							//Bonos por turno
 							for ($x = 0; $x <= 6; $x++) {
@@ -1846,14 +1822,14 @@ require_once '0_validate_user_1.php';
 									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTurno'][$x]['idTurnos']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTurno'][$x]['idTurnos']!=''){ $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTurno'][$x]['idTurnos']."'";      }else{$SIS_data .= ",''";}
 									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTurno'][$x]['BonoNombre']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTurno'][$x]['BonoNombre']!=''){    $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTurno'][$x]['BonoNombre']."'";    }else{$SIS_data .= ",''";}
 									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTurno'][$x]['BonoMonto']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTurno'][$x]['BonoMonto']!=''){      $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTurno'][$x]['BonoMonto']."'";     }else{$SIS_data .= ",''";}
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idFactTrab, idTurnos, BonoNombre,BonoMonto';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'rrhh_sueldos_facturacion_trabajadores_bonoturno', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 							}
-							
+
 							/*****************************************************************************/
 							//Bonos Temporales
 							for ($x = 0; $x <= 100; $x++) {
@@ -1865,14 +1841,14 @@ require_once '0_validate_user_1.php';
 									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTemporal'][$x]['BonoNombre']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTemporal'][$x]['BonoNombre']!=''){     $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTemporal'][$x]['BonoNombre']."'";      }else{$SIS_data .= ",''";}
 									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTemporal'][$x]['BonoMonto']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTemporal'][$x]['BonoMonto']!=''){       $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTemporal'][$x]['BonoMonto']."'";       }else{$SIS_data .= ",''";}
 									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTemporal'][$x]['BonoTipo']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTemporal'][$x]['BonoTipo']!=''){         $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['BonoTemporal'][$x]['BonoTipo']."'";        }else{$SIS_data .= ",''";}
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idFactTrab, idBonoTemporal, BonoNombre,BonoMonto, BonoTipo';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'rrhh_sueldos_facturacion_trabajadores_bonotemporal', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 							}
-							
+
 							/*****************************************************************************/
 							//Horas extras
 							for ($x = 0; $x <= 31; $x++) {
@@ -1885,14 +1861,14 @@ require_once '0_validate_user_1.php';
 									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['HorasExtras'][$x]['N_Horas']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['HorasExtras'][$x]['N_Horas']!=''){      $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['HorasExtras'][$x]['N_Horas']."'";       }else{$SIS_data .= ",''";}
 									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['HorasExtras'][$x]['ValorHora']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['HorasExtras'][$x]['ValorHora']!=''){  $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['HorasExtras'][$x]['ValorHora']."'";     }else{$SIS_data .= ",''";}
 									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['HorasExtras'][$x]['TotalHora']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['HorasExtras'][$x]['TotalHora']!=''){  $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['HorasExtras'][$x]['TotalHora']."'";     }else{$SIS_data .= ",''";}
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idFactTrab, idPorcentaje, Porcentaje, N_Horas, ValorHora, TotalHora';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'rrhh_sueldos_facturacion_trabajadores_horasextras', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 							}
-							
+
 							/*****************************************************************************/
 							//Descuentos previsionales
 							for ($x = 0; $x <= 100; $x++) {
@@ -1904,15 +1880,14 @@ require_once '0_validate_user_1.php';
 									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['DescuentoFijo'][$x]['DescuentoNombre']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['DescuentoFijo'][$x]['DescuentoNombre']!=''){  $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['DescuentoFijo'][$x]['DescuentoNombre']."'";  }else{$SIS_data .= ",''";}
 									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['DescuentoFijo'][$x]['DescuentoMonto']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['DescuentoFijo'][$x]['DescuentoMonto']!=''){    $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['DescuentoFijo'][$x]['DescuentoMonto']."'";   }else{$SIS_data .= ",''";}
 									if(isset($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['DescuentoFijo'][$x]['DescuentoIDAFP']) && $_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['DescuentoFijo'][$x]['DescuentoIDAFP']!=''){    $SIS_data .= ",'".$_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['DescuentoFijo'][$x]['DescuentoIDAFP']."'";   }else{$SIS_data .= ",''";}
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idFactTrab, idDescuentoFijo, DescuentoNombre,DescuentoMonto, DescuentoIDAFP';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'rrhh_sueldos_facturacion_trabajadores_descuentofijo', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 							}
-							
-							
+
 							/*****************************************************************************/
 							//anticipos
 							if(!empty($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['Anticipo'])){
@@ -1920,41 +1895,41 @@ require_once '0_validate_user_1.php';
 									//filtros
 									if(isset($ultimo_idmain) && $ultimo_idmain!=''){                              $SIS_data  = "'".$ultimo_idmain."'";                 }else{$SIS_data  = "''";}
 									if(isset($anticipo['Creacion_fecha']) && $anticipo['Creacion_fecha']!=''){    $SIS_data .= ",'".$anticipo['Creacion_fecha']."'";   }else{$SIS_data .= ",''";}
-									if(isset($anticipo['Monto']) && $anticipo['Monto']!=''){               $SIS_data .= ",'".$anticipo['Monto']."'";            }else{$SIS_data .= ",''";}
-									
+									if(isset($anticipo['Monto']) && $anticipo['Monto']!=''){                      $SIS_data .= ",'".$anticipo['Monto']."'";            }else{$SIS_data .= ",''";}
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idFactTrab, Creacion_fecha, Monto';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'rrhh_sueldos_facturacion_trabajadores_anticipos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 							}
-							
+
 							/*****************************************************************************/
 							//Cuotas
 							if(!empty($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['Cuotas'])){
 								foreach ($_SESSION['fact_sueldos_sueldos'][$producto['idTrabajador']]['Cuotas'] as $key => $cuotas){
 									//filtros
 									if(isset($ultimo_idmain) && $ultimo_idmain!=''){                    $SIS_data  = "'".$ultimo_idmain."'";            }else{$SIS_data  = "''";}
-									if(isset($cuotas['Fecha']) && $cuotas['Fecha']!=''){         $SIS_data .= ",'".$cuotas['Fecha']."'";         }else{$SIS_data .= ",''";}
-									if(isset($cuotas['nCuota']) && $cuotas['nCuota']!=''){       $SIS_data .= ",'".$cuotas['nCuota']."'";        }else{$SIS_data .= ",''";}
+									if(isset($cuotas['Fecha']) && $cuotas['Fecha']!=''){                $SIS_data .= ",'".$cuotas['Fecha']."'";         }else{$SIS_data .= ",''";}
+									if(isset($cuotas['nCuota']) && $cuotas['nCuota']!=''){              $SIS_data .= ",'".$cuotas['nCuota']."'";        }else{$SIS_data .= ",''";}
 									if(isset($cuotas['TotalCuotas']) && $cuotas['TotalCuotas']!=''){    $SIS_data .= ",'".$cuotas['TotalCuotas']."'";   }else{$SIS_data .= ",''";}
 									if(isset($cuotas['monto_cuotas']) && $cuotas['monto_cuotas']!=''){  $SIS_data .= ",'".$cuotas['monto_cuotas']."'";  }else{$SIS_data .= ",''";}
-									if(isset($cuotas['Tipo']) && $cuotas['Tipo']!=''){           $SIS_data .= ",'".$cuotas['Tipo']."'";          }else{$SIS_data .= ",''";}
-									
+									if(isset($cuotas['Tipo']) && $cuotas['Tipo']!=''){                  $SIS_data .= ",'".$cuotas['Tipo']."'";          }else{$SIS_data .= ",''";}
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idFactTrab, Fecha, nCuota, TotalCuotas, monto_cuotas, Tipo';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'rrhh_sueldos_facturacion_trabajadores_descuentos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 							}
-							
+
 							/*********************************************************************************/
 							/*                      SE ACTUALIZAN LOS DATOS UTILIZADOS                       */
 							/*********************************************************************************/
 							//filtro
 							$SIS_data = "idUso='2'" ;
 							$SIS_data .= ",idFactRRHH='".$ultimo_id."'";
-											
+
 							/****************************************************/
 							//Inasistencias
 							$resultado = db_update_data (false, $SIS_data, 'trabajadores_inasistencias_dias', 'idTrabajador = "'.$producto['idTrabajador'].'" AND  idUso=1 AND Creacion_fecha BETWEEN "'.$_SESSION['fact_sueldos_basicos']['Fecha_desde'].'" AND "'.$_SESSION['fact_sueldos_basicos']['Fecha_hasta'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1979,21 +1954,19 @@ require_once '0_validate_user_1.php';
 
 						}
 					}
-							
-							
-					
+
 					/*********************************************************************/
 					//Archivos
 					if(isset($_SESSION['insumos_ing_archivos'])){
 						foreach ($_SESSION['insumos_ing_archivos'] as $key => $archivo){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                     $SIS_data  = "'".$ultimo_id."'";                                       }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                              $SIS_data  = "'".$ultimo_id."'";                                       }else{$SIS_data  = "''";}
 							if(isset($_SESSION['fact_sueldos_basicos']['idSistema']) && $_SESSION['fact_sueldos_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['idSistema']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['fact_sueldos_basicos']['idUsuario']) && $_SESSION['fact_sueldos_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['fact_sueldos_basicos']['fecha_auto']) && $_SESSION['fact_sueldos_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['fecha_auto']."'"; }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['fact_sueldos_basicos']['Creacion_fecha']) && $_SESSION['fact_sueldos_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['fact_sueldos_basicos']['Creacion_fecha']) && $_SESSION['fact_sueldos_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['fact_sueldos_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NSemana($_SESSION['fact_sueldos_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['fact_sueldos_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['fact_sueldos_basicos']['Creacion_fecha'])."'";
@@ -2021,13 +1994,12 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['fact_sueldos_sueldos']);
 					unset($_SESSION['fact_sueldos_temporal']);
 					unset($_SESSION['fact_sueldos_archivos']);
-					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
 
 			}
-	
 
 		break;
 /*******************************************************************************************************************/

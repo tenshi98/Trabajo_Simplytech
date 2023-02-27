@@ -37,10 +37,10 @@ if(!empty($_GET['submit_filter'])){
 $SIS_where_1 = "telemetria_listado_errores_999.idErrores!=0";           //siempre pasa
 $SIS_where_2 = "telemetria_listado_error_fuera_linea.idFueraLinea!=0";  //siempre pasa
 $SIS_where_3 = "telemetria_listado.idEstado = 1";                       //solo activos
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''&&isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){ 
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''&&isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){
 	$SIS_where_1.=" AND telemetria_listado_errores_999.TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."'";
 	$SIS_where_2.=" AND telemetria_listado_error_fuera_linea.TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."'";
-}elseif(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
+}elseif(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){
 	$SIS_where_1.=" AND telemetria_listado_errores_999.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 	$SIS_where_2.=" AND telemetria_listado_error_fuera_linea.Fecha_inicio BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
@@ -73,7 +73,7 @@ $SIS_join  = '
 LEFT JOIN telemetria_listado     ON telemetria_listado.idTelemetria  = telemetria_listado_errores_999.idTelemetria
 LEFT JOIN core_sistemas          ON core_sistemas.idSistema          = telemetria_listado_errores_999.idSistema
 LEFT JOIN core_telemetria_tabs   ON core_telemetria_tabs.idTab       = telemetria_listado.idTab';
-$SIS_order = 'core_sistemas.Nombre ASC, telemetria_listado.Nombre ASC, core_telemetria_tabs.Nombre ASC, telemetria_listado_errores_999.Sensor ASC, telemetria_listado_errores_999.Descripcion ASC, telemetria_listado_errores_999.Valor ASC';	
+$SIS_order = 'core_sistemas.Nombre ASC, telemetria_listado.Nombre ASC, core_telemetria_tabs.Nombre ASC, telemetria_listado_errores_999.Sensor ASC, telemetria_listado_errores_999.Descripcion ASC, telemetria_listado_errores_999.Valor ASC';
 $SIS_where_1.= ' GROUP BY core_sistemas.Nombre,telemetria_listado.Nombre,core_telemetria_tabs.Nombre,telemetria_listado_errores_999.Sensor, telemetria_listado_errores_999.Descripcion, telemetria_listado_errores_999.Valor';
 $arrEquipos1 = array();
 $arrEquipos1 = db_select_array (false, $SIS_query, 'telemetria_listado_errores_999', $SIS_join, $SIS_where_1, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos1');
@@ -93,7 +93,7 @@ $SIS_join  = '
 LEFT JOIN telemetria_listado     ON telemetria_listado.idTelemetria  = telemetria_listado_error_fuera_linea.idTelemetria
 LEFT JOIN core_sistemas          ON core_sistemas.idSistema          = telemetria_listado_error_fuera_linea.idSistema
 LEFT JOIN core_telemetria_tabs   ON core_telemetria_tabs.idTab       = telemetria_listado.idTab';
-$SIS_order = 'core_sistemas.Nombre ASC, telemetria_listado.Nombre ASC, core_telemetria_tabs.Nombre ASC, telemetria_listado_error_fuera_linea.Fecha_inicio ASC';	
+$SIS_order = 'core_sistemas.Nombre ASC, telemetria_listado.Nombre ASC, core_telemetria_tabs.Nombre ASC, telemetria_listado_error_fuera_linea.Fecha_inicio ASC';
 $arrErrores = array();
 $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera_linea', $SIS_join, $SIS_where_2, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
 
@@ -109,7 +109,7 @@ telemetria_listado.TiempoFueraLinea';
 $SIS_join  = '
 LEFT JOIN `core_sistemas`        ON core_sistemas.idSistema      = telemetria_listado.idSistema
 LEFT JOIN core_telemetria_tabs   ON core_telemetria_tabs.idTab   = telemetria_listado.idTab';
-$SIS_order = 'telemetria_listado.idSistema ASC';	
+$SIS_order = 'telemetria_listado.idSistema ASC';
 $arrTelemetria = array();
 $arrTelemetria = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where_3, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
 
@@ -120,7 +120,7 @@ $arrGrupos = array();
 $arrGrupos = db_select_array (false, 'idGrupo,Nombre,nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
 				
 $arrFinalGrupos = array();
-foreach ($arrGrupos as $sen) { 
+foreach ($arrGrupos as $sen) {
 	$arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];
 }
 
@@ -252,7 +252,7 @@ foreach ($arrGrupos as $sen) {
 						</tbody>
 					</table>
 				</div>
-				
+
 			</div>
 
 			<div class="tab-pane fade" id="fuera_actual">
@@ -298,15 +298,15 @@ foreach ($arrGrupos as $sen) {
 										<td>'.$Tiempo.' hrs</td>
 									</tr>';
 								}
-							}?>
+							} ?>
 						</tbody>
 					</table>
 				</div>
-				
+
 			</div>
-			
+
 		</div>
-		
+
 	</div>
 </div>
 
@@ -323,6 +323,7 @@ foreach ($arrGrupos as $sen) {
 $z  = "telemetria_listado.idTelemetria!=0";   //Siempre pasa
 
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -347,7 +348,7 @@ $z  = "telemetria_listado.idTelemetria!=0";   //Siempre pasa
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x3, 2);
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 1, 2);
 				$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x5, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
-					
+
 				?>
 
 				<div class="form-group">
@@ -365,4 +366,5 @@ $z  = "telemetria_listado.idTelemetria!=0";   //Siempre pasa
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

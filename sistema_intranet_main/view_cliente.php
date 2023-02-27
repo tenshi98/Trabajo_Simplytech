@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -134,7 +134,7 @@ $SIS_where = "cotizacion_listado.idCliente = ".$X_Puntero;
 $SIS_where.= " AND cotizacion_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //verifico que sea un administrador
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$SIS_where.="  AND cotizacion_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$SIS_where.="  AND cotizacion_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //consulta
 $SIS_query = '
@@ -175,11 +175,11 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 							<p class="text-muted word_break">
 								<strong>Tipo de Cliente : </strong><?php echo $rowdata['tipoCliente']; ?><br/>
-								<?php 
+								<?php
 								//Si el cliente es una empresa
 								if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){?>
 									<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<?php 
+								<?php
 								//si es una persona
 								}else{?>
 									<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>
@@ -192,8 +192,8 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
 								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
 							</p>
-										
-							<?php 
+
+							<?php
 							//Si el cliente es una empresa
 							if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){?>
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
@@ -213,7 +213,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
 								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
 							</p>
-										
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Persona de Contacto</h2>
 							<p class="text-muted word_break">
 								<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
@@ -221,7 +221,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 								<strong>Telefono : </strong><?php echo formatPhone($rowdata['PersonaContacto_Fono']); ?><br/>
 								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['PersonaContacto_email']; ?>"><?php echo $rowdata['PersonaContacto_email']; ?></a><br/>
 							</p>
-							
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Contrato</h2>
 							<p class="text-muted word_break">
 								<strong>Nombre : </strong><?php echo $rowdata['Contrato_Nombre']; ?><br/>
@@ -243,7 +243,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 									<div class="clearfix"></div>
 								</div>
 							</p>
-							
+
 							<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){?>
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Unidades de Negocio</h2>
 								<p class="text-muted word_break">
@@ -259,13 +259,13 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 									?>
 								</p>		
 							<?php } ?>
-							
+
 						</div>
 					</div>
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
-						<?php 
+						<?php
 							//se arma la direccion
 							$direccion = "";
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
@@ -282,9 +282,9 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				
+
 			</div>
-			
+
 			<?php if($arrObservaciones!=false && !empty($arrObservaciones) && $arrObservaciones!=''){ ?>
 				<div class="tab-pane fade" id="observaciones">
 					<div class="wmd-panel">
@@ -311,7 +311,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 					</div>
 				</div>
 			<?php } ?>
-			
+
 			<?php if($arrVentas!=false && !empty($arrVentas) && $arrVentas!=''){ ?>
 				<div class="tab-pane fade" id="ventas">
 					<div class="wmd-panel">
@@ -341,7 +341,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 					</div>
 				</div>
 			<?php } ?>
-			
+
 			<?php if($arrCotizaciones!=false && !empty($arrCotizaciones) && $arrCotizaciones!=''){ ?>
 				<div class="tab-pane fade" id="cotizaciones">
 					<div class="wmd-panel">
@@ -377,7 +377,6 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_listado', $SI
 	</div>
 </div>
 
-
 <?php 
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
@@ -390,7 +389,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -400,7 +399,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -409,4 +408,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

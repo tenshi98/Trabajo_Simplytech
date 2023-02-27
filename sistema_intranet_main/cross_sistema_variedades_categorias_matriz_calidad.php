@@ -84,6 +84,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado); 	
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -92,7 +93,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProceso)){  $x1  = $idProceso; }else{$x1  = $rowdata['idProceso'];}
@@ -101,7 +102,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Proceso','idProceso', $x1, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, 0,
-										 'Matriz','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'cross_quality_calidad_matriz', $z, 0, 
+										 'Matriz','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'cross_quality_calidad_matriz', $z, 0,
 										 $dbConn, 'form1');
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -127,6 +128,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 //verifico que sea un administrador
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -137,7 +139,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProceso)){  $x1  = $idProceso; }else{$x1  = '';}
@@ -146,7 +148,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Proceso','idProceso', $x1, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, 0,
-										 'Matriz','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'cross_quality_calidad_matriz', $z, 0, 
+										 'Matriz','idMatriz', $x2, 2, 'idMatriz', 'Nombre', 'cross_quality_calidad_matriz', $z, 0,
 										 $dbConn, 'form1');
 				
 				
@@ -166,7 +168,6 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</div>
 	</div>
 </div>
-
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
@@ -225,9 +226,9 @@ array_push( $arrProductos,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especies', $rowdata['Nombre'], 'Editar Matrices');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especies', $rowdata['Nombre'], 'Editar Matrices'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar nueva matriz</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar nueva matriz</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -263,15 +264,15 @@ array_push( $arrProductos,$row );
 							<td>
 								<div class="btn-group" style="width: 70px;" >
 									<a href="<?php echo $new_location.'&edit='.$subprocesos['idVarMatriz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-									<?php 
+									<?php
 										$ubicacion = $new_location.'&del='.simpleEncode($subprocesos['idVarMatriz'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar el dato '.$subprocesos['Matriz'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar el dato '.$subprocesos['Matriz'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>	
 								</div>
 							</td>
 						</tr>
 					 <?php } 
-					}?>
+					} ?>
 								   
 				</tbody>
 			</table>
@@ -281,17 +282,16 @@ array_push( $arrProductos,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
-
 <?php } ?>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

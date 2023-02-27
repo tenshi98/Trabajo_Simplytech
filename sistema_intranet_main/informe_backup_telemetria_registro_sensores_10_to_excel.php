@@ -102,7 +102,7 @@ foreach ($arrGrupo as $uni) {
 /*******************************************************************************/
 //Funcion para escribir datos
 function crear_data($limite, $idTelemetria, $f_inicio, $f_termino, $dbConn ) {
-	
+
 	//numero sensores equipo
 	$N_Maximo_Sensores = 72;
 	$subquery = '';
@@ -152,7 +152,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$arrTemporal = array();
 	//Llamo a la funcion
 	$arrTemporal = crear_data($set_lim, $_GET['idTelemetria'], $_GET['f_inicio'], $_GET['f_termino'] , $dbConn);
-	
+
 	/***********************************************************/
 	//Grupos de los sensores
 	for ($i = 1; $i <= $arrTemporal[0]['cantSensores']; $i++) {
@@ -278,7 +278,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		$SIS_join  = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
 		$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_GET['idUsuario'];	
 	}
-	
+
 	//se traen lo datos del equipo
 	$SIS_order = 'idTelemetria ASC';
 	$arrEquipos = array();
@@ -384,7 +384,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 					$fVariance += pow($rutas['SensorValue_'.$i] - $avg_val, 2);
 				} 
 			} 
-			if($count_val!=0){     
+			if($count_val!=0){
 				$size = $count_val - 1;
 				$std_val = sqrt($fVariance)/sqrt($size);
 			}
@@ -408,7 +408,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		$sheet++;
 	}
 
-}	
+}
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);

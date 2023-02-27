@@ -52,6 +52,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['clone_idMatriz'])){ 
 	
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -73,7 +74,7 @@ if(!empty($_GET['clone_idMatriz'])){
 
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['clone_idMatriz'], 2);
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c5; Clonar" name="clone_Matriz">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -254,7 +255,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_proceso_matriz',
 						<tr class="odd">
 							<td><?php echo $maq['Nombre']; ?></td>
 							<td><?php echo $maq['Planilla']; ?></td>
-							<td><label class="label <?php if(isset($maq['idEstado'])&&$maq['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $maq['Estado']; ?></label></td>
+							<td><label class="label <?php if(isset($maq['idEstado'])&&$maq['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $maq['Estado']; ?></label></td>
 							<td><?php echo $maq['cantPuntos']; ?></td>
 							<td><?php echo $maq['RazonSocial']; ?></td>
 							<td>
@@ -273,7 +274,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_proceso_matriz',
 			//se llama al paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
-		
+
 	</div>
 </div>
 
@@ -283,4 +284,5 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_proceso_matriz',
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

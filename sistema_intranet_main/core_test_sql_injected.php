@@ -38,7 +38,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 			<h5>Inputs Test</h5>
 		</header>
 		<div class="body">
-			
+
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
 				<?php
@@ -81,7 +81,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 				$Form_Inputs->form_tittle(3, 'SQL Sanitizado');
 				//se sanitiza
 				$_POST = SanitizarDatos($_POST);
-				
+
 				if (!empty($_POST['submit_test'])){
 					
 					if (!empty($_POST['usuario']))    $usuario_2    = $_POST['usuario'];
@@ -122,7 +122,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 				
 			
 				?>
-			  
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Ejecutar" name="submit_test"> 
 				</div>
@@ -138,4 +138,5 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

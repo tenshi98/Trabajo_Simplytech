@@ -24,7 +24,7 @@ if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){   $h_inicio      = $_GET['h
 if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){ $h_termino     = $_GET['h_termino'];     }elseif(isset($_POST['h_termino'])&&$_POST['h_termino']!=''){$h_termino     = $_POST['h_termino'];}
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){  $idTelemetria  = $_GET['idTelemetria'];  }elseif(isset($_POST['idTelemetria'])&&$_POST['idTelemetria']!=''){ $idTelemetria  = $_POST['idTelemetria'];}
 if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){     $idGrupo       = $_GET['idGrupo'];       }elseif(isset($_POST['idGrupo'])&&$_POST['idGrupo']!=''){    $idGrupo       = $_POST['idGrupo'];}
-				
+
 //Se buscan la imagen i el tipo de PDF
 if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
 	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas','', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
@@ -43,7 +43,7 @@ $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelaciona
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
-}else{	
+}else{
 	/****************************************/
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo,cantSensores', 'telemetria_listado', '', 'idTelemetria='.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
@@ -70,13 +70,13 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	//Se traen todas las unidades de medida
 	$arrUnimed = array();
 	$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
-		
+
 	//guardo las unidades de medida
 	$Unimed = array();
-	foreach ($arrUnimed as $sen) { 
+	foreach ($arrUnimed as $sen) {
 		$Unimed[$sen['idUniMed']] = ' '.DeSanitizar($sen['Nombre']);
 	}
-		
+
 	/****************************************/
 	//Se trae grupo
 	$rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$idGrupo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowGrupo');
@@ -95,41 +95,40 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 
 	$html .= '
-	<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">  
+	<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">
 		<thead>';
-			$html .='	
+			$html .='
 			<tr>
 				<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;"></th>
 				<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;"></th>';
 
-				for ($i = 1; $i <= $arrEquipos[0]['cantSensores']; $i++) { 
+				for ($i = 1; $i <= $arrEquipos[0]['cantSensores']; $i++) {
 					if($arrEquipos[0]['SensoresGrupo_'.$i]==$idGrupo){
 						$html .='<th  style="font-size: 10px;text-align:center;background-color: #c3c3c3;">'.DeSanitizar($arrEquipos[0]['SensorNombre_'.$i]).'</th>';			
 					}
 				}
-			$html .='				
+			$html .='
 			</tr>
 			<tr>
 				<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Fecha</th>
 				<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Hora</th>';
-				for ($i = 1; $i <= $arrEquipos[0]['cantSensores']; $i++) { 
+				for ($i = 1; $i <= $arrEquipos[0]['cantSensores']; $i++) {
 					if($arrEquipos[0]['SensoresGrupo_'.$i]==$idGrupo){
 						$html .='<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Medicion</th>';
 					}
 				}
 			$html .='</tr>';
-				
+
 		$html .='
 		</thead>
 		<tbody>';
-				
-								
+
 			foreach ($arrEquipos as $rutas) {
-			$html .='	
+			$html .='
 				<tr>
 					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.fecha_estandar($rutas['FechaSistema']).'</td>
 					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$rutas['HoraSistema'].'</td>';
-					for ($i = 1; $i <= $rutas['cantSensores']; $i++) { 
+					for ($i = 1; $i <= $rutas['cantSensores']; $i++) {
 						if($rutas['SensoresGrupo_'.$i]==$idGrupo){
 							if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]<99900){
 								$xdata=Cantidades_decimales_justos($rutas['SensorValue_'.$i]).$Unimed[$rutas['SensoresUniMed_'.$i]];
@@ -141,7 +140,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					}
 				$html .='</tr>';
 			}
-								
+
 	$html .='</tbody>
 	</table>';
 
@@ -163,7 +162,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			/************************************************************************/
 			//TCPDF
 			case 1:
-				
+
 				require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 				// create new PDF document
@@ -222,11 +221,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					// The '@' character is used to indicate that follows an image data stream and not an image file name
 					$pdf->Image('@'.$imgdata, 15, 30, 180, 120, 'PNG', '', '', true, 150, '', false, false, 1, false, false, false);
 				}
-				
+
 				$pdf->writeHTML($html, true, false, true, false, '');
 				$pdf->lastPage();
 				$pdf->Output(DeSanitizar($pdf_file), 'I');
-		
+
 				break;
 			/************************************************************************/
 			//DomPDF (Solo compatible con PHP 5.x)

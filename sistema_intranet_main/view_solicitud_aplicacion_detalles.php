@@ -30,14 +30,14 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
 //se recorre deacuerdo a la cantidad de sensores
 $subquery = '';
 $Nsens = 6;
-for ($i = 1; $i <= $Nsens; $i++) { 
+for ($i = 1; $i <= $Nsens; $i++) {
 	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Prom';
 	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Min';
 	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Max';
@@ -90,7 +90,7 @@ $subquery .= ',GeoLatitud';
 $subquery .= ',GeoLongitud';
 $subquery .= ',GeoVelocidad';
 //se recorre deacuerdo a la cantidad de sensores
-for ($i = 1; $i <= $row_data['cantSensores']; $i++) { 
+for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
 	$subquery .= ',Sensor_'.$i;
 }
 
@@ -124,7 +124,7 @@ $arrData[4]['Name'] = "'Velocidad'";
 ?>
 
 <style>
-#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif';?>");background-repeat: no-repeat;background-position: center;}
+#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif'; ?>");background-repeat: no-repeat;background-position: center;}
 </style>
 <div id="loading"></div>
 <script>
@@ -132,9 +132,8 @@ $arrData[4]['Name'] = "'Velocidad'";
 document.getElementById("loading").style.display = "none";
 </script>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:15px;">
-	<input class="btn btn-sm btn-metis-3 pull-right margin_width fa-input" type="button" onclick="Export()" value="&#xf1c1; Exportar a PDF"/>	
+	<input class="btn btn-sm btn-metis-3 pull-right margin_width fa-input" type="button" onclick="Export()" value="&#xf1c1; Exportar a PDF"/>
 </div>
 <div class="clearfix"></div>
 
@@ -195,10 +194,10 @@ document.getElementById("loading").style.display = "none";
 				<tbody>
 					<?php for ($i = 1; $i <= $row_data['cantSensores']; $i++) {  ?>
 						<tr>
-							<td><?php echo $row_data['Sensor_'.$i.'_Nombre'];?></td>
-							<td><?php echo Cantidades($row_data['Sensor_'.$i.'_Min'], 1);?></td>
-							<td><?php echo Cantidades($row_data['Sensor_'.$i.'_Max'], 1);?></td>
-							<td><?php echo Cantidades($row_data['Sensor_'.$i.'_Prom'], 1);?></td>
+							<td><?php echo $row_data['Sensor_'.$i.'_Nombre']; ?></td>
+							<td><?php echo Cantidades($row_data['Sensor_'.$i.'_Min'], 1); ?></td>
+							<td><?php echo Cantidades($row_data['Sensor_'.$i.'_Max'], 1); ?></td>
+							<td><?php echo Cantidades($row_data['Sensor_'.$i.'_Prom'], 1); ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -291,18 +290,17 @@ document.getElementById("loading").style.display = "none";
 	alert_post_data(4,2,2, $Alert_Text);
 	?>
 </div>
-	
-	
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: none;">
 
 	<form method="post" id="make_pdf" action="view_solicitud_aplicacion_detalles_to_pdf.php">
 		<input type="hidden" name="img_adj" id="img_adj" />
-			
+
 		<input type="hidden" name="idSistema"  id="idSistema"  value="<?php echo simpleEncode($_SESSION['usuario']['basic_data']['idSistema'], fecha_actual()); ?>" />
 		<input type="hidden" name="view"       id="view"       value="<?php echo $_GET['view']; ?>" />
-			
+
 		<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
-		
+
 	</form>
 
 	<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>
@@ -353,7 +351,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -363,7 +361,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -372,4 +370,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

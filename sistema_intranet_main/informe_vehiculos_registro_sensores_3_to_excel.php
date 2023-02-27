@@ -131,7 +131,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 	$arrTemporal = array();
 	//Llamo a la funcion
 	$arrTemporal = crear_data($set_lim, $_GET['idVehiculo'], $_GET['f_inicio'], $_GET['f_termino'] , $dbConn);
-	
+
 	/***********************************************************/
 	//Titulo columnas
 	$spreadsheet->setActiveSheetIndex(0)
@@ -178,7 +178,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 
 	//Verifico el tipo de usuario que esta ingresando
 	$SIS_where.= " AND vehiculos_listado.idSistema=".$_GET['idSistema'];
-	
+
 	/*******************************************************/
 	$SIS_query = '
 	vehiculos_listado.idVehiculo, 
@@ -209,7 +209,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 					->setCellValue('F2', 'Velocidad')
 					->setCellValue('G2', 'Direccion')
 					->setCellValue('H2', 'Movimiento');
-			
+
 		/***********************************************************/
 		//Datos        
 		$nn=3;
@@ -238,7 +238,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 	
 		$sheet++;
 	}
-}	
+}
 
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);

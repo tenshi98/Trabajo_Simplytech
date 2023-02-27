@@ -302,6 +302,7 @@ array_push( $arrTipo4,$row );
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -325,7 +326,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_number('N° Documento', 'N_Doc', $x3, 1);
 				$Form_Inputs->form_date('Fecha Creacion Desde','f_creacion_inicio', $x4, 1);
 				$Form_Inputs->form_date('Fecha Creacion Hasta','f_creacion_termino', $x5, 1);
-						
+
 				?>
 
 				<div class="form-group">
@@ -343,4 +344,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

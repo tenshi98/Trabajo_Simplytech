@@ -50,7 +50,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Datos Basicos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Datos Basicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -81,7 +81,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 						<?php if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
 							<li class=""><a href="<?php echo 'productos_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Sistema CROSS</a></li>
 						<?php } ?>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -89,8 +89,8 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post"  id="form1" name="form1" novalidate>
-					
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Nombre)){              $x1  = $Nombre;                }else{$x1  = $rowdata['Nombre'];}
 					if(isset($idTipo)){              $x2  = $idTipo;                }else{$x2  = $rowdata['idTipo'];}
@@ -107,7 +107,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 					if(isset($EfectoResidual)){      $x13 = $EfectoResidual;        }else{$x13 = Cantidades_decimales_justos($rowdata['EfectoResidual']);}
 					if(isset($EfectoRetroactivo)){   $x14 = $EfectoRetroactivo;     }else{$x14 = Cantidades_decimales_justos($rowdata['EfectoRetroactivo']);}
 					if(isset($AporteNutricional)){   $x15 = $AporteNutricional;     }else{$x15 = $rowdata['AporteNutricional'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -129,7 +129,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 					
 					$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
 					?>
-					
+
 					<script>
 						document.getElementById('div_idTipoReceta').style.display = 'none';
 						
@@ -158,7 +158,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 								//Materia prima
 								if(modelSelected == 1){
 									document.getElementById('div_idTipoReceta').style.display = 'none';
-									
+
 									//lo vacio
 									document.getElementById('idTipoReceta').length = 1
 									document.getElementById('idTipoReceta').options[0].value = "0"
@@ -167,7 +167,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 								//Producto Terminado	
 								}else if(modelSelected == 2){
 									document.getElementById('div_idTipoReceta').style.display = '';
-									
+
 									//lo vacio
 									document.getElementById('idTipoReceta').length = 3
 									document.getElementById('idTipoReceta').options[0].value = "0"
@@ -179,7 +179,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 									
 								}else {
 									document.getElementById('div_idTipoReceta').style.display = 'none';
-									
+
 								}
 							
 							});
@@ -187,7 +187,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 						
 					</script>
 				  
-					<div class="form-group">	
+					<div class="form-group">
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
@@ -199,14 +199,14 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

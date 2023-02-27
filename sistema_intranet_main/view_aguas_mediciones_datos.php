@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -81,7 +81,6 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
 	<div id="page-wrap">
@@ -105,7 +104,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 						<td class="meta-head">Sistema</td>
 						<td><?php echo $rowdata['Sistema']?></td>
 					</tr>
-					
+
 					<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==2){ ?>
 
 						<tr>
@@ -124,7 +123,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 							<td class="meta-head">Distribucion de diferencia</td>
 							<td><?php echo $rowdata['MedidorTipoMed']; ?></td>
 						</tr>
-					
+
 					<?php } ?>
 				</tbody>
 			</table>
@@ -136,7 +135,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td><?php echo Fecha_estandar($rowdata['Fecha']);?></td>
+						<td><?php echo Fecha_estandar($rowdata['Fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -168,14 +167,14 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 				<?php } ?>
 
 				<tr>
-					<td colspan="6" class="blank"> 
+					<td colspan="6" class="blank">
 						<p>
 							<?php 
 							if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){
 								echo $rowdata['Observaciones'];
 							}else{
 								echo 'Sin Observaciones';
-							}?>
+							} ?>
 						</p>
 					</td>
 				</tr>
@@ -201,7 +200,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -211,7 +210,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -220,4 +219,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

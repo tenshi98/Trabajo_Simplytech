@@ -106,7 +106,7 @@ array_push( $arrBoletas,$row );
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php 
+					<?php
 					if ($arrBoletas!=false && !empty($arrBoletas) && $arrBoletas!='') {
 						//llamamos a la función para filtrar los datos
 						filtrar($arrBoletas, 'DocumentoPagoNumero');
@@ -118,7 +118,7 @@ array_push( $arrBoletas,$row );
 									<div class="btn-group" style="width: 35px;" >
 										<?php if ($rowlevel['level']>=4){
 											$ubicacion = $location.'&submit_filter=Filtrar&del_idPago='.simpleEncode($productos[0]['idPago'], fecha_actual()).'&idFacturacion='.simpleEncode($productos[0]['idFacturacion'], fecha_actual());
-											$dialogo   = '¿Realmente deseas eliminar el pago '.$productos[0]['DocumentoPago'].' '.$menu.'?';?>
+											$dialogo   = '¿Realmente deseas eliminar el pago '.$productos[0]['DocumentoPago'].' '.$menu.'?'; ?>
 											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-exchange" aria-hidden="true"></i></a>
 										<?php } ?>
 									</div>
@@ -138,7 +138,7 @@ array_push( $arrBoletas,$row );
 							<?php } ?>
 						<?php } ?>
 					<?php } ?>
-						
+
 				</tbody>
 			</table>
 		</div>
@@ -157,6 +157,7 @@ array_push( $arrBoletas,$row );
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -175,7 +176,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Documento de Pago','idDocPago', $x1, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
-				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x2, 1);	
+				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x2, 1);
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x3, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
@@ -197,4 +198,5 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

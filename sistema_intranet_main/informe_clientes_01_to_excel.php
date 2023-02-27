@@ -109,7 +109,7 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('R1', 'Persona de Contacto')
             ->setCellValue('S1', 'Telefono de Contacto')
             ->setCellValue('T1', 'Email de Contacto');
-            
+
 $nn=2;
 foreach ($arrClientes as $productos) { 
 
@@ -135,10 +135,8 @@ foreach ($arrClientes as $productos) {
 				->setCellValue('S'.$nn, formatPhone($productos['PersonaContacto_Fono']))
 				->setCellValue('T'.$nn, DeSanitizar($productos['PersonaContacto_email']));
 	$nn++;
-   
-} 
 
-
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Datos Clientes');

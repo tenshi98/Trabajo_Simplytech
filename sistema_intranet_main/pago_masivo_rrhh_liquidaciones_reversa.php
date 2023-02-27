@@ -60,7 +60,7 @@ if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){
 if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){
 	$z .= ' AND pagos_rrhh_liquidaciones.N_DocPago='.$_GET['N_DocPago'];
 }
-	
+
 //consulto los datos
 $arrReversa = array();
 $query = "SELECT 
@@ -122,7 +122,7 @@ array_push( $arrReversa,$row );
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php 
+					<?php
 					if ($arrReversa!=false && !empty($arrReversa) && $arrReversa!='') {
 						//llamamos a la función para filtrar los datos
 						filtrar($arrReversa, 'N_DocPago');
@@ -134,7 +134,7 @@ array_push( $arrReversa,$row );
 									<div class="btn-group" style="width: 35px;" >
 										<?php if ($rowlevel['level']>=4){
 											$ubicacion = $location.'&submit_filter=Filtrar&del_idDocPago='.simpleEncode($productos[0]['idDocPago'], fecha_actual()).'&del_N_DocPago='.simpleEncode($menu, fecha_actual());
-											$dialogo   = '¿Realmente deseas eliminar el pago '.$productos[0]['DocPago'].' '.$menu.'?';?>
+											$dialogo   = '¿Realmente deseas eliminar el pago '.$productos[0]['DocPago'].' '.$menu.'?'; ?>
 											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-exchange" aria-hidden="true"></i></a>
 										<?php } ?>
 									</div>
@@ -157,7 +157,7 @@ array_push( $arrReversa,$row );
 							<?php } ?>
 						<?php } ?>
 					<?php } ?>
-						
+
 				</tbody>
 			</table>
 		</div>
@@ -179,7 +179,8 @@ array_push( $arrReversa,$row );
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 //Verifico el tipo de usuario que esta ingresando
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -213,7 +214,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 /**********************************************************/
@@ -303,7 +304,7 @@ $arrAFP = db_select_array (false, $SIS_query, 'pagos_rrhh_liquidaciones_reversa'
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
-				<?php 
+				<?php
 				if(isset($idDocPago)){       $x1  = $idDocPago;       }else{$x1  = '';}
 				if(isset($N_DocPago)){       $x2  = $N_DocPago;       }else{$x2  = '';}
 				if(isset($Monto)){           $x3  = $Monto;           }else{$x3  = '';}
@@ -314,7 +315,7 @@ $arrAFP = db_select_array (false, $SIS_query, 'pagos_rrhh_liquidaciones_reversa'
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Documento de Pago','idDocPago', $x1, 1, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
-				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x2, 1);	
+				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x2, 1);
 				$Form_Inputs->form_input_number('Monto', 'Monto', $x3, 1);
 				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x4, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				$Form_Inputs->form_date('Fecha Inicio','Fecha_Inicio', $x5, 1);
@@ -413,4 +414,5 @@ $arrAFP = db_select_array (false, $SIS_query, 'pagos_rrhh_liquidaciones_reversa'
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

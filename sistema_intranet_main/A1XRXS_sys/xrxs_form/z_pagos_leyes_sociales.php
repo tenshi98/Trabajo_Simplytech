@@ -104,7 +104,7 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-	
+
 		case 'new_pago':
 
 			//Se elimina la restriccion del sql 5.7
@@ -146,7 +146,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['pagos_leyes_sociales_basicos']['idSistema']       = $idSistema;      }else{$_SESSION['pagos_leyes_sociales_basicos']['idSistema']       = '';}
 				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['pagos_leyes_sociales_basicos']['idUsuario']       = $idUsuario;      }else{$_SESSION['pagos_leyes_sociales_basicos']['idUsuario']       = '';}
 				if(isset($fecha_auto)&&$fecha_auto!=''){          $_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']      = $fecha_auto;     }else{$_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']      = '';}
-				
+
 				$_SESSION['pagos_leyes_sociales_basicos']['TotalGeneral']      = 0;
 				$_SESSION['pagos_leyes_sociales_basicos']['TotalPagoGeneral']  = 0;
 
@@ -231,7 +231,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_3']        = $rowPPM['SEGURIDAD_idLevel_3'];
 				$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_4']        = $rowPPM['SEGURIDAD_idLevel_4'];
 				$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_5']        = $rowPPM['SEGURIDAD_idLevel_5'];
-				
+
 				if(isset($rowPPM['AFP_CC_Nombre'])&&$rowPPM['AFP_CC_Nombre']!=''){
 					$_SESSION['pagos_leyes_sociales_basicos']['AFP_CC'] = $rowPPM['AFP_CC_Nombre'];
 					if(isset($rowPPM['AFP_CC_Level_1'])&&$rowPPM['AFP_CC_Level_1']!=''){$_SESSION['pagos_leyes_sociales_basicos']['AFP_CC'] .= ' - '.$rowPPM['AFP_CC_Level_1'];}
@@ -333,11 +333,11 @@ require_once '0_validate_user_1.php';
 				if($arrTemporal!=false && !empty($arrTemporal) && $arrTemporal!=''){
 					$_SESSION['pagos_leyes_sociales_trabajadores'] = $arrTemporal;
 				}
-					
+
 				//redirijo
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
@@ -368,7 +368,7 @@ require_once '0_validate_user_1.php';
 			}
 			unset($_SESSION['pagos_leyes_sociales_archivos']);
 
-			
+			//redirijo
 			header( 'Location: '.$location );
 			die;
 
@@ -405,7 +405,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -552,7 +552,7 @@ require_once '0_validate_user_1.php';
 			if(valores_comparables($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_MontoPago'])<valores_comparables($Mont_tot_3)){
 				$error['nPagos3'] = 'error/El monto ingresado en el pago de la Retencion es superior al total a pagar ('.valores($_SESSION['pagos_leyes_sociales_basicos']['Retencion'], 0).'<'.valores($Mont_tot_3, 0).')';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -644,7 +644,7 @@ require_once '0_validate_user_1.php';
 				$ntrab++;
 			}
 			if($ntrab==0){$error['ntrab'] = 'error/No hay trabajadores asignados';}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -662,8 +662,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']!=''){                  $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']."'";            }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['pagos_leyes_sociales_basicos']['Periodo_Ano']) && $_SESSION['pagos_leyes_sociales_basicos']['Periodo_Ano']!=''){                $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['Periodo_Ano']."'";           }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['pagos_leyes_sociales_basicos']['Periodo_Mes']) && $_SESSION['pagos_leyes_sociales_basicos']['Periodo_Mes']!=''){                $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['Periodo_Mes']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha']) && $_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha']."'";  
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha']) && $_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha'])."'";
@@ -928,7 +928,6 @@ require_once '0_validate_user_1.php';
 				}
 
 			}
-	
 
 		break;
 /*******************************************************************************************************************/

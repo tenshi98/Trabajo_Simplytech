@@ -60,10 +60,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+$rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs', 'Editar Datos Basicos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs', 'Editar Datos Basicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -79,8 +79,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-					
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Fecha)){         $x1  = $Fecha;        }else{$x1  = $rowdata['Fecha'];}
 					if(isset($Hora)){          $x2  = $Hora;         }else{$x2  = $rowdata['Hora'];}
@@ -91,13 +91,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
 					$Form_Inputs->form_time('Hora','Hora', $x2, 2, 2);
 					$Form_Inputs->form_ckeditor('Observacion','Observacion', $x3, 2, 2);
-					
+
 					$Form_Inputs->form_input_hidden('idEvento', $_GET['id'], 2);
 					?>
-					
 
-				  
-					<div class="form-group">	
+					<div class="form-group">
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
@@ -109,14 +107,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

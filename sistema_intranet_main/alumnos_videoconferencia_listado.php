@@ -42,55 +42,38 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 //obtengo el numero del dia de la semana
 $idDia = fecha2NDiaSemana(fecha_actual());
 //Variable de busqueda
-$z = "WHERE cursos_listado_videoconferencia.idVideoConferencia!=0";
+$SIS_where = "cursos_listado_videoconferencia.idVideoConferencia!=0";
 //Verifico el tipo de usuario que esta ingresando
-$z.= " AND cursos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-$z.= " AND cursos_listado_videoconferencia.idDia_".$idDia." = 2";
+$SIS_where.= " AND cursos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_where.= " AND cursos_listado_videoconferencia.idDia_".$idDia." = 2";
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	//filtro por la columna correspondiente
-	$z.= " AND cursos_listado_videoconferencia.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$SIS_where.= " AND cursos_listado_videoconferencia.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idCurso']) && $_GET['idCurso']!=''){      $z .= " AND cursos_listado.idCurso='".$_GET['idCurso']."'";}
-if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){  $z .= " AND cursos_listado_videoconferencia.idUsuario='".$_GET['idUsuario']."'";}
+if(isset($_GET['idCurso']) && $_GET['idCurso']!=''){      $SIS_where .= " AND cursos_listado.idCurso='".$_GET['idCurso']."'";}
+if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){  $SIS_where .= " AND cursos_listado_videoconferencia.idUsuario='".$_GET['idUsuario']."'";}
+
 /**********************************************************/
 // Se trae un listado con todos los elementos
-$arrVideoConferencia = array();
-$query = "SELECT 
+$SIS_query = '
 cursos_listado_videoconferencia.idVideoConferencia,
 cursos_listado.Nombre AS Curso,
 usuarios_listado.Nombre AS Profesor,
 cursos_listado_videoconferencia.Nombre,
 cursos_listado_videoconferencia.HoraInicio,
 cursos_listado_videoconferencia.HoraTermino,
-core_sistemas.Nombre AS RazonSocial
-
-FROM `cursos_listado`
+core_sistemas.Nombre AS RazonSocial';
+$SIS_join  = '
 LEFT JOIN `cursos_listado_videoconferencia`  ON cursos_listado_videoconferencia.idCurso  = cursos_listado.idCurso
 LEFT JOIN `core_sistemas`                    ON core_sistemas.idSistema                  = cursos_listado.idSistema
-LEFT JOIN `usuarios_listado`                 ON usuarios_listado.idUsuario               = cursos_listado_videoconferencia.idUsuario
+LEFT JOIN `usuarios_listado`                 ON usuarios_listado.idUsuario               = cursos_listado_videoconferencia.idUsuario';
+$SIS_order = 'usuarios_listado.Nombre ASC, cursos_listado_videoconferencia.HoraInicio ASC';
+$arrVideoConferencia = array();
+$arrVideoConferencia = db_select_array (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrVideoConferencia');
 
-".$z."
-ORDER BY usuarios_listado.Nombre ASC, cursos_listado_videoconferencia.HoraInicio ASC
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrVideoConferencia,$row );
-}
 //filtro de los cursos
 $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 //Verifico el tipo de usuario que esta ingresando
@@ -98,18 +81,18 @@ $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-}?>
+}
+?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
-		<li class="btn btn-default">Listado de Videoconferencias</li>	
+		<li class="btn btn-default">Listado de Videoconferencias</li>
 	</ul>
 
 </div>
 <div class="clearfix"></div>
-
 
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
@@ -177,10 +160,11 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</div>
 	</div>
 </div>
-          
+
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

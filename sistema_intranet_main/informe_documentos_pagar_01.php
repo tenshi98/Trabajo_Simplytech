@@ -48,7 +48,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$join = "";
 }else{
 	$z.=" AND usuarios_documentos_pago.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
-	$join = " INNER JOIN usuarios_documentos_pago  ON usuarios_documentos_pago.idDocPago  = pagos_facturas_proveedores.idDocPago";	
+	$join = " INNER JOIN usuarios_documentos_pago  ON usuarios_documentos_pago.idDocPago  = pagos_facturas_proveedores.idDocPago";
 }
 //Traigo los eventos guardados en la base de datos
 $arrCheques = array();
@@ -120,7 +120,7 @@ array_push( $arrCheques,$row );
 			<div class="btn-group pull-right" style="width: 35px;" >
 				<a href="<?php echo $original.'?Mes='.$mes_adelante.'&Ano='.$Ano_b ?>" class="btn btn-default">›</a>
 			</div>
-			
+
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -194,7 +194,7 @@ array_push( $arrCheques,$row );
 					</tr>'; ?>                  
 				</tbody>
 			</table>
-		</div> 
+		</div>
 	</div>
 </div>
 
@@ -207,4 +207,5 @@ array_push( $arrCheques,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

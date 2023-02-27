@@ -196,7 +196,7 @@ require_once 'core/Web.Header.Main.php';
 	<h4>Mini Button</h4>
 	<a href="#" class="btn btn-default btn-xs btn-rect" data-original-title="" title="">default</a>
 	<a href="#" class="btn btn-primary btn-xs btn-rect" data-original-title="" title="">primary</a>
-	<a href="#" class="btn btn-danger btn-xs btn-rect" data-original-title="" title="">danger</a> 
+	<a href="#" class="btn btn-danger btn-xs btn-rect" data-original-title="" title="">danger</a>
 	<a href="#" class="btn btn-success btn-xs btn-rect" data-original-title="" title="">success</a>
 	<a href="#" class="btn btn-info btn-xs btn-rect" data-original-title="" title="">info</a>
 	<a href="#" class="btn btn-warning btn-xs btn-rect" data-original-title="" title="">warning</a>
@@ -944,4 +944,5 @@ require_once 'core/Web.Header.Main.php';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

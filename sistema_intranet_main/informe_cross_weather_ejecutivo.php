@@ -89,17 +89,17 @@ foreach ($arrMediciones as $med) {
 		if(isset($arrData[3]['Value'])&&$arrData[3]['Value']!=''){$arrData[3]['Value'] .= ", ".$med['PresionAtmos'];   }else{ $arrData[3]['Value'] = $med['PresionAtmos'];}
 		if(isset($arrData[4]['Value'])&&$arrData[4]['Value']!=''){$arrData[4]['Value'] .= ", ".$med['UnidadesFrio'];   }else{ $arrData[4]['Value'] = $med['UnidadesFrio'];}
 		if(isset($arrData[5]['Value'])&&$arrData[5]['Value']!=''){$arrData[5]['Value'] .= ", ".$med['Dias_acumulado'];}else{ $arrData[5]['Value'] = $med['Dias_acumulado'];}
-		
+
 		//verifico cambio de dia
 		if((isset($arrMed[$counter]['Fecha'])&&$arrMed[$counter]['Fecha']!=$med['Fecha']) OR $counter==0){
 			$counter++;
 		}
-		
+
 		//creo las variables si estas no existen
 		if(!isset($arrMed[$counter]['Tiempo_Helada'])){  $arrMed[$counter]['Tiempo_Helada']  = 0;}
 		if(!isset($arrMed[$counter]['Temp_Min'])){       $arrMed[$counter]['Temp_Min']       = 1000;}
 		if(!isset($arrMed[$counter]['Temp_Max'])){       $arrMed[$counter]['Temp_Max']       = -1000;}
-		
+
 		//Guardo los datos
 		$arrMed[$counter]['Fecha']        = $med['Fecha'];
 		$arrMed[$counter]['UnidadesFrio'] = $med['UnidadesFrio'];
@@ -132,7 +132,7 @@ $arrData[5]['Name'] = "'Acumulado Dias Grado'";
 ?>
 
 <style>
-#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif';?>");background-repeat: no-repeat;background-position: center;}
+#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif'; ?>");background-repeat: no-repeat;background-position: center;}
 </style>
 <div id="loading"></div>
 <script>
@@ -141,7 +141,7 @@ document.getElementById("loading").style.display = "none";
 </script>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Informe Ejecutivo', $_SESSION['usuario']['basic_data']['RazonSocial'], 'De '.Fecha_completa($_GET['fecha_desde']).' a '.Fecha_completa($_GET['fecha_hasta']));?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Informe Ejecutivo', $_SESSION['usuario']['basic_data']['RazonSocial'], 'De '.Fecha_completa($_GET['fecha_desde']).' a '.Fecha_completa($_GET['fecha_hasta'])); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
 		<a target="new" href="<?php echo 'informe_cross_weather_ejecutivo_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 
@@ -150,7 +150,7 @@ document.getElementById("loading").style.display = "none";
 		<?php }else{ ?>
 			<a target="new" href="<?php echo 'informe_cross_weather_ejecutivo_to_pdf.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
 		<?php } ?>
-		
+
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -177,7 +177,7 @@ document.getElementById("loading").style.display = "none";
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php 
+					<?php
 					$unifrio  = 0;
 					$diasAcum = 0;
 					foreach ($arrMed as $key => $med){ 
@@ -210,7 +210,7 @@ document.getElementById("loading").style.display = "none";
 							<td><?php echo cantidades($med['UnidadesFrio'], 0); ?></td>
 							<td><?php echo cantidades($diaAcum, 0); ?></td>
 							<td><?php echo cantidades($med['DiasAcum'], 0); ?></td>
-							
+
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -332,10 +332,10 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 						<input type="hidden" name="fecha_hasta"   id="fecha_hasta"  value="<?php echo $_GET['fecha_hasta']; ?>" />
 						<?php if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){?>
 							<input type="hidden" name="idTelemetria"   id="idTelemetria"  value="<?php echo $_GET['idTelemetria']; ?>" />
-						<?php }?>
+						<?php } ?>
 
 						<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
-					
+
 					</form>
 
 					<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>
@@ -446,4 +446,5 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

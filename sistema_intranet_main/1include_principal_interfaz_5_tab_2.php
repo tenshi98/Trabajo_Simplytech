@@ -29,6 +29,7 @@ if(isset($idZona)&&$idZona!=''&&$idZona!=9999){
 }
 
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 telemetria_listado.idTelemetria,
 telemetria_listado.cantSensores,
@@ -78,7 +79,7 @@ $arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablare
 
 <style>
 .float_table table{margin-right: auto !important;margin-left: auto !important;float: none !important;}
-#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif';?>");background-repeat: no-repeat;background-position: center;}
+#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif'; ?>");background-repeat: no-repeat;background-position: center;}
 </style>
 
 <div role="tabpanel" class="tab-pane fade" id="online">

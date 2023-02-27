@@ -43,7 +43,7 @@ if(isset($_SESSION['pagos_boletas_empresas'][$_GET['idFacturacion']]['idFacturac
 
 	}
 	$row_data = mysqli_fetch_assoc ($resultado);
-	
+
 	/******************************************************************/
 	//Se traspasan los valores a variables de sesion
 	$_SESSION['pagos_boletas_empresas'][$row_data['idFacturacion']]['idFacturacion']      = $row_data['idFacturacion'];

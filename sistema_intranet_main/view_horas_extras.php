@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -94,7 +94,7 @@ $arrTurnos = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_fact
 
 foreach ($arrTurnos as $prod){
 	$arrHorasExtras[$prod['idTrabajador']][$prod['nSem']]['Turno']      = $prod['Turno'];
-	$arrHorasExtras[$prod['idTrabajador']][$prod['nSem']]['idTurnos']   = $prod['idTurnos'];	
+	$arrHorasExtras[$prod['idTrabajador']][$prod['nSem']]['idTurnos']   = $prod['idTurnos'];
 }
 
 /*****************************************/
@@ -124,9 +124,9 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 
 	<div id="page-wrap">
 		<div id="header"> Horas Extras</div>
-		
+
 		<div id="customer">
-			
+
 			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
@@ -260,35 +260,35 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 					}
 				}
 				
-				echo '<tr id="hiderow"><td colspan="10"><a name="Ancla_obs"></a></td></tr>';?>
+				echo '<tr id="hiderow"><td colspan="10"><a name="Ancla_obs"></a></td></tr>'; ?>
 
 				<tr class="invoice-total" bgcolor="#f1f1f1">
-					<td colspan="9" align="right"><strong>Total Horas extras</strong></td> 
+					<td colspan="9" align="right"><strong>Total Horas extras</strong></td>
 					<td align="right"></td>
 				</tr>
-					
+
 				<?php
 				foreach ($arrHorasTotal as $prod) {
 					echo '
 					<tr class="invoice-total" bgcolor="#f1f1f1">
-						<td colspan="9" align="right">Horas extras al '.$prod['Porcentaje'].'%</td> 
+						<td colspan="9" align="right">Horas extras al '.$prod['Porcentaje'].'%</td>
 						<td align="right">'.$prod['Total'].' Horas</td>
 					</tr>';
-				}?>
+				} ?>
 
 				<tr>
-					<td colspan="10" class="blank word_break"> 
-						<?php echo $row_data['Observaciones'];?>
+					<td colspan="10" class="blank word_break">
+						<?php echo $row_data['Observaciones']; ?>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="10" class="blank"><p>Observaciones</p></td> 
 				</tr>
-				
+
 			</tbody>
 		</table>
     </div>
-    
+
     <?php if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){ ?>
 		<table id="items" style="margin-bottom: 20px;">
 			<tbody>
@@ -324,7 +324,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -334,7 +334,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -343,4 +343,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

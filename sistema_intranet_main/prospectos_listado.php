@@ -160,8 +160,9 @@ foreach ($arrTabs as $tab) {
 	$arrTabsSorter[$tab['idTab']] = $tab['Nombre'];
 }
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -199,7 +200,7 @@ foreach ($arrTabs as $tab) {
 								<strong>Estado Fidelizacion: </strong><?php echo $rowdata['prospectoEstado']; ?><br/>
 								<strong>Etapa Fidelizacion: </strong><?php echo $rowdata['prospectoEtapa']; ?>
 							</p>
-									
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 							<p class="text-muted word_break">
 								<strong>Tipo de Prospecto : </strong><?php echo $rowdata['tipoProspecto']; ?><br/>
@@ -211,7 +212,7 @@ foreach ($arrTabs as $tab) {
 								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
 								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
 							</p>
-							
+
 							<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){?>
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Unidades de Negocio</h2>
 								<p class="text-muted word_break">
@@ -234,7 +235,7 @@ foreach ($arrTabs as $tab) {
 									?>
 								</p>		
 							<?php } ?>
-									
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
 							<p class="text-muted word_break">
 								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
@@ -242,7 +243,7 @@ foreach ($arrTabs as $tab) {
 								<strong>Giro de la empresa: </strong><?php echo $rowdata['Giro']; ?><br/>
 								<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?><br/>
 							</p>
-										
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 							<p class="text-muted word_break">
 								<strong>Telefono Fijo : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
@@ -251,7 +252,7 @@ foreach ($arrTabs as $tab) {
 								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
 								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
 							</p>
-									
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Persona de Contacto</h2>
 							<p class="text-muted word_break">
 								<strong>Persona de Contacto : </strong><?php echo $rowdata['PersonaContacto']; ?><br/>
@@ -264,7 +265,7 @@ foreach ($arrTabs as $tab) {
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
-						<?php 
+						<?php
 							//se arma la direccion
 							$direccion = "";
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
@@ -281,7 +282,7 @@ foreach ($arrTabs as $tab) {
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				
+
 			</div>
         </div>
 	</div>
@@ -289,14 +290,14 @@ foreach ($arrTabs as $tab) {
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -344,7 +345,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x8, 1,'fa fa-industry');
 				//Solo para plataforma Intranet
 				if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){
@@ -363,7 +364,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_hidden('HModificacion', hora_actual(), 2);
 				$Form_Inputs->form_input_hidden('idUsuarioMod', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				?>
-								
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -412,7 +413,7 @@ $SIS_where = "prospectos_listado.idSistema=".$_SESSION['usuario']['basic_data'][
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	//si es la interfaz de intranet no filtra
 	if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){
-	
+
 	//para el resto se filtra al vendedor	
 	}else{
 		$SIS_where.= " AND prospectos_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
@@ -498,6 +499,7 @@ foreach ($arrTabs as $tab) {
 	$arrTabsSorter[$tab['idTab']] = $tab['Nombre'];
 }
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
@@ -508,7 +510,7 @@ foreach ($arrTabs as $tab) {
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Prospecto</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Prospecto</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -554,7 +556,7 @@ foreach ($arrTabs as $tab) {
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
 				$Form_Inputs->form_select('Estado Fidelizacion','idEstadoFidelizacion', $x10, 1, 'idEstadoFidelizacion', 'Nombre', 'prospectos_estado_fidelizacion', 0, '', $dbConn);
 				$Form_Inputs->form_select('Etapa','idEtapa', $x11, 1, 'idEtapa', 'Nombre', 'prospectos_etapa', 0, '', $dbConn);
@@ -647,7 +649,7 @@ foreach ($arrTabs as $tab) {
 					<tr class="odd">
 						<td><?php echo $prospect['Rut']; ?></td>
 						<td><?php echo $prospect['Nombre']; ?></td>
-						<td><label class="label <?php if(isset($prospect['idEstado'])&&$prospect['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $prospect['estado']; ?></label></td>	
+						<td><label class="label <?php if(isset($prospect['idEstado'])&&$prospect['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $prospect['estado']; ?></label></td>
 						<td><?php echo $prospect['Etapa']; ?></td>
 						<td><?php echo fecha_estandar($prospect['FModificacion']).' - '.$prospect['HModificacion']; ?></td>
 						<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){ ?>	
@@ -678,7 +680,7 @@ foreach ($arrTabs as $tab) {
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$prospect['idProspecto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($prospect['idProspecto'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar al prospecto '.$prospect['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar al prospecto '.$prospect['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -696,7 +698,6 @@ foreach ($arrTabs as $tab) {
 	</div>
 </div>
 
-
 <?php } ?>
 
 <?php
@@ -704,4 +705,5 @@ foreach ($arrTabs as $tab) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

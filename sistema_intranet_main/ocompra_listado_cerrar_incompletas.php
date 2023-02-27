@@ -289,10 +289,10 @@ switch ($_GET['type']) {
 				}
 				
 				
-				$Form_Inputs->form_input_hidden('type', $_GET['type'], 2);	
+				$Form_Inputs->form_input_hidden('type', $_GET['type'], 2);
 				$Form_Inputs->form_input_hidden('idExistencia', $_GET['id'], 2); 
 				?>
-								
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location.$search; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -302,8 +302,8 @@ switch ($_GET['type']) {
 
 		</div>
 	</div>
-</div>	
-	
+</div>
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['submit_filter'])){
 
@@ -342,7 +342,7 @@ if(isset($_GET['Creacion_fecha_ini']) && $_GET['Creacion_fecha_ini'] != ''&&isse
 	$search .= "&Creacion_fecha_fin=".$_GET['Creacion_fecha_fin'];
 }
 /**************************************************************/
-if(isset($_GET['idServicio']) && $_GET['idServicio']!=''){ 
+if(isset($_GET['idServicio']) && $_GET['idServicio']!=''){
 	$z1 .= " AND ocompra_listado_existencias_servicios.idServicio=".$_GET['idServicio'];
 	$search .= "&idServicio=".$_GET['idServicio'];
 }
@@ -354,15 +354,15 @@ if(isset($_GET['idInsumo']) && $_GET['idInsumo']!=''){
 	$z3 .= " AND ocompra_listado_existencias_insumos.idProducto=".$_GET['idInsumo'];
 	$search .= "&idInsumo=".$_GET['idInsumo'];
 }
-if(isset($_GET['idProducto']) && $_GET['idProducto']!=''){ 
+if(isset($_GET['idProducto']) && $_GET['idProducto']!=''){
 	$z4 .= " AND ocompra_listado_existencias_productos.idProducto=".$_GET['idProducto'];
 	$search .= "&idProducto=".$_GET['idProducto'];
 }
-if(isset($_GET['idTrabajador']) && $_GET['idTrabajador']!=''){ 
+if(isset($_GET['idTrabajador']) && $_GET['idTrabajador']!=''){
 	$z5 .= " AND ocompra_listado_existencias_boletas.idTrabajador=".$_GET['idTrabajador'];
 	$search .= "&idTrabajador=".$_GET['idTrabajador'];
 }
-if(isset($_GET['Descripcion']) && $_GET['Descripcion']!=''){ 
+if(isset($_GET['Descripcion']) && $_GET['Descripcion']!=''){
 	$z6 .= " AND ocompra_listado_existencias_boletas_empresas.Descripcion LIKE '%".EstandarizarInput($_GET['Descripcion'])."%'";
 	$search .= "&Descripcion=".$_GET['Descripcion'];
 }
@@ -572,6 +572,7 @@ array_push( $arrBoletasEmp,$row );
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -697,11 +698,10 @@ array_push( $arrBoletasEmp,$row );
 	</div>
 </div>
 
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -769,6 +769,7 @@ foreach ($arrPermisos as $prod) {
 }
 
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -817,7 +818,7 @@ foreach ($arrPermisos as $prod) {
 				
 				
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -833,4 +834,5 @@ foreach ($arrPermisos as $prod) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

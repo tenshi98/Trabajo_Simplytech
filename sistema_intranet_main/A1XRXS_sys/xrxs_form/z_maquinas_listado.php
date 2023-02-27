@@ -35,7 +35,7 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idUbicacion_lvl_5']))    $idUbicacion_lvl_5     = $_POST['idUbicacion_lvl_5'];
 	if (!empty($_POST['idCliente']))            $idCliente             = $_POST['idCliente'];
 	if (!empty($_POST['FakeidCliente']))        $FakeidCliente         = $_POST['FakeidCliente'];
-	
+
 	//formulario para componentes
 	if (!empty($_POST['idUtilizable']))         $idUtilizable          = $_POST['idUtilizable'];
 	if ( isset($_POST['Marca']))                 $Marca                 = $_POST['Marca'];
@@ -54,7 +54,7 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['lvl']))                  $lvl                   = $_POST['lvl'];
 	if (!empty($_POST['idLicitacion']))         $idLicitacion          = $_POST['idLicitacion'];
 	if (!empty($_POST['addTrabajo']))           $SIS_dataddTrabajo            = $_POST['addTrabajo'];
-	
+
 	//formulario para matriz analisis
 	if (!empty($_POST['cantPuntos']))           $cantPuntos            = $_POST['cantPuntos'];
 	if (!empty($_POST['mod']))                  $mod                   = $_POST['mod'];
@@ -66,7 +66,7 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['PuntoMedCondenatorio'])) $PuntoMedCondenatorio  = $_POST['PuntoMedCondenatorio'];
 	if (!empty($_POST['PuntoUniMed']))          $PuntoUniMed           = $_POST['PuntoUniMed'];
 	if (!empty($_POST['PuntoidGrupo']))         $PuntoidGrupo          = $_POST['PuntoidGrupo'];
-	
+
 	//formulariopara el itemizado
 	//Traspaso de valores input a variables
 	$idLevel = array();
@@ -423,7 +423,7 @@ require_once '0_validate_user_1.php';
 				for ($i = 1; $i <= $nmax; $i++) {
 					$resultado = db_delete_data (false, 'maquinas_listado_level_'.$i, 'idMaquina = "'.$_GET['del'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
-					
+
 				//redirijo
 				header( 'Location: '.$location.'&deleted=true' );
 				die;
@@ -459,7 +459,7 @@ require_once '0_validate_user_1.php';
 						//Muevo el archivo
 						$move_result = @move_uploaded_file($_FILES["Direccion_img"]["tmp_name"], "upload/xxxsxx_".$_FILES['Direccion_img']['name']);
 						if ($move_result){
-								
+
 							//se selecciona la imagen
 							switch ($_FILES['Direccion_img']['type']) {
 								case 'image/jpg':
@@ -940,7 +940,7 @@ require_once '0_validate_user_1.php';
 						}
 					}
 				}
-					
+
 				//redirijo
 				header( 'Location: '.$location.'&deleted=true' );
 				die;
@@ -979,7 +979,7 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			if(empty($error)){
 				
 				if(isset($idLevel[1])&&$idLevel[1]!=''){   $xx = $idLevel[1];  $level=1; }
@@ -1072,7 +1072,7 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			if(empty($error)){
 		
 				//Filtros
@@ -3479,7 +3479,7 @@ require_once '0_validate_user_1.php';
 												}
 											}
 										}
-										
+
 									}
 								}
 							}
@@ -3492,7 +3492,7 @@ require_once '0_validate_user_1.php';
 		
 		header( 'Location: '.$location.'&clone_comp=true' );
 		die;
-		
+
 		break;
 
 /*******************************************************************************************************************/
@@ -3668,7 +3668,7 @@ require_once '0_validate_user_1.php';
 						//Se mueve el archivo a la carpeta previamente configurada
 						$move_result = @move_uploaded_file($_FILES["Direccion_img"]["tmp_name"], $ruta);
 						if ($move_result){
-								
+
 							//Filtros
 							$SIS_data = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'";
 

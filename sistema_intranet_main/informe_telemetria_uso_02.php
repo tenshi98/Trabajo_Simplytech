@@ -65,7 +65,7 @@ $SIS_where = "telemetria_listado_historial_uso.idUso!=0";
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){$SIS_where.=" AND telemetria_listado_historial_uso.idTelemetria =".$_GET['idTelemetria'];}
-if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino']!=''){ 
+if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino']!=''){
 	$SIS_where.=" AND telemetria_listado_historial_uso.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
 /**********************************************************/
@@ -96,15 +96,15 @@ $arrConsulta = db_select_array (false, 'Fecha'.$subquery, 'telemetria_listado_hi
 						<?php foreach ($arrColumnas as $col) { 
 							echo '<th>'.$col['Nombre'].'</th>';
 						} ?>
-						
+
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php 
+					<?php
 					//variables
-					$arrSuma = array(); 
+					$arrSuma = array();
 					//recorrio
-					foreach ($arrConsulta as $con) { ?> 
+					foreach ($arrConsulta as $con) { ?>
 						<tr class="odd">
 							<td><?php echo fecha_estandar($con['Fecha']); ?></td>
 							<?php foreach ($arrColumnas as $col) { 
@@ -157,6 +157,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
  
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -185,7 +186,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -201,4 +202,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

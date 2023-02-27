@@ -115,13 +115,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 	</div>
 </div>
 
-
-
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -191,10 +188,10 @@ $arrBloqueo = db_select_array (false, $SIS_query, 'seg_vecinal_actualizaciones',
 
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
-		<li class="btn btn-default">Fecha Descendente</li>	
+		<li class="btn btn-default">Fecha Descendente</li>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Actualizacion</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Actualizacion</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -244,7 +241,7 @@ $arrBloqueo = db_select_array (false, $SIS_query, 'seg_vecinal_actualizaciones',
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
-								  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrBloqueo as $bloqueo) { ?>
 					<tr class="odd">
@@ -253,9 +250,9 @@ $arrBloqueo = db_select_array (false, $SIS_query, 'seg_vecinal_actualizaciones',
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<a href="<?php echo $location.'&id='.$bloqueo['idLog']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $location.'&del='.simpleEncode($bloqueo['idLog'], fecha_actual());
-								$dialogo   = '¿Realmente deseas eliminar el registro?';?>
+								$dialogo   = '¿Realmente deseas eliminar el registro?'; ?>
 								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
@@ -277,4 +274,5 @@ $arrBloqueo = db_select_array (false, $SIS_query, 'seg_vecinal_actualizaciones',
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

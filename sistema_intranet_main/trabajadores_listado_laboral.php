@@ -52,10 +52,11 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 
 
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Datos Laborales');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Datos Laborales'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -80,7 +81,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 						<li class=""><a href="<?php echo 'trabajadores_listado_antecedentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Antecedentes</a></li>
 						<li class=""><a href="<?php echo 'trabajadores_listado_carnet.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Carnet</a></li>
 						<li class=""><a href="<?php echo 'trabajadores_listado_rhtm.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Permiso Trabajo Menor Edad</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -88,8 +89,8 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($idTipo)){              $x1  = $idTipo;               }else{$x1  = $rowdata['idTipo'];}
 					if(isset($Cargo)){               $x2  = $Cargo;                }else{$x2  = $rowdata['Cargo'];}
@@ -114,13 +115,13 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					if(isset($idLevel_4)){           $x21 = $idLevel_4;            }else{$x21 = $rowdata['idLevel_4'];}
 					if(isset($idLevel_5)){           $x22 = $idLevel_5;            }else{$x22 = $rowdata['idLevel_5'];}
 					if(isset($Observaciones)){       $x23 = $Observaciones;        }else{$x23 = $rowdata['Observaciones'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_tittle(3, 'Datos Trabajador');
 					$Form_Inputs->form_select('Tipo Trabajador','idTipo', $x1, 2, 'idTipo', 'Nombre', 'trabajadores_listado_tipos', 0, '', $dbConn);
 					$Form_Inputs->form_input_text('Cargo', 'Cargo', $x2, 1);
-					
+
 					$Form_Inputs->form_tittle(3, 'Datos Contrato');
 					$Form_Inputs->form_select_filter('Empresa Contratista','idContratista', $x3, 1, 'idContratista', 'Nombre', 'contratista_listado', $w, '', $dbConn);
 					$Form_Inputs->form_select('Tipo de Contrato','idTipoContrato', $x4, 1, 'idTipoContrato', 'Nombre', 'core_tipos_contrato', 0, '', $dbConn);
@@ -128,19 +129,19 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					$Form_Inputs->form_date('F Inicio Contrato','F_Inicio_Contrato', $x6, 1);
 					$Form_Inputs->form_date('F Termino Contrato','F_Termino_Contrato', $x7, 1);
 					$Form_Inputs->form_input_text('Ubicacion Trabajo', 'UbicacionTrabajo', $x8, 1);
-					
+
 					$Form_Inputs->form_tittle(3, 'Datos Remuneraciones');
 					$Form_Inputs->form_select('AFP','idAFP', $x9, 1, 'idAFP', 'Nombre', 'sistema_afp', 'idEstado=1', '', $dbConn);
 					$Form_Inputs->form_select('Salud','idSalud', $x10, 1, 'idSalud', 'Nombre', 'sistema_salud', 'idEstado=1', '', $dbConn);
 					$Form_Inputs->form_values('Sueldo Liquido a Pago','SueldoLiquido', $x11, 1);
 					$Form_Inputs->form_values('Sueldo Liquido a Pago por dia','SueldoDia', $x12, 1);
 					$Form_Inputs->form_values('Sueldo Liquido a Pago por hora','SueldoHora', $x13, 1);
-					
+
 					$Form_Inputs->form_tittle(3, 'Forma de Pago');
 					$Form_Inputs->form_select_filter('Banco','idBanco', $x14, 1, 'idBanco', 'Nombre', 'core_bancos', 0, '', $dbConn);
 					$Form_Inputs->form_select('Tipo de cuenta deposito','idTipoCuenta', $x15, 1, 'idTipoCuenta', 'Nombre', 'core_tipo_cuenta', 0, '', $dbConn);
 					$Form_Inputs->form_input_text('Nro. Cta. Deposito', 'N_Cuenta', $x16, 1);
-					
+
 					$Form_Inputs->form_tittle(3, 'Centro de Costo Asignado');
 					$Form_Inputs->form_select_depend5('Centro de Costo', 'idCentroCosto',  $x17,  2,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  $w,   0,
 													  'Nivel 1', 'idLevel_1',  $x18,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0, 
@@ -149,9 +150,9 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 													  'Nivel 4', 'idLevel_4',  $x21,  1,  'idLevel_4',  'Nombre',  'centrocosto_listado_level_4',  0,   0,
 													  'Nivel 5', 'idLevel_5',  $x22,  1,  'idLevel_5',  'Nombre',  'centrocosto_listado_level_5',  0,   0,
 													  $dbConn, 'form1');
-					
+
 					$Form_Inputs->form_ckeditor('Observaciones','Observaciones', $x23, 1, 2);
-					
+
 					$Form_Inputs->form_input_hidden('idTrabajador', $_GET['id'], 2);
 					?>
 
@@ -167,8 +168,8 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php
@@ -176,4 +177,5 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

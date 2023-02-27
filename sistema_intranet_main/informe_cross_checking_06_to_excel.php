@@ -106,7 +106,7 @@ $spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-          
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A1', 'Cross Checking - Exportar Datos');
@@ -154,7 +154,7 @@ foreach ($arrOTS as $temp) {
 	}else{
 		$litrosxhectarea = 0;
 	}
-	
+
 	//subfiltro
 	if(isset($temp['EspecieNombre'])&&$temp['EspecieNombre']!=''){  $EspecieNombre  = $temp['EspecieNombre'];  }else{$EspecieNombre  = 'Todas las Especies';} 
 	if(isset($temp['VariedadNombre'])&&$temp['VariedadNombre']!=''){$VariedadNombre = $temp['VariedadNombre'];}else{$VariedadNombre = 'Todas las Variedades';}

@@ -58,7 +58,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Correo borrado correct
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- if(!empty($_GET['id'])){
+if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 /********************************************/
@@ -336,7 +336,7 @@ $arrCorreos = db_select_array (false, $SIS_query, 'telemetria_mnt_correos_list',
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$comunas['idCorreos']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($comunas['idCorreos'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el correo '.$comunas['NombreEmail'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el correo '.$comunas['NombreEmail'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -359,4 +359,5 @@ $arrCorreos = db_select_array (false, $SIS_query, 'telemetria_mnt_correos_list',
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

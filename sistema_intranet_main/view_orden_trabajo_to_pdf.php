@@ -26,7 +26,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -96,7 +96,7 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 	$SIS_order = 'insumos_listado.Nombre ASC';
 	$arrInsumos = array();
 	$arrInsumos = db_select_array (false, $SIS_query, 'orden_trabajo_listado_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrInsumos');
-	
+
 	/***************************************************/
 	// Se trae un listado con todos los productos utilizados
 	$SIS_query = '
@@ -129,7 +129,7 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 	$SIS_order = 'insumos_listado.Nombre ASC';
 	$arrInsumos = array();
 	$arrInsumos = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrInsumos');
-	
+
 	/***************************************************/
 	// Se trae un listado con todos los productos utilizados
 	$SIS_query = '
@@ -177,7 +177,7 @@ $html ='<style>
 .otdata td {text-align: left !important;}
 .otdata{width: 65% !important;}
 .otdata2{width: 30% !important;}
-</style> 
+</style>
 <div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive">
 
 <div id="page-wrap">
@@ -214,7 +214,7 @@ $html ='<style>
                     <td class="meta-head">Estado</td>
                     <td>'.$rowdata['NombreEstado'].'</td>
                 </tr>';
-				
+
 				if(isset($rowdata['idSupervisor'])&&$rowdata['idSupervisor']!=''&&$rowdata['idSupervisor']!=0){
 					$html .='<tr>
 						<td class="meta-head">Supervisor</td>
@@ -274,7 +274,7 @@ $html ='<style>
     </div>
     <table id="items">
         <tbody>
-            
+
 			<tr><th colspan="6">Detalle</th></tr>';		  
             
 			/**********************************************************************************/
@@ -396,7 +396,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 		/************************************************************************/
 		//TCPDF
 		case 1:
-			
+
 			require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 			// create new PDF document
@@ -451,7 +451,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output(DeSanitizar($pdf_file), 'I');
-	
+
 			break;
 		/************************************************************************/
 		//DomPDF (Solo compatible con PHP 5.x)

@@ -63,24 +63,15 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
+
+/*******************************************************/
 // consulto los datos
-$query = "SELECT Fecha, TasaCorriente, TasaDia, MC
-FROM `aguas_mediciones_tasas_interes`
-WHERE idTasasInteres = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	?>
+$SIS_query = 'Fecha, TasaCorriente, TasaDia, MC';
+$SIS_join  = '';
+$SIS_where = 'idTasasInteres = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_tasas_interes', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -93,7 +84,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Fecha)){$x1  = $Fecha;          }else{$x1  = $rowdata['Fecha'];}
+				if(isset($Fecha)){          $x1  = $Fecha;          }else{$x1  = $rowdata['Fecha'];}
 				if(isset($TasaCorriente)){  $x2  = $TasaCorriente;  }else{$x2  = Cantidades_decimales_justos($rowdata['TasaCorriente']);}
 				if(isset($TasaDia)){        $x3  = $TasaDia;        }else{$x3  = Cantidades_decimales_justos($rowdata['TasaDia']);}
 				if(isset($MC)){             $x4  = $MC;             }else{$x4  = Cantidades_decimales_justos($rowdata['MC']);}
@@ -122,9 +113,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -137,7 +128,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Fecha)){$x1  = $Fecha;          }else{$x1  = '';}
+				if(isset($Fecha)){          $x1  = $Fecha;          }else{$x1  = '';}
 				if(isset($TasaCorriente)){  $x2  = $TasaCorriente;  }else{$x2  = '';}
 				if(isset($TasaDia)){        $x3  = $TasaDia;        }else{$x3  = '';}
 				if(isset($MC)){             $x4  = $MC;             }else{$x4  = '';}
@@ -201,13 +192,13 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = "aguas_mediciones_tasas_interes.idTasasInteres!=0";
-$SIS_where.= " AND aguas_mediciones_tasas_interes.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando	
+$SIS_where.= " AND aguas_mediciones_tasas_interes.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){            $SIS_where .= " AND aguas_mediciones_tasas_interes.Fecha='".$_GET['Fecha']."'";}
+if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){                   $SIS_where .= " AND aguas_mediciones_tasas_interes.Fecha='".$_GET['Fecha']."'";}
 if(isset($_GET['TasaCorriente']) && $_GET['TasaCorriente']!=''){   $SIS_where .= " AND aguas_mediciones_tasas_interes.TasaCorriente='".$_GET['TasaCorriente']."'";}
-if(isset($_GET['TasaDia']) && $_GET['TasaDia']!=''){        $SIS_where .= " AND aguas_mediciones_tasas_interes.TasaDia='".$_GET['TasaDia']."'";}
-if(isset($_GET['MC']) && $_GET['MC']!=''){                  $SIS_where .= " AND aguas_mediciones_tasas_interes.MC='".$_GET['MC']."'";}
+if(isset($_GET['TasaDia']) && $_GET['TasaDia']!=''){               $SIS_where .= " AND aguas_mediciones_tasas_interes.TasaDia='".$_GET['TasaDia']."'";}
+if(isset($_GET['MC']) && $_GET['MC']!=''){                         $SIS_where .= " AND aguas_mediciones_tasas_interes.MC='".$_GET['MC']."'";}
 
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
@@ -217,9 +208,9 @@ $total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
 aguas_mediciones_tasas_interes.idTasasInteres,
-aguas_mediciones_tasas_interes.Dia, 
+aguas_mediciones_tasas_interes.Dia,
 aguas_mediciones_tasas_interes.Ano,
-aguas_mediciones_tasas_interes.Fecha, 
+aguas_mediciones_tasas_interes.Fecha,
 aguas_mediciones_tasas_interes.TasaCorriente,
 aguas_mediciones_tasas_interes.TasaDia,
 aguas_mediciones_tasas_interes.MC,
@@ -254,7 +245,7 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_tasas_interes', 
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Fecha)){$x1  = $Fecha;          }else{$x1  = '';}
+				if(isset($Fecha)){          $x1  = $Fecha;          }else{$x1  = '';}
 				if(isset($TasaCorriente)){  $x2  = $TasaCorriente;  }else{$x2  = '';}
 				if(isset($TasaDia)){        $x3  = $TasaDia;        }else{$x3  = '';}
 				if(isset($MC)){             $x4  = $MC;             }else{$x4  = '';}
@@ -349,28 +340,28 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_tasas_interes', 
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-				<?php foreach ($arrUML as $uml) { ?>
-					<tr class="odd">
-						<td><?php echo $uml['Fecha']; ?></td>
-						<td><?php echo $uml['Dia']; ?></td>
-						<td><?php echo $uml['Mes']; ?></td>
-						<td><?php echo $uml['Ano']; ?></td>
-						<td><?php echo Cantidades_decimales_justos($uml['TasaCorriente']); ?></td>
-						<td><?php echo Cantidades_decimales_justos($uml['TasaDia']); ?></td>
-						<td><?php echo Cantidades_decimales_justos($uml['MC']); ?></td>
-						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $uml['sistema']; ?></td><?php } ?>
-						<td>
-							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$uml['idTasasInteres']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.simpleEncode($uml['idTasasInteres'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la Tasa de Interes?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>
-							</div>
-						</td>
-					</tr>
-				<?php } ?>
+					<?php foreach ($arrUML as $uml) { ?>
+						<tr class="odd">
+							<td><?php echo $uml['Fecha']; ?></td>
+							<td><?php echo $uml['Dia']; ?></td>
+							<td><?php echo $uml['Mes']; ?></td>
+							<td><?php echo $uml['Ano']; ?></td>
+							<td><?php echo Cantidades_decimales_justos($uml['TasaCorriente']); ?></td>
+							<td><?php echo Cantidades_decimales_justos($uml['TasaDia']); ?></td>
+							<td><?php echo Cantidades_decimales_justos($uml['MC']); ?></td>
+							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $uml['sistema']; ?></td><?php } ?>
+							<td>
+								<div class="btn-group" style="width: 70px;" >
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$uml['idTasasInteres']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=4){
+										$ubicacion = $location.'&del='.simpleEncode($uml['idTasasInteres'], fecha_actual());
+										$dialogo   = '¿Realmente deseas eliminar la Tasa de Interes?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<?php } ?>
+								</div>
+							</td>
+						</tr>
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -387,4 +378,5 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_tasas_interes', 
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

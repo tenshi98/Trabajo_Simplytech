@@ -45,7 +45,7 @@ if (isset($_GET['fInicio'])&&$_GET['fInicio']!=''&&isset($_GET['fTermino'])&&$_G
 	$d1.=" AND Creacion_fecha BETWEEN '".$_GET['fInicio']."' AND '".$_GET['fTermino']."'";
 	$d2.=" AND Fecha BETWEEN '".$_GET['fInicio']."' AND '".$_GET['fTermino']."'";
 	$data .= " entre ".Fecha_estandar($_GET['fInicio'])." al ".Fecha_estandar($_GET['fTermino']);
-	$n_meses = diferencia_meses($_GET['fInicio'], $_GET['fTermino'] );	
+	$n_meses = diferencia_meses($_GET['fInicio'], $_GET['fTermino'] );
 }
 /*******************************************************************************************/
 // Se trae un listado con todos los elementos
@@ -175,13 +175,12 @@ array_push( $arrVehiculos,$row );
 						<td style="background-color: #ccc;">Diferencia</td>
 
 					</tr>
-					
-					
+
 					<?php 
 						$total_prog = 0;
 						$total_cost = 0;
 						$total_reco = 0;
-					
+
 						foreach ($arrVehiculos as $trab) { 
 						
 						$total_recolec = 0;
@@ -211,13 +210,13 @@ array_push( $arrVehiculos,$row );
 							<td><?php echo $trab['Marca']; ?></td>
 							<td><?php echo $trab['Modelo']; ?></td>
 							<td><?php echo $trab['Tipo']; ?></td>
-							
+
 							<td align="right"><?php echo $trab['PasajerosCuenta']; ?></td>
 							<td align="right" style="background-color: #eee;"><?php echo  valores($pas_valor,0); ?></td>
 							
 							
-							<?php $subtotal = 0;?>
-							<td align="right"><?php echo valores($pas_sueldo,0); $subtotal = $subtotal + $pas_sueldo;?></td>
+							<?php $subtotal = 0; ?>
+							<td align="right"><?php echo valores($pas_sueldo,0); $subtotal = $subtotal + $pas_sueldo; ?></td>
 							<?php 
 							$cost = 0;
 							foreach ($arrCostos as $costo) { ?>
@@ -228,7 +227,7 @@ array_push( $arrVehiculos,$row );
 							} ?>
 							<td align="right" style="background-color: #eee;"><?php echo  valores($subtotal,0); ?></td>
 							<?php $total_cost = $total_cost + $subtotal; ?>
-							
+
 							<td align="right"><?php echo  valores($total_recolec,0); ?></td>
 							<td align="right" style="background-color: #eee;"><?php echo  valores($total_recolec-$subtotal,0); ?></td>
 							<?php $total_reco = $total_reco + $total_recolec; ?>
@@ -302,7 +301,7 @@ array_push( $arrVehiculos,$row );
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -325,4 +324,5 @@ array_push( $arrVehiculos,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

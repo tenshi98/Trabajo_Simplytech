@@ -118,9 +118,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 	</div>
 </div>
 
-
-
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){?>
 	 
@@ -236,6 +233,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrAccess,$row );
 }
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -256,7 +254,7 @@ array_push( $arrAccess,$row );
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary">Datos del Perfil</h2>
@@ -279,13 +277,13 @@ array_push( $arrAccess,$row );
 						</p>
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
 
 			<div class="tab-pane fade" id="ingresos">
 				<div class="wmd-panel">
-					
+
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 						<thead>
 							<tr role="row">
@@ -302,7 +300,7 @@ array_push( $arrAccess,$row );
 							<?php } ?>
 						</tbody>
 					</table>
-			
+
 				</div>
 			</div>
 			
@@ -318,8 +316,8 @@ array_push( $arrAccess,$row );
             
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -354,7 +352,9 @@ $arrUsers = db_select_array (false, $SIS_query, 'usuarios_listado', $SIS_join, $
 
 //paginacion
 $search='';
+
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Usuario</a>
 </div>
@@ -387,14 +387,14 @@ $search='';
 						<td><?php echo $usuarios['usuario']; ?></td>
 						<td><?php echo $usuarios['Nombre']; ?></td>
 						<td><?php echo $usuarios['Ultimo_acceso']; ?></td>
-						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['estado']; ?></label></td>
+						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $usuarios['estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<a href="<?php echo $location.'&view='.$usuarios['idUsuario']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&id='.$usuarios['idUsuario']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $location.'&del='.simpleEncode($usuarios['idUsuario'], fecha_actual());
-								$dialogo   = '¿Realmente deseas eliminar el registro '.$usuarios['Nombre'].'?';?>
+								$dialogo   = '¿Realmente deseas eliminar el registro '.$usuarios['Nombre'].'?'; ?>
 								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
@@ -416,4 +416,5 @@ $search='';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

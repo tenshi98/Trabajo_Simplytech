@@ -28,7 +28,6 @@ require_once 'core/Web.Header.Views.php';
 	.panel-body {padding: 0px !important;}
 </style>
 
-
 <div class="invoice">
 	<div class="row">
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
@@ -44,7 +43,7 @@ require_once 'core/Web.Header.Views.php';
 				<strong>Tope Deposito Convenido</strong>: <span class="pull-right"><?php echo valores($_SESSION['fact_sueldos_basicos']['TopeDepConv'], 0); ?></span><br/>
 			</address>
 		</div>
-		
+
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Pago Empresa
 			<address>
@@ -107,7 +106,7 @@ require_once 'core/Web.Header.Views.php';
     		
     	</div>
     </div>
-    
+
     <div class="row">
     	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     		<div class="panel panel-default">
@@ -148,7 +147,7 @@ require_once 'core/Web.Header.Views.php';
 										<?php	
 										}
 									}
-								}?>
+								} ?>
 								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalCargasFamiliares'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalCargasFamiliares']!=''){?>
 									<tr>
 										<td>Asignación Familiar</td>
@@ -174,7 +173,7 @@ require_once 'core/Web.Header.Views.php';
 										<?php	
 										}
 									}
-								}?>
+								} ?>
 								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoAfecto'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoAfecto']!=''){?>
 									<tr>
 										<td colspan="3">Bonos Fijos Imponibles</td>
@@ -193,7 +192,7 @@ require_once 'core/Web.Header.Views.php';
 										<?php	
 										}
 									}
-								}?>
+								} ?>
 								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalAfecto'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalAfecto']!=''){?>
 									<tr>	
 										<td colspan="3">Bonos Temporales Imponibles</td>
@@ -212,7 +211,7 @@ require_once 'core/Web.Header.Views.php';
 										<?php	
 										}
 									}
-								}?>
+								} ?>
 								
 								
 								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoNoAfecto'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoFijoNoAfecto']!=''){?>
@@ -233,7 +232,7 @@ require_once 'core/Web.Header.Views.php';
 										<?php	
 										}
 									}
-								}?>
+								} ?>
 								<?php if(isset($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalNoAfecto'])&&$_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['TotalBonoTemporalNoAfecto']!=''){?>
 									<tr>	
 										<td colspan="3">Bonos Temporales No Imponibles</td>
@@ -252,7 +251,7 @@ require_once 'core/Web.Header.Views.php';
 										<?php	
 										}
 									}
-								}?>
+								} ?>
     							<tr>
 									<td align="right" colspan="3"><strong>Total Imponible</strong></td>
 									<td align="right"><strong><?php echo valores($_SESSION['fact_sueldos_sueldos'][$_GET['idTrabajador']]['SueldoImponible'], 0); ?></strong></td>
@@ -380,9 +379,6 @@ require_once 'core/Web.Header.Views.php';
     </div>
 </div>
 
-
-
-
 <?php 
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
@@ -395,7 +391,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -405,7 +401,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -414,4 +410,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

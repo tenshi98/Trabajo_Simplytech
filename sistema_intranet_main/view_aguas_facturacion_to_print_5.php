@@ -22,14 +22,14 @@
 	<div class="invoice-info">
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 		<p class="well well-sm no-shadow" style="background-color: #fff;text-align: center;font-size: 16px !important;" >
-		
+
 		<?php echo $rowDatos['ClienteNombre']; ?><br>
 		<?php echo $rowDatos['ClienteDireccionFact'] ?><br>
 		<?php echo $rowDatos['ClienteComunaFact'] ?><br>
 		<br>
 		</p>
 	</div>
-		
+
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 		<p class="well well-sm no-shadow" style="background-color: #fff;text-align: center;margin-bottom: 1px;font-size: 14px !important;" >
 		N° Cliente: <?php echo $rowDatos['ClienteIdentificador'] ?>
@@ -45,7 +45,7 @@
 		}
 		?>
 		</p>
-		
+
 	</div>
 
 	</div>
@@ -76,23 +76,23 @@
 		<tr>
 			<td>Cargo Fijo Cliente</td>
 			<td>Afecto</td>
-			<td align="right"><?php echo $rowDatos['ClienteUH'];?></td>
-			<td align="right"><?php echo Valores(($rowDatos['AguasInfCargoFijo']/1.19), 2);?></td>
-			<td align="right"><?php echo Valores(($rowDatos['DetalleCargoFijoValor']/1.19), 0);?></td>
+			<td align="right"><?php echo $rowDatos['ClienteUH']; ?></td>
+			<td align="right"><?php echo Valores(($rowDatos['AguasInfCargoFijo']/1.19), 2); ?></td>
+			<td align="right"><?php echo Valores(($rowDatos['DetalleCargoFijoValor']/1.19), 0); ?></td>
 		</tr>
 		<tr>
 			<td>Consumo Agua Potable</td>
 			<td>Afecto</td>
-			<td align="right"><?php echo Cantidades($rowDatos['DetalleConsumoCantidad'], $ndecim);?></td>
-			<td align="right"><?php echo Valores(($rowDatos['AguasInfMetroAgua']/1.19), 2);?></td>
-			<td align="right"><?php echo Valores(($rowDatos['DetalleConsumoValor']/1.19), 0);?></td>
+			<td align="right"><?php echo Cantidades($rowDatos['DetalleConsumoCantidad'], $ndecim); ?></td>
+			<td align="right"><?php echo Valores(($rowDatos['AguasInfMetroAgua']/1.19), 2); ?></td>
+			<td align="right"><?php echo Valores(($rowDatos['DetalleConsumoValor']/1.19), 0); ?></td>
 		</tr>
 		<tr>
 			<td>Recoleccion de Aguas Servidas</td>
 			<td>Afecto</td>
-			<td align="right"><?php echo Cantidades($rowDatos['DetalleRecoleccionCantidad'], $ndecim);?></td>
-			<td align="right"><?php echo Valores(($rowDatos['AguasInfMetroRecolecion']/1.19), 2);?></td>
-			<td align="right"><?php echo Valores(($rowDatos['DetalleRecoleccionValor']/1.19), 0);?></td>
+			<td align="right"><?php echo Cantidades($rowDatos['DetalleRecoleccionCantidad'], $ndecim); ?></td>
+			<td align="right"><?php echo Valores(($rowDatos['AguasInfMetroRecolecion']/1.19), 2); ?></td>
+			<td align="right"><?php echo Valores(($rowDatos['DetalleRecoleccionValor']/1.19), 0); ?></td>
 		</tr>
 		<?php if(isset($rowDatos['DetalleVisitaCorte'])&&$rowDatos['DetalleVisitaCorte']!=0){?>
 			<tr>
@@ -152,7 +152,7 @@
 			<td align="right"><?php echo Valores(($rowDatos['DetalleInteresDeuda']/1.19), 0)?></td>
 			</tr>
 		<?php } ?>
-			
+
 		<?php 
 		//Otros Cargos 1
 		if(isset($rowDatos['DetalleOtrosCargos1Valor'])&&$rowDatos['DetalleOtrosCargos1Valor']!=0){?>
@@ -249,7 +249,7 @@
 		</div>
 		<div class="col-xs-2">
 		<strong>
-			<?php 
+			<?php
 			if($rowDatos['DetalleTotalVenta']>0){
 			echo Valores(($rowDatos['DetalleTotalVenta']/1.19), 0).'<br>';
 			echo Valores(($rowDatos['DetalleTotalVenta']-($rowDatos['DetalleTotalVenta']/1.19)), 0).'<br>';
@@ -265,7 +265,7 @@
 		</strong>
 		</div>
 	</div>
-		
+
 	</div>
 	
 	
@@ -274,7 +274,7 @@
 	
 	<div class="row"  >
 	<div class="col-xs-12 invoice-footer">
-		
+
 		<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5 footer-left">
 		<div class="well well-sm no-shadow" style="background-color: #fff;">
 		
@@ -293,7 +293,7 @@
 					
 		</div>
 		<div class="well well-sm no-shadow" style="background-color: #fff;">
-			
+
 			<p>
 			<div class="pull-left">Lectura Mes anterior <?php echo '('.Fecha_estandar($rowDatos['DetConsMesAnteriorFecha']).')'; ?></div>
 			<small class="pull-right"><?php echo valores_truncados($rowDatos['DetConsMesAnteriorCantidad']) ?> m3</small>
@@ -309,13 +309,13 @@
 			<br/>
 			<div class="pull-left">Adicionales por prorrateo</div>
 			<small class="pull-right">
-				<?php 
+				<?php
 				if($rowDatos['DetConsProrateo']>0){
 					$bla = $rowDatos['DetConsProrateo'];
 				}else{
 					$bla = $rowDatos['DetConsProrateo']*-1;
 				}
-				echo $rowDatos['DetConsProrateoSigno'].' '.$bla.' m3';?>
+				echo $rowDatos['DetConsProrateoSigno'].' '.$bla.' m3'; ?>
 			</small>	
 			<?php } ?>
 			<br/>
@@ -323,13 +323,13 @@
 			<small class="pull-right"><?php echo Cantidades($rowDatos['DetConsMesTotalCantidad'], $ndecim) ?> m3</small>
 			<br/>
 			<div class="pull-left">Proxima lectura estimada</div>
-			<small class="pull-right"><?php echo Fecha_estandar($rowDatos['DetConsFechaProxLectura']);?></small>
+			<small class="pull-right"><?php echo Fecha_estandar($rowDatos['DetConsFechaProxLectura']); ?></small>
 			<?php
 				//verificacion de remarcador
 				if(isset($rowDatos['DetConsProrateo'])&&$rowDatos['DetConsProrateo']!=''&&$rowDatos['DetConsProrateo']!=0){?>
 				<br/>
 				<div class="pull-left">Prorrateo: </div>
-				<small class="pull-right"><?php echo $rowDatos['DetConsModalidad'];?></small>
+				<small class="pull-right"><?php echo $rowDatos['DetConsModalidad']; ?></small>
 			<?php } ?>
 			<br/>
 			<div class="pull-left">Emergencias 24 horas </div>
@@ -339,7 +339,7 @@
 			<small class="pull-right"><?php echo formatPhone($rowDatos['DetConsFonoConsultas']) ?></small>
 			</p>
 		</div>
-		
+
 		</div>
 
 
@@ -352,31 +352,31 @@
 			<br/>
 			<div class="pull-left">Cargo fijo</div>
 			<small class="pull-right"><?php echo Valores($rowDatos['AguasInfCargoFijo'], 0)?></small>
-			
+
 			<br/>
 			<div class="pull-left">Metro cubico agua potable</div>
 			<small class="pull-right"><?php echo Valores($rowDatos['AguasInfMetroAgua'], 2)?></small>
-			
+
 			<br/>
 			<div class="pull-left">Metro cubico recoleccion</div>
 			<small class="pull-right"><?php echo Valores($rowDatos['AguasInfMetroRecolecion'], 2)?></small>
-			
+
 			<br/>
 			<div class="pull-left">Visita corte</div>
 			<small class="pull-right"><?php echo Valores($rowDatos['AguasInfVisitaCorte'], 0)?></small>
-			
+
 			<br/>
 			<div class="pull-left">Corte 1° instancia</div>
 			<small class="pull-right"><?php echo Valores($rowDatos['AguasInfCorte1'], 0)?></small>
-			
+
 			<br/>
 			<div class="pull-left">Corte 2° instancia</div>
 			<small class="pull-right"><?php echo Valores($rowDatos['AguasInfCorte2'], 0)?></small>
-			
+
 			<br/>
 			<div class="pull-left">Reposicion 1° instancia</div>
 			<small class="pull-right"><?php echo Valores($rowDatos['AguasInfReposicion1'], 0)?></small>
-			
+
 			<br/>
 			<div class="pull-left">Reposicion 2° instancia</div>
 			<small class="pull-right"><?php echo Valores($rowDatos['AguasInfReposicion2'], 0)?></small>
@@ -390,32 +390,32 @@
 			<br/>
 				<div class="pull-left">Diferencia medidor general</div>
 				<small class="pull-right">
-				<?php 
+				<?php
 				if($rowDatos['AguasInfDifMedGeneral']>0){
 					$bla = '(+)'.Cantidades($rowDatos['AguasInfDifMedGeneral'], 2);
 				}else{
 					$bla = '(-)'.Cantidades($rowDatos['AguasInfDifMedGeneral']*-1, 2);
 				}
-				echo $bla.' m3';?>
+				echo $bla.' m3'; ?>
 				</small>
 
 				<br/>
 				<div class="pull-left">Porcentaje Prorrateo</div>
 				<small class="pull-right"><?php echo $rowDatos['AguasInfProcProrrateo'] ?> %</small>
 			<?php } ?>
-			
+
 			<br/>
 			<div class="pull-left">Punto servicio diametro</div>
 			<small class="pull-right"><?php echo $rowDatos['AguasInfTipoMedicion'].' '.$rowDatos['AguasInfPuntoDiametro'].'mm' ?></small>
-			
+
 			<br/>
 			<div class="pull-left">Clave facturacion</div>
 			<small class="pull-right"><?php echo $rowDatos['AguasInfClaveFacturacion'] ?></small>
-			
+
 			<br/>
 			<div class="pull-left">Clave Lectura</div>
 			<small class="pull-right"><?php echo $rowDatos['AguasInfClaveLectura'] ?></small>
-			
+
 			<br/>
 			<div class="pull-left">Numero medidor</div>
 			<small class="pull-right"><?php echo $rowDatos['AguasInfNumeroMedidor'] ?></small>
@@ -426,11 +426,11 @@
 			<p>
 			<div class="pull-left">Tarifas publicadas la nacion</div>
 			<small class="pull-right">26-05-2017</small>
-			
+
 			<br/>	
 			<div class="pull-left">Fecha emision</div>
-			<small class="pull-right"><?php echo Fecha_estandar($rowDatos['AguasInfFechaEmision']);?></small>
-			
+			<small class="pull-right"><?php echo Fecha_estandar($rowDatos['AguasInfFechaEmision']); ?></small>
+
 			<br/>	
 			<div class="pull-left">Ultimo pago</div>
 			<small class="pull-right">
@@ -442,10 +442,10 @@
 				}
 				?>
 			</small>
-			
+
 			<br/>	
 			<div class="pull-left">Considera movimientos hasta</div>
-			<small class="pull-right"><?php echo Fecha_estandar($rowDatos['AguasInfMovimientosHasta']);?></small>
+			<small class="pull-right"><?php echo Fecha_estandar($rowDatos['AguasInfMovimientosHasta']); ?></small>
 			</p>
 			<div class="clearfix"></div>
 			

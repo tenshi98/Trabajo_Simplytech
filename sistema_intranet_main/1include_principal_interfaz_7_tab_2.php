@@ -257,7 +257,7 @@
 											case 9:
 
 												break;
-										}?>
+										} ?>
 									</td>
 								</tr>
 							<?php

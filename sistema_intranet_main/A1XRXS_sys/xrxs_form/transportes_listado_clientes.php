@@ -24,7 +24,7 @@ require_once '0_validate_user_1.php';
 			//Variables
 			$idTransporte = $_GET['id'];
 			$idCliente    = $_GET['cliente_add'];
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;

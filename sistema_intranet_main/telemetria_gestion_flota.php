@@ -33,7 +33,7 @@ $FechaSistema   = fecha_actual();
 	
 //Se traen las rutas si se ingresaron
 if(isset($_GET['idRuta'])&&$_GET['idRuta']!=''){
-	
+
 	//Se consultan datos
 	$arrRutas = array();
 	$arrRutas = db_select_array (false, 'idUbicaciones, Latitud, Longitud, direccion', 'telemetria_rutas_ubicaciones', '', 'idRuta ='.$_GET['idRuta'], 'idUbicaciones ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrRutas');
@@ -51,11 +51,11 @@ $enlace    .= "&idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 if (isset($_GET['idRuta'])&&$_GET['idRuta']!=''){
 	$SIS_where .= " AND telemetria_listado.idRuta=".$_GET['idRuta'];
-	$enlace    .= "&idRuta=".$_GET['idRuta'];	
+	$enlace    .= "&idRuta=".$_GET['idRuta'];
 }
 if (isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$SIS_where .= " AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
-	$enlace    .= "&idTelemetria=".$_GET['idTelemetria'];	
+	$enlace    .= "&idTelemetria=".$_GET['idTelemetria'];
 }
 
 //Se consultan datos
@@ -111,7 +111,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 									$tiempo1     = $data['LastUpdateHora'];
 									$tiempo2     = $HoraSistema;
 									$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
-									
+
 									//Comparaciones de tiempo
 									$Time_Tiempo     = horas2segundos($Tiempo);
 									$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
@@ -122,11 +122,11 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 									if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 										$in_eq_fueralinea++;
 									}
-									
+
 									/**********************************************/
 									//NErrores
 									if(isset($data['NErrores'])&&$data['NErrores']>0){ $in_eq_alertas++; }
-									
+
 									/**********************************************/
 									//Equipos detenidos
 									if(isset($data['NDetenciones'])&&$data['NDetenciones']>0){ $in_eq_detenidos++; }
@@ -147,10 +147,10 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 										$eq_ok  = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 									}
 									?>
-									
-									<tr class="odd <?php echo $danger; ?>">		
+
+									<tr class="odd <?php echo $danger; ?>">
 										<td><?php echo $data['Nombre']; ?></td>
-										<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>		
+										<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>
 										<td>
 											<div class="btn-group" style="width: 35px;" >
 												<a href="<?php echo 'telemetria_gestion_flota_view_equipo.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
@@ -240,7 +240,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 								
 								var route=[];
 								var tmp;
-								
+
 								var routex = [ 
 								<?php foreach ( $arrRutas as $pos ) { ?>
 									['<?php echo $pos['idUbicaciones']; ?>', <?php echo $pos['Latitud']; ?>, <?php echo $pos['Longitud']; ?>], 					
@@ -280,7 +280,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 										//Los demas buses
 										hideMarkers('transMarkers');
 										deleteMarkers('transMarkers');
-										
+
 										for(var i in locations){
 											transporte = addMarker(icon_transMarker);
 											transporte.show().setPosition(new google.maps.LatLng(locations[i][1], locations[i][2]));	
@@ -292,8 +292,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 								mapax++;
 								if(mapax==3){mapax=1}
 							}
-							
-							
+
 							/* ************************************************************************** */
 						
 							/* ************************************************************************** */
@@ -313,7 +312,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 									}
 									
 									toRet=true;
-									
+
 									for (var a in markers[tmp]) callback(markers[tmp][a]);
 								}
 								
@@ -340,7 +339,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 								if (opt == undefined) return false;
 								
 								opt.map=map;
-								
+
 								var tmp=new google.maps.Marker(opt);
 								
 								if (opt.pos) tmp.setPosition(opt.pos);
@@ -360,7 +359,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 										google.maps.event.addListener(tmp,a,opt.events[a].bind(tmp));
 									}
 								}
-								
+
 								// Borrar, esconder y mostrar
 								tmp.delete=function(){
 									this.deleteInfo();
@@ -390,7 +389,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 								tmp.info=function(message,click,opt){
 									
 									opt=opt||{}
-									
+
 									var custom=click===true;
 									
 									click=typeof click=='function'?click:opt.click||function(){};
@@ -407,7 +406,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 								
 
 									this.infoWindowListener=google.maps.event.addListener(this, 'click', function () {
-										
+
 										if (activeInfoWindow) {
 											activeInfoWindow.close();
 										}
@@ -416,7 +415,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 										click.bind(this)();
 										
 										return this;
-										
+
 									}.bind(this));
 								}.bind(tmp);
 								
@@ -424,12 +423,12 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 									if (this.infoWindow) {
 										this.infoWindow.setMap(null);
 										delete this.infoWindow;
-										
+
 										google.maps.event.removeListener(this.infoWindowListener);
 										delete this.infoWindowListener;
 									}
 									return this;
-									
+
 								}.bind(tmp);
 								
 								tmp.click=function(){
@@ -439,12 +438,11 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 								return tmp;
 								
 							}
-							
-							
+
 							/* ************************************************************************** */
 							google.maps.event.addDomListener(window, "load", initialize());
 						</script>
-			
+
 					<?php } ?>
 				</div>
 			</div>
@@ -467,7 +465,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 } else {
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=1";	
+	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=1";
 }else{
 	//filtro
 	$z = "idTelemetria=0";
@@ -495,10 +493,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	foreach ($arrPermisos as $prod) {
 		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND id_Geo=2 AND idTelemetria={$prod['idTelemetria']})";
 	}
-	//$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=1";	
+	//$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=1";
 }	 
 ?>
-
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
@@ -527,7 +524,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						<div class="clearfix"></div>
 					</form>
 				</div>
-			
+
 			<?php widget_validator(); ?>
 			
         </div>
@@ -544,4 +541,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

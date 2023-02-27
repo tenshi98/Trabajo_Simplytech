@@ -43,7 +43,7 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idUsuarioCancel']))          $idUsuarioCancel         = $_POST['idUsuarioCancel'];
 	if (!empty($_POST['f_cancel']))                 $f_cancel                = $_POST['f_cancel'];
 	if (!empty($_POST['ObservacionesCancel']))      $ObservacionesCancel     = $_POST['ObservacionesCancel'];
-	
+
 	//Traspaso de valores input a variables
 	if (!empty($_POST['idTrabajoOT']))          $idTrabajoOT             = $_POST['idTrabajoOT'];
 	if (!empty($_POST['idEstadoTarea']))        $idEstadoTarea           = $_POST['idEstadoTarea'];
@@ -75,7 +75,7 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idLevel_24']))           $idLevel[24]             = $_POST['idLevel_24'];
 	if (!empty($_POST['idLevel_25']))           $idLevel[25]             = $_POST['idLevel_25'];
 	if (!empty($_POST['Observacion']))          $Observacion             = $_POST['Observacion'];
-	
+
 	//otros datos
 	if (!empty($_POST['idTrabajador']))         $idTrabajador            = $_POST['idTrabajador'];
 	if (!empty($_POST['idProducto']))           $idProducto              = $_POST['idProducto'];
@@ -194,7 +194,7 @@ require_once '0_validate_user_1.php';
 
 				//Condiciono la variable observaciones
 				if(empty($Observaciones)){ $Observaciones="Sin observaciones";}
-					
+
 				//Borro todas las sesiones
 				unset($_SESSION['ot_motivo_basicos']);
 				unset($_SESSION['ot_motivo_trabajador']);
@@ -223,7 +223,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idTrabajador)&&$idTrabajador!=''){$_SESSION['ot_motivo_trabajador'][$idTrabajador]['idTrabajador'] = $idTrabajador;}
 
 				/********************************************************************************/
-				if(isset($idUbicacion) && $idUbicacion!=''){ 
+				if(isset($idUbicacion) && $idUbicacion!=''){
 					$subquery = '';
 					if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1!=''){  $subquery .= ',(SELECT Nombre FROM `ubicacion_listado_level_1` WHERE idLevel_1 = '.$idUbicacion_lvl_1.') AS LVL1';}
 					if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2!=''){  $subquery .= ',(SELECT Nombre FROM `ubicacion_listado_level_2` WHERE idLevel_2 = '.$idUbicacion_lvl_2.') AS LVL2';}
@@ -313,7 +313,7 @@ require_once '0_validate_user_1.php';
 				
 				unset($_SESSION['ot_motivo_tareas']);
 				unset($_SESSION['ot_motivo_temporal']);
-				
+
 				if(isset($idUbicacion)&&$idUbicacion!=''){              $_SESSION['ot_motivo_basicos']['idUbicacion']       = $idUbicacion;       }else{$_SESSION['ot_motivo_basicos']['idUbicacion']        = '';}
 				if(isset($idUbicacion_lvl_1)&&$idUbicacion_lvl_1!=''){  $_SESSION['ot_motivo_basicos']['idUbicacion_lvl_1'] = $idUbicacion_lvl_1; }else{$_SESSION['ot_motivo_basicos']['idUbicacion_lvl_1']  = '';}
 				if(isset($idUbicacion_lvl_2)&&$idUbicacion_lvl_2!=''){  $_SESSION['ot_motivo_basicos']['idUbicacion_lvl_2'] = $idUbicacion_lvl_2; }else{$_SESSION['ot_motivo_basicos']['idUbicacion_lvl_2']  = '';}
@@ -330,7 +330,7 @@ require_once '0_validate_user_1.php';
 				if(isset($Observaciones)&&$Observaciones!=''){          $_SESSION['ot_motivo_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['ot_motivo_basicos']['Observaciones']      = '';}
 
 				/********************************************************************************/
-				if(isset($idUbicacion) && $idUbicacion!=''){ 
+				if(isset($idUbicacion) && $idUbicacion!=''){
 					$subquery = '';
 					if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1!=''){  $subquery .= ',(SELECT Nombre FROM `ubicacion_listado_level_1` WHERE idLevel_1 = '.$idUbicacion_lvl_1.') AS LVL1';}
 					if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2!=''){  $subquery .= ',(SELECT Nombre FROM `ubicacion_listado_level_2` WHERE idLevel_2 = '.$idUbicacion_lvl_2.') AS LVL2';}
@@ -388,7 +388,7 @@ require_once '0_validate_user_1.php';
 
 				// consulto los datos
 				$rowTrabajador = db_select_data (false, 'Nombre,ApellidoPat, ApellidoMat, Cargo, Rut', 'trabajadores_listado', '', 'idTrabajador ='.$idTrabajador, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 				//Se guarda el trabajador asignado
 				$_SESSION['ot_motivo_trabajador'][$idTrabajador]['idTrabajador'] = $idTrabajador;
 				$_SESSION['ot_motivo_trabajador'][$idTrabajador]['Trabajador']   = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
@@ -543,7 +543,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idLevel[25]) && $idLevel[25]!=''){ $_SESSION['ot_motivo_tareas'][$idInterno]['idLevel_25']    = $idLevel[25];}
 
 				/********************************************************************************/
-				if(isset($idLicitacion) && $idLicitacion!=''){ 
+				if(isset($idLicitacion) && $idLicitacion!=''){
 					$subquery = '';
 					if(isset($idLevel[1]) && $idLevel[1]!=''){    $subquery .= ',(SELECT Nombre FROM `licitacion_listado_level_1`  WHERE idLevel_1 = '.$idLevel[1].') AS LVL1';}
 					if(isset($idLevel[2]) && $idLevel[2]!=''){    $subquery .= ',(SELECT Nombre FROM `licitacion_listado_level_2`  WHERE idLevel_2 = '.$idLevel[2].') AS LVL2';}
@@ -570,7 +570,7 @@ require_once '0_validate_user_1.php';
 					if(isset($idLevel[23]) && $idLevel[23]!=''){  $subquery .= ',(SELECT Nombre FROM `licitacion_listado_level_23` WHERE idLevel_23 = '.$idLevel[23].') AS LVL23';}
 					if(isset($idLevel[24]) && $idLevel[24]!=''){  $subquery .= ',(SELECT Nombre FROM `licitacion_listado_level_24` WHERE idLevel_24 = '.$idLevel[24].') AS LVL24';}
 					if(isset($idLevel[25]) && $idLevel[25]!=''){  $subquery .= ',(SELECT Nombre FROM `licitacion_listado_level_25` WHERE idLevel_25 = '.$idLevel[25].') AS LVL25';}
-					
+
 					// consulto los datos
 					$rowLicitacion = db_select_data (false, 'Nombre'.$subquery, 'licitacion_listado', '', 'idLicitacion = '.$idLicitacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -680,7 +680,7 @@ require_once '0_validate_user_1.php';
 			if(isset($n_trabajos)&&$n_trabajos==0){
 				$error['trabajos'] = 'error/No tiene tareas asignados a la orden de trabajo';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -698,8 +698,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['ot_motivo_basicos']['idPrioridad']) && $_SESSION['ot_motivo_basicos']['idPrioridad']!=''){       $SIS_data .= ",'".$_SESSION['ot_motivo_basicos']['idPrioridad']."'";       }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['ot_motivo_basicos']['idTipo']) && $_SESSION['ot_motivo_basicos']['idTipo']!=''){                 $SIS_data .= ",'".$_SESSION['ot_motivo_basicos']['idTipo']."'";            }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['ot_motivo_basicos']['f_creacion']) && $_SESSION['ot_motivo_basicos']['f_creacion']!=''){         $SIS_data .= ",'".$_SESSION['ot_motivo_basicos']['f_creacion']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['ot_motivo_basicos']['f_programacion']) && $_SESSION['ot_motivo_basicos']['f_programacion']!=''){  
-					$SIS_data .= ",'".$_SESSION['ot_motivo_basicos']['f_programacion']."'";  
+				if(isset($_SESSION['ot_motivo_basicos']['f_programacion']) && $_SESSION['ot_motivo_basicos']['f_programacion']!=''){
+					$SIS_data .= ",'".$_SESSION['ot_motivo_basicos']['f_programacion']."'";
 					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['ot_motivo_basicos']['f_programacion'])."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['ot_motivo_basicos']['f_programacion'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['ot_motivo_basicos']['f_programacion'])."'";
@@ -773,7 +773,7 @@ require_once '0_validate_user_1.php';
 								if(isset($_SESSION['ot_motivo_basicos']['f_programacion']) && $_SESSION['ot_motivo_basicos']['f_programacion']!=''){ $SIS_data .= ",'".$_SESSION['ot_motivo_basicos']['f_programacion']."'";    }else{$SIS_data .= ",''";}
 								if(isset($insumos['idProducto']) && $insumos['idProducto']!=''){                                                     $SIS_data .= ",'".$insumos['idProducto']."'";   				              }else{$SIS_data .= ",''";}
 								if(isset($insumos['Cantidad']) && $insumos['Cantidad']!=''){                                                         $SIS_data .= ",'".$insumos['Cantidad']."'";                                }else{$SIS_data .= ",''";}
-								
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idOT, idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, 
 								idUbicacion_lvl_5, idUsuario, idEstado, idPrioridad, idTipo, f_creacion, f_programacion, 
@@ -807,7 +807,7 @@ require_once '0_validate_user_1.php';
 								if(isset($_SESSION['ot_motivo_basicos']['f_programacion']) && $_SESSION['ot_motivo_basicos']['f_programacion']!=''){ $SIS_data .= ",'".$_SESSION['ot_motivo_basicos']['f_programacion']."'";    }else{$SIS_data .= ",''";}
 								if(isset($prod['idProducto']) && $prod['idProducto']!=''){                                                           $SIS_data .= ",'".$prod['idProducto']."'";   				              }else{$SIS_data .= ",''";}
 								if(isset($prod['Cantidad']) && $prod['Cantidad']!=''){                                                               $SIS_data .= ",'".$prod['Cantidad']."'";                                   }else{$SIS_data .= ",''";}
-								
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idOT, idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, 
 								idUbicacion_lvl_5, idUsuario, idEstado, idPrioridad, idTipo, f_creacion, f_programacion, 
@@ -867,7 +867,7 @@ require_once '0_validate_user_1.php';
 								if(isset($trabajos['idLevel_24']) && $trabajos['idLevel_24']!=''){                                                   $SIS_data .= ",'".$trabajos['idLevel_24']."'";                             }else{$SIS_data .= ",''";}
 								if(isset($trabajos['idLevel_25']) && $trabajos['idLevel_25']!=''){                                                   $SIS_data .= ",'".$trabajos['idLevel_25']."'";                             }else{$SIS_data .= ",''";}
 								if(isset($trabajos['Observacion']) && $trabajos['Observacion']!=''){                                                 $SIS_data .= ",'".$trabajos['Observacion']."'";                            }else{$SIS_data .= ",''";}
-								
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idOT, idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, 
 								idUbicacion_lvl_5, idUsuario, idEstado, idPrioridad, idTipo, f_creacion, f_programacion, 
@@ -911,7 +911,6 @@ require_once '0_validate_user_1.php';
 				}
 
 			}
-	
 
 		break;
 /*******************************************************************************************************************/
@@ -993,7 +992,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'clone':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -1028,8 +1027,8 @@ require_once '0_validate_user_1.php';
 				if(isset($rowdata['idPrioridad']) && $rowdata['idPrioridad']!=''){       $SIS_data .= ",'".$rowdata['idPrioridad']."'";         }else{$SIS_data .= ",''";}
 				if(isset($rowdata['idTipo']) && $rowdata['idTipo']!= ''){                         $SIS_data .= ",'".$rowdata['idTipo']."'";              }else{$SIS_data .= ",''";}
 				if(isset($f_creacion) && $f_creacion!=''){                                      $SIS_data .= ",'".$f_creacion."'";                     }else{$SIS_data .= ",''";}
-				if(isset($f_programacion) && $f_programacion!=''){  
-					$SIS_data .= ",'".$f_programacion."'";  
+				if(isset($f_programacion) && $f_programacion!=''){
+					$SIS_data .= ",'".$f_programacion."'";
 					$SIS_data .= ",'".fecha2NdiaMes($f_programacion)."'";
 					$SIS_data .= ",'".fecha2NSemana($f_programacion)."'";
 					$SIS_data .= ",'".fecha2NMes($f_programacion)."'";
@@ -1144,7 +1143,7 @@ require_once '0_validate_user_1.php';
 					/*********************************************************************/
 					//Se guarda en historial la accion
 					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
-					$SIS_data .= ",'".$f_creacion."'";  
+					$SIS_data .= ",'".$f_creacion."'";
 					$SIS_data .= ",'1'";                                                                        //Creacion Satisfactoria
 					$SIS_data .= ",'OT N°".n_doc($ultimo_id, 8)." clonada desde la OT N°".n_doc($idOT, 8)."'";  //Observacion
 					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";                      //idUsuario
@@ -1161,7 +1160,6 @@ require_once '0_validate_user_1.php';
 					}
 				}
 			}
-	
 
 		break;
 /*******************************************************************************************************************/
@@ -2695,7 +2693,7 @@ require_once '0_validate_user_1.php';
 			/********************************************************************/
 			//Verifico errores en los archivos
 			foreach($_FILES["NombreArchivo"]["tmp_name"] as $key=>$tmp_name){
-				if ($_FILES["NombreArchivo"]["error"][$key] > 0){ 
+				if ($_FILES["NombreArchivo"]["error"][$key] > 0){
 					$error['NombreArchivo'] = 'error/'.uploadPHPError($_FILES["NombreArchivo"]["error"][$key]); 
 				}
 				if (in_array($_FILES['NombreArchivo']['type'][$key], $permitidos) && $_FILES['NombreArchivo']['size'][$key] <= $limite_kb * 1024){
@@ -2709,14 +2707,14 @@ require_once '0_validate_user_1.php';
 					$error['NombreArchivo']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
 				}
 			}
-			
+
 			/********************************************************************/
 			if(empty($error)){
 								
 				//Verifico errores en los archivos
 				foreach($_FILES["NombreArchivo"]["tmp_name"] as $key=>$tmp_name){
-					if ($_FILES["NombreArchivo"]["error"][$key] > 0){ 
-						$error['NombreArchivo']  = 'error/'.uploadPHPError($_FILES["NombreArchivo"]["error"][$key]); 
+					if ($_FILES["NombreArchivo"]["error"][$key] > 0){
+						$error['NombreArchivo']  = 'error/'.uploadPHPError($_FILES["NombreArchivo"]["error"][$key]);
 					}
 					if (in_array($_FILES['NombreArchivo']['type'][$key], $permitidos) && $_FILES['NombreArchivo']['size'][$key] <= $limite_kb * 1024){
 						//Se especifica carpeta de destino
@@ -2746,7 +2744,7 @@ require_once '0_validate_user_1.php';
 								if(isset($f_programacion) && $f_programacion!=''){        $SIS_data .= ",'".$f_programacion."'";      }else{$SIS_data .= ",''";}
 								if(isset($idTrabajoOT) && $idTrabajoOT!=''){              $SIS_data .= ",'".$idTrabajoOT."'";         }else{$SIS_data .= ",''";}
 								if(isset($NombreArchivo) && $NombreArchivo!=''){          $SIS_data .= ",'".$NombreArchivo."'";       }else{$SIS_data .= ",''";}
-								
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idOT,idSistema,idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, 
 								idUbicacion_lvl_5,idUsuario, idEstado,idPrioridad,idTipo,f_creacion,f_programacion,

@@ -41,7 +41,7 @@
 					</div>
 				</div>
 			</div>
-			
+
 			<table class="table table-bordered">
 				<thead>
 					<tr>
@@ -62,18 +62,18 @@
 								
 					<tr>
 						<td>Cargo Fijo Cliente</td>
-						<td align="right"><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteUnidadHabitacional'];?></td>
-						<td align="right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleCargoFijoValor'], 0);?></td>
+						<td align="right"><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteUnidadHabitacional']; ?></td>
+						<td align="right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleCargoFijoValor'], 0); ?></td>
 					</tr>
 					<tr>
 						<td>Consumo Agua Potable</td>
-						<td align="right"><?php echo Cantidades($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleConsumoCantidad'], $ndecim);?></td>
-						<td align="right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleConsumoValor'], 0);?></td>
+						<td align="right"><?php echo Cantidades($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleConsumoCantidad'], $ndecim); ?></td>
+						<td align="right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleConsumoValor'], 0); ?></td>
 					</tr>
 					<tr>
 						<td>Recoleccion de Aguas Servidas</td>
-						<td align="right"><?php echo Cantidades($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleRecoleccionCantidad'], $ndecim);?></td>
-						<td align="right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleRecoleccionValor'], 0);?></td>
+						<td align="right"><?php echo Cantidades($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleRecoleccionCantidad'], $ndecim); ?></td>
+						<td align="right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleRecoleccionValor'], 0); ?></td>
 					</tr>
 					<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleVisitaCorte'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleVisitaCorte']!=0){?>
 						<tr>
@@ -121,8 +121,8 @@
 							<td align="right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleInteresDeuda'], 0)?></td>
 						</tr>
 					<?php } ?>
-					
-					<?php 
+
+					<?php
 					//Otros Cargos 1
 					if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos1Valor'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos1Valor']!=0){?>
 						<tr>
@@ -167,7 +167,7 @@
 						<td colspan="2"><strong>TOTAL VENTA</strong></td>
 						<td align="right"><strong><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleTotalVenta'], 0); ?></strong></td>
 					</tr>
-					<?php 
+					<?php
 					//variable exento
 					$Exento = 0;
 					if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleSaldoFavor'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleSaldoFavor']!=0){
@@ -186,9 +186,7 @@
 							<td align="right"><?php echo '(+) '.Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleSaldoAnterior'], 0)?></td>
 						</tr>
 					<?php } ?>
-					
-					
-					
+
 				</tbody>
 			</table>
 			<div class="row text-right" style="margin-top:20px;">
@@ -263,7 +261,7 @@
 											$mes_anterior = Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesAnteriorFecha']);
 										}else{
 											$mes_anterior = 'Sin datos';
-										}?>
+										} ?>
 										<div class="pull-left">Lectura Mes anterior <?php echo '('.$mes_anterior.')'; ?></div>
 										<small class="pull-right"><?php echo valores_truncados($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesAnteriorCantidad']) ?> m3</small>
 										
@@ -273,7 +271,7 @@
 											$mes_actual = Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesActualFecha']);
 										}else{
 											$mes_actual = 'Sin datos';
-										}?>
+										} ?>
 										<div class="pull-left">Lectura Mes actual <?php echo '('.$mes_actual.')'; ?></div>
 										<small class="pull-right"><?php echo valores_truncados($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesActualCantidad']) ?> m3</small>
 										
@@ -295,7 +293,7 @@
 												}else{
 													$bla = '(+) 0';
 												}
-												echo $bla.' m3';?>
+												echo $bla.' m3'; ?>
 											</small>	
 										<?php } ?>
 										
@@ -303,20 +301,20 @@
 										<div class="pull-left">Consumo Mes Total</div>
 										<small class="pull-right"><?php echo Cantidades($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesTotalCantidad'], $ndecim) ?> m3</small>
 									</p>
-									
+
 									<div class="clearfix"></div>
 
 									<p>
 										<div class="pull-left">Proxima lectura estimada</div>
-										<small class="pull-right"><?php echo Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsFechaProxLectura']);?></small>
+										<small class="pull-right"><?php echo Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsFechaProxLectura']); ?></small>
 										<?php
 										//verificacion de remarcador
 										if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['idTipoMedicion'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['idTipoMedicion']!=''&&$_SESSION['Facturacion_clientes'][$X_Puntero]['idTipoMedicion']!=0){?>
 										<br/>
-										<div class="pull-left">Modalidad de prorrateo: <?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsModalidad'];?></div>
+										<div class="pull-left">Modalidad de prorrateo: <?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsModalidad']; ?></div>
 										<?php } ?>
 									</p>
-									
+
 									<div class="clearfix"></div>
 
 									<p>
@@ -330,9 +328,9 @@
 								</div>
 							</div>
 						</div>
-						
+
 					</div>
-					
+
 				</div>
 				<div class="col-xs-6">
 					<div class="panel panel-default">
@@ -346,31 +344,31 @@
 								<br/>
 								<div class="pull-left">Cargo fijo</div>
 								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfCargoFijo'], 0)?></small>
-								
+
 								<br/>
 								<div class="pull-left">Metro cubico agua potable</div>
 								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfMetroAgua'], 2)?></small>
-								
+
 								<br/>
 								<div class="pull-left">Metro cubico recoleccion</div>
 								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfMetroRecolecion'], 2)?></small>
-								
+
 								<br/>
 								<div class="pull-left">Visita corte</div>
 								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfVisitaCorte'], 0)?></small>
-								
+
 								<br/>
 								<div class="pull-left">Corte 1° instancia</div>
 								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfCorte1'], 0)?></small>
-								
+
 								<br/>
 								<div class="pull-left">Corte 2° instancia</div>
 								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfCorte2'], 0)?></small>
-								
+
 								<br/>
 								<div class="pull-left">Reposicion 1° instancia</div>
 								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfReposicion1'], 0)?></small>
-								
+
 								<br/>
 								<div class="pull-left">Reposicion 2° instancia</div>
 								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfReposicion2'], 0)?></small>
@@ -378,11 +376,11 @@
 							</p>
 
 							<div class="clearfix"></div>
-							
+
 							<p>
 								<div class="pull-left">Factor de cobro del periodo</div>
 								<small class="pull-right"><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfFactorCobro'] ?></small>
-								
+
 								<?php
 								//verificacion de remarcador
 								if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['idTipoMedicion'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['idTipoMedicion']!=''&&$_SESSION['Facturacion_clientes'][$X_Puntero]['idTipoMedicion']!=0){?>
@@ -397,41 +395,41 @@
 										}else{
 											$bla = '(+)0';
 										}
-										echo $bla.' m3';?>
+										echo $bla.' m3'; ?>
 									</small>
-									
+
 									<br/>
 									<div class="pull-left">Porcentaje Prorrateo</div>
 									<small class="pull-right"><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfProcProrrateo'] ?> %</small>	
 								<?php } ?>
-										
+
 								<br/>
 								<div class="pull-left">Punto servicio diametro</div>
 								<small class="pull-right"><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfTipoMedicion'].' '.$_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfPuntoDiametro'].'mm' ?></small>
-								
+
 								<br/>
 								<div class="pull-left">Clave facturacion</div>
 								<small class="pull-right"><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfClaveFacturacion'] ?></small>
-								
+
 								<br/>
 								<div class="pull-left">Clave Lectura</div>
 								<small class="pull-right"><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfClaveLectura'] ?></small>
-								
+
 								<br/>
 								<div class="pull-left">Numero medidor</div>
 								<small class="pull-right"><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfNumeroMedidor'] ?></small>
 							</p>
-							
+
 							<div class="clearfix"></div>
 							
 				
 							<p>
 								<div class="pull-left">Tarifas publicadas la nacion</div>
 								<small class="pull-right">26-05-2017</small>
-								
+
 								<br/>	
 								<div class="pull-left">Fecha emision</div>
-								<small class="pull-right"><?php echo Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfFechaEmision']);?></small>
+								<small class="pull-right"><?php echo Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfFechaEmision']); ?></small>
 
 								<br/>	
 								<div class="pull-left">Ultimo pago</div>
@@ -441,12 +439,12 @@
 										echo Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfUltimoPagoFecha']);
 									}else{
 										echo 'Sin datos';
-									}?>
+									} ?>
 								</small>
-								
+
 								<br/>	
 								<div class="pull-left">Considera movimientos hasta</div>
-								<small class="pull-right"><?php echo Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfMovimientosHasta']);?></small>
+								<small class="pull-right"><?php echo Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfMovimientosHasta']); ?></small>
 							</p>	
 							<div class="clearfix"></div>
 						</div>

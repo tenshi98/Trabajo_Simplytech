@@ -181,7 +181,7 @@ echo widget_Ficha_11('bgx-white', 'bgx-themeprimary',    'color2-themeprimary', 
 echo widget_Ficha_11('bgx-white', 'bgx-themesecondary',    'color2-themesecondary',    'bgx-themesecondary', 2, 50, 28, 'NEW TASKS', 'fa-check');
 echo widget_Ficha_11('bgx-white', 'bgx-themethirdcolor',    'color2-themethirdcolor',    'bgx-themethirdcolor', 2, 50, 28, 'NEW TASKS', 'fa-check');
 echo widget_Ficha_11('bgx-white', 'bgx-themefourthcolor',    'color2-themefourthcolor',    'bgx-themefourthcolor', 2, 50, 28, 'NEW TASKS', 'fa-check');
-						
+
 ?>
 
 
@@ -212,7 +212,7 @@ echo widget_Ficha_11('bgx-white', 'bgx-themefourthcolor',    'color2-themefourth
 			animate: 1500
 		});
 	});
-	
+
 </script>
 
 
@@ -222,4 +222,5 @@ echo widget_Ficha_11('bgx-white', 'bgx-themefourthcolor',    'color2-themefourth
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

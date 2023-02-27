@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -49,7 +49,6 @@ $arrPuntos = array();
 $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ubicaciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPuntos');
 
 ?>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -70,7 +69,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 							<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
 							<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 							<script>
-								
+
 								var map;
 								var marker;
 								/* ************************************************************************** */
@@ -91,7 +90,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 								}
 								/* ************************************************************************** */
 								function dibuja_zona() {
-									
+
 									var triangleCoords = [
 										<?php 
 										//Variables con la primera posicion
@@ -130,7 +129,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 									if(isset($Latitud_z_prom)&&$Latitud_z_prom!=0&&isset($Longitud_z_prom)&&$Longitud_z_prom!=0){
 										echo 'myLatlng = new google.maps.LatLng('.$Latitud_z_prom.', '.$Longitud_z_prom.');
 											map.setCenter(myLatlng);'; 
-									}?>
+									} ?>
 									
 										// Construct the polygon.
 										var bermudaTriangle = new google.maps.Polygon({
@@ -161,7 +160,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 								<th>Ubicacion</th>
 							</tr>
 							</thead>
-											  
+
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<?php 
 							$nx=1;
@@ -177,13 +176,12 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 						</table>
 					</div>
 				</div>
-				
+
 			</div>
 		</div>
         
 	</div>
 </div>
-
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
@@ -197,7 +195,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -207,14 +205,14 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

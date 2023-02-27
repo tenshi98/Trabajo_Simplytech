@@ -51,6 +51,7 @@ $SIS_where.= " AND bodegas_insumos_facturacion_existencias.Cantidad_ing=0 AND bo
 $SIS_where.= " GROUP BY bodegas_insumos_facturacion_existencias.Creacion_ano, bodegas_insumos_facturacion_existencias.Creacion_mes, insumos_listado.idCategoria";
 
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 bodegas_insumos_facturacion_existencias.Creacion_ano,
 bodegas_insumos_facturacion_existencias.Creacion_mes,
@@ -79,7 +80,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$graficoMain[$xcontador]['mes'] = $xmes;
 		$graficoMain[$xcontador]['año'] = $xaño;
 		
-		foreach ($arrCategoria as $cat) { 
+		foreach ($arrCategoria as $cat) {
 			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $graficoMain[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']];}else{$graficoMain[$xcontador][$cat['idCategoria']] = 0;};
 		}
 									
@@ -89,7 +90,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$graficoMain[$xcontador]['mes'] = $xmes;
 		$graficoMain[$xcontador]['año'] = $xaño;
 		
-		foreach ($arrCategoria as $cat) { 
+		foreach ($arrCategoria as $cat) {
 			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $graficoMain[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']];}else{$graficoMain[$xcontador][$cat['idCategoria']] = 0;};
 		}	
 	}
@@ -108,6 +109,7 @@ $SIS_where.= " AND bodegas_insumos_facturacion_existencias.Cantidad_ing!=0 AND b
 $SIS_where.= " GROUP BY bodegas_insumos_facturacion.idBodegaDestino, bodegas_insumos_facturacion_existencias.Creacion_ano, bodegas_insumos_facturacion_existencias.Creacion_mes, insumos_listado.idCategoria";
 
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 bodegas_insumos_facturacion_existencias.Creacion_ano,
 bodegas_insumos_facturacion_existencias.Creacion_mes,
@@ -143,7 +145,7 @@ foreach ($arrBodega as $bod) {
 			$grafico[$bod['idBodega']][$xcontador]['mes'] = $xmes;
 			$grafico[$bod['idBodega']][$xcontador]['año'] = $xaño;
 
-			foreach ($arrCategoria as $cat) { 
+			foreach ($arrCategoria as $cat) {
 				if(isset($mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']])){ $grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = $mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']];}else{$grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = 0;};
 			}
 										
@@ -152,12 +154,12 @@ foreach ($arrBodega as $bod) {
 			$xaño = $xaño-1;
 			$grafico[$bod['idBodega']][$xcontador]['mes'] = $xmes;
 			$grafico[$bod['idBodega']][$xcontador]['año'] = $xaño;
-			
-			foreach ($arrCategoria as $cat) { 
+
+			foreach ($arrCategoria as $cat) {
 				if(isset($mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']])){ $grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = $mes[$bod['idBodega']][$xaño][$xmes][$cat['idCategoria']];}else{$grafico[$bod['idBodega']][$xcontador][$cat['idCategoria']] = 0;};
 			}
 		}
-		$xmes = $xmes-1;								
+		$xmes = $xmes-1;
 	}
 }
 
@@ -176,10 +178,10 @@ $spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-          
+
 //Numero de hoja
 $sheet = 0;
-            
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex($sheet)
             ->setCellValue('A1', 'Categoria')
@@ -196,7 +198,7 @@ $spreadsheet->setActiveSheetIndex($sheet)
 			->setCellValue('L1', numero_a_mes_corto($graficoMain[11]['mes']))
 			->setCellValue('M1', numero_a_mes_corto($graficoMain[12]['mes']))
 			->setCellValue('N1', 'SubTotal');
-            
+
 $nn=2;
 //Variables
 $Total        = 0;
@@ -291,10 +293,10 @@ $spreadsheet->getActiveSheet()->setTitle(cortar('Egresos de '.$rowBodega['Nombre
 $sheet++;
 filtrar($arrExistencias, 'BodegaNombre');
 foreach($arrExistencias as $empresa=>$datos) {
-	
+
 	//Se crea nueva hoja
 	$spreadsheet->createSheet();
-		
+
 	//Titulo columnas
 	$spreadsheet->setActiveSheetIndex($sheet)
 				->setCellValue('A1', 'Categoria')

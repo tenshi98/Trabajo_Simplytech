@@ -94,7 +94,6 @@ $arrTracxCuartel = db_select_array (false, $SIS_query, 'cross_solicitud_aplicaci
 							
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -164,7 +163,7 @@ $arrTracxCuartel = db_select_array (false, $SIS_query, 'cross_solicitud_aplicaci
 									}
 									?>	
 								</td>
-										
+
 								<td>
 									<div class="btn-group" style="width: 70px;" >
 										<a href="<?php echo 'view_solicitud_aplicacion_finalizada.php?view='.simpleEncode($temp['idSolicitud'], fecha_actual()).'&idZona='.simpleEncode($temp['idZona'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Cuartel Cerrado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
@@ -237,7 +236,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Predio','idPredio', $x1, 2, 'idPredio', 'Nombre', 'cross_predios_listado', $x, 0,
-										 'Cuarteles','idZona', $x2, 2, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0, 
+										 'Cuarteles','idZona', $x2, 2, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select_filter('Temporada','idTemporada', $x3, 2, 'idTemporada', 'Codigo,Nombre', 'cross_checking_temporada', $y, '', $dbConn);
 				$Form_Inputs->form_select('Estado','idEstado', $x4, 1, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
@@ -247,7 +246,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_date('Fecha Ejecutada Hasta','f_ejecucion_hasta', $x8, 1);
 				$Form_Inputs->form_date('Fecha Terminada Desde','f_termino_desde', $x9, 1);
 				$Form_Inputs->form_date('Fecha Terminada Hasta','f_termino_hasta', $x10, 1);
-						
+
 				?>
 
 				<div class="form-group">
@@ -266,4 +265,5 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

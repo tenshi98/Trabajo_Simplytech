@@ -26,7 +26,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -159,7 +159,7 @@ $html .= '
 					$html .= '<br/>
 				</address>
 			</div>
-				
+
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 				Fecha Creacion
 				<address>
@@ -227,7 +227,7 @@ $html .= '
 						$html .= '
 					</tbody>
 				</table>
-				
+
 			</div>
 		</div>
 
@@ -244,4 +244,5 @@ echo $html;
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Print.php';
+
 ?>

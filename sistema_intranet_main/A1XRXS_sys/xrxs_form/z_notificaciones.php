@@ -285,10 +285,10 @@ require_once '0_validate_user_1.php';
 					if(isset($_GET['idComuna']) && $_GET['idComuna'] != '')  {          $w .= " AND usuarios_listado.idComuna = '".$_GET['idComuna']."'";}
 					if(isset($_GET['Direccion']) && $_GET['Direccion'] != '')  {        $z .= " AND usuarios_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";}
 					if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {        $z .= " AND usuarios_sistemas.idSistema = '".$_GET['idSistema']."'";}
-					if(isset($_GET['rango_a']) && $_GET['rango_a'] != ''&&isset($_GET['rango_b']) && $_GET['rango_b']!=''){ 
+					if(isset($_GET['rango_a']) && $_GET['rango_a'] != ''&&isset($_GET['rango_b']) && $_GET['rango_b']!=''){
 						$z .= " AND usuarios_listado.fNacimiento BETWEEN '".$_GET['rango_a']."' AND '".$_GET['rango_b']."'";
 					}
-					
+
 					$arrPermiso = array();
 					$arrPermiso = db_select_array (false, 'usuarios_listado.idUsuario', 'usuarios_listado', 'LEFT JOIN `usuarios_sistemas` ON usuarios_sistemas.idUsuario = usuarios_listado.idUsuario', $z.' GROUP BY usuarios_listado.idUsuario', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 

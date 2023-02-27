@@ -116,7 +116,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sistema_aprobador_oc', $SIS_join,
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idUsuario)){     $x1  = $idUsuario;   }else{$x1  = '';}
@@ -140,7 +140,6 @@ $rowdata = db_select_data (false, $SIS_query, 'sistema_aprobador_oc', $SIS_join,
 	</div>
 </div>
 
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos
@@ -162,13 +161,12 @@ $arrAprobador = db_select_array (false, $SIS_query, 'sistema_aprobador_oc', $SIS
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Aprobador OC');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Aprobador OC'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Aprobador</a>
 	</div>
 </div>
 <div class="clearfix"></div>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -191,7 +189,7 @@ $arrAprobador = db_select_array (false, $SIS_query, 'sistema_aprobador_oc', $SIS
 						<li class=""><a href="<?php echo 'core_sistemas_crosstech.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >CrossTech</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_crossenergy.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >CrossEnergy</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_social.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -211,9 +209,9 @@ $arrAprobador = db_select_array (false, $SIS_query, 'sistema_aprobador_oc', $SIS
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$apro['idAprobador']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($apro['idAprobador'], fecha_actual());
-								$dialogo   = '¿Realmente deseas eliminar al aprobador '.$apro['nombre_usuario'].'?';?>
+								$dialogo   = '¿Realmente deseas eliminar al aprobador '.$apro['nombre_usuario'].'?'; ?>
 								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
@@ -227,8 +225,8 @@ $arrAprobador = db_select_array (false, $SIS_query, 'sistema_aprobador_oc', $SIS
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -237,4 +235,5 @@ $arrAprobador = db_select_array (false, $SIS_query, 'sistema_aprobador_oc', $SIS
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

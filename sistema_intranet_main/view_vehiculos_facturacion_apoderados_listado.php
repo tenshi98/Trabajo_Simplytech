@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -144,8 +144,8 @@ $arrDetalle = db_select_array (false, $SIS_query, 'vehiculos_facturacion_apodera
 					</tr>
 				</thead>
 				<tbody>
-					
-					<?php 
+
+					<?php
 					//Variables
 					$t_total = 0;
 					//recorro
@@ -158,7 +158,7 @@ $arrDetalle = db_select_array (false, $SIS_query, 'vehiculos_facturacion_apodera
 								//si esta pagado
 								if(isset($det['idEstadoPago'])&&$det['idEstadoPago']==2){
 									echo ' (Documento Pago '.$det['DocumentoPago'].' N°'.$det['DocumentoNumero'].', fecha '.fecha_estandar($det['DocumentoFecha']).')'; 
-								}?>
+								} ?>
 							</td>
 							<td align="right"><?php echo Valores($det['Monto'], 0);$t_total=$t_total+$det['Monto']; ?></td>
 						</tr>
@@ -174,9 +174,7 @@ $arrDetalle = db_select_array (false, $SIS_query, 'vehiculos_facturacion_apodera
 						<td colspan="3"><strong>Total</strong></td>
 						<td align="right"><strong><?php echo Valores($t_total, 0); ?></strong></td>
 					</tr>
-					
-					
-					
+
 				</tbody>
 			</table>
 		
@@ -185,14 +183,13 @@ $arrDetalle = db_select_array (false, $SIS_query, 'vehiculos_facturacion_apodera
 			<div class="col-xs-12">
 				<div class="row">
 					<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-					<p class="text-muted well well-sm no-shadow" ><?php echo $rowDatos['Observaciones'];?></p>
+					<p class="text-muted well well-sm no-shadow" ><?php echo $rowDatos['Observaciones']; ?></p>
 				</div>
 			</div>
 	
 	
 		</div>
 	</div>
-
 
 </div>
 
@@ -211,7 +208,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -221,7 +218,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -230,4 +227,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

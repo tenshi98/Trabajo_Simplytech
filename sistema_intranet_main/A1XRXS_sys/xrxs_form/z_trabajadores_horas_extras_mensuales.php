@@ -72,7 +72,7 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-	
+
 		case 'new_ingreso':
 
 			//Se elimina la restriccion del sql 5.7
@@ -117,7 +117,7 @@ require_once '0_validate_user_1.php';
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
@@ -148,7 +148,7 @@ require_once '0_validate_user_1.php';
 			}
 			unset($_SESSION['horas_extras_mens_ing_archivos']);
 
-			
+			//redirijo
 			header( 'Location: '.$location );
 			die;
 
@@ -260,7 +260,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -391,7 +391,7 @@ require_once '0_validate_user_1.php';
 			if(isset($n_data1)&&$n_data1==0){
 				$error['trabajos'] = 'error/No se han asignado horas extras';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -400,8 +400,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['horas_extras_mens_ing_basicos']['idSistema']) && $_SESSION['horas_extras_mens_ing_basicos']['idSistema']!=''){     $SIS_data  = "'".$_SESSION['horas_extras_mens_ing_basicos']['idSistema']."'";   }else{$SIS_data  = "''";}
 				if(isset($_SESSION['horas_extras_mens_ing_basicos']['idUsuario']) && $_SESSION['horas_extras_mens_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['horas_extras_mens_ing_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['horas_extras_mens_ing_basicos']['fecha_auto']) && $_SESSION['horas_extras_mens_ing_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['horas_extras_mens_ing_basicos']['fecha_auto']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']) && $_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']) && $_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha'])."'";
@@ -456,7 +456,7 @@ require_once '0_validate_user_1.php';
 									$SIS_columns = 'idFacturacion, idSistema, idUsuario, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, Ano, idMes, idTrabajador,
 									N_Horas, idPorcentaje, idUso';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_horas_extras_mensuales_facturacion_horas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 							}
 						}
@@ -472,8 +472,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['horas_extras_mens_ing_basicos']['idSistema']) && $_SESSION['horas_extras_mens_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['horas_extras_mens_ing_basicos']['idSistema']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['horas_extras_mens_ing_basicos']['idUsuario']) && $_SESSION['horas_extras_mens_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['horas_extras_mens_ing_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['horas_extras_mens_ing_basicos']['fecha_auto']) && $_SESSION['horas_extras_mens_ing_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['horas_extras_mens_ing_basicos']['fecha_auto']."'"; }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']) && $_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']) && $_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -499,13 +499,12 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['horas_extras_mens_ing_horas']);
 					unset($_SESSION['horas_extras_mens_ing_temporal']);
 					unset($_SESSION['horas_extras_mens_ing_archivos']);
-					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
 
 			}
-	
 
 		break;
 

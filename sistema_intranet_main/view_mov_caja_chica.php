@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -149,7 +149,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<?php
 		//se verifica el tipo de movimiento
 		switch ($row_data['idTipo']) {
@@ -169,7 +169,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 				</div>
 
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
-					
+
 				</div>';
 
 				break;
@@ -231,8 +231,8 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 				</div>';
 				
 				break;
-		}?>
-		
+		} ?>
+
 	</div>
 
 	<div class="">
@@ -250,7 +250,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 						<tr class="active"><td colspan="3"><strong>Rendiciones</strong></td></tr>
 						<?php foreach ($arrRendiciones as $prod) {?>
 							<tr>
-								<td><?php echo $prod['Item'];?></td>
+								<td><?php echo $prod['Item']; ?></td>
 								<?php 
 								if(isset($row_data['idTipo'])&&$row_data['idTipo']==1){
 									echo '<td align="right">'.Valores($prod['Valor'], 0).'</td>';
@@ -258,11 +258,11 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 								}else{
 									echo '<td align="right"></td>';
 									echo '<td align="right">'.Valores($prod['Valor'], 0).'</td>';
-								}?>
+								} ?>
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					
+
 					<?php if ($arrDocumentos!=false && !empty($arrDocumentos) && $arrDocumentos!='') { ?>
 						<tr class="active"><td colspan="3"><strong>Montos</strong></td></tr>
 						<?php foreach ($arrDocumentos as $prod) {?>
@@ -282,14 +282,14 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 								}else{
 									echo '<td align="right"></td>';
 									echo '<td align="right">'.Valores($prod['Valor'], 0).'</td>';
-								}?>
+								} ?>
 							</tr>
 						<?php } ?>
 					<?php } ?>
-					
+
 					<?php if(isset($row_data['Valor'])&&$row_data['Valor']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td align="right"><strong>Total</strong></td> 
+							<td align="right"><strong>Total</strong></td>
 							<?php 
 							if(isset($row_data['idTipo'])&&$row_data['idTipo']==1){
 								echo '<td align="right">'.Valores($row_data['Valor'], 0).'</td>';
@@ -297,7 +297,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 							}else{
 								echo '<td align="right"></td>';
 								echo '<td align="right">'.Valores($row_data['Valor'], 0).'</td>';
-							}?>
+							} ?>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -309,7 +309,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
 		</div>
 	</div>
 
@@ -323,7 +323,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 	<?php }
 	//Si es una rendicion
 	if($row_data['idTipo']==3&&isset($row_data['idSolicitado'])&&$row_data['idSolicitado']!=''&&isset($row_data['idRevisado'])&&$row_data['idRevisado']!=''&&isset($row_data['idAprobado'])&&$row_data['idAprobado']!=''){?>
-		
+
 		<div class="row firma">
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 fcont"><p>Solicitado Por:<br/><?php echo $row_data['SolicitadoNombre'].' '.$row_data['SolicitadoApellidoPat']; ?><br/>Firma</p></div>
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 fcont"><p>Revisado Por:<br/><?php echo $row_data['RevisadoNombre'].' '.$row_data['RevisadoApellidoPat']; ?><br/>Firma</p></div>
@@ -408,7 +408,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -418,7 +418,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -427,4 +427,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -65,7 +65,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Medicion borrada corre
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['view_facturacion'])){ 
+if(!empty($_GET['view_facturacion'])){
 //Obtengo los datos principales
 $query = "SELECT 
 aguas_facturacion_listado.Fecha,
@@ -169,11 +169,11 @@ array_push( $arrFacturacion,$row );
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td><?php echo Fecha_estandar($rowdata['Fecha']);?></td>
+						<td><?php echo Fecha_estandar($rowdata['Fecha']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td><?php echo Fecha_estandar($rowdata['fCreacion']);?></td>
+						<td><?php echo Fecha_estandar($rowdata['fCreacion']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -223,7 +223,7 @@ array_push( $arrFacturacion,$row );
 			
 
 				<tr>
-					<td colspan="6" class="blank"> 
+					<td colspan="6" class="blank">
 						<p>
 							<?php echo $rowdata['Observaciones']; ?>
 						</p>
@@ -247,25 +247,25 @@ array_push( $arrFacturacion,$row );
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px; margin-top:30px">
 <a href="<?php echo $location; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
-</div>	
-	
+</div>
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['view'])){ ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
 
-		<?php 
+		<?php
 		$ubicacion = $location.'&clear_all=true';
-		$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+		$dialogo   = '¿Realmente deseas eliminar todos los registros?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger dialogBox"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
 
 		<a href="<?php echo $location; ?>"  class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
-		<?php 		
+		<?php
 		$ubicacion = $location.'&view=true&ing_doc=true';
-		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?';?>
-		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
+		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?'; ?>
+		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>
 
 	</div>
 	<div class="clearfix"></div>
@@ -304,11 +304,11 @@ array_push( $arrFacturacion,$row );
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td><?php echo Fecha_estandar($_SESSION['Facturacion_basicos']['Fecha']);?></td>
+						<td><?php echo Fecha_estandar($_SESSION['Facturacion_basicos']['Fecha']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td><?php echo Fecha_estandar($_SESSION['Facturacion_basicos']['fCreacion']);?></td>
+						<td><?php echo Fecha_estandar($_SESSION['Facturacion_basicos']['fCreacion']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -346,14 +346,14 @@ array_push( $arrFacturacion,$row );
 				<?php } ?>
 
 				<tr>
-					<td colspan="6" class="blank"> 
+					<td colspan="6" class="blank">
 						<p>
 							<?php 
 							if(isset($_SESSION['Facturacion_basicos']['Observaciones'])&&$_SESSION['Facturacion_basicos']['Observaciones']!=''){
 								echo $_SESSION['Facturacion_basicos']['Observaciones'];
 							}else{
 								echo 'Sin Observaciones';
-							}?>
+							} ?>
 						</p>
 					</td>
 				</tr>
@@ -378,14 +378,15 @@ array_push( $arrFacturacion,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 $sub_fecha = '10/'.fecha2NMes(fecha_actual()).'/'.fecha2Ano(fecha_actual());
 //cuadro para descargar
 $Alert_Text  = 'Tasa de Interés Corriente y Máxima Convencional vigentes al '.$sub_fecha;
 $Alert_Text .= '<a target="_blank" rel="noopener noreferrer" href="http://www.sbif.cl/sbifweb/servlet/InfoFinanciera?indice=4.2.1&FECHA='.$sub_fecha.'" title="Ver Tasas" class="btn btn-primary btn-sm pull-right" ><i class="fa fa-list" aria-hidden="true"></i> Ver Tasas</a>';
-alert_post_data(2,1,2, $Alert_Text); 
+alert_post_data(2,1,2, $Alert_Text);
+
 ?>
 
 		
@@ -418,8 +419,7 @@ alert_post_data(2,1,2, $Alert_Text);
 				$Form_Inputs->form_input_hidden('fCreacion', fecha_actual(), 2);
 
 				?>
-				
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -491,7 +491,7 @@ $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-}?>
+} ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
@@ -598,7 +598,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&view_facturacion='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($tipo['idFacturacion'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la facturacion '.n_doc($tipo['idFacturacion'], 7).'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la facturacion '.n_doc($tipo['idFacturacion'], 7).'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -622,4 +622,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -106,7 +106,7 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 <div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive">
 
 	<div id="page-wrap">
-		
+
 		<div id="header"> Facturacion Mes de <?php echo Fecha_mes_ano($rowFacturacion['Fecha']); ?> </div>
 	   
 		<div id="customer">
@@ -134,7 +134,7 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td><?php echo Fecha_estandar($rowFacturacion['Fecha']);?></td>
+						<td><?php echo Fecha_estandar($rowFacturacion['Fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -153,7 +153,7 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 				</tr>
 				<?php 
 				//recorro el lsiatdo entregado por la base de datos
-				foreach ($arrHijos as $hijo) { 
+				foreach ($arrHijos as $hijo) {
 					if(isset($hijo['Vehiculo_1_Nombre'])&&$hijo['Vehiculo_1_Nombre']!=''){?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name"><?php echo $hijo['Vehiculo_1_Nombre'].' Patente '.$hijo['Vehiculo_1_Patente']; ?></td>
@@ -218,16 +218,16 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 								</div>
 							</td>
 						</tr>
-					<?php 
+					<?php
 					}
 				} ?>
 
 				<tr id="hiderow"><td colspan="5"></td></tr>
 
 				<tr>
-					<td colspan="5" class="blank"> 
+					<td colspan="5" class="blank">
 						<p>
-							<?php echo $rowFacturacion['Observaciones'];?>
+							<?php echo $rowFacturacion['Observaciones']; ?>
 						</p>
 					</td>
 				</tr>
@@ -242,7 +242,6 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 
 </div>
 
-
 <?php 
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
@@ -255,7 +254,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -265,7 +264,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -274,4 +273,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

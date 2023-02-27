@@ -33,7 +33,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //formulario para crear
 if (!empty($_POST['submit'])){
 	//Llamamos al formulario
-	$form_trabajo= 'new_traspasomanualempresa'; 
+	$form_trabajo= 'new_traspasomanualempresa';
 	require_once 'A1XRXS_sys/xrxs_form/z_bodega_productos.php';
 }
 //formulario para editar
@@ -129,7 +129,7 @@ if(!$resultado){
 $row_data = mysqli_fetch_assoc ($resultado);
 
 $Total_existencias = $row_data['ingreso'] - $row_data['egreso'];
-	
+
 //filtro
 $zx1 = "idProducto=0";
 //Se revisan los permisos a los productos
@@ -181,16 +181,15 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_disabled('Existencias','Existencias', Cantidades_decimales_justos($Total_existencias));
 				$Form_Inputs->form_input_disabled('Valor Unitario','Unitario', Cantidades_decimales_justos($_SESSION['productos_traspasomanualempresa_productos'][$_GET['editProd']]['ValorEgreso']));
 				$Form_Inputs->form_input_hidden('ValorEgreso', Cantidades_decimales_justos($_SESSION['productos_traspasomanualempresa_productos'][$_GET['editProd']]['ValorEgreso']), 2);
-				
+
 				echo prod_print_venta($bodega, 'ValorEgreso', 'productos_listado','bodegas_productos_facturacion_existencias', 
 									  'idProducto', 'unimed', 'Unitario', 'Existencias', 'ValorEgreso', $dbConn); 
 				
 				$Form_Inputs->form_input_hidden('oldItemID', $_GET['editProd'], 2);
 				?>
-				
-			  
+
 				<div class="form-group">
-					<input type="submit" id="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_prod"> 
+					<input type="submit" id="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_prod">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -228,6 +227,7 @@ foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (productos_listado.idEstado=1 AND productos_listado.idProducto={$prod['idProducto']})";
 }
 $Form_Inputs = new Inputs();
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -246,17 +246,17 @@ $Form_Inputs = new Inputs();
 				<div id="insert_producto"></div>
 
 				<div class="form-group">
-					<input type="submit" id="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod"> 
+					<input type="submit" id="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
-				
+
 			</form>
             <?php widget_validator(); ?>
 		</div>
 	</div>
 </div>
 <div class="clearfix"></div>
-			
+
 <div style="display: none;">
 	<div id="clone_producto" class="prod_container">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
@@ -266,23 +266,23 @@ $Form_Inputs = new Inputs();
 		</div>
 		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->input_number('Cantidad','Number[]', '', 2);?>
+				<?php $Form_Inputs->input_number('Cantidad','Number[]', '', 2); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->input_disabled('text', 'Unidad de medida', 'escribeme1', 0, 1);?>
+				<?php $Form_Inputs->input_disabled('text', 'Unidad de medida', 'escribeme1', 0, 1); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->input_disabled('text', 'Valor Unitario', 'escribeme2', 0, 1);?>
+				<?php $Form_Inputs->input_disabled('text', 'Valor Unitario', 'escribeme2', 0, 1); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
 				<div class="input-group">
-					<?php $Form_Inputs->input_disabled('text', 'Existencias', 'escribeme3', 0, 1);?>
+					<?php $Form_Inputs->input_disabled('text', 'Existencias', 'escribeme3', 0, 1); ?>
 					<div class="input-group-btn">
 						<button class="btn btn-metis-1 tooltip remove_producto" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 					</div>
@@ -299,7 +299,7 @@ $Form_Inputs = new Inputs();
 <script>
 	
 	let room = 0;
-	
+
 	/**********************************************************/
 	//Se agrega producto
 	function producto_add(){
@@ -389,7 +389,9 @@ $Form_Inputs = new Inputs();
 }elseif(!empty($_GET['modCentroCosto'])){
 //sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -420,7 +422,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modCentroCosto"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modCentroCosto">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -434,8 +436,8 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 $z = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
-} 
+	$z .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
+}
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -479,7 +481,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['view'])){
+} elseif(!empty($_GET['view'])){
 $Form_Inputs = new Inputs();
  	
 //verifico los valores de los productos
@@ -508,16 +510,16 @@ if($valor_0!=0){
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 		<div class="btn-group pull-right" role="group" aria-label="...">
 
-			<?php 
+			<?php
 			$ubicacion = $location.'&clear_all=true';
-			$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+			$dialogo   = '¿Realmente deseas eliminar todos los registros?'; ?>
 			<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger dialogBox"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
 
 			<a href="<?php echo $location; ?>"  class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
-			<?php 
+			<?php
 			$ubicacion = $location.'&view=true&trasp_bodega=true';
-			$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?';?>
+			$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?'; ?>
 			<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary"><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>	
 
 		</div>
@@ -534,7 +536,7 @@ if($valor_0!=0){
 
 		
 		<div id="customer">
-			
+
 			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
@@ -575,9 +577,7 @@ if($valor_0!=0){
 					<th colspan="5">Detalle</th>
 					<th width="160">Acciones</th>
 				</tr>
-				
 
-				
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Productos a Traspasar</td>
 					<td><a href="<?php echo $location.'&addProd=true' ?>" title="Agregar Producto" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Productos</a></td>
@@ -591,38 +591,37 @@ if($valor_0!=0){
 					foreach ($_SESSION['productos_traspasomanualempresa_productos'] as $key => $producto){?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="4">
-								<?php echo Cantidades_decimales_justos($producto['Number']).' '.$prod['Unimed'].' de '.$prod['Nombre'];?>
+								<?php echo Cantidades_decimales_justos($producto['Number']).' '.$prod['Unimed'].' de '.$prod['Nombre']; ?>
 							</td>
 							<td class="item-name" align="right">
-								<?php 
+								<?php
 								//verifico si el valor es 0
 								if($producto['ValorTotal']==0){$valor_0++;}
-								echo Valores($producto['ValorTotal'], 0).' ('.Valores($producto['ValorEgreso'], 0).' x '.$prod['Unimed'].')';?>
+								echo Valores($producto['ValorTotal'], 0).' ('.Valores($producto['ValorEgreso'], 0).' x '.$prod['Unimed'].')'; ?>
 							</td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
 									<a href="<?php echo $location.'&editProd='.$producto['idProducto']; ?>" title="Editar Traspaso" class="iframe btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-									<?php 
+									<?php
 									$ubicacion = $location.'&del_prod='.$producto['idProducto'];
-									$dialogo   = '¿Realmente deseas eliminar el registro '.str_replace('"','',$prod['Nombre']).'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Producto" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+									$dialogo   = '¿Realmente deseas eliminar el registro '.str_replace('"','',$prod['Nombre']).'?'; ?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Producto" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
 				<?php }
-				}?>
-				
+				} ?>
+
 			</tbody>
 		</table>
     </div>
-    
+
     <div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['productos_traspasomanualempresa_basicos']['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['productos_traspasomanualempresa_basicos']['Observaciones']; ?></p>
 		</div>
 	</div>
-
 
 </div>
 
@@ -634,7 +633,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 $z = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$z .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }   ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -707,12 +706,12 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 //Verifico el tipo de usuario que esta ingresando
 $w = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$w .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$w .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 /**********************************************************/
 //Variable con la ubicacion
 $SIS_where = "bodegas_productos_facturacion.idTipo=8";//Solo traspaso manual a otra empresa
-$SIS_where.= " AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando	
+$SIS_where.= " AND bodegas_productos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando
 
 /**********************************************************/
 //Se aplican los filtros
@@ -757,17 +756,17 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 
 	<?php if ($rowlevel['level']>=3){
 		if (isset($_SESSION['productos_traspasomanualempresa_basicos']['idBodegaOrigen'])&&$_SESSION['productos_traspasomanualempresa_basicos']['idBodegaOrigen']!=''){?>
-			
-		<?php 
+
+		<?php
 		$ubicacion = $location.'&clear_all=true';
-		$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+		$dialogo   = '¿Realmente deseas eliminar todos los registros?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</a>
-		
+
 		<a href="<?php echo $location; ?>&view=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-arrow-right" aria-hidden="true"></i> Continuar Traspaso</a>
 	<?php }else{ ?>
 		<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Traspaso</a>
 	<?php }
-	 }?>
+	 } ?>
 </div>
 <div class="clearfix"></div>
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
@@ -870,11 +869,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

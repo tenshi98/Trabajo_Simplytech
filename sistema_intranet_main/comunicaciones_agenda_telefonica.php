@@ -117,7 +117,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
@@ -216,7 +216,7 @@ $arrContactos = db_select_array (false, $SIS_query, 'principal_agenda_telefonica
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Contacto</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Contacto</a><?php } ?>
 </div>
 <div class="clearfix"></div>
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
@@ -281,7 +281,7 @@ $arrContactos = db_select_array (false, $SIS_query, 'principal_agenda_telefonica
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
-								  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrContactos as $cont) { ?>
 					<tr class="odd">
@@ -293,7 +293,7 @@ $arrContactos = db_select_array (false, $SIS_query, 'principal_agenda_telefonica
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$cont['idAgenda']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($cont['idAgenda'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el numero telefonico de '.$cont['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el numero telefonico de '.$cont['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -316,4 +316,5 @@ $arrContactos = db_select_array (false, $SIS_query, 'principal_agenda_telefonica
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

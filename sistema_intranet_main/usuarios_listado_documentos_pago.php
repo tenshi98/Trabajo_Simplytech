@@ -201,7 +201,7 @@ $arrDocumentos = db_select_array (false, $SIS_query, 'sistema_documentos_pago', 
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Documentos a ver');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Documentos a ver'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -252,9 +252,9 @@ $arrDocumentos = db_select_array (false, $SIS_query, 'sistema_documentos_pago', 
 						<th>Nombre</th>
 						<th width="10">Acciones</th>
 					</tr>
-					<?php echo widget_sherlock(1, 2, 'TableFiltered');?>
+					<?php echo widget_sherlock(1, 2, 'TableFiltered'); ?>
 				</thead>
-								  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 					<?php foreach ($arrDocumentos as $permiso) { ?>
 						<tr class="odd">
@@ -282,14 +282,14 @@ $arrDocumentos = db_select_array (false, $SIS_query, 'sistema_documentos_pago', 
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

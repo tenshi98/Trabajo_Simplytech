@@ -28,7 +28,7 @@ foreach ($arrSitio as $trab) { ?>
 			</div>
 			<div class="panel-body">
 				<h4><?php echo $trab['Nombre']; ?></h4>
-				<label class="label <?php if(isset($trab['idEstado'])&&$trab['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $trab['Estado']; ?></label>
+				<label class="label <?php if(isset($trab['idEstado'])&&$trab['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $trab['Estado']; ?></label>
 				<div class="clearfix"></div>
 				<br/>
 				<div class="btn-group-vertical" role="group" aria-label="..." style="width: 100%;">
@@ -39,9 +39,6 @@ foreach ($arrSitio as $trab) { ?>
 		</div>
 	</div>
 <?php } ?>
-
-
-
 
 <style>
 	.panel-altura{height: 100px;}

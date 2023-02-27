@@ -33,7 +33,7 @@ if (isset($_GET['idPuntoMuestreo']) && $_GET['idPuntoMuestreo']!=''){
 if (isset($_GET['idTipoMuestra']) && $_GET['idTipoMuestra']!=''){      
 	$z .=" AND aguas_analisis_aguas.idTipoMuestra='".$_GET['idTipoMuestra']."'";
 }
-if (isset($_GET['idParametros']) && $_GET['idParametros']!=''){ 
+if (isset($_GET['idParametros']) && $_GET['idParametros']!=''){
 	$z .=" AND aguas_analisis_aguas.idParametros='".$_GET['idParametros']."'";
 }
 if (isset($_GET['idSigno']) && $_GET['idSigno']!=''){           
@@ -42,10 +42,10 @@ if (isset($_GET['idSigno']) && $_GET['idSigno']!=''){
 if (isset($_GET['idLaboratorio']) && $_GET['idLaboratorio']!=''){      
 	$z .=" AND aguas_analisis_aguas.idLaboratorio='".$_GET['idLaboratorio']."'";
 }
-if(isset($_GET['f_muestra_inicio']) && $_GET['f_muestra_inicio'] != ''&&isset($_GET['f_muestra_termino']) && $_GET['f_muestra_termino']!=''){ 
+if(isset($_GET['f_muestra_inicio']) && $_GET['f_muestra_inicio'] != ''&&isset($_GET['f_muestra_termino']) && $_GET['f_muestra_termino']!=''){
 	$z .= " AND aguas_analisis_aguas.f_muestra BETWEEN '".$_GET['f_muestra_inicio']."' AND '".$_GET['f_muestra_termino']."'";
 }
-if(isset($_GET['f_recibida_inicio']) && $_GET['f_recibida_inicio'] != ''&&isset($_GET['f_recibida_termino']) && $_GET['f_recibida_termino']!=''){ 
+if(isset($_GET['f_recibida_inicio']) && $_GET['f_recibida_inicio'] != ''&&isset($_GET['f_recibida_termino']) && $_GET['f_recibida_termino']!=''){
 	$z .= " AND aguas_analisis_aguas.f_recibida BETWEEN '".$_GET['f_recibida_inicio']."' AND '".$_GET['f_recibida_termino']."'";
 }
 

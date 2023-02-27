@@ -28,7 +28,7 @@ if(!empty($_GET['submit_filter'])){
 $SIS_where = 'trabajadores_listado.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $search .= '&Fecha='.$_GET['Fecha'];
-if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){ 
+if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){
 	$SIS_where .=" AND trabajadores_listado.idTrabajador='".$_GET['idTrabajador']."'";
 	$search .= '&idTrabajador='.$_GET['idTrabajador'];
 }
@@ -61,8 +61,7 @@ $arrAsistencias = db_select_array (false, $SIS_query, 'trabajadores_listado', $S
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<a target="new" href="<?php echo 'informe_rrhh_04_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
-	
-	
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -88,7 +87,7 @@ $arrAsistencias = db_select_array (false, $SIS_query, 'trabajadores_listado', $S
 							<td><?php echo $con['PredioCuartel']; ?></td>
 							<td><?php echo fecha_estandar($_GET['Fecha']); ?></td>
 							<td><?php echo $con['Ingreso']; if($con['Ingreso_IP']=='999.999.999.999'){echo '<i class="fa fa-check" aria-hidden="true"></i>';} ?></td>
-							<td><?php echo $con['Egreso']; if($con['Ingreso_IP']=='999.999.999.999'){echo '<i class="fa fa-check" aria-hidden="true"></i>';}?></td>
+							<td><?php echo $con['Egreso']; if($con['Ingreso_IP']=='999.999.999.999'){echo '<i class="fa fa-check" aria-hidden="true"></i>';} ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -113,6 +112,7 @@ $arrAsistencias = db_select_array (false, $SIS_query, 'trabajadores_listado', $S
 //Verifico el tipo de usuario que esta ingresando
 $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -131,7 +131,7 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 2);
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x2, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $y, '', $dbConn);
-						
+
 				?>
 
 				<div class="form-group">
@@ -149,4 +149,5 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

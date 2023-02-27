@@ -48,17 +48,17 @@ $SIS_where .=" GROUP BY cross_predios_listado_zonas.idPredio, backup_telemetria_
 $SIS_join  = '
 	LEFT JOIN `cross_predios_listado_zonas`   ON cross_predios_listado_zonas.idZona     = backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idZona
 	LEFT JOIN `cross_predios_listado`         ON cross_predios_listado.idPredio         = cross_predios_listado_zonas.idPredio';
-	
+
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idTabla', 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
 
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
-}else{			
+}else{
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'Nombre AS EquipoNombre', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowEquipo');
-	
+
 	/****************************************/
 	//Numero del sensor
 	$NSensor = 1;
@@ -108,13 +108,13 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								<td><?php echo $med['PredioNombre']; ?></td>
 								<td><?php echo $med['CuartelNombre']; ?></td>
 								<td><?php echo $rowEquipo['EquipoNombre']; ?></td>
-										
+
 								<td><?php echo $med['CantidadMuestra']; ?></td>
 								<td><?php echo $med['MedMin']; ?></td>
 								<td><?php echo $med['MedMax']; ?></td>
 								<td><?php echo $med['MedProm']; ?></td>
 								<td><?php echo $med['MedDesStan']; ?></td>
-								
+
 								<td>
 									<div class="btn-group" style="width: 70px;" >
 										<?php
@@ -154,10 +154,11 @@ $w  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSist
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
-} 
+}
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 alert_post_data(2,1,1, $Alert_Text);
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -185,11 +186,11 @@ alert_post_data(2,1,1, $Alert_Text);
 					$Form_Inputs->form_select_join_filter('Equipo Medicion','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
 				$Form_Inputs->form_select_depend1('Predio','idPredio', $x2, 1, 'idPredio', 'Nombre', 'cross_predios_listado', $x, 0,
-										 'Cuarteles','idZona', $x3, 1, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0, 
+										 'Cuarteles','idZona', $x3, 1, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_date('Fecha Desde','fecha_desde', $x4, 1);
 				$Form_Inputs->form_date('Fecha Hasta','fecha_hasta', $x5, 1);
-						
+
 				?>
 
 				<div class="form-group">
@@ -207,4 +208,5 @@ alert_post_data(2,1,1, $Alert_Text);
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -265,7 +265,7 @@ foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen
 
 				echo $input;
 
-				$Form_Inputs->form_select('Funcion','idFuncion', $x1, 2, 'idFuncion', 'Nombre', 'core_telemetria_funciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Funcion','idFuncion', $x1, 2, 'idFuncion', 'Nombre', 'core_telemetria_funciones', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('Valor Supervisado','ValorActivo', $x2, 1);
 				$Form_Inputs->form_input_number('Rango Valor Minimo','RangoMinimo', $x3, 1);
 				$Form_Inputs->form_input_number('Rango Valor Maximo','RangoMaximo', $x4, 1);
@@ -341,10 +341,11 @@ $arrOperaciones = array();
 $arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_definicion_operacional', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOperaciones');
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Definicion Operacional');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Definicion Operacional'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Definicion Operacional</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Definicion Operacional</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -403,7 +404,7 @@ $arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_defini
 								echo Cantidades_decimales_justos($oper['ValorActivo']);
 							}else{
 								echo Cantidades_decimales_justos($oper['RangoMinimo']).' - '.Cantidades_decimales_justos($oper['RangoMaximo']);
-							}?>
+							} ?>
 						</td>
 						<td><?php echo $oper['Funcion']; ?></td>
 						<td>
@@ -411,7 +412,7 @@ $arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_defini
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$oper['idDefinicion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($oper['idDefinicion'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la definicion de '.$rowdata['SensoresNombre_'.$oper['N_Sensor']].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la definicion de '.$rowdata['SensoresNombre_'.$oper['N_Sensor']].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -426,8 +427,8 @@ $arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_defini
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -436,4 +437,5 @@ $arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_defini
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

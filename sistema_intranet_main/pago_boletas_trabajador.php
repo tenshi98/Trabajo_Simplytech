@@ -91,12 +91,12 @@ if(isset($_SESSION['pagos_boletas_trabajadores'])){
 					
 ?>
 
-<div class="row inbox"> 
+<div class="row inbox">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h3>
 			<strong>Trabajador : </strong><?php echo $row_data['Nombre'].' '.$row_data['ApellidoPat'].' '.$row_data['ApellidoMat']; ?><br/>
 		</h3>
-		<hr>	
+		<hr>
 	</div>
 </div>
 									
@@ -144,7 +144,7 @@ if(isset($_SESSION['pagos_boletas_trabajadores'])){
 											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_boleta_honorarios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											<?php if ($rowlevel['level']>=2){
 												$ubicacion = $location.'&del_boleta='.$tipo['idFacturacion'];
-												$dialogo   = '¿Realmente deseas eliminar la Boleta N° '.$tipo['N_Doc'].'?';?>
+												$dialogo   = '¿Realmente deseas eliminar la Boleta N° '.$tipo['N_Doc'].'?'; ?>
 												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php } ?>
 										</div>
@@ -154,7 +154,7 @@ if(isset($_SESSION['pagos_boletas_trabajadores'])){
 									<td align="right"><?php echo valores($tipo['MontoPagado'], 0);$MontoCancelado = $MontoCancelado + $tipo['MontoPagado']; ?></td>
 									<td align="right"><?php echo valores($tipo['ValorTotal']-$tipo['MontoPagado'], 0);$TotalDeuda = $TotalDeuda + $tipo['ValorTotal']-$tipo['MontoPagado']; ?></td>
 									<td align="right">
-										<?php 
+										<?php
 										$total = $tipo['ValorTotal']-$tipo['MontoPagado'];
 										if(isset($tipo['ValorReal'])&&$tipo['ValorReal']!=''){
 											echo valores($tipo['ValorReal'], 0);
@@ -213,7 +213,7 @@ if(isset($_SESSION['pagos_boletas_trabajadores'])){
 		//Verificaciones
 		if (pago_x != "") { ok++; }else{ alert("No ha ingresado un valor de pago");}
 		if (pago>maxs){ok--;alert("El valor que intenta cancelar es superior al maximo permitido");}
-		
+
 		//Guardo el dato y refresco la pagina
 		if(ok==1){
 			saveData(idFacturacion, pago);
@@ -262,7 +262,7 @@ if(isset($_SESSION['pagos_boletas_trabajadores'])){
 		//Verificaciones
 		if (pago_x != "") { ok++; }else{ alert("No ha ingresado un valor de pago");}
 		if (pago>maxs){ok--;alert("El valor que intenta cancelar es superior al maximo permitido");}
-		
+
 		//Guardo el dato y refresco la pagina
 		if(ok==1){
 			saveData(idFacturacion, pago);
@@ -275,7 +275,7 @@ if(isset($_SESSION['pagos_boletas_trabajadores'])){
 
 
 	
-	<?php if(isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalGeneral!=0){ ?>	
+	<?php if(isset($Data_Pendientes)&&$Data_Pendientes==0&&$TotalGeneral!=0){ ?>
 		<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 
 			<div class="box">
@@ -285,7 +285,7 @@ if(isset($_SESSION['pagos_boletas_trabajadores'])){
 				</header>
 				<div class="body">
 					<form class="form-horizontal" method="post" name="form1" id="form1">
-					
+
 						<?php
 						//Se verifican si existen los datos
 						if(isset($idDocPago)){         $x1  = $idDocPago;          }else{$x1  = '';}
@@ -315,9 +315,9 @@ if(isset($_SESSION['pagos_boletas_trabajadores'])){
 							<input type="submit" id="submitCadastroHidden" style="display: none;" name="submit_form">
 							<input type="button" id="submitBtn" data-toggle="modal" data-target="#confirm-submit"  class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf283; Ingresar Pago" name="submit2">
 						</div>
-							  
+
 					</form>
-							
+
 				</div>
 			</div>
 
@@ -343,7 +343,7 @@ if(isset($_SESSION['pagos_boletas_trabajadores'])){
 				
 				$('#submitBtn').click(function() {
 					//Se verifica que todos los input tengan valores asignados
-					let ninput = <?php echo ($Registro_total-$Registro_ok);?>;
+					let ninput = <?php echo ($Registro_total-$Registro_ok); ?>;
 
 					//verifica el valor
 					let monto = <?php echo $TotalGeneral; ?>;
@@ -361,7 +361,7 @@ if(isset($_SESSION['pagos_boletas_trabajadores'])){
 				});
 
 			</script>
-			
+
 		</div>
 	<?php } ?>
 
@@ -460,13 +460,12 @@ array_push( $arrBoletas,$row );
 ?> 
 
 	
-<div class="row inbox"> 
+<div class="row inbox">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h2><strong>Trabajador : </strong><?php echo $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat']; ?></h2>
-		<hr>	
+		<hr>
 	</div>
 </div>
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -494,7 +493,7 @@ array_push( $arrBoletas,$row );
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php 
+					<?php
 					if ($arrBoletas!=false && !empty($arrBoletas) && $arrBoletas!='') {
 						foreach ($arrBoletas as $tipo){ ?>
 							<tr class="odd">
@@ -578,13 +577,13 @@ array_push( $arrBoletas,$row );
 		}
 		return '$ '+s; 
 	}
-	
+
 	//////////////////////////////////////////////////////////
 	function doSomething(number) {
 		$.get("pago_boletas_trabajador_execute.php?idFacturacion="+number);
 		return false;
 	}
-	
+
 	//////////////////////////////////////////////////////////
 	function onToggle(number) {
 		
@@ -606,7 +605,7 @@ array_push( $arrBoletas,$row );
 				Totalgen = Totalgen + <?php echo Cantidades_decimales_justos($tipo['ValorTotal']-($tipo['MontoPagado'])); ?>;
 
 			}
-		<?php }?>
+		<?php } ?>
 		
 		//Se escriben en los cuadros
 		document.getElementById("final_val_1").innerHTML = number_format(Total, 0, ',', '.');
@@ -640,6 +639,7 @@ array_push( $arrBoletas,$row );
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 ";		
  
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -658,7 +658,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_Doc', $x2, 1);
-					
+
 				?>
 
 				<div class="form-group">
@@ -677,4 +677,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

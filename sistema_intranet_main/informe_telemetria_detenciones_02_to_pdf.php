@@ -27,7 +27,7 @@ $SIS_where = "telemetria_listado_error_detenciones.idDetencion>0";
 $SIS_where.= " AND telemetria_listado_error_detenciones.idSistema=".$_GET['idSistema'];	
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$SIS_where.= " AND telemetria_listado.idTab=1";//CrossChecking			
+	$SIS_where.= " AND telemetria_listado.idTab=1";//CrossChecking
 }
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
@@ -45,7 +45,7 @@ if(isset($_GET['idOpciones'])&&$_GET['idOpciones']!=''){
 $SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_detenciones.idTelemetria';
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_error_detenciones.idTelemetria ";
-	$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 
 // Se trae un listado con todos los elementos
@@ -80,7 +80,7 @@ $html .= '
 		</tr>
 	</thead>
 	<tbody>';
-							
+
 		foreach ($arrErrores as $error) {
 							
 				$html .='
@@ -94,7 +94,7 @@ $html .= '
 
 							
 		}
-							
+
 $html .='</tbody>
 </table>';
    
@@ -116,7 +116,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 		/************************************************************************/
 		//TCPDF
 		case 1:
-			
+
 			require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 			// create new PDF document
@@ -171,7 +171,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output(DeSanitizar($pdf_file), 'I');
-	
+
 			break;
 		/************************************************************************/
 		//DomPDF (Solo compatible con PHP 5.x)

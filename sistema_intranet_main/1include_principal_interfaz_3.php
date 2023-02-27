@@ -278,6 +278,7 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SI
 /*****************************************************************************************************************/
 
 ?>
+
 <div class="row">
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -307,6 +308,5 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SI
 			</div>
 		</div>
 	</div>
-
 
 </div>

@@ -61,10 +61,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+$rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowdata['Nombre'], 'Editar Datos Basicos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowdata['Nombre'], 'Editar Datos Basicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -81,7 +81,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
         <div class="table-responsive" >
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;min-height:500px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
+
 					<?php  
 					//Se verifican si existen los datos
 					if(isset($Nombre)){       $x1  = $Nombre;        }else{$x1  = $rowdata['Nombre'];}
@@ -89,7 +89,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					if(isset($idCiudad)){     $x3  = $idCiudad;      }else{$x3  = $rowdata['idCiudad'];}
 					if(isset($idComuna)){     $x4  = $idComuna;      }else{$x4  = $rowdata['idComuna'];}
 					if(isset($Direccion)){    $x5  = $Direccion;     }else{$x5  = $rowdata['Direccion'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_text('Nombre del Predio', 'Nombre', $x1, 2);
@@ -104,7 +104,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idPredio', $_GET['id'], 2);
 					?>
-					
+
 					<script>
 						
 						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
@@ -140,7 +140,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 						});
 						
 					</script>
-					
+
 					<div class="form-group">
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
@@ -153,14 +153,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

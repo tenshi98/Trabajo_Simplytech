@@ -57,10 +57,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+$rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Vecino', $rowdata['Nombre'], 'Editar Persona de contacto');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Vecino', $rowdata['Nombre'], 'Editar Persona de contacto'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -89,22 +89,21 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($PersonaContacto)){         $x1 = $PersonaContacto;         }else{$x1 = $rowdata['PersonaContacto'];}
 					if(isset($PersonaContacto_Cargo)){   $x2 = $PersonaContacto_Cargo;   }else{$x2 = $rowdata['PersonaContacto_Cargo'];}
 					if(isset($PersonaContacto_Fono)){    $x3 = $PersonaContacto_Fono;    }else{$x3 = $rowdata['PersonaContacto_Fono'];}
 					if(isset($PersonaContacto_email)){   $x4 = $PersonaContacto_email;   }else{$x4 = $rowdata['PersonaContacto_email'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_icon('Persona de Contacto', 'PersonaContacto', $x1, 1,'fa fa-user-secret');
 					$Form_Inputs->form_input_icon('Cargo', 'PersonaContacto_Cargo', $x2, 1,'fa fa-university');
 					$Form_Inputs->form_input_phone('Telefono', 'PersonaContacto_Fono', $x3, 1);
 					$Form_Inputs->form_input_icon('Email', 'PersonaContacto_email', $x4, 1,'fa fa-envelope-o');
-					
-	
+
 					$Form_Inputs->form_input_hidden('idCliente', $_GET['id'], 2);
 
 					?>
@@ -121,14 +120,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

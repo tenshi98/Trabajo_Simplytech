@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -91,7 +91,7 @@ $arrCuestionarios = db_select_array (false, $SIS_query, 'alumnos_elearning_lista
 /*****************************************************/
 //calculo de los dias de duracion
 $Dias_Duracion = 0;
-filtrar($arrContenidos, 'Unidad_Numero');  
+filtrar($arrContenidos, 'Unidad_Numero');
 foreach($arrContenidos as $categoria=>$permisos){
 	$Dias_Duracion = $Dias_Duracion + $permisos[0]['Unidad_Duracion'];
 }
@@ -155,18 +155,18 @@ foreach($arrContenidos as $categoria=>$permisos){
 			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
-							
+
 						<?php foreach($arrContenidos as $categoria=>$permisos){ ?>
 							<tr class="odd" >
 								<td style="background-color:#DDD"><strong>Unidad <?php echo $categoria; ?></strong> - <?php echo $permisos[0]['Unidad_Nombre'].' ('.$permisos[0]['Unidad_Duracion'].' dias de duracion)'; ?></td>
 							</tr>
-							<?php foreach ($permisos as $preg) { 
+							<?php foreach ($permisos as $preg) {
 								if(isset($preg['Contenido_Nombre'])&&$preg['Contenido_Nombre']!=''){?>
 									<tr class="item-row linea_punteada">
 										<td class="item-name">
 											<span style="word-wrap: break-word;white-space: initial;"><?php echo $preg['Contenido_Nombre']; ?></span>	
 												
-											<?php if($arrFiles!=false && !empty($arrFiles) && $arrFiles!=''){ 
+											<?php if($arrFiles!=false && !empty($arrFiles) && $arrFiles!=''){
 												//verifico que existan archivos en esta unidad
 												$x_n_arch = 0;
 												foreach ($arrFiles as $file) {
@@ -184,9 +184,9 @@ foreach($arrContenidos as $categoria=>$permisos){
 														if(isset($preg['Unidad_ID'])&&$preg['Unidad_ID']==$file['idUnidad']&&isset($preg['Contenido_ID'])&&$preg['Contenido_ID']==$file['idContenido']){ ?>
 															<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:2px;">
 																<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11">
-																	<?php 
+																	<?php
 																	$f_file = str_replace('elearning_files_'.$file['idContenido'].'_','',$file['File']);
-																	echo $f_file; 
+																	echo $f_file;
 																	?>
 																</div>
 																<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
@@ -200,7 +200,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 												<?php } ?>
 											<?php } ?>
 												
-											<?php if($arrCuestionarios!=false && !empty($arrCuestionarios) && $arrCuestionarios!=''){ 
+											<?php if($arrCuestionarios!=false && !empty($arrCuestionarios) && $arrCuestionarios!=''){
 												//verifico que existan archivos en esta unidad
 												$x_n_Cuest = 0;
 												foreach ($arrCuestionarios as $file) {
@@ -254,7 +254,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -264,7 +264,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -273,4 +273,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

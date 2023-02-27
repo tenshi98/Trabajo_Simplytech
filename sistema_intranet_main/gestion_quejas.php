@@ -89,6 +89,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }
 $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -135,7 +136,7 @@ $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //Verifico el tipo de usuario que esta ingresando
@@ -145,6 +146,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }
 $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -177,7 +179,7 @@ $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('FechaQueja', fecha_actual(), 2);
 				?>
-								
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -259,7 +261,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }
 $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
@@ -270,7 +274,7 @@ $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Queja</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Queja</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -293,7 +297,7 @@ $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=
 				$Form_Inputs->form_select_filter('Trabajador Queja','idTrabajadorQueja', $x4, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z2, '', $dbConn);
 				$Form_Inputs->form_input_text('Persona Queja', 'NombreQueja', $x5, 1);
 				$Form_Inputs->form_select('Tipo Queja','idTipoQueja', $x6, 1, 'idTipoQueja', 'Nombre', 'core_tipo_queja_general', 0, '', $dbConn);
-					
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 
@@ -375,7 +379,7 @@ $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idQueja']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($usuarios['idQueja'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar la queja?';?>
+										$dialogo   = '¿Realmente deseas eliminar la queja?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -393,7 +397,6 @@ $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=
 	</div>
 </div>
 
-
 <?php } ?>
 
 <?php
@@ -401,4 +404,5 @@ $z2="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

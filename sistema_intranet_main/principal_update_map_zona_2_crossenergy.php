@@ -57,7 +57,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresUniMed_'.$i;
 	$subquery .= ',SensoresActivo_'.$i;
 }
-				
+
 //Listar los equipos
 $arrEquipo = array();
 $query = "SELECT Nombre,LastUpdateFecha,LastUpdateHora,GeoLatitud, GeoLongitud,
@@ -86,7 +86,7 @@ array_push( $arrEquipo,$row );
 //Se traen todas las unidades de medida
 $arrUnimed = array();
 $arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
-	
+
 //Ordeno las unidades de medida
 $arrFinalUnimed = array();
 foreach ($arrUnimed as $data) {
@@ -94,7 +94,6 @@ foreach ($arrUnimed as $data) {
 }	
 
 ?>
-
 
 <script>
 	var HoraRefresco = '<?php echo hora_actual(); ?>';

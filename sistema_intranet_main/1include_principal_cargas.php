@@ -83,7 +83,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_j
 											echo "<td class='fc-Dia fc-wed fc-widget-content fc-other-Mes fc-future fc-state-none'> </td>";
 										// mostramos el dia
 										}else{?>
-											<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';}?>">
+											<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';} ?>">
 												<div class="calendar_min">
 													<div class="fc-Dia-number"><?php echo $Dia; ?></div>
 													<div class="fc-Dia-content">
@@ -92,7 +92,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_j
 																$ver = $location.'&view='.$evento['idCarga'];
 																echo '<div class="event_calendar evcal_color1 word_break" href="'.$ver.'">'.cortar($evento['Titulo'], 20).'</div>';
 															}
-														}?>
+														} ?>
 													</div>
 												</div>
 											</td>

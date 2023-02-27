@@ -41,7 +41,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores_999.idTelemetria ";
 	$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
-	
+
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
@@ -61,7 +61,7 @@ telemetria_listado.id_Geo'.$subquery;
 $SIS_order = 'idErrores DESC';
 $arrErrores = array();
 $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_errores_999', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrErrores');
- 
+
 //Se traen todas las unidades de medida
 $arrUnimed = array();
 $arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
@@ -99,7 +99,7 @@ $nn=2;
 foreach ($arrErrores as $error) { 
 	//Guardo la unidad de medida
 	$unimed = $arrFinalUnimed[$error['SensoresUniMed_'.$error['Sensor']]];
-				
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($error['NombreEquipo']))
 				->setCellValue('B'.$nn, DeSanitizar($error['Descripcion']))
@@ -108,7 +108,7 @@ foreach ($arrErrores as $error) {
 				->setCellValue('E'.$nn, $error['Valor'])
 				->setCellValue('F'.$nn, DeSanitizar($unimed));
 	$nn++;
-   
+
 } 
 						
 

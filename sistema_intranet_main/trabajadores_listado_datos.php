@@ -59,10 +59,11 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Datos Personales');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Datos Personales'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -87,7 +88,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class=""><a href="<?php echo 'trabajadores_listado_antecedentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Antecedentes</a></li>
 						<li class=""><a href="<?php echo 'trabajadores_listado_carnet.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Carnet</a></li>
 						<li class=""><a href="<?php echo 'trabajadores_listado_rhtm.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Permiso Trabajo Menor Edad</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -96,7 +97,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-					<?php 
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Nombre)){              $x1  = $Nombre;               }else{$x1  = $rowdata['Nombre'];}
 					if(isset($ApellidoPat)){         $x2  = $ApellidoPat;          }else{$x2  = $rowdata['ApellidoPat'];}
@@ -111,7 +112,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					if(isset($Direccion)){           $x11 = $Direccion;            }else{$x11 = $rowdata['Direccion'];}
 					if(isset($idEstadoCivil)){       $x12 = $idEstadoCivil;        }else{$x12 = $rowdata['idEstadoCivil'];}
 					if(isset($email)){               $x13 = $email;                }else{$x13 = $rowdata['email'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -128,9 +129,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x11, 1,'fa fa-map');
 					$Form_Inputs->form_select('Estado Civil','idEstadoCivil', $x12, 1, 'idEstadoCivil', 'Nombre', 'core_estado_civil', 0, '', $dbConn);
 					$Form_Inputs->form_input_icon('Email', 'email', $x13, 1,'fa fa-envelope-o');
-					
-					
-					
+
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idTrabajador', $_GET['id'], 2);
@@ -148,14 +147,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

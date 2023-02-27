@@ -84,6 +84,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	
 //filtro
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -113,8 +114,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_hidden('idContabPrevired', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idUsuarioCierre', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idEstadoOld', $rowdata['idEstado'], 2);
-				
-				
+
 				?>
 
 				<div class="form-group">
@@ -129,9 +129,9 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -238,6 +238,7 @@ $arrClientes = db_select_array (false, $SIS_query, 'contabilidad_clientes_previr
 
 //filtro
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
@@ -356,7 +357,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$client['idContabPrevired']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($client['idContabPrevired'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la facturacion del cliente '.$client['ClienteNombre'].' con fecha '.fecha_estandar($client['Creacion_fecha']).'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la facturacion del cliente '.$client['ClienteNombre'].' con fecha '.fecha_estandar($client['Creacion_fecha']).'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -379,4 +380,5 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

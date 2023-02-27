@@ -73,7 +73,7 @@ if(!empty($_GET['addDetalle'])){?>
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_add_detalle"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_add_detalle">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -105,7 +105,7 @@ if(!empty($_GET['addDetalle'])){?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_date('Fecha Cierre Cuartel','f_cierre', $x1, 2);	
+				$Form_Inputs->form_date('Fecha Cierre Cuartel','f_cierre', $x1, 2);
 				$Form_Inputs->form_select('Ejecucion','idEjecucion', $x2, 2, 'idEjecucion', 'Nombre', 'core_estado_ejecucion', 0, '', $dbConn);
 				$Form_Inputs->form_input_number_spinner('Distancia Recorrida Km','GeoDistance', $x3, 0, 500000, '0.1', 1, 1);
 				$Form_Inputs->form_input_number_spinner('Vel. Promedio Tractor Km/hr','VelPromedio', $x4, 0, 50, '0.1', 1, 1);
@@ -123,10 +123,10 @@ if(!empty($_GET['addDetalle'])){?>
 					document.getElementById('div_VelPromedio').style.display = 'none';
 					document.getElementById('div_LitrosAplicados').style.display = 'none';
 					//document.getElementById('div_T_Aplicacion').style.display = 'none';
-						
+
 					$("#idEjecucion").on("change", function(){ //se ejecuta al cambiar valor del select
 						let idEjecucion = $(this).val(); //Asignamos el valor seleccionado
-					
+
 						//No ejecutado
 						if(idEjecucion == 1){
 							document.getElementById('div_GeoDistance').style.display = '';
@@ -151,7 +151,7 @@ if(!empty($_GET['addDetalle'])){?>
 				</script>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_close_cuartel"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_close_cuartel">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -161,7 +161,7 @@ if(!empty($_GET['addDetalle'])){?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } else { 
+} else {
 /**********************************************/
 // consulto los datos
 $SIS_query = 'idEstado, f_ejecucion, f_ejecucion_fin';
@@ -216,7 +216,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 
 	<div id="page-wrap">
 		<div id="header"> SOLICITUD DE APLICACIONES N° <?php echo n_doc($_GET['view'], 5); ?></div>
-		
+
 		<table id="items">
 			<tbody>
 
@@ -238,20 +238,20 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					<td></td>
 										
 				</tr>
-				<?php 
+				<?php
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrCuarteles!=false && !empty($arrCuarteles) && $arrCuarteles!='') {
 						foreach ($arrCuarteles as $cuartel) { ?>
 						
 							<tr class="item-row linea_punteada" style="background: #eee;">
 								<td class="item-name"><?php echo $cuartel['CuartelNombre'];if(isset($cuartel['idEstado'])&&$cuartel['idEstado']==2){ echo '(Cerrado el '.fecha_estandar($cuartel['f_cierre']).')';} ?></td>
-								<td class="item-name"><?php echo $cuartel['CuartelEspecie'].' '.$cuartel['CuartelVariedad'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['Mojamiento']).' L/ha';?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['VelTractor']).' Km/hr';?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['VelViento']).' Km/hr';?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['TempMin']).' °';?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['TempMax']).' °';?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['HumTempMax']).' %';?></td>
+								<td class="item-name"><?php echo $cuartel['CuartelEspecie'].' '.$cuartel['CuartelVariedad']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['Mojamiento']).' L/ha'; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['VelTractor']).' Km/hr'; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['VelViento']).' Km/hr'; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['TempMin']).' °'; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['TempMax']).' °'; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($cuartel['HumTempMax']).' %'; ?></td>
 								<td>
 									<div class="btn-group" style="width: 100px;" >
 										<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']!=3&&isset($cuartel['idEstado'])&&$cuartel['idEstado']==1){ ?>
@@ -307,7 +307,6 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 
 </div>
 
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
 	<a href="cross_solicitud_aplicacion_ejecucion.php?pagina=1" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -320,4 +319,5 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

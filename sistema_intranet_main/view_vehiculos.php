@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -104,8 +104,8 @@ $SIS_where = 'vehiculos_listado.idVehiculo ='.$X_Puntero;
 $rowdata = db_select_data (false, $SIS_query, 'vehiculos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 
-if(isset($rowdata['idOpciones_5'])&&$rowdata['idOpciones_5']==1){ 
-	
+if(isset($rowdata['idOpciones_5'])&&$rowdata['idOpciones_5']==1){
+
 	// Se trae un listado con todos los pasajeros
 	$SIS_query = '
 	apoderados_listado_hijos.Nombre,
@@ -127,7 +127,7 @@ if(isset($rowdata['idOpciones_5'])&&$rowdata['idOpciones_5']==1){
 
 
 if(isset($rowdata['idOpciones_7'])&&$rowdata['idOpciones_7']==1){
-	
+
 	// consulto los datos
 	$SIS_query = 'idPeoneta, Nombre,ApellidoPat, ApellidoMat, Rut, Fecha';
 	$SIS_join  = '';
@@ -139,7 +139,7 @@ if(isset($rowdata['idOpciones_7'])&&$rowdata['idOpciones_7']==1){
 }
 
 if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
-	
+
 	// Se trae un listado con todos los colegios
 	$SIS_query = 'colegios_listado.Nombre';
 	$SIS_join  = 'LEFT JOIN `colegios_listado` ON colegios_listado.idColegio = vehiculos_listado_colegios.idColegio';
@@ -168,7 +168,7 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/car_siluete.png">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
@@ -203,7 +203,7 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 							if(isset($rowdata['AprobacionEstado'])&&$rowdata['AprobacionEstado']!=''){
 								echo '<br/><strong>Proceso Aprobacion: </strong>'.$rowdata['AprobacionEstado'];
 								if(isset($rowdata['idProceso'])&&$rowdata['idProceso']==3){echo ' ('.$rowdata['AprobacionMotivo'].')';}
-							}?>
+							} ?>
 							
 							
 					
@@ -259,7 +259,7 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 												</div>
 											</div>
 										</div>
-									
+
 									<?php 
 									}
 								//si no existen cargas se muestra mensaje
@@ -314,7 +314,7 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
-								<?php 
+								<?php
 								//Fecha ultima mantencion
 								if(isset($rowdata['doc_mantencion'])&&$rowdata['doc_mantencion']!=''){
 									echo '
@@ -449,7 +449,7 @@ if(isset($rowdata['idOpciones_8'])&&$rowdata['idOpciones_8']==1){
 										
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
 			
@@ -472,7 +472,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -482,7 +482,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -491,4 +491,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

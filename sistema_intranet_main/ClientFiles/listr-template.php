@@ -7,6 +7,7 @@ define('XMBCXRXSKGC', 1);
 /*                                          Se llaman a los archivos necesarios                                                   */
 /**********************************************************************************************************************************/
 require_once '../A1XRXS_sys/xrxs_configuracion/config.php';
+
 ?>
 
 <!DOCTYPE html>
@@ -105,9 +106,7 @@ require_once '../A1XRXS_sys/xrxs_configuracion/config.php';
 					</div>
 				</div>
 			<?php } ?>
-		
-		
-		
+
 		<?php echo $footer?>
 		<?php if($options['bootstrap']['sticky_footer'] === true) { ?>
 			<footer class="footer">

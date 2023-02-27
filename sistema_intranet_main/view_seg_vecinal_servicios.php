@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -84,7 +84,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_servicios_listado', $
 								<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
 								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
 							</p>
-										
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
 							<p class="text-muted word_break">
 								<strong>Telefono Fijo : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
@@ -93,7 +93,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_servicios_listado', $
 								<strong>Email : </strong><a href="mailto:<?php echo $rowdata['email']; ?>"><?php echo $rowdata['email']; ?></a><br/>
 								<strong>Web : </strong><a target="_blank" rel="noopener noreferrer" href="https://<?php echo $rowdata['Web']; ?>"><?php echo $rowdata['Web']; ?></a>
 							</p>
-										
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Horario de Atencion</h2>
 							<p class="text-muted word_break">
 								<strong>Inicio : </strong><?php echo $rowdata['HoraInicio']; ?><br/>
@@ -104,7 +104,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_servicios_listado', $
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
-						<?php 
+						<?php
 							//se arma la direccion
 							$direccion = "";
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
@@ -121,9 +121,9 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_servicios_listado', $
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				
+
 			</div>
-			
+
 			<?php if($arrObservaciones!=false && !empty($arrObservaciones) && $arrObservaciones!=''){ ?>
 				<div class="tab-pane fade" id="observaciones">
 					<div class="wmd-panel">
@@ -155,7 +155,6 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_servicios_listado', $
 	</div>
 </div>
 
-
 <?php 
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
@@ -168,7 +167,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -178,7 +177,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -187,4 +186,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -58,6 +58,7 @@ if(!empty($_GET['new'])){
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //filtro para el Elearning
 $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -68,7 +69,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idElearning)){     $x1  = $idElearning;    }else{$x1  = '';}
@@ -78,7 +79,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				$Form_Inputs->form_select_filter('Elearning','idElearning', $x1, 2, 'idElearning', 'Nombre', 'alumnos_elearning_listado',$z, '', $dbConn);
 
 				$Form_Inputs->form_input_hidden('idCurso', $_GET['id'], 2);
-						
+
 				?>
 
 				<div class="form-group">
@@ -93,62 +94,30 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
+/*******************************************************/
 // consulto los datos
-$query = "SELECT Nombre
-FROM `alumnos_cursos`
-WHERE idCurso = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre';
+$SIS_join  = '';
+$SIS_where = 'idCurso = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'alumnos_cursos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-
-
-// SE TRAE UN LISTADO DE TODOS LOS PERMISOS ASIGNADOS SOLO A UN USUARIO
+/*******************************************************/
+// consulto los datos
+$SIS_query = '
+alumnos_cursos_elearning.idRelacionados,
+alumnos_elearning_listado.Nombre AS NombreElearning';
+$SIS_join  = 'LEFT JOIN `alumnos_elearning_listado` ON alumnos_elearning_listado.idElearning = alumnos_cursos_elearning.idElearning';
+$SIS_where = 'alumnos_cursos_elearning.idCurso = '.$_GET['id'];
+$SIS_order = 'alumnos_elearning_listado.Nombre ASC';
 $arrCursos = array();
-$query =
-"SELECT 
-alumnos_cursos_elearning.idRelacionados, 
-alumnos_elearning_listado.Nombre AS NombreElearning
-
-FROM `alumnos_cursos_elearning`
-LEFT JOIN `alumnos_elearning_listado`   ON alumnos_elearning_listado.idElearning     = alumnos_cursos_elearning.idElearning
-WHERE alumnos_cursos_elearning.idCurso = ".$_GET['id']."
-ORDER BY alumnos_elearning_listado.Nombre ASC  
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrCursos,$row );
-}
-
+$arrCursos = db_select_array (false, $SIS_query, 'alumnos_cursos_elearning', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCursos');
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Asignatura', $rowdata['Nombre'], 'Editar Elearning Asignados');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Asignatura', $rowdata['Nombre'], 'Editar Elearning Asignados'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Elearning</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Elearning</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -178,22 +147,20 @@ array_push( $arrCursos,$row );
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					
 					<?php foreach ($arrCursos as $curso){ ?>
-						<tr> 
+						<tr>
 							<td><?php echo $curso['NombreElearning']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($curso['idRelacionados'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar el elearning '.$curso['NombreElearning'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar el elearning '.$curso['NombreElearning'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>
 						</tr>
 					<?php } ?>
-						                
 				</tbody>
 			</table>
 		</div>
@@ -202,8 +169,8 @@ array_push( $arrCursos,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -212,4 +179,5 @@ array_push( $arrCursos,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

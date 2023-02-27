@@ -44,26 +44,15 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Cliente borrado correc
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
-$query = "SELECT Identificador, Nombre,idTipo, fNacimiento, idCiudad, idComuna, Direccion, idSistema, Rut
-FROM `aguas_clientes_listado`
-WHERE idCliente = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+$SIS_query = 'Identificador, Nombre,idTipo, fNacimiento, idCiudad, idComuna, Direccion, idSistema, Rut';
+$SIS_join  = '';
+$SIS_where = 'idCliente = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowdata['Identificador'], $rowdata['Nombre'], 'Editar Datos Basicos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowdata['Identificador'], $rowdata['Nombre'], 'Editar Datos Basicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -89,8 +78,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($idTipo)){           $x1  = $idTipo;            }else{$x1  = $rowdata['idTipo'];}
 					if(isset($Identificador)){    $x2  = $Identificador;     }else{$x2  = $rowdata['Identificador'];}
@@ -100,7 +89,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					if(isset($idCiudad)){         $x6  = $idCiudad;          }else{$x6  = $rowdata['idCiudad'];}
 					if(isset($idComuna)){         $x7  = $idComuna;          }else{$x7  = $rowdata['idComuna'];}
 					if(isset($Direccion)){        $x8  = $Direccion;         }else{$x8  = $rowdata['Direccion'];}
-					
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -109,7 +97,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 					$Form_Inputs->form_input_text('Identificador', 'Identificador', $x2, 2);
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x3, 2);
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 2);
-					
+
 					$Form_Inputs->form_tittle(3, 'Datos Opcionales');
 					$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x5, 1);
 					$Form_Inputs->form_select_depend1('Region','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
@@ -136,14 +124,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

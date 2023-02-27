@@ -69,12 +69,12 @@ foreach ($arrMediciones as $med) {
 		if((isset($arrMed[$counter]['Fecha'])&&$arrMed[$counter]['Fecha']!=$med['Fecha']) OR $counter==0){
 			$counter++;
 		}
-		
+
 		//creo las variables si estas no existen
 		if(!isset($arrMed[$counter]['Tiempo_Helada'])){  $arrMed[$counter]['Tiempo_Helada']  = 0;}
 		if(!isset($arrMed[$counter]['Temp_Min'])){       $arrMed[$counter]['Temp_Min']       = 1000;}
 		if(!isset($arrMed[$counter]['Temp_Max'])){       $arrMed[$counter]['Temp_Max']       = -1000;}
-		
+
 		//Guardo los datos
 		$arrMed[$counter]['Fecha']        = $med['Fecha'];
 		$arrMed[$counter]['UnidadesFrio'] = $med['UnidadesFrio'];

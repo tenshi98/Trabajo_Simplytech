@@ -101,7 +101,7 @@ echo '
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Notificaciones</h5>
 				<div class="toolbar">
 					<a href="<?php echo $location.'&all='.$_SESSION['usuario']['basic_data']['idUsuario']; ?>" class="btn btn-xs btn-primary"><i class="fa fa-check" aria-hidden="true"></i> Marcar Todos Leidos</a>
-					<?php 
+					<?php
 					//Paginador
 					echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 				</div>
@@ -138,19 +138,19 @@ echo '
 				//Paginador
 				echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
-			
+
 		</div>
 	</div>  
 	
 	
 	<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 mail-left-box">
   		<div class="list-group inbox-options">
-				<?php 
+				<?php
 				$todos = 0;
 				foreach ($arrCategorias as $cat) {
 					$todos = $todos + $cat['cuenta'];
 				} ?>
-					
+
 				<div class="list-group-item">Filtro</div>
 				<a href="<?php echo $original.'?pagina=1'; ?>" class="list-group-item">
 					<i class="fa fa-inbox" aria-hidden="true"></i> 
@@ -161,7 +161,7 @@ echo '
 			<?php foreach ($arrCategorias as $cat) { ?>
 				<?php if($cat['usuario']!=''){?>
 					<a href="<?php echo $original.'?pagina=1&filtersender='.$cat['idusuario']; ?>" class="list-group-item">
-						<i class="fa fa-inbox" aria-hidden="true"></i> 
+						<i class="fa fa-inbox" aria-hidden="true"></i>
 						<?php echo $cat['usuario']; ?>
 						<span class="badge bg-primary"><?php echo $cat['cuenta']; ?></span>
 					</a>

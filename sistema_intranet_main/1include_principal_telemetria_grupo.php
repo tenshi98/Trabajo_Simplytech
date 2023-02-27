@@ -22,7 +22,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
     $consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
     $consql .= ',telemetria_listado.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
     $consql .= ',telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.Sensor_'.$i.' AS SensorValue_'.$i;
-   
+
 }
 //Se traen todos los registros
 $SIS_query = ' 
@@ -49,7 +49,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacio
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5> Graficos</h5>
-						
+
 		</header>
 		<div class="table-responsive">
 

@@ -26,7 +26,7 @@ if(isset($_GET['seguimiento'])&&$_GET['seguimiento']!=''&&simpleDecode($_GET['se
 }
 //Filtro el sistema al cual pertenece
 if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&simpleDecode($_GET['idSistema'], fecha_actual())!=0){
-	$SIS_where .= " AND telemetria_listado.idSistema = ".simpleDecode($_GET['idSistema'], fecha_actual());	
+	$SIS_where .= " AND telemetria_listado.idSistema = ".simpleDecode($_GET['idSistema'], fecha_actual());
 }
 
 //Se consultan datos
@@ -83,7 +83,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 										echo '
 										<tr class="odd">
 											<td>'.$data['Nombre'].'</td>
-											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>	
+											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
 													<a target="_blank" rel="noopener noreferrer" href="informe_telemetria_errores_'.simpleDecode($_GET['seguimiento'], fecha_actual()).'.php?submit_filter=Filtrar'.$extra_data.'&idTelemetria='.$data['idTelemetria'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
@@ -103,7 +103,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 									$tiempo1     = $data['LastUpdateHora'];
 									$tiempo2     = $HoraSistema;
 									$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
-									
+
 									//Comparaciones de tiempo
 									$Time_Tiempo     = horas2segundos($Tiempo);
 									$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
@@ -115,7 +115,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 										echo '
 										<tr class="odd">
 											<td>'.$data['Nombre'].'</td>
-											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>	
+											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
 													<a target="_blank" rel="noopener noreferrer" href="informe_telemetria_fuera_linea_'.simpleDecode($_GET['seguimiento'], fecha_actual()).'.php?submit_filter=Filtrar'.$extra_data.'&idTelemetria='.$data['idTelemetria'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
@@ -145,7 +145,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 									$tiempo1     = $data['LastUpdateHora'];
 									$tiempo2     = $HoraSistema;
 									$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
-									
+
 									//Comparaciones de tiempo
 									$Time_Tiempo     = horas2segundos($Tiempo);
 									$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
@@ -156,11 +156,11 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 									if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 										$in_eq_fueralinea++;
 									}
-									
+
 									/**********************************************/
 									//NErrores
 									if(isset($data['NErrores'])&&$data['NErrores']>0){ $in_eq_alertas++; }
-									
+
 									/**********************************************/
 									//Si no hay errores nu fuera de linea
 									if($in_eq_fueralinea==0&&$in_eq_alertas==0){
@@ -169,7 +169,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 										echo '
 										<tr class="odd">
 											<td>'.$data['Nombre'].'</td>
-											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>	
+											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>
 											<td></td>
 										</tr>';
 									}
@@ -183,7 +183,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 										echo '
 										<tr class="odd">
 											<td>'.$data['Nombre'].'</td>
-											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>	
+											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
 													<a target="_blank" rel="noopener noreferrer" href="principal_gps_view_view.php?view='.$data['idTelemetria'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
@@ -204,12 +204,12 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 	</div>
 </div>
 
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>
 
 

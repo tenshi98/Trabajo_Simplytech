@@ -22,7 +22,7 @@ require_once 'core/Web.Header.Views.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['viewMuestra'])){ 
+if(!empty($_GET['viewMuestra'])){
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
 if (validarNumero($_GET['view'])){
@@ -32,7 +32,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 $X_viewMuestra = simpleDecode($_GET['viewMuestra'], fecha_actual());
@@ -103,7 +103,7 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 <section class="invoice">
 
 	<div class="row">
-		
+
 		<div class="col-xs-4">
 			<p class="lead">Datos Basicos:</p>
 			<p class="text-muted well well-sm no-shadow" >
@@ -118,7 +118,7 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 				<strong>Peso Caja: </strong>                 <?php echo $rowMuestras['peso'].'<br/>'; ?>
 			</p>
 		</div>
-		
+
 		<?php
 		foreach ($arrGrupo as $grupo) {
 			//Cuento si hay items dentro de la categoria
@@ -205,7 +205,7 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 				</div>';
 			}
 		}
-		
+
 		//se arma la ventana
 		echo '
 		<div class="col-xs-4">
@@ -226,7 +226,7 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 								
 		echo '</p>
 		</div>';
-		
+
 		?>
 
 	</div>
@@ -236,12 +236,12 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 
 <div class="clearfix"></div>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-		<a href="view_cross_quality_calidad_analisis.php?view=<?php echo $_GET['view'];?>"  class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+		<a href="view_cross_quality_calidad_analisis.php?view=<?php echo $_GET['view']; ?>"  class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 	<div class="clearfix"></div>
 </div>
-		
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else { 
+} else {
 //Version antigua de view
 //se verifica si es un numero lo que se recibe
 if (validarNumero($_GET['view'])){
@@ -251,7 +251,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -349,7 +349,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Datos Basicos
 			<address>
@@ -362,7 +362,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 					if(isset($row_data['UbicacionNombre_lvl_3'])&&$row_data['UbicacionNombre_lvl_3']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_3'];}
 					if(isset($row_data['UbicacionNombre_lvl_4'])&&$row_data['UbicacionNombre_lvl_4']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_4'];}
 					if(isset($row_data['UbicacionNombre_lvl_5'])&&$row_data['UbicacionNombre_lvl_5']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_5'];}
-				?>	
+				?>
 				<br/>
 			</address>
 		</div>
@@ -382,7 +382,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 				Usuario: <?php echo $row_data['Usuario']; ?><br/>
 			</address>
 		</div>
-    
+
 	</div>
 
 	<div class="">
@@ -398,9 +398,9 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 						<tr class="active"><td colspan="6"><strong>Trabajadores Encargados</strong></td></tr>
 						<?php foreach ($arrTrabajadores as $trab) { ?>
 							<tr>
-								<td><?php echo $trab['Rut'];?></td>
-								<td colspan="3"><?php echo $trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'];?></td>
-								<td colspan="2"><?php echo $trab['Cargo'];?></td>
+								<td><?php echo $trab['Rut']; ?></td>
+								<td colspan="3"><?php echo $trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat']; ?></td>
+								<td colspan="2"><?php echo $trab['Cargo']; ?></td>
 							</tr>
 						<?php } ?>
 					<?php } ?>
@@ -408,7 +408,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 						<tr class="active"><td colspan="6"><strong>Maquinas a Utilizar</strong></td></tr>
 						<?php foreach ($arrMaquinas as $maq) { ?>
 							<tr>
-								<td colspan="6"><?php echo $maq['Nombre'];?></td>
+								<td colspan="6"><?php echo $maq['Nombre']; ?></td>
 							</tr>
 						<?php } ?>
 					<?php } ?>
@@ -422,9 +422,9 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 						</tr>
 						<?php foreach ($arrMuestras as $muestra) { ?>
 							<tr>
-								<td colspan="2"><?php echo $muestra['ClienteNombre'];?></td>
-								<td colspan="2"><?php echo $muestra['n_folio_pallet'];?></td>
-								<td><?php echo $muestra['lote'];?></td>
+								<td colspan="2"><?php echo $muestra['ClienteNombre']; ?></td>
+								<td colspan="2"><?php echo $muestra['n_folio_pallet']; ?></td>
+								<td><?php echo $muestra['lote']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
 										<a href="<?php echo 'view_cross_quality_calidad_analisis.php?view='.$_GET['view'].'&viewMuestra='.simpleEncode($muestra['idMuestras'], fecha_actual()).'&cantPuntos='.simpleEncode($row_data['Producto_cantPuntos'], fecha_actual()).'&idCalidad='.simpleEncode($row_data['Producto_idCalidad'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
@@ -441,7 +441,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
 		</div>
 	</div>
 
@@ -484,7 +484,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -494,7 +494,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -504,4 +504,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

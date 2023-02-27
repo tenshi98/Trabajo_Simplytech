@@ -118,7 +118,7 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<tr class="odd"><td style="background-color:#7F7F7F" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>"><strong>Arriendos</strong></td></tr>
-					<?php 
+					<?php
 						//variables
 						$Total_ValorTotal  = 0;
 						$Total_MontoPagado = 0;
@@ -154,9 +154,9 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
 						<td></td>
 					</tr>
-					
+
 					<tr class="odd"><td style="background-color:#7F7F7F" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>"><strong>Insumos</strong></td></tr>
-					<?php 
+					<?php
 						//variables
 						$Sub_ValorTotal    = 0;
 						$Sub_MontoPagado   = 0;
@@ -192,7 +192,7 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 					</tr>
 					 
 					<tr class="odd"><td style="background-color:#7F7F7F" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>"><strong>Productos</strong></td></tr>
-					<?php 
+					<?php
 						//variables
 						$Sub_ValorTotal    = 0;
 						$Sub_MontoPagado   = 0;
@@ -226,9 +226,9 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td></td><?php } ?>
 						<td></td>
 					</tr>
-					
+
 					<tr class="odd"><td style="background-color:#7F7F7F" colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo '8';}else{echo '7';} ?>"><strong>Servicios</strong></td></tr>
-					<?php 
+					<?php
 						//variables
 						$Sub_ValorTotal    = 0;
 						$Sub_MontoPagado   = 0;
@@ -287,6 +287,7 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -312,7 +313,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_number('N° Documento', 'N_Doc', $x3, 1);
 				$Form_Inputs->form_date('Fecha Creacion Desde','f_creacion_inicio', $x4, 1);
 				$Form_Inputs->form_date('Fecha Creacion Hasta','f_creacion_termino', $x5, 1);
-						
+
 				?>
 
 				<div class="form-group">
@@ -330,4 +331,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

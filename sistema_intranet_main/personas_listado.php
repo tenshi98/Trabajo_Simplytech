@@ -85,7 +85,7 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SI
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Personas', $rowdata['Nombre'].' '.$rowdata['ApellidoPaterno'].' '.$rowdata['ApellidoMaterno'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Personas', $rowdata['Nombre'].' '.$rowdata['ApellidoPaterno'].' '.$rowdata['ApellidoMaterno'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -133,7 +133,7 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SI
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
-						<?php 
+						<?php
 							//se arma la direccion
 							$direccion = '';
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
@@ -150,7 +150,7 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SI
 					</div>
 				</div>
 				<div class="clearfix"></div>
-			
+
 			</div>
         </div>
 	</div>
@@ -158,14 +158,14 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SI
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -194,7 +194,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 
 				?>
-								
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -273,7 +273,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'personas_listado', $SIS_join, $
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Persona</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Persona</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -370,7 +370,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'personas_listado', $SIS_join, $
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idPersona']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idPersona'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar a la persona '.$usuarios['Nombre'].' '.$usuarios['ApellidoPaterno'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar a la persona '.$usuarios['Nombre'].' '.$usuarios['ApellidoPaterno'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -388,7 +388,6 @@ $arrUsers = db_select_array (false, $SIS_query, 'personas_listado', $SIS_join, $
 	</div>
 </div>
 
-
 <?php } ?>
 
 <?php
@@ -396,4 +395,5 @@ $arrUsers = db_select_array (false, $SIS_query, 'personas_listado', $SIS_join, $
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -109,9 +109,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 	</div>
 </div>
 
-
-
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){ ?>
 
@@ -176,7 +173,9 @@ $arrMantencion = db_select_array (false, $SIS_query, 'core_mantenciones', $SIS_j
 
 //variable de busqueda
 $search='';
+
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Mantencion</a>
 </div>
@@ -202,7 +201,7 @@ $search='';
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
-								  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrMantencion as $man) { ?>
 					<tr class="odd">
@@ -212,9 +211,9 @@ $search='';
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<a href="<?php echo $location.'&id='.$man['idMantencion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $location.'&del='.simpleEncode($man['idMantencion'], fecha_actual());
-								$dialogo   = '¿Realmente deseas eliminar el registro '.$man['Descripcion'].'?';?>
+								$dialogo   = '¿Realmente deseas eliminar el registro '.$man['Descripcion'].'?'; ?>
 								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
@@ -236,4 +235,5 @@ $search='';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -114,7 +114,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 	$SIS_order = 'idUtilizable ASC';
 	$arrTipos = array();
 	$arrTipos = db_select_array (false, $SIS_query, 'core_maquinas_tipo_componente', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTipos');
-	
+
 	//Se crea el arreglo
 	$TipoMaq = array();
 	foreach($arrTipos as $tipo) {
@@ -494,14 +494,14 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 						<p class="text-muted">
 							<?php if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
 								<strong>Cliente : </strong><?php echo $rowdata['Cliente']; ?><br/>
-							<?php }?>
+							<?php } ?>
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
 							<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>
 							<strong>Modelo : </strong><?php echo $rowdata['Modelo']; ?><br/>
@@ -510,13 +510,13 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							<strong>Fecha incorporacion : </strong><?php echo fecha_estandar($rowdata['fincorporacion']); ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
 							<?php if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
-								<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=''){echo '<strong>Ubicacion : </strong>'.$rowdata['Ubicacion'];}?>
-								<?php if(isset($rowdata['Ubicacion_lvl_1'])&&$rowdata['Ubicacion_lvl_1']!=''){echo ' - '.$rowdata['Ubicacion_lvl_1'];}?>
-								<?php if(isset($rowdata['Ubicacion_lvl_2'])&&$rowdata['Ubicacion_lvl_2']!=''){echo ' - '.$rowdata['Ubicacion_lvl_2'];}?>
-								<?php if(isset($rowdata['Ubicacion_lvl_3'])&&$rowdata['Ubicacion_lvl_3']!=''){echo ' - '.$rowdata['Ubicacion_lvl_3'];}?>
-								<?php if(isset($rowdata['Ubicacion_lvl_4'])&&$rowdata['Ubicacion_lvl_4']!=''){echo ' - '.$rowdata['Ubicacion_lvl_4'];}?>
-								<?php if(isset($rowdata['Ubicacion_lvl_5'])&&$rowdata['Ubicacion_lvl_5']!=''){echo ' - '.$rowdata['Ubicacion_lvl_5'];}?>
-							<?php }?>
+								<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=''){echo '<strong>Ubicacion : </strong>'.$rowdata['Ubicacion'];} ?>
+								<?php if(isset($rowdata['Ubicacion_lvl_1'])&&$rowdata['Ubicacion_lvl_1']!=''){echo ' - '.$rowdata['Ubicacion_lvl_1'];} ?>
+								<?php if(isset($rowdata['Ubicacion_lvl_2'])&&$rowdata['Ubicacion_lvl_2']!=''){echo ' - '.$rowdata['Ubicacion_lvl_2'];} ?>
+								<?php if(isset($rowdata['Ubicacion_lvl_3'])&&$rowdata['Ubicacion_lvl_3']!=''){echo ' - '.$rowdata['Ubicacion_lvl_3'];} ?>
+								<?php if(isset($rowdata['Ubicacion_lvl_4'])&&$rowdata['Ubicacion_lvl_4']!=''){echo ' - '.$rowdata['Ubicacion_lvl_4'];} ?>
+								<?php if(isset($rowdata['Ubicacion_lvl_5'])&&$rowdata['Ubicacion_lvl_5']!=''){echo ' - '.$rowdata['Ubicacion_lvl_5'];} ?>
+							<?php } ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Configuracion</h2>
@@ -531,7 +531,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<p class="text-muted">
-							<?php 
+							<?php
 							//Ficha Tecnica
 							if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
 								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Ficha Tecnica</a>';
@@ -543,12 +543,10 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							?>
 
 						</p>
-						
 
-						
 					</div>
 					<div class="clearfix"></div>
-					
+
 					<?php if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -594,7 +592,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			
 		</div>
 	</div>
-</div>	
+</div>
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
@@ -608,7 +606,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -618,7 +616,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -627,4 +625,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

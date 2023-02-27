@@ -62,24 +62,15 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
+
+/*******************************************************/
 // consulto los datos
-$query = "SELECT Ano, idMes, Valor
-FROM `aguas_mediciones_ipbi`
-WHERE idIPBI = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	?>
+$SIS_query = 'Ano, idMes, Valor';
+$SIS_join  = '';
+$SIS_where = 'idIPBI = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_ipbi', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -92,9 +83,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Ano)){      $x1  = $Ano;      }else{$x1  = $rowdata['Ano'];}
-				if(isset($idMes)){    $x2  = $idMes;    }else{$x2  = $rowdata['idMes'];}
-				if(isset($Valor)){    $x3  = $Valor;   }else{$x3  = Cantidades_decimales_justos($rowdata['Valor']);}
+				if(isset($Ano)){      $x1 = $Ano;      }else{$x1 = $rowdata['Ano'];}
+				if(isset($idMes)){    $x2 = $idMes;    }else{$x2 = $rowdata['idMes'];}
+				if(isset($Valor)){    $x3 = $Valor;    }else{$x3 = Cantidades_decimales_justos($rowdata['Valor']);}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -119,9 +110,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -134,9 +125,9 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Ano)){      $x1  = $Ano;      }else{$x1  = '';}
-				if(isset($idMes)){    $x2  = $idMes;    }else{$x2  = '';}
-				if(isset($Valor)){    $x3  = $Valor;   }else{$x3  = '';}
+				if(isset($Ano)){      $x1 = $Ano;     }else{$x1 = '';}
+				if(isset($idMes)){    $x2 = $idMes;   }else{$x2 = '';}
+				if(isset($Valor)){    $x3 = $Valor;   }else{$x3 = '';}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -188,10 +179,10 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = "aguas_mediciones_ipbi.idIPBI!=0";
-$SIS_where.= " AND aguas_mediciones_ipbi.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando	
+$SIS_where.= " AND aguas_mediciones_ipbi.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Ano']) && $_GET['Ano']!=''){$SIS_where .= " AND aguas_mediciones_ipbi.Ano='".$_GET['Ano']."'";}
+if(isset($_GET['Ano']) && $_GET['Ano']!=''){       $SIS_where .= " AND aguas_mediciones_ipbi.Ano='".$_GET['Ano']."'";}
 if(isset($_GET['idMes']) && $_GET['idMes']!=''){   $SIS_where .= " AND aguas_mediciones_ipbi.idMes='".$_GET['idMes']."'";}
 if(isset($_GET['Valor']) && $_GET['Valor']!=''){   $SIS_where .= " AND aguas_mediciones_ipbi.Valor='".$_GET['Valor']."'";}
 
@@ -236,8 +227,8 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_ipbi', $SIS_join
 			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
 				<?php
 				//Se verifican si existen los datos
-				if(isset($Ano)){      $x1  = $Ano;     }else{$x1  = '';}
-				if(isset($idMes)){    $x2  = $idMes;   }else{$x2  = '';}
+				if(isset($Ano)){      $x1  = $Ano;    }else{$x1  = '';}
+				if(isset($idMes)){    $x2  = $idMes;  }else{$x2  = '';}
 				if(isset($Valor)){    $x3  = $Valor;  }else{$x3  = '';}
 
 				//se dibujan los inputs
@@ -301,24 +292,24 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_ipbi', $SIS_join
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-				<?php foreach ($arrUML as $uml) { ?>
-					<tr class="odd">
-						<td><?php echo $uml['Ano']; ?></td>
-						<td><?php echo $uml['Mes']; ?></td>
-						<td align="right"><?php echo valores($uml['Valor'], 0); ?></td>
-						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $uml['sistema']; ?></td><?php } ?>
-						<td>
-							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$uml['idIPBI']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.simpleEncode($uml['idIPBI'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el IPBI del '.$uml['Ano'].' '.$uml['Mes'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>
-							</div>
-						</td>
-					</tr>
-				<?php } ?>
+					<?php foreach ($arrUML as $uml) { ?>
+						<tr class="odd">
+							<td><?php echo $uml['Ano']; ?></td>
+							<td><?php echo $uml['Mes']; ?></td>
+							<td align="right"><?php echo valores($uml['Valor'], 0); ?></td>
+							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $uml['sistema']; ?></td><?php } ?>
+							<td>
+								<div class="btn-group" style="width: 70px;" >
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$uml['idIPBI']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=4){
+										$ubicacion = $location.'&del='.simpleEncode($uml['idIPBI'], fecha_actual());
+										$dialogo   = '¿Realmente deseas eliminar el IPBI del '.$uml['Ano'].' '.$uml['Mes'].'?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<?php } ?>
+								</div>
+							</td>
+						</tr>
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -335,4 +326,5 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_mediciones_ipbi', $SIS_join
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

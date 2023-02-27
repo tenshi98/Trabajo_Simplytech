@@ -50,6 +50,7 @@ if (!empty($_POST['submit_pass'])){
 unset($_SESSION['form_require']);
 //se carga dato previo
 $_SESSION['form_require'] = 'required';
+
 ?>
 <!DOCTYPE html>
 <html lang="es-ES">

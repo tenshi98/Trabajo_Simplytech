@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -103,7 +103,7 @@ WHERE cross_solicitud_aplicacion_listado.idSolicitud = ".$X_Puntero;
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
 if(!$resultado){
-	
+
 	//variables
 	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
@@ -150,7 +150,7 @@ WHERE cross_solicitud_aplicacion_listado_cuarteles.idSolicitud = ".$X_Puntero;
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
 if(!$resultado){
-	
+
 	//variables
 	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
@@ -356,7 +356,7 @@ array_push( $arrHistorial,$row );
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<?php echo '
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Datos Empresa</strong>
@@ -408,7 +408,7 @@ array_push( $arrHistorial,$row );
 						Temperatura Min: '.Cantidades_decimales_justos($row_data['TempMin']).' °<br/>
 						Temperatura Max: '.Cantidades_decimales_justos($row_data['TempMax']).' °<br/>
 						Humedad: '.Cantidades_decimales_justos($row_data['HumTempMax']).' %<br/>
-						
+
 					</address>
 				</div>';
 		?>
@@ -431,7 +431,7 @@ array_push( $arrHistorial,$row );
 						<td><strong>Vehiculos</strong></td>
 						<td width="10"><strong>Acciones</strong></td>
 					</tr>
-					
+
 					<?php
 					//Variables
 					$TotalNPlantas          = 0;
@@ -503,7 +503,7 @@ array_push( $arrHistorial,$row );
 									break;
 							}
 							?>
-							
+
 							<tr class="item-row linea_punteada">
 								<td class="item-name"><?php echo $s_Icon.' '.$cuartel['CuartelNombre'].$cierre; ?></td>
 								<td class="item-name">
@@ -511,7 +511,7 @@ array_push( $arrHistorial,$row );
 									<strong>N° Plantas: </strong><?php echo Cantidades($cuartel['NPlantas'], 0); ?><br/>
 									<strong>Hectareas: </strong><?php echo Cantidades($cuartel['CuartelHectareas'], 2); ?>
 								</td>
-								
+
 								<td class="item-name">
 									<strong>Año Plantacion: </strong><?php echo Cantidades($cuartel['CuartelAnoPlantacion'], 0); ?><br/>
 									<strong>Hileras: </strong><?php echo Cantidades($cuartel['CuartelHileras'], 0); ?><br/>
@@ -524,7 +524,7 @@ array_push( $arrHistorial,$row );
 									<strong>lts. Aplicados x Hectareas: </strong><?php echo Cantidades($LitrosApliXhect, 0); ?><br/>
 									<strong>Mojamiento: </strong><?php echo Cantidades_decimales_justos($row_data['Mojamiento']).' L/ha'; ?>
 								</td>
-								
+
 								<td class="item-name"><?php echo porcentaje($LitrosApliXhect/$row_data['Mojamiento']); ?></td>
 								<td class="item-name">
 									<?php 
@@ -546,8 +546,8 @@ array_push( $arrHistorial,$row );
 									</div>
 								</td>
 								<?php //echo '<td class="item-name">'.Cantidades($aplicadas, 0).'</td>'; ?>
-                            </tr> 
-						<?php 
+                            </tr>
+						<?php
 						} 
 						//calculo
 						if(isset($TotalCuartelHectareas)&&$TotalCuartelHectareas!=0){
@@ -560,25 +560,25 @@ array_push( $arrHistorial,$row );
 
 						<tr class="item-row linea_punteada">
 							<td class="item-name"><strong>Totales</strong></td>
-							
+
 							<td class="item-name">
 								<strong>Total N° Plantas: </strong><?php echo Cantidades($TotalNPlantas, 0); ?><br/>
 								<strong>Total Hectareas: </strong><?php echo Cantidades($TotalCuartelHectareas, 2); ?>
 							</td>
-							
+
 							<td class="item-name">
 								<strong>Total Hileras: </strong><?php echo Cantidades($TotalCuartelHileras, 0); ?><br/>
 							</td>
-							
+
 							<td class="item-name">
 								<strong>Total lts. Aplicados: </strong><?php echo Cantidades($TotalLitrosAplicados, 0); ?><br/>
 								<strong>Total lts. Aplicados x Hectareas: </strong><?php echo Cantidades($TotLitrosApliXhect, 0); ?><br/>
 							</td>
-							
+
 							<td class="item-name"><?php echo porcentaje($TotLitrosApliXhect/$row_data['Mojamiento']); ?></td>
 							<td class="item-name"><strong></strong></td>
 							<td class="item-name"><strong></strong></td>
-							
+
 						</tr>
                         <?php    
 					}else{
@@ -607,26 +607,26 @@ array_push( $arrHistorial,$row );
 						<td><strong>Carencia<br/>ESCO</strong></td>
 						<td><strong>Tiempo<br/>Re-Ingreso</strong></td>
 					</tr>
-					<?php 
+					<?php
 					//Variable
 					$NProd = 0;
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrProductos) {
 						foreach ($arrProductos as $prod) {
 							$NProd++; ?>
-							
+
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><?php echo $prod['Objetivo'];?></td>
-								<td class="item-name"><i class="fa fa-flask" aria-hidden="true"></i> <?php echo $prod['ProductoNombre'];?></td>
-								<td class="item-name"><?php echo $prod['ProductoIngrediente'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['DosisRecomendada']).' '.$prod['Unimed'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['DosisAplicar']).' '.$prod['Unimed'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoExportador']);?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoCarencia']);?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoResidual']);?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoRetroactivo']);?></td>
+								<td class="item-name"><?php echo $prod['Objetivo']; ?></td>
+								<td class="item-name"><i class="fa fa-flask" aria-hidden="true"></i> <?php echo $prod['ProductoNombre']; ?></td>
+								<td class="item-name"><?php echo $prod['ProductoIngrediente']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['DosisRecomendada']).' '.$prod['Unimed']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['DosisAplicar']).' '.$prod['Unimed']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoExportador']); ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoCarencia']); ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoResidual']); ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($prod['ProductoRetroactivo']); ?></td>
 							</tr>
-							<?php 
+							<?php
 						}
 					}else{
 						echo '<tr class="item-row linea_punteada"><td colspan="9">No hay Productos Quimicos Asignados</td></tr>';
@@ -650,7 +650,7 @@ array_push( $arrHistorial,$row );
 						<td><strong>Velocidad Promedio</strong></td>
 						<td><strong>Tiempo Aplicando</strong></td>
 					</tr>
-					<?php 
+					<?php
 					//Variables
 					$Capacidad  = 0;
 					$NTract     = 0;
@@ -661,19 +661,19 @@ array_push( $arrHistorial,$row );
 							$Capacidad = $Capacidad + $tract['TelemetriaCapacidad'];
 							$NTract++;
 							?>
-							
+
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><i class="fa fa-truck" aria-hidden="true"></i> <?php echo $tract['VehiculoNombre'];?></td>
-								<td class="item-name"><?php echo $tract['TelemetriaNombre'];?></td>
-								<td class="item-name"><?php echo $tract['Rut'].' '.$tract['Nombre'].' '.$tract['ApellidoPat'];?></td>
-								<td class="item-name"><?php echo $tract['Contratista'];?></td>
-								<td class="item-name"><?php echo Cantidades_decimales_justos($tract['TelemetriaCapacidad']);?></td>
-								<td class="item-name"><?php echo Cantidades($tract['Diferencia'], 0);?></td>
-								<td class="item-name"><?php echo Cantidades($tract['GeoVelocidadProm'],2);?></td>
-								<td class="item-name"><?php echo $tract['T_Aplicacion'];?></td>
+								<td class="item-name"><i class="fa fa-truck" aria-hidden="true"></i> <?php echo $tract['VehiculoNombre']; ?></td>
+								<td class="item-name"><?php echo $tract['TelemetriaNombre']; ?></td>
+								<td class="item-name"><?php echo $tract['Rut'].' '.$tract['Nombre'].' '.$tract['ApellidoPat']; ?></td>
+								<td class="item-name"><?php echo $tract['Contratista']; ?></td>
+								<td class="item-name"><?php echo Cantidades_decimales_justos($tract['TelemetriaCapacidad']); ?></td>
+								<td class="item-name"><?php echo Cantidades($tract['Diferencia'], 0); ?></td>
+								<td class="item-name"><?php echo Cantidades($tract['GeoVelocidadProm'],2); ?></td>
+								<td class="item-name"><?php echo $tract['T_Aplicacion']; ?></td>
 							</tr>
 						
-							<?php 
+							<?php
 						}
 					}else{
 						echo '<tr class="item-row linea_punteada"><td colspan="5">No hay Tractores Asignados</td></tr>';
@@ -694,28 +694,28 @@ array_push( $arrHistorial,$row );
 						<td><strong>Producto<br/>Quimico</strong></td>
 						<td><strong>Total Producto<br/>Quimico</strong></td>
 					</tr>
-					
+
 					<?php
 					//Variable
-					$nmb = 0; 
+					$nmb = 0;
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrProductos) {
 						foreach ($arrProductos as $prod) {
 							$PromedioCapacidad = $Capacidad/$NTract;
 							
 							?>
-							
+
 							<tr class="item-row linea_punteada">
-								<?php if($nmb==0){ ?><td class="item-name"  rowspan="<?php echo $NProd; ?>"><?php echo Cantidades_decimales_justos($Capacidad);?></td><?php } ?>
-								<?php if($nmb==0){ ?><td class="item-name"  rowspan="<?php echo $NProd; ?>"><?php echo Cantidades_decimales_justos($PromedioCapacidad);?></td><?php } ?>
+								<?php if($nmb==0){ ?><td class="item-name"  rowspan="<?php echo $NProd; ?>"><?php echo Cantidades_decimales_justos($Capacidad); ?></td><?php } ?>
+								<?php if($nmb==0){ ?><td class="item-name"  rowspan="<?php echo $NProd; ?>"><?php echo Cantidades_decimales_justos($PromedioCapacidad); ?></td><?php } ?>
 								<?php if($nmb==0){ ?><td class="item-name"  rowspan="<?php echo $NProd; ?>"><?php if($PromedioCapacidad!=0){echo Cantidades(($row_data['Mojamiento']*$TotalCuartelHectareas)/$PromedioCapacidad, 2);}else{echo '0';} ?></td><?php } ?>
-								
-								<td class="item-name"><i class="fa fa-flask" aria-hidden="true"></i> <?php echo $prod['ProductoNombre'];?></td>
-								<td class="item-name"><?php echo Cantidades((($row_data['Mojamiento']*$TotalCuartelHectareas)/100)*$prod['DosisAplicar'], 2).' '.$prod['Unimed'];?></td>
+
+								<td class="item-name"><i class="fa fa-flask" aria-hidden="true"></i> <?php echo $prod['ProductoNombre']; ?></td>
+								<td class="item-name"><?php echo Cantidades((($row_data['Mojamiento']*$TotalCuartelHectareas)/100)*$prod['DosisAplicar'], 2).' '.$prod['Unimed']; ?></td>
 	
 							</tr>
 	
-							<?php 
+							<?php
 							//se suma 1
 							$nmb++;
 						}
@@ -743,9 +743,9 @@ array_push( $arrHistorial,$row );
 					if ($arrMateriales) {
 						foreach ($arrMateriales as $prod){ ?>
 							<tr class="item-row linea_punteada">
-								<td class="item-name"><i class="fa fa-eyedropper" aria-hidden="true"></i> <?php echo $prod['Codigo'].' - '.$prod['Nombre'];?></td>
+								<td class="item-name"><i class="fa fa-eyedropper" aria-hidden="true"></i> <?php echo $prod['Codigo'].' - '.$prod['Nombre']; ?></td>
 							</tr>
-							<?php 
+							<?php
 						}
 					}else{
 						echo '<tr class="item-row linea_punteada"><td>No hay Materiales de Seguridad Asignados</td></tr>';
@@ -800,7 +800,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -810,7 +810,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -819,4 +819,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

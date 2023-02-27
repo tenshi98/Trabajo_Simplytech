@@ -94,7 +94,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				$Form_Inputs->form_input_hidden('idQuizRealizadas', $_GET['id'], 2);
 				?>
-								
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -165,7 +165,6 @@ array_push( $arrAlumnos,$row );
 }
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -203,12 +202,12 @@ array_push( $arrAlumnos,$row );
 							<div class="btn-group" style="width: 35px;" >
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$eva['idQuizRealizadas']; ?>" title="Editar Evaluacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
-						</td>	
+						</td>
 						</tr>
 					<?php } ?>
 				</tbody>
 			</table>
-		</div> 
+		</div>
 	</div>
 </div>
  
@@ -229,7 +228,9 @@ array_push( $arrAlumnos,$row );
 } else {
 //Verifico el tipo de usuario que esta ingresando
 $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -277,4 +278,5 @@ $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstad
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

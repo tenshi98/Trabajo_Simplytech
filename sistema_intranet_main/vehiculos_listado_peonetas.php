@@ -101,7 +101,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($ApellidoMat)){    $x3  = $ApellidoMat;  }else{$x3  = $rowdata['ApellidoMat'];}
 				if(isset($Rut)){            $x4  = $Rut;          }else{$x4  = $rowdata['Rut'];}
 				if(isset($Fecha)){$x5  = $Fecha;        }else{$x5  = $rowdata['Fecha'];}
-					
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -109,8 +109,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_text('Apellido Materno', 'ApellidoMat', $x3, 2);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 2);
 				$Form_Inputs->form_date('F Nacimiento','Fecha', $x5, 1);
-					
-					
+
 				$Form_Inputs->form_input_hidden('idPeoneta', $_GET['edit'], 2);
 				$Form_Inputs->form_input_hidden('idVehiculo', $_GET['id'], 2);
 				?>
@@ -128,7 +127,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -138,7 +137,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){         $x1  = $Nombre;       }else{$x1  = '';}
@@ -146,7 +145,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				if(isset($ApellidoMat)){    $x3  = $ApellidoMat;  }else{$x3  = '';}
 				if(isset($Rut)){            $x4  = $Rut;          }else{$x4  = '';}
 				if(isset($Fecha)){$x5  = $Fecha;        }else{$x5  = '';}
-					
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -296,9 +295,9 @@ array_push( $arrPeonetas,$row );
 	if(isset($rowdata['Patente'])&&$rowdata['Patente']!=''){
 		$vehiculo .= ' Patente '.$rowdata['Patente'];
 	}
-	echo widget_title('bg-aqua', 'fa-cog', 100, 'Vehiculo', $vehiculo, 'Editar Peonetas');?>
+	echo widget_title('bg-aqua', 'fa-cog', 100, 'Vehiculo', $vehiculo, 'Editar Peonetas'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Peoneta</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Peoneta</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -358,7 +357,7 @@ array_push( $arrPeonetas,$row );
 						<li class=""><a href="<?php echo 'vehiculos_listado_doc_mantencion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Mantenciones</a></li>
 						<li class=""><a href="<?php echo 'vehiculos_listado_doc_trans_personas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Cert. Transporte Personas</a></li>
 						<li class=""><a href="<?php echo 'vehiculos_listado_doc_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Ficha Tecnica</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -384,7 +383,7 @@ array_push( $arrPeonetas,$row );
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$peoneta['idPeoneta']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($peoneta['idPeoneta'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el peoneta '.$peoneta['Nombre'].' '.$peoneta['ApellidoPat'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el peoneta '.$peoneta['Nombre'].' '.$peoneta['ApellidoPat'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -399,8 +398,8 @@ array_push( $arrPeonetas,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -409,4 +408,5 @@ array_push( $arrPeonetas,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -35,14 +35,15 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 	.iframe_elfinder{height: 700px;}
 	iframe{float:right;width: 100%;height: 100%;padding: 0;margin: 0;border:none;}
 </style>
-			
+
 <div class="iframe_elfinder">
 	<iframe class="embed-responsive-item" src="<?php echo DB_SITE_REPO.'/LIB_Programs/index.php' ?>" allowfullscreen></iframe>
 </div>
-		
+
 <?php		
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

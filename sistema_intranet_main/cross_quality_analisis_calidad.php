@@ -142,12 +142,12 @@ if(!empty($_GET['addFile'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
-			
+
 				<?php
 				//Se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_multiple_upload('Seleccionar archivo','exFile', 1, '"jpg", "png", "gif", "jpeg", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf"');
-					
+
 				?>
 
 				<div class="form-group">
@@ -161,7 +161,7 @@ if(!empty($_GET['addFile'])){ ?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['cloneMuestra'])){ 
+} elseif(!empty($_GET['cloneMuestra'])){
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -214,6 +214,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrGrupo,$row );
 }
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -257,12 +258,12 @@ array_push( $arrGrupo,$row );
 							$x_con++;
 						}
 					}
-					
+
 					//si hay items se muestra todo
 					if($x_con!=0){
-						
+
 						echo '<h4>'.$grupo['Nombre'].'</h4>';
-					
+
 						for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
 							if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
 								//Verifico el tipo de dato
@@ -307,8 +308,7 @@ array_push( $arrGrupo,$row );
 									case 10:
 										$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 10);
 										break;
-								
-									
+
 								}
 							}
 						}
@@ -330,9 +330,7 @@ array_push( $arrGrupo,$row );
 				}
 
 				?>
-				
-				
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_muestra">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -344,7 +342,7 @@ array_push( $arrGrupo,$row );
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['editMuestra'])){ 
+} elseif(!empty($_GET['editMuestra'])){
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -397,6 +395,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrGrupo,$row );
 }
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -431,7 +430,7 @@ array_push( $arrGrupo,$row );
 				$Form_Inputs->form_input_number('Peso Caja', 'peso', $x9, 2);
 
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['cross_quality_ana_cali_muestras'][$_GET['editMuestra']]['idMuestra'], 2);
-					
+
 				$Form_Inputs->form_tittle(3, 'Datos Tipo Planilla');
 				foreach ($arrGrupo as $grupo) {
 					//Cuento si hay items dentro de la categoria
@@ -441,12 +440,12 @@ array_push( $arrGrupo,$row );
 							$x_con++;
 						}
 					}
-					
+
 					//si hay items se muestra todo
 					if($x_con!=0){
-						
+
 						echo '<h4>'.$grupo['Nombre'].'</h4>';
-					
+
 						for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
 							if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
 								//Verifico el tipo de dato
@@ -491,8 +490,7 @@ array_push( $arrGrupo,$row );
 									case 10:
 										$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, $_SESSION['cross_quality_ana_cali_muestras'][$_GET['editMuestra']]['Medida_'.$i], 1, 1, 10);
 										break;
-								
-									
+
 								}
 							}
 						}
@@ -514,9 +512,7 @@ array_push( $arrGrupo,$row );
 				}
 
 				?>
-				
-				
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_muestra">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -528,7 +524,7 @@ array_push( $arrGrupo,$row );
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addMuestra'])){ 
+} elseif(!empty($_GET['addMuestra'])){
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -581,6 +577,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrGrupo,$row );
 }
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -623,12 +620,12 @@ array_push( $arrGrupo,$row );
 							$x_con++;
 						}
 					}
-					
+
 					//si hay items se muestra todo
 					if($x_con!=0){
-						
+
 						echo '<h4>'.$grupo['Nombre'].'</h4>';
-					
+
 						for ($i = 1; $i <= $_GET['cantPuntos']; $i++) {
 							if($grupo['idGrupo']==$rowdata['PuntoidGrupo_'.$i]){
 								//Verifico el tipo de dato
@@ -673,8 +670,7 @@ array_push( $arrGrupo,$row );
 									case 10:
 										$Form_Inputs->form_select_n_auto($rowdata['PuntoNombre_'.$i],'Medida_'.$i, '', 1, 1, 10);
 										break;
-								
-									
+
 								}
 							}
 						}
@@ -697,9 +693,7 @@ array_push( $arrGrupo,$row );
 				
 
 				?>
-				
-				
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_muestra">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -709,11 +703,12 @@ array_push( $arrGrupo,$row );
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
+</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addMaquina'])){ 
+} elseif(!empty($_GET['addMaquina'])){
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -733,9 +728,9 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Maquina','idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $z, '', $dbConn);
 				?>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_maq"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_maq">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -745,9 +740,10 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addTrab'])){ 
+} elseif(!empty($_GET['addTrab'])){
 //Verifico el tipo de usuario que esta ingresando
 $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -763,15 +759,14 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = '';}
 
-				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador responsable','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
 
 				?>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_trab"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_trab">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -808,7 +803,6 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_5'])&&$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_5']!=''){if(isset($idUbicacion_lvl_5)){   $x11 = $idUbicacion_lvl_5; }else{$x11 = $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_5'];}}else{$x11 = '';}
 
 				if(isset($Observaciones)){         $x12  = $Observaciones;       }else{$x12  = $_SESSION['cross_quality_ana_cali_basicos']['Observaciones'];}
-				
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -816,10 +810,10 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x2, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
 				$Form_Inputs->form_select_temporada_2('Temporada','Temporada', $x3, 2, ano_actual());
 				$Form_Inputs->form_select_depend1('Categoria','idCategoria', $x4, 2, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, 0,
-										 'Producto','idProducto', $x5, 2, 'idProducto', 'Nombre', 'productos_listado', 'idEstado=1 AND idCalidad!=0', 0, 
+										 'Producto','idProducto', $x5, 2, 'idProducto', 'Nombre', 'productos_listado', 'idEstado=1 AND idCalidad!=0', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x6,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1',   0,
-							                 'Nivel 1', 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
+							                 'Nivel 1', 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0,
 							                 'Nivel 2', 'idUbicacion_lvl_2',  $x8,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
 							                 'Nivel 3', 'idUbicacion_lvl_3',  $x9,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
 							                 'Nivel 4', 'idUbicacion_lvl_4',  $x10,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
@@ -831,8 +825,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				
-				
+
 				?>
 
 				<div class="form-group">
@@ -851,17 +844,17 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
 
-		<?php 
+		<?php
 		$ubicacion = $location.'&clear_all=true';
-		$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+		$dialogo   = '¿Realmente deseas eliminar todos los registros?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
 
 		<a href="<?php echo $location; ?>"  class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
 		<?php
 		$ubicacion = $location.'&view=true&ing_Doc=true';
-		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?';?>
-		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
+		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?'; ?>
+		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>
 
 	</div>
 	<div class="clearfix"></div>
@@ -873,7 +866,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 		<div id="header"> <?php echo $_SESSION['cross_quality_ana_cali_basicos']['Tipo']; ?></div>
 
 		<div id="customer">
-			
+
 			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
@@ -908,7 +901,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 						<td class="meta-head">Temporada</td>
 						<td colspan="2"><?php echo $_SESSION['cross_quality_ana_cali_basicos']['Temporada'] ?></td>
 					</tr>
-					
+
 				</tbody>
 			</table>
 		</div>
@@ -932,14 +925,14 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				if(isset($_SESSION['cross_quality_ana_cali_trabajadores'])&&$_SESSION['cross_quality_ana_cali_trabajadores']!=''){
 					foreach ($_SESSION['cross_quality_ana_cali_trabajadores'] as $key => $trabajador){ ?>
 						<tr class="item-row linea_punteada">
-							<td class="item-name"><?php echo $trabajador['Rut'];?></td>
-							<td class="item-name" colspan="3"><?php echo $trabajador['Nombre'];?></td>
-							<td class="item-name"><?php echo $trabajador['Cargo'];?></td>
+							<td class="item-name"><?php echo $trabajador['Rut']; ?></td>
+							<td class="item-name" colspan="3"><?php echo $trabajador['Nombre']; ?></td>
+							<td class="item-name"><?php echo $trabajador['Cargo']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php 
+									<?php
 									$ubicacion = $location.'&del_trab='.$trabajador['idTrabajador'];
-									$dialogo   = '¿Realmente deseas eliminar al trabajador '.$trabajador['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar al trabajador '.$trabajador['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Trabajador" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 								</div>
 							</td>
@@ -947,7 +940,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 					<?php }
 				}else{
 					echo '<tr class="item-row linea_punteada"><td colspan="6">No hay trabajadores asignados</td></tr>';
-				}?>
+				} ?>
 				<tr id="hiderow"><td colspan="6"></td></tr>
 				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
@@ -961,12 +954,12 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				if(isset($_SESSION['cross_quality_ana_cali_maquinas'])&&$_SESSION['cross_quality_ana_cali_maquinas']!=''){
 					foreach ($_SESSION['cross_quality_ana_cali_maquinas'] as $key => $maquina){ ?>
 						<tr class="item-row linea_punteada">
-							<td class="item-name" colspan="5"><?php echo $maquina['Nombre'];?></td>
+							<td class="item-name" colspan="5"><?php echo $maquina['Nombre']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php 
+									<?php
 									$ubicacion = $location.'&del_maq='.$maquina['idMaquina'];
-									$dialogo   = '¿Realmente deseas eliminar a Maquina '.$maquina['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar a Maquina '.$maquina['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Trabajador" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 								</div>
 							</td>
@@ -989,22 +982,22 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 					<td>Lote</td>
 					<td></td>
 				</tr>
-				<?php 
+				<?php
 				if (isset($_SESSION['cross_quality_ana_cali_muestras'])){
 					//recorro el lsiatdo entregado por la base de datos
 					foreach ($_SESSION['cross_quality_ana_cali_muestras'] as $key => $producto){ ?>
 						<tr class="item-row linea_punteada">
-							<td class="item-name" colspan="2"><?php echo $producto['ProductorNombre'];?></td>
-							<td class="item-name" colspan="2"><?php echo $producto['n_folio_pallet'];?></td>
-							<td class="item-name"><?php echo $producto['lote'];?></td>
+							<td class="item-name" colspan="2"><?php echo $producto['ProductorNombre']; ?></td>
+							<td class="item-name" colspan="2"><?php echo $producto['n_folio_pallet']; ?></td>
+							<td class="item-name"><?php echo $producto['lote']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
 									<a href="<?php echo $location.'&cloneMuestra='.$producto['idMuestra'].'&cantPuntos='.$_SESSION['cross_quality_ana_cali_basicos']['ProductoPuntos'].'&idCalidad='.$_SESSION['cross_quality_ana_cali_basicos']['ProductoCalidad']; ?>" title="Clonar Registro" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a>
 									<a href="<?php echo $location.'&editMuestra='.$producto['idMuestra'].'&cantPuntos='.$_SESSION['cross_quality_ana_cali_basicos']['ProductoPuntos'].'&idCalidad='.$_SESSION['cross_quality_ana_cali_basicos']['ProductoCalidad']; ?>" title="Editar Registro" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-									<?php 
+									<?php
 									$ubicacion = $location.'&del_muestra='.$producto['idMuestra'];
-									$dialogo   = '¿Realmente deseas eliminar el registro ?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Registro" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+									$dialogo   = '¿Realmente deseas eliminar el registro ?'; ?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Registro" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -1014,27 +1007,26 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				}
 				?>
 
-				
 			</tbody>
 		</table>
     </div>
-    
+
     <div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['cross_quality_ana_cali_basicos']['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['cross_quality_ana_cali_basicos']['Observaciones']; ?></p>
 		</div>
 	</div>
-    
+
 	<table id="items" style="margin-bottom: 20px;">
         <tbody>
-            
+
 			<tr class="invoice-total" bgcolor="#f1f1f1">
                 <td colspan="5">Archivos Adjuntos</td>
                 <td width="160"><a href="<?php echo $location.'&addFile=true' ?>" title="Agregar Archivo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Archivos</a></td>
             </tr>
-            
-			<?php 
+
+			<?php
 			if (isset($_SESSION['cross_quality_ana_cali_archivos'])){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
@@ -1044,18 +1036,18 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $location.'&del_file='.$producto['idFile'];
-								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?';?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+								$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?'; ?>
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>
-					 
-				 <?php 
+
+				 <?php
 				$numeral++;
 				}
-			}?>
+			} ?>
 
 		</tbody>
     </table>
@@ -1065,7 +1057,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -1102,10 +1094,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x2, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
 				$Form_Inputs->form_select_temporada_2('Temporada','Temporada', $x3, 2, ano_actual());
 				$Form_Inputs->form_select_depend1('Categoria','idCategoria', $x4, 2, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, 0,
-										 'Producto','idProducto', $x5, 2, 'idProducto', 'Nombre', 'productos_listado', 'idEstado=1 AND idCalidad!=0 AND idOpciones_2=1', 0, 
+										 'Producto','idProducto', $x5, 2, 'idProducto', 'Nombre', 'productos_listado', 'idEstado=1 AND idCalidad!=0 AND idOpciones_2=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x6,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1',   0,
-							                 'Nivel 1', 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
+							                 'Nivel 1', 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0,
 							                 'Nivel 2', 'idUbicacion_lvl_2',  $x8,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
 							                 'Nivel 3', 'idUbicacion_lvl_3',  $x9,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
 							                 'Nivel 4', 'idUbicacion_lvl_4',  $x10,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
@@ -1236,17 +1228,17 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_quality_analisis_calidad',
 
 	<?php if ($rowlevel['level']>=3){ ?>
 		<?php if (isset($_SESSION['cross_quality_ana_cali_basicos']['idTipo'])&&$_SESSION['cross_quality_ana_cali_basicos']['idTipo']!=''){?>
-			
-			<?php 
+
+			<?php
 			$ubicacion = $location.'&clear_all=true';
-			$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+			$dialogo   = '¿Realmente deseas eliminar todos los registros?'; ?>
 			<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</a>
-			
+
 			<a href="<?php echo $location; ?>&view=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-arrow-right" aria-hidden="true"></i> Continuar Inspeccion</a>
 		<?php }else{ ?>
 			<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Inspeccion</a>
 		<?php } ?>
-	<?php }?>
+	<?php } ?>
 </div>
 <div class="clearfix"></div>
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
@@ -1273,10 +1265,10 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_quality_analisis_calidad',
 				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x2, 1, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
 				$Form_Inputs->form_select_temporada_2('Temporada','Temporada', $x3, 1, ano_actual());
 				$Form_Inputs->form_select_depend1('Categoria','idCategoria', $x4, 1, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, 0,
-										 'Producto','idProducto', $x5, 1, 'idProducto', 'Nombre', 'productos_listado', 'idEstado=1 AND idCalidad!=0', 0, 
+										 'Producto','idProducto', $x5, 1, 'idProducto', 'Nombre', 'productos_listado', 'idEstado=1 AND idCalidad!=0', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x6,  1,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1',   0,
-											 'Nivel 1', 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
+											 'Nivel 1', 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0,
 							                 'Nivel 2', 'idUbicacion_lvl_2',  $x8,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
 							                 'Nivel 3', 'idUbicacion_lvl_3',  $x9,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
 							                 'Nivel 4', 'idUbicacion_lvl_4',  $x10,  1,  'idLevel_4',  'Nombre',  'ubicacion_listado_level_4',  0,   0,
@@ -1395,11 +1387,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_quality_analisis_calidad',
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

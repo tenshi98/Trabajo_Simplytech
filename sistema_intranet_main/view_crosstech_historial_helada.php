@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 //Equipo
@@ -74,11 +74,11 @@ foreach($arrHistorial as $hist2) {
 
 $Temp_1   = '';
 $arrData  = array();
-foreach($arrHistorial as $hist) { 
-	
+foreach($arrHistorial as $hist) {
+
 	//variables
 	$temp_predic = $hist['Helada'];
-	
+
 	//se obtiene la hora
 	$x_time     = strtotime($hist['HeladaHora']);
 	$x_hora   = date('H', $x_time);
@@ -89,7 +89,7 @@ foreach($arrHistorial as $hist) {
 	}else{
 		$temp_real = 0;
 	}
-	
+
 	//Se obtiene la fecha
 	$Temp_1 .= "'".Fecha_estandar($hist['HeladaDia'])." - ".$hist['HeladaHora']."',";
 	//valores	
@@ -155,7 +155,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -165,7 +165,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -174,4 +174,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

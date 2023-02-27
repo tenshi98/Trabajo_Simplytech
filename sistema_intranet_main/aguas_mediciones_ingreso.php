@@ -91,7 +91,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos', $SIS_joi
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				if(isset($Fecha)){  $x1  = $Fecha;            }else{$x1  = $rowdata['Fecha'];}
 				if(isset($Observaciones)){    $x2  = $Observaciones;    }else{$x2  = $rowdata['Observaciones'];}
 
@@ -131,7 +131,6 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos_detalle', 
 
 ?>
 
-
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -153,7 +152,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos_detalle', 
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modConsumo"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modConsumo">
 					<a href="<?php echo $location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -238,7 +237,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td><?php echo Fecha_estandar($rowdata['Fecha']);?></td>
+						<td><?php echo Fecha_estandar($rowdata['Fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -279,14 +278,14 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 				<?php } ?>
 
 				<tr>
-					<td colspan="8" class="blank"> 
+					<td colspan="8" class="blank">
 						<p>
 							<?php 
 							if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){
 								echo $rowdata['Observaciones'];
 							}else{
 								echo 'Sin Observaciones';
-							}?>
+							} ?>
 						</p>
 					</td>
 				</tr>
@@ -312,7 +311,8 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //cuadro para descargar
 $Alert_Text  = 'Descargar Plantilla';
 $Alert_Text .= '<a href="1download.php?dir='.simpleEncode('templates', fecha_actual()).'&file='.simpleEncode('carga_medidores_plantilla.xlsx', fecha_actual()).'" title="Descargar Plantilla" class="btn btn-primary btn-sm pull-right" ><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>';
-alert_post_data(2,1,2, $Alert_Text);	 
+alert_post_data(2,1,2, $Alert_Text);
+
 ?>
 
 		
@@ -533,7 +533,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idDatos']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($tipo['idDatos'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar la medicion '.n_doc($tipo['idDatos'], 7).'?';?>
+										$dialogo   = '¿Realmente deseas eliminar la medicion '.n_doc($tipo['idDatos'], 7).'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -557,4 +557,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

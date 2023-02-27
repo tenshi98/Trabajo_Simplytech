@@ -28,15 +28,15 @@ $SIS_where  = 'telemetria_listado_historial_activaciones.idEstado=1';
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){      
 	$SIS_where.=" AND telemetria_listado_historial_activaciones.idTelemetria =".$_GET['idTelemetria'];
 }
-if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino']!=''){ 
+if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino']!=''){
 	$SIS_where.=" AND telemetria_listado_historial_activaciones.TimeStamp BETWEEN '".$_GET['F_inicio']." ".$_GET['H_inicio']."' AND '".$_GET['F_termino']." ".$_GET['H_termino']."'";
-}elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino']!=''){ 
+}elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino']!=''){
 	$SIS_where.=" AND telemetria_listado_historial_activaciones.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
 
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idTelemetria', 'telemetria_listado_historial_activaciones', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'ndata_1');
-	
+
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
@@ -153,7 +153,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					
 									  
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
-								<?php 
+								<?php
 								//Variables
 								$fecha              = '';
 								$HoraInicio         = '00:00:00';
@@ -333,9 +333,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									$l_mp   = $con['EquipoMicroparada'];
 									$l_v1   = $con['EquipoValor'];
 									$l_v2   = $con['EquipoActivacionValor'];
-									
+
 								}
-								
+
 								/**********************************************************************************/
 								//ultimo dato
 								//Calculo colacion
@@ -380,7 +380,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				</div>
 			</div>
 			<?php 
-		} 
+		}
 	}else{
 		alert_post_data(2,1,1, 'No hay datos, intenta con otro rango de fechas.');
 	}
@@ -398,4 +398,5 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 require_once 'core/Web.Footer.Views.php';
 //cuadro mensajes
 widget_avgrund();
+
 ?>

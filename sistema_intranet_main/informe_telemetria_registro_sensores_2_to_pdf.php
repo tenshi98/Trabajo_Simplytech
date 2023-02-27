@@ -24,7 +24,7 @@ if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){   $h_inicio      = $_GET['h
 if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){ $h_termino     = $_GET['h_termino'];     }elseif(isset($_POST['h_termino'])&&$_POST['h_termino']!=''){$h_termino     = $_POST['h_termino'];}
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){  $idTelemetria  = $_GET['idTelemetria'];  }elseif(isset($_POST['idTelemetria'])&&$_POST['idTelemetria']!=''){ $idTelemetria  = $_POST['idTelemetria'];}
 if(isset($_GET['sensorn'])&&$_GET['sensorn']!=''){     $sensorn       = $_GET['sensorn'];       }elseif(isset($_POST['sensorn'])&&$_POST['sensorn']!=''){    $sensorn       = $_POST['sensorn'];}
-				
+
 //Se buscan la imagen i el tipo de PDF
 if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
 	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas','', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
@@ -37,7 +37,7 @@ if(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''&&isset($h_
 }elseif(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''){
 	$SIS_where.="(telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema BETWEEN '".$f_inicio."' AND '".$f_termino."')";
 }
-	
+
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelacionada_'.$idTelemetria, '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'ndata_1');
 
@@ -47,7 +47,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 }else{
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo', 'telemetria_listado', '', 'idTelemetria='.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
-		
+
 	/****************************************/
 	//consulto
 	$SIS_query = '
@@ -84,31 +84,30 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 
 	$html .= '
-	<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">  
+	<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">
 		<thead>
 			<tr>
 				<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Fecha</th>
 				<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Hora</th>';
-				$html .= '<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Medicion</th>';       
-			$html .= '	
+				$html .= '<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Medicion</th>';
+			$html .= '
 			</tr>
 		</thead>
 		<tbody>';
-			
-			foreach ($arrEquipos as $rutas) { 
+
+			foreach ($arrEquipos as $rutas) {
 				if(isset($rutas['SensorValue'])&&$rutas['SensorValue']<99900){$xdata=Cantidades_decimales_justos($rutas['SensorValue']).' '.DeSanitizar($rutas['Unimed']);}else{$xdata='Sin Datos';}
-				
+
 				$html .='<tr>
 							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.fecha_estandar($rutas['FechaSistema']).'</td>
 							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$rutas['HoraSistema'].'</td>';
-				$html .= '<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$xdata.'</td>';       
+				$html .= '<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$xdata.'</td>';
 				$html .='</tr>';
 			}
 
-								
 	$html .='</tbody>
 	</table>';
-	 
+
 	/**********************************************************************************************************************************/
 	/*                                                          Impresion PDF                                                         */
 	/**********************************************************************************************************************************/
@@ -126,7 +125,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			/************************************************************************/
 			//TCPDF
 			case 1:
-				
+
 				require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 				// create new PDF document
@@ -185,11 +184,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					// The '@' character is used to indicate that follows an image data stream and not an image file name
 					$pdf->Image('@'.$imgdata, 15, 30, 180, 120, 'PNG', '', '', true, 150, '', false, false, 1, false, false, false);
 				}
-				
+
 				$pdf->writeHTML($html, true, false, true, false, '');
 				$pdf->lastPage();
 				$pdf->Output(DeSanitizar($pdf_file), 'I');
-		
+
 				break;
 			/************************************************************************/
 			//DomPDF (Solo compatible con PHP 5.x)

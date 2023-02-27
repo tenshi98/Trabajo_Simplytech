@@ -359,7 +359,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 
@@ -385,6 +385,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'aguas_clientes_listado', $SIS_jo
 
 //Indico el sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -646,6 +647,7 @@ $arrTipo = array();
 $arrTipo = db_select_array (false, $SIS_query, 'aguas_analisis_aguas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
 $z = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
@@ -773,7 +775,7 @@ $z = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSis
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idAnalisisAgua']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($tipo['idAnalisisAgua'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el analisis de la fecha '.fecha_estandar($tipo['f_muestra']).'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el analisis de la fecha '.fecha_estandar($tipo['f_muestra']).'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -797,4 +799,5 @@ $z = "aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSis
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

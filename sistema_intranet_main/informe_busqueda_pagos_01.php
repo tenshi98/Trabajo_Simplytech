@@ -173,8 +173,7 @@ switch ($_GET['idType']) {
 
 </div>
 <div class="clearfix"></div>
-	
-	
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -269,6 +268,7 @@ switch ($_GET['idType']) {
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -299,13 +299,13 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x6, 1);
 				$Form_Inputs->form_date('Fecha Pagada Desde','f_inicio_p', $x7, 1);
 				$Form_Inputs->form_date('Fecha Pagada Hasta','f_termino_p', $x8, 1);
-						
+
 				?>
 
 				<script>
 					document.getElementById('div_idProveedor').style.display = 'none';
 					document.getElementById('div_idCliente').style.display = 'none';
-						
+
 					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 						
 						$("#idType").on("change", function(){ //se ejecuta al cambiar valor del select
@@ -344,4 +344,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

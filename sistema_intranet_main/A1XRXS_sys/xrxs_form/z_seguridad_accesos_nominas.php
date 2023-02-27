@@ -99,7 +99,7 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-	
+
 		case 'new_nomina':
 
 			//Se elimina la restriccion del sql 5.7
@@ -195,7 +195,7 @@ require_once '0_validate_user_1.php';
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
@@ -225,7 +225,7 @@ require_once '0_validate_user_1.php';
 			}
 			unset($_SESSION['nomina_archivos']);
 
-			
+			//redirijo
 			header( 'Location: '.$location );
 			die;
 
@@ -409,7 +409,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -541,7 +541,7 @@ require_once '0_validate_user_1.php';
 			if(isset($n_data1)&&$n_data1==0){
 				$error['trabajos'] = 'error/No se han asignado personas';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -571,7 +571,7 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los servicios
-					if(isset($_SESSION['nomina_personas'])){		
+					if(isset($_SESSION['nomina_personas'])){
 						foreach ($_SESSION['nomina_personas'] as $key => $personas){
 
 							//filtros
@@ -609,13 +609,12 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['nomina_basicos']);
 					unset($_SESSION['nomina_personas']);
 					unset($_SESSION['nomina_archivos']);
-					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
 
 			}
-	
 
 		break;
 
@@ -865,7 +864,7 @@ require_once '0_validate_user_1.php';
 			
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -912,11 +911,11 @@ require_once '0_validate_user_1.php';
 									
 									if(isset($idAcceso) && $idAcceso!=''){   $SIS_data  = "'".$idAcceso."'";   }else{$SIS_data  ="''";}
 									$SIS_data .= ",'".$sufijo.$_FILES['exFile']['name']."'";
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idAcceso, Nombre';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'seguridad_accesos_nominas_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 									//Si ejecuto correctamente la consulta
 									if($ultimo_id!=0){
 										//redirijo

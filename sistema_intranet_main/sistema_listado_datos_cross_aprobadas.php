@@ -121,7 +121,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -131,7 +131,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($email)){     $x1  = $email;   }else{$x1  = '';}
@@ -153,7 +153,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</div>
 	</div>
 </div>
-
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
@@ -303,7 +302,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Correos');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar Correos'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Correo</a>
 	</div>
@@ -320,29 +319,29 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'sistema_listado_datos_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Datos Contrato</a></li>
-						<li class=""><a href="<?php echo 'sistema_listado_datos_temas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-tags" aria-hidden="true"></i> Temas</a></li>
-						<li class=""><a href="<?php echo 'sistema_listado_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
+						<li class=""><a href="<?php echo 'sistema_listado_datos_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Datos Contrato</a></li>
+						<li class=""><a href="<?php echo 'sistema_listado_datos_temas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-tags" aria-hidden="true"></i> Temas</a></li>
+						<li class=""><a href="<?php echo 'sistema_listado_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<?php if(isset($Count_OT)&&$Count_OT!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-cogs" aria-hidden="true"></i> OT</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-cogs" aria-hidden="true"></i> OT</a></li>
 						<?php } ?>
-						<li class=""><a href="<?php echo 'sistema_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Logo</a></li>
+						<li class=""><a href="<?php echo 'sistema_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Logo</a></li>
 						<?php if(isset($Count_OC)&&$Count_OC!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_oc.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador OC</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_oc.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador OC</a></li>
 						<?php } ?>
 						<?php if(isset($Count_productos)&&$Count_productos!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_productos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Productos Usados</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_productos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Productos Usados</a></li>
 						<?php } ?>
 						<?php if(isset($Count_insumos)&&$Count_insumos!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_insumos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Insumos Usados</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_insumos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Insumos Usados</a></li>
 						<?php } ?>
 						<?php if(isset($Count_Variedades)&&$Count_Variedades!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_variedades_especies.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Especies</a></li>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_variedades_nombres.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Variedades</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_variedades_especies.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Especies</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_variedades_nombres.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Variedades</a></li>
 						<?php } ?>
 						<?php if(isset($Count_Shipping)&&$Count_Shipping!=0){?>
-							<li class=""><a href="<?php echo 'sistema_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador CrossShipping</a></li>
-							<li class="active"><a href="<?php echo 'sistema_listado_datos_cross_aprobadas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id'];?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Cross Shipping Correos Aprobados</a></li>
+							<li class=""><a href="<?php echo 'sistema_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador CrossShipping</a></li>
+							<li class="active"><a href="<?php echo 'sistema_listado_datos_cross_aprobadas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Cross Shipping Correos Aprobados</a></li>
 						<?php } ?>
 					</ul>
                 </li>
@@ -363,9 +362,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$apro['idAprobador']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($apro['idAprobador'], fecha_actual());
-								$dialogo   = '¿Realmente deseas eliminar el correo '.$apro['email'].'?';?>
+								$dialogo   = '¿Realmente deseas eliminar el correo '.$apro['email'].'?'; ?>
 								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
@@ -379,8 +378,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -389,4 +388,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -68,7 +68,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Insumos', $rowdata['Nombre'], 'Editar Datos Comerciales');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Insumos', $rowdata['Nombre'], 'Editar Datos Comerciales'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -87,7 +87,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 						<li class=""><a href="<?php echo 'insumos_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 						<li class=""><a href="<?php echo 'insumos_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha</a></li>
 						<li class=""><a href="<?php echo 'insumos_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> HDS</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -95,14 +95,13 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($idProveedorFijo)){  $x1  = $idProveedorFijo;  }else{$x1  = $rowdata['idProveedorFijo'];}
 					if(isset($StockLimite)){      $x2  = $StockLimite;      }else{$x2  = Cantidades_decimales_justos($rowdata['StockLimite']);}
 					if(isset($ValorIngreso)){     $x3  = $ValorIngreso;     }else{$x3  = Cantidades_decimales_justos($rowdata['ValorIngreso']);}
 					if(isset($ValorEgreso)){      $x4  = $ValorEgreso;      }else{$x4  = Cantidades_decimales_justos($rowdata['ValorEgreso']);}
-					
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -110,11 +109,11 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 					$Form_Inputs->form_input_number('Stock Minimo', 'StockLimite', $x2, 1);
 					$Form_Inputs->form_values('Valor Ingreso', 'ValorIngreso', $x3, 1);
 					$Form_Inputs->form_values('Valor Egreso', 'ValorEgreso', $x4, 1);
-					
+
 					$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
 					?>
 				  
-					<div class="form-group">	
+					<div class="form-group">
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
@@ -126,8 +125,8 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php
@@ -135,4 +134,5 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

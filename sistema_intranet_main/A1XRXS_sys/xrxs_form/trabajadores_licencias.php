@@ -138,11 +138,11 @@ require_once '0_validate_user_1.php';
 									if(isset($Observacion) && $Observacion!=''){        $SIS_data .= ",'".$Observacion."'";    }else{$SIS_data .= ",''";}
 									if(isset($idUso) && $idUso!=''){                    $SIS_data .= ",'".$idUso."'";          }else{$SIS_data .= ",''";}
 									$SIS_data .= ",'".$sufijo.$_FILES['File_Licencia']['name']."'";
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idSistema, idTrabajador, idUsuario, Fecha_ingreso, Fecha_inicio, Fecha_termino, N_Dias, Observacion, idUso,File_Licencia';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_licencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 									//Si ejecuto correctamente la consulta
 									if($ultimo_id!=0){
 										//redirijo
@@ -262,7 +262,7 @@ require_once '0_validate_user_1.php';
 									if(isset($Observacion) && $Observacion!=''){        $SIS_data .= ",Observacion='".$Observacion."'";}
 									if(isset($idUso) && $idUso!=''){                    $SIS_data .= ",idUso='".$idUso."'";}
 									$SIS_data .= ",File_Licencia='".$sufijo.$_FILES['File_Licencia']['name']."'";
-									
+
 									/*******************************************************/
 									//se actualizan los datos
 									$resultado = db_update_data (false, $SIS_data, 'trabajadores_licencias', 'idLicencia = "'.$idLicencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -271,9 +271,8 @@ require_once '0_validate_user_1.php';
 										
 										header( 'Location: '.$location.'&edited=true' );
 										die;
-										
+
 									}
-									
 								}else {
 									$error['File_Licencia']     = 'error/Ocurrio un error al mover el archivo';
 								}

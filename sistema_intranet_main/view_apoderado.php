@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -83,7 +83,6 @@ $arrCargas = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SI
 
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -101,7 +100,7 @@ $arrCargas = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SI
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
@@ -123,7 +122,7 @@ $arrCargas = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SI
 							<strong>Usuario : </strong><?php echo $rowdata['Rut']; ?><br/>
 							<strong>Password : </strong><?php echo $rowdata['Password']; ?><br/>
 						</p>
-					
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Hijos</h2>
 						<div class="row">
 							<?php
@@ -148,7 +147,7 @@ $arrCargas = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SI
 											</div>
 										</div>
 									</div>
-								
+
 								<?php 
 								}
 							//si no existen cargas se muestra mensaje
@@ -162,11 +161,11 @@ $arrCargas = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SI
 						
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<p class="text-muted">
-							<?php 
+							<?php
 							//Contrato
 							if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){
 								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['File_Contrato'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Contrato</a>';
-							}?>
+							} ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Ubicacion</h2>
@@ -174,7 +173,7 @@ $arrCargas = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SI
 											
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
         </div>
@@ -193,7 +192,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -203,7 +202,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -212,4 +211,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

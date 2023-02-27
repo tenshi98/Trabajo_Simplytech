@@ -99,7 +99,7 @@ if(isset($_GET['Observaciones'])&&$_GET['Observaciones']!=''){          $SIS_whe
 if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){                  $SIS_where .=" AND cross_shipping_consolidacion.idSistema=".$_GET['idSistema'];}
 if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){                    $SIS_where .=" AND cross_shipping_consolidacion.idEstado=".$_GET['idEstado'];}
 
-if(isset($_GET['Creacion_fechaDesde']) && $_GET['Creacion_fechaDesde'] != ''&&isset($_GET['Creacion_fechaHasta']) && $_GET['Creacion_fechaHasta']!=''){ 
+if(isset($_GET['Creacion_fechaDesde']) && $_GET['Creacion_fechaDesde'] != ''&&isset($_GET['Creacion_fechaHasta']) && $_GET['Creacion_fechaHasta']!=''){
 	$SIS_where .= " AND cross_shipping_consolidacion.Creacion_fecha BETWEEN '".$_GET['Creacion_fechaDesde']."' AND '".$_GET['Creacion_fechaHasta']."'";
 }
 
@@ -110,6 +110,7 @@ $cuenta_registros = db_select_nrows (false, 'idEstibaListado', 'cross_shipping_c
 $total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 cross_shipping_consolidacion.idConsolidacion,
 cross_shipping_consolidacion.Creacion_fecha,
@@ -202,8 +203,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion_est
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -212,6 +213,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion_est
 $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -253,7 +255,6 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				if(isset($NumeroSello)){           $x26 = $NumeroSello;           }else{$x26 = '';}
 				if(isset($idInspector)){           $x27 = $idInspector;           }else{$x27 = '';}
 				if(isset($Observaciones)){         $x28 = $Observaciones;         }else{$x28 = '';}
-				
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -269,7 +270,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_time('Hora Termino Carga','HoraTerminoCarga', $x7, 1, 1, 24);
 				$Form_Inputs->form_select_filter('Planta Despachadora','idPlantaDespacho', $x8, 1, 'idPlantaDespacho', 'Codigo,Nombre', 'cross_shipping_plantas', $z, '', $dbConn);
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x9, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x10, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 'Variedad','idProducto', $x10, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_number_integer('Cantidad de Cajas', 'CantidadCajas', $x11, 1);
 				$Form_Inputs->form_select_filter('N° Instructivo','idInstructivo', $x12, 1, 'idInstructivo', 'Codigo,Nombre', 'cross_shipping_instructivo', $z, '', $dbConn);
@@ -299,7 +300,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -315,4 +316,5 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

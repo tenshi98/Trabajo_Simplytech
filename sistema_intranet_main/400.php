@@ -31,7 +31,6 @@ if($post_query){@fwrite($fh, 'POST_QUERY: '.$post_query."\r\n");}
  	
 ?>
 
-
 <div class="container">
 	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-lg-offset-2 text-center">
 		<div class="logo">
@@ -54,4 +53,5 @@ if($post_query){@fwrite($fh, 'POST_QUERY: '.$post_query."\r\n");}
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Error.php';
+
 ?>

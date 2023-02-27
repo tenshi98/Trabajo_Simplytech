@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -133,7 +133,6 @@ $arrPagos = db_select_array (false, 'sistema_documentos_pago.Nombre AS DocPago,p
 </div>
 <div class="clearfix"></div>
 
-
 <?php
 //Si el documento esta pagado se muestran los datos relacionados al pago
 if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){?>
@@ -158,7 +157,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){?>
 								<?php foreach ($arrPagos as $pagos) { ?>
 									<tr class="odd">
 										<td><?php echo $pagos['UsuarioPago']; ?></td>
-										<td><?php echo $pagos['DocPago'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];}?></td>
+										<td><?php echo $pagos['DocPago'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];} ?></td>
 										<td><?php echo fecha_estandar($pagos['F_Pago']); ?></td>
 										<td align="right"><?php echo Valores($pagos['MontoPagado'], 0); ?></td>
 									</tr>
@@ -166,7 +165,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){?>
 							</tbody>
 						</table>
 					</div>
-						
+
 					<div class="row invoice-payment">
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8"></div>
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -182,7 +181,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){?>
 									</tr>
 									<tr>
 										<th>Diferencia:</th>
-										<?php 
+										<?php
 										$diferencia = valores_enteros($rowdata['MontoPagado'] - $rowdata['TotalAPagar']);
 										if($diferencia<0){
 											echo '<td align="right" class="text-danger"><h6><i class="fa fa-arrow-down" aria-hidden="true"></i> '.Valores($diferencia, 0).'</h6></td>';
@@ -197,7 +196,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){?>
 							</table>
 						</div>
 					</div>
-						
+
 				</div>
 			</div>
 		</div>
@@ -248,7 +247,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){?>
 
     	</div>
     </div>
-    
+
     <div class="row">
     	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     		<div class="panel panel-default">
@@ -286,7 +285,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){?>
 										</tr>
 									<?php	
 									}
-								}?>
+								} ?>
 								<?php if(isset($rowdata['TotalCargasFamiliares'])&&$rowdata['TotalCargasFamiliares']!=''){?>
 									<tr>
 										<td>Asignación Familiar</td>
@@ -309,7 +308,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){?>
 										</tr>
 									<?php	
 									}
-								}?>
+								} ?>
 								<?php if(isset($rowdata['TotalBonoFijoAfecto'])&&$rowdata['TotalBonoFijoAfecto']!=''){?>
 									<tr>
 										<td colspan="3">Bonos Fijos Imponibles</td>
@@ -328,7 +327,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){?>
 										<?php	
 										}
 									}
-								}?>
+								} ?>
 								<?php if(isset($rowdata['TotalBonoTemporalAfecto'])&&$rowdata['TotalBonoTemporalAfecto']!=''){?>
 									<tr>	
 										<td colspan="3">Bonos Temporales Imponibles</td>
@@ -347,7 +346,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){?>
 										<?php	
 										}
 									}
-								}?>
+								} ?>
 								
 								
 								<?php if(isset($rowdata['TotalBonoFijoNoAfecto'])&&$rowdata['TotalBonoFijoNoAfecto']!=''){?>
@@ -368,7 +367,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){?>
 										<?php	
 										}
 									}
-								}?>
+								} ?>
 								<?php if(isset($rowdata['TotalBonoTemporalNoAfecto'])&&$rowdata['TotalBonoTemporalNoAfecto']!=''){?>
 									<tr>	
 										<td colspan="3">Bonos Temporales No Imponibles</td>
@@ -387,7 +386,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){?>
 										<?php	
 										}
 									}
-								}?>
+								} ?>
     							<tr>
 									<td align="right" colspan="3"><strong>Total Imponible</strong></td>
 									<td align="right"><strong><?php echo valores($rowdata['SueldoImponible'], 0); ?></strong></td>
@@ -530,7 +529,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -540,7 +539,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -549,4 +548,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

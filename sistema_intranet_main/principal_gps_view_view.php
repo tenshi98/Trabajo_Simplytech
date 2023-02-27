@@ -44,7 +44,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Datos del Equipo <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
-			<?php 
+			<?php
 			$explanation  = '<strong>'.fecha_estandar($rowdata['LastUpdateFecha']).' - '.$rowdata['LastUpdateHora'].'</strong><br/>';
 			$explanation .= '<strong>Equipo: </strong>'.$rowdata['Nombre'].'<br/>';
 			$explanation .= '<strong>Velocidad: </strong>'.Cantidades($rowdata['GeoVelocidad'], 0).'/'.Cantidades($rowdata['LimiteVelocidad'], 0).' KM/h<br/>';
@@ -71,4 +71,5 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

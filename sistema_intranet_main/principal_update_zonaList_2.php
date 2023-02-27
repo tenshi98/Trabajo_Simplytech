@@ -72,7 +72,6 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 
 ?>
 
-
 <table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 	<thead>
 		<tr role="row">
@@ -175,12 +174,12 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 					<div class="btn-group" style="width: 35px;" ><?php echo $eq_ok; ?></div>
 				</td>
 				<td>
-					<?php echo $data['Nombre'];?><br/>
-					<?php echo fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora'];?>
+					<?php echo $data['Nombre']; ?><br/>
+					<?php echo fecha_estandar($data['LastUpdateFecha']).' '.$data['LastUpdateHora']; ?>
 				</td>
 				<td width="10">
 					<div class="btn-group" style="width: 35px;" >
-						<button onclick="fncCenterMap('<?php echo $data['GeoLatitud'];?>', '<?php echo $data['GeoLongitud'];?>')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+						<button onclick="fncCenterMap('<?php echo $data['GeoLatitud']; ?>', '<?php echo $data['GeoLongitud']; ?>')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
 					</div>
 				</td>
 			</tr>
@@ -188,4 +187,4 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 	</tbody>
 </table>
 
-<?php widget_tooltipster();?>
+<?php widget_tooltipster(); ?>

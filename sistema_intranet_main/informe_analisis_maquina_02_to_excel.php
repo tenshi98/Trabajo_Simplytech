@@ -27,7 +27,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 //filtros
-$SIS_where_1 = "maquinas_listado_matriz.idMatriz>=0";	
+$SIS_where_1 = "maquinas_listado_matriz.idMatriz>=0";
 $SIS_where_2 = "maquinas_listado.idMaquina>=0";
 $SIS_where_3 = "analisis_listado.idAnalisis>=0";
 if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {     
@@ -42,13 +42,14 @@ if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != '')  {
 	$SIS_where_2 .= " AND maquinas_listado_matriz.idMatriz = '".$_GET['idMaquina']."'";
 	$SIS_where_3 .= " AND analisis_listado.idMatriz = '".$_GET['idMatriz']."'";
 }
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){
 	$SIS_where_3 .= " AND analisis_listado.f_muestreo BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 /*******************************************************/
 $rowpre = db_select_data (false, 'cantPuntos', 'maquinas_listado_matriz', '', $SIS_where_1, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowpre');
 
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 maquinas_listado.Codigo AS MaquinaCodigo,
 maquinas_listado.Nombre AS MaquinaNombre,
@@ -92,6 +93,7 @@ LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna   
 $rowMaquina = db_select_data (false, $SIS_query, 'maquinas_listado', '', $SIS_where_2, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowMaquina');
 
 /*******************************************************/
+// consulto los datos
 $SIS_query = 'core_analisis_estado.Nombre AS AnalisisEstado, analisis_listado.f_muestreo';
 for ($i = 1; $i <= $rowpre['cantPuntos']; $i++) {
 	$SIS_query .= ',analisis_listado.Medida_'.$i.' AS Analisis_Medida_'.$i;
@@ -188,7 +190,7 @@ foreach ($arrGrupo as $grupo) {
 		if($grupo['idGrupo']==$rowMaquina['PuntoidGrupo_'.$i]){
 			//obtengo la unidad de medida
 			$uniMed = '';
-			foreach ($arrUnimed as $med) { 
+			foreach ($arrUnimed as $med) {
 				if($rowMaquina['PuntoUniMed_'.$i]==$med['idUml']){
 					$uniMed = $med['Nombre'];
 				}

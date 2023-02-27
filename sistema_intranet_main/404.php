@@ -11,8 +11,8 @@ require_once 'core/Load.Utils.Error.php';
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Header.Error.php';
-?>
 
+?>
 
 <div class="container">
 	<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8 col-lg-offset-2 text-center">
@@ -36,4 +36,5 @@ require_once 'core/Web.Header.Error.php';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Error.php';
+
 ?>

@@ -42,7 +42,7 @@ $SIS_where = $x_table.".idSistema=".$_SESSION['usuario']['basic_data']['idSistem
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['fecha'])&&$_GET['fecha']!=''){
-	
+
 	//Se organizan los datos
 	$Fecha     = $_GET['fecha'];
 	$Hora      = '18:00:00';
@@ -177,7 +177,7 @@ foreach ($arrEvento as $key => $eve){
 									
 ?>
 <style>
-#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif';?>");background-repeat: no-repeat;background-position: center;}
+#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif'; ?>");background-repeat: no-repeat;background-position: center;}
 </style>
 <div id="loading"></div>
 <script>
@@ -186,7 +186,7 @@ document.getElementById("loading").style.display = "none";
 </script>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Resumen Heladas', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Del dia '.Fecha_completa($_GET['fecha']));?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Resumen Heladas', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Del dia '.Fecha_completa($_GET['fecha'])); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
 		<a target="new" href="<?php echo 'informe_cross_weather_resumen_heladas_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 
@@ -195,7 +195,7 @@ document.getElementById("loading").style.display = "none";
 		<?php }else{ ?>
 			<a target="new" href="<?php echo 'informe_cross_weather_resumen_heladas_to_pdf.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
 		<?php } ?>
-		
+
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -209,7 +209,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 				<h5> Graficos</h5>
 			</header>
-			<div class="table-responsive" id="grf">	
+			<div class="table-responsive" id="grf">
 				<?php
 					/*******************************************************************************/
 					//las fechas
@@ -242,15 +242,15 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 
 		<form method="post" id="make_pdf" action="informe_cross_weather_resumen_heladas_to_pdf.php">
 			<input type="hidden" name="img_adj" id="img_adj" />
-			
+
 			<input type="hidden" name="idSistema"     id="idSistema"    value="<?php echo $_SESSION['usuario']['basic_data']['idSistema']; ?>" />
 			<input type="hidden" name="fecha"         id="fecha"        value="<?php echo $_GET['fecha']; ?>" />
 			<?php if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){?>
 				<input type="hidden" name="idTelemetria"   id="idTelemetria"  value="<?php echo $_GET['idTelemetria']; ?>" />
-			<?php }?>
-			
+			<?php } ?>
+
 			<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
-		
+
 		</form>
 
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>
@@ -292,7 +292,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="row">
-		
+
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 			<div class="box box-blue box-solid">
 				<div class="box-header with-border">
@@ -353,9 +353,6 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 	</div>
 </div>
 
-
-
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -409,6 +406,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 	$z .= " AND telemetria_listado.idTab=4";//CrossWeather			
 }	 
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -451,4 +449,5 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

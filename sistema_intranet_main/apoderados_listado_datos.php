@@ -45,28 +45,16 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Apoderado borrado corr
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
-$query = "SELECT Nombre,ApellidoPat,ApellidoMat,Rut,FNacimiento,Fono1,Fono2,idCiudad,idComuna,Direccion,idSistema,idApoderado,
-F_Inicio_Contrato, F_Termino_Contrato, idOpciones_1,idOpciones_2
-FROM `apoderados_listado`
-WHERE idApoderado = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre,ApellidoPat,ApellidoMat,Rut,FNacimiento,Fono1,Fono2,idCiudad,idComuna,Direccion,idSistema,idApoderado,
+F_Inicio_Contrato, F_Termino_Contrato, idOpciones_1,idOpciones_2';
+$SIS_join  = '';
+$SIS_where = 'idApoderado = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Datos Personales');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Datos Personales'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -82,11 +70,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'apoderados_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 						<?php
-						//Si se utiliza la APP 
+						//Si se utiliza la APP
 						if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
 							<li class=""><a href="<?php echo 'apoderados_listado_subcuentas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Subcuentas</a></li>
 						<?php } ?>
-						<?php 
+						<?php
 						//Si se utiliza subcuentas
 						if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
 							<li class=""><a href="<?php echo 'apoderados_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password</a></li>
@@ -96,7 +84,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class=""><a href="<?php echo 'apoderados_listado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Contrato</a></li>
 						<li class=""><a href="<?php echo 'apoderados_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Foto</a></li>
 						<li class=""><a href="<?php echo 'apoderados_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -105,7 +93,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-					<?php 
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Nombre)){              $x1  = $Nombre;               }else{$x1  = $rowdata['Nombre'];}
 					if(isset($ApellidoPat)){         $x2  = $ApellidoPat;          }else{$x2  = $rowdata['ApellidoPat'];}
@@ -119,7 +107,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					if(isset($Direccion)){           $x10 = $Direccion;            }else{$x10 = $rowdata['Direccion'];}
 					if(isset($F_Inicio_Contrato)){   $x11 = $F_Inicio_Contrato;    }else{$x11 = $rowdata['F_Inicio_Contrato'];}
 					if(isset($F_Termino_Contrato)){  $x12 = $F_Termino_Contrato;   }else{$x12 = $rowdata['F_Termino_Contrato'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -135,9 +123,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x10, 1,'fa fa-map');
 					$Form_Inputs->form_date('F. Inicio Contrato','F_Inicio_Contrato', $x11, 1);
 					$Form_Inputs->form_date('F. Termino Contrato','F_Termino_Contrato', $x12, 1);
-					
-					
-					
+
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idApoderado', $_GET['id'], 2);
@@ -155,14 +141,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

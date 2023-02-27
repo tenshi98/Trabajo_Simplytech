@@ -463,7 +463,7 @@ $arrTemp = array();
 /***********************/
 $inc = 0;
 foreach($arrTemporal_1 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	$valor_1      = 0;
@@ -472,7 +472,7 @@ foreach($arrTemporal_1 as $temp) {
 	$valor_4      = 0;
 	$valor_5      = 0;
 	$valor_6      = 0;
-	
+
 	//verificacion de cambios
 	if($inc==0 OR $arrTemp[1][$inc]['Ano']!=$temp['Creacion_ano']){             $count_change++;}//se verifica cambio de año
 	if($inc==0 OR $arrTemp[1][$inc]['Mes']!=$temp['Creacion_mes']){             $count_change++;}//se verifica cambio de mes
@@ -541,7 +541,7 @@ foreach($arrTemporal_1 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_2 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	$valor_1      = 0;
@@ -550,7 +550,7 @@ foreach($arrTemporal_2 as $temp) {
 	$valor_4      = 0;
 	$valor_5      = 0;
 	$valor_6      = 0;
-	
+
 	//verificacion de cambios
 	if($inc==0 OR $arrTemp[2][$inc]['Ano']!=$temp['Creacion_ano']){             $count_change++;}//se verifica cambio de año
 	if($inc==0 OR $arrTemp[2][$inc]['Mes']!=$temp['Creacion_mes']){             $count_change++;}//se verifica cambio de mes
@@ -619,7 +619,7 @@ foreach($arrTemporal_2 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_3 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	$valor_1      = 0;
@@ -628,7 +628,7 @@ foreach($arrTemporal_3 as $temp) {
 	$valor_4      = 0;
 	$valor_5      = 0;
 	$valor_6      = 0;
-	
+
 	//verificacion de cambios
 	if($inc==0 OR $arrTemp[3][$inc]['Ano']!=$temp['Creacion_ano']){             $count_change++;}//se verifica cambio de año
 	if($inc==0 OR $arrTemp[3][$inc]['Mes']!=$temp['Creacion_mes']){             $count_change++;}//se verifica cambio de mes
@@ -697,7 +697,7 @@ foreach($arrTemporal_3 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_4 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	$valor_1      = 0;
@@ -706,7 +706,7 @@ foreach($arrTemporal_4 as $temp) {
 	$valor_4      = 0;
 	$valor_5      = 0;
 	$valor_6      = 0;
-	
+
 	//verificacion de cambios
 	if($inc==0 OR $arrTemp[4][$inc]['Ano']!=$temp['Creacion_ano']){             $count_change++;}//se verifica cambio de año
 	if($inc==0 OR $arrTemp[4][$inc]['Mes']!=$temp['Creacion_mes']){             $count_change++;}//se verifica cambio de mes
@@ -732,7 +732,7 @@ foreach($arrTemporal_4 as $temp) {
 		$arrTemp[4][$inc]['Total_5'] = 0;
 		$arrTemp[4][$inc]['Total_6'] = 0;
 	}
-	
+
 	//se busca el tipo
 	switch ($temp['idTipo']) {
 		case 2:  $valor_1 = $temp['Total'];     break; //Venta
@@ -774,7 +774,7 @@ foreach($arrTemporal_4 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_5 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -804,7 +804,7 @@ foreach($arrTemporal_5 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_6 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -834,7 +834,7 @@ foreach($arrTemporal_6 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_7 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -864,7 +864,7 @@ foreach($arrTemporal_7 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_8_1 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -894,7 +894,7 @@ foreach($arrTemporal_8_1 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_8_2 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -924,7 +924,7 @@ foreach($arrTemporal_8_2 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_8_3 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -954,7 +954,7 @@ foreach($arrTemporal_8_3 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_8_4 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -984,7 +984,7 @@ foreach($arrTemporal_8_4 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_9_1 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -1014,7 +1014,7 @@ foreach($arrTemporal_9_1 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_9_2 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -1044,7 +1044,7 @@ foreach($arrTemporal_9_2 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_9_3 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -1095,7 +1095,7 @@ $spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-          
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('G1', 'INGRESOS')

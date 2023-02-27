@@ -473,7 +473,7 @@ $arrTemp = array();
 /***********************/
 $inc = 0;
 foreach($arrTemporal_1 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	$valor_1      = 0;
@@ -482,7 +482,7 @@ foreach($arrTemporal_1 as $temp) {
 	$valor_4      = 0;
 	$valor_5      = 0;
 	$valor_6      = 0;
-	
+
 	//verificacion de cambios
 	if($inc==0 OR $arrTemp[1][$inc]['Ano']!=$temp['Creacion_ano']){             $count_change++;}//se verifica cambio de año
 	if($inc==0 OR $arrTemp[1][$inc]['Mes']!=$temp['Creacion_mes']){             $count_change++;}//se verifica cambio de mes
@@ -551,7 +551,7 @@ foreach($arrTemporal_1 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_2 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	$valor_1      = 0;
@@ -560,7 +560,7 @@ foreach($arrTemporal_2 as $temp) {
 	$valor_4      = 0;
 	$valor_5      = 0;
 	$valor_6      = 0;
-	
+
 	//verificacion de cambios
 	if($inc==0 OR $arrTemp[2][$inc]['Ano']!=$temp['Creacion_ano']){             $count_change++;}//se verifica cambio de año
 	if($inc==0 OR $arrTemp[2][$inc]['Mes']!=$temp['Creacion_mes']){             $count_change++;}//se verifica cambio de mes
@@ -629,7 +629,7 @@ foreach($arrTemporal_2 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_3 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	$valor_1      = 0;
@@ -638,7 +638,7 @@ foreach($arrTemporal_3 as $temp) {
 	$valor_4      = 0;
 	$valor_5      = 0;
 	$valor_6      = 0;
-	
+
 	//verificacion de cambios
 	if($inc==0 OR $arrTemp[3][$inc]['Ano']!=$temp['Creacion_ano']){             $count_change++;}//se verifica cambio de año
 	if($inc==0 OR $arrTemp[3][$inc]['Mes']!=$temp['Creacion_mes']){             $count_change++;}//se verifica cambio de mes
@@ -707,7 +707,7 @@ foreach($arrTemporal_3 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_4 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	$valor_1      = 0;
@@ -716,7 +716,7 @@ foreach($arrTemporal_4 as $temp) {
 	$valor_4      = 0;
 	$valor_5      = 0;
 	$valor_6      = 0;
-	
+
 	//verificacion de cambios
 	if($inc==0 OR $arrTemp[4][$inc]['Ano']!=$temp['Creacion_ano']){             $count_change++;}//se verifica cambio de año
 	if($inc==0 OR $arrTemp[4][$inc]['Mes']!=$temp['Creacion_mes']){             $count_change++;}//se verifica cambio de mes
@@ -785,7 +785,7 @@ foreach($arrTemporal_4 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_5 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -815,7 +815,7 @@ foreach($arrTemporal_5 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_6 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -845,7 +845,7 @@ foreach($arrTemporal_6 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_7 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -875,7 +875,7 @@ foreach($arrTemporal_7 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_8_1 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -905,7 +905,7 @@ foreach($arrTemporal_8_1 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_8_2 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -935,7 +935,7 @@ foreach($arrTemporal_8_2 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_8_3 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -965,7 +965,7 @@ foreach($arrTemporal_8_3 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_8_4 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -995,7 +995,7 @@ foreach($arrTemporal_8_4 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_9_1 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -1025,7 +1025,7 @@ foreach($arrTemporal_9_1 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_9_2 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -1055,7 +1055,7 @@ foreach($arrTemporal_9_2 as $temp) {
 /***********************/
 $inc = 0;
 foreach($arrTemporal_9_3 as $temp) {
-	
+
 	//contador de cambios
 	$count_change = 0;
 	//verificacion de cambios
@@ -1087,16 +1087,17 @@ foreach($arrTemporal_9_3 as $temp) {
 $arrCC     = array();
 $arrCC_lv1 = array();
 $arrCC_lv2 = array();
-foreach ($arrCentroCosto as $trab) { 
+foreach ($arrCentroCosto as $trab) {
 	$arrCC[$trab['idCentroCosto']] = $trab['Nombre'];
 }
-foreach ($arrCentroCosto_lv1 as $trab) { 
+foreach ($arrCentroCosto_lv1 as $trab) {
 	$arrCC_lv1[$trab['idLevel_1']] = $trab['Nombre'];
 }
-foreach ($arrCentroCosto_lv2 as $trab) { 
+foreach ($arrCentroCosto_lv2 as $trab) {
 	$arrCC_lv2[$trab['idLevel_2']] = $trab['Nombre'];
 }
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_22_to_excel.php'.$search?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
@@ -1142,7 +1143,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 						<th>%</th>
 						<th>Total margen cliente</th>
 						<th>%</th>
-						
+
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -1196,13 +1197,13 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 								<td align="right"><?php echo valores($trab['Total_5'], 0); ?></td>
 								<td align="right"><?php echo valores($trab['Total_6'], 0); ?></td>
 								<td align="right"><?php echo valores(0, 0); ?></td>
-								<td align="right"><span <?php if($margen_tel<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_tel, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_tel<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_tel, 0); ?></span></td>
 								<td align="right"><?php if(isset($trab['Total_1'])&&$trab['Total_1']!=0){echo porcentaje($margen_tel/$trab['Total_1']);}else{echo '0 %';} ?></td>
-								<td align="right"><span <?php if($margen_ins<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_ins, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_ins<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_ins, 0); ?></span></td>
 								<td align="right"><?php if(isset($trab['Total_2'])&&$trab['Total_2']!=0){echo porcentaje($margen_ins/$trab['Total_2']);}else{echo '0 %';} ?></td>
-								<td align="right"><span <?php if($margen_serv<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_serv, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_serv<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_serv, 0); ?></span></td>
 								<td align="right"><?php if(isset($trab['Total_3'])&&$trab['Total_3']!=0){echo porcentaje($margen_serv/$trab['Total_3']);}else{echo '0 %';} ?></td>
-								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_total, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_total, 0); ?></span></td>
 								<td align="right"><?php if(isset($ing_total)&&$ing_total!=0){echo porcentaje($margen_total/$ing_total);}else{echo '0 %';} ?></td>
 							</tr>
 						<?php }
@@ -1243,13 +1244,13 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 								<td align="right"><?php echo valores($trab['Total_5'], 0); ?></td>
 								<td align="right"><?php echo valores($trab['Total_6'], 0); ?></td>
 								<td align="right"><?php echo valores(0, 0); ?></td>
-								<td align="right"><span <?php if($margen_tel<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_tel, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_tel<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_tel, 0); ?></span></td>
 								<td align="right"><?php if(isset($trab['Total_1'])&&$trab['Total_1']!=0){echo porcentaje($margen_tel/$trab['Total_1']);}else{echo '0 %';} ?></td>
-								<td align="right"><span <?php if($margen_ins<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_ins, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_ins<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_ins, 0); ?></span></td>
 								<td align="right"><?php if(isset($trab['Total_2'])&&$trab['Total_2']!=0){echo porcentaje($margen_ins/$trab['Total_2']);}else{echo '0 %';} ?></td>
-								<td align="right"><span <?php if($margen_serv<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_serv, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_serv<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_serv, 0); ?></span></td>
 								<td align="right"><?php if(isset($trab['Total_3'])&&$trab['Total_3']!=0){echo porcentaje($margen_serv/$trab['Total_3']);}else{echo '0 %';} ?></td>
-								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_total, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_total, 0); ?></span></td>
 								<td align="right"><?php if(isset($ing_total)&&$ing_total!=0){echo porcentaje($margen_total/$ing_total);}else{echo '0 %';} ?></td>
 							</tr>
 						<?php } 
@@ -1290,13 +1291,13 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 								<td align="right"><?php echo valores($trab['Total_5'], 0); ?></td>
 								<td align="right"><?php echo valores($trab['Total_6'], 0); ?></td>
 								<td align="right"><?php echo valores(0, 0); ?></td>
-								<td align="right"><span <?php if($margen_tel<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_tel, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_tel<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_tel, 0); ?></span></td>
 								<td align="right"><?php if(isset($trab['Total_1'])&&$trab['Total_1']!=0){echo porcentaje($margen_tel/$trab['Total_1']);}else{echo '0 %';} ?></td>
-								<td align="right"><span <?php if($margen_ins<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_ins, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_ins<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_ins, 0); ?></span></td>
 								<td align="right"><?php if(isset($trab['Total_2'])&&$trab['Total_2']!=0){echo porcentaje($margen_ins/$trab['Total_2']);}else{echo '0 %';} ?></td>
-								<td align="right"><span <?php if($margen_serv<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_serv, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_serv<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_serv, 0); ?></span></td>
 								<td align="right"><?php if(isset($trab['Total_3'])&&$trab['Total_3']!=0){echo porcentaje($margen_serv/$trab['Total_3']);}else{echo '0 %';} ?></td>
-								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_total, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_total, 0); ?></span></td>
 								<td align="right"><?php if(isset($ing_total)&&$ing_total!=0){echo porcentaje($margen_total/$ing_total);}else{echo '0 %';} ?></td>
 							</tr>
 						<?php }
@@ -1337,13 +1338,13 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 								<td align="right"><?php echo valores($trab['Total_5'], 0); ?></td>
 								<td align="right"><?php echo valores($trab['Total_6'], 0); ?></td>
 								<td align="right"><?php echo valores(0, 0); ?></td>
-								<td align="right"><span <?php if($margen_tel<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_tel, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_tel<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_tel, 0); ?></span></td>
 								<td align="right"><?php if(isset($trab['Total_1'])&&$trab['Total_1']!=0){echo porcentaje($margen_tel/$trab['Total_1']);}else{echo '0 %';} ?></td>
-								<td align="right"><span <?php if($margen_ins<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_ins, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_ins<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_ins, 0); ?></span></td>
 								<td align="right"><?php if(isset($trab['Total_2'])&&$trab['Total_2']!=0){echo porcentaje($margen_ins/$trab['Total_2']);}else{echo '0 %';} ?></td>
-								<td align="right"><span <?php if($margen_serv<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_serv, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_serv<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_serv, 0); ?></span></td>
 								<td align="right"><?php if(isset($trab['Total_3'])&&$trab['Total_3']!=0){echo porcentaje($margen_serv/$trab['Total_3']);}else{echo '0 %';} ?></td>
-								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_total, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_total, 0); ?></span></td>
 								<td align="right"><?php if(isset($ing_total)&&$ing_total!=0){echo porcentaje($margen_total/$ing_total);}else{echo '0 %';} ?></td>
 							</tr>
 						<?php }
@@ -1380,7 +1381,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 								<td align="right"><?php echo '0 %'; ?></td>
 								<td align="right"><?php echo valores(0, 0); ?></td>
 								<td align="right"><?php echo '0 %'; ?></td>
-								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_total, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_total, 0); ?></span></td>
 								<td align="right"><?php if(isset($ing_total)&&$ing_total!=0){echo porcentaje($margen_total/$ing_total);}else{echo '0 %';} ?></td>
 							</tr>
 						<?php }
@@ -1417,7 +1418,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 								<td align="right"><?php echo '0 %'; ?></td>
 								<td align="right"><?php echo valores(0, 0); ?></td>
 								<td align="right"><?php echo '0 %'; ?></td>
-								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_total, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_total, 0); ?></span></td>
 								<td align="right"><?php if(isset($ing_total)&&$ing_total!=0){echo porcentaje($margen_total/$ing_total);}else{echo '0 %';} ?></td>
 							</tr>
 						<?php }
@@ -1454,7 +1455,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 								<td align="right"><?php echo '0 %'; ?></td>
 								<td align="right"><?php echo valores(0, 0); ?></td>
 								<td align="right"><?php echo '0 %'; ?></td>
-								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_total, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_total, 0); ?></span></td>
 								<td align="right"><?php if(isset($ing_total)&&$ing_total!=0){echo porcentaje($margen_total/$ing_total);}else{echo '0 %';} ?></td>
 							</tr>
 						<?php }
@@ -1491,7 +1492,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 								<td align="right"><?php echo '0 %'; ?></td>
 								<td align="right"><?php echo valores(0, 0); ?></td>
 								<td align="right"><?php echo '0 %'; ?></td>
-								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_total, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_total, 0); ?></span></td>
 								<td align="right"><?php if(isset($ing_total)&&$ing_total!=0){echo porcentaje($margen_total/$ing_total);}else{echo '0 %';} ?></td>
 							</tr>
 						<?php }
@@ -1528,7 +1529,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 								<td align="right"><?php echo '0 %'; ?></td>
 								<td align="right"><?php echo valores(0, 0); ?></td>
 								<td align="right"><?php echo '0 %'; ?></td>
-								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_total, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_total, 0); ?></span></td>
 								<td align="right"><?php if(isset($ing_total)&&$ing_total!=0){echo porcentaje($margen_total/$ing_total);}else{echo '0 %';} ?></td>
 							</tr>
 						<?php }
@@ -1565,7 +1566,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 								<td align="right"><?php echo '0 %'; ?></td>
 								<td align="right"><?php echo valores(0, 0); ?></td>
 								<td align="right"><?php echo '0 %'; ?></td>
-								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_total, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_total, 0); ?></span></td>
 								<td align="right"><?php if(isset($ing_total)&&$ing_total!=0){echo porcentaje($margen_total/$ing_total);}else{echo '0 %';} ?></td>
 							</tr>
 						<?php }
@@ -1602,7 +1603,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 								<td align="right"><?php echo '0 %'; ?></td>
 								<td align="right"><?php echo valores(0, 0); ?></td>
 								<td align="right"><?php echo '0 %'; ?></td>
-								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_total, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_total, 0); ?></span></td>
 								<td align="right"><?php if(isset($ing_total)&&$ing_total!=0){echo porcentaje($margen_total/$ing_total);}else{echo '0 %';} ?></td>
 							</tr>
 						<?php }
@@ -1639,7 +1640,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 								<td align="right"><?php echo '0 %'; ?></td>
 								<td align="right"><?php echo valores(0, 0); ?></td>
 								<td align="right"><?php echo '0 %'; ?></td>
-								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_total, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_total, 0); ?></span></td>
 								<td align="right"><?php if(isset($ing_total)&&$ing_total!=0){echo porcentaje($margen_total/$ing_total);}else{echo '0 %';} ?></td>
 							</tr>
 						<?php }
@@ -1676,7 +1677,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 								<td align="right"><?php echo '0 %'; ?></td>
 								<td align="right"><?php echo valores(0, 0); ?></td>
 								<td align="right"><?php echo '0 %'; ?></td>
-								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_total, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_total, 0); ?></span></td>
 								<td align="right"><?php if(isset($ing_total)&&$ing_total!=0){echo porcentaje($margen_total/$ing_total);}else{echo '0 %';} ?></td>
 							</tr>
 						<?php }
@@ -1713,7 +1714,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 								<td align="right"><?php echo '0 %'; ?></td>
 								<td align="right"><?php echo valores(0, 0); ?></td>
 								<td align="right"><?php echo '0 %'; ?></td>
-								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($margen_total, 0); ?></span></td>
+								<td align="right"><span <?php if($margen_total<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($margen_total, 0); ?></span></td>
 								<td align="right"><?php if(isset($ing_total)&&$ing_total!=0){echo porcentaje($margen_total/$ing_total);}else{echo '0 %';} ?></td>
 							</tr>
 						<?php }
@@ -1731,13 +1732,13 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 						<td align="right"><strong><?php echo valores($total_EG_Instalacion, 0); ?></strong></td>
 						<td align="right"><strong><?php echo valores($total_EG_ServicioTecnico, 0); ?></strong></td>
 						<td align="right"><strong><?php echo valores($total_EG_Costos, 0); ?></strong></td>
-						<td align="right"><strong><span <?php if($total_margen_tel<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($total_margen_tel, 0); ?></strong></span></td>
+						<td align="right"><strong><span <?php if($total_margen_tel<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($total_margen_tel, 0); ?></strong></span></td>
 						<td align="right"><strong><?php if(isset($total_ING_Telemetria)&&$total_ING_Telemetria!=0){echo porcentaje($total_margen_tel/$total_ING_Telemetria);}else{echo '0 %';} ?></strong></td>
-						<td align="right"><strong><span <?php if($total_margen_ins<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($total_margen_ins, 0); ?></strong></span></td>
+						<td align="right"><strong><span <?php if($total_margen_ins<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($total_margen_ins, 0); ?></strong></span></td>
 						<td align="right"><strong><?php if(isset($total_ING_Instalacion)&&$total_ING_Instalacion!=0){echo porcentaje($total_margen_ins/$total_ING_Instalacion);}else{echo '0 %';} ?></strong></td>
-						<td align="right"><strong><span <?php if($total_margen_serv<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($total_margen_serv, 0); ?></strong></span></td>
+						<td align="right"><strong><span <?php if($total_margen_serv<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($total_margen_serv, 0); ?></strong></span></td>
 						<td align="right"><strong><?php if(isset($total_ING_ServicioTecnico)&&$total_ING_ServicioTecnico!=0){echo porcentaje($total_margen_serv/$total_ING_ServicioTecnico);}else{echo '0 %';} ?></strong></td>
-						<td align="right"><strong><span <?php if($total_margen_total<0){echo 'style="color:#ce4844;"';}?>><?php echo valores($total_margen_total, 0); ?></strong></span></td>
+						<td align="right"><strong><span <?php if($total_margen_total<0){echo 'style="color:#ce4844;"';} ?>><?php echo valores($total_margen_total, 0); ?></strong></span></td>
 						<td align="right"><strong><?php if(isset($total_ing_total)&&$total_ing_total!=0){echo porcentaje($total_margen_total/$total_ing_total);}else{echo '0 %';} ?></strong></td>
 					</tr>
 					
@@ -1747,7 +1748,6 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 		</div>
 	</div>
 </div>
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -1803,4 +1803,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

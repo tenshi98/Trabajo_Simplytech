@@ -19,7 +19,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 //Cargamos la ubicacion original
@@ -180,7 +180,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 	$x_seg = $n_permisos['idOpcionesGen_6'] * 1000;
 }else{
 	$x_seg = 300000;//5 minutos
-}?>
+} ?>
 <script>
 	window.setTimeout(function () {
 	  window.location.reload();
@@ -298,7 +298,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						$voltaje_actual_total = $voltaje_actual_total + $rowdata['SensoresMedActual_'.$i];
 						$voltaje_actual_cuenta++;
 					}
-					
+
 					//Se verifica si el sensor esta habilitado para la supervision
 					if(isset($rowMed['SensoresUso_'.$i])&&$rowMed['SensoresUso_'.$i]==1){ 
 						//si esta configurado el porcentaje de alerta
@@ -391,7 +391,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				$margen_elevacion     = 0;
 				$margen_giro          = 0;
 				$margen_carro         = 0;
-				
+
 				if($alimentacion_min > 1&&$alimentacion_max > 1){  $margen_alimentacion  = cantidades(100-(($alimentacion_min*100)/$alimentacion_max), 0);}
 				if($elevacion_min > 1&&$elevacion_max > 1){        $margen_elevacion     = cantidades(100-(($elevacion_min*100)/$elevacion_max), 0);}
 				if($giro_min > 1&&$giro_max > 1){                  $margen_giro          = cantidades(100-(($giro_min*100)/$giro_max), 0);}
@@ -531,38 +531,37 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				?>
 
 				<div class="row">
-					
+
 					<?php /*
 					<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-						<h3 style="text-align: center;"><?php echo $icon_alimentacion.' Alimentacion';?></h3>
-						<div class="float_table" id="chart_gauge_alimentacion" ></div> 
+						<h3 style="text-align: center;"><?php echo $icon_alimentacion.' Alimentacion'; ?></h3>
+						<div class="float_table" id="chart_gauge_alimentacion" ></div>
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo $link_alimentacion; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
 					*/ ?>
-					
+
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<h3 style="text-align: center;"><?php echo $icon_elevacion.' Elevacion';?></h3>
-						<div class="float_table" id="chart_gauge_elevacion" ></div> 
+						<h3 style="text-align: center;"><?php echo $icon_elevacion.' Elevacion'; ?></h3>
+						<div class="float_table" id="chart_gauge_elevacion" ></div>
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo $link_elevacion; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-					
+
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<h3 style="text-align: center;"><?php echo $icon_giro.' Giro';?></h3>
-						<div class="float_table" id="chart_gauge_giro" ></div> 
+						<h3 style="text-align: center;"><?php echo $icon_giro.' Giro'; ?></h3>
+						<div class="float_table" id="chart_gauge_giro" ></div>
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo $link_giro; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-					
+
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<h3 style="text-align: center;"><?php echo $icon_carro.' Carro';?></h3>
-						<div class="float_table" id="chart_gauge_carro" ></div> 
+						<h3 style="text-align: center;"><?php echo $icon_carro.' Carro'; ?></h3>
+						<div class="float_table" id="chart_gauge_carro" ></div>
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo $link_carro; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-					
-					
+
 					<script>
 						/* ************************************************************************** */
 						//Variables globales
@@ -758,11 +757,11 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 								
 					</script>
 				</div>
-			
+
 				<div class="row">
-					
+
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<h3 style="text-align: center;"><?php echo $icon_voltaje.' Voltaje';?></h3>
+						<h3 style="text-align: center;"><?php echo $icon_voltaje.' Voltaje'; ?></h3>
 
 						<div  class="box box-blue box-solid tooltip">
 							<div class="box-header with-border">
@@ -790,11 +789,11 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 							<div class="box-body">
 								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 value tipnoabs">
 									<span><i class="fa fa-bolt" aria-hidden="true"></i></span>
-									<span><?php echo cantidades($ndata_x1, 0);?></span>
+									<span><?php echo cantidades($ndata_x1, 0); ?></span>
 								</div>
 								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 value tipnoabs">
 									<span><i class="fa fa-bolt" aria-hidden="true"></i></span>
-									<span><?php echo cantidades($ndata_x2, 0);?></span>
+									<span><?php echo cantidades($ndata_x2, 0); ?></span>
 								</div>
 								<div class="clearfix"></div>
 							</div>
@@ -803,9 +802,9 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo $link_voltaje; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-					
+
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<h3 style="text-align: center;"><?php echo $icon_Alertas.' Operacion';?></h3>
+						<h3 style="text-align: center;"><?php echo $icon_Alertas.' Operacion'; ?></h3>
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
 								<h3 class="box-title">Alertas (Ultimas 24 Horas)</h3>
@@ -820,9 +819,9 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo $link_Alertas; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-					
+
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-						<h3 style="text-align: center;"><?php echo $icon_sobreuso.' Mantencion';?></h3>
+						<h3 style="text-align: center;"><?php echo $icon_sobreuso.' Mantencion'; ?></h3>
 						<div class="box box-blue box-solid">
 							<div class="box-header with-border text-center">
 								<h3 class="box-title">Mantención Requerida</h3>
@@ -838,8 +837,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo $link_sobreuso; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
 				</div>
-				
-				
+
 				<?php
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
@@ -865,9 +863,9 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 								var marker;
 								/* ************************************************************************** */
 								function initialize() {
-									
+
 									var myLatlng = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud']; ?>, <?php echo $rowdata['GeoLongitud']; ?>);
-									
+
 									var myOptions = {
 										zoom: 15,
 										center: myLatlng,
@@ -875,7 +873,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 									};
 									map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 									map.setTilt(0);
-									
+
 									// InfoWindow content
 									var content_1 = '<div id="iw-container">' +
 													'<div class="iw-title">Equipo</div>' +
@@ -904,18 +902,18 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 										title		: "Tu Ubicacion",
 										icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 									});
-									
+
 									// This event expects a click on a marker
 									// When this event is fired the Info Window is opened.
 									google.maps.event.addListener(marker, 'click', function() {
 										infowindow.open(map,marker);
 									});
-									
+
 									// Event that closes the Info Window with a click on the map
 									google.maps.event.addListener(map, 'click', function() {
 										infowindow.close();
 									});
-									
+
 									// *
 									// START INFOWINDOW CUSTOMIZE.
 									// The google.maps.event.addListener() event expects
@@ -977,11 +975,11 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 								google.maps.event.addDomListener(window, "load", initialize());
 
 							</script>
-							<?php 
+							<?php
 						}
 
 					} ?>
-				
+
 			</div>
 
 	
@@ -990,7 +988,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 		</div>
 	</div>
 </div>
-
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
@@ -1004,7 +1001,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -1014,7 +1011,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -1023,4 +1020,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

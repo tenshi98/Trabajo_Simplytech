@@ -19,7 +19,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 //Cargamos la ubicacion original
@@ -87,13 +87,13 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 		</header>
         <div class="tab-content">
 			<div class="wmd-panel">
-					
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					<?php if ($rowdata['Direccion_img']=='') { ?>
 						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 					<?php }else{  ?>
 						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-					<?php }?>
+					<?php } ?>
 				</div>
 				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 					<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Equipo</h2>
@@ -108,14 +108,14 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 						<?php if(isset($rowdata['IP_Client'])&&$rowdata['IP_Client']!=''){?><strong>IP Cliente : </strong><?php echo $rowdata['IP_Client']; ?><br/><?php } ?>
 						<?php if(isset($rowdata['idTelemetria'])&&$rowdata['idTelemetria']!=''){?><strong>ID Equipo : </strong><?php echo $rowdata['idTelemetria']; ?><br/><?php } ?>
 					</p>
-						
+
 					<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Configuracion</h2>
 					<p class="text-muted">
 						<strong>Identificador : </strong><?php echo $rowdata['Identificador']; ?><br/>
 						<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
 						<strong>Ultima Conexion : </strong><?php echo fecha_estandar($rowdata['LastUpdateFecha']).' a las '.$rowdata['LastUpdateHora']; ?><br/>
 					</p>
-					
+
 					<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Cambiar Estado</h2>
 					<?php
 					alert_post_data(2,1,1, '<strong>AVISO</strong>: Estás apunto de apagar una grúa <strong>manualmente</strong>. 
@@ -125,11 +125,10 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 			
 					
 					?>
-					
-					
+
 					<table  class="table table-bordered">
 						<tr class="item-row">
-							<td><label class="label <?php if(isset($rowdata['idEstadoEncendido'])&&$rowdata['idEstadoEncendido']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $rowdata['EstadoEncendido']; ?></label></td>
+							<td><label class="label <?php if(isset($rowdata['idEstadoEncendido'])&&$rowdata['idEstadoEncendido']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $rowdata['EstadoEncendido']; ?></label></td>
 							<td width="10">
 								<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
 									<?php if ( $rowdata['idEstadoEncendido']==1 ){ ?>   
@@ -143,15 +142,14 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 							</td>
 						</tr>
 					</table>
-						
+
 				</div>
 				<div class="clearfix"></div>
-						
+
 			</div>
         </div>
 	</div>
 </div>
-
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
@@ -165,7 +163,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -175,14 +173,14 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

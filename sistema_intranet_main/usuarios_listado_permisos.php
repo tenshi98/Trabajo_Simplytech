@@ -246,7 +246,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Permisos Asignados');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Permisos Asignados'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -299,16 +299,16 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 						<th width="10">Nivel</th>
 					</tr>
 					<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){$colspan=5;}else{$colspan=4;} ?>
-					<?php echo widget_sherlock(1, $colspan, 'TableFiltered');?>
+					<?php echo widget_sherlock(1, $colspan, 'TableFiltered'); ?>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
-					<?php 
+					<?php
 					//Obtengo la ubicacion completa para devolver al punto inicial
 					$xxx ='&id='.$_GET['id'];//Ciclo
 					filtrar($arrPermisos, 'Categoria');
 					foreach ($arrPermisos as $categoria=>$subcategorias) {  ?>
 						<tr class="odd" >
-							<td colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ echo '4';}else{echo '3';}?>" style="background-color:#DDD">
+							<td colspan="<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ echo '4';}else{echo '3';} ?>" style="background-color:#DDD">
 								<a name="<?php echo 'subcat_'.$subcategorias[0]['id_pmcat']; ?>"></a>
 								<strong><?php echo $categoria; ?></strong>
 							</td>
@@ -338,7 +338,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 								<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php if($permiso['visualizacion']==9999){echo 'Solo Superadministradores';}elseif($permiso['visualizacion']==9998){echo 'Todos';}else{echo $permiso['ver'];} ?></td><?php } ?>
 								<td>
 									<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
-										<?php $w='&anclaje='.$permiso['idAdmpm'];?>
+										<?php $w='&anclaje='.$permiso['idAdmpm']; ?>
 										<?php if ( $permiso['contar']=='1' ){ ?>
 											<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.$xxx; ?>&prm_del=<?php echo simpleEncode($permiso['idpermiso'], fecha_actual()).$w; ?>">OFF</a>
 											<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
@@ -371,14 +371,14 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -66,6 +66,7 @@ $SIS_query = 'Nombre,idEstado';
 $SIS_join  = '';
 $SIS_where = 'idCorreosCat = '.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_mnt_correos_cat', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -104,7 +105,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_mnt_correos_cat', $SIS
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -264,13 +265,13 @@ $arrCategorias = db_select_array (false, $SIS_query, 'telemetria_mnt_correos_cat
 				<?php foreach ($arrCategorias as $ciudad) { ?>
 					<tr class="odd">
 						<td><?php echo $ciudad['Nombre']; ?></td>
-						<td><label class="label <?php if(isset($ciudad['idEstado'])&&$ciudad['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $ciudad['Estado']; ?></label></td>
+						<td><label class="label <?php if(isset($ciudad['idEstado'])&&$ciudad['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $ciudad['Estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$ciudad['idCorreosCat']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($ciudad['idCorreosCat'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la categoria '.$ciudad['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la categoria '.$ciudad['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -293,4 +294,5 @@ $arrCategorias = db_select_array (false, $SIS_query, 'telemetria_mnt_correos_cat
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

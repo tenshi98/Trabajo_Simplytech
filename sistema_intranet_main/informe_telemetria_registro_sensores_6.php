@@ -42,10 +42,10 @@ $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelaciona
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
-}else{			
+}else{
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo,cantSensores', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowEquipo');
-	
+
 	//numero sensores equipo
 	$consql = '';
 	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
@@ -54,7 +54,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
 		$consql .= ',telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.Sensor_'.$i.' AS SensorValue_'.$i;
 	}
-	
+
 	/****************************************/
 	//consulto
 	$SIS_query = '
@@ -69,13 +69,13 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	//Se traen todas las unidades de medida
 	$arrUnimed = array();
 	$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
-	
+
 	//guardo las unidades de medida
 	$Unimed = array();
-	foreach ($arrUnimed as $sen) { 
+	foreach ($arrUnimed as $sen) {
 		$Unimed[$sen['idUniMed']] = ' '.$sen['Nombre'];
 	}
-	
+
 	/****************************************/
 	//Se trae grupo
 	$rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$_GET['idGrupo'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowGrupo');
@@ -170,7 +170,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$Graphics_lineColors .= '];';
 		$Graphics_lineDash   .= '];';
 		$Graphics_lineWidth  .= '];';
-		
+
 		?>
 		
 		
@@ -185,7 +185,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				</div>
 			</div>
 		</div>
-		
+
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: none;">
 
 			<form method="post" id="make_pdf" action="informe_telemetria_registro_sensores_19_to_pdf.php">
@@ -201,17 +201,17 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				<?php if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){?> <input type="hidden" name="h_termino"  id="h_termino" value="<?php echo $_GET['h_termino']; ?>" /><?php } ?>
 
 				<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
-			
+
 			</form>
-			
+
 			<style>
-			#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif';?>");background-repeat: no-repeat;background-position: center;}
+			#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif'; ?>");background-repeat: no-repeat;background-position: center;}
 			</style>
 			<div id="loading"></div>
 			<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>
 			<script>
 				var node = document.getElementById('graphLinear_1');
-				
+
 				function sendDatatoSRV(img) {
 					$('#img_adj').val(img);
 					//$('#img_adj').val($('#img-out').html());
@@ -237,7 +237,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								console.error('oops, something went wrong!', error);
 								alert('No se puede exportar!');
 								document.getElementById("loading").style.display = "none";
-							});		
+							});
 						}
 					, 3000);
 				}
@@ -252,7 +252,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			<header>
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 				<h5>Registro Sensores grupo <?php echo $rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo']; ?></h5>
-				
+
 			</header>
 			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -261,7 +261,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<td></td>
 							<td></td>
 							<?php 
-							for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
+							for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 								if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 									echo '<th style="text-align:center">'.$arrEquipos[0]['SensorNombre_'.$i].'</th>';
 								}
@@ -272,14 +272,14 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<th>Fecha</th>
 							<th>Hora</th>
 							<?php 
-							for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
+							for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 								if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 									echo '<th>Medicion</th>';
 								}
 							}
 							?>
 						</tr>
-						
+
 					<?php foreach ($arrEquipos as $rutas) { ?>
 						<tr class="odd">
 							<td><?php echo fecha_estandar($rutas['FechaSistema']); ?></td>
@@ -304,13 +304,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	</div>
 <?php } ?>
 
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-			
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Filtro de busqueda
@@ -327,8 +326,9 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 alert_post_data(2,1,1, $Alert_Text);
-?>	
-	
+
+?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -375,11 +375,10 @@ alert_post_data(2,1,1, $Alert_Text);
 </div>
 <?php } ?>
 
-	
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

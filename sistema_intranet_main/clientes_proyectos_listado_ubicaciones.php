@@ -100,7 +100,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ubicacion borrada corr
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['edit_itemizado'])){ 
+if(!empty($_GET['edit_itemizado'])){
 // consulto los datos
 $query = "SELECT Nombre
 FROM `ubicacion_listado_level_".$_GET['lvl']."`
@@ -121,6 +121,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	 
  
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -153,7 +154,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				?> 
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel">
 					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -213,7 +214,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
  
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['itemizado'])){ 
+}elseif(!empty($_GET['itemizado'])){
 // consulto los datos
 $query = "SELECT Nombre,idSistema
 FROM `ubicacion_listado`
@@ -281,7 +282,7 @@ array_push( $arrLicitacion,$row );
 
 $array3d = array();
 foreach($arrLicitacion as $key) {
-	
+
 	//Creo Variables para la rejilla
 	for ($i = 1; $i <= $nmax; $i++) {
 		$d[$i]  = $key['LVL_'.$i.'_id'];   
@@ -373,9 +374,10 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
     echo '</ul>';
 }	
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'].'&new_itemizado=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'].'&new_itemizado=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -386,7 +388,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Itemizado Ubicacion <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
         <div class="table-responsive">
-			
+
 			<?php //Se imprime el arbol
 			echo arrayToUL($array3d, 0, $rowlevel['level'],$new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'], $nmax);
 			?>
@@ -399,8 +401,8 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 <a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
-</div>	
-	
+</div>
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['status'])){
 // consulto los datos
@@ -425,8 +427,8 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
-?>
 
+?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -504,7 +506,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){     $x1  = $Nombre;      }else{$x1  = $rowdata['Nombre'];}
-					
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -544,7 +546,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){       $x1  = $Nombre;       }else{$x1  = '';}
@@ -626,10 +628,11 @@ array_push( $arrArea,$row );
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Proyecto', $rowdata['Nombre'], 'Ubicaciones');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Proyecto', $rowdata['Nombre'], 'Ubicaciones'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Ubicacion</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Ubicacion</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -671,7 +674,7 @@ array_push( $arrArea,$row );
 				<?php foreach ($arrArea as $area) { ?>
 					<tr class="odd">
 						<td><?php echo $area['Nombre']; ?></td>
-						<td><label class="label <?php if(isset($area['idEstado'])&&$area['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $area['Estado']; ?></label></td>
+						<td><label class="label <?php if(isset($area['idEstado'])&&$area['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $area['Estado']; ?></label></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $area['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 175px;" >
@@ -681,7 +684,7 @@ array_push( $arrArea,$row );
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$area['idUbicacion']; ?>" title="Editar Itemizado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-server" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $new_location.'&del='.simpleEncode($area['idUbicacion'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el registro '.$area['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el registro '.$area['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -698,8 +701,8 @@ array_push( $arrArea,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -708,4 +711,5 @@ array_push( $arrArea,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

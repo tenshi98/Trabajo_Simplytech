@@ -32,9 +32,9 @@ $SIS_where = "telemetria_listado_historial_activaciones.idEstado=1";
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){    $SIS_where.= " AND telemetria_listado_historial_activaciones.idTelemetria =".$_GET['idTelemetria'];}
-if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino']!=''){ 
+if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino']!=''){
 	$SIS_where.= " AND telemetria_listado_historial_activaciones.TimeStamp BETWEEN '".$_GET['F_inicio']." ".$_GET['H_inicio']."' AND '".$_GET['F_termino']." ".$_GET['H_termino']."'";
-}elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino']!=''){ 
+}elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino']!=''){
 	$SIS_where.= " AND telemetria_listado_historial_activaciones.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 /**********************************************************/
@@ -72,7 +72,7 @@ $spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
 			->setDescription("Document for Office 2007")
 			->setKeywords("office 2007")
 			->setCategory("office 2007 result file");
-          
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Equipo')
@@ -85,7 +85,7 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('H1', 'Tiempo Muerto')
             ->setCellValue('I1', 'Tiempo Perdido')
             ->setCellValue('J1', 'Sobre Tiempo');
-            
+
 $nn=2;
 filtrar($arrConsulta, 'EquipoNombre');
 foreach($arrConsulta as $categoria=>$permisos){
@@ -253,7 +253,7 @@ foreach($arrConsulta as $categoria=>$permisos){
 			$FueraHorario       = 0;
 			$Direccion          = $con['Direccion'];
 			$CodigoInterno      = $con['CodigoInterno'];
-			
+
 			/***************************************/
 			//Verifico el sobretiempo
 			if($SobreTiempo_1=='00:00:00'&&$con['EquipoJornada_inicio']>=$con['EquipoHora']&&$con['EquipoValor']==$con['EquipoActivacionValor']){

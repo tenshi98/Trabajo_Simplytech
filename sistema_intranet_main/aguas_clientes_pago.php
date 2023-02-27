@@ -44,7 +44,7 @@ if (isset($_GET['created'])){ $error['created'] = 'sucess/Pago realizado correct
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['pagar'])){ 
+if(!empty($_GET['pagar'])){
 //obtengo los datos del cliente
 $query = "SELECT Nombre,Identificador
 FROM `aguas_clientes_listado`
@@ -93,14 +93,15 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 									
 }
-$rowFacturacion = mysqli_fetch_assoc ($resultado);	
+$rowFacturacion = mysqli_fetch_assoc ($resultado);
+
 ?>
  
  
-<div class="row inbox"> 
+<div class="row inbox">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h2><strong>Cliente : </strong><?php echo $rowCliente['Identificador']; ?></h2>
-		<hr>	
+		<hr>
 	</div>
 </div> 
  
@@ -111,7 +112,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 	
 	<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 		<ul class="list-group inbox-options">
-			<li class="list-group-item"><i class="fa fa-inbox" aria-hidden="true"></i>  Facturacion <?php echo Fecha_estandar($rowFacturacion['Fecha']);?></li>
+			<li class="list-group-item"><i class="fa fa-inbox" aria-hidden="true"></i>  Facturacion <?php echo Fecha_estandar($rowFacturacion['Fecha']); ?></li>
 			<li class="list-group-item">		
 				<div class="pull-left">Cargo Fijo Cliente</div>
 				<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleCargoFijoValor'], 0); ?></small>
@@ -197,11 +198,11 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 			</li>
 			<?php if($rowFacturacion['montoPago']!=0){?>
 				<li class="list-group-item">
-					
+
 					<div class="pull-left">Pagado</div>
 					<small class="pull-right"><?php echo '(-) '.Valores($rowFacturacion['montoPago'], 0); ?></small>
 					<br/>
-					
+
 				</li>
 			<?php } ?>
 			<li class="list-group-item">
@@ -210,7 +211,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 				<?php $calculo = $rowFacturacion['DetalleTotalAPagar'] - $rowFacturacion['montoPago']; ?>
 				<small class="pull-right"><strong><?php echo Valores($calculo, 0); ?></strong></small>
 				<br/>
-				
+
 			</li>
 		</ul>
   	
@@ -220,7 +221,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 	
 	<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
 		<div class="">
-			
+
 			<ul class="list-group inbox-options">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate >
 					<li class="list-group-item"><i class="fa fa-inbox" aria-hidden="true"></i>  Pago</li>
@@ -343,12 +344,11 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrFacturaciones,$row );
 }	
 ?>
-	
-	
-<div class="row inbox"> 
+
+<div class="row inbox">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h2><strong>Cliente : </strong><?php echo $rowCliente['Identificador']; ?></h2>
-		<hr>	
+		<hr>
 	</div>
 </div>
 
@@ -401,7 +401,7 @@ array_push( $arrFacturaciones,$row );
 					<div class="pull-left">Cargo Fijo Cliente</div>
 					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleCargoFijoValor'], 0); ?></small>
 					<br/>
-					
+
 					<?php if(isset($rowFacturacion['DetalleConsumoValor'])&&$rowFacturacion['DetalleConsumoValor']!='0'){ ?>
 						<div class="pull-left">Consumo Agua Potable</div>
 						<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleConsumoValor'], 0); ?></small>
@@ -452,7 +452,7 @@ array_push( $arrFacturaciones,$row );
 						<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleSaldoAnterior'], 0)?></small>
 						<br/>
 					<?php } ?>
-					
+
 					<?php if(isset($rowFacturacion['DetalleOtrosCargos1Valor'])&&$rowFacturacion['DetalleOtrosCargos1Valor']!='0'){ ?>
 						<div class="pull-left">Otros Cargos 1</div>
 						<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos1Valor'], 0)?></small>
@@ -485,19 +485,19 @@ array_push( $arrFacturaciones,$row );
 						<div class="pull-left">Pagado</div>
 						<small class="pull-right"><?php echo '(-) '.Valores($rowFacturacion['montoPago'], 0); ?></small>
 						<br/>
-						
+
 					</li>
 				<?php } ?>
 				<li class="list-group-item">
-					
+
 					<div class="pull-left">TOTAL A PAGAR</div>
 					<?php $calculo = $rowFacturacion['DetalleTotalAPagar'] - $rowFacturacion['montoPago']; ?>
 					<small class="pull-right"><strong><?php echo Valores($calculo, 0); ?></strong></small>
 					<br/>
-					
+
 				</li>
 			</ul>
-		
+
 		</div>
 								
 	</div>
@@ -511,14 +511,13 @@ array_push( $arrFacturaciones,$row );
 		<div class="clearfix"></div>
 	</div>
 
-
 <?php } else{ ?>
 <p class="bg-primary" style="padding: 10px;">Este cliente no registra ninguna deuda</p>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php }  ?>
@@ -530,7 +529,8 @@ array_push( $arrFacturaciones,$row );
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //Indico el sistema
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';	 
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -553,7 +553,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('pagina', $_GET['pagina'], 2);
 				?>
-								
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -626,7 +626,8 @@ $arrUsers = array();
 $arrUsers = db_select_array (false, $SIS_query, 'aguas_clientes_pago', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUsers');
 
 //Indico el sistema
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';	
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_clientes_listado.idEstado=1';
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
@@ -639,7 +640,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Ingresar Pago</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Ingresar Pago</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -656,7 +657,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Cliente','idClienteFilt', $x1, 1, 'idCliente', 'Identificador,Nombre', 'aguas_clientes_listado', $z, 'ORDER BY Identificador ASC', $dbConn);
 				$Form_Inputs->form_date('Fecha Pago','fechaPago', $x2, 1);
-					
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 
@@ -738,7 +739,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 						<td><?php echo fecha_estandar($usuarios['fechaPago']); ?></td>
 						<td><?php echo $usuarios['TipoPago'].' '.$usuarios['nDocPago']; ?></td>
 						<td align="right"><?php echo valores($usuarios['montoPago'], 0); ?></td>
-						<td><?php echo $usuarios['Creador']; ?></td>	
+						<td><?php echo $usuarios['Creador']; ?></td>
 					</tr>
 					<?php } ?>
 				</tbody>
@@ -752,7 +753,6 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 	</div>
 </div>
 
-
 <?php } ?>
 
 <?php
@@ -760,4 +760,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

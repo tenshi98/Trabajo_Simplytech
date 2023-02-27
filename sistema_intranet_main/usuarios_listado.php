@@ -68,6 +68,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['clone_idUsuario'])){
 	
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -115,7 +116,7 @@ if(!empty($_GET['clone_idUsuario'])){
 				$Form_Inputs->form_input_hidden('idUsuario', $_GET['clone_idUsuario'], 2);
 
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c5; Clonar" name="clone_Usuario">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -355,7 +356,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -406,7 +407,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Perfil</h2>
@@ -436,11 +437,11 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 							<?php } ?>
 						</p>
 					</div>
-					
+
 					<?php if($arrMenu!=false && !empty($arrMenu) && $arrMenu!=''){ ?>
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos Asignados</h2>
-							
+
 							<ul class="tree">
 								<?php
 								filtrar($arrMenu, 'CategoriaNombre');
@@ -468,8 +469,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 							</ul>
 						</div>
 					<?php } ?>
-					
-					
+
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 
 						<?php
@@ -590,7 +590,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 						
 						?>
 					</div>
-			
+
 				</div>
 			</div>
         </div>
@@ -599,14 +599,14 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -748,6 +748,7 @@ foreach ($arrSistemas as $sis) {
 }
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
@@ -802,11 +803,7 @@ foreach ($arrSistemas as $sis) {
 	</div>
 </div>
 <div class="clearfix"></div>
-                     
 
-
-
-                                
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -875,7 +872,7 @@ foreach ($arrSistemas as $sis) {
 								<td><?php echo $usuarios['usuario']; ?></td>
 								<td><?php echo $usuarios['Nombre']; ?></td>
 								<td><?php echo $usuarios['tipo']; ?></td>
-								<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['estado']; ?></label></td>	
+								<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $usuarios['estado']; ?></label></td>	
 								<td>
 									<?php
 									if(isset($arrSystem[$usuarios['idUsuario']])){
@@ -885,7 +882,7 @@ foreach ($arrSistemas as $sis) {
 									}
 									?>
 								</td>
-										
+
 								<td>
 									<div class="btn-group" style="width: 140px;" >
 										<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_usuario.php?view='.simpleEncode($usuarios['idUsuario'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
@@ -895,10 +892,10 @@ foreach ($arrSistemas as $sis) {
 											//se verifica que el usuario no sea uno mismo
 											if($usuarios['idUsuario']!=$_SESSION['usuario']['basic_data']['idUsuario']){
 												$ubicacion = $location.'&del='.simpleEncode($usuarios['idUsuario'], fecha_actual());
-												$dialogo   = '¿Realmente deseas eliminar al usuario '.$usuarios['Nombre'].'?';?>
+												$dialogo   = '¿Realmente deseas eliminar al usuario '.$usuarios['Nombre'].'?'; ?>
 												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-										<?php } 
-										}?>
+										<?php }
+										} ?>
 									</div>
 								</td>
 							</tr>
@@ -922,4 +919,5 @@ foreach ($arrSistemas as $sis) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

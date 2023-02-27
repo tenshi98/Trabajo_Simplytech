@@ -18,7 +18,7 @@ require_once '0_validate_user_1.php';
 	for ($i = 1; $i <= 50; $i++) {
 		if (!empty($_POST['Medida_'.$i])) $Medidas[$i] = $_POST['Medida_'.$i];
 	}
-	
+
 	//Traspaso de valores input a variables
 	if (!empty($_POST['idAnalisis']))       $idAnalisis       = $_POST['idAnalisis'];
 	if (!empty($_POST['idMaquina']))        $idMaquina        = $_POST['idMaquina'];
@@ -61,7 +61,7 @@ require_once '0_validate_user_1.php';
 			case 'obs_Accion':        if(empty($obs_Accion)){         $error['obs_Accion']          = 'error/No ha ingresado la observacion de accion';}break;
 			case 'idTipo':            if(empty($idTipo)){             $error['idTipo']              = 'error/No ha seleccionado el tipo de analisis';}break;
 			case 'idLaboratorio':     if(empty($idLaboratorio)){      $error['idLaboratorio']       = 'error/No ha seleccionado el laboratorio';}break;
-			
+
 			/*for ($i = 1; $i <= 50; $i++) {
 				case 'Medida_'.$i: if(empty($Medidas[$i])){  $error['Medida_'.$i] = 'error/No ha ingresado la medida '.$i;}break;
 			}*/
@@ -122,7 +122,7 @@ require_once '0_validate_user_1.php';
 				if(isset($obs_Accion) && $obs_Accion!=''){              $SIS_data .= ",'".$obs_Accion."'";          }else{$SIS_data .= ",'Sin Observaciones'";}
 				if(isset($idTipo) && $idTipo!=''){                     $SIS_data .= ",'".$idTipo."'";              }else{$SIS_data .= ",''";}
 				if(isset($idLaboratorio) && $idLaboratorio!=''){        $SIS_data .= ",'".$idLaboratorio."'";       }else{$SIS_data .= ",''";}
-				
+
 				$zz = '';
 				for ($i = 1; $i <= 50; $i++) {
 					if(isset($Medidas[$i]) && $Medidas[$i]!=''){   $SIS_data .= ",'".$Medidas[$i]."'";   }else{$SIS_data .= ",''";}
@@ -185,13 +185,13 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$rowdata['PuntoMedAceptable_'.$i]."'";
 									$SIS_data .= ",'".$rowdata['PuntoMedAlerta_'.$i]."'";
 									$SIS_data .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'";
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia, 
 									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta, 
 									medCondenatorio';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'analisis_listado_alertas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 								//alerta naranja
 								if(isset($Medidas[$i])&&$Medidas[$i]!=''&&$Medidas[$i]>$rowdata['PuntoMedCondenatorio_'.$i]&&$Medidas[$i]<=$rowdata['PuntoMedAlerta_'.$i]){
@@ -220,13 +220,13 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$rowdata['PuntoMedAceptable_'.$i]."'";
 									$SIS_data .= ",'".$rowdata['PuntoMedAlerta_'.$i]."'";
 									$SIS_data .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'";
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia, 
 									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta, 
 									medCondenatorio';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'analisis_listado_alertas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 								//alerta roja
 								if(isset($Medidas[$i])&&$Medidas[$i]!=''&&$Medidas[$i]<=$rowdata['PuntoMedCondenatorio_'.$i]){
@@ -255,13 +255,13 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$rowdata['PuntoMedAceptable_'.$i]."'";
 									$SIS_data .= ",'".$rowdata['PuntoMedAlerta_'.$i]."'";
 									$SIS_data .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'";
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia, 
 									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta, 
 									medCondenatorio';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'analisis_listado_alertas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 							
 								
@@ -295,13 +295,13 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$rowdata['PuntoMedAceptable_'.$i]."'";
 									$SIS_data .= ",'".$rowdata['PuntoMedAlerta_'.$i]."'";
 									$SIS_data .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'";
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia, 
 									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta, 
 									medCondenatorio';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'analisis_listado_alertas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 								//alerta naranja
 								if(isset($Medidas[$i])&&$Medidas[$i]!=''&&$Medidas[$i]<$rowdata['PuntoMedCondenatorio_'.$i]&&$Medidas[$i]>=$rowdata['PuntoMedAlerta_'.$i]){
@@ -330,13 +330,13 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$rowdata['PuntoMedAceptable_'.$i]."'";
 									$SIS_data .= ",'".$rowdata['PuntoMedAlerta_'.$i]."'";
 									$SIS_data .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'";
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia, 
 									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta, 
 									medCondenatorio';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'analisis_listado_alertas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 								//alerta roja
 								if(isset($Medidas[$i])&&$Medidas[$i]!=''&&$Medidas[$i]>=$rowdata['PuntoMedCondenatorio_'.$i]){
@@ -365,13 +365,13 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$rowdata['PuntoMedAceptable_'.$i]."'";
 									$SIS_data .= ",'".$rowdata['PuntoMedAlerta_'.$i]."'";
 									$SIS_data .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'";
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia, 
 									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta, 
 									medCondenatorio';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'analisis_listado_alertas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 							}
 						}

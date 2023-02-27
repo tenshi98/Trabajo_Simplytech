@@ -26,7 +26,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -194,7 +194,6 @@ tr.oddrow td{display: line;border-bottom: 1px solid #EEE;}
 table .title{background: #222; text-align: center; color: white; font: bold 15px Helvetica, Sans-Serif; text-transform: uppercase; padding: 8px 0px;}
 </style>
 
-
 <div class="row">
 	<div class="col-xs-12">
 			
@@ -202,7 +201,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 		<table style="margin: 1%; width: 98%;"   cellpadding="10" cellspacing="0">
 			<tr>
 				<td style="padding: 10px;" valign="top">
-			
+
 					<table style="text-align: left; width: 100%;"  cellpadding="0" cellspacing="0">
 						<tr>
 							<td width="33%">';
@@ -260,7 +259,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							<td>Valor Unitario</td>
 							<td>Subtotal</td>
 						</tr>';
-					
+
 						$nn = 1;
 						$total = 0;
 						//Listado de productos solicitados
@@ -385,7 +384,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 					
 						
 					$html .= '</table>
-			
+
 					<br/>
 			  
 					<table style="text-align: left; width: 100%;"  cellpadding="0" cellspacing="0">
@@ -403,7 +402,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							</td>
 						</tr>
 					</table>
-			
+
 					<br/>
 					<table style="text-align: left; width: 100%;"  cellpadding="0" cellspacing="0">
 						<tr>
@@ -413,7 +412,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							<td style="padding: 10px;">'.$row_data['Observaciones'].'</td>
 						</tr>
 					</table>';
-					
+
 					$html .= '
 					
 					<br/>
@@ -438,7 +437,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 		
 		
 			
-	</div>   
+	</div>
 </div>';
 	
 echo $html;
@@ -446,4 +445,5 @@ echo $html;
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Print.php';
+
 ?>

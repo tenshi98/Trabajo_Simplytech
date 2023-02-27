@@ -27,7 +27,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 $SIS_where = 'trabajadores_listado.idSistema='.$_GET['idSistema'];
-if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){ 
+if(isset($_GET['idTrabajador'])&&$_GET['idTrabajador']!=''){
 	$SIS_where .=" AND trabajadores_listado.idTrabajador='".$_GET['idTrabajador']."'";
 }
 
@@ -67,7 +67,7 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('C1', 'Fecha')
             ->setCellValue('D1', 'Ingreso')
             ->setCellValue('E1', 'Egreso');
-            
+
 $nn=2;
 foreach ($arrAsistencias as $con) { 
 		

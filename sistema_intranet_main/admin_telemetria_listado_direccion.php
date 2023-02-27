@@ -53,7 +53,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos Direccion');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos Direccion'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -80,7 +80,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_trabajo.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-clock-o" aria-hidden="true"></i> Jornada Trabajo</a></li>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_otros_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-archive" aria-hidden="true"></i> Otros Datos</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -130,7 +130,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 									mapTypeId: google.maps.MapTypeId.ROADMAP
 								};
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-								
+
 								marker = new google.maps.Marker({
 									draggable	: true,
 									position	: myLatlng,
@@ -139,13 +139,13 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 									animation 	:google.maps.Animation.DROP,
 									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
-							
+
 								google.maps.event.addListener(marker, 'dragend', function (event) {
 
 									document.getElementById("GeoLatitud").value = event.latLng.lat();
 									document.getElementById("GeoLongitud").value = event.latLng.lng();
 									codeLatLng(event.latLng.lat(),event.latLng.lng(),'Direccion');
-									
+
 									document.getElementById("Latitud_fake").value = event.latLng.lat();
 									document.getElementById("Longitud_fake").value = event.latLng.lng();
 			
@@ -209,7 +209,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 							/* ************************************************************************** */
 							google.maps.event.addDomListener(window, "load", initialize());
 						</script>
-					
+
 					<?php } ?>
 				</div>
 			</div>
@@ -244,13 +244,13 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 						<div class="form-group">
 							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit">
 						</div>
-							  
+
 					</form>
 					<?php widget_validator(); ?>
-					
+
 				</div>
 			</div>
-			
+
 		</div>
 		
 		
@@ -260,14 +260,14 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

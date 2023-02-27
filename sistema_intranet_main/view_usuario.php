@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -167,7 +167,7 @@ $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', 
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/usr.png">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Perfil</h2>
@@ -200,7 +200,7 @@ $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', 
 					<?php if($arrMenu!=false && !empty($arrMenu) && $arrMenu!=''){ ?>
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos Asignados</h2>
-							
+
 							<ul class="tree">
 								<?php
 								filtrar($arrMenu, 'CategoriaNombre');
@@ -228,7 +228,7 @@ $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', 
 							</ul>
 						</div>
 					<?php } ?>
-					
+
 					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 
 						<?php
@@ -343,7 +343,7 @@ $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', 
 							echo '</ul>';
 						} ?>
 					</div>
-			
+
 				</div>
 			</div>
 
@@ -411,7 +411,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -421,7 +421,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -430,4 +430,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -53,11 +53,11 @@ if(isset($_GET['idOpciones'])&&$_GET['idOpciones']!=''&&$_GET['idOpciones']==1){
 
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idAsistencia', 'trabajadores_asistencias_predios', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
-			
+
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
-}else{	
+}else{
 	//se traen lo datos del equipo
 	$SIS_query = '
 	trabajadores_asistencias_predios.idAsistencia,
@@ -129,7 +129,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								</td>
 							</tr>
 						<?php }
-					}?>                    
+					} ?>                    
 					</tbody>
 				</table>
 			</div>
@@ -152,6 +152,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 //Verifico el tipo de usuario que esta ingresando
 $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -180,7 +181,7 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_select('Estado','idEstado', $x5, 1, 'idEstado', 'Nombre', 'core_estado_asistencia_predio', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Trabajador','idTrabajador', $x6, 1, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $y, '', $dbConn);
 				$Form_Inputs->form_select('Dentro de Predio','idOpciones', $x7, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-						
+
 				?>
 
 				<div class="form-group">
@@ -198,4 +199,5 @@ $y = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

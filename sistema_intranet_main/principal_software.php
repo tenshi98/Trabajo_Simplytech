@@ -124,7 +124,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'soporte_software_listado_c
 					
 			<?php foreach ($arrCategorias as $cat) { ?>
 				<a href="<?php echo $original.'?pagina=1&filterCat='.$cat['idCategoria']; ?>" class="list-group-item">
-					<i class="fa fa-inbox" aria-hidden="true"></i> 
+					<i class="fa fa-inbox" aria-hidden="true"></i>
 					<?php echo $cat['Nombre']; ?>
 					<span class="badge bg-primary"><?php echo $cat['cuenta']; ?></span>
 				</a>	
@@ -138,7 +138,6 @@ $arrCategorias = db_select_array (false, $SIS_query, 'soporte_software_listado_c
 
 <?php echo paginador_1($total_paginas, $original, '', $num_pag); ?>
 
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px; margin-top:30px">
 <a href="principal.php" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -151,4 +150,5 @@ $arrCategorias = db_select_array (false, $SIS_query, 'soporte_software_listado_c
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

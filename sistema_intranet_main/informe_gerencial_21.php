@@ -213,7 +213,7 @@ array_push( $arrTemporal_4,$row );
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="table-responsive" style="height: 800px;">
-		
+
 		<?php 
 		//Datos
 		$tabla = '';
@@ -229,7 +229,7 @@ array_push( $arrTemporal_4,$row );
 		foreach ($arrTemporal_4 as $temp) {
 			$tabla .= '{"Tipo": "Servicios","Proveedor": "'.$temp['ProveedorNombre'].'","Fecha": "'.$temp['Creacion_fecha'].'","Semana": '.$temp['Creacion_Semana'].',"Mes": '.$temp['Creacion_mes'].',"Ano": '.$temp['Creacion_ano'].',"Valor_Neto": '.$temp['ValorNeto'].',"Valor_Total": '.$temp['ValorTotal'].'},';
 		}
-		
+
 		//
 		$extraconfig = '
 		slice: {
@@ -276,6 +276,7 @@ array_push( $arrTemporal_4,$row );
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -298,7 +299,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_filter('Estado de Pago','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estado_facturacion', 0, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x3, 1);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x4, 1);
-						
+
 				?>
 
 				<div class="form-group">
@@ -316,4 +317,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

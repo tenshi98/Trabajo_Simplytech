@@ -124,7 +124,7 @@ $spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-          
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Bodega origen')
@@ -161,7 +161,7 @@ $spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('AF1', 'Cantidad eg')
 			->setCellValue('AG1', 'Valor')
 			->setCellValue('AH1', 'Valor Total');
-            
+
 $nn=2;
 foreach ($arrProductos as $productos) { 
 
@@ -201,10 +201,8 @@ foreach ($arrProductos as $productos) {
 				->setCellValue('AG'.$nn, cantidades_excel($productos['Valor']))
 				->setCellValue('AH'.$nn, cantidades_excel($productos['ValorTotal']));
 	$nn++;
-   
-} 
 
-
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Datos');

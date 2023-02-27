@@ -304,7 +304,7 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new2'])){ 
+} elseif(!empty($_GET['new2'])){
 // consulto los datos
 $query = "SELECT cantPuntos
 FROM `maquinas_listado_matriz`
@@ -372,7 +372,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrGrupo,$row );
-}	
+}
 
 //filtro
 $zx1 = "idProducto=0";
@@ -399,8 +399,9 @@ array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
-} 
+}
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -432,7 +433,7 @@ foreach ($arrPermisos as $prod) {
 							$x_con++;
 						}
 					}
-					
+
 					//si hay items se muestra todo
 					if($x_con!=0){
 						
@@ -485,7 +486,7 @@ foreach ($arrPermisos as $prod) {
 
 				<script>
 					document.getElementById('div_idLaboratorio').style.display = 'none';
-					
+
 					$("#idTipo").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 						
@@ -512,7 +513,7 @@ foreach ($arrPermisos as $prod) {
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	 
+</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
@@ -762,7 +763,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'analisis_listado', $SIS_join, $S
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idAnalisis']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($tipo['idAnalisis'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el analisis?';?>
+									$dialogo   = '¿Realmente deseas eliminar el analisis?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -780,11 +781,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'analisis_listado', $SIS_join, $S
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

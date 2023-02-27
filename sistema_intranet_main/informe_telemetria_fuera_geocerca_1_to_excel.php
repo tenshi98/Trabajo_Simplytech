@@ -43,7 +43,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 $SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_geocerca.idTelemetria';
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_error_geocerca.idTelemetria ";
-	$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 // Se trae un listado con todos los elementos
 $SIS_query = '
@@ -70,7 +70,7 @@ $spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-           
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Nombre Equipo')
@@ -87,7 +87,7 @@ foreach ($arrErrores as $error) {
 				->setCellValue('C'.$nn, $error['Fecha'])
 				->setCellValue('D'.$nn, $error['Hora']);
 	$nn++;
-   
+
 } 
 						
 

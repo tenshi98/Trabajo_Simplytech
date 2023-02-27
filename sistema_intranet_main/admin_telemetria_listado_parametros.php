@@ -45,7 +45,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Equipo borrado correct
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- if(!empty($_GET['modAct'])){
+if(!empty($_GET['modAct'])){
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
@@ -268,7 +268,7 @@ $arrFinalUnimed[0]    = 'No configurado';
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos Sensores');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos Sensores'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -360,11 +360,10 @@ $arrFinalUnimed[0]    = 'No configurado';
 	</div>
 </div>
 
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -373,4 +372,5 @@ $arrFinalUnimed[0]    = 'No configurado';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

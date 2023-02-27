@@ -74,7 +74,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Caja Chica', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Caja Chica', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -104,7 +104,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/caja-chica.jpg">
 						<?php }else{  ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-						<?php }?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de la Caja Chica</h2>
@@ -118,7 +118,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
-								<?php 
+								<?php
 								//Ficha Tecnica
 								if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
 									echo '
@@ -136,30 +136,27 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 								?>
 							</tbody>
 						</table>
-						
 
-						
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
 
-			
         </div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -329,7 +326,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'caja_chica_listado', $SIS_join, 
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idCajaChica']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($tipo['idCajaChica'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar la Caja Chica '.$tipo['Nombre'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar la Caja Chica '.$tipo['Nombre'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -352,4 +349,5 @@ $arrTipo = db_select_array (false, $SIS_query, 'caja_chica_listado', $SIS_join, 
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -1,7 +1,7 @@
 <div class="tab-pane fade" id="Menu_tab_3">
 
 	<div style="margin-top:10px;">
-		
+
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<a target="_blank" rel="noopener noreferrer" href="<?php echo 'principal_calendario.php?Mes='.$Mes.'&Ano='.$Ano.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Evento</a>
 		</div>
@@ -11,7 +11,7 @@
 				<header>
 					<h5>Calendario General</h5>
 				</header>
-						
+
 				<div id="calendar_content" class="body">
 					<div id="calendar" class="fc fc-ltr">
 
@@ -56,7 +56,7 @@
 													echo "<td class='fc-Dia fc-wed fc-widget-content fc-other-Mes fc-future fc-state-none'> </td>";
 												// mostramos el dia
 												}else{?>
-													<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';}?>">
+													<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';} ?>">
 														<div class="calendar_min">
 															<div class="fc-Dia-number"><?php echo $Dia; ?></div>
 															<div class="fc-Dia-content">
@@ -69,7 +69,7 @@
 																			echo '<a class="event_calendar evcal_color1 word_break" target="_blank" rel="noopener noreferrer" href="'.$ver.'">'.cortar($evento['Titulo'], 20).'</a>';
 																		}
 																	}
-																}?>    
+																} ?>    
 															</div>
 														</div>
 													</td>

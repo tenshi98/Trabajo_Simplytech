@@ -130,7 +130,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -219,6 +219,7 @@ $arrContactos = db_select_array (false, $SIS_query, 'principal_agenda_telefonica
 
 //paginador
 $search='';
+
 ?>
                                 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -241,7 +242,7 @@ $search='';
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
-								  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrContactos as $cont) { ?>
 					<tr class="odd">
@@ -252,9 +253,9 @@ $search='';
 							<div class="btn-group" style="width: 70px;" >
 								<?php if($cont['idUsuario']!=9999){?>
 									<a href="<?php echo $location.'&id='.$cont['idAgenda']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 									$ubicacion = $location.'&del='.simpleEncode($cont['idAgenda'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el contacto '.$cont['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el contacto '.$cont['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -272,7 +273,6 @@ $search='';
 	</div>
 </div>
 
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px; margin-top:30px">
 <a href="principal.php" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -284,4 +284,5 @@ $search='';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

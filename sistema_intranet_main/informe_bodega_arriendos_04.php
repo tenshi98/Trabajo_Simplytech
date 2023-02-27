@@ -115,7 +115,6 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table']});</script>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -154,7 +153,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 			<div class="tab-pane fade" id="tab_arr_2">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-									
+
 						<script>
 							
 							google.charts.setOnLoadCallback(drawChart_arr_1);
@@ -200,7 +199,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 					</div>
 				</div>
 			</div>
-			
+
 			<?php if($s_Ventas=='true'){ ?>
 				<div class="tab-pane fade" id="tab_arr_3">
 					<div class="wmd-panel">
@@ -208,7 +207,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_arr_2);
 
 								function drawChart_arr_2() {
@@ -268,4 +267,5 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

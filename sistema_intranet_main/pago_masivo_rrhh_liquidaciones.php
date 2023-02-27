@@ -65,13 +65,13 @@ $Form_Inputs = new Inputs();
 					
 ?>
 
-<div class="row inbox"> 
+<div class="row inbox">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h2>
 			<strong>Facturacion : </strong><?php echo numero_a_mes($rowFacturacion['Creacion_mes']).' '.$rowFacturacion['Creacion_ano'].' ('.Fecha_estandar($rowFacturacion['Creacion_fecha']).')' ?><br/>
 			<?php echo 'Desde el '.Fecha_estandar($rowFacturacion['Fecha_desde']).' hasta el '.Fecha_estandar($rowFacturacion['Fecha_hasta'])?>
 		</h2>
-		<hr>	
+		<hr>
 	</div>
 </div>
 										
@@ -102,7 +102,7 @@ $Form_Inputs = new Inputs();
 						</tr>
 						</thead>
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
-							<?php 
+							<?php
 							//registros aceptados
 							$Registro_total = 0;
 							$Registro_ok    = 0;
@@ -112,7 +112,7 @@ $Form_Inputs = new Inputs();
 							if(isset($_SESSION['pago_rrhh_liquidaciones'])){
 								foreach ($_SESSION['pago_rrhh_liquidaciones'] as $key => $tipo){
 									$TotalPagar = valores_enteros($tipo['TotalAPagar'] - $tipo['MontoPagado']);
-									
+
 									$Registro_total++; ?>
 									<tr class="odd">
 										<td>
@@ -120,7 +120,7 @@ $Form_Inputs = new Inputs();
 												<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_rrhh_sueldos.php?view='.simpleEncode($tipo['idFactTrab'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 												<?php if ($rowlevel['level']>=2){
 													$ubicacion = $location.'&del_liquidacion='.$tipo['idFactTrab'].'&idFacturacion='.$_GET['idFacturacion'];
-													$dialogo   = '¿Realmente deseas eliminar la liquidacion de '.$tipo['TrabajadorNombre'].'?';?>
+													$dialogo   = '¿Realmente deseas eliminar la liquidacion de '.$tipo['TrabajadorNombre'].'?'; ?>
 													<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Eliminar" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 												<?php } ?>
 											</div>
@@ -153,7 +153,7 @@ $Form_Inputs = new Inputs();
 									</tr>
 							<?php 
 								}
-							}?> 
+							} ?>
 							<tr class="odd">
 								<td style="background-color: #E5E5E5;" align="right" colspan="7"><strong>Totales</strong></td>
 								<td style="background-color: #E5E5E5;" align="right"><strong><?php echo valores($TotalGeneral, 0); ?></strong></td>
@@ -191,7 +191,7 @@ $Form_Inputs = new Inputs();
 		//Verificaciones
 		if (pago_x != "") { ok++; }else{ alert("No ha ingresado un valor de pago");}
 		if (pago>maxs){ok--;alert("El valor que intenta cancelar es superior al maximo permitido");}
-		
+
 		//Guardo el dato y refresco la pagina
 		if(ok==1){
 			saveData(number, pago);
@@ -210,7 +210,7 @@ $Form_Inputs = new Inputs();
 		//Verificaciones
 		if (pago_x != "") { ok++; }else{ alert("No ha ingresado un valor de pago");}
 		if (pago>maxs){ok--;alert("El valor que intenta cancelar es superior al maximo permitido");}
-		
+
 		//Guardo el dato y refresco la pagina
 		if(ok==1){
 			saveData(number, pago);
@@ -248,7 +248,7 @@ $Form_Inputs = new Inputs();
 </script>
 
 							
-<?php if($Registro_total==$Registro_ok){ ?>	
+<?php if($Registro_total==$Registro_ok){ ?>
 	<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 
 		<div class="box">
@@ -258,8 +258,8 @@ $Form_Inputs = new Inputs();
 			</header>
 			<div class="body">
 				<form class="form-horizontal" method="post" name="form1" id="form1">
-					
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($idDocPago)){         $x1  = $idDocPago;          }else{$x1  = '';}
 					if(isset($N_DocPago)){         $x2  = $N_DocPago;          }else{$x2  = '';}
@@ -285,7 +285,7 @@ $Form_Inputs = new Inputs();
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 						
 					?>
-						
+
 					<div class="form-group">
 						<input type="submit" id="submitCadastroHidden" style="display: none;" name="submit_form">
 						<input type="button" id="submitBtn" data-toggle="modal" data-target="#confirm-submit"  class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf283; Ingresar Pago" name="submit2">
@@ -308,14 +308,14 @@ $Form_Inputs = new Inputs();
 				</div>
 			</div>
 		</div>
-		
+
 		<script>
 				
 				
 			$('#submitBtn').click(function() {
 				//Se verifica que todos los input tengan valores asignados
-				let ninput = <?php echo ($Registro_total-$Registro_ok);?>;
-					
+				let ninput = <?php echo ($Registro_total-$Registro_ok); ?>;
+
 				//verifica el valor
 				let monto = <?php echo $TotalGeneral; ?>;
 				if(monto!=0&&ninput==0){
@@ -370,16 +370,15 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 ?> 
 
 
-<div class="row inbox"> 
+<div class="row inbox">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h2>
 			<strong>Facturacion : </strong><?php echo numero_a_mes($rowFacturacion['Creacion_mes']).' '.$rowFacturacion['Creacion_ano'].' ('.Fecha_estandar($rowFacturacion['Creacion_fecha']).')' ?><br/>
 			<?php echo 'Desde el '.Fecha_estandar($rowFacturacion['Fecha_desde']).' hasta el '.Fecha_estandar($rowFacturacion['Fecha_hasta'])?>
 		</h2>
-		<hr>	
+		<hr>
 	</div>
 </div>
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -498,13 +497,13 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 		}
 		return '$ '+s; 
 	}
-	
+
 	//////////////////////////////////////////////////////////
 	function doSomething(number) {
 		$.get("pago_masivo_rrhh_liquidaciones_execute.php?idFactTrab="+number);
 		return false;
 	}
-	
+
 	//////////////////////////////////////////////////////////
 	function onToggle(number) {
 
@@ -562,6 +561,7 @@ $arrSelect = db_select_array (false, 'idFacturacion,Creacion_ano,Creacion_mes', 
 
 $_SESSION['form_require'].=',idFacturacion';
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -571,7 +571,7 @@ $_SESSION['form_require'].=',idFacturacion';
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				$input  = '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/chosen/chosen.css">';
 				$input .= '<div class="form-group" id="div_idFacturacion">
 								<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_idFacturacion">Facturacion Fecha</label>
@@ -585,7 +585,7 @@ $_SESSION['form_require'].=',idFacturacion';
 						$input .= '</select>
 								</div>
 							</div>
-									
+
 							<script type="text/javascript">
 										
 								$.fn.oldChosen = $.fn.chosen
@@ -614,7 +614,7 @@ $_SESSION['form_require'].=',idFacturacion';
 					
 
 					echo $input;
-						
+
 				?>
 
 				<div class="form-group">
@@ -633,4 +633,5 @@ $_SESSION['form_require'].=',idFacturacion';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

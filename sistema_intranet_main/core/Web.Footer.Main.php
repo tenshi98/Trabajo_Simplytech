@@ -3,7 +3,7 @@
 			</div>
 		</div>
 		<footer id="footer">
-			<p><?php echo ano_actual();?> &copy; <?php echo DB_EMPRESA_NAME ?> Todos los derechos reservados.</p>
+			<p><?php echo ano_actual(); ?> &copy; <?php echo DB_EMPRESA_NAME ?> Todos los derechos reservados.</p>
 		</footer>
 
 		<!-- Animacion carga pagina -->

@@ -51,7 +51,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar APIS');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Editar APIS'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -76,7 +76,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 						<li class=""><a href="<?php echo 'core_sistemas_crosstech.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >CrossTech</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_crossenergy.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >CrossEnergy</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_social.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -84,8 +84,8 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Config_IDGoogle)){            $x1 = $Config_IDGoogle;            }else{$x1 = $rowdata['Config_IDGoogle'];}
 					if(isset($Config_Google_apiKey)){       $x2 = $Config_Google_apiKey;       }else{$x2 = $rowdata['Config_Google_apiKey'];}
@@ -93,7 +93,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 					if(isset($Config_FCM_Main_apiKey)){     $x4 = $Config_FCM_Main_apiKey;     }else{$x4 = $rowdata['Config_FCM_Main_apiKey'];}
 					if(isset($Config_WhatsappToken)){       $x5 = $Config_WhatsappToken;       }else{$x5 = $rowdata['Config_WhatsappToken'];}
 					if(isset($Config_WhatsappInstanceId)){  $x6 = $Config_WhatsappInstanceId;  }else{$x6 = $rowdata['Config_WhatsappInstanceId'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_icon('ID Google (Mapas)', 'Config_IDGoogle', $x1, 1,'fa fa-google-plus-square');
@@ -101,15 +101,15 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 					$Form_Inputs->form_input_icon('ApiKey (Firebase)', 'Config_FCM_apiKey', $x3, 1,'fa fa-google-plus-square');
 					$Form_Inputs->form_post_data(2, '<strong>Main ApiKey (Firebase)</strong> sirve para la notificacion desde varias plataformas a una misma APP.');	
 					$Form_Inputs->form_input_icon('Main ApiKey (Firebase)', 'Config_FCM_Main_apiKey', $x4, 1,'fa fa-google-plus-square');
-					
+
 					$Form_Inputs->form_post_data(2, 'El Token y el Instance ID de Whatsapp se obtienen con el proveedor del servicio.');	
 					$Form_Inputs->form_input_icon('Whatsapp Token', 'Config_WhatsappToken', $x5, 1,'fa fa-google-plus-square');
 					$Form_Inputs->form_input_icon('Whatsapp Instance Id', 'Config_WhatsappInstanceId', $x6, 1,'fa fa-google-plus-square');
-					
+
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
 					
 					?>
-					
+
 					<div class="form-group">
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
@@ -122,14 +122,14 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

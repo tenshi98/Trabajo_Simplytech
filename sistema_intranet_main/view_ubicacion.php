@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -67,7 +67,7 @@ $arrLicitacion = db_select_array (false, $SIS_query, 'ubicacion_listado_level_1'
 
 $array3d = array();
 foreach($arrLicitacion as $key) {
-	
+
 	//Creo Variables para la rejilla
 	for ($i = 1; $i <= $nmax; $i++) {
 		$d[$i]  = $key['LVL_'.$i.'_id'];   
@@ -147,11 +147,11 @@ function arrayToUL(array $array, $lv, $nmax){
 		
 							<tr class="odd">
 								<td>Nombre</td>
-								<td><?php echo $rowdata['Nombre'];?></td>
+								<td><?php echo $rowdata['Nombre']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Estado</td>
-								<td><?php echo $rowdata['Estado'];?></td>
+								<td><?php echo $rowdata['Estado']; ?></td>
 							</tr>
 							<tr>
 								<td colspan="2" style="background-color: #ccc;">Itemizado</td>
@@ -171,7 +171,7 @@ function arrayToUL(array $array, $lv, $nmax){
 			</div>
 		</div>
 	</div>
-</div>	
+</div>
 
 <?php 
 //si se entrega la opcion de mostrar boton volver
@@ -185,7 +185,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -195,7 +195,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -206,4 +206,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -49,7 +49,7 @@ require_once '0_validate_user_1.php';
 
 			//Variable
 			$errorn = 0;
-			
+
 			/************************************************************/
 			//verifico si se envia un entero
 			if((!validarNumero($_GET['del_idPago']) OR !validaEntero($_GET['del_idPago']))&&$_GET['del_idPago']!=''){
@@ -66,7 +66,7 @@ require_once '0_validate_user_1.php';
 				//guardo el log
 				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
 			}
-			
+
 			/************************************************************/
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice1)&&$indice1!=''){ 
@@ -88,7 +88,7 @@ require_once '0_validate_user_1.php';
 				$error['validaEntero'] = 'error/El valor ingresado en $indice2 ('.$indice2.') en la opcion DEL  no es un numero entero';
 				$errorn++;
 			}
-			
+
 			/************************************************************/
 			if($errorn==0){
 				//validaciones

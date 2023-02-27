@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -60,7 +60,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'vehiculos_rutas_ubicaciones', $
 
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
-					
+
 					<?php
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
@@ -86,13 +86,13 @@ $arrRutas = db_select_array (false, $SIS_query, 'vehiculos_rutas_ubicaciones', $
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 								RutasAlternativas();
 							}
-							
+
 							/* ************************************************************************** */
 							function RutasAlternativas() {
 								
 								var route=[];
 								var tmp;
-								
+
 								var locations = [ 
 								<?php foreach ( $arrRutas as $pos ) { ?>
 									['<?php echo $pos['idUbicaciones']; ?>', <?php echo $pos['Latitud']; ?>, <?php echo $pos['Longitud']; ?>], 					
@@ -121,9 +121,9 @@ $arrRutas = db_select_array (false, $SIS_query, 'vehiculos_rutas_ubicaciones', $
 								  content: ''
 								});
 								var marcadores = [
-								<?php 
+								<?php
 								$in=0;
-								foreach ($arrRutas as $pos) { 
+								foreach ($arrRutas as $pos) {
 										if($in==0){
 											$in=1;
 										}else{
@@ -164,7 +164,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'vehiculos_rutas_ubicaciones', $
 									});
 								  })(marker, contenido);
 								}
-								
+
 								// *
 								// START INFOWINDOW CUSTOMIZE.
 								// The google.maps.event.addListener() event expects
@@ -239,7 +239,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -249,7 +249,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -258,4 +258,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

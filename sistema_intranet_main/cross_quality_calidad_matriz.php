@@ -77,9 +77,10 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tipo Planilla borrado 
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['clone_idMatriz'])){ 
+if(!empty($_GET['clone_idMatriz'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);	
+validaPermisoUser($rowlevel['level'], 3, $dbConn);
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -104,7 +105,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c5; Clonar" name="clone_Matriz">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -118,7 +119,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 	
 	
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['mod'])){ 
+}elseif(!empty($_GET['mod'])){
 //Armo cadena
 $SIS_query  = 'PuntoNombre_'.$_GET['mod'].' AS Nombre';
 $SIS_query .= ',PuntoMedAceptable_'.$_GET['mod'].' AS Aceptable';
@@ -168,7 +169,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 					document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
 					document.getElementById('div_PuntoUniMed').style.display = 'none';
 					document.getElementById('div_Validar').style.display = 'none';
-					
+
 					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 								
 						let Sensores_val= $("#PuntoidTipo").val();
@@ -456,11 +457,11 @@ foreach ($arrGrupos as $data) {  $arrFinalGrupos[$data['idGrupo']] = $data['Nomb
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['idMatriz_2'])){ 
+}elseif(!empty($_GET['idMatriz_2'])){
 // consulto los datos
 $SIS_query = 'Nombre,cantPuntos, idEstado, idNota_1, idNota_2, idNota_3, idNotaTipo_1, idNotaTipo_2, idNotaTipo_3, idTipo, idSistema, Validar_1, Validar_2, Validar_3';
 $SIS_join  = '';
@@ -514,7 +515,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 				$Form_Inputs->form_input_text('Datos a Validar', 'Validar_3', $x13, 1);
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
-				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz_2'], 2);
 				?>
 
@@ -525,7 +526,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 					document.getElementById('div_Validar_1').style.display = 'none';
 					document.getElementById('div_Validar_2').style.display = 'none';
 					document.getElementById('div_Validar_3').style.display = 'none';
-					
+
 					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 								
 						let Sensores_val_1 = $("#idNota_1").val();
@@ -718,7 +719,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 				</script>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_1"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_1">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -728,12 +729,13 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro  
 //verifico que sea un administrador
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -758,16 +760,16 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x3, 2, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
-				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('idNota_1', 2, 2);
 				$Form_Inputs->form_input_hidden('idNota_2', 2, 2);
 				$Form_Inputs->form_input_hidden('idNota_3', 2, 2);
 
 				?>
-	   
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -776,7 +778,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
                     
 		</div>
 	</div>
-</div> 
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
@@ -979,7 +981,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz',
 						<tr class="odd">
 							<td><?php echo $maq['Nombre']; ?></td>
 							<td><?php echo $maq['Planilla']; ?></td>
-							<td><label class="label <?php if(isset($maq['idEstado'])&&$maq['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $maq['Estado']; ?></label></td>
+							<td><label class="label <?php if(isset($maq['idEstado'])&&$maq['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $maq['Estado']; ?></label></td>
 							<td><?php echo $maq['cantPuntos']; ?></td>
 							<td><?php echo $maq['Opciones_1']; ?></td>
 							<td><?php echo $maq['Opciones_2']; ?></td>
@@ -992,7 +994,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz',
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz='.$maq['idMatriz']; ?>" title="Editar Matriz" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($maq['idMatriz'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar la matriz '.$maq['Nombre'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar la matriz '.$maq['Nombre'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -1016,4 +1018,5 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz',
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

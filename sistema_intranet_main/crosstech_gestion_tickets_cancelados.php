@@ -41,7 +41,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['id'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 2, $dbConn); ?>
  
 
 
@@ -303,7 +303,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	</div>
 </div>
 
-
 <?php } ?>
 
 <?php
@@ -311,4 +310,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

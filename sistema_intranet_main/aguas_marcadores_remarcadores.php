@@ -61,26 +61,17 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
+
+/*******************************************************/
 // consulto los datos
-$query = "SELECT idMarcadores, Nombre
-FROM `aguas_marcadores_remarcadores`
-WHERE idRemarcadores = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	
+$SIS_query = 'idMarcadores, Nombre';
+$SIS_join  = '';
+$SIS_where = 'idRemarcadores = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'aguas_marcadores_remarcadores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 //filtro para el curso
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -124,6 +115,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //filtro para el curso
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -187,7 +179,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = "aguas_marcadores_remarcadores.idRemarcadores!=0";
-$SIS_where.= " AND aguas_marcadores_remarcadores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando	
+$SIS_where.= " AND aguas_marcadores_remarcadores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];//Verifico el tipo de usuario que esta ingresando
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idMarcadores']) && $_GET['idMarcadores']!=''){  $SIS_where .= " AND aguas_marcadores_remarcadores.idMarcadores='".$_GET['idMarcadores']."'";}
@@ -202,7 +194,7 @@ $total_paginas = ceil($cuenta_registros / $cant_reg);
 $SIS_query = '
 aguas_marcadores_remarcadores.idRemarcadores,
 aguas_marcadores_remarcadores.Nombre,
-aguas_marcadores_listado.Nombre AS Medidor, 
+aguas_marcadores_listado.Nombre AS Medidor,
 core_sistemas.Nombre AS sistema';
 $SIS_join  = '
 LEFT JOIN `core_sistemas`              ON core_sistemas.idSistema                  = aguas_marcadores_remarcadores.idSistema
@@ -213,6 +205,7 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_marcadores_remarcadores', $
 
 //filtro para el curso
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
@@ -291,23 +284,23 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-				<?php foreach ($arrUML as $uml) { ?>
-					<tr class="odd">
-						<td><?php echo $uml['Medidor']; ?></td>
-						<td><?php echo $uml['Nombre']; ?></td>
-						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $uml['sistema']; ?></td><?php } ?>
-						<td>
-							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$uml['idRemarcadores']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.simpleEncode($uml['idRemarcadores'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el Remarcador '.$uml['Nombre'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>
-							</div>
-						</td>
-					</tr>
-				<?php } ?>
+					<?php foreach ($arrUML as $uml) { ?>
+						<tr class="odd">
+							<td><?php echo $uml['Medidor']; ?></td>
+							<td><?php echo $uml['Nombre']; ?></td>
+							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $uml['sistema']; ?></td><?php } ?>
+							<td>
+								<div class="btn-group" style="width: 70px;" >
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$uml['idRemarcadores']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=4){
+										$ubicacion = $location.'&del='.simpleEncode($uml['idRemarcadores'], fecha_actual());
+										$dialogo   = '¿Realmente deseas eliminar el Remarcador '.$uml['Nombre'].'?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<?php } ?>
+								</div>
+							</td>
+						</tr>
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -324,4 +317,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

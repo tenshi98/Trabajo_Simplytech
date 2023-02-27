@@ -307,7 +307,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 							<td><strong>Lavado de maquinaria</strong></td>
 							<td><strong>Caldo sobrante</strong></td>
 							<td><strong>Uso de EPP</strong></td>
-							
+
 						</tr>
 					<?php } ?>
 				</tbody>
@@ -339,6 +339,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -370,10 +371,10 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Temporada','idTemporada', $x4, 1, 'idTemporada', 'Codigo,Nombre', 'cross_checking_temporada', $y, '', $dbConn);
 				$Form_Inputs->form_select_depend1('Predio','idPredio', $x2, 1, 'idPredio', 'Nombre', 'cross_predios_listado', $x, 0,
-										 'Cuarteles','idZona', $x3, 1, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0, 
+										 'Cuarteles','idZona', $x3, 1, 'idZona', 'Nombre', 'cross_predios_listado_zonas', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x6, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x7, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 'Variedad','idProducto', $x7, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
 										 $dbConn, 'form1');					 
 				$Form_Inputs->form_select_filter('N° Solicitud','NSolicitud', $x1, 1, 'NSolicitud', 'NSolicitud', 'cross_solicitud_aplicacion_listado', $w, '', $dbConn);
 				$Form_Inputs->form_select('Estado','idEstado', $x15, 2, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
@@ -400,7 +401,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
 					document.getElementById('div_f_termino_desde').style.display = 'none';
 					document.getElementById('div_f_termino_hasta').style.display = 'none';
-						
+
 					$("#idEstado").on("change", function(){ //se ejecuta al cambiar valor del select
 						let idEstado = $(this).val(); //Asignamos el valor seleccionado
 						
@@ -488,4 +489,5 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

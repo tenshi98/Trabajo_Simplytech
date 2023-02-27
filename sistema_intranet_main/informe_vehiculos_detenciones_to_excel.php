@@ -37,6 +37,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 $SIS_where.=" AND vehiculos_listado_error_detenciones.idSistema=".$_GET['idSistema'];	
 
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 vehiculos_listado_error_detenciones.idDetencion,
 vehiculos_listado_error_detenciones.Fecha, 
@@ -80,9 +81,7 @@ foreach ($arrErrores as $error) {
 				->setCellValue('D'.$nn, $error['Tiempo']);
 	$nn++;
    
-} 
-
-
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Resumen de Detenciones');

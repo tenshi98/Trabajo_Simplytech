@@ -37,9 +37,9 @@ if(!empty($_GET['submit_filter'])){
 /**********************************************************/
 $SIS_where_1 = "telemetria_listado_errores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $SIS_where_2 = "telemetria_listado_errores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''&&isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){ 
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''&&isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){
 	$SIS_where_1.= " AND telemetria_listado_errores.TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."'";
-}elseif(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
+}elseif(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){
 	$SIS_where_1.= " AND telemetria_listado_errores.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){  
@@ -65,7 +65,7 @@ MAX(telemetria_listado_errores.Valor) AS Valor_max';
 $SIS_join  = '
 LEFT JOIN telemetria_listado               ON telemetria_listado.idTelemetria             = telemetria_listado_errores.idTelemetria
 LEFT JOIN telemetria_listado_unidad_medida ON telemetria_listado_unidad_medida.idUniMed   = telemetria_listado_errores.idUniMed';
-$SIS_order = 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Descripcion ASC, telemetria_listado_errores.Fecha ASC';	
+$SIS_order = 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Descripcion ASC, telemetria_listado_errores.Fecha ASC';
 $arrEquipos1 = array();
 $arrEquipos1 = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where_1, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos1');
 
@@ -145,9 +145,9 @@ $arrEquipos2 = db_select_array (false, $SIS_query, 'telemetria_listado_errores',
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php 
+					<?php
 					//filtro por equipo
-					filtrar($arrEquipos2, 'Equipo'); 
+					filtrar($arrEquipos2, 'Equipo');
 					//recorro los equipos 
 					foreach($arrEquipos2 as $equipo=>$dias){ 
 						//imprimo
@@ -205,9 +205,10 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=6";//CrossCrane	
+	$z .= " AND telemetria_listado.idTab=6";//CrossCrane
 }
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -232,8 +233,8 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				$Form_Inputs->form_time('Hora Inicio','h_inicio', $x2, 1, 2);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x3, 2);
 				$Form_Inputs->form_time('Hora Termino','h_termino', $x4, 1, 2);
-				//$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				
+				//$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x6, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
@@ -257,4 +258,5 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

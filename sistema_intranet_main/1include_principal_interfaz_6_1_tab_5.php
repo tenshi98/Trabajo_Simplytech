@@ -82,7 +82,7 @@ foreach ($arrSolicitud as $sol) {
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php for ($i = 0; $i < $max_counter; $i++) { ?>
 						<tr class="odd">
-												
+
 							<td><?php if(isset($arrProgramadas[$i]['idSolicitud'])&&$arrProgramadas[$i]['idSolicitud']!=''){echo $arrProgramadas[$i]['NSolicitud'];} ?></td>
 							<td><?php if(isset($arrProgramadas[$i]['idSolicitud'])&&$arrProgramadas[$i]['idSolicitud']!=''){echo $arrProgramadas[$i]['Fecha'];} ?></td>
 							<td><?php if(isset($arrProgramadas[$i]['idSolicitud'])&&$arrProgramadas[$i]['idSolicitud']!=''){echo $arrProgramadas[$i]['Predio'];} ?></td>

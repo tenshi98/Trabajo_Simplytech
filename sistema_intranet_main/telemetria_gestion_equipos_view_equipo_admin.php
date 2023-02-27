@@ -16,7 +16,7 @@ require_once 'core/Web.Header.Views.php';
 /**********************************************************************************************************************************/
 //Verifico la existencia de datos de base de datos
 if(isset($_GET['data_3'])&&isset($_GET['data_4'])&&isset($_GET['data_5'])&&isset($_GET['data_6'])){
-	
+
 	//Funcion para conectarse
 	function conectarDB ($servidor, $usuario, $password, $base_datos) {
 		$db_con = mysqli_connect($servidor, $usuario, $password, $base_datos);
@@ -56,7 +56,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 /****************************************************************/
 //Se arma la consulta
 $aa = '';
-for ($i = 1; $i <= $rowdata['cantSensores']; $i++) { 
+for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 	$aa .= ',SensoresNombre_'.$i;
 	$aa .= ',SensoresGrupo_'.$i;
 	$aa .= ',SensoresUniMed_'.$i;
@@ -86,7 +86,7 @@ $arrGrupo = array();
 $arrGrupo = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupo');
 
 $grupo = array();
-foreach ($arrGrupos as $sen) { 
+foreach ($arrGrupos as $sen) {
 	$grupo[$sen['idGrupo']]['Nombre'] = $sen['Nombre'];
 }
 
@@ -142,7 +142,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 				<?php if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){ ?>
 					<li class=""><a href="#mediciones" data-toggle="tab"><i class="fa fa-wifi" aria-hidden="true"></i> Ultimas Mediciones</a></li>
 				<?php } ?>
-					
+
 				<li class=""><a href="#flinea"    data-toggle="tab"><i class="fa fa-power-off" aria-hidden="true"></i> Fuera de Linea</a></li>
 				<li class=""><a href="#error999"  data-toggle="tab"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Errores 999***</a></li>
 				<li class=""><a href="#gps0"      data-toggle="tab"><i class="fa fa-battery-empty" aria-hidden="true"></i> Equipo sin GPS</a></li>
@@ -162,8 +162,8 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo 'https://'.$_GET['data_2'].$rowdata['Direccion_img']; ?>">
 							<?php }else{  ?>
 								<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowdata['Direccion_img']; ?>">
-							<?php }?>
-						<?php }?>
+							<?php } ?>
+						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary">Datos del Equipo</h2>
@@ -200,13 +200,13 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 				<div class="tab-pane fade" id="mediciones">
 					<div class="wmd-panel">
 						<div class="table-responsive">
-							
+
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
 								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.simpleDecode($_GET['view'], fecha_actual()).'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ubicacion</a>
 								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_2.php?view='.simpleDecode($_GET['view'], fecha_actual()); ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Sensores</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
-							
+
 							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 								<thead>
 									<tr role="row">
@@ -231,7 +231,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 													echo Cantidades_decimales_justos($rowMed['SensoresMedActual_'.$i]).' '.$unimed[$rowMed['SensoresUniMed_'.$i]]['Nombre'];
 												}else{
 													echo 'Sin Datos';
-												}?>
+												} ?>
 												</td>
 											</tr>
 										<?php } ?>
@@ -248,12 +248,12 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 			<div class="tab-pane fade" id="flinea">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-							
+
 						<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
 							<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_2.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 							<div style="padding-bottom:10px;padding-top:10px;"></div>
 						</div>
-							
+
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 							<thead>
 								<tr role="row">
@@ -265,7 +265,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 									<th>Ubicacion</th> 
 								</tr>
 							</thead>
-								
+
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($arrFlinea as $error) {  ?>
 									<tr>
@@ -301,7 +301,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 									<th>Ubicacion</th> 
 								</tr>
 							</thead>
-								
+
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($arrAlertas999 as $error) { ?>
 									<tr>
@@ -334,7 +334,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 									<th>Horas de diferencia</th>
 								</tr>
 							</thead>
-								
+
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($arrGPS0 as $error) { ?>
 									<tr>
@@ -354,10 +354,10 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 	</div>
 </div>
 
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

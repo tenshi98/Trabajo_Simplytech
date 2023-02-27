@@ -238,7 +238,7 @@ echo '
 					$xcounter = 1;
 					foreach($arrClientes as $cli) {
 						if($xcounter==1){$xactive = 'active';}else{$xactive = '';}
-						if($xcounter==4){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';} 
+						if($xcounter==4){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';}
 						echo '<li class="'.$xactive.'"><a href="#xid_'.$cli['idCliente'].'" data-toggle="tab"><i class="fa fa-user" aria-hidden="true"></i> '.$cli['Nombre'].'</a></li>';
 						$xcounter++;
 					}

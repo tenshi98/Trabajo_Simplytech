@@ -41,15 +41,15 @@ $SIS_where  = 'telemetria_listado_historial_activaciones.idEstado=1';
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){      
 	$SIS_where.=" AND telemetria_listado_historial_activaciones.idTelemetria =".$_GET['idTelemetria'];
 }
-if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino']!=''){ 
+if(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino'] != ''&&isset($_GET['H_inicio']) && $_GET['H_inicio'] != ''&&isset($_GET['H_termino']) && $_GET['H_termino']!=''){
 	$SIS_where.=" AND telemetria_listado_historial_activaciones.TimeStamp BETWEEN '".$_GET['F_inicio']." ".$_GET['H_inicio']."' AND '".$_GET['F_termino']." ".$_GET['H_termino']."'";
-}elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino']!=''){ 
+}elseif(isset($_GET['F_inicio']) && $_GET['F_inicio'] != ''&&isset($_GET['F_termino']) && $_GET['F_termino']!=''){
 	$SIS_where.=" AND telemetria_listado_historial_activaciones.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
 
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idTelemetria', 'telemetria_listado_historial_activaciones', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
-	
+
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
@@ -173,7 +173,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					
 									  
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
-								<?php 
+								<?php
 								//Variables
 								$fecha              = '';
 								$HoraInicio         = '00:00:00';
@@ -353,9 +353,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									$l_mp   = $con['EquipoMicroparada'];
 									$l_v1   = $con['EquipoValor'];
 									$l_v2   = $con['EquipoActivacionValor'];
-									
+
 								}
-								
+
 								/**********************************************************************************/
 								//ultimo dato
 								//Calculo colacion
@@ -400,7 +400,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				</div>
 			</div>
 			<?php 
-		} 
+		}
 	}else{
 		alert_post_data(2,1,1, 'No hay datos, intenta con otro rango de fechas.');
 	}
@@ -428,9 +428,10 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$w .= " AND telemetria_listado.idTab=6";//CrossCrane	
+	$w .= " AND telemetria_listado.idTab=6";//CrossCrane
 }
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -467,7 +468,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				
 
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -483,4 +484,5 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -120,8 +120,9 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrUsuarios,$row );
 }
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Screen Sharing', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Screen Sharing', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -185,7 +186,7 @@ array_push( $arrUsuarios,$row );
 						
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
         </div>
@@ -194,14 +195,14 @@ array_push( $arrUsuarios,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -312,20 +313,19 @@ $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-}?>
+} ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
-		<li class="btn btn-default">Listado</li>	
+		<li class="btn btn-default">Listado</li>
 	</ul>
 
 	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Screen Sharing</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
-
 
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
@@ -395,7 +395,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 							}
 							echo $Conferencia[0]['HoraInicio'].' - '.$Conferencia[0]['HoraTermino']; ?>
 						</td>
-						<td><label class="label <?php if(isset($Conferencia[0]['idEstado'])&&$Conferencia[0]['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $Conferencia[0]['Estado']; ?></label></td>
+						<td><label class="label <?php if(isset($Conferencia[0]['idEstado'])&&$Conferencia[0]['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $Conferencia[0]['Estado']; ?></label></td>
 						<td><?php echo $Conferencia[0]['Usuario']; ?></td>
 						<td>
 							<?php 
@@ -411,7 +411,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $Conferencia[0]['RazonSocial']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php 
+								<?php
 								//si esta activa la conferencia
 								if(isset($Conferencia[0]['idEstado'])&&$Conferencia[0]['idEstado']==1){ 
 									//si es un usuario participante o el creador
@@ -427,14 +427,14 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 											}
 										}
 									}
-								}?>
+								} ?>
 								
 								
 								<?php if(($Conferencia[0]['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$ScreenSharing; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($ScreenSharing, fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar el Screen Sharing '.$Conferencia[0]['Nombre'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar el Screen Sharing '.$Conferencia[0]['Nombre'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								<?php } ?>	
@@ -454,4 +454,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

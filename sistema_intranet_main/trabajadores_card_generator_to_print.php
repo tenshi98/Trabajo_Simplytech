@@ -63,7 +63,7 @@ WHERE trabajadores_listado.idTrabajador = ".$_GET['idTrabajador'];
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
 if(!$resultado){
-	
+
 	//variables
 	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
@@ -419,4 +419,5 @@ echo $html;
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Print.php';
+
 ?>

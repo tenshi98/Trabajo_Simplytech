@@ -19,7 +19,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	
 }else{
 	$SIS_where.= ' AND usuarios_documentos_pago.idUsuario = '.$_SESSION['usuario']['basic_data']['idUsuario'];
-	$SIS_join .= ' INNER JOIN usuarios_documentos_pago  ON usuarios_documentos_pago.idDocPago  = pagos_facturas_proveedores.idDocPago';	
+	$SIS_join .= ' INNER JOIN usuarios_documentos_pago  ON usuarios_documentos_pago.idDocPago  = pagos_facturas_proveedores.idDocPago';
 }
 //Traigo los eventos guardados en la base de datos
 $SIS_query = '
@@ -103,7 +103,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'pagos_facturas_proveedores', 
 											echo "<td class='fc-Dia fc-wed fc-widget-content fc-other-Mes fc-future fc-state-none'> </td>";
 										// mostramos el dia
 										}else{?>
-											<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';}?>">
+											<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';} ?>">
 												<div class="calendar_min">
 													<div class="fc-Dia-number"><?php echo $Dia; ?></div>
 													<div class="fc-Dia-content">

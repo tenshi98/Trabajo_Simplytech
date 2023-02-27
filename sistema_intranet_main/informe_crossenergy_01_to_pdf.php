@@ -39,15 +39,15 @@ if(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''&&isset($h_
 	$SIS_where.= "(telemetria_listado_crossenergy_dia.FechaSistema BETWEEN '".$f_inicio."' AND '".$f_termino."')";
 }
 $SIS_where.= " AND telemetria_listado_crossenergy_dia.idTelemetria=".$idTelemetria;
- 
+
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_crossenergy_dia', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'ndata_1');
-			
+
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
 }else{
-	
+
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo, cantSensores', 'telemetria_listado', '', 'idTelemetria='.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
 
@@ -70,7 +70,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$SIS_order = 'telemetria_listado_crossenergy_dia.FechaSistema ASC, telemetria_listado_crossenergy_dia.HoraSistema ASC LIMIT 10000';
 	$arrEquipos = array();
 	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_crossenergy_dia', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos');
-		
+
 	/****************************************************************/
 	//Se trae el dato del grupo
 	$rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$idGrupo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowGrupo');
@@ -124,9 +124,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	}
 
 	$html .= '
-	<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">  
+	<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">
 		<thead>';
-			$html .='	
+			$html .='
 			<tr>
 				<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">Fecha</th>
 				<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">Hora</th>
@@ -165,7 +165,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			/************************************************************************/
 			//TCPDF
 			case 1:
-				
+
 				require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 				// create new PDF document
@@ -224,11 +224,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					// The '@' character is used to indicate that follows an image data stream and not an image file name
 					$pdf->Image('@'.$imgdata, 15, 30, 180, 120, 'PNG', '', '', true, 150, '', false, false, 1, false, false, false);
 				}
-				
+
 				$pdf->writeHTML($html, true, false, true, false, '');
 				$pdf->lastPage();
 				$pdf->Output(DeSanitizar($pdf_file), 'I');
-		
+
 				break;
 			/************************************************************************/
 			//DomPDF (Solo compatible con PHP 5.x)

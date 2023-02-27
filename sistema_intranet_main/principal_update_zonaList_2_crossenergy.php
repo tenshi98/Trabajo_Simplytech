@@ -221,7 +221,6 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) {$Count_Fu
 
 ?>
 
-
 <script>
 	//se actualizan los widgets superiores
 	document.getElementById('updt_Count_Alerta').innerHTML=<?php echo $Count_Alerta; ?>;
@@ -271,10 +270,10 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) {$Count_Fu
 						<?php echo $grua['eq_ok_icon']; ?>
 					</div>
 				</td>
-				<td><?php echo $grua['Nombre'];?><br/><?php echo $grua['LastUpdate'];?></td>
-				<td><?php echo cantidades($grua['VTrifasico'], 1).' V';?></td>
-				<td><?php echo cantidades($grua['Vmonofasico'], 1).' V';?></td>
-				<td><?php echo cantidades($grua['Potencia'], 1).' kW';?></td>
+				<td><?php echo $grua['Nombre']; ?><br/><?php echo $grua['LastUpdate']; ?></td>
+				<td><?php echo cantidades($grua['VTrifasico'], 1).' V'; ?></td>
+				<td><?php echo cantidades($grua['Vmonofasico'], 1).' V'; ?></td>
+				<td><?php echo cantidades($grua['Potencia'], 1).' kW'; ?></td>
 				<td width="10">
 					<div class="btn-group" style="width: 105px;" >
 						<?php
@@ -298,10 +297,10 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) {$Count_Fu
 						<?php echo $grua['eq_ok_icon']; ?>
 					</div>
 				</td>
-				<td><?php echo $grua['Nombre'];?><br/><?php echo $grua['LastUpdate'];?></td>
-				<td><?php echo cantidades($grua['VTrifasico'], 1).' V';?></td>
-				<td><?php echo cantidades($grua['Vmonofasico'], 1).' V';?></td>
-				<td><?php echo cantidades($grua['Potencia'], 1).' kW';?></td>
+				<td><?php echo $grua['Nombre']; ?><br/><?php echo $grua['LastUpdate']; ?></td>
+				<td><?php echo cantidades($grua['VTrifasico'], 1).' V'; ?></td>
+				<td><?php echo cantidades($grua['Vmonofasico'], 1).' V'; ?></td>
+				<td><?php echo cantidades($grua['Potencia'], 1).' kW'; ?></td>
 				<td width="10">
 					<div class="btn-group" style="width: 105px;" >
 						<?php
@@ -325,10 +324,10 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) {$Count_Fu
 						<?php echo $grua['eq_ok_icon']; ?>
 					</div>
 				</td>
-				<td><?php echo $grua['Nombre'];?><br/><?php echo $grua['LastUpdate'];?></td>
-				<td><?php echo cantidades($grua['VTrifasico'], 1).' V';?></td>
-				<td><?php echo cantidades($grua['Vmonofasico'], 1).' V';?></td>
-				<td><?php echo cantidades($grua['Potencia'], 1).' kW';?></td>
+				<td><?php echo $grua['Nombre']; ?><br/><?php echo $grua['LastUpdate']; ?></td>
+				<td><?php echo cantidades($grua['VTrifasico'], 1).' V'; ?></td>
+				<td><?php echo cantidades($grua['Vmonofasico'], 1).' V'; ?></td>
+				<td><?php echo cantidades($grua['Potencia'], 1).' kW'; ?></td>
 				<td width="10">
 					<div class="btn-group" style="width: 105px;" >
 						<?php
@@ -346,4 +345,4 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) {$Count_Fu
 	</tbody>
 </table>
 
-<?php widget_tooltipster();?>
+<?php widget_tooltipster(); ?>

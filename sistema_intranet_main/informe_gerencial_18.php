@@ -125,7 +125,7 @@ array_push( $arrLicitacion,$row );
 
 $array3d = array();
 foreach($arrLicitacion as $key) {
-	
+
 	//Creo Variables para la rejilla
 	for ($i = 1; $i <= $nmax; $i++) {
 		$d[$i]  = $key['LVL_'.$i.'_id'];   
@@ -316,7 +316,7 @@ array_push( $arrUML,$row );
 }
 $UML = array();
 foreach ($arrUML as $unidad){
-	$UML[$unidad['idFrecuencia']]['Nombre'] = $unidad['Nombre'];	
+	$UML[$unidad['idFrecuencia']]['Nombre'] = $unidad['Nombre'];
 }
 
 
@@ -351,7 +351,7 @@ array_push( $arrOTRealizadas,$row );
 }	
 $OTRealizadas = array();
 foreach ($arrOTRealizadas as $ot){
-	$OTRealizadas[$ot['item_tabla']][$ot['item_tabla_id']]['Cuenta']   = $ot['Cuenta'];	
+	$OTRealizadas[$ot['item_tabla']][$ot['item_tabla_id']]['Cuenta']   = $ot['Cuenta'];
 }
 
 /*************************************************************/
@@ -643,7 +643,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 									//Se hacen calculos
 									$total = $value['Valor']*$FlujoMensual[$value['lvl']][$value['id']][$z_ano][$z_mes]['Cuenta'];
 									$suma_real = $suma_real + $total;
-									
+
 									//Se escriben los resultados
 									echo '<td align="right">'.valores($total, 0).'</td>'; 
 								
@@ -664,7 +664,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 									//Se hacen calculos
 									$total = $value['Valor']*$FlujoMensual[$value['lvl']][$value['id']][$z_ano][$z_mes]['Cuenta'];
 									$suma_real = $suma_real + $total;
-									
+
 									//Se escriben los resultados
 									echo '<td align="right">'.valores($total, 0).'</td>'; 
 								
@@ -678,10 +678,10 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 							}
 						}
 					}
-					
+
 					//Total Programado
 					if($value['ValorTotal']!=0){echo '<td align="right">'.valores($value['ValorTotal'], 0).'</td>';}else{echo '<td></td>';}
-					
+
 					//Total real
 					echo '<td align="right">'.valores($suma_real, 0).'</td>';
 
@@ -692,11 +692,11 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 						if(isset($suma_real)&&$suma_real!=0){
 							$porcentaje = ($total*100)/$value['ValorTotal'];
 						}
-						echo '<td align="right">'.Cantidades($porcentaje, 2).' %</td>'; 
+						echo '<td align="right">'.Cantidades($porcentaje, 2).' %</td>';
 					}else{
 						echo '<td></td>';
 					}
-					
+
 					//sumo 1 al interruptor
 					$interruptor_mes++;
 				}
@@ -717,7 +717,6 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -734,57 +733,57 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 		
 							<tr class="odd">
 								<td width="200">Codigo Contrato</td>
-								<td><?php echo $rowdata['Codigo'];?></td>
+								<td><?php echo $rowdata['Codigo']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Nombre Contrato</td>
-								<td><?php echo $rowdata['Nombre'];?></td>
+								<td><?php echo $rowdata['Nombre']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Sistema</td>
-								<td><?php echo $rowdata['Sistema'];?></td>
+								<td><?php echo $rowdata['Sistema']; ?></td>
 							</tr>
-							
+
 							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){?>
 								<tr class="odd">
 									<td>Cliente</td>
-									<td><?php echo $rowdata['Cliente'];?></td>
+									<td><?php echo $rowdata['Cliente']; ?></td>
 								</tr>
 							<?php } ?>
-							
+
 							<tr class="odd">
 								<td>Duracion</td>
-								<td><?php echo 'Del '.Fecha_estandar($rowdata['FechaInicio']).' al '.Fecha_estandar($rowdata['FechaTermino']);?></td>
+								<td><?php echo 'Del '.Fecha_estandar($rowdata['FechaInicio']).' al '.Fecha_estandar($rowdata['FechaTermino']); ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Estado</td>
-								<td><?php echo $rowdata['Estado'];?></td>
+								<td><?php echo $rowdata['Estado']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Bodega Productos Utilizada</td>
-								<td><?php echo $rowdata['BodegaProductos'];?></td>
+								<td><?php echo $rowdata['BodegaProductos']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Bodega Insumos Utilizada</td>
-								<td><?php echo $rowdata['BodegaInsumos'];?></td>
+								<td><?php echo $rowdata['BodegaInsumos']; ?></td>
 							</tr>
-							
+
 						</tbody>
 					</table>
 						
 						
-					<div class="table-responsive">	
+					<div class="table-responsive">
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
-											  
+
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<tr>
-									<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;"></td>
+									<td colspan="<?php echo $nmax; ?>" style="background-color: #ccc;"></td>
 									<td colspan="3" align="center" style="background-color: #ccc;">Presupuestado</td>
 									<td colspan="3" align="center" style="background-color: #ccc;">Real</td>
 									<td colspan="1" align="center" style="background-color: #ccc;">Cumplimiento</td>
 								</tr>
 								<tr>
-									<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Itemizado</td>
+									<td colspan="<?php echo $nmax; ?>" style="background-color: #ccc;">Itemizado</td>
 									<td align="center" style="background-color: #ccc;">Cantidad</td>
 									<td align="center" style="background-color: #ccc;">Valor Unitario</td>
 									<td align="center" style="background-color: #ccc;">Valor Total</td>
@@ -820,14 +819,14 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
-						
-					<div class="table-responsive">	
+
+					<div class="table-responsive">
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
-											  
+
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<tr>
-									<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;"></td>
-									
+									<td colspan="<?php echo $nmax; ?>" style="background-color: #ccc;"></td>
+
 									<?php
 									//Recorro los años
 									$interruptor_mes = 0;
@@ -847,14 +846,14 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 										$interruptor_mes++;
 									}
 									?>
-									
+
 									<td colspan="1" align="center" style="background-color: #ccc;"></td>
 									<td colspan="1" align="center" style="background-color: #ccc;"></td>
 									<td colspan="1" align="center" style="background-color: #ccc;"></td>
 								</tr>
 								<tr>
-									<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Itemizado</td>
-									
+									<td colspan="<?php echo $nmax; ?>" style="background-color: #ccc;">Itemizado</td>
+
 									<?php
 									//Recorro los años
 									$interruptor_mes = 0;
@@ -874,7 +873,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 										$interruptor_mes++;
 									}
 									?>
-									
+
 									<td colspan="1" align="center" style="background-color: #ccc;">Total<br/>Programado</td>
 									<td colspan="1" align="center" style="background-color: #ccc;">Total<br/>Real</td>
 									<td colspan="1" align="center" style="background-color: #ccc;">%<br/>Cumplimiento</td>
@@ -890,7 +889,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 								//Verifico si hay resultados
 								if($CompProd){ ?>
 									<tr>
-										<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Productos Utilizados</td>
+										<td colspan="<?php echo $nmax; ?>" style="background-color: #ccc;">Productos Utilizados</td>
 										<?php
 										//Recorro los años
 										$interruptor_mes = 0;
@@ -914,10 +913,10 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 										<td colspan="1" align="center" style="background-color: #ccc;">Total</td>
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 									</tr>
-									
+
 									<?php foreach ($CompProd as $prod) { ?>
 										<tr>
-											<td colspan="<?php echo $nmax;?>" ><?php echo $prod['Nombre']; ?></td>
+											<td colspan="<?php echo $nmax; ?>" ><?php echo $prod['Nombre']; ?></td>
 											
 											<?php
 											//Recorro los años
@@ -960,7 +959,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 								//Verifico si hay resultados
 								if($CompIns){ ?>
 									<tr>
-										<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Insumos Utilizados</td>
+										<td colspan="<?php echo $nmax; ?>" style="background-color: #ccc;">Insumos Utilizados</td>
 										<?php
 										//Recorro los años
 										$interruptor_mes = 0;
@@ -984,10 +983,10 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 										<td colspan="1" align="center" style="background-color: #ccc;">Total</td>
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 									</tr>
-									
+
 									<?php foreach ($CompIns as $prod) { ?>
 										<tr>
-											<td colspan="<?php echo $nmax;?>" ><?php echo $prod['Nombre']; ?></td>
+											<td colspan="<?php echo $nmax; ?>" ><?php echo $prod['Nombre']; ?></td>
 											
 											<?php
 											//Recorro los años
@@ -1030,7 +1029,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 								//Verifico si hay resultados
 								if($CompCliente){ ?>
 									<tr>
-										<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Pagos Clientes</td>
+										<td colspan="<?php echo $nmax; ?>" style="background-color: #ccc;">Pagos Clientes</td>
 										<?php
 										//Recorro los años
 										$interruptor_mes = 0;
@@ -1054,10 +1053,10 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 										<td colspan="1" align="center" style="background-color: #ccc;">Total</td>
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 									</tr>
-									
+
 									<?php foreach ($CompCliente as $prod) { ?>
 										<tr>
-											<td colspan="<?php echo $nmax;?>" ><?php echo $prod['Nombre']; ?></td>
+											<td colspan="<?php echo $nmax; ?>" ><?php echo $prod['Nombre']; ?></td>
 											
 											<?php
 											//Recorro los años
@@ -1120,17 +1119,17 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
-						
-					<div class="table-responsive">	
+
+					<div class="table-responsive">
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
-											  
+
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php 
 								/******************************************************************************/
 								//Verifico si hay resultados
 								if($CompProd){ ?>
 									<tr>
-										<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Productos Utilizados</td>
+										<td colspan="<?php echo $nmax; ?>" style="background-color: #ccc;">Productos Utilizados</td>
 										<?php
 										//Recorro los años
 										$interruptor_mes = 0;
@@ -1154,10 +1153,10 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 										<td colspan="1" align="center" style="background-color: #ccc;">Total</td>
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 									</tr>
-									
+
 									<?php foreach ($CompProd as $prod) { ?>
 										<tr>
-											<td colspan="<?php echo $nmax;?>" ><?php echo $prod['Nombre']; ?></td>
+											<td colspan="<?php echo $nmax; ?>" ><?php echo $prod['Nombre']; ?></td>
 											
 											<?php
 											//Recorro los años
@@ -1200,7 +1199,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 								//Verifico si hay resultados
 								if($CompIns){ ?>
 									<tr>
-										<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Insumos Utilizados</td>
+										<td colspan="<?php echo $nmax; ?>" style="background-color: #ccc;">Insumos Utilizados</td>
 										<?php
 										//Recorro los años
 										$interruptor_mes = 0;
@@ -1224,10 +1223,10 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 										<td colspan="1" align="center" style="background-color: #ccc;">Total</td>
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 									</tr>
-									
+
 									<?php foreach ($CompIns as $prod) { ?>
 										<tr>
-											<td colspan="<?php echo $nmax;?>" ><?php echo $prod['Nombre']; ?></td>
+											<td colspan="<?php echo $nmax; ?>" ><?php echo $prod['Nombre']; ?></td>
 											
 											<?php
 											//Recorro los años
@@ -1265,7 +1264,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 											<td colspan="1" align="center"></td>
 										</tr>
 									<?php }
-								}?>
+								} ?>
 							</tbody>
 						</table>
 					</div>
@@ -1287,17 +1286,17 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
-						
-					<div class="table-responsive">	
+
+					<div class="table-responsive">
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
-											  
+
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php 
 								/******************************************************************************/
 								//Verifico si hay resultados
 								if($CompCliente){ ?>
 									<tr>
-										<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Pagos Clientes</td>
+										<td colspan="<?php echo $nmax; ?>" style="background-color: #ccc;">Pagos Clientes</td>
 										<?php
 										//Recorro los años
 										$interruptor_mes = 0;
@@ -1321,10 +1320,10 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 										<td colspan="1" align="center" style="background-color: #ccc;">Total</td>
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 									</tr>
-									
+
 									<?php foreach ($CompCliente as $prod) { ?>
 										<tr>
-											<td colspan="<?php echo $nmax;?>" ><?php echo $prod['Nombre']; ?></td>
+											<td colspan="<?php echo $nmax; ?>" ><?php echo $prod['Nombre']; ?></td>
 											
 											<?php
 											//Recorro los años
@@ -1386,10 +1385,11 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //sistema
-$y = "licitacion_listado.idEstado=1 AND licitacion_listado.idAprobado=2 ";	
+$y = "licitacion_listado.idEstado=1 AND licitacion_listado.idAprobado=2 ";
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -1414,7 +1414,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					$Form_Inputs->form_select_filter('Contrato','idLicitacion', $x1, 2, 'idLicitacion', 'Nombre', 'licitacion_listado', $y, '', $dbConn);
 				}
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -1430,4 +1430,5 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

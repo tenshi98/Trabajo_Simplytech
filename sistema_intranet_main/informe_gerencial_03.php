@@ -125,7 +125,7 @@ array_push( $arrLicitacion,$row );
 
 $array3d = array();
 foreach($arrLicitacion as $key) {
-	
+
 	//Creo Variables para la rejilla
 	for ($i = 1; $i <= $nmax; $i++) {
 		$d[$i]  = $key['LVL_'.$i.'_id'];   
@@ -405,7 +405,7 @@ array_push( $arrUML,$row );
 }
 $UML = array();
 foreach ($arrUML as $unidad){
-	$UML[$unidad['idFrecuencia']]['Nombre'] = $unidad['Nombre'];	
+	$UML[$unidad['idFrecuencia']]['Nombre'] = $unidad['Nombre'];
 }
 
 
@@ -436,7 +436,7 @@ array_push( $arrOTRealizadas,$row );
 }	
 $OTRealizadas = array();
 foreach ($arrOTRealizadas as $ot){
-	$OTRealizadas[$ot['item_tabla']][$ot['item_tabla_id']]['Cuenta']   = $ot['Cuenta'];	
+	$OTRealizadas[$ot['item_tabla']][$ot['item_tabla_id']]['Cuenta']   = $ot['Cuenta'];
 }
 
 
@@ -558,7 +558,6 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 }	
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -576,58 +575,58 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){?>
 								<tr class="odd">
 									<td>Cliente</td>
-									<td><?php echo $rowdata['Cliente'];?></td>
+									<td><?php echo $rowdata['Cliente']; ?></td>
 								</tr>
 							<?php } ?>
 							<tr class="odd">
 								<td>Nombre Contrato</td>
-								<td><?php echo $rowdata['Nombre'];?></td>
+								<td><?php echo $rowdata['Nombre']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td width="200">Codigo Contrato</td>
-								<td><?php echo $rowdata['Codigo'];?></td>
+								<td><?php echo $rowdata['Codigo']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Sistema</td>
-								<td><?php echo $rowdata['Sistema'];?></td>
+								<td><?php echo $rowdata['Sistema']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Duracion</td>
-								<td><?php echo 'Del '.Fecha_estandar($rowdata['FechaInicio']).' al '.Fecha_estandar($rowdata['FechaTermino']);?></td>
+								<td><?php echo 'Del '.Fecha_estandar($rowdata['FechaInicio']).' al '.Fecha_estandar($rowdata['FechaTermino']); ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Estado</td>
-								<td><?php echo $rowdata['Estado'];?></td>
+								<td><?php echo $rowdata['Estado']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Estado Aprobacion</td>
-								<td><?php echo $rowdata['EstadoAprobacion'];?></td>
+								<td><?php echo $rowdata['EstadoAprobacion']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Bodega Productos Utilizada</td>
-								<td><?php echo $rowdata['BodegaProductos'];?></td>
+								<td><?php echo $rowdata['BodegaProductos']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Bodega Insumos Utilizada</td>
-								<td><?php echo $rowdata['BodegaInsumos'];?></td>
+								<td><?php echo $rowdata['BodegaInsumos']; ?></td>
 							</tr>
-							
+
 						</tbody>
 					</table>
 						
 						
-					<div class="table-responsive">	
+					<div class="table-responsive">
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
-											  
+
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<tr>
-									<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;"></td>
+									<td colspan="<?php echo $nmax; ?>" style="background-color: #ccc;"></td>
 									<td colspan="3" align="center" style="background-color: #ccc;">Presupuestado</td>
 									<td colspan="3" align="center" style="background-color: #ccc;">Real</td>
 									<td colspan="1" align="center" style="background-color: #ccc;">Cumplimiento</td>
 								</tr>
 								<tr>
-									<td colspan="<?php echo $nmax;?>" style="background-color: #ccc;">Itemizado</td>
+									<td colspan="<?php echo $nmax; ?>" style="background-color: #ccc;">Itemizado</td>
 									<td align="center" style="background-color: #ccc;">Cantidad</td>
 									<td align="center" style="background-color: #ccc;">Valor Unitario</td>
 									<td align="center" style="background-color: #ccc;">Valor Total</td>
@@ -671,6 +670,7 @@ $y = "licitacion_listado.idEstado=1 AND licitacion_listado.idAprobado=2 ";
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -698,7 +698,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				
 				
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -714,4 +714,5 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -31,7 +31,7 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 }
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idTabla', 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'ndata_1');
-			
+
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
@@ -47,7 +47,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		AVG(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedProm,
 		STDDEV(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedDesStan,
 		";
-	//solo desde	
+	//solo desde
 	}elseif(isset($_GET['desde'])&&$_GET['desde']!=''&&(!isset($_GET['hasta']) OR $_GET['hasta']=='')){
 		$subquery = "
 		MIN(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMin,
@@ -55,7 +55,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		AVG(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedProm,
 		STDDEV(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedDesStan,
 		";
-	//solo hasta	
+	//solo hasta
 	}elseif(isset($_GET['hasta'])&&$_GET['hasta']!=''&&(!isset($_GET['desde']) OR $_GET['desde']=='')){
 		$subquery = "
 		MIN(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMin,
@@ -71,8 +71,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		AVG(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedProm,
 		STDDEV(NULLIF(IF(backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedDesStan,
 		";
-	}	
-	
+	}
+
 	//se traen lo datos del equipo
 	$SIS_query = '
 	telemetria_listado.SensoresNombre_'.$_GET['sensorn'].' AS SensorNombre,
@@ -95,7 +95,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	</style>';
 
 	$html .= '
-	<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">  
+	<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">
 		<thead>
 			<tr>
 				<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Fecha</th>';
@@ -105,20 +105,20 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Promedio</th>
 					<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Minimo</th>
 					<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Maximo</th>
-					<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Dev. Std.</th>';		
-				//Si no se ven detalles	
+					<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Dev. Std.</th>';
+				//Si no se ven detalles
 				}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
 					$html .= '<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Promedio</th>';
-				} 
-				$html .= '         
+				}
+				$html .= '
 			</tr>
 		</thead>
 		<tbody>';
-								
+
 			foreach ($arrEquipos as $rutas) {
 				//Verifico si existen datos
 				if(isset($rutas['MedMin'])&&$rutas['MedMin']!=0&&$rutas['MedMin']!=''&&isset($rutas['MedMax'])&&$rutas['MedMax']!=0&&$rutas['MedMax']!=''){
-							
+
 					$html .='<tr><td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$rutas['FechaSistema'].'</td>';
 					//Si se ven detalles
 					if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
@@ -127,20 +127,20 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedMin'], 2).' '.DeSanitizar($rutas['Unimed']).'</td>
 							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedMax'], 2).' '.DeSanitizar($rutas['Unimed']).'</td>
 							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedDesStan'], 2).' '.DeSanitizar($rutas['Unimed']).'</td>
-						';		
-					//Si no se ven detalles	
+						';
+					//Si no se ven detalles
 					}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
 						$html .= '
 							<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades($rutas['MedProm'], 2).' '.DeSanitizar($rutas['Unimed']).'</td>
 						';
-					} 
+					}
 					$html .= '</tr>';
 				}
 			}
-								
+
 	$html .='</tbody>
 	</table>';
-	 
+
 	/**********************************************************************************************************************************/
 	/*                                                          Impresion PDF                                                         */
 	/**********************************************************************************************************************************/
@@ -158,7 +158,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			/************************************************************************/
 			//TCPDF
 			case 1:
-				
+
 				require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 				// create new PDF document
@@ -213,7 +213,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				$pdf->writeHTML($html, true, false, true, false, '');
 				$pdf->lastPage();
 				$pdf->Output(DeSanitizar($pdf_file), 'I');
-		
+
 				break;
 			/************************************************************************/
 			//DomPDF (Solo compatible con PHP 5.x)

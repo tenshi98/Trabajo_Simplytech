@@ -384,7 +384,6 @@ echo '
 											$SIS_join  = '
 											LEFT JOIN `core_sistemas`           ON core_sistemas.idSistema            = caja_chica_listado.idSistema
 											INNER JOIN `usuarios_cajas_chicas`  ON usuarios_cajas_chicas.idCajaChica  = caja_chica_listado.idCajaChica';
-											$SIS_where = '';
 											$SIS_order = 0;
 											$arrCajas = array();
 											$arrCajas = db_select_array (false, $SIS_query, 'caja_chica_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrCajas');

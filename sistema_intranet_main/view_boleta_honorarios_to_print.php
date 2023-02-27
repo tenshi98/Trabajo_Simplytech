@@ -26,7 +26,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -304,24 +304,24 @@ $html .= '<div class="row">
 					}
 				$html .= '</tbody>
 			</table>
-			
+
 			<table class="table">
 				<tbody>';	
 					if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td align="right"><strong>Total Honorarios</strong></td> 
+							<td align="right"><strong>Total Honorarios</strong></td>
 							<td width="160" align="right">'.Valores($row_data['ValorNeto'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['Impuesto'])&&$row_data['Impuesto']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td align="right"><strong>'.$row_data['Porcentaje_Ret_Boletas'].'% Impuesto Retenido</strong></td> 
+							<td align="right"><strong>'.$row_data['Porcentaje_Ret_Boletas'].'% Impuesto Retenido</strong></td>
 							<td align="right">'.Valores($row_data['Impuesto'], 0).'</td>
 						</tr>';
 					}
 					if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){
 						$html .= '<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td align="right"><strong>Total</strong></td> 
+							<td align="right"><strong>Total</strong></td>
 							<td align="right">'.Valores($row_data['ValorTotal'], 0).'</td>
 						</tr>';
 					}
@@ -344,4 +344,5 @@ echo $html;
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Print.php';
+
 ?>

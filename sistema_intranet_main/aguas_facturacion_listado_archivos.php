@@ -45,7 +45,8 @@ if(!empty($_GET['modBase'])){?>
 } else {
 //cuadro para descargar
 $Alert_Text  = 'Todos los archivos deben tener como nombre el identificador del cliente (100101-100.pdf por ejemplo) sin espacios ni otros caracteres';
-alert_post_data(2,1,2, $Alert_Text);	 
+alert_post_data(2,1,2, $Alert_Text);
+
 ?>
 
 		
@@ -70,8 +71,7 @@ alert_post_data(2,1,2, $Alert_Text);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 
 				?>
-				
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 				</div>
@@ -87,4 +87,5 @@ alert_post_data(2,1,2, $Alert_Text);
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

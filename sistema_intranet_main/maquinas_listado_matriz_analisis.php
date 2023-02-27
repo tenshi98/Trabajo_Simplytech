@@ -72,10 +72,11 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Matriz borrado correct
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['clone_idMatriz'])){ 
+if(!empty($_GET['clone_idMatriz'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);		
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -95,7 +96,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 
 				$Form_Inputs->form_input_hidden('idMatriz', $_GET['clone_idMatriz'], 2);
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c5; Clonar" name="clone_Matriz">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -109,7 +110,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 	
 	
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['mod'])){ 
+}elseif(!empty($_GET['mod'])){
 //Armo cadena
 $SIS_query  = 'PuntoNombre_'.$_GET['mod'].' AS Nombre';
 $SIS_query .= ',PuntoMedAceptable_'.$_GET['mod'].' AS Aceptable';
@@ -123,7 +124,7 @@ $SIS_query .= ',PuntoidGrupo_'.$_GET['mod'].' AS Grupo';
 $SIS_join  = '';
 $SIS_where = 'idMatriz ='.$_GET['idMatriz'];
 $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
-	 
+
 ?>
 	 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -140,7 +141,7 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_jo
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'PuntoNombre', $rowdata['Nombre'], 1);
 				$Form_Inputs->form_select_depend1('Tipo', 'PuntoidTipo',  $rowdata['Tipo'],  1, 'idTipo', 'Nombre', 'core_analisis_tipos', 0,  0,
-										 'Grupo', 'PuntoidGrupo',  $rowdata['Grupo'],  1,  'idGrupo', 'Nombre', 'maquinas_listado_matriz_grupos', 0,   0, 
+										 'Grupo', 'PuntoidGrupo',  $rowdata['Grupo'],  1,  'idGrupo', 'Nombre', 'maquinas_listado_matriz_grupos', 0,   0,
 										 $dbConn, 'form1');
 							 
 				$Form_Inputs->form_input_number('Aceptable','PuntoMedAceptable', Cantidades_decimales_justos($rowdata['Aceptable']), 1);
@@ -157,7 +158,7 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_jo
 					document.getElementById('div_PuntoMedAlerta').style.display = 'none';
 					document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
 					document.getElementById('div_PuntoUniMed').style.display = 'none';
-					
+
 					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 								
 						let Sensores_val= $("#PuntoidTipo").val();
@@ -221,7 +222,7 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_jo
 </div> 
 	 	 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['idMatriz'])){ 
+} elseif(!empty($_GET['idMatriz'])){
 // consulto los datos
 $SIS_query = '
 Nombre,cantPuntos,
@@ -384,7 +385,7 @@ foreach ($arrGrupos as $data) {  $arrFinalGrupos[$data['idGrupo']] = $data['Nomb
 <div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['idMatriz_2'])){ 
+}elseif(!empty($_GET['idMatriz_2'])){
 // consulto los datos
 $SIS_query = 'Nombre,cantPuntos, idEstado';
 $SIS_join  = '';
@@ -435,6 +436,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 //verifico que sea un administrador
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -455,14 +457,13 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 2, 1, 50);
-					
-					
+
 				$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				?>
-	   
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -471,7 +472,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
                     
 		</div>
 	</div>
-</div> 
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
@@ -497,9 +498,9 @@ $arrMatriz = db_select_array (false, $SIS_query, 'maquinas_listado_matriz', $SIS
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Matriz Analisis');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Matriz Analisis'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Matriz</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Matriz</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -529,7 +530,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'maquinas_listado_matriz', $SIS
 						<?php if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
 							<li class="active"><a href="<?php echo 'maquinas_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -548,7 +549,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'maquinas_listado_matriz', $SIS
 				<?php foreach ($arrMatriz as $maq) { ?>
 					<tr class="odd">
 						<td><?php echo $maq['Nombre']; ?></td>
-						<td><label class="label <?php if(isset($maq['idEstado'])&&$maq['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $maq['Estado']; ?></label></td>
+						<td><label class="label <?php if(isset($maq['idEstado'])&&$maq['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $maq['Estado']; ?></label></td>
 						<td><?php echo $maq['cantPuntos']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 140px;" >
@@ -557,7 +558,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'maquinas_listado_matriz', $SIS
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idMatriz='.$maq['idMatriz']; ?>" title="Editar Matriz" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($maq['idMatriz'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la matriz '.$maq['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la matriz '.$maq['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -572,8 +573,8 @@ $arrMatriz = db_select_array (false, $SIS_query, 'maquinas_listado_matriz', $SIS
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 <?php } ?>
 <?php
@@ -581,4 +582,5 @@ $arrMatriz = db_select_array (false, $SIS_query, 'maquinas_listado_matriz', $SIS
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

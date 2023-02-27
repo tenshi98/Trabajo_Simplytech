@@ -133,7 +133,7 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-	
+
 		case 'new_ingreso':
 
 			//Se elimina la restriccion del sql 5.7
@@ -253,7 +253,7 @@ require_once '0_validate_user_1.php';
 
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
@@ -287,7 +287,7 @@ require_once '0_validate_user_1.php';
 			}
 			unset($_SESSION['servicios_ing_archivos']);
 
-			
+			//redirijo
 			header( 'Location: '.$location );
 			die;
 
@@ -390,7 +390,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'modCentroCosto_ing':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -453,7 +453,7 @@ require_once '0_validate_user_1.php';
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 		break;
 /*******************************************************************************************************************/
@@ -486,7 +486,7 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			if(empty($error)){
 				
 				$_SESSION['servicios_ing_basicos']['Pago_fecha'] = '0000-00-00';
@@ -563,7 +563,7 @@ require_once '0_validate_user_1.php';
 				$temp_idFrecuencia     = 0;
 				$temp_cant_ingresada   = 0;
 				$temp_cant_max         = 0;
-				
+
 				if(isset($_SESSION['servicios_ing_basicos']['idOcompra'])&&$_SESSION['servicios_ing_basicos']['idOcompra']!=''){
 					$temp_idExistencia     = $_SESSION['servicios_ing_productos'][$oldItemID]['idExistencia'];
 					$temp_idFrecuencia     = $_SESSION['servicios_ing_productos'][$oldItemID]['idFrecuencia'];
@@ -699,7 +699,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -976,7 +976,7 @@ require_once '0_validate_user_1.php';
 			if(isset($valor)&&$valor==0){
 				$error['trabajos'] = 'error/No se han asignado Servicios ni guias';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -984,8 +984,8 @@ require_once '0_validate_user_1.php';
 			//Se guardan los datos basicos
 				if(isset($_SESSION['servicios_ing_basicos']['idSistema']) && $_SESSION['servicios_ing_basicos']['idSistema']!=''){     $SIS_data  = "'".$_SESSION['servicios_ing_basicos']['idSistema']."'";      }else{$SIS_data  = "''";}
 				if(isset($_SESSION['servicios_ing_basicos']['idUsuario']) && $_SESSION['servicios_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['servicios_ing_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['servicios_ing_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['servicios_ing_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_ing_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_ing_basicos']['Creacion_fecha'])."'";
@@ -1000,8 +1000,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['servicios_ing_basicos']['idTipo']) && $_SESSION['servicios_ing_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['idTipo']."'";         }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['servicios_ing_basicos']['Observaciones']) && $_SESSION['servicios_ing_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['Observaciones']."'";  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['servicios_ing_basicos']['idProveedor']) && $_SESSION['servicios_ing_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['idProveedor']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['servicios_ing_basicos']['Pago_fecha']) && $_SESSION['servicios_ing_basicos']['Pago_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['Pago_fecha']."'";  
+				if(isset($_SESSION['servicios_ing_basicos']['Pago_fecha']) && $_SESSION['servicios_ing_basicos']['Pago_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['Pago_fecha']."'";
 					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['servicios_ing_basicos']['Pago_fecha'])."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['servicios_ing_basicos']['Pago_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_ing_basicos']['Pago_fecha'])."'";
@@ -1052,15 +1052,15 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de los trabajadores	
-					if(isset($_SESSION['servicios_ing_productos'])){		
+					if(isset($_SESSION['servicios_ing_productos'])){
 						foreach ($_SESSION['servicios_ing_productos'] as $key => $producto){
 
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_ing_basicos']['idSistema']) && $_SESSION['servicios_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_ing_basicos']['idUsuario']) && $_SESSION['servicios_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_ing_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_ing_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_ing_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_ing_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1140,8 +1140,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_ing_basicos']['idSistema']) && $_SESSION['servicios_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_ing_basicos']['idUsuario']) && $_SESSION['servicios_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_ing_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_ing_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_ing_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_ing_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1169,8 +1169,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_ing_basicos']['idSistema']) && $_SESSION['servicios_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_ing_basicos']['idUsuario']) && $_SESSION['servicios_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_ing_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_ing_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_ing_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_ing_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1213,13 +1213,12 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['servicios_ing_archivos']);
 					unset($_SESSION['servicios_ing_descuentos']);
 					unset($_SESSION['servicios_ing_guias']);
-					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
 
 			}
-	
 
 		break;
 
@@ -1492,13 +1491,13 @@ require_once '0_validate_user_1.php';
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
 /*******************************************************************************************************************/
 		case 'modCentroCosto_egr':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -1561,7 +1560,7 @@ require_once '0_validate_user_1.php';
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 		break;
 /*******************************************************************************************************************/
@@ -1669,7 +1668,7 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			if(empty($error)){
 				
 				$_SESSION['servicios_egr_basicos']['Pago_fecha'] = '0000-00-00';
@@ -1783,7 +1782,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -1986,7 +1985,7 @@ require_once '0_validate_user_1.php';
 			if(isset($valor)&&$valor==0){
 				$error['trabajos']   = 'error/No se han asignado ni servicios ni guias';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -1998,8 +1997,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['servicios_egr_basicos']['idSistema']) && $_SESSION['servicios_egr_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['servicios_egr_basicos']['idUsuario']) && $_SESSION['servicios_egr_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['servicios_egr_basicos']['idTipo']) && $_SESSION['servicios_egr_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['servicios_egr_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['servicios_egr_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['servicios_egr_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_egr_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_egr_basicos']['Creacion_fecha'])."'";
@@ -2025,8 +2024,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['servicios_egr_impuestos'][8]['valor'])&&$_SESSION['servicios_egr_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['servicios_egr_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['servicios_egr_impuestos'][9]['valor'])&&$_SESSION['servicios_egr_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['servicios_egr_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['servicios_egr_impuestos'][10]['valor'])&&$_SESSION['servicios_egr_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['servicios_egr_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['servicios_egr_basicos']['Pago_fecha']) && $_SESSION['servicios_egr_basicos']['Pago_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['Pago_fecha']."'";  
+				if(isset($_SESSION['servicios_egr_basicos']['Pago_fecha']) && $_SESSION['servicios_egr_basicos']['Pago_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['Pago_fecha']."'";
 					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['servicios_egr_basicos']['Pago_fecha'])."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['servicios_egr_basicos']['Pago_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_egr_basicos']['Pago_fecha'])."'";
@@ -2060,16 +2059,16 @@ require_once '0_validate_user_1.php';
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					/*********************************************************************/
-					//Se guardan los datos de los productos	
-					if(isset($_SESSION['servicios_egr_productos'])){		
+					//Se guardan los datos de los productos
+					if(isset($_SESSION['servicios_egr_productos'])){
 						foreach ($_SESSION['servicios_egr_productos'] as $key => $producto){
 
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_egr_basicos']['idSistema']) && $_SESSION['servicios_egr_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_egr_basicos']['idUsuario']) && $_SESSION['servicios_egr_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_egr_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_egr_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_egr_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_egr_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -2135,8 +2134,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_egr_basicos']['idSistema']) && $_SESSION['servicios_egr_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_egr_basicos']['idUsuario']) && $_SESSION['servicios_egr_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_egr_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_egr_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_egr_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_egr_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -2164,8 +2163,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_egr_basicos']['idSistema']) && $_SESSION['servicios_egr_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_egr_basicos']['idUsuario']) && $_SESSION['servicios_egr_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_egr_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_egr_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_egr_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_egr_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -2208,13 +2207,12 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['servicios_egr_impuestos']);
 					unset($_SESSION['servicios_egr_archivos']);
 					unset($_SESSION['servicios_egr_descuentos']);
-					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
 
 			}
-	
 
 		break;
 
@@ -2224,7 +2222,7 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-	
+
 		case 'new_ingreso_nd':
 
 			//Se elimina la restriccion del sql 5.7
@@ -2336,7 +2334,7 @@ require_once '0_validate_user_1.php';
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
@@ -2369,7 +2367,7 @@ require_once '0_validate_user_1.php';
 			}
 			unset($_SESSION['servicios_ing_nd_archivos']);
 
-			
+			//redirijo
 			header( 'Location: '.$location );
 			die;
 
@@ -2460,7 +2458,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'modCentroCosto_ing_nd':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -2523,7 +2521,7 @@ require_once '0_validate_user_1.php';
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 		break;
 /*******************************************************************************************************************/
@@ -2727,7 +2725,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -2871,7 +2869,7 @@ require_once '0_validate_user_1.php';
 			if(isset($valor)&&$valor==0){
 				$error['idProducto'] = 'error/No se han asignado servicios ni guias';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -2879,8 +2877,8 @@ require_once '0_validate_user_1.php';
 			//Se guardan los datos basicos
 				if(isset($_SESSION['servicios_ing_nd_basicos']['idSistema']) && $_SESSION['servicios_ing_nd_basicos']['idSistema']!=''){     $SIS_data  = "'".$_SESSION['servicios_ing_nd_basicos']['idSistema']."'";      }else{$SIS_data  = "''";}
 				if(isset($_SESSION['servicios_ing_nd_basicos']['idUsuario']) && $_SESSION['servicios_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha'])."'";
@@ -2895,8 +2893,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['servicios_ing_nd_basicos']['idTipo']) && $_SESSION['servicios_ing_nd_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['idTipo']."'";         }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['servicios_ing_nd_basicos']['Observaciones']) && $_SESSION['servicios_ing_nd_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['Observaciones']."'";  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['servicios_ing_nd_basicos']['idProveedor']) && $_SESSION['servicios_ing_nd_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['idProveedor']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['servicios_ing_nd_basicos']['Pago_fecha']) && $_SESSION['servicios_ing_nd_basicos']['Pago_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['Pago_fecha']."'";  
+				if(isset($_SESSION['servicios_ing_nd_basicos']['Pago_fecha']) && $_SESSION['servicios_ing_nd_basicos']['Pago_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['Pago_fecha']."'";
 					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['servicios_ing_nd_basicos']['Pago_fecha'])."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['servicios_ing_nd_basicos']['Pago_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_ing_nd_basicos']['Pago_fecha'])."'";
@@ -2943,15 +2941,15 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de los trabajadores	
-					if(isset($_SESSION['servicios_ing_nd_productos'])){		
+					if(isset($_SESSION['servicios_ing_nd_productos'])){
 						foreach ($_SESSION['servicios_ing_nd_productos'] as $key => $producto){
 
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_ing_nd_basicos']['idSistema']) && $_SESSION['servicios_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_ing_nd_basicos']['idUsuario']) && $_SESSION['servicios_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -2988,8 +2986,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_ing_nd_basicos']['idSistema']) && $_SESSION['servicios_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_ing_nd_basicos']['idUsuario']) && $_SESSION['servicios_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -3017,8 +3015,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_ing_nd_basicos']['idSistema']) && $_SESSION['servicios_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_ing_nd_basicos']['idUsuario']) && $_SESSION['servicios_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -3060,13 +3058,12 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['servicios_ing_nd_impuestos']);
 					unset($_SESSION['servicios_ing_nd_archivos']);
 					unset($_SESSION['servicios_ing_nd_otros']);
-					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
 
 			}
-	
 
 		break;
 
@@ -3294,13 +3291,13 @@ require_once '0_validate_user_1.php';
 				
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
 /*******************************************************************************************************************/
 		case 'modCentroCosto_ing_nc':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -3363,7 +3360,7 @@ require_once '0_validate_user_1.php';
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 		break;
 /*******************************************************************************************************************/
@@ -3566,7 +3563,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -3711,7 +3708,7 @@ require_once '0_validate_user_1.php';
 			if(isset($valor)&&$valor==0){
 				$error['idProducto']   = 'error/No se han asignado ni servicios ni guias';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -3723,8 +3720,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['servicios_ing_nc_basicos']['idSistema']) && $_SESSION['servicios_ing_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['servicios_ing_nc_basicos']['idUsuario']) && $_SESSION['servicios_ing_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['servicios_ing_nc_basicos']['idTipo']) && $_SESSION['servicios_ing_nc_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['servicios_ing_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['servicios_ing_nc_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_ing_nc_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_ing_nc_basicos']['Creacion_fecha'])."'";
@@ -3770,16 +3767,16 @@ require_once '0_validate_user_1.php';
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					/*********************************************************************/
-					//Se guardan los datos de los productos	
-					if(isset($_SESSION['servicios_ing_nc_productos'])){		
+					//Se guardan los datos de los productos
+					if(isset($_SESSION['servicios_ing_nc_productos'])){
 						foreach ($_SESSION['servicios_ing_nc_productos'] as $key => $producto){
 
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_ing_nc_basicos']['idSistema']) && $_SESSION['servicios_ing_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_ing_nc_basicos']['idUsuario']) && $_SESSION['servicios_ing_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_ing_nc_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_ing_nc_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -3815,8 +3812,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_ing_nd_basicos']['idSistema']) && $_SESSION['servicios_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_ing_nd_basicos']['idUsuario']) && $_SESSION['servicios_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -3844,8 +3841,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_ing_nc_basicos']['idSistema']) && $_SESSION['servicios_ing_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_ing_nc_basicos']['idUsuario']) && $_SESSION['servicios_ing_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_ing_nc_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_ing_nc_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -3892,7 +3889,6 @@ require_once '0_validate_user_1.php';
 				}
 
 			}
-	
 
 		break;
 /*******************************************************************************************************************/
@@ -3901,7 +3897,7 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-	
+
 		case 'new_egreso_nd':
 
 			//Se elimina la restriccion del sql 5.7
@@ -4012,7 +4008,7 @@ require_once '0_validate_user_1.php';
 
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
@@ -4045,7 +4041,7 @@ require_once '0_validate_user_1.php';
 			}
 			unset($_SESSION['servicios_egr_nd_archivos']);
 
-			
+			//redirijo
 			header( 'Location: '.$location );
 			die;
 
@@ -4136,7 +4132,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'modCentroCosto_egr_nd':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -4199,7 +4195,7 @@ require_once '0_validate_user_1.php';
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 		break;
 /*******************************************************************************************************************/
@@ -4402,7 +4398,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -4546,7 +4542,7 @@ require_once '0_validate_user_1.php';
 			if(isset($valor)&&$valor==0){
 				$error['idProducto'] = 'error/No se han asignado servicios ni guias';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -4554,8 +4550,8 @@ require_once '0_validate_user_1.php';
 			//Se guardan los datos basicos
 				if(isset($_SESSION['servicios_egr_nd_basicos']['idSistema']) && $_SESSION['servicios_egr_nd_basicos']['idSistema']!=''){     $SIS_data  = "'".$_SESSION['servicios_egr_nd_basicos']['idSistema']."'";       }else{$SIS_data  = "''";}
 				if(isset($_SESSION['servicios_egr_nd_basicos']['idUsuario']) && $_SESSION['servicios_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['idUsuario']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha'])."'";
@@ -4570,8 +4566,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['servicios_egr_nd_basicos']['idTipo']) && $_SESSION['servicios_egr_nd_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['idTipo']."'";         }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['servicios_egr_nd_basicos']['Observaciones']) && $_SESSION['servicios_egr_nd_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['Observaciones']."'";  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['servicios_egr_nd_basicos']['idCliente']) && $_SESSION['servicios_egr_nd_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['idCliente']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['servicios_egr_nd_basicos']['Pago_fecha']) && $_SESSION['servicios_egr_nd_basicos']['Pago_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['Pago_fecha']."'";  
+				if(isset($_SESSION['servicios_egr_nd_basicos']['Pago_fecha']) && $_SESSION['servicios_egr_nd_basicos']['Pago_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['Pago_fecha']."'";
 					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['servicios_egr_nd_basicos']['Pago_fecha'])."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['servicios_egr_nd_basicos']['Pago_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_egr_nd_basicos']['Pago_fecha'])."'";
@@ -4618,15 +4614,15 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de los trabajadores	
-					if(isset($_SESSION['servicios_egr_nd_productos'])){		
+					if(isset($_SESSION['servicios_egr_nd_productos'])){
 						foreach ($_SESSION['servicios_egr_nd_productos'] as $key => $producto){
 
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_egr_nd_basicos']['idSistema']) && $_SESSION['servicios_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_egr_nd_basicos']['idUsuario']) && $_SESSION['servicios_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -4663,8 +4659,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_egr_nd_basicos']['idSistema']) && $_SESSION['servicios_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_egr_nd_basicos']['idUsuario']) && $_SESSION['servicios_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -4692,8 +4688,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_egr_nd_basicos']['idSistema']) && $_SESSION['servicios_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_egr_nd_basicos']['idUsuario']) && $_SESSION['servicios_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -4735,13 +4731,12 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['servicios_egr_nd_impuestos']);
 					unset($_SESSION['servicios_egr_nd_archivos']);
 					unset($_SESSION['servicios_egr_nd_otros']);
-					
+					//redirijo
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
 
 			}
-	
 
 		break;
 
@@ -4968,13 +4963,13 @@ require_once '0_validate_user_1.php';
 
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 
 		break;
 /*******************************************************************************************************************/
 		case 'modCentroCosto_egr_nc':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -5037,7 +5032,7 @@ require_once '0_validate_user_1.php';
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
-			
+
 			}
 		break;
 /*******************************************************************************************************************/
@@ -5240,7 +5235,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -5385,7 +5380,7 @@ require_once '0_validate_user_1.php';
 			if(isset($valor)&&$valor==0){
 				$error['idProducto']   = 'error/No se han asignado ni servicios ni guias';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -5397,8 +5392,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['servicios_egr_nc_basicos']['idSistema']) && $_SESSION['servicios_egr_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['servicios_egr_nc_basicos']['idUsuario']) && $_SESSION['servicios_egr_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['servicios_egr_nc_basicos']['idTipo']) && $_SESSION['servicios_egr_nc_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['servicios_egr_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['servicios_egr_nc_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_egr_nc_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_egr_nc_basicos']['Creacion_fecha'])."'";
@@ -5444,16 +5439,16 @@ require_once '0_validate_user_1.php';
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					/*********************************************************************/
-					//Se guardan los datos de los productos	
-					if(isset($_SESSION['servicios_egr_nc_productos'])){		
+					//Se guardan los datos de los productos
+					if(isset($_SESSION['servicios_egr_nc_productos'])){
 						foreach ($_SESSION['servicios_egr_nc_productos'] as $key => $producto){
 
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_egr_nc_basicos']['idSistema']) && $_SESSION['servicios_egr_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_egr_nc_basicos']['idUsuario']) && $_SESSION['servicios_egr_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_egr_nc_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_egr_nc_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -5489,8 +5484,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_egr_nd_basicos']['idSistema']) && $_SESSION['servicios_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_egr_nd_basicos']['idUsuario']) && $_SESSION['servicios_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -5518,8 +5513,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['servicios_egr_nc_basicos']['idSistema']) && $_SESSION['servicios_egr_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['servicios_egr_nc_basicos']['idUsuario']) && $_SESSION['servicios_egr_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['servicios_egr_nc_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['servicios_egr_nc_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -5566,7 +5561,6 @@ require_once '0_validate_user_1.php';
 				}
 
 			}
-	
 
 		break;
 /*******************************************************************************************************************/

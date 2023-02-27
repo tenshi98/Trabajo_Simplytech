@@ -153,7 +153,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //verifico que sea un administrador
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$usrfil .= ' AND usuarios_listado.idTipoUsuario=5';	
+	$usrfil .= ' AND usuarios_listado.idTipoUsuario=5';
 }
 /**********************************************************/
 //Se aplican los filtros
@@ -228,7 +228,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'prospectos_listado', $SIS_join,
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');	 
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
 				$Form_Inputs->form_select_join_filter('Vendedor','idUsuario', $x10, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 
@@ -299,7 +299,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'prospectos_listado', $SIS_join,
 						<td><?php echo $usuarios['Rut']; ?></td>
 						<td><?php echo $usuarios['Nombre']; ?></td>
 						<td><?php echo $usuarios['Vendedor']; ?></td>
-						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $usuarios['estado']; ?></label></td>	
+						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $usuarios['estado']; ?></label></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
@@ -320,11 +320,11 @@ $arrUsers = db_select_array (false, $SIS_query, 'prospectos_listado', $SIS_join,
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

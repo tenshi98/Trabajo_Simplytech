@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -127,7 +127,7 @@ AVG(NULLIF(IF(bodegas_productos_facturacion_existencias.Valor!=0,bodegas_product
 bodegas_productos_facturacion_existencias.Creacion_mes';
 $SIS_join  = 'LEFT JOIN bodegas_productos_facturacion on bodegas_productos_facturacion.idFacturacion = bodegas_productos_facturacion_existencias.idFacturacion';
 $SIS_where = 'bodegas_productos_facturacion_existencias.idProducto='.$X_Puntero;
-$SIS_where.= ' AND bodegas_productos_facturacion_existencias.Creacion_fecha>"'.restarDias(fecha_actual(),360).'"';	
+$SIS_where.= ' AND bodegas_productos_facturacion_existencias.Creacion_fecha>"'.restarDias(fecha_actual(),360).'"';
 $SIS_where.= ' AND (bodegas_productos_facturacion.idTipo = 1 OR bodegas_productos_facturacion.idTipo = 2)';
 $SIS_where.= ' GROUP BY bodegas_productos_facturacion.idTipo, bodegas_productos_facturacion_existencias.Creacion_mes';
 $SIS_order = 'ORDER BY bodegas_productos_facturacion_existencias.Creacion_fecha ASC';
@@ -153,6 +153,7 @@ foreach ($arrPromedioProd as $productos) {
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -174,7 +175,7 @@ foreach ($arrPromedioProd as $productos) {
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/productos.jpg">
 						<?php }else{
 							echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowdata['Direccion_img']);
-						}?>
+						} ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 
@@ -188,16 +189,16 @@ foreach ($arrPromedioProd as $productos) {
 							<strong>Tipo de Producto : </strong><?php echo $rowdata['TipoProd']; ?><br/>
 							<strong>Unidad de medida : </strong><?php echo $rowdata['Unidad']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
-							
+
 							<strong>Ingredientes Activos : </strong><br/><?php echo $rowdata['IngredienteActivo']; ?><br/>
-							
+
 							<strong>Dosis Recomendada : </strong><?php echo Cantidades_decimales_justos($rowdata['DosisRecomendada']); ?><br/>
 							<strong>Carencia Etiqueta : </strong><?php echo Cantidades_decimales_justos($rowdata['CarenciaExportador']); ?><br/>
 							<strong>Carencia ASOEX : </strong><?php echo $rowdata['Carencia']; ?><br/>
 							<strong>Carencia TESCO : </strong><?php echo Cantidades_decimales_justos($rowdata['EfectoResidual']); ?><br/>
 							<strong>Tiempo Re-Ingreso : </strong><?php echo Cantidades_decimales_justos($rowdata['EfectoRetroactivo']); ?><br/>
 							<strong>Aporte Nutricional : </strong><?php echo $rowdata['AporteNutricional']; ?><br/>
-							
+
 						</p>
 						
 
@@ -235,21 +236,21 @@ foreach ($arrPromedioProd as $productos) {
 						<?php if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){ ?>
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Receta</h2>
 							<table  class="table table-bordered">
-								<?php 
+								<?php
 								$total = 0;
 								foreach ($arrRecetas as $receta) {
 									$total = $total + $receta['Cantidad']; ?>
 									<tr class="item-row">
 										<td><?php echo $receta['NombreProd']; ?></td>
-										<td width="90"><?php echo Cantidades_decimales_justos_alt($receta['Cantidad']).' '.$receta['UnidadMedida'];?></td>
+										<td width="90"><?php echo Cantidades_decimales_justos_alt($receta['Cantidad']).' '.$receta['UnidadMedida']; ?></td>
 									</tr>
-								<?php }?>
+								<?php } ?>
 							</table>
 						<?php } ?>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>
 						<p class="text-muted">
-							<?php 
+							<?php
 							//Ficha Tecnica
 							if(isset($rowdata['FichaTecnica'])&&$rowdata['FichaTecnica']!=''){
 								echo '<a href="1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($rowdata['FichaTecnica'], fecha_actual()).'" class="btn btn-xs btn-primary" style="margin-right: 5px;"><i class="fa fa-download" aria-hidden="true"></i> Descargar Ficha Tecnica</a>';
@@ -265,7 +266,7 @@ foreach ($arrPromedioProd as $productos) {
 						
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
 			
@@ -274,7 +275,7 @@ foreach ($arrPromedioProd as $productos) {
 			<div class="tab-pane fade" id="movimientos">
 				<div class="wmd-panel">
 					<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-					
+
 					<div class="table-responsive">		
 						<script>
 							google.charts.load('current', {'packages':['corechart']});
@@ -346,7 +347,7 @@ foreach ($arrPromedioProd as $productos) {
 						<div id="curve_chart1" style="height: 500px"></div>
 											
 					</div>
-					
+
 					<div class="table-responsive">
 						<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 							<thead>
@@ -370,8 +371,8 @@ foreach ($arrPromedioProd as $productos) {
 										</td>
 										<td><?php echo $productos['NombreBodega']; ?></td>
 										<td><?php echo Fecha_estandar($productos['Creacion_fecha']); ?></td>
-										<td><?php echo Cantidades_decimales_justos($productos['Cantidad_ing']).' '.$productos['UnidadMedida'];?></td>
-										<td><?php echo Cantidades_decimales_justos($productos['Cantidad_eg']).' '.$productos['UnidadMedida'];?></td>
+										<td><?php echo Cantidades_decimales_justos($productos['Cantidad_ing']).' '.$productos['UnidadMedida']; ?></td>
+										<td><?php echo Cantidades_decimales_justos($productos['Cantidad_eg']).' '.$productos['UnidadMedida']; ?></td>
 							
 									</tr>
 								<?php } ?>
@@ -397,7 +398,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -407,7 +408,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -416,4 +417,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

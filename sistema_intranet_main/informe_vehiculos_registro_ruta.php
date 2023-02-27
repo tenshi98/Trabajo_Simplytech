@@ -64,7 +64,6 @@ array_push( $arrRutas,$row );
 
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -99,7 +98,7 @@ array_push( $arrRutas,$row );
 									if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){?>
 									['<?php echo $pos['idTabla']; ?>', <?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>], 					
 								<?php } 
-								}?>
+								} ?>
 								];
 
 
@@ -131,13 +130,13 @@ array_push( $arrRutas,$row );
 								{
 									animateMarker(marker, [
 										<?php foreach ( $arrRutas as $pos ) { ?>
-											[<?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>], 					
+											[<?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>],
 										<?php } ?>
 									], speed);
 								})
 						
 							}
-							
+
 							/* ************************************************************************** */
 							function RutasAlternativas() {
 								
@@ -172,7 +171,7 @@ array_push( $arrRutas,$row );
 									
 									var dest = new google.maps.LatLng(
 									coords[target][0], coords[target][1]);
-									
+
 									var distance =
 									google.maps.geometry.spherical.computeDistanceBetween(
 									dest, marker.position); // in meters
@@ -181,7 +180,7 @@ array_push( $arrRutas,$row );
 									let i = 0;
 									var deltaLat = (coords[target][0] - lat) / numStep;
 									var deltaLng = (coords[target][1] - lng) / numStep;
-									
+
 									function moveMarker(){
 										lat += deltaLat;
 										lng += deltaLng;
@@ -190,7 +189,7 @@ array_push( $arrRutas,$row );
 										if (i < distance){
 											marker.setPosition(new google.maps.LatLng(lat, lng));
 											setTimeout(moveMarker, delay);
-										}else{ 
+										}else{
 											if(targetx==0){
 												marker.setPosition(dest);
 												target++;
@@ -205,14 +204,14 @@ array_push( $arrRutas,$row );
 									map.panTo(marker.getPosition());
 									//muevo el marcador
 									moveMarker();
-									
+
 								}
 								
 							}
 							/* ************************************************************************** */
 							google.maps.event.addDomListener(window, "load", initialize());
 						</script>
-			
+
 					<?php } ?>
 				</div>
 			</div>
@@ -230,14 +229,14 @@ array_push( $arrRutas,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-			
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";?>		
+$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; ?>		
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -246,7 +245,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
@@ -264,8 +263,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_select_filter('Vehiculo','idVehiculo', $x5, 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $w, '', $dbConn);
 
 				?>
-	   
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -276,12 +274,10 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 </div>
 <?php } ?>
 
-	
-
-          
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

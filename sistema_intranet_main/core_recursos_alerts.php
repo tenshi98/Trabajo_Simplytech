@@ -54,4 +54,5 @@ info_post_data(7, '<h4>Lorem ipsum dolor sit amet</h4><p>consectetur adipiscing 
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

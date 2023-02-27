@@ -39,7 +39,7 @@ $SIS_where .= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_d
 $enlace    .= "&idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 if (isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$SIS_where .= " AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
-	$enlace    .= "&idTelemetria=".$_GET['idTelemetria'];	
+	$enlace    .= "&idTelemetria=".$_GET['idTelemetria'];
 }
 
 //numero sensores equipo
@@ -167,7 +167,7 @@ foreach ($arrGrupos as $sen) {
 									<td>Grupo</td>	
 									<td colspan="2">Mediciones</td>
 								</tr>
-								
+
 								<?php
 								$arrGruposTitulo = array();
 								$n_sensores = 0;
@@ -192,7 +192,7 @@ foreach ($arrGrupos as $sen) {
 									$arrGruposTitulo[$Titulo][$i]['valor']       = $rowDatos['SensoresMedActual_'.$i];
 									$arrGruposTitulo[$Titulo][$i]['unimed']      = $unimed;
 								}
-								
+
 								//Ordenamiento por titulo de grupo
 								$names = array();
 								foreach ($arrGruposTitulo as $titulo=>$items) {
@@ -215,7 +215,7 @@ foreach ($arrGrupos as $sen) {
 									?>
 									<tr class="odd">
 										<td><?php echo $titulo ?></td>	
-										<?php foreach($items as $datos) { 
+										<?php foreach($items as $datos) {
 											if($y==1){
 												$columna_a .= $datos['Descripcion'].'<br/>';
 												//Verifico que el dato no sea 99900
@@ -235,17 +235,17 @@ foreach ($arrGrupos as $sen) {
 												$unimed_col2 = $datos['unimed'];
 												$y=1;
 											}
-										}?> 
+										} ?> 
 										
 										<td><?php echo $columna_a ?></td>
 										<td><?php echo $columna_b ?></td>	
 									</tr>
-									
+
 									<?php if($rowDatos['idOpcionesGen_3']==1){ ?>
 										<tr class="odd">
 											<td>Promedio</td>
 											<td><?php if($ntotal_col1!=0){echo Cantidades_decimales_justos($total_col1/$ntotal_col1).$unimed_col1;} ?></td>
-											<td><?php if($ntotal_col2!=0){echo Cantidades_decimales_justos($total_col2/$ntotal_col2).$unimed_col2;} ?></td>		
+											<td><?php if($ntotal_col2!=0){echo Cantidades_decimales_justos($total_col2/$ntotal_col2).$unimed_col2;} ?></td>
 										</tr>
 									<?php } ?>
 										
@@ -258,12 +258,12 @@ foreach ($arrGrupos as $sen) {
 			</div>
 
 			<div class="col-xs-12 col-sm-5 col-md-5 col-lg-5">
-				<div class="row">	
+				<div class="row">
 					<?php if ($rowDatos['Direccion_img']=='') { ?>
 						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/maquina.jpg">
 					<?php }else{  ?>
 						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="upload/<?php echo $rowDatos['Direccion_img']; ?>">
-					<?php }?>
+					<?php } ?>
 				</div>
 			</div>
 			
@@ -272,7 +272,6 @@ foreach ($arrGrupos as $sen) {
 		</div>
 	</div>
 </div>
-
 
 <script type="text/javascript">
 function initialize() {
@@ -295,7 +294,7 @@ function myTimer2() {
 } else {
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=2";	
+	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=2";
 }else{
 	//filtro
 	$z = "idTelemetria=0";
@@ -323,7 +322,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	foreach ($arrPermisos as $prod) {
 		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND id_Geo=2 AND idTelemetria={$prod['idTelemetria']})";
 	}
-	//$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=2";	
+	//$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=2";
 }	
 
 	 
@@ -369,4 +368,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

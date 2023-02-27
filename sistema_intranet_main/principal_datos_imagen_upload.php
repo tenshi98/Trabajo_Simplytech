@@ -13,7 +13,7 @@ require_once 'core/Load.Utils.Excel.php';
 
 
 if(isset($_POST["image"])){
-	
+
 	//Se obtiene la imagen
 	$img  = $_POST['image']; // Your data 'data:image/png;base64,AAAFBfj42Pj4';
 	$img  = str_replace('data:image/png;base64,', '', $img);
@@ -23,7 +23,7 @@ if(isset($_POST["image"])){
 	$idUsuario  = $_SESSION['usuario']['basic_data']['idUsuario'];
 	$imageName  = 'usr_img_'.$idUsuario.'_'.time().'.png';
 	$ruta       = "upload/".$imageName;
-	
+
 	//Se verifica que el archivo un archivo con el mismo nombre no existe
 	if (!file_exists($ruta)){
 		//Se mueve el archivo a la carpeta previamente configurada

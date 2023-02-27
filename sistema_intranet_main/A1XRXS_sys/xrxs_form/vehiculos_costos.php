@@ -75,8 +75,8 @@ require_once '0_validate_user_1.php';
 				if(isset($idTipo) && $idTipo!=''){           $SIS_data  = "'".$idTipo."'";        }else{$SIS_data  = "''";}
 				if(isset($idUsuario) && $idUsuario!=''){     $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
 				if(isset($idVehiculo) && $idVehiculo!=''){    $SIS_data .= ",'".$idVehiculo."'";   }else{$SIS_data .= ",''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
-					$SIS_data .= ",'".$Creacion_fecha."'";  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
+					$SIS_data .= ",'".$Creacion_fecha."'";
 					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'";
 				}else{

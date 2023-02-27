@@ -109,8 +109,8 @@ foreach ($arrErrores as $error) {
 				->setCellValue('E'.$nn, $error['Valor'])
 				->setCellValue('F'.$nn, DeSanitizar($unimed));
 	$nn++;
-   
-} 
+
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Resumen de Alertas');

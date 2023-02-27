@@ -73,7 +73,7 @@ $spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
 	 ->setDescription("Document for Office 2007")
 	 ->setKeywords("office 2007")
 	 ->setCategory("office 2007 result file");
-          
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Trabajador')
@@ -84,7 +84,7 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('F1', 'Predio')
             ->setCellValue('G1', 'Cuartel')
             ->setCellValue('H1', 'Estado');
-            
+
 $nn=2;
 foreach ($arrAsistencias as $con) { 
 		

@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -177,7 +177,7 @@ foreach ($arrImpuestos as $impto) {
 }
 
 ?>
-		
+
 <section class="invoice">
 
 	<div class="row">
@@ -190,7 +190,7 @@ foreach ($arrImpuestos as $impto) {
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Empresa Emisora
 			<address>
@@ -284,7 +284,7 @@ foreach ($arrImpuestos as $impto) {
 				</tbody>
 			</table>
 			<table class="table">
-				<tbody>	
+				<tbody>
 					<?php if(isset($row_data['ValorNetoImp'])&&$row_data['ValorNetoImp']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong>Neto Imponible</strong></td>
@@ -366,7 +366,7 @@ foreach ($arrImpuestos as $impto) {
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Condiciones Comerciales:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
 		</div>
 	</div>
 
@@ -377,7 +377,7 @@ foreach ($arrImpuestos as $impto) {
     <table id="items">
         <tbody>
 			<tr><th colspan="6">Archivos Adjuntos</th></tr>		  
-			<?php 
+			<?php
 			if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrArchivo as $producto){?>
@@ -390,10 +390,10 @@ foreach ($arrImpuestos as $impto) {
 							</div>
 						</td>
 					</tr>
-					 
+
 				 <?php 	
 				}
-			}?>
+			} ?>
 		</tbody>
     </table>
 </div>
@@ -416,7 +416,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -426,7 +426,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -435,4 +435,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

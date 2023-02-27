@@ -118,7 +118,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idOpciones_3) && $idOpciones_3!=''){    $SIS_data .= ",'".$idOpciones_3."'";  }else{$SIS_data .= ",''";}
 				if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
 				if(isset($Fecha) && $Fecha!=''){
-					$SIS_data .= ",'".$Fecha."'";  
+					$SIS_data .= ",'".$Fecha."'";
 					$SIS_data .= ",'".fecha2NdiaMes($Fecha)."'";
 					$SIS_data .= ",'".fecha2NMes($Fecha)."'";
 					$SIS_data .= ",'".fecha2NSemana($Fecha)."'"; 
@@ -179,7 +179,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idOpciones_2) && $idOpciones_2!=''){   $SIS_data .= ",idOpciones_2='".$idOpciones_2."'";}else{$SIS_data .= ",idOpciones_2='1'";}
 				if(isset($idOpciones_3) && $idOpciones_3!=''){   $SIS_data .= ",idOpciones_3='".$idOpciones_3."'";}else{$SIS_data .= ",idOpciones_3='1'";}
 				if(isset($idUsuario) && $idUsuario!=''){        $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($Fecha) && $Fecha!=''){  
+				if(isset($Fecha) && $Fecha!=''){
 					$SIS_data .= ",Fecha='".$Fecha."'";
 					$SIS_data .= ",Dia='".fecha2NdiaMes($Fecha)."'";
 					$SIS_data .= ",idMes='".fecha2NMes($Fecha)."'";
@@ -245,7 +245,7 @@ require_once '0_validate_user_1.php';
 				//Se buscan todos los archivos relacionados
 				$arrArchivos = array();
 				$arrArchivos = db_select_array (false, 'Nombre', 'telemetria_historial_mantencion_archivos', '', 'idMantencion = '.$indice, 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//se borran los datos
 				$resultado_1 = db_delete_data (false, 'telemetria_historial_mantencion', 'idMantencion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$resultado_2 = db_delete_data (false, 'telemetria_historial_mantencion_archivos', 'idMantencion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -448,7 +448,7 @@ require_once '0_validate_user_1.php';
 											// inserto los datos de registro en la db
 											$SIS_columns = 'idMantencion,Nombre';
 											$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_historial_mantencion_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 										}else {
 											$error['files_adj'.$i]     = 'error/Ocurrio un error al mover el archivo';
 										}
@@ -656,7 +656,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'del_firma':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 

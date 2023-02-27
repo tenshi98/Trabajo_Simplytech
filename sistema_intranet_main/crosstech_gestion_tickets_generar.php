@@ -80,6 +80,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 //Verifico el tipo de usuario que esta ingresando
 $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1';
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -128,6 +129,7 @@ $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND 
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //Verifico el tipo de usuario que esta ingresando
 $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1';
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -254,7 +256,9 @@ $arrUsers = db_select_array (false, $SIS_query, 'crosstech_gestion_tickets', $SI
 
 //Verifico el tipo de usuario que esta ingresando
 $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1';
+
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
@@ -388,7 +392,7 @@ $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND 
 							<td><?php echo n_doc($usuarios['idTicket'], 8); ?></td>
 							<td><?php echo $usuarios['Cliente']; ?></td>
 							<td>
-								<?php 
+								<?php
 								//variable con el color
 								$est_color = '';
 								switch ($usuarios['idEstado']) {
@@ -411,7 +415,7 @@ $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND 
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idTicket']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($usuarios['idTicket'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar el ticket N°'. n_doc($usuarios['idTicket'], 8).'?';?>
+										$dialogo   = '¿Realmente deseas eliminar el ticket N°'. n_doc($usuarios['idTicket'], 8).'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -429,7 +433,6 @@ $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND 
 	</div>
 </div>
 
-
 <?php } ?>
 
 <?php
@@ -437,4 +440,5 @@ $clientfil = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND 
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

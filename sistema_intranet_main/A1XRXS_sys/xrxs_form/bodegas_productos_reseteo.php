@@ -77,10 +77,10 @@ require_once '0_validate_user_1.php';
 				sistema_productos_uml.Nombre AS UnidadMedida,
 				productos_listado.ValorIngreso,
 				(SELECT SUM(Cantidad_ing) FROM bodegas_productos_facturacion_existencias WHERE idProducto = productos_listado.idProducto AND idBodega='.$idBodega.'  LIMIT 1) AS stock_entrada,
-				(SELECT SUM(Cantidad_eg) FROM bodegas_productos_facturacion_existencias WHERE idProducto = productos_listado.idProducto AND idBodega='.$idBodega.' LIMIT 1) AS stock_salida,
+				(SELECT SUM(Cantidad_eg) FROM bodegas_productos_facturacion_existencias  WHERE idProducto = productos_listado.idProducto AND idBodega='.$idBodega.' LIMIT 1) AS stock_salida,
 				(SELECT Nombre FROM bodegas_productos_listado WHERE idBodega='.$idBodega.' LIMIT 1) AS NombreBodega';
 				$SIS_join  = 'LEFT JOIN `sistema_productos_uml`  ON sistema_productos_uml.idUml = productos_listado.idUml';
-				$SIS_where = '';
+				$SIS_where = 'productos_listado.idProducto!=0';
 				$SIS_order = 'productos_listado.Nombre ASC';
 				$arrProductos = array();
 				$arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

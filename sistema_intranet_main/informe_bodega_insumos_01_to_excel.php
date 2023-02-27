@@ -24,16 +24,17 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 insumos_listado.StockLimite,
 insumos_listado.ValorIngreso,
 insumos_listado.Nombre AS NombreProd,
 sistema_productos_uml.Nombre AS UnidadMedida,
 (SELECT SUM(Cantidad_ing) FROM bodegas_insumos_facturacion_existencias WHERE idProducto = insumos_listado.idProducto AND idBodega='.$_GET['idBodega'].'  LIMIT 1) AS stock_entrada,
-(SELECT SUM(Cantidad_eg) FROM bodegas_insumos_facturacion_existencias WHERE idProducto = insumos_listado.idProducto AND idBodega='.$_GET['idBodega'].' LIMIT 1) AS stock_salida,
+(SELECT SUM(Cantidad_eg) FROM bodegas_insumos_facturacion_existencias  WHERE idProducto = insumos_listado.idProducto AND idBodega='.$_GET['idBodega'].' LIMIT 1) AS stock_salida,
 (SELECT Nombre FROM bodegas_insumos_listado WHERE idBodega='.$_GET['idBodega'].' LIMIT 1) AS NombreBodega';
 $SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml';
-$SIS_where = '';
+$SIS_where = 'insumos_listado.idProducto!=0';
 $SIS_order = 'insumos_listado.Nombre ASC';
 $arrProductos = array();
 $arrProductos = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
@@ -52,7 +53,7 @@ $spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-           
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Alertas')
@@ -62,9 +63,9 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('E1', 'Unidad de Medida')
             ->setCellValue('F1', 'V/Unitario')
             ->setCellValue('G1', 'V/Total');
-            
+
 $nn=2;
-foreach ($arrProductos as $productos) { 
+foreach ($arrProductos as $productos) {
 	$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];
 	if ($stock_actual!=0){
 		if ($productos['StockLimite']>$stock_actual){$delta = 'Stock Bajo';}else{$delta = '';}
@@ -78,10 +79,8 @@ foreach ($arrProductos as $productos) {
 					->setCellValue('F'.$nn, $productos['ValorIngreso'])
 					->setCellValue('G'.$nn, $stock_actual*$productos['ValorIngreso']);
 		$nn++;
-	}            
-} 
-
-
+	}
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle(cortar('Bodega '.DeSanitizar($arrProductos[0]['NombreBodega']), 25));

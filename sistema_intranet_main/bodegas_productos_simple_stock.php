@@ -74,6 +74,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );
 } ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<?php
 	$zz  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
@@ -107,8 +108,8 @@ array_push( $arrProductos,$row );
 					<tr class="odd <?php if ($productos['StockLimite']>$stock_actual){echo 'danger';} ?>">
 						<td><?php echo $productos['tipo_producto']; ?></td>
 						<td><?php echo $productos['NombreProd']; ?></td>
-						<td><?php echo Cantidades_decimales_justos($productos['StockLimite']); ?> <?php echo $productos['UnidadMedida'];?></td>
-						<td><?php echo Cantidades_decimales_justos($stock_actual) ?> <?php echo $productos['UnidadMedida'];?></td>
+						<td><?php echo Cantidades_decimales_justos($productos['StockLimite']); ?> <?php echo $productos['UnidadMedida']; ?></td>
+						<td><?php echo Cantidades_decimales_justos($stock_actual) ?> <?php echo $productos['UnidadMedida']; ?></td>
 					</tr>
 				<?php } } ?>         
 				</tbody>
@@ -119,8 +120,8 @@ array_push( $arrProductos,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -152,7 +153,7 @@ $SIS_join   = "";
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_where .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
-	$SIS_join  .= "INNER JOIN `usuarios_bodegas_productos` ON usuarios_bodegas_productos.idBodega = bodegas_productos_listado.idBodega";	
+	$SIS_join  .= "INNER JOIN `usuarios_bodegas_productos` ON usuarios_bodegas_productos.idBodega = bodegas_productos_listado.idBodega";
 }
 $SIS_where .= " GROUP BY bodegas_productos_listado.idBodega";
 /**********************************************************/
@@ -236,4 +237,5 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_listado', $SIS
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

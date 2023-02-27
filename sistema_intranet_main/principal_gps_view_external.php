@@ -44,7 +44,7 @@ if($CON_Server!=''&&$CON_Usuario!=''&&$CON_Base!=''){
 	//variables
 	$HoraSistema    = hora_actual();
 	$FechaSistema   = fecha_actual();
-	
+
 	//Se consultan datos
 	$SIS_query = '
 	telemetria_listado.idTelemetria,
@@ -129,7 +129,7 @@ require_once 'core/Web.Header.Views.php';
 									$tiempo1     = $data['LastUpdateHora'];
 									$tiempo2     = $HoraSistema;
 									$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
-									
+
 									//Comparaciones de tiempo
 									$Time_Tiempo     = horas2segundos($Tiempo);
 									$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
@@ -167,7 +167,7 @@ require_once 'core/Web.Header.Views.php';
 									$tiempo1     = $data['LastUpdateHora'];
 									$tiempo2     = $HoraSistema;
 									$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
-									
+
 									//Comparaciones de tiempo
 									$Time_Tiempo     = horas2segundos($Tiempo);
 									$Time_Tiempo_FL  = horas2segundos($data['TiempoFueraLinea']);
@@ -178,11 +178,11 @@ require_once 'core/Web.Header.Views.php';
 									if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 										$in_eq_fueralinea++;
 									}
-									
+
 									/**********************************************/
 									//NErrores
 									if(isset($data['NErrores'])&&$data['NErrores']>0){ $in_eq_alertas++; }
-									
+
 									/**********************************************/
 									//Si no hay errores nu fuera de linea
 									if($in_eq_fueralinea==0&&$in_eq_alertas==0){
@@ -219,12 +219,12 @@ require_once 'core/Web.Header.Views.php';
 	</div>
 </div>
 
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>
 
 

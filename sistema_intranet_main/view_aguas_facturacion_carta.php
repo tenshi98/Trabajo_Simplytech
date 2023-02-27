@@ -153,4 +153,5 @@ $fecha_mesanterior = $ano.'-'.$mes_ant.'-10';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

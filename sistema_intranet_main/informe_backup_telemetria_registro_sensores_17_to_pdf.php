@@ -47,7 +47,7 @@ $ndata_1 = db_select_nrows (false, 'idTabla', 'backup_telemetria_listado_tablare
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
-}else{	
+}else{
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo,cantSensores', 'telemetria_listado', '', 'idTelemetria='.$idTelemetria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
 
@@ -78,7 +78,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	//guardo las unidades de medida
 	$Unimed = array();
-	foreach ($arrUnimed as $sen) { 
+	foreach ($arrUnimed as $sen) {
 		$Unimed[$sen['idUniMed']] = ' '.DeSanitizar($sen['Nombre']);
 	}
 
@@ -96,35 +96,34 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	}
 
 	$html .= '
-	<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">  
+	<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">
 		<thead>';
-			$html .='	
+			$html .='
 			<tr>
 				<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;"></th>
 				<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;"></th>';
 
-				for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
+				for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 					if($arrEquipos[0]['SensoresGrupo_'.$i]==$idGrupo){
 						$html .='<th  style="font-size: 10px;text-align:center;background-color: #c3c3c3;">'.DeSanitizar($arrEquipos[0]['SensorNombre_'.$i]).'</th>';			
 					}
 				}
-			$html .='				
+			$html .='
 			</tr>
 			<tr>
 				<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Fecha</th>
 				<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Hora</th>';
-				for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) { 
+				for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 					if($arrEquipos[0]['SensoresGrupo_'.$i]==$idGrupo){
 						$html .='<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Medicion</th>';
 					}
 				}
 			$html .='</tr>';
-				
+
 		$html .='
 		</thead>
 		<tbody>';
-				
-								
+
 			foreach ($arrEquipos as $rutas) {
 				//variables
 				$y_counter = 0;
@@ -157,7 +156,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$rutas['HoraSistema'].'</td>';
 								$html .= $td_data;
 							$html .='</tr>';
-						
+
 					}
 				}else{
 					if (isset($y_counter)&&$y_counter!=0){
@@ -167,16 +166,15 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$rutas['HoraSistema'].'</td>';
 								$html .= $td_data;
 							$html .='</tr>';
-						
+
 					}
 				}
 								
 			
 			}
-								
+
 	$html .='</tbody>
 	</table>';
-	 
 
 	/**********************************************************************************************************************************/
 	/*                                                          Impresion PDF                                                         */
@@ -195,7 +193,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			/************************************************************************/
 			//TCPDF
 			case 1:
-				
+
 				require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 				// create new PDF document
@@ -254,11 +252,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					// The '@' character is used to indicate that follows an image data stream and not an image file name
 					$pdf->Image('@'.$imgdata, 15, 30, 180, 120, 'PNG', '', '', true, 150, '', false, false, 1, false, false, false);
 				}
-				
+
 				$pdf->writeHTML($html, true, false, true, false, '');
 				$pdf->lastPage();
 				$pdf->Output(DeSanitizar($pdf_file), 'I');
-		
+
 				break;
 			/************************************************************************/
 			//DomPDF (Solo compatible con PHP 5.x)

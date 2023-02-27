@@ -72,16 +72,16 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Permiso Trabajo Menor Edad');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trabajador', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Editar Permiso Trabajo Menor Edad'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<a target="_blank" rel="noopener noreferrer" href="https://www.registrocivil.cl/principal/servicios-en-linea/inhabilidades-para-trabajar-con-menores-de-edad" class="btn btn-default pull-right margin_width" ><i class="fa fa-search" aria-hidden="true"></i> Consulta Trabajo Menores Edad</a>
 	</div>
 </div>
 <div class="clearfix"></div>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -104,7 +104,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class=""><a href="<?php echo 'trabajadores_listado_antecedentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Antecedentes</a></li>
 						<li class=""><a href="<?php echo 'trabajadores_listado_carnet.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Carnet</a></li>
 						<li class="active"><a href="<?php echo 'trabajadores_listado_rhtm.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-files-o" aria-hidden="true"></i> Archivo - Permiso Trabajo Menor Edad</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -113,7 +113,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 
 				<?php if(isset($rowdata['File_RHTM'])&&$rowdata['File_RHTM']!=''){?>
-        
+
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<h3>Archivo</h3>
 						<p>Fecha de Revision: <?php echo fecha_estandar($rowdata['File_RHTM_Fecha']); ?></p>
@@ -122,11 +122,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<a href="<?php echo $new_location.'&id='.$_GET['id'].'&del_File_RHTM='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>
 					</div>
 					<div class="clearfix"></div>
-					
+
 				<?php }else{ ?>
 
 					<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
-					
+
 						<?php
 						//Se verifican si existen los datos
 						if(isset($File_RHTM_Fecha)){   $x1  = $File_RHTM_Fecha;    }else{$x1  = '';}
@@ -142,13 +142,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<div class="form-group">
 							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf093; Subir Archivo" name="submit_edit">
 						</div>
-							  
+
 					</form>
 					<?php widget_validator(); ?>
 				<?php } ?>
-				
-				
-				
+
 			</div>
 		</div>
 	</div>
@@ -156,14 +154,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

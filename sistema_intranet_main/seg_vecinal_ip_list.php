@@ -112,7 +112,7 @@ $arrIpRelacionadas = db_select_array (false, $SIS_query, 'seg_vecinal_clientes_l
 									<?php if(isset($tipo['Count'])&&$tipo['Count']!=1){ 
 										$ubicacion = $location.'&block_ip='.simpleEncode($tipo['IP_Client'], fecha_actual());
 										$ubicacion.='&Relacion='.simpleEncode('del vecino '.$tipo['Relacion'], fecha_actual());
-										$dialogo   = '¿Realmente deseas bloquear la IP '.$tipo['IP_Client'].'?';?>
+										$dialogo   = '¿Realmente deseas bloquear la IP '.$tipo['IP_Client'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Bloquear Direccion IP" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-ban" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -140,7 +140,7 @@ $arrIpRelacionadas = db_select_array (false, $SIS_query, 'seg_vecinal_clientes_l
 } else {
 //Verifico el tipo de usuario que esta ingresando
 $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1';
-	 
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -180,4 +180,5 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -58,7 +58,7 @@ LEFT JOIN `rrhh_quiz_tipo_evaluacion`    ON rrhh_quiz_tipo_evaluacion.idTipoEval
 LEFT JOIN `rrhh_quiz_tipo_quiz`          ON rrhh_quiz_tipo_quiz.idTipoQuiz                 = rrhh_quiz_listado.idTipoQuiz';
 $SIS_where = 'rrhh_quiz_listado.idQuiz ='.$X_Puntero;
 $rowdata = db_select_data (false, $SIS_query, 'rrhh_quiz_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
-	 
+
 /**************************************************/
 // Se trae un listado con todas las preguntas
 $SIS_query = '
@@ -92,7 +92,7 @@ foreach ($arrPreguntas as $preg) {
 ?>
 
 <?php if(isset($count)&&$count==0){ ?>
-		
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
 		<?php
 		$Alert_Text  = 'No tiene preguntas asignadas a la Quiz';
@@ -101,6 +101,7 @@ foreach ($arrPreguntas as $preg) {
 	</div>
 
 <?php } ?>
+
 <div class="clearfix"></div>
 
 
@@ -179,7 +180,7 @@ foreach ($arrPreguntas as $preg) {
 				<div class="table-responsive">
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
-							
+
 							<?php 
 							filtrar($arrPreguntas, 'Categoria');  
 							foreach($arrPreguntas as $categoria=>$permisos){ 
@@ -188,7 +189,7 @@ foreach ($arrPreguntas as $preg) {
 						
 									<tr class="item-row linea_punteada">
 										<td class="item-name">
-											<strong><?php echo $preg['Tipo']; ?> : </strong><?php echo $preg['Pregunta']; ?><br/>	
+											<strong><?php echo $preg['Tipo']; ?> : </strong><?php echo $preg['Pregunta']; ?><br/>
 											<?php
 											$resp_correct = 1;
 											if(isset($preg['Opcion_1'])&&$preg['Opcion_1']!=''){$tex = '';if($preg['OpcionCorrecta']==$resp_correct){$tex = ' <strong>-> correcta</strong>';};echo ' - '.$preg['Opcion_1'].$tex.'<br/>';$resp_correct++;}
@@ -230,7 +231,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -240,14 +241,14 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
-	
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

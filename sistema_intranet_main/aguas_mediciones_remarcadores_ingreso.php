@@ -103,7 +103,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Medicion borrada corre
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['modMed'])){ 
+if(!empty($_GET['modMed'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
 
@@ -136,7 +136,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos_detalle', 
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modConsumo"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modConsumo">
 					<a href="<?php echo $location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -168,7 +168,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_mediciones_datos', $SIS_joi
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php 
+				<?php
 				if(isset($Fecha)){  $x1  = $Fecha;            }else{$x1  = $rowdata['Fecha'];}
 				if(isset($Observaciones)){    $x2  = $Observaciones;    }else{$x2  = $rowdata['Observaciones'];}
 
@@ -267,7 +267,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 						<td class="meta-head">Sistema</td>
 						<td><?php echo $rowdata['Sistema']?></td>
 					</tr>
-					
+
 					<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==2){ ?>
 
 						<tr>
@@ -286,7 +286,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 							<td class="meta-head">Distribucion de diferencia</td>
 							<td><?php echo $rowdata['MedidorTipoMed']; ?></td>
 						</tr>
-					
+
 					<?php } ?>
 				</tbody>
 			</table>
@@ -298,7 +298,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td><?php echo Fecha_estandar($rowdata['Fecha']);?></td>
+						<td><?php echo Fecha_estandar($rowdata['Fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -339,14 +339,14 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 				<?php } ?>
 
 				<tr>
-					<td colspan="7" class="blank"> 
+					<td colspan="7" class="blank">
 						<p>
 							<?php 
 							if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){
 								echo $rowdata['Observaciones'];
 							}else{
 								echo 'Sin Observaciones';
-							}?>
+							} ?>
 						</p>
 					</td>
 				</tr>
@@ -366,7 +366,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['addclient'])){ 
+}elseif(!empty($_GET['addclient'])){
 //Filtro
 $SIS_where  = 'WHERE aguas_clientes_listado.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $SIS_where .= ' AND aguas_clientes_listado.idMarcadores = '.$_SESSION['rem_basicos']['idMarcadores'];
@@ -390,6 +390,7 @@ $arrClientes = db_select_array (false, $SIS_query, 'aguas_clientes_listado', $SI
 
 //se dibujan los inputs
 $Form_Inputs = new Inputs();
+
 ?>
 
 <div class="row">
@@ -402,8 +403,8 @@ $Form_Inputs = new Inputs();
 			<div class="body">
 
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-					
-					<div> 	
+
+					<div>
 						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 nopadding">
 							<?php $Form_Inputs->form_tittle(6, 'Nombre Cliente'); ?>
 						</div>
@@ -418,30 +419,30 @@ $Form_Inputs = new Inputs();
 						</div>
 						<div class="clearfix"></div>
 					</div>
-					<?php 
+					<?php
 					$NClientes = 0;
-					foreach ($arrClientes as $cli) { 
+					foreach ($arrClientes as $cli) {
 						$NClientes++;
 						?>
-						<div> 	
+						<div>
 							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 nopadding">
 								<div class="form-group">
-									<?php $Form_Inputs->input_disabled('text', 'Cliente', 'Cliente_'.$NClientes, $cli['ClienteIdentificador'].' '.$cli['ClienteNombre'], 1);?>
+									<?php $Form_Inputs->input_disabled('text', 'Cliente', 'Cliente_'.$NClientes, $cli['ClienteIdentificador'].' '.$cli['ClienteNombre'], 1); ?>
 								</div>
 							</div>
 							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 								<div class="form-group">
-									<?php $Form_Inputs->input_disabled('text', 'Medidor', 'Medidor_'.$NClientes, $cli['Medidor'], 1);?>
+									<?php $Form_Inputs->input_disabled('text', 'Medidor', 'Medidor_'.$NClientes, $cli['Medidor'], 1); ?>
 								</div>
 							</div>
 							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 								<div class="form-group">
-									<?php $Form_Inputs->input_disabled('text', 'Remarcador', 'Remarcador_'.$NClientes, $cli['Remarcador'], 1);?>
+									<?php $Form_Inputs->input_disabled('text', 'Remarcador', 'Remarcador_'.$NClientes, $cli['Remarcador'], 1); ?>
 								</div>
 							</div>
 							<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 								<div class="form-group">
-									<?php $Form_Inputs->input_number('Consumo','Consumo_'.$NClientes, 0, 2);?>
+									<?php $Form_Inputs->input_number('Consumo','Consumo_'.$NClientes, 0, 2); ?>
 								</div>
 							</div>
 							<div class="clearfix"></div>
@@ -453,19 +454,19 @@ $Form_Inputs = new Inputs();
 						$Form_Inputs->input_hidden('Cliente_'.$NClientes, $cli['ClienteIdentificador'].' '.$cli['ClienteNombre'], 2);
 						$Form_Inputs->input_hidden('Marcadores_'.$NClientes, $cli['Medidor'], 2);
 						$Form_Inputs->input_hidden('Remarcadores_'.$NClientes, $cli['Remarcador'], 2);
-						
+
 					}
 					$Form_Inputs->input_hidden('NClientes', $NClientes, 2);
 					$Form_Inputs->input_hidden('Fecha', $_SESSION['rem_basicos']['Fecha'], 2);
 					$Form_Inputs->input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					
 					?>
-					
+
 					<div class="form-group" style="margin-top:10px;">
-						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_add_client"> 
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_add_client">
 						<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 					</div>
-						  
+
 				</form>
 				<?php widget_validator(); ?>
 			</div>
@@ -473,15 +474,14 @@ $Form_Inputs = new Inputs();
 	</div>
 </div>
 <div class="clearfix"></div>
-
-<div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px; margin-top:30px">
 <a href="<?php echo $location.'&view=true'; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 <div class="clearfix"></div>
-</div>	
+</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['modBase'])){ 
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idFacturable=3"; 
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idFacturable=3";
+
 ?>
 
 		
@@ -529,18 +529,17 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
 
-		<?php 
+		<?php
 		$ubicacion = $location.'&clear_all=true';
-		$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+		$dialogo   = '¿Realmente deseas eliminar todos los registros?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger dialogBox"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
 
-		
 		<a href="<?php echo $location; ?>"  class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
-		<?php 		
+		<?php
 		$ubicacion = $location.'&view=true&ing_doc=true';
-		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?';?>
-		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
+		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?'; ?>
+		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>
 
 	</div>
 	<div class="clearfix"></div>
@@ -590,7 +589,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td><?php echo Fecha_estandar($_SESSION['rem_basicos']['Fecha']);?></td>
+						<td><?php echo Fecha_estandar($_SESSION['rem_basicos']['Fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -620,7 +619,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 								<div class="btn-group" style="width: 35px;" >
 									<?php
 									$ubicacion = $location.'&view=true&del_cliente='.$clientes['idPoint'];
-									$dialogo   = '¿Realmente deseas eliminar la medicion de '.$clientes['Cliente'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la medicion de '.$clientes['Cliente'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								</div>
 							</td>
@@ -630,14 +629,14 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				<?php } ?>
 
 				<tr>
-					<td colspan="5" class="blank"> 
+					<td colspan="5" class="blank">
 						<p>
 							<?php 
 							if(isset($_SESSION['rem_basicos']['Observaciones'])&&$_SESSION['rem_basicos']['Observaciones']!=''){
 								echo $_SESSION['rem_basicos']['Observaciones'];
 							}else{
 								echo 'Sin Observaciones';
-							}?>
+							} ?>
 						</p>
 					</td>
 				</tr>
@@ -661,7 +660,8 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro 
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idFacturable=3"; 
+$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idFacturable=3";
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -885,7 +885,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idDatos']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($tipo['idDatos'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar la medicion '.n_doc($tipo['idDatos'], 7).'?';?>
+										$dialogo   = '¿Realmente deseas eliminar la medicion '.n_doc($tipo['idDatos'], 7).'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -909,4 +909,5 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

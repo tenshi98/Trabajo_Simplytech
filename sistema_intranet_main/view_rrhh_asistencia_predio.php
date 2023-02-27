@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -55,7 +55,7 @@ $SIS_join  = '
 LEFT JOIN `trabajadores_listado`           ON trabajadores_listado.idTrabajador            = trabajadores_asistencias_predios.idTrabajador
 LEFT JOIN `cross_predios_listado_zonas`    ON cross_predios_listado_zonas.idZona           = trabajadores_asistencias_predios.idZona
 LEFT JOIN `cross_predios_listado`          ON cross_predios_listado.idPredio               = cross_predios_listado_zonas.idPredio
-LEFT JOIN `core_estado_asistencia_predio`  ON core_estado_asistencia_predio.idEstado       = trabajadores_asistencias_predios.idEstado';	
+LEFT JOIN `core_estado_asistencia_predio`  ON core_estado_asistencia_predio.idEstado       = trabajadores_asistencias_predios.idEstado';
 $rowdata = db_select_data (false, $SIS_query, 'trabajadores_asistencias_predios', $SIS_join, 'trabajadores_asistencias_predios.idAsistencia ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 /**************************************************************/
@@ -84,7 +84,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 		</header>
 		<div class="tab-content">
 			<div class="table-responsive">
-			
+
 					<?php
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
@@ -144,7 +144,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 							function initialize() {
 								
 								var myLatlng = new google.maps.LatLng(<?php echo $rowdata['PredioLatitud']; ?>, <?php echo $rowdata['PredioLongitud']; ?>);
-								
+
 								var myOptions = {
 									zoom: 15,
 									center: myLatlng,
@@ -260,7 +260,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 							function dibuja_zona() {
 								
 								var polygons = [];
-								<?php 
+								<?php
 								//variables
 								$Latitud_z       = 0;
 								$Longitud_z      = 0;
@@ -283,7 +283,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 									//Variables con la primera posicion
 									$Latitud_x = '';
 									$Longitud_x = '';
-									
+
 									foreach ($zonas as $puntos) {
 										if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
 											echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
@@ -302,7 +302,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 									if(isset($Longitud_x)&&$Longitud_x!=''){
 										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
 									}
-									
+
 									echo '];';
 									
 									echo '
@@ -324,7 +324,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 									// The label that pops up when the mouse moves within each polygon.
 									echo '
 									myLatlng = new google.maps.LatLng('.$Latitud_z_prom_2.', '.$Longitud_z_prom_2.');
-									
+
 									var marker = new MyMarker({
 										position: myLatlng,
 										label: "'.$zonas[0]['Nombre'].'"
@@ -345,7 +345,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 										});
 									});
 									';
-									
+
 									$zcounter2++;
 										
 								}
@@ -369,7 +369,6 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 	</div>
 </div>
 
-
 <?php 
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
@@ -382,7 +381,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -392,7 +391,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -401,4 +400,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -394,7 +394,7 @@ require_once '0_validate_user_1.php';
 				$arrArchivos = array();
 				$arrEventos  = db_select_array (false, 'seg_vecinal_eventos_listado_archivos.Nombre AS DATA', 'seg_vecinal_eventos_listado', 'LEFT JOIN seg_vecinal_eventos_listado_archivos ON seg_vecinal_eventos_listado_archivos.idEvento = seg_vecinal_eventos_listado.idEvento', 'seg_vecinal_eventos_listado.idCliente='.$indice, 'seg_vecinal_eventos_listado.idEvento ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$arrArchivos = db_select_array (false, 'seg_vecinal_peligros_listado_archivos.Nombre AS DATA', 'seg_vecinal_peligros_listado', 'LEFT JOIN seg_vecinal_peligros_listado_archivos ON seg_vecinal_peligros_listado_archivos.idPeligro = seg_vecinal_peligros_listado.idPeligro', 'seg_vecinal_peligros_listado.idCliente='.$indice, 'seg_vecinal_peligros_listado.idPeligro ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				/********************************************************************/
 				//se eliminan archivos
 				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){
@@ -514,7 +514,7 @@ require_once '0_validate_user_1.php';
 
 			$idCliente    = simpleDecode($_GET['id'], fecha_actual());
 			$idVerificado = simpleDecode($_GET['verificacion'], fecha_actual());
-			
+
 			/*******************************************************/
 			//se actualizan los datos
 			$SIS_data = "idVerificado='".$idVerificado."'";

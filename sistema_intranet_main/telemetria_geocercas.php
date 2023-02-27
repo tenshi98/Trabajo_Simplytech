@@ -81,7 +81,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Geocerca borrada corre
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- if(!empty($_GET['mod'])){ 
+if(!empty($_GET['mod'])){
 // consulto los datos
 $query = "SELECT Nombre
 FROM `telemetria_geocercas`
@@ -100,7 +100,7 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
-	
+
 //Se traen las rutas
 $query = "SELECT Latitud, Longitud
 FROM `telemetria_geocercas_ubicaciones`
@@ -170,7 +170,7 @@ array_push( $arrPuntos,$row );
 							/* ************************************************************************** */
 							function initialize() {
 								var myLatlng = new google.maps.LatLng(-33.4372, -70.6506);
-								
+
 								var myOptions = {
 									zoom: 18,
 									center: myLatlng,
@@ -178,7 +178,7 @@ array_push( $arrPuntos,$row );
 								};
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 								map.setTilt(0);
-								
+
 								marker = new google.maps.Marker({
 									draggable	: true,
 									position	: myLatlng,
@@ -187,12 +187,12 @@ array_push( $arrPuntos,$row );
 									animation 	:google.maps.Animation.DROP,
 									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
-							
+
 								google.maps.event.addListener(marker, 'dragend', function (event) {
 
 									document.getElementById("Latitud").value = event.latLng.lat();
 									document.getElementById("Longitud").value = event.latLng.lng();
-									
+
 									document.getElementById("Latitud_fake").value = event.latLng.lat();
 									document.getElementById("Longitud_fake").value = event.latLng.lng();
 									
@@ -247,7 +247,7 @@ array_push( $arrPuntos,$row );
 										  map.setCenter(myLatlng);
 										  map.panTo(marker.position);'; 
 
-								}?>
+								} ?>
 
 							}
 							
@@ -280,15 +280,15 @@ array_push( $arrPuntos,$row );
 						
 					
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Actualizar Punto" name="submit_edit_punto"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Actualizar Punto" name="submit_edit_punto">
 						</div>
-							  
+
 					</form>
 					<?php widget_validator(); ?>
-					
+
 				</div>
 			</div>
-			
+
 		</div>
 	</div>
 </div>
@@ -303,7 +303,7 @@ array_push( $arrPuntos,$row );
 <div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['edit_puntos'])){ 
+} elseif(!empty($_GET['edit_puntos'])){
 // consulto los datos
 $query = "SELECT Nombre
 FROM `telemetria_geocercas`
@@ -345,8 +345,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPuntos,$row );
-}?>
-
+} ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -383,7 +382,7 @@ array_push( $arrPuntos,$row );
 								};
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 								map.setTilt(0);
-								
+
 								marker = new google.maps.Marker({
 									draggable	: true,
 									position	: myLatlng,
@@ -392,12 +391,12 @@ array_push( $arrPuntos,$row );
 									animation 	:google.maps.Animation.DROP,
 									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
-							
+
 								google.maps.event.addListener(marker, 'dragend', function (event) {
 
 									document.getElementById("Latitud").value = event.latLng.lat();
 									document.getElementById("Longitud").value = event.latLng.lng();
-									
+
 									document.getElementById("Latitud_fake").value = event.latLng.lat();
 									document.getElementById("Longitud_fake").value = event.latLng.lng();
 									
@@ -414,7 +413,7 @@ array_push( $arrPuntos,$row );
 								$Latitud_x = '';
 								$Longitud_x = '';
 								?>
-								
+
 								var triangleCoords = [
 									<?php //recorrer
 									foreach ($arrPuntos as $puntos) {
@@ -427,7 +426,7 @@ array_push( $arrPuntos,$row );
 									}
 									if(isset($Longitud_x)&&$Longitud_x!=''){
 										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
-									}?>
+									} ?>
 								];
 							
 								// Construct the polygon.
@@ -445,7 +444,7 @@ array_push( $arrPuntos,$row );
 								if(isset($Latitud_x)&&$Latitud_x!=''&&isset($Longitud_x)&&$Longitud_x!=''){
 									echo 'marker.setPosition(new google.maps.LatLng('.$Latitud_x.', '.$Longitud_x.'));
 										  map.panTo(marker.position);'; 
-								}?>
+								} ?>
 
 							}
 							
@@ -477,9 +476,9 @@ array_push( $arrPuntos,$row );
 						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Punto" name="submit_punto"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Punto" name="submit_punto">
 						</div>
-							  
+
 					</form>
 					<?php widget_validator(); ?>
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -503,7 +502,7 @@ array_push( $arrPuntos,$row );
 										<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_puntos='.$_GET['edit_puntos'].'&mod='.$pos['idUbicaciones']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=2){
 											$ubicacion = $location.'&edit_puntos='.$_GET['edit_puntos'].'&del_punto='.simpleEncode($pos['idUbicaciones'], fecha_actual());
-											$dialogo   = '¿Realmente deseas eliminar el dato?';?>
+											$dialogo   = '¿Realmente deseas eliminar el dato?'; ?>
 											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 										<?php } ?>
 									</div>
@@ -516,18 +515,18 @@ array_push( $arrPuntos,$row );
 					</table>
 				</div>
 			</div>
-			
+
 		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['edit_zona'])){ 
+} elseif(!empty($_GET['edit_zona'])){
 // consulto los datos
 $query = "SELECT Nombre,idEstado
 FROM `telemetria_geocercas`
@@ -546,7 +545,9 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
+
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -563,7 +564,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);	
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_select('Estado','idEstado', $x2, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 
 				$Form_Inputs->form_input_hidden('idZona', $_GET['edit_zona'], 2);
@@ -572,18 +573,18 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 							
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_zona">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_zona">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
 			<?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -612,14 +613,14 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
 							
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_zona">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_zona">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
 			<?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 /**********************************************************/
@@ -684,7 +685,7 @@ $arrCercas = db_select_array (false, $SIS_query, 'telemetria_geocercas', $SIS_jo
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Geocerca</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Geocerca</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -751,7 +752,7 @@ $arrCercas = db_select_array (false, $SIS_query, 'telemetria_geocercas', $SIS_jo
 					<?php foreach ($arrCercas as $cerca) { ?>
 					<tr class="odd">
 						<td><?php echo $cerca['Nombre']; ?></td>
-						<td><label class="label <?php if(isset($cerca['idEstado'])&&$cerca['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $cerca['estado']; ?></label></td>	
+						<td><label class="label <?php if(isset($cerca['idEstado'])&&$cerca['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $cerca['estado']; ?></label></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $cerca['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 140px;" >
@@ -760,7 +761,7 @@ $arrCercas = db_select_array (false, $SIS_query, 'telemetria_geocercas', $SIS_jo
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_puntos='.$cerca['idZona']; ?>" title="Editar Puntos" class="btn btn-success btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($cerca['idZona'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la geocerca '.$cerca['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la geocerca '.$cerca['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -778,7 +779,6 @@ $arrCercas = db_select_array (false, $SIS_query, 'telemetria_geocercas', $SIS_jo
 	</div>
 </div>
 
-
 <?php } ?>
 
 <?php
@@ -786,4 +786,5 @@ $arrCercas = db_select_array (false, $SIS_query, 'telemetria_geocercas', $SIS_jo
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

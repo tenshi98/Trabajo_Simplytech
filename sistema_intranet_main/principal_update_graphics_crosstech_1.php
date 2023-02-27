@@ -53,7 +53,7 @@ $aa .= ',GeoLatitud';
 $aa .= ',GeoLongitud';
 $aa .= ',GeoVelocidad';
 //se recorre deacuerdo a la cantidad de sensores
-for ($i = 1; $i <= $_GET['idSensoresActual']; $i++) { 
+for ($i = 1; $i <= $_GET['idSensoresActual']; $i++) {
 	$aa .= ',Sensor_'.$i;
 }		
 /*****************************************/
@@ -70,7 +70,7 @@ LIMIT 10000";
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
 if(!$resultado){
-	
+
 	//variables
 	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
@@ -83,7 +83,6 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrMediciones,$row );
 }
 ?>
-
 
 <script>
 	
@@ -126,7 +125,7 @@ array_push( $arrMediciones,$row );
 		}
 	}
 	$data_caud_flu .= '];';
-	
+
 	/******************************************************/
 	//Caudales
 	
@@ -171,11 +170,11 @@ array_push( $arrMediciones,$row );
 	}
 	
 	$data_gauge = 'var data_correccion_x = '.str_replace(",", ".",Cantidades($correccion, 2)).';';
-	
+
 	/******************************************************/
 	//Rutas
 	$data_locations = 'var locations_x = [';
-		foreach ( $arrMediciones as $pos ) { 
+		foreach ( $arrMediciones as $pos ) {
 			if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){
 				if((isset($pos['Sensor_1'])&&$pos['Sensor_1']>0) OR (isset($pos['Sensor_2'])&&$pos['Sensor_2']>0)){
 					$data_locations .= "['".$pos['idTabla']."', ".$pos['GeoLatitud'].", ".$pos['GeoLongitud']."],";		

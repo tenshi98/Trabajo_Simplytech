@@ -120,7 +120,7 @@ array_push( $arrArchivos,$row );
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs', 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Evento', fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].' hrs', 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -150,7 +150,7 @@ array_push( $arrArchivos,$row );
 							<strong>Fecha : </strong><?php echo $rowdata['Fecha']; ?><br/>
 							<strong>Hora : </strong><?php echo $rowdata['Hora']; ?><br/>
 							<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?><br/>
-							
+
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Observacion</h2>
@@ -180,24 +180,21 @@ array_push( $arrArchivos,$row );
 								?>
 							</tbody>
 						</table>
-						
 
-						
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
 
-			
         </div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -242,12 +239,12 @@ $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 				$Form_Inputs->form_date('Fecha','Fecha', $x4, 2);
 				$Form_Inputs->form_time('Hora','Hora', $x5, 2, 2);
 				$Form_Inputs->form_ckeditor('Observacion','Observacion', $x6, 2, 2);
-					
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				?>
-					
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -307,10 +304,10 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {        $SIS_where .= " AND orden_trabajo_eventos_listado.idUsuario = '".$_GET['idUsuario']."'";}
 if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != '')  {  $SIS_where .= " AND orden_trabajo_eventos_listado.idTrabajador = '".$_GET['idTrabajador']."'";}
 if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != '')  {        $SIS_where .= " AND orden_trabajo_eventos_listado.idMaquina = '".$_GET['idMaquina']."'";}
-if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){ 
+if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){
 	$SIS_where .= " AND orden_trabajo_eventos_listado.Hora BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'";
 }
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){
 	$SIS_where .= " AND orden_trabajo_eventos_listado.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
 /**********************************************************/
@@ -471,7 +468,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'orden_trabajo_eventos_listado', 
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idEvento']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($tipo['idEvento'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar el evento?';?>
+										$dialogo   = '¿Realmente deseas eliminar el evento?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -489,11 +486,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'orden_trabajo_eventos_listado', 
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

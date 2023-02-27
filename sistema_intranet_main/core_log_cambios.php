@@ -105,9 +105,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 	</div>
 </div>
 
-
-
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){?>
 
@@ -166,6 +163,7 @@ $arrLOG = db_select_array (false, $SIS_query, 'core_log_cambios', $SIS_join, '',
 
 //variable de busqueda
 $search='';
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -191,7 +189,7 @@ $search='';
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
-								  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrLOG as $logs) { ?>
 					<tr class="odd">
@@ -199,9 +197,9 @@ $search='';
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<a href="<?php echo $location.'&id='.$logs['idLog']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $location.'&del='.simpleEncode($logs['idLog'], fecha_actual());
-								$dialogo   = '¿Realmente deseas eliminar el registro '.$logs['Descripcion'].'?';?>
+								$dialogo   = '¿Realmente deseas eliminar el registro '.$logs['Descripcion'].'?'; ?>
 								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
@@ -223,4 +221,5 @@ $search='';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

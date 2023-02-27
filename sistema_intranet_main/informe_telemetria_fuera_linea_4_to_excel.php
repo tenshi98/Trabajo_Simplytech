@@ -28,7 +28,7 @@ $SIS_where  = "telemetria_listado_error_fuera_linea.idFueraLinea>0";
 $SIS_where .= " AND telemetria_listado.id_Geo='1'";
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$SIS_where .= " AND telemetria_listado.idTab=1";//CrossChecking				
+	$SIS_where .= " AND telemetria_listado.idTab=1";//CrossChecking	
 }
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
@@ -91,10 +91,8 @@ foreach ($arrErrores as $error) {
 				->setCellValue('E'.$nn, $error['Hora_termino'])
 				->setCellValue('F'.$nn, $error['Tiempo']);
 	$nn++;
-   
-} 
 
-
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Resumen de Fuera de Linea');

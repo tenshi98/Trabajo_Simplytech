@@ -93,9 +93,9 @@ $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.
 /**********************************************************/
 $SIS_where_1 = "telemetria_listado_errores.idSistema=".$_GET['idSistema'];
 $SIS_where_2 = "telemetria_listado_errores.idSistema=".$_GET['idSistema'];
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''&&isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){ 
+if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino'] != ''&&isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){
 	$SIS_where_1.=" AND telemetria_listado_errores.TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."'";
-}elseif(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){ 
+}elseif(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){
 	$SIS_where_1.=" AND telemetria_listado_errores.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){  
@@ -121,7 +121,7 @@ MAX(telemetria_listado_errores.Valor) AS Valor_max';
 $SIS_join  = '
 LEFT JOIN telemetria_listado               ON telemetria_listado.idTelemetria             = telemetria_listado_errores.idTelemetria
 LEFT JOIN telemetria_listado_unidad_medida ON telemetria_listado_unidad_medida.idUniMed   = telemetria_listado_errores.idUniMed';
-$SIS_order = 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Descripcion ASC, telemetria_listado_errores.Fecha ASC';	
+$SIS_order = 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Descripcion ASC, telemetria_listado_errores.Fecha ASC';
 $arrEquipos1 = array();
 $arrEquipos1 = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where_1, $SIS_order, $dbConn, 'arrEquipos1', basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos1');
 
@@ -232,7 +232,7 @@ $nn=2;
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(1)
             ->setCellValue('A'.$nn, 'Equipo');
-            
+
 $spreadsheet->setActiveSheetIndex(1)
 				->setCellValue('B'.$nn, 'Total Registros');
 			
@@ -265,7 +265,7 @@ foreach($arrEquipos2 as $equipo=>$dias){
 		$DiaActual[$i]['fecha'] = $nuevoDia;
 		$DiaActual[$i]['valor'] = 0;
 	}
-	
+
 	//Variables
 	$TotalErrores = 0;
 	//recorro los dias
@@ -278,7 +278,7 @@ foreach($arrEquipos2 as $equipo=>$dias){
 			}
 		}
 	}
-	
+
 	//Nombre del equipo
 	$spreadsheet->setActiveSheetIndex(1)
 				->setCellValue('A'.$nn, $equipo);

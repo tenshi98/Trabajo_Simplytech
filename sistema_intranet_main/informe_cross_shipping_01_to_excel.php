@@ -60,7 +60,7 @@ if(isset($_GET['Observaciones'])&&$_GET['Observaciones']!=''){          $SIS_whe
 if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){                  $SIS_where .=" AND cross_shipping_consolidacion.idSistema=".$_GET['idSistema'];}
 if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){                    $SIS_where .=" AND cross_shipping_consolidacion.idEstado=".$_GET['idEstado'];}
 
-if(isset($_GET['Creacion_fechaDesde']) && $_GET['Creacion_fechaDesde'] != ''&&isset($_GET['Creacion_fechaHasta']) && $_GET['Creacion_fechaHasta']!=''){ 
+if(isset($_GET['Creacion_fechaDesde']) && $_GET['Creacion_fechaDesde'] != ''&&isset($_GET['Creacion_fechaHasta']) && $_GET['Creacion_fechaHasta']!=''){
 	$SIS_where .= " AND cross_shipping_consolidacion.Creacion_fecha BETWEEN '".$_GET['Creacion_fechaDesde']."' AND '".$_GET['Creacion_fechaHasta']."'";
 }
 

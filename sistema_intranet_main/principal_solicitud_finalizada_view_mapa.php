@@ -36,7 +36,7 @@ WHERE cross_solicitud_aplicacion_listado_tractores.idTelemetria = ".simpleDecode
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
 if(!$resultado){
-	
+
 	//variables
 	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
 	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
@@ -91,7 +91,7 @@ $aa .= ',GeoLatitud';
 $aa .= ',GeoLongitud';
 $aa .= ',GeoVelocidad';
 //se recorre deacuerdo a la cantidad de sensores
-for ($i = 1; $i <= 4; $i++) { 
+for ($i = 1; $i <= 4; $i++) {
 	$aa .= ',Sensor_'.$i;
 }
 $arrMediciones = array();
@@ -176,9 +176,9 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 					.my_marker {color: white;background-color: black;border: solid 1px black;font-weight: 900;padding: 4px;top: -8px;}
 					.my_marker::after {content: "";position: absolute;top: 100%;left: 50%;transform: translate(-50%, 0%);border: solid 8px transparent;border-top-color: black;}
 				</style>
-			
+
 				<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=visualization"></script>
-			
+
 				<div id="map_canvas_y" style="width: 100%; height: 550px;"></div>
 				<br/><br/>
 				<div id="map_canvas_z" style="width: 100%; height: 550px;"></div>
@@ -265,7 +265,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 								
 						var polygons1 = [];
 						var polygons2 = [];
-						<?php 
+						<?php
 						//variables
 						$Latitud_z        = 0;
 						$Longitud_z       = 0;
@@ -367,7 +367,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 							});
 							';
 												
-							$zcounter2++;		
+							$zcounter2++;
 						}
 								
 						//Centralizado del mapa
@@ -473,7 +473,6 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 	</div>
 </div>
 
-
 <?php if(isset($_GET['return'])&&$_GET['return']!=''){?>
 	<div class="clearfix"></div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
@@ -487,4 +486,5 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

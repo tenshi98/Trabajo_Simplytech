@@ -40,7 +40,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Bodega borrada correct
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- if(!empty($_GET['view'])){ 	
+if(!empty($_GET['view'])){
 // Se trae un listado con todos los elementos
 $arrProductos = array();
 $query = "SELECT 
@@ -78,8 +78,9 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );
-} 
+}
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<?php
 	$zz  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
@@ -91,12 +92,11 @@ array_push( $arrProductos,$row );
 	<a target="new" href="<?php echo 'bodegas_insumos_stock_view_to_print.php?bla=bla'.$zz ; ?>" class="btn btn-sm btn-metis-5 pull-right margin_width"><i class="fa fa-print" aria-hidden="true"></i> Imprimir</a>
 </div>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Listado de Movimientos de <?php echo $arrProductos[0]['NombreProducto'];?> de la bodega <?php echo $arrProductos[0]['NombreBodega']; ?></h5>
+			<h5>Listado de Movimientos de <?php echo $arrProductos[0]['NombreProducto']; ?> de la bodega <?php echo $arrProductos[0]['NombreBodega']; ?></h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -118,8 +118,8 @@ array_push( $arrProductos,$row );
 							<?php echo $productos['TipoMovimiento']; ?>
 						</td>
 						<td><?php echo Fecha_estandar($productos['Creacion_fecha']); ?></td>
-						<td><?php echo Cantidades_decimales_justos($productos['Cantidad_ing']).' '.$productos['UnidadMedida'];?></td>
-						<td><?php echo Cantidades_decimales_justos($productos['Cantidad_eg']).' '.$productos['UnidadMedida'];?></td>
+						<td><?php echo Cantidades_decimales_justos($productos['Cantidad_ing']).' '.$productos['UnidadMedida']; ?></td>
+						<td><?php echo Cantidades_decimales_justos($productos['Cantidad_eg']).' '.$productos['UnidadMedida']; ?></td>
 					</tr>
 					<?php } ?>
 				</tbody>
@@ -137,7 +137,7 @@ array_push( $arrProductos,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['idBodega'])){ 
+} elseif(!empty($_GET['idBodega'])){ 
 
              
   
@@ -176,8 +176,9 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );
-} 
+}
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<?php
 	$zz  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
@@ -206,11 +207,11 @@ array_push( $arrProductos,$row );
 							  
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrProductos as $productos) { ?>
-					<?php $stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];?>
+					<?php $stock_actual = $productos['stock_entrada'] - $productos['stock_salida']; ?>
 					<tr class="odd <?php if ($productos['StockLimite']>$stock_actual){echo 'danger';} ?>">
 						<td><?php echo $productos['NombreProd']; ?></td>
-						<td><?php echo Cantidades_decimales_justos($productos['StockLimite']).' '.$productos['UnidadMedida'];?></td>
-						<td><?php echo Cantidades_decimales_justos($stock_actual).' '.$productos['UnidadMedida'];?></td>
+						<td><?php echo Cantidades_decimales_justos($productos['StockLimite']).' '.$productos['UnidadMedida']; ?></td>
+						<td><?php echo Cantidades_decimales_justos($stock_actual).' '.$productos['UnidadMedida']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
 								<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&idBodega='.$_GET['idBodega'].'&view='.$productos['idProducto']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
@@ -226,8 +227,8 @@ array_push( $arrProductos,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -259,7 +260,7 @@ $SIS_join  = "";
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_where.= " AND usuarios_bodegas_insumos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
-	$SIS_join .= "INNER JOIN `usuarios_bodegas_insumos` ON usuarios_bodegas_insumos.idBodega = bodegas_insumos_listado.idBodega";	
+	$SIS_join .= "INNER JOIN `usuarios_bodegas_insumos` ON usuarios_bodegas_insumos.idBodega = bodegas_insumos_listado.idBodega";
 }
 $SIS_where.= " GROUP BY bodegas_insumos_listado.idBodega";
 
@@ -344,4 +345,5 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_listado', $SIS_j
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

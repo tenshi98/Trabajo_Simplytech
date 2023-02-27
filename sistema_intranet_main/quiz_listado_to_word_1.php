@@ -127,8 +127,8 @@ if(isset($rowdata['idLimiteTiempo'])&&$rowdata['idLimiteTiempo']==1){
 /**********************************************************/
 //Contenido de la evaluacion
 $Contenido = '';
-filtrar($arrPreguntas, 'Categoria');  
-foreach($arrPreguntas as $categoria=>$permisos){ 
+filtrar($arrPreguntas, 'Categoria');
+foreach($arrPreguntas as $categoria=>$permisos){
 	$Contenido .= $categoria.'
 	';
 	foreach ($permisos as $preg) { 
@@ -192,7 +192,7 @@ foreach($arrPreguntas as $categoria=>$permisos){
 	</head>
 
 	<body>
-		
+
 	</body>
 </html>
 

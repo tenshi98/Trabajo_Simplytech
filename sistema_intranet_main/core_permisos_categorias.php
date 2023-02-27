@@ -112,9 +112,6 @@ select {
 	</div>
 </div>
 
-
-
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){?>
 <style>
@@ -186,6 +183,7 @@ $arrCatpem = db_select_array (false, $SIS_query, 'core_permisos_categorias', $SI
 
 //variable de busqueda
 $search='';
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -213,19 +211,19 @@ $search='';
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
-								  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrCatpem as $catpem) { ?>
 					<tr class="odd">
-						<td><i class="<?php echo $catpem['Codigo']; ?>" style="<?php if(isset($catpem['IconColor'])&&$catpem['IconColor']!=''){echo 'color: '.$catpem['IconColor'].';';}?>"></i></td>
+						<td><i class="<?php echo $catpem['Codigo']; ?>" style="<?php if(isset($catpem['IconColor'])&&$catpem['IconColor']!=''){echo 'color: '.$catpem['IconColor'].';';} ?>"></i></td>
 						<td><?php echo $catpem['Cuenta']; ?></td>
 						<td><?php echo $catpem['Nombre']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<a href="<?php echo $location.'&id='.$catpem['id_pmcat']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $location.'&del='.simpleEncode($catpem['id_pmcat'], fecha_actual());
-								$dialogo   = '¿Realmente deseas eliminar el registro '.$catpem['Nombre'].'?';?>
+								$dialogo   = '¿Realmente deseas eliminar el registro '.$catpem['Nombre'].'?'; ?>
 								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
@@ -247,4 +245,5 @@ $search='';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

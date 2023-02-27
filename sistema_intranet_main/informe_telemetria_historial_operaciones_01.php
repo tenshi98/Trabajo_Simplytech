@@ -41,11 +41,11 @@ if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_has
 	$SIS_where.=" AND (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['fecha_desde']." ".$_GET['h_inicio']."' AND '".$_GET['fecha_hasta']." ".$_GET['h_termino']."')";
 }elseif(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
 	$SIS_where.=" AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
-} 
+}
 
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
-			
+
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
@@ -255,7 +255,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								<section id="line"></section>
 								<section id="hook">?</section>
 							</div>
-							
+
 							<div id="control-center">
 								<section id="body"></section>
 								<section id="cabin">
@@ -349,8 +349,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						</div>
 					</div>
 				</div>
-				
-				
+
 				<div class="clearfix"></div>
 			</div>
 		</div>
@@ -416,7 +415,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		}else{
 			document.getElementById('elevacion_up').style.backgroundColor  = '#ffffff';
 		}
-		
+
 		//Elevacion abajo
 		if (typeof $(this).data('sensor_10') !== 'undefined') {
 			document.getElementById('elevacion_down').style.backgroundColor  = '#5cb85c';
@@ -462,7 +461,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	 
 <?php } ?>
 
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -476,14 +474,15 @@ $w .= " AND telemetria_listado.id_Geo=2";                                       
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
-} 
+}
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$w .= " AND telemetria_listado.idTab=6";//CrossCrane	
+	$w .= " AND telemetria_listado.idTab=6";//CrossCrane
 }
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 alert_post_data(2,1,1, $Alert_Text);
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -510,12 +509,12 @@ alert_post_data(2,1,1, $Alert_Text);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo Medicion','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				}
-				
+
 				$Form_Inputs->form_date('Fecha Desde','fecha_desde', $x2, 2);
 				$Form_Inputs->form_time('Hora Desde','h_inicio', $x3, 1, 1);
 				$Form_Inputs->form_date('Fecha Hasta','fecha_hasta', $x4, 2);
 				$Form_Inputs->form_time('Hora Hasta','h_termino', $x5, 1, 1);
-						
+
 				?>
 
 				<div class="form-group">
@@ -533,4 +532,5 @@ alert_post_data(2,1,1, $Alert_Text);
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

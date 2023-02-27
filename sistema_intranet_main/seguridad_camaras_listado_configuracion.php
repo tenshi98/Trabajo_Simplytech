@@ -99,7 +99,9 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
+
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -144,14 +146,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 							
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_camara">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_camara">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
 			<?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
@@ -220,14 +222,14 @@ $rowConfig = mysqli_fetch_assoc ($resultado);
 
 							
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_zona">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_zona">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
 			<?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {	 
 // consulto los datos
@@ -292,7 +294,7 @@ foreach ($arrCamaras as $zona) {
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Grupo Camaras', $rowdata['Nombre'], 'Editar Camaras');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Grupo Camaras', $rowdata['Nombre'], 'Editar Camaras'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<?php if ($rowlevel['level']>=3&&$rowdata['N_Camaras']>$total_cam){?><a href="<?php echo $new_location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Camara</a><?php } ?>
 	</div>
@@ -334,14 +336,14 @@ foreach ($arrCamaras as $zona) {
 								<td><?php echo $zona['Config_IP']; ?></td>
 							<?php } ?>
 							<td><?php echo $zona['Chanel']; ?></td>
-							<td><label class="label <?php if(isset($zona['idEstado'])&&$zona['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $zona['estado']; ?></label></td>	
+							<td><label class="label <?php if(isset($zona['idEstado'])&&$zona['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $zona['estado']; ?></label></td>	
 							<td>
 								<div class="btn-group" style="width: 70px;" >
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&edit_camara='.$zona['idCanal']; ?>" title="Editar Informacion Basica" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										//se verifica que el usuario no sea uno mismo
 										$ubicacion = $new_location.'&idCamara='.$zona['idCamara'].'&del_camara='.simpleEncode($zona['idCanal'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar la camara '.$zona['Nombre'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar la camara '.$zona['Nombre'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -358,8 +360,8 @@ foreach ($arrCamaras as $zona) {
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 <?php } ?>
 
@@ -368,4 +370,5 @@ foreach ($arrCamaras as $zona) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

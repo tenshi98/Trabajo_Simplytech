@@ -22,7 +22,7 @@ if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){      $idSistema     = $_G
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''){  $fecha_desde   = $_GET['fecha_desde'];   }elseif(isset($_POST['fecha_desde'])&&$_POST['fecha_desde']!=''){   $fecha_desde   = $_POST['fecha_desde'];}
 if(isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){  $fecha_hasta   = $_GET['fecha_hasta'];   }elseif(isset($_POST['fecha_hasta'])&&$_POST['fecha_hasta']!=''){   $fecha_hasta   = $_POST['fecha_hasta'];}
 //Seleccionar la tabla
-if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ 
+if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$x_table = 'telemetria_listado_aux_equipo';
 	$idTelemetria   = $_GET['idTelemetria'];
 }else{
@@ -79,12 +79,12 @@ foreach ($arrMediciones as $med) {
 		if((isset($arrMed[$counter]['Fecha'])&&$arrMed[$counter]['Fecha']!=$med['Fecha']) OR $counter==0){
 			$counter++;
 		}
-		
+
 		//creo las variables si estas no existen
 		if(!isset($arrMed[$counter]['Tiempo_Helada'])){  $arrMed[$counter]['Tiempo_Helada']  = 0;}
 		if(!isset($arrMed[$counter]['Temp_Min'])){       $arrMed[$counter]['Temp_Min']       = 1000;}
 		if(!isset($arrMed[$counter]['Temp_Max'])){       $arrMed[$counter]['Temp_Max']       = -1000;}
-		
+
 		//Guardo los datos
 		$arrMed[$counter]['Fecha']        = $med['Fecha'];
 		$arrMed[$counter]['UnidadesFrio'] = $med['UnidadesFrio'];
@@ -158,7 +158,7 @@ $html .= '
 			$diaAcum=$med['DiasAcum']-$diasAcum;
 			$diasAcum=$med['DiasAcum'];
 		}	
-		$html .='	
+		$html .='
 			<tr>
 				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.numero_a_mes(fecha2NMes($med['Fecha'])).'</td>
 				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.fecha2NdiaMes($med['Fecha']).'</td>
@@ -202,7 +202,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 		/************************************************************************/
 		//TCPDF
 		case 1:
-			
+
 			require_once('../LIBS_php/tcpdf/tcpdf.php');
 
 			// create new PDF document
@@ -265,7 +265,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output(DeSanitizar($pdf_file), 'I');
-	
+
 			break;
 		/************************************************************************/
 		//DomPDF (Solo compatible con PHP 5.x)

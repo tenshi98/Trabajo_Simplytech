@@ -153,7 +153,7 @@ if (!empty($_GET['backup'])){
 		die;
     
 	}
-	
+
 	/************************************************************************************/
 	$para = array(
 		'db_host'=> DB_SERVER,  //mysql host
@@ -184,7 +184,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['id'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 2, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 2, $dbConn); ?>
 
 
 
@@ -312,4 +312,5 @@ $arrBackup = db_select_array (false, $SIS_query, 'mantencion_backup', $SIS_join,
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

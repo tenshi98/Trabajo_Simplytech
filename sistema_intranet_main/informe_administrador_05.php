@@ -78,4 +78,5 @@ echo widget_Resumen_equipo('Ultimas Mediciones del equipo', 2, 0, $arreglo[2], 1
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

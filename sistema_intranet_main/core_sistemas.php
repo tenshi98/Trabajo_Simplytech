@@ -123,11 +123,11 @@ $SIS_where = 'core_sistemas.idSistema ='.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sistema', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -150,7 +150,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 						<li class=""><a href="<?php echo 'core_sistemas_crosstech.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >CrossTech</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_crossenergy.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >CrossEnergy</a></li>
 						<li class=""><a href="<?php echo 'core_sistemas_datos_social.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -189,7 +189,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								<strong>Fecha inicio Contrato : </strong><?php echo $rowdata['Contrato_Fecha']; ?><br/>
 								<strong>Duracion Contrato(Meses) : </strong><?php echo $rowdata['Contrato_Duracion']; ?>
 							</p>
-								
+
 							<h2 class="text-primary">Configuracion</h2>
 							<h3 class="text-muted" style="font-size: 16px!important;color: #337ab7;">Visualizacion General</h3>
 							<p class="text-muted word_break">
@@ -197,7 +197,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								<strong>Mostrar Repositorio Comun : </strong><?php echo $rowdata['OpcionesGen_9']; ?><br/>
 								<strong>Gestor de Correo : </strong><?php echo $rowdata['OpcionesGen_8']; ?><br/>
 							</p>
-									
+
 							<h3 class="text-muted" style="font-size: 16px!important;color: #337ab7;">Visualizacion Pagina Inicio</h3>
 							<p class="text-muted word_break">
 								<strong>Interfaz : </strong><?php echo $rowdata['OpcionesGen_7']; ?><br/>
@@ -208,7 +208,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								<strong>Valores promedios de las mediciones : </strong><?php echo $rowdata['OpcionesGen_3']; ?><br/>
 								<strong>Nuevo Widget CrossC : </strong><?php echo $rowdata['OpcionesGen_10']; ?><br/>
 							</p>
-									
+
 							<h3 class="text-muted" style="font-size: 16px!important;color: #337ab7;">Configuracion Sistema</h3>
 							<p class="text-muted word_break">
 								<strong>Memoria Ram Maxima : </strong><?php if(isset($rowdata['ConfigRam'])&&$rowdata['ConfigRam']!=0){echo $rowdata['ConfigRam'].' MB';}else{ echo '4096 MB';} ?><br/>
@@ -221,7 +221,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								<strong>Whatsapp Token : </strong><?php echo $rowdata['Config_WhatsappToken']; ?><br/>
 								<strong>Whatsapp Instance Id : </strong><?php echo $rowdata['Config_WhatsappInstanceId']; ?><br/>
 							</p>
-									
+
 							<h2 class="text-primary">APIS</h2>
 							<p class="text-muted word_break">
 								<strong>ID Google (Mapas) : </strong><?php echo $rowdata['Config_IDGoogle']; ?><br/>
@@ -229,13 +229,13 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								<strong>ApiKey (Firebase) : </strong><?php echo $rowdata['Config_FCM_apiKey']; ?><br/>
 								<strong>Main ApiKey (Firebase) : </strong><?php echo $rowdata['Config_FCM_Main_apiKey']; ?><br/>
 							</p>
-									
+
 							<h2 class="text-primary">Bodegas OT</h2>
 							<p class="text-muted word_break">
 								<strong>Bodega Productos : </strong><?php echo $rowdata['BodegaProd']; ?><br/>
 								<strong>Bodega Insumos : </strong><?php echo $rowdata['BodegaIns']; ?><br/>
 							</p>
-									
+
 							<h2 class="text-primary">Social</h2>
 							<p class="text-muted word_break">
 								<strong>Uso de widget Sociales : </strong><?php echo $rowdata['SocialUso']; ?><br/>
@@ -254,7 +254,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
-						<?php 
+						<?php
 							//se arma la direccion
 							$direccion = "";
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
@@ -271,7 +271,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 					</div>
 				</div>
 				<div class="clearfix"></div>
-				
+
 			</div>
         </div>
 	</div>
@@ -279,8 +279,8 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -370,6 +370,7 @@ $arrSistemas = db_select_array (false, $SIS_query, 'core_sistemas',$SIS_join, $S
 /**********************************************************/
 //paginacion
 $search='';
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -403,14 +404,14 @@ $search='';
 					<tr class="odd">
 						<td><?php echo $tipo['Nombre']; ?></td>
 						<td><?php echo $tipo['Rut']; ?></td>
-						<td><label class="label <?php if(isset($tipo['idEstado'])&&$tipo['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $tipo['estado']; ?></label></td>	
+						<td><label class="label <?php if(isset($tipo['idEstado'])&&$tipo['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $tipo['estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
 								<a href="<?php echo 'view_sistema.php?view='.simpleEncode($tipo['idSistema'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&id='.$tipo['idSistema']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $location.'&del='.simpleEncode($tipo['idSistema'], fecha_actual());
-								$dialogo   = '¿Realmente deseas eliminar el sistema '.$tipo['Nombre'].'?';?>
+								$dialogo   = '¿Realmente deseas eliminar el sistema '.$tipo['Nombre'].'?'; ?>
 								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
@@ -427,7 +428,6 @@ $search='';
 	</div>
 </div>
 
-
 <?php } ?>
 
 <?php
@@ -435,4 +435,5 @@ $search='';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

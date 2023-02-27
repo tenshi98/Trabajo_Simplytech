@@ -39,7 +39,7 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idTrabajo']))           $idTrabajo            = $_POST['idTrabajo'];
 
 	if (!empty($_POST['lvl']))                 $lvl                  = $_POST['lvl'];
-	
+
 	//formulariopara el itemizado
 	//Traspaso de valores input a variables
 	$idLevel = array();
@@ -343,7 +343,7 @@ require_once '0_validate_user_1.php';
 				for ($i = 1; $i <= $nmax; $i++) {
 					$resultado = db_delete_data (false, 'licitacion_listado_level_'.$i, 'idLicitacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
-					
+
 				//redirijo
 				header( 'Location: '.$location.'&deleted=true' );
 				die;
@@ -387,7 +387,7 @@ require_once '0_validate_user_1.php';
 				if(isset($ValorTotal) && $ValorTotal!=''){              $SIS_data .= ",'".$ValorTotal."'";        }else{$SIS_data .= ",''";}
 				if(isset($TiempoProgramado) && $TiempoProgramado!=''){  $SIS_data .= ",'".$TiempoProgramado."'";  }else{$SIS_data .= ",''";}
 				if(isset($idTrabajo) && $idTrabajo!=''){                $SIS_data .= ",'".$idTrabajo."'";         }else{$SIS_data .= ",''";}
-				
+
 				$xbla = '';
 				for ($i = 2; $i <= $lvl; $i++) {
 					//Ubico correctamente el puntero
@@ -570,7 +570,7 @@ require_once '0_validate_user_1.php';
 
 					}
 				}
-					
+
 				//redirijo
 				header( 'Location: '.$location.'&deleted=true' );
 				die;
@@ -588,7 +588,7 @@ require_once '0_validate_user_1.php';
 
 			$idLicitacion  = $_GET['id'];
 			$idEstado      = simpleDecode($_GET['estado'], fecha_actual());
-			
+
 			/*****************************************************/
 			// Se traen todos los datos de la licitacion
 			$rowdata = db_select_data (false, 'idEstado', 'licitacion_listado', '', 'idLicitacion = '.$idLicitacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

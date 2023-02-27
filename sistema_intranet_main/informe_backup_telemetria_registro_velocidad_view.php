@@ -36,7 +36,7 @@ $rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_tablare
 			<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>
 		</header>
         <div class="table-responsive">
-			<?php 
+			<?php
 			$explanation  = '<strong>'.fecha_estandar($rowdata['FechaSistema']).' - '.$rowdata['HoraSistema'].'</strong><br/>';
 			$explanation .= '<strong>Equipo: </strong>'.$rowdata['NombreEquipo'].'<br/>';
 			$explanation .= '<strong>Velocidad: </strong>'.Cantidades($rowdata['GeoVelocidad'], 0).'/'.Cantidades($rowdata['LimiteVelocidad'], 0).' KM/h<br/>';
@@ -46,12 +46,10 @@ $rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_tablare
 	</div>
 </div>
 
-
-
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

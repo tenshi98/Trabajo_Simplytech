@@ -40,7 +40,7 @@ if (isset($_GET['idTipoMuestra']) && $_GET['idTipoMuestra']!=''){
 	$z .=" AND aguas_analisis_aguas.idTipoMuestra='".$_GET['idTipoMuestra']."'";
 	$n .="&idTipoMuestra=".$_GET['idTipoMuestra'];
 }
-if (isset($_GET['idParametros']) && $_GET['idParametros']!=''){ 
+if (isset($_GET['idParametros']) && $_GET['idParametros']!=''){
 	$z .=" AND aguas_analisis_aguas.idParametros='".$_GET['idParametros']."'";
 	$n .="&idParametros=".$_GET['idParametros'];
 }
@@ -53,11 +53,11 @@ if (isset($_GET['idLaboratorio']) && $_GET['idLaboratorio']!=''){
 	$n .="&idLaboratorio=".$_GET['idLaboratorio'];
 }
 
-if(isset($_GET['f_muestra_inicio']) && $_GET['f_muestra_inicio'] != ''&&isset($_GET['f_muestra_termino']) && $_GET['f_muestra_termino']!=''){ 
+if(isset($_GET['f_muestra_inicio']) && $_GET['f_muestra_inicio'] != ''&&isset($_GET['f_muestra_termino']) && $_GET['f_muestra_termino']!=''){
 	$z .= " AND aguas_analisis_aguas.f_muestra BETWEEN '".$_GET['f_muestra_inicio']."' AND '".$_GET['f_muestra_termino']."'";
 	$n .="&f_muestra_inicio=".$_GET['f_muestra_inicio']."&f_muestra_termino=".$_GET['f_muestra_termino'];
 }
-if(isset($_GET['f_recibida_inicio']) && $_GET['f_recibida_inicio'] != ''&&isset($_GET['f_recibida_termino']) && $_GET['f_recibida_termino']!=''){ 
+if(isset($_GET['f_recibida_inicio']) && $_GET['f_recibida_inicio'] != ''&&isset($_GET['f_recibida_termino']) && $_GET['f_recibida_termino']!=''){
 	$z .= " AND aguas_analisis_aguas.f_recibida BETWEEN '".$_GET['f_recibida_inicio']."' AND '".$_GET['f_recibida_termino']."'";
 	$n .="&f_recibida_inicio=".$_GET['f_recibida_inicio']."&f_recibida_termino=".$_GET['f_recibida_termino'];
 }
@@ -118,7 +118,6 @@ array_push( $arrProductos,$row );
 	<a target="new" href="<?php echo 'informe_aguas_sis_PR14001_to_xml.php?bla=bla'.$n ; ?>" class="btn btn-sm btn-warning pull-right margin_width"><i class="fa fa-file-code-o" aria-hidden="true"></i> Exportar a XML</a>
 </div>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -153,7 +152,7 @@ array_push( $arrProductos,$row );
 							  
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrProductos as $productos) { ?>
-					
+
 						<tr class="odd">
 							<td><?php echo $productos['Identificador']; ?></td>
 							<td><?php echo $productos['codigoProceso']; ?></td>
@@ -187,15 +186,17 @@ array_push( $arrProductos,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -232,7 +233,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_filter('Laboratorio','idLaboratorio', $x10, 1, 'idLaboratorio', 'Nombre', 'aguas_analisis_laboratorios', $z, 0, $dbConn);
 
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -248,4 +249,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

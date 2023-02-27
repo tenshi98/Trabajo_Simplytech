@@ -601,13 +601,13 @@ require_once '0_validate_user_1.php';
 					$valor++;
 				}
 			}
-			
+
 			/*********************************************/
 			//Se verifica el minimo de trabajos
 			if(isset($valor)&&$valor==0){
 				$error['trabajos'] = 'error/No se ha asignado nada a solicitar';
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -615,8 +615,8 @@ require_once '0_validate_user_1.php';
 				//Se guardan los datos basicos
 				if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema']!=''){      $SIS_data  = "'".$_SESSION['solicitud_basicos']['idSistema']."'";   }else{$SIS_data  ="''";}
 				if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'";
 				}else{
@@ -641,8 +641,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                              $SIS_data  = "'".$ultimo_id."'";                                       }else{$SIS_data  = "''";}
 							if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -670,8 +670,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                              $SIS_data  = "'".$ultimo_id."'";                                       }else{$SIS_data  = "''";}
 							if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -699,8 +699,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                              $SIS_data  = "'".$ultimo_id."'";                                       }else{$SIS_data  = "''";}
 							if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -729,8 +729,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                              $SIS_data  = "'".$ultimo_id."'";                                       }else{$SIS_data  = "''";}
 							if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -759,8 +759,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                              $SIS_data  = "'".$ultimo_id."'";                                       }else{$SIS_data  = "''";}
 							if(isset($_SESSION['solicitud_basicos']['idSistema']) && $_SESSION['solicitud_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['solicitud_basicos']['idUsuario']) && $_SESSION['solicitud_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['solicitud_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['solicitud_basicos']['Creacion_fecha']) && $_SESSION['solicitud_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['solicitud_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['solicitud_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['solicitud_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -794,7 +794,6 @@ require_once '0_validate_user_1.php';
 				}
 
 			}
-	
 
 		break;
 /*******************************************************************************************************************/
@@ -967,7 +966,7 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'solicitud_listado_existencias_productos.idExistencia ASC';
 				$arrProductos = array();
 				$arrProductos = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				/*************************************/			
 				// Se trae un listado con todos los insumos
 				$SIS_query = '
@@ -1052,7 +1051,7 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'solicitud_listado_existencias_otros.idExistencia ASC';
 				$arrOtros = array();
 				$arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_otros', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				/**************************************************************/
 				if(isset($idProveedor) && $idProveedor!=''){ 
 					// consulto los datos
@@ -1176,7 +1175,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['ocompra_otros'][$cantidad_x]['Frecuencia']    = $prod['Medida'];
 					$_SESSION['ocompra_otros'][$cantidad_x]['vUnitario']     = 0;
 					$_SESSION['ocompra_otros'][$cantidad_x]['vTotal']        = 0;
-					
+
 					$cantidad_x++;
 				}
 				/*************************************************************/
@@ -1194,7 +1193,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['ocompra_sol_rel'][$idInterno]['Medida']        = $prod['Medida'];
 					$_SESSION['ocompra_sol_rel'][$idInterno]['idProdSol']     = $prod['idProdSol'];
 					$_SESSION['ocompra_sol_rel'][$idInterno]['bvar']          = $idInterno;
-					
+
 					$idInterno++;
 				}
 				/************************************/
@@ -1209,7 +1208,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['ocompra_sol_rel'][$idInterno]['Medida']        = $prod['Medida'];
 					$_SESSION['ocompra_sol_rel'][$idInterno]['idProdSol']     = $prod['idProdSol'];
 					$_SESSION['ocompra_sol_rel'][$idInterno]['bvar']          = $idInterno;
-					
+
 					$idInterno++;
 				}
 				/************************************/
@@ -1224,7 +1223,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['ocompra_sol_rel'][$idInterno]['Medida']        = $prod['Medida'];
 					$_SESSION['ocompra_sol_rel'][$idInterno]['idProdSol']     = $prod['idProdSol'];
 					$_SESSION['ocompra_sol_rel'][$idInterno]['bvar']          = $idInterno;
-					
+
 					$idInterno++;
 				}
 				/************************************/
@@ -1239,7 +1238,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['ocompra_sol_rel'][$idInterno]['Medida']        = $prod['Medida'];
 					$_SESSION['ocompra_sol_rel'][$idInterno]['idProdSol']     = $prod['idProdSol'];
 					$_SESSION['ocompra_sol_rel'][$idInterno]['bvar']          = $idInterno;
-					
+
 					$idInterno++;
 				}
 				/************************************/
@@ -1255,7 +1254,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['ocompra_sol_rel'][$idInterno]['Medida']        = $prod['Medida'];
 					$_SESSION['ocompra_sol_rel'][$idInterno]['idProdSol']     = $cantidad_x;
 					$_SESSION['ocompra_sol_rel'][$idInterno]['bvar']          = $idInterno;
-					
+
 					$idInterno++;
 					$cantidad_x++;
 				}

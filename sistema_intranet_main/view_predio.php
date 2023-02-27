@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -106,7 +106,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 		</header>
 		<div class="tab-content">
 			<div class="table-responsive">
-			
+
 					<?php
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
@@ -166,7 +166,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 							function initialize() {
 								
 								var myLatlng = new google.maps.LatLng(-33.4372, -70.6506);
-								
+
 								var myOptions = {
 									zoom: 15,
 									center: myLatlng,
@@ -182,7 +182,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 							function dibuja_zona() {
 								
 								var polygons = [];
-								<?php 
+								<?php
 								//variables
 								$Latitud_z       = 0;
 								$Longitud_z      = 0;
@@ -205,7 +205,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 									//Variables con la primera posicion
 									$Latitud_x = '';
 									$Longitud_x = '';
-									
+
 									foreach ($zonas as $puntos) {
 										if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
 											echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
@@ -227,7 +227,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 									if(isset($Longitud_x)&&$Longitud_x!=''){
 										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
 									}
-									
+
 									echo '];';
 									
 									echo '
@@ -249,7 +249,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 									// The label that pops up when the mouse moves within each polygon.
 									echo '
 									myLatlng = new google.maps.LatLng('.$Latitud_z_prom_2.', '.$Longitud_z_prom_2.');
-									
+
 									var marker = new MyMarker({
 										position: myLatlng,
 										label: "'.$zonas[0]['Nombre'].'"
@@ -270,11 +270,11 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 										});
 									});
 									';
-									
+
 									$zcounter2++;
 										
 								}
-								
+
 								//Centralizado del mapa
 								if($zcounter!=0){
 									$Latitud_z_prom  = $Latitud_z/$zcounter;
@@ -331,7 +331,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -341,14 +341,14 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -20,7 +20,7 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['Nombre']))          $Nombre          = $_POST['Nombre'];
 	if (!empty($_POST['Enlace']))          $Enlace          = $_POST['Enlace'];
 	if (!empty($_POST['PalabrasClave']))   $PalabrasClave   = $_POST['PalabrasClave'];
-	 
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/

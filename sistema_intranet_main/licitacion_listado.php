@@ -325,10 +325,9 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contrato', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contrato', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -359,58 +358,58 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<tr class="odd">
 								<td width="200">Codigo Contrato</td>
-								<td><?php echo $rowdata['Codigo'];?></td>
+								<td><?php echo $rowdata['Codigo']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Nombre Contrato</td>
-								<td><?php echo $rowdata['Nombre'];?></td>
+								<td><?php echo $rowdata['Nombre']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Sistema</td>
-								<td><?php echo $rowdata['Sistema'];?></td>
+								<td><?php echo $rowdata['Sistema']; ?></td>
 							</tr>
-							
+
 							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){?>
 								<tr class="odd">
 									<td>Cliente</td>
-									<td><?php echo $rowdata['Cliente'];?></td>
+									<td><?php echo $rowdata['Cliente']; ?></td>
 								</tr>
 							<?php } ?>
 							<tr class="odd">
 								<td>Duracion</td>
-								<td><?php echo 'Del '.Fecha_estandar($rowdata['FechaInicio']).' al '.Fecha_estandar($rowdata['FechaTermino']);?></td>
+								<td><?php echo 'Del '.Fecha_estandar($rowdata['FechaInicio']).' al '.Fecha_estandar($rowdata['FechaTermino']); ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Tipo de Contrato</td>
-								<td><?php echo $rowdata['TipoLicitacion'];?></td>
+								<td><?php echo $rowdata['TipoLicitacion']; ?></td>
 							</tr>
 							<?php if(isset($rowdata['idTipoLicitacion'])&&$rowdata['idTipoLicitacion']==1){ ?>
 								<tr class="odd">
 									<td>Valor Mensual</td>
-									<td align="right"><?php echo Valores($rowdata['ValorMensual'], 0);?></td>
+									<td align="right"><?php echo Valores($rowdata['ValorMensual'], 0); ?></td>
 								</tr>
 							<?php } ?>
 							<?php if(isset($rowdata['idTipoLicitacion'])&&$rowdata['idTipoLicitacion']==2){ ?>
 								<tr class="odd">
 									<td>Presupuesto</td>
-									<td align="right"><?php echo Valores($rowdata['Presupuesto'], 0);?></td>
+									<td align="right"><?php echo Valores($rowdata['Presupuesto'], 0); ?></td>
 								</tr>
 							<?php } ?>
 							<tr class="odd">
 								<td>Estado</td>
-								<td><?php echo $rowdata['Estado'];?></td>
+								<td><?php echo $rowdata['Estado']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Estado Aprobacion</td>
-								<td><?php echo $rowdata['EstadoAprobacion'];?></td>
+								<td><?php echo $rowdata['EstadoAprobacion']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Bodega Productos Utilizada</td>
-								<td><?php echo $rowdata['BodegaProductos'];?></td>
+								<td><?php echo $rowdata['BodegaProductos']; ?></td>
 							</tr>
 							<tr class="odd">
 								<td>Bodega Insumos Utilizada</td>
-								<td><?php echo $rowdata['BodegaInsumos'];?></td>
+								<td><?php echo $rowdata['BodegaInsumos']; ?></td>
 							</tr>
 							<?php if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){ ?>
 								<tr>
@@ -423,7 +422,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 										<?php //Se imprime el arbol
 										echo arrayToUL($array3d, 0, $rowlevel['level'],$location, $nmax);
 										?>
-									
+
 									</td>
 								</tr>
 							<?php } ?>
@@ -441,8 +440,8 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 			</div>
 		</div>
 	</div>
-</div>	
-	
+</div>
+
 <?php if ($arrHistorial!=false && !empty($arrHistorial) && $arrHistorial!=''){ ?>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 		<table id="items">
@@ -475,7 +474,6 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 	<div class="clearfix"></div>
 </div>
 
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
@@ -484,6 +482,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //verifico que sea un administrador
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -526,11 +525,10 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
-				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);	
+				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('idAprobado', 2, 2);
-				
-				
+
 				?>
 
 				<script>
@@ -558,7 +556,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				</script>  
 	   
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_Licitacion"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_Licitacion">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -567,7 +565,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
                     
 		</div>
 	</div>
-</div> 
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
@@ -643,6 +641,7 @@ $arrArea = db_select_array (false, $SIS_query, 'licitacion_listado', $SIS_join, 
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
@@ -653,7 +652,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Contrato</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Contrato</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -699,7 +698,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
             <?php widget_validator(); ?>
         </div>
 	</div>
-</div> 
+</div>
 <div class="clearfix"></div>      
                                  
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -761,7 +760,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						<td><?php echo $area['Cliente']; ?></td>
 						<td><?php echo $area['Codigo']; ?></td>
 						<td><?php echo $area['Nombre']; ?></td>
-						<td><label class="label <?php if(isset($area['idEstado'])&&$area['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $area['Estado']; ?></label></td>
+						<td><label class="label <?php if(isset($area['idEstado'])&&$area['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $area['Estado']; ?></label></td>
 						<td><?php echo $area['EstadoAprobacion']; ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $area['sistema']; ?></td><?php } ?>
 						<td>
@@ -770,7 +769,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$area['idLicitacion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($area['idLicitacion'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el registro '.$area['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el registro '.$area['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -788,11 +787,11 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

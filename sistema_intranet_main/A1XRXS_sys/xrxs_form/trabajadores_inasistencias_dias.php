@@ -90,8 +90,8 @@ require_once '0_validate_user_1.php';
 				if(isset($idTrabajador) && $idTrabajador!=''){     $SIS_data .= ",'".$idTrabajador."'";   }else{$SIS_data .= ",''";}
 				if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",'".$idUsuario."'";      }else{$SIS_data .= ",''";}
 				if(isset($Fecha_ingreso) && $Fecha_ingreso!=''){    $SIS_data .= ",'".$Fecha_ingreso."'";  }else{$SIS_data .= ",''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
-					$SIS_data .= ",'".$Creacion_fecha."'";  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
+					$SIS_data .= ",'".$Creacion_fecha."'";
 					$SIS_data .= ",'".fecha2NSemana($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'";
@@ -148,8 +148,8 @@ require_once '0_validate_user_1.php';
 				if(isset($idTrabajador) && $idTrabajador!=''){     $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
 				if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($Fecha_ingreso) && $Fecha_ingreso!=''){    $SIS_data .= ",Fecha_ingreso='".$Fecha_ingreso."'";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
-					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
+					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_Semana='".fecha2NSemana($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'";

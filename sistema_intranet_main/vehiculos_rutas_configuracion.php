@@ -63,7 +63,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ruta borrada correctam
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- if(!empty($_GET['mod'])){ 
+if(!empty($_GET['mod'])){
 // consulto los datos
 $query = "SELECT Nombre
 FROM `vehiculos_rutas`
@@ -106,7 +106,7 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta', $rowdata['Nombre'], 'Editar Ruta');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta', $rowdata['Nombre'], 'Editar Ruta'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -117,7 +117,7 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 				<li class=""><a href="<?php echo 'vehiculos_rutas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class=""><a href="<?php echo 'vehiculos_rutas_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class="active"><a href="<?php echo 'vehiculos_rutas_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
-				
+
 			</ul>
 		</header>
         <div class="table-responsive">
@@ -147,7 +147,7 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 									mapTypeId: google.maps.MapTypeId.ROADMAP
 								};
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-								
+
 								marker = new google.maps.Marker({
 									draggable	: true,
 									position	: myLatlng,
@@ -156,19 +156,19 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 									animation 	: google.maps.Animation.DROP,
 									icon      	: "<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
-							
+
 								google.maps.event.addListener(marker, 'dragend', function (event) {
 
 									document.getElementById("Latitud").value = event.latLng.lat();
 									document.getElementById("Longitud").value = event.latLng.lng();
 									codeLatLng(event.latLng.lat(),event.latLng.lng(),'direccion');
-									
+
 									document.getElementById("Latitud_fake").value = event.latLng.lat();
 									document.getElementById("Longitud_fake").value = event.latLng.lng();
 									codeLatLng(event.latLng.lat(),event.latLng.lng(),'direccion_fake');
 
 								});
-							
+
 							}
 							/* ************************************************************************** */	
 							//devuelve la direccion
@@ -187,7 +187,7 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 									}
 								});
 							}
-							
+
 							/* ************************************************************************** */
 							google.maps.event.addDomListener(window, "load", initialize());
 						</script>
@@ -213,17 +213,17 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Actualizar Punto" name="submit_edit_ruta"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Actualizar Punto" name="submit_edit_ruta">
 						</div>
-							  
+
 					</form>
 					<?php widget_validator(); ?>
-					
+
 				</div>
 			</div>
-			
+
 		</div>
-		
+
 	</div>
 </div>
 
@@ -275,10 +275,10 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrRutas,$row );
-}?>
+} ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta', $rowdata['Nombre'], 'Editar Ruta');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ruta', $rowdata['Nombre'], 'Editar Ruta'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -289,7 +289,7 @@ array_push( $arrRutas,$row );
 				<li class=""><a href="<?php echo 'vehiculos_rutas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class=""><a href="<?php echo 'vehiculos_rutas_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
 				<li class="active"><a href="<?php echo 'vehiculos_rutas_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
-				
+
 			</ul>
 		</header>
         <div class="table-responsive">
@@ -319,7 +319,7 @@ array_push( $arrRutas,$row );
 									mapTypeId: google.maps.MapTypeId.ROADMAP
 								};
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-								
+
 								marker = new google.maps.Marker({
 									draggable	: true,
 									position	: myLatlng,
@@ -328,13 +328,13 @@ array_push( $arrRutas,$row );
 									animation 	:google.maps.Animation.DROP,
 									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
-							
+
 								google.maps.event.addListener(marker, 'dragend', function (event) {
 
 									document.getElementById("Latitud").value = event.latLng.lat();
 									document.getElementById("Longitud").value = event.latLng.lng();
 									codeLatLng(event.latLng.lat(),event.latLng.lng(),'direccion');
-									
+
 									document.getElementById("Latitud_fake").value = event.latLng.lat();
 									document.getElementById("Longitud_fake").value = event.latLng.lng();
 									codeLatLng(event.latLng.lat(),event.latLng.lng(),'direccion_fake');
@@ -402,13 +402,13 @@ array_push( $arrRutas,$row );
 								  content: ''
 								});
 								var marcadores = [
-								<?php 
+								<?php
 								$in=0;
 								$count_in=0;
 								foreach ($arrRutas as $pos) {
 									//cuento la cantidad de puntos
 									$count_in++;
-									
+
 									//hago el resto
 										if($in==0){
 											$in=1;
@@ -437,7 +437,7 @@ array_push( $arrRutas,$row );
 
 								];
 								for (let i = 0, j = marcadores.length; i < j; i++) { 
-									if(i!=<?php echo $count_in-1;?>){ 
+									if(i!=<?php echo $count_in-1; ?>){ 
 										var contenido = marcadores[i].contenido;
 										var marker = new google.maps.Marker({
 											position: new google.maps.LatLng(marcadores[i].position.lat, marcadores[i].position.lng),
@@ -453,7 +453,7 @@ array_push( $arrRutas,$row );
 									}
 								  
 								}
-								
+
 								// *
 								// START INFOWINDOW CUSTOMIZE.
 								// The google.maps.event.addListener() event expects
@@ -534,9 +534,9 @@ array_push( $arrRutas,$row );
 						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Punto" name="submit_ruta"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Punto" name="submit_ruta">
 						</div>
-							  
+
 					</form>
 					<?php widget_validator(); ?>
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -560,7 +560,7 @@ array_push( $arrRutas,$row );
 										<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$rutas['idUbicaciones']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=4){
 											$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($rutas['idUbicaciones'], fecha_actual());
-											$dialogo   = '¿Realmente deseas eliminar el dato '.$rutas['direccion'].'?';?>
+											$dialogo   = '¿Realmente deseas eliminar el dato '.$rutas['direccion'].'?'; ?>
 											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 										<?php } ?>
 									</div>
@@ -573,15 +573,15 @@ array_push( $arrRutas,$row );
 					</table>
 				</div>
 			</div>
-			
+
 		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 <?php } ?>
 
@@ -590,4 +590,5 @@ array_push( $arrRutas,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

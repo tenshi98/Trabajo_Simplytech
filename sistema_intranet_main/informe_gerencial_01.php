@@ -207,7 +207,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 						<?php if($s_Gasto_OT=='true'){ ?>          <li class=""><a href="#tab_prod_8"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Gasto OT</a></li><?php } ?>
 						<?php if($s_Traspaso_Manual=='true'){ ?>   <li class=""><a href="#tab_prod_9"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Traspaso manual otra empresa</a></li><?php } ?>
 						<?php if($s_Ingreso_Manual=='true'){ ?>    <li class=""><a href="#tab_prod_10" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Ingreso Manual</a></li><?php } ?>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -233,7 +233,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 			<div class="tab-pane fade" id="tab_prod_2">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-									
+
 						<script>
 							
 							google.charts.setOnLoadCallback(drawChart_prod_1);
@@ -279,7 +279,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 					</div>
 				</div>
 			</div>
-			
+
 			<?php if($s_Ventas=='true'){ ?>
 				<div class="tab-pane fade" id="tab_prod_3">
 					<div class="wmd-panel">
@@ -287,7 +287,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_prod_2);
 
 								function drawChart_prod_2() {
@@ -341,7 +341,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_prod_3);
 
 								function drawChart_prod_3() {
@@ -395,7 +395,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_prod_4);
 
 								function drawChart_prod_4() {
@@ -449,7 +449,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_prod_5);
 
 								function drawChart_prod_5() {
@@ -503,7 +503,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_prod_6);
 
 								function drawChart_prod_6() {
@@ -557,7 +557,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_prod_7);
 
 								function drawChart_prod_7() {
@@ -611,7 +611,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_prod_8);
 
 								function drawChart_prod_8() {
@@ -665,7 +665,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_prod_9);
 
 								function drawChart_prod_9() {
@@ -713,11 +713,9 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 				</div>
 			<?php } ?>
 
-			
         </div>
 	</div>
 </div>
-
 
 <?php 
 /*******************************************************************************************************/
@@ -868,6 +866,7 @@ if($s_Gasto_OT=='true'){          $s_data .= ',tipo7';}
 if($s_Traspaso_Manual=='true'){   $s_data .= ',tipo8';}
 if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 ?>
+
 <div class="clearfix"></div>
 <h3 class="supertittle text-primary">Insumos</h3>
 
@@ -890,7 +889,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 						<?php if($s_Gasto_OT=='true'){ ?>          <li class=""><a href="#tab_ins_8"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Gasto OT</a></li><?php } ?>
 						<?php if($s_Traspaso_Manual=='true'){ ?>   <li class=""><a href="#tab_ins_9"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Traspaso manual otra empresa</a></li><?php } ?>
 						<?php if($s_Ingreso_Manual=='true'){ ?>    <li class=""><a href="#tab_ins_10" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Ingreso Manual</a></li><?php } ?>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -917,7 +916,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 			<div class="tab-pane fade" id="tab_ins_2">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-									
+
 						<script>
 							
 							google.charts.setOnLoadCallback(drawChart_ins_1);
@@ -963,7 +962,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 					</div>
 				</div>
 			</div>
-			
+
 			<?php if($s_Ventas=='true'){ ?>
 				<div class="tab-pane fade" id="tab_ins_3">
 					<div class="wmd-panel">
@@ -971,7 +970,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_ins_2);
 
 								function drawChart_ins_2() {
@@ -1025,7 +1024,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_ins_3);
 
 								function drawChart_ins_3() {
@@ -1079,7 +1078,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_ins_4);
 
 								function drawChart_ins_4() {
@@ -1133,7 +1132,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_ins_5);
 
 								function drawChart_ins_5() {
@@ -1187,7 +1186,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_ins_6);
 
 								function drawChart_ins_6() {
@@ -1241,7 +1240,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_ins_7);
 
 								function drawChart_ins_7() {
@@ -1295,7 +1294,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_ins_8);
 
 								function drawChart_ins_8() {
@@ -1349,7 +1348,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_ins_9);
 
 								function drawChart_ins_9() {
@@ -1484,6 +1483,7 @@ $s_Ventas              = 'true';
 $s_data = 'tipo1';
 if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 ?>
+
 <div class="clearfix"></div>
 <h3 class="supertittle text-primary">Arriendos</h3>
 
@@ -1525,7 +1525,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 			<div class="tab-pane fade" id="tab_arr_2">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-									
+
 						<script>
 							
 							google.charts.setOnLoadCallback(drawChart_arr_1);
@@ -1571,7 +1571,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 					</div>
 				</div>
 			</div>
-			
+
 			<?php if($s_Ventas=='true'){ ?>
 				<div class="tab-pane fade" id="tab_arr_3">
 					<div class="wmd-panel">
@@ -1579,7 +1579,7 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart_arr_2);
 
 								function drawChart_arr_2() {
@@ -1637,4 +1637,5 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

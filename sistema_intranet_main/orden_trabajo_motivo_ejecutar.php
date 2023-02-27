@@ -200,7 +200,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idArchivoTipo)){    $x1  = $idArchivoTipo;  }else{$x1  = '';}
@@ -225,7 +225,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
 				$Form_Inputs->form_input_hidden('idEstadoTarea', 1, 2);
 				$Form_Inputs->form_input_hidden('idTrabajoOT', $_GET['addFile'], 2);
-					
+
 				?>
 
 				<div class="form-group">
@@ -237,9 +237,9 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
+</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['addTarea'])){ 
+}elseif(!empty($_GET['addTarea'])){
 //Se traen los datos de la ot
 $SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
 $SIS_join  = '';
@@ -257,7 +257,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$SIS_order = 'idLicitacion ASC';
 	$arrPermisos = array();
 	$arrPermisos = db_select_array (false, $SIS_query, 'usuarios_contratos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
-	
+
 	//filtro
 	$z = "idLicitacion=0";
 	foreach ($arrPermisos as $prod) {
@@ -265,6 +265,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	}
 }
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -351,9 +352,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				$Form_Inputs->form_input_hidden('idEstadoTarea', 1, 2);
 
 				?>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_tarea"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_tarea">
 					<a href="<?php echo $location.'?view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -361,9 +362,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
+</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['editTarea'])){ 
+}elseif(!empty($_GET['editTarea'])){
 //Se traen los datos de la ot
 $SIS_query = 'idEstadoTarea, Observacion';
 $SIS_join  = '';
@@ -389,6 +390,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	}
 }
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -414,9 +416,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				$Form_Inputs->form_input_hidden('idTrabajoOT', $_GET['editTarea'], 2);
 
 				?>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edittarea"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edittarea">
 					<a href="<?php echo $location.'?view='.$_GET['view']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -476,7 +478,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $SIS_where, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
-				
+
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -498,7 +500,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 				$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
-				
+
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
@@ -517,9 +519,9 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 					}
 				}
 				</script>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Agregar" name="submit_prod"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Agregar" name="submit_prod">
 					<a href="<?php echo $location.'?view='.$_GET['view']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -529,7 +531,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['edit_prod'])){ 
+} elseif(!empty($_GET['edit_prod'])){
 //Se traen los datos de la ot
 $SIS_query = '
 productos_listado.Nombre AS Producto, 
@@ -566,7 +568,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_prod
 				</div>';
 
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x1, 2);
-				
+
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -579,10 +581,9 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_prod
 					
 				
 				?>
-				
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Editar" name="submit_editprod"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Editar" name="submit_editprod">
 					<a href="<?php echo $location.'?view='.$_GET['view']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -592,7 +593,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_prod
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addIns'])){ 
+} elseif(!empty($_GET['addIns'])){
 //Se traen los datos de la ot
 $SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
 $SIS_join  = '';
@@ -642,7 +643,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $SIS_where, '', $dbConn);
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
-				
+
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -664,7 +665,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 				$Form_Inputs->form_input_hidden('idTipo', $rowdata['idTipo'], 2);
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
-				
+
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
@@ -683,9 +684,9 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 					}
 				}
 				</script>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Agregar" name="submit_ins"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Agregar" name="submit_ins">
 					<a href="<?php echo $location.'?view='.$_GET['view']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -695,7 +696,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['edit_ins'])){ 
+} elseif(!empty($_GET['edit_ins'])){
 //Se traen los datos de la ot
 $SIS_query = '
 insumos_listado.Nombre AS Producto, 
@@ -732,7 +733,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_insu
 				</div>';
 
 				$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x1, 2);
-				
+
 				echo '<div class="form-group" id="div_">
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_">Unidad de Medida</label>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -744,10 +745,9 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_insu
 				$Form_Inputs->form_input_hidden('idInsumos', $_GET['edit_ins'], 2);
 
 				?>
-				
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Editar" name="submit_editins"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Editar" name="submit_editins">
 					<a href="<?php echo $location.'?view='.$_GET['view']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -758,7 +758,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_insu
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addTrab'])){ 
+} elseif(!empty($_GET['addTrab'])){
 //Se traen los datos de la ot
 $SIS_query = 'idSistema, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idEstado, idPrioridad, idTipo, f_programacion';
 $SIS_join  = '';
@@ -767,6 +767,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -782,7 +783,6 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = '';}
 
-				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Trabajador responsable','idTrabajador', $x1, 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'trabajadores_listado', $z, '', $dbConn);
@@ -803,9 +803,9 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
 
 				?>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Agregar" name="submit_trab"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Agregar" name="submit_trab">
 					<a href="<?php echo $location.'?view='.$_GET['view']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -815,7 +815,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['edit_trab'])){ 	
+} elseif(!empty($_GET['edit_trab'])){
 //Se traen los datos de la ot
 $SIS_query = 'idTrabajador';
 $SIS_join  = '';
@@ -824,6 +824,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_resp
 
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -846,9 +847,9 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idResponsable', $_GET['edit_trab'], 2);
 				?>
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Editar" name="submit_edittrab"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Editar" name="submit_edittrab">
 					<a href="<?php echo $location.'?view='.$_GET['view']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -858,7 +859,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['edit_obs'])){ 
+} elseif(!empty($_GET['edit_obs'])){
 //Se traen los datos de la ot
 $SIS_query = 'Observaciones';
 $SIS_join  = '';
@@ -888,7 +889,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editObs"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_editObs">
 					<a href="<?php echo $location.'?view='.$_GET['view']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -1070,12 +1071,13 @@ $arrHistorial = array();
 $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrHistorial');
 
 ?>
+
 <div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive">
 	<div id="page-wrap">
-		<div id="header"> ORDEN DE TRABAJO N° <?php echo n_doc($_GET['view'], 8);?></div>
+		<div id="header"> ORDEN DE TRABAJO N° <?php echo n_doc($_GET['view'], 8); ?></div>
 
 		<div id="customer">
-			
+
 			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
@@ -1106,46 +1108,46 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 						<td class="meta-head">Estado</td>
 						<td><?php echo $rowdata['NombreEstado']?></td>
 					</tr>
-					
+
 				</tbody>
 			</table>
 			<table id="meta" class="otdata2">
 				<tbody>
-					
+
 					<?php if($rowdata['f_creacion']!='0000-00-00'){?>
 						<tr>
 							<td class="meta-head">Fecha creacion</td>
-							<td><?php if($rowdata['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_creacion']);}?></td>
+							<td><?php if($rowdata['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_creacion']);} ?></td>
 						</tr>
-					<?php }?>
-					
+					<?php } ?>
+
 					<?php if($rowdata['f_programacion']!='0000-00-00'){?>
 						<tr>
 							<td class="meta-head">Fecha programada</td>
-							<td><?php if($rowdata['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_programacion']);}?></td>
+							<td><?php if($rowdata['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_programacion']);} ?></td>
 						</tr>
-					<?php }?>
-					
+					<?php } ?>
+
 					<?php if($rowdata['f_termino']!='0000-00-00'){?>
 						<tr>
 							<td class="meta-head">Fecha termino</td>
-							<td><?php if($rowdata['f_termino']!='0000-00-00'){echo Fecha_estandar($rowdata['f_termino']);}?></td>
+							<td><?php if($rowdata['f_termino']!='0000-00-00'){echo Fecha_estandar($rowdata['f_termino']);} ?></td>
 						</tr>
-					<?php }?>
-					
+					<?php } ?>
+
 					<?php if($rowdata['hora_Inicio']!='00:00:00'){?>
 						<tr>
 							<td class="meta-head">Hora inicio</td>
-							<td><?php if($rowdata['hora_Inicio']!='00:00:00'){echo $rowdata['hora_Inicio'];}?></td>
+							<td><?php if($rowdata['hora_Inicio']!='00:00:00'){echo $rowdata['hora_Inicio'];} ?></td>
 						</tr>
-					<?php }?>
-					
+					<?php } ?>
+
 					<?php if($rowdata['hora_Termino']!='00:00:00'){?>
 						<tr>
 							<td class="meta-head">Hora termino</td>
-							<td><?php if($rowdata['hora_Termino']!='00:00:00'){echo $rowdata['hora_Termino'];}?></td>
+							<td><?php if($rowdata['hora_Termino']!='00:00:00'){echo $rowdata['hora_Termino'];} ?></td>
 						</tr>
-					<?php }?>
+					<?php } ?>
 
 				</tbody>
 			</table>
@@ -1160,7 +1162,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 
 				<?php /**********************************************************************************/?>
 					<tr class="item-row fact_tittle">
-						<td colspan="5">Trabajadores  <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Encargados';}else{echo 'Utilizados';}?></td>
+						<td colspan="5">Trabajadores  <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Encargados';}else{echo 'Utilizados';} ?></td>
 						<td>
 							<?php //Si la OT solo esta programada
 							if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']<3){ ?>
@@ -1170,27 +1172,27 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 					</tr>
 					<?php foreach ($arrTrabajadores as $trab) {  ?>
 						<tr class="item-row linea_punteada">
-							<td class="item-name"><?php echo $trab['Rut'];?></td>
-							<td class="item-name" colspan="3"><?php echo $trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'];?></td>
-							<td class="item-name"><?php echo $trab['Cargo'];?></td> 
+							<td class="item-name"><?php echo $trab['Rut']; ?></td>
+							<td class="item-name" colspan="3"><?php echo $trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat']; ?></td>
+							<td class="item-name"><?php echo $trab['Cargo']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
 									<?php //Si la OT solo esta programada
 									if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']<3){ ?>
 										<a href="<?php echo $location.'?view='.$_GET['view'].'&edit_trab='.$trab['idResponsable']; ?>" title="Editar Trabajador" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-										<?php 
+										<?php
 										$ubicacion = $location.'?view='.$_GET['view'].'&del_trab='.simpleEncode($trab['idResponsable'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar al trabajador '.$trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'].'?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Trabajador" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
+										$dialogo   = '¿Realmente deseas eliminar al trabajador '.$trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'].'?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Trabajador" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>
 						</tr>
-					<?php }?>
+					<?php } ?>
 					<tr id="hiderow"><td colspan="6"></td></tr>
 				<?php /**********************************************************************************/ ?>
 					<tr class="item-row fact_tittle">
-						<td colspan="5">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td>
+						<td colspan="5">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td>
 						<td>
 							<?php //Si la OT solo esta programada
 							if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']<3){ ?>
@@ -1210,7 +1212,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 											<a href="<?php echo $location.'?view='.$_GET['view'].'&edit_ins='.$insumos['idMain']; ?>" title="Editar Insumos" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 											<?php 
 											$ubicacion = $location.'?view='.$_GET['view'].'&del_ins='.simpleEncode($insumos['idMain'], fecha_actual());
-											$dialogo   = '¿Realmente deseas eliminar el insumo '.$insumos['NombreProducto'].'?';?>
+											$dialogo   = '¿Realmente deseas eliminar el insumo '.$insumos['NombreProducto'].'?'; ?>
 											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Insumo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 										<?php } ?>
 									</div>
@@ -1222,7 +1224,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 					<tr id="hiderow"><td colspan="6"></td></tr>
 				<?php /**********************************************************************************/?>
 					<tr class="item-row fact_tittle">
-						<td colspan="5">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';}?></td>
+						<td colspan="5">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td>
 						<td>
 							<?php //Si la OT solo esta programada
 							if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']<3){ ?>
@@ -1242,19 +1244,19 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 											<a href="<?php echo $location.'?view='.$_GET['view'].'&edit_prod='.$prod['idMain']; ?>" title="Editar Productos" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 											<?php 
 											$ubicacion = $location.'?view='.$_GET['view'].'&del_prod='.simpleEncode($prod['idMain'], fecha_actual());
-											$dialogo   = '¿Realmente deseas eliminar el producto '.$prod['NombreProducto'].'?';?>
+											$dialogo   = '¿Realmente deseas eliminar el producto '.$prod['NombreProducto'].'?'; ?>
 											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Producto" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>							
 										<?php } ?>
 									</div>
 								</td>
 							</tr>
-						<?php 
+						<?php
 						}
 					} ?>
 					<tr id="hiderow"><td colspan="6"></td></tr>
 				<?php /**********************************************************************************/?>
 					<tr class="item-row fact_tittle">
-						<td colspan="5">Tareas <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';}?></td>
+						<td colspan="5">Tareas <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';} ?></td>
 						<td>
 							<?php //Si la OT solo esta programada
 							if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']<3){ ?>
@@ -1291,12 +1293,12 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 						?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name">
-								<strong>Estado: </strong><?php echo $tarea['EstadoTarea'];?>
+								<strong>Estado: </strong><?php echo $tarea['EstadoTarea']; ?>
 							</td>
 							<td class="item-name" colspan="4">
-								<strong>Licitacion: </strong><?php echo $tarea['Licitacion'];?><br/>
+								<strong>Licitacion: </strong><?php echo $tarea['Licitacion']; ?><br/>
 								<strong>Tarea: </strong><?php echo $s_tarea; ?><br/>
-								<strong>Observacion: </strong><?php echo $tarea['Observacion'];?>
+								<strong>Observacion: </strong><?php echo $tarea['Observacion']; ?>
 							</td>
 							<td class="item-name">
 								<div class="btn-group" style="width: 105px;" >
@@ -1305,7 +1307,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 									if(isset($tarea['idEstadoTarea'])&&$tarea['idEstadoTarea']==1){
 										$ubicacion  = $location.'?view='.$_GET['view'];
 										$dialogo = 'Deseas borrar la tarea';
-										
+
 										//Boton para cambiar agregar archivos
 										echo '<a href="'.$ubicacion.'&addFile='.$tarea['idTrabajoOT'].'" title="Agregar Archivos" class="btn btn-success btn-sm tooltip"><i class="fa fa-upload" aria-hidden="true"></i></a>';
 										//Boton para cambiar el estado de la tarea
@@ -1340,7 +1342,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 																
 																//Boton para borrar archivos
 																echo '<a onClick="dialogBox(\''.$ubicacion.'&del_file='.$arch['idAdjunto'].'\', \''.$dialogo.'\')" title="Borrar Archivo" class="btn btn-xs btn-metis-1 tooltip" style="position: initial;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Archivo</a>';	
-															}?>
+															} ?>
 														</div>
 													<?php } ?>
 												<?php } ?>
@@ -1350,10 +1352,9 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 								<?php } ?>
 							<?php } ?>
 					<?php } ?>
-					
+
 					<?php /**********************************************************************************/?>
-					
-					
+
 					<tr id="hiderow"><td colspan="6"></td></tr>
 				<?php /**********************************************************************************/?>
 
@@ -1369,14 +1370,13 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 					</td>
 				</tr>
 				<tr><td colspan="6" class="blank"><p>Observacion</p></td></tr>
-				
+
 			</tbody>
 		</table>
 		<div class="clearfix"></div>
 	</div>
 </div>
 <br/>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 	<div class="row">
@@ -1410,7 +1410,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<a href="<?php echo $location; ?>"  class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 	<div class="clearfix"></div>
-</div> 
+</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 /**********************************************************/
@@ -1484,6 +1484,7 @@ $arrOTS = array();
 $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOTS');
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
@@ -1530,8 +1531,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 				$Form_Inputs->form_select('Prioridad','idPrioridad', $x9, 1, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x10, 1, 'idTipo', 'Nombre', 'core_ot_motivos_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_select('Estado Ejecucion','idEstado', $x11, 1, 'idEstado', 'Nombre', 'core_estado_ot_motivos', 'idEstado<3', '', $dbConn);
-				
-				
+
 				?>
 
 				<div class="form-group">
@@ -1638,4 +1638,5 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

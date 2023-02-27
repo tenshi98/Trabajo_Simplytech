@@ -89,7 +89,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Cuartel borrado correc
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- if(!empty($_GET['mod'])){ 
+if(!empty($_GET['mod'])){
 // consulto los datos
 $query = "SELECT 
 cross_predios_listado_zonas.Nombre,
@@ -204,7 +204,7 @@ array_push( $arrPuntos,$row );
 							/* ************************************************************************** */
 							function initialize() {
 								var myLatlng = new google.maps.LatLng(-33.4372, -70.6506);
-								
+
 								var myOptions = {
 									zoom: 18,
 									center: myLatlng,
@@ -212,7 +212,7 @@ array_push( $arrPuntos,$row );
 								};
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 								map.setTilt(0);
-								
+
 								marker = new google.maps.Marker({
 									draggable	: true,
 									position	: myLatlng,
@@ -221,12 +221,12 @@ array_push( $arrPuntos,$row );
 									animation 	:google.maps.Animation.DROP,
 									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
-							
+
 								google.maps.event.addListener(marker, 'dragend', function (event) {
 
 									document.getElementById("Latitud").value = event.latLng.lat();
 									document.getElementById("Longitud").value = event.latLng.lng();
-									
+
 									document.getElementById("Latitud_fake").value = event.latLng.lat();
 									document.getElementById("Longitud_fake").value = event.latLng.lng();
 									
@@ -301,8 +301,7 @@ array_push( $arrPuntos,$row );
 									}
 								});
 							}
-							
-							
+
 							/* ************************************************************************** */
 							google.maps.event.addDomListener(window, "load", initialize());
 
@@ -331,15 +330,15 @@ array_push( $arrPuntos,$row );
 						
 					
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Actualizar Punto" name="submit_edit_punto"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Actualizar Punto" name="submit_edit_punto">
 						</div>
-							  
+
 					</form>
 					<?php widget_validator(); ?>
-					
+
 				</div>
 			</div>
-			
+
 		</div>
 	</div>
 </div>
@@ -354,7 +353,7 @@ array_push( $arrPuntos,$row );
 <div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['edit_puntos'])){ 
+} elseif(!empty($_GET['edit_puntos'])){
 // consulto los datos
 $query = "SELECT 
 cross_predios_listado_zonas.Nombre,
@@ -458,7 +457,6 @@ array_push( $arrZonas,$row );
 
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -494,7 +492,7 @@ array_push( $arrZonas,$row );
 								};
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 								map.setTilt(0);
-								
+
 								marker = new google.maps.Marker({
 									draggable	: true,
 									position	: myLatlng,
@@ -503,12 +501,12 @@ array_push( $arrZonas,$row );
 									animation 	:google.maps.Animation.DROP,
 									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
-							
+
 								google.maps.event.addListener(marker, 'dragend', function (event) {
 
 									document.getElementById("Latitud").value = event.latLng.lat();
 									document.getElementById("Longitud").value = event.latLng.lng();
-									
+
 									document.getElementById("Latitud_fake").value = event.latLng.lat();
 									document.getElementById("Longitud_fake").value = event.latLng.lng();
 									
@@ -539,7 +537,7 @@ array_push( $arrZonas,$row );
 									//Variables con la primera posicion
 									$Latitud_x = '';
 									$Longitud_x = '';
-									
+
 									foreach ($zonas as $puntos) {
 										if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
 											echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
@@ -579,7 +577,7 @@ array_push( $arrZonas,$row );
 								$Latitud_x = '';
 								$Longitud_x = '';
 								?>
-								
+
 								var triangleCoords = [
 									<?php //recorrer
 									foreach ($arrPuntos as $puntos) {
@@ -592,7 +590,7 @@ array_push( $arrZonas,$row );
 									}
 									if(isset($Longitud_x)&&$Longitud_x!=''){
 										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
-									}?>
+									} ?>
 								];
 							
 								// Construct the polygon.
@@ -661,9 +659,9 @@ array_push( $arrZonas,$row );
 						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Punto" name="submit_punto"> 
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Punto" name="submit_punto">
 						</div>
-							  
+
 					</form>
 					<?php widget_validator(); ?>
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -680,14 +678,14 @@ array_push( $arrZonas,$row );
 						$nx=1;
 						foreach ($arrPuntos as $pos) { ?>
 							<tr class="odd">
-								<td><?php echo $nx;?></td>
+								<td><?php echo $nx; ?></td>
 								<td><?php echo 'lat: '.$pos['Latitud'].'<br/>lng: '.$pos['Longitud']; ?></td>
 								<td> 
 									<div class="btn-group" style="width: 70px;" >  
 										<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&edit_puntos='.$_GET['edit_puntos'].'&mod='.$pos['idUbicaciones']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=2){
 											$ubicacion = $new_location.'&edit_puntos='.$_GET['edit_puntos'].'&del_punto='.simpleEncode($pos['idUbicaciones'], fecha_actual());
-											$dialogo   = '¿Realmente deseas eliminar el dato?';?>
+											$dialogo   = '¿Realmente deseas eliminar el dato?'; ?>
 											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 										<?php } ?>
 									</div>
@@ -700,7 +698,7 @@ array_push( $arrZonas,$row );
 					</table>
 				</div>
 			</div>
-			
+
 		</div>
 	</div>
 </div>
@@ -711,7 +709,7 @@ array_push( $arrZonas,$row );
 <div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['edit_zona'])){ 
+} elseif(!empty($_GET['edit_zona'])){
 // consulto los datos
 $query = "SELECT Nombre,Codigo,idCategoria,idProducto,AnoPlantacion,Hectareas,Hileras,Plantas,
 idEstadoProd,DistanciaPlant,DistanciaHileras,idEstado
@@ -731,7 +729,9 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
+
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -758,10 +758,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre del Cuartel', 'Nombre', $x1, 2);	
-				$Form_Inputs->form_input_text('Codigo del Cuartel', 'Codigo', $x2, 2);	
+				$Form_Inputs->form_input_text('Nombre del Cuartel', 'Nombre', $x1, 2);
+				$Form_Inputs->form_input_text('Codigo del Cuartel', 'Codigo', $x2, 2);
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x3, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x4, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 'Variedad','idProducto', $x4, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select_n_auto('Año plantación','AnoPlantacion', $x5, 2, 1975, ano_actual());
 				$Form_Inputs->form_input_number_spinner('N° Hectáreas','Hectareas', $x6, 0, 500, '0.01', 2, 2);
@@ -779,18 +779,18 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 							
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_zona">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_zona">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
 			<?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -817,10 +817,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre del Cuartel', 'Nombre', $x1, 2);	
-				$Form_Inputs->form_input_text('Codigo del Cuartel', 'Codigo', $x2, 2);	
+				$Form_Inputs->form_input_text('Nombre del Cuartel', 'Nombre', $x1, 2);
+				$Form_Inputs->form_input_text('Codigo del Cuartel', 'Codigo', $x2, 2);
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x3, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x4, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 'Variedad','idProducto', $x4, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select_n_auto('Año plantación','AnoPlantacion', $x5, 2, 1975, ano_actual());
 				$Form_Inputs->form_input_number_spinner('N° Hectáreas','Hectareas', $x6, 0, 500, '0.01', 2, 2);
@@ -837,14 +837,14 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 
 							
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_zona">	
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_zona">
 					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
 			<?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
+</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {	 
 // consulto los datos
@@ -904,10 +904,10 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrZonas,$row );
-}?>
+} ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowdata['Nombre'], 'Editar Cuarteles');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowdata['Nombre'], 'Editar Cuarteles'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cuartel</a><?php } ?>
 	</div>
@@ -962,7 +962,7 @@ array_push( $arrZonas,$row );
 								<?php if ($rowlevel['level']>=4){
 									//se verifica que el usuario no sea uno mismo
 									$ubicacion = $new_location.'&del_zona='.simpleEncode($zona['idZona'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el cuartel '.$zona['CuartelNombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el cuartel '.$zona['CuartelNombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -979,8 +979,8 @@ array_push( $arrZonas,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 <?php } ?>
 
@@ -989,4 +989,5 @@ array_push( $arrZonas,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

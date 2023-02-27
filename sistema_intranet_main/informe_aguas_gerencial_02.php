@@ -115,8 +115,8 @@ array_push( $arrFacturacion,$row );
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					
-					<?php 
+
+					<?php
 					//Variables
 					$x1 = 0;
 					$x2 = 0;
@@ -127,7 +127,7 @@ array_push( $arrFacturacion,$row );
 					$x7 = 0;
 					$x8 = 0;
 					$x9 = 0;
-					
+
 					$rev = 0;
 					//Se recorre la tabla
 					foreach ($arrFacturacion as $fact) {  
@@ -139,7 +139,7 @@ array_push( $arrFacturacion,$row );
 							<td><?php echo numero_a_mes($fact['mesActual']).' '.$fact['anoActual']; ?></td>
 							<td><?php echo $fact['nClientes']; ?></td>
 							<td><?php echo $fact['M3Consumidos'].' M3'; ?></td>
-							
+
 							<td align="right" class="active"><?php echo Valores($fact['DetalleSubtotalServicio'], 0); ?></td>
 							<td align="right" class="active"><?php echo Valores($fact['DetalleInteresDeuda'], 0); ?></td>
 							<td align="right" class="active"><?php echo Valores($OtrosCargos, 0); ?></td>
@@ -184,7 +184,6 @@ array_push( $arrFacturacion,$row );
 	</div>
 </div>
 
-
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['corechart']});</script>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -192,7 +191,7 @@ array_push( $arrFacturacion,$row );
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5> Graficos </h5>
-			
+
 		</header>
 		<div class="table-responsive">
 			<script>
@@ -268,7 +267,7 @@ array_push( $arrFacturacion,$row );
 			</script>
 			<div id="curve_chart_1" style="height: 500px"></div>
 			<div id="curve_chart_2" style="height: 500px"></div>
-			
+
 		</div>
 	</div>
 </div>
@@ -284,6 +283,7 @@ array_push( $arrFacturacion,$row );
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -302,7 +302,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Inicio Periodo','f_inicio', $x1, 2);
 				$Form_Inputs->form_date('Fecha Termino Periodo','f_termino', $x2, 2);
-						
+
 				?>
 
 				<div class="form-group">
@@ -320,4 +320,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

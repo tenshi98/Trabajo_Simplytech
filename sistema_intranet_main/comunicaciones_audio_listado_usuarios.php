@@ -142,7 +142,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idUsuario)){     $x1  = $idUsuario;    }else{$x1  = '';}
@@ -152,7 +152,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 
 				$Form_Inputs->form_input_hidden('idAudio', $_GET['id'], 2);
-						
+
 				?>
 
 				<div class="form-group">
@@ -216,10 +216,11 @@ array_push( $arrUsuarios,$row );
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'AudioConferencia', $rowdata['Nombre'], 'Usuarios Participantes');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'AudioConferencia', $rowdata['Nombre'], 'Usuarios Participantes'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Usuario</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Usuario</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -249,7 +250,7 @@ array_push( $arrUsuarios,$row );
 							<div class="btn-group" style="width: 35px;" >
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($usr['idUsers'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el usuario '.$usr['Usuario'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el usuario '.$usr['Usuario'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -264,8 +265,8 @@ array_push( $arrUsuarios,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -274,4 +275,5 @@ array_push( $arrUsuarios,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

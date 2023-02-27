@@ -64,25 +64,14 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Observacion borrada co
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['edit'])){
+/*******************************************************/
 // consulto los datos
-$query = "SELECT Observacion
-FROM `aguas_clientes_observaciones`
-WHERE idObservacion = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado); 
- ?>
+$SIS_query = 'Observacion';
+$SIS_join  = '';
+$SIS_where = 'idObservacion = '.$_GET['edit'];
+$rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_observaciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -117,7 +106,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -127,7 +116,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Observacion)){     $x1  = $Observacion;    }else{$x1  = '';}
@@ -151,36 +140,24 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 	</div>
 </div>
 
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['view'])){ 
+}elseif(!empty($_GET['view'])){
+/*******************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 aguas_clientes_listado.Nombre AS nombre_cliente,
 usuarios_listado.Nombre AS nombre_usuario,
 aguas_clientes_observaciones.Fecha,
-aguas_clientes_observaciones.Observacion
-FROM `aguas_clientes_observaciones`
+aguas_clientes_observaciones.Observacion';
+$SIS_join  = '
 LEFT JOIN `aguas_clientes_listado`   ON aguas_clientes_listado.idCliente     = aguas_clientes_observaciones.idCliente
-LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario           = aguas_clientes_observaciones.idUsuario
-WHERE aguas_clientes_observaciones.idObservacion = ".$_GET['view']."
-ORDER BY aguas_clientes_observaciones.idObservacion ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario           = aguas_clientes_observaciones.idUsuario';
+$SIS_where = 'aguas_clientes_observaciones.idObservacion = '.$_GET['view'];
+$SIS_where.= ' ORDER BY aguas_clientes_observaciones.idObservacion ASC';
+$rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_observaciones', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box">
 		<header>
@@ -193,7 +170,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				<strong>Usuario : </strong><?php echo $rowdata['nombre_usuario']; ?><br/>
 				<strong>Fecha : </strong><?php echo Fecha_completa_alt($rowdata['Fecha']); ?>
             </p>
-                      
+
             <h2 class="text-primary">Observacion</h2>
             <p class="text-muted word_break">
 				<div class="text-muted well well-sm no-shadow">
@@ -201,8 +178,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<div class="clearfix"></div>
 				</div>
 			</p>
-            
-        	
+
         </div>
 	</div>
 </div>
@@ -214,62 +190,35 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
+/*******************************************************/
 // consulto los datos
-$query = "SELECT Identificador, Nombre,idTipo
-FROM `aguas_clientes_listado`
-WHERE idCliente = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Identificador, Nombre,idTipo';
+$SIS_join  = '';
+$SIS_where = 'idCliente = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
+/*******************************************************/
 // consulto los datos
-$arrObservaciones = array();
-$query = "SELECT 
+$SIS_query = '
 aguas_clientes_observaciones.idObservacion,
 aguas_clientes_listado.Nombre AS nombre_cliente,
 usuarios_listado.Nombre AS nombre_usuario,
 aguas_clientes_observaciones.Fecha,
-aguas_clientes_observaciones.Observacion
-FROM `aguas_clientes_observaciones`
+aguas_clientes_observaciones.Observacion';
+$SIS_join  = '
 LEFT JOIN `aguas_clientes_listado`   ON aguas_clientes_listado.idCliente     = aguas_clientes_observaciones.idCliente
-LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario           = aguas_clientes_observaciones.idUsuario
-WHERE aguas_clientes_observaciones.idCliente = ".$_GET['id']."
-ORDER BY aguas_clientes_observaciones.idObservacion ASC ";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrObservaciones,$row );
-}
-
-
+LEFT JOIN `usuarios_listado`         ON usuarios_listado.idUsuario           = aguas_clientes_observaciones.idUsuario';
+$SIS_where = 'aguas_clientes_observaciones.idCliente = '.$_GET['id'];
+$SIS_order = 'aguas_clientes_observaciones.idObservacion ASC';
+$arrObservaciones = array();
+$arrObservaciones = db_select_array (false, $SIS_query, 'aguas_clientes_observaciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrObservaciones');
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowdata['Identificador'], $rowdata['Nombre'], 'Observaciones');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowdata['Identificador'], $rowdata['Nombre'], 'Observaciones'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Observacion</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Observacion</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -304,24 +253,24 @@ array_push( $arrObservaciones,$row );
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-				<?php foreach ($arrObservaciones as $observaciones){ ?>
-					<tr class="odd">
-						<td><?php echo fecha_estandar($observaciones['Fecha']); ?></td>
-						<td><?php echo $observaciones['nombre_usuario']; ?></td>
-						<td><?php echo cortar($observaciones['Observacion'], 70); ?></td>
-						<td>
-							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&view='.$observaciones['idObservacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$observaciones['idObservacion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($observaciones['idObservacion'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la observacion del usuario '.$observaciones['nombre_usuario'].'?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>
-							</div>
-						</td>
-					</tr>
-				<?php } ?>
+					<?php foreach ($arrObservaciones as $observaciones){ ?>
+						<tr class="odd">
+							<td><?php echo fecha_estandar($observaciones['Fecha']); ?></td>
+							<td><?php echo $observaciones['nombre_usuario']; ?></td>
+							<td><?php echo cortar($observaciones['Observacion'], 70); ?></td>
+							<td>
+								<div class="btn-group" style="width: 105px;" >
+									<?php if ($rowlevel['level']>=1){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&view='.$observaciones['idObservacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$observaciones['idObservacion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=4){
+										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($observaciones['idObservacion'], fecha_actual());
+										$dialogo   = '¿Realmente deseas eliminar la observacion del usuario '.$observaciones['nombre_usuario'].'?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<?php } ?>
+								</div>
+							</td>
+						</tr>
+					<?php } ?>
 				</tbody>
 			</table>
 		</div>
@@ -330,8 +279,8 @@ array_push( $arrObservaciones,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -340,4 +289,5 @@ array_push( $arrObservaciones,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

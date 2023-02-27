@@ -317,8 +317,8 @@ require_once '0_validate_user_1.php';
 				//Se insertan los datos principales
 				if(isset($SIS_idSistema) && $SIS_idSistema!=''){    $SIS_data  = "'".$SIS_idSistema."'";    }else{$SIS_data  = "''";}
 				if(isset($SIS_idUsuario) && $SIS_idUsuario!=''){    $SIS_data .= ",'".$SIS_idUsuario."'";   }else{$SIS_data .= ",''";}
-				if(isset($SIS_Fecha) && $SIS_Fecha!= ''){  
-					$SIS_data .= ",'".$SIS_Fecha."'";  
+				if(isset($SIS_Fecha) && $SIS_Fecha!= ''){
+					$SIS_data .= ",'".$SIS_Fecha."'";
 					$SIS_data .= ",'".fecha2NMes($SIS_Fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($SIS_Fecha)."'";
 				}else{
@@ -336,15 +336,15 @@ require_once '0_validate_user_1.php';
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					/*********************************************************************/
-					//Se guardan los datos de los productos	
-					if(isset($_SESSION['vehiculos_apoderados_detalle'])){		
+					//Se guardan los datos de los productos
+					if(isset($_SESSION['vehiculos_apoderados_detalle'])){
 						foreach ($_SESSION['vehiculos_apoderados_detalle'] as $key => $apo){
 							//Genero la consulta
 							if(isset($ultimo_id) && $ultimo_id!=''){            $SIS_data  = "'".$ultimo_id."'";        }else{$SIS_data  = "''";}
 							if(isset($SIS_idSistema) && $SIS_idSistema!=''){    $SIS_data .= ",'".$SIS_idSistema."'";   }else{$SIS_data .= ",''";}
 							if(isset($SIS_idUsuario) && $SIS_idUsuario!=''){    $SIS_data .= ",'".$SIS_idUsuario."'";   }else{$SIS_data .= ",''";}
-							if(isset($SIS_Fecha) && $SIS_Fecha!= ''){  
-								$SIS_data .= ",'".$SIS_Fecha."'";  
+							if(isset($SIS_Fecha) && $SIS_Fecha!= ''){
+								$SIS_data .= ",'".$SIS_Fecha."'";
 								$SIS_data .= ",'".fecha2NMes($SIS_Fecha)."'";
 								$SIS_data .= ",'".fecha2Ano($SIS_Fecha)."'";
 							}else{
@@ -380,7 +380,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'pago':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -428,7 +428,7 @@ require_once '0_validate_user_1.php';
 					if(isset($montoPago) && $montoPago!=''){          $SIS_data .= ",montoPago='".$montoPago."'";}
 					if(isset($idUsuarioPago) && $idUsuarioPago!=''){  $SIS_data .= ",idUsuarioPago='".$idUsuarioPago."'";}
 					if(isset($ultimo_id) && $ultimo_id!=''){          $SIS_data .= ",idPago='".$ultimo_id."'";}
-					
+
 					//se actualizan los datos
 					$resultado = db_update_data (false, $SIS_data, 'vehiculos_facturacion_apoderados_listado_detalle', 'idFacturacionDetalle = "'.$idFacturacionDetalle.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				

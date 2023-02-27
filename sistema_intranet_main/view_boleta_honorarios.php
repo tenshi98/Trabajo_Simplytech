@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -216,7 +216,7 @@ if($row_data['MontoPagado']!=0){?>
 								<?php foreach ($arrPagosTrab as $pagos) { ?>
 									<tr class="odd">
 										<td><?php echo $pagos['UsuarioPago']; ?></td>
-										<td><?php echo $pagos['Nombre'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];}?></td>
+										<td><?php echo $pagos['Nombre'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];} ?></td>
 										<td><?php echo fecha_estandar($pagos['F_Pago']); ?></td>
 										<td align="right" style="padding-right: 22px !important;"><?php echo Valores($pagos['MontoPagado'], 0); ?></td>
 									</tr>
@@ -224,7 +224,7 @@ if($row_data['MontoPagado']!=0){?>
 								<?php foreach ($arrPagosClien as $pagos) { ?>
 									<tr class="odd">
 										<td><?php echo $pagos['UsuarioPago']; ?></td>
-										<td><?php echo $pagos['Nombre'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];}?></td>
+										<td><?php echo $pagos['Nombre'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];} ?></td>
 										<td><?php echo fecha_estandar($pagos['F_Pago']); ?></td>
 										<td align="right" style="padding-right: 22px !important;"><?php echo Valores($pagos['MontoPagado'], 0); ?></td>
 									</tr>
@@ -232,7 +232,7 @@ if($row_data['MontoPagado']!=0){?>
 								<?php foreach ($arrPagosProv as $pagos) { ?>
 									<tr class="odd">
 										<td><?php echo $pagos['UsuarioPago']; ?></td>
-										<td><?php echo $pagos['Nombre'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];}?></td>
+										<td><?php echo $pagos['Nombre'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];} ?></td>
 										<td><?php echo fecha_estandar($pagos['F_Pago']); ?></td>
 										<td align="right" style="padding-right: 22px !important;"><?php echo Valores($pagos['MontoPagado'], 0); ?></td>
 									</tr>
@@ -241,7 +241,7 @@ if($row_data['MontoPagado']!=0){?>
 							</tbody>
 						</table>
 					</div>
-						
+
 					<div class="row invoice-payment">
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8"></div>
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -257,7 +257,7 @@ if($row_data['MontoPagado']!=0){?>
 									</tr>
 									<tr>
 										<th>Diferencia:</th>
-										<?php 
+										<?php
 										$diferencia = $row_data['MontoPagado'] - $row_data['ValorTotal'];
 										if($diferencia<0){
 											echo '<td align="right" class="text-danger"><h6><i class="fa fa-arrow-down" aria-hidden="true"></i> '.Valores($diferencia, 0).'</h6></td>';
@@ -272,7 +272,7 @@ if($row_data['MontoPagado']!=0){?>
 							</table>
 						</div>
 					</div>
-						
+
 				</div>
 			</div>
 		</div>
@@ -282,7 +282,6 @@ if($row_data['MontoPagado']!=0){?>
 
 
 <div class="clearfix"></div>
-
 
 <section class="invoice">
 
@@ -296,7 +295,7 @@ if($row_data['MontoPagado']!=0){?>
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<?php
 		//se verifica el tipo de movimiento
 		switch ($row_data['idTipo']) {
@@ -440,8 +439,8 @@ if($row_data['MontoPagado']!=0){?>
 				echo '</div>';
 
 				break;
-		}?>
-		
+		} ?>
+
 	</div>
 	
 	
@@ -458,24 +457,24 @@ if($row_data['MontoPagado']!=0){?>
 					<?php if ($arrOtros!=false && !empty($arrOtros) && $arrOtros!='') { ?>
 						<?php foreach ($arrOtros as $otro) { ?>
 							<tr>
-								<td><?php echo $otro['Nombre'];?></td>
-								<td align="right"><?php echo Valores($otro['vTotal'], 0);?></td>
+								<td><?php echo $otro['Nombre']; ?></td>
+								<td align="right"><?php echo Valores($otro['vTotal'], 0); ?></td>
 							</tr>
 						<?php } ?>
 					<?php } ?>
 				</tbody>
 			</table>
 			<table class="table">
-				<tbody>	
+				<tbody>
 					<?php if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong>Total Honorarios</strong></td> 
+							<td colspan="4" align="right"><strong>Total Honorarios</strong></td>
 							<td width="160" align="right"><?php echo Valores($row_data['ValorNeto'], 0); ?></td>
 						</tr>
 					<?php } ?>
 					<?php if(isset($row_data['Impuesto'])&&$row_data['Impuesto']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
-							<td colspan="4" align="right"><strong><?php echo $row_data['Porcentaje_Ret_Boletas'].'%'; ?> Impuesto Retenido</strong></td> 
+							<td colspan="4" align="right"><strong><?php echo $row_data['Porcentaje_Ret_Boletas'].'%'; ?> Impuesto Retenido</strong></td>
 							<td width="160" align="right"><?php echo Valores($row_data['Impuesto'], 0); ?></td>
 						</tr>
 					<?php } ?>
@@ -494,7 +493,7 @@ if($row_data['MontoPagado']!=0){?>
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
 		</div>
 	</div>
 
@@ -533,7 +532,6 @@ if($row_data['MontoPagado']!=0){?>
 	</div>
       
 </section>
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
 
@@ -594,7 +592,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -604,7 +602,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -613,4 +611,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

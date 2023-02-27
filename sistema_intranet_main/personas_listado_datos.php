@@ -50,7 +50,7 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SI
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Personas', $rowdata['Nombre'].' '.$rowdata['ApellidoPaterno'].' '.$rowdata['ApellidoMaterno'], 'Editar Datos Personales');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Personas', $rowdata['Nombre'].' '.$rowdata['ApellidoPaterno'].' '.$rowdata['ApellidoMaterno'], 'Editar Datos Personales'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -76,7 +76,7 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SI
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-					<?php 
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Rut)){               $x1  = $Rut;               }else{$x1  = $rowdata['Rut'];}
 					if(isset($Nombre)){            $x2  = $Nombre;            }else{$x2  = $rowdata['Nombre'];}
@@ -89,7 +89,7 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SI
 					if(isset($Direccion)){         $x9  = $Direccion;         }else{$x9  = $rowdata['Direccion'];}
 					if(isset($Sueldo)){            $x10 = $Sueldo;            }else{$x10 = $rowdata['Sueldo'];}
 					if(isset($idAFP)){             $x11 = $idAFP;             }else{$x11 = $rowdata['idAFP'];}
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x1, 2);
@@ -104,7 +104,7 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SI
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x9, 1,'fa fa-map');
 					$Form_Inputs->form_values('Sueldo','Sueldo', $x10, 1);
 					$Form_Inputs->form_select('AFP','idAFP', $x11, 1, 'idAFP', 'Nombre', 'sistema_afp', 'idEstado=1', '', $dbConn);
-					
+
 					$Form_Inputs->form_input_hidden('idPersona', $_GET['id'], 2);
 					?>
 
@@ -120,14 +120,14 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SI
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

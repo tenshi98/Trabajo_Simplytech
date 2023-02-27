@@ -214,6 +214,7 @@ $total_egreso  = 0;
 
  		
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<a target="new" href="<?php echo 'informe_gerencial_09_view_to_excel.php'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
@@ -240,7 +241,7 @@ $total_egreso  = 0;
 					<tr role="row" style="background-color: #d2d2d2;">
 						<th colspan="7">Pagos a Proveedores</th>
 					</tr>
-					<?php 
+					<?php
 					//Subtotal
 					$Subtotal_1 = 0;
 					$Subtotal_2 = 0;
@@ -281,11 +282,11 @@ $total_egreso  = 0;
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($Subtotal_2, 0); ?></td><?php } ?>
 						<td></td>
 					</tr>
-					<?php ////////////////////////////////////////////////////////////////////?> 
+					<?php ////////////////////////////////////////////////////////////////////?>
 					<tr role="row" style="background-color: #d2d2d2;">
 						<th colspan="7">Pagos de Clientes</th>
 					</tr>
-					<?php 
+					<?php
 					//Subtotal
 					$Subtotal_1 = 0;
 					$Subtotal_2 = 0;
@@ -296,7 +297,7 @@ $total_egreso  = 0;
 							<td><?php echo $tipo['Empresa']; ?></td>
 							<td><?php echo $tipo['Documento'].' '.$tipo['N_DocPago']; ?></td>
 							<td><?php echo Fecha_estandar($tipo['F_Pago']); ?></td>
-							<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){ ?><td align="right" class="color-blue"><?php echo valores($tipo['MontoPagado'], 0); $total_ingreso = $total_ingreso + $tipo['MontoPagado']; $Subtotal_1 = $Subtotal_1 + $tipo['MontoPagado'];?></td><?php } ?>
+							<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){ ?><td align="right" class="color-blue"><?php echo valores($tipo['MontoPagado'], 0); $total_ingreso = $total_ingreso + $tipo['MontoPagado']; $Subtotal_1 = $Subtotal_1 + $tipo['MontoPagado']; ?></td><?php } ?>
 							<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores(0, 0); ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
@@ -325,12 +326,12 @@ $total_egreso  = 0;
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){ ?><td align="right" class="color-blue"><?php echo valores($Subtotal_1, 0); ?></td><?php } ?>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($Subtotal_2, 0); ?></td><?php } ?>
 						<td></td>
-					</tr> 
+					</tr>
 					<?php ////////////////////////////////////////////////////////////////////?> 
 					 <tr role="row" style="background-color: #d2d2d2;">
 						<th colspan="7">Pagos a trabajadores</th>
 					</tr>
-					<?php 
+					<?php
 					//Subtotal
 					$Subtotal_1 = 0;
 					$Subtotal_2 = 0;
@@ -345,7 +346,7 @@ $total_egreso  = 0;
 							<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($tipo['MontoPagado'], 0); $total_egreso = $total_egreso + $tipo['MontoPagado'];$Subtotal_2 = $Subtotal_2 + $tipo['MontoPagado']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="view_rrhh_sueldos.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php");?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="view_rrhh_sueldos.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -360,7 +361,7 @@ $total_egreso  = 0;
 					 <tr role="row" style="background-color: #d2d2d2;">
 						<th colspan="7">Pagos boletas a trabajadores</th>
 					</tr>
-					<?php 
+					<?php
 					//Subtotal
 					$Subtotal_1 = 0;
 					$Subtotal_2 = 0;
@@ -375,7 +376,7 @@ $total_egreso  = 0;
 							<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($tipo['MontoPagado'], 0); $total_egreso = $total_egreso + $tipo['MontoPagado'];$Subtotal_2 = $Subtotal_2 + $tipo['MontoPagado']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="view_boleta_honorarios.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php");?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="view_boleta_honorarios.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -386,11 +387,11 @@ $total_egreso  = 0;
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($Subtotal_2, 0); ?></td><?php } ?>
 						<td></td>
 					</tr>
-					<?php ////////////////////////////////////////////////////////////////////?> 
+					<?php ////////////////////////////////////////////////////////////////////?>
 					<tr role="row" style="background-color: #d2d2d2;">
 						<th colspan="7">Rendiciones</th>
 					</tr>
-					<?php 
+					<?php
 					//Subtotal
 					$Subtotal_1 = 0;
 					$Subtotal_2 = 0;
@@ -405,7 +406,7 @@ $total_egreso  = 0;
 							<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($tipo['MontoPagado'], 0); $total_egreso = $total_egreso + $tipo['MontoPagado'];$Subtotal_2 = $Subtotal_2 + $tipo['MontoPagado']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="view_mov_contab_caja_gastos.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php");?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="view_mov_contab_caja_gastos.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -416,11 +417,11 @@ $total_egreso  = 0;
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($Subtotal_2, 0); ?></td><?php } ?>
 						<td></td>
 					</tr>
-					<?php ////////////////////////////////////////////////////////////////////?> 
+					<?php ////////////////////////////////////////////////////////////////////?>
 					<tr role="row" style="background-color: #d2d2d2;">
 						<th colspan="7">Formulario 29</th>
 					</tr>
-					<?php 
+					<?php
 					//Subtotal
 					$Subtotal_1 = 0;
 					$Subtotal_2 = 0;
@@ -435,7 +436,7 @@ $total_egreso  = 0;
 							<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($tipo['MontoPagado'], 0); $total_egreso = $total_egreso + $tipo['MontoPagado'];$Subtotal_2 = $Subtotal_2 + $tipo['MontoPagado']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="view_mov_pagos_leyes_fiscales.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php");?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="view_mov_pagos_leyes_fiscales.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -446,11 +447,11 @@ $total_egreso  = 0;
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($Subtotal_2, 0); ?></td><?php } ?>
 						<td></td>
 					</tr>
-					<?php ////////////////////////////////////////////////////////////////////?> 
+					<?php ////////////////////////////////////////////////////////////////////?>
 					<tr role="row" style="background-color: #d2d2d2;">
 						<th colspan="7">Pagos de previred</th>
 					</tr>
-					<?php 
+					<?php
 					//Subtotal
 					$Subtotal_1 = 0;
 					$Subtotal_2 = 0;
@@ -465,7 +466,7 @@ $total_egreso  = 0;
 							<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($tipo['MontoPagado'], 0); $total_egreso = $total_egreso + $tipo['MontoPagado'];$Subtotal_2 = $Subtotal_2 + $tipo['MontoPagado']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="view_mov_pagos_leyes_sociales.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php");?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="view_mov_pagos_leyes_sociales.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -489,7 +490,6 @@ $total_egreso  = 0;
 	</div>
 </div>
 
-
 <?php if(isset($_GET['return'])&&$_GET['return']!=''){?>
 	<div class="clearfix"></div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
@@ -503,4 +503,5 @@ $total_egreso  = 0;
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

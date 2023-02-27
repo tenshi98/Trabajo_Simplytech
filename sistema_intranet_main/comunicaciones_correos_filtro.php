@@ -58,7 +58,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Notificacion borrada c
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['submit_filter'])){	
+if(!empty($_GET['submit_filter'])){
 //realizo el filtrado de acuerdo al filtro anterior
 $w = "WHERE usuarios_listado.idEstado = 1 AND usuarios_listado.email!= ''";
 if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario']!=''){  $w .= " AND usuarios_listado.idTipoUsuario = '".$_GET['idTipoUsuario']."'";}
@@ -67,7 +67,7 @@ if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != '')  {          $w .= " AND 
 if(isset($_GET['idComuna']) && $_GET['idComuna'] != '')  {          $w .= " AND usuarios_listado.idComuna = '".$_GET['idComuna']."'";}
 if(isset($_GET['Direccion']) && $_GET['Direccion'] != '')  {        $w .= " AND usuarios_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";}
 if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {        $w .= " AND usuarios_sistemas.idSistema = '".$_GET['idSistema']."'";}
-if(isset($_GET['rango_a']) && $_GET['rango_a'] != ''&&isset($_GET['rango_b']) && $_GET['rango_b']!=''){ 
+if(isset($_GET['rango_a']) && $_GET['rango_a'] != ''&&isset($_GET['rango_b']) && $_GET['rango_b']!=''){
 	$w .= " AND usuarios_listado.fNacimiento BETWEEN '".$_GET['rango_a']."' AND '".$_GET['rango_b']."'";
 }
 //consulta
@@ -105,6 +105,7 @@ foreach ($arrNotificaciones as $noti) {
 }
 					
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -126,7 +127,7 @@ foreach ($arrNotificaciones as $noti) {
 
 				$Form_Inputs->form_input_hidden('Fecha', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-				
+
 				if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario']!=''){  $Form_Inputs->form_input_hidden('idTipoUsuario', $_GET['idTipoUsuario'], 2);}     
 				if(isset($_GET['Nombre']) && $_GET['Nombre'] != '')  {              $Form_Inputs->form_input_hidden('Nombre', $_GET['Nombre'], 2);}           
 				if(isset($_GET['rango_a']) && $_GET['rango_a'] != '')  {            $Form_Inputs->form_input_hidden('rango_a', $_GET['rango_a'], 2);}     
@@ -175,13 +176,13 @@ foreach ($arrNotificaciones as $noti) {
 					<?php } ?>
 				</tbody>
 			</table>
-		</div> 
+		</div>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -217,7 +218,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Buscar" name="submit_filter">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -325,7 +326,7 @@ $arrNotificaciones = db_select_array (false, $SIS_query, 'comunicaciones_interna
 									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_correos_masivos.php?view='.simpleEncode($noti['idEmail'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($noti['idEmail'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar el correo masivo?';?>
+										$dialogo   = '¿Realmente deseas eliminar el correo masivo?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -343,11 +344,11 @@ $arrNotificaciones = db_select_array (false, $SIS_query, 'comunicaciones_interna
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

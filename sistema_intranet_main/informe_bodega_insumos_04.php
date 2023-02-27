@@ -182,7 +182,6 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table']});</script>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -202,7 +201,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 						<?php if($s_Gasto_OT=='true'){ ?>          <li class=""><a href="#tab8"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Gasto OT</a></li><?php } ?>
 						<?php if($s_Traspaso_Manual=='true'){ ?>   <li class=""><a href="#tab9"  data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Traspaso manual otra empresa</a></li><?php } ?>
 						<?php if($s_Ingreso_Manual=='true'){ ?>    <li class=""><a href="#tab10" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Ingreso Manual</a></li><?php } ?>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -229,7 +228,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 			<div class="tab-pane fade" id="tab2">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-									
+
 						<script>
 							
 							google.charts.setOnLoadCallback(drawChart1);
@@ -275,7 +274,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 					</div>
 				</div>
 			</div>
-			
+
 			<?php if($s_Ventas=='true'){ ?>
 				<div class="tab-pane fade" id="tab3">
 					<div class="wmd-panel">
@@ -283,7 +282,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart1);
 
 								function drawChart1() {
@@ -337,7 +336,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart1);
 
 								function drawChart1() {
@@ -391,7 +390,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart1);
 
 								function drawChart1() {
@@ -445,7 +444,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart1);
 
 								function drawChart1() {
@@ -499,7 +498,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart1);
 
 								function drawChart1() {
@@ -553,7 +552,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart1);
 
 								function drawChart1() {
@@ -607,7 +606,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart1);
 
 								function drawChart1() {
@@ -661,7 +660,7 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 							
 										
 							<script>
-								
+
 								google.charts.setOnLoadCallback(drawChart1);
 
 								function drawChart1() {
@@ -723,4 +722,5 @@ if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

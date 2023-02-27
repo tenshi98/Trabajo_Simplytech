@@ -110,9 +110,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 	</div>
 </div>
 
-
-
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){?>
 
@@ -176,6 +173,7 @@ $arrBloqueo = db_select_array (false, $SIS_query, 'sistema_seguridad_bloqueo_ip'
 
 //variable de busqueda
 $search='';
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -204,7 +202,7 @@ $search='';
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
-								  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrBloqueo as $bloqueo) { ?>
 					<tr class="odd">
@@ -215,9 +213,9 @@ $search='';
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<a href="<?php echo $location.'&id='.$bloqueo['idBloqueo']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-								<?php 
+								<?php
 								$ubicacion = $location.'&del='.simpleEncode($bloqueo['idBloqueo'], fecha_actual());
-								$dialogo   = '¿Realmente deseas eliminar el registro '.$bloqueo['IP_Client'].'?';?>
+								$dialogo   = '¿Realmente deseas eliminar el registro '.$bloqueo['IP_Client'].'?'; ?>
 								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
@@ -239,4 +237,5 @@ $search='';
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

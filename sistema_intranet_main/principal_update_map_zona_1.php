@@ -100,7 +100,6 @@ foreach ($arrUnimed as $data) {
 }
 ?>
 
-
 <script>
 	var HoraRefresco = '<?php echo hora_actual(); ?>';
 	

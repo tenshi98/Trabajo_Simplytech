@@ -422,7 +422,7 @@ require_once '0_validate_user_1.php';
 			$FModificacion  = fecha_actual();
 			$HModificacion  = hora_actual();
 			$idUsuarioMod   = $_SESSION['usuario']['basic_data']['idUsuario'];
-			
+
 			/*******************************************************/
 			//se actualizan los datos
 			$SIS_data  = "idEstado='".$idEstado."'";
@@ -492,7 +492,7 @@ require_once '0_validate_user_1.php';
 					$password    = 1234;
 					$new_folder  = 1;
 					$fNacimiento = fecha_actual();
-						
+
 					//se actualizaal cliente
 					if($ndata_1!=0){
 						//Filtros

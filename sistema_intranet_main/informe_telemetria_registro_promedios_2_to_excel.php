@@ -33,7 +33,7 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'ndata_1');
-			
+
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
@@ -49,7 +49,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		AVG(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedProm,
 		STDDEV(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0),0)) AS MedDesStan,
 		";
-	//solo desde	
+	//solo desde
 	}elseif(isset($_GET['desde'])&&$_GET['desde']!=''&&(!isset($_GET['hasta']) OR $_GET['hasta']=='')){
 		$subquery = "
 		MIN(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMin,
@@ -57,7 +57,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		AVG(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedProm,
 		STDDEV(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].">=".$_GET['desde'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedDesStan,
 		";
-	//solo hasta	
+	//solo hasta
 	}elseif(isset($_GET['hasta'])&&$_GET['hasta']!=''&&(!isset($_GET['desde']) OR $_GET['desde']=='')){
 		$subquery = "
 		MIN(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<=".$_GET['hasta'].",IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0),0)) AS MedMin,
@@ -73,8 +73,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		AVG(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedProm,
 		STDDEV(NULLIF(IF(telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn']."<99900,telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".Sensor_".$_GET['sensorn'].",0),0)) AS MedDesStan,
 		";
-	}	
-	
+	}
+
 	//se traen lo datos del equipo
 	$SIS_query = '
 	telemetria_listado.SensoresNombre_'.$_GET['sensorn'].' AS SensorNombre,
@@ -103,7 +103,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								 ->setDescription("Document for Office 2007")
 								 ->setKeywords("office 2007")
 								 ->setCategory("office 2007 result file");
-		
+
 	//Titulo columnas
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A1', 'CONTROL Sensor N° '.$_GET['sensorn'].' '.DeSanitizar($arrEquipos[0]['SensorNombre']))
@@ -118,37 +118,36 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					->setCellValue('B5', DeSanitizar($arrEquipos[0]['Unimed']).' Promedio')
 					->setCellValue('C5', DeSanitizar($arrEquipos[0]['Unimed']).' Minimo')
 					->setCellValue('D5', DeSanitizar($arrEquipos[0]['Unimed']).' Maximo')
-					->setCellValue('E5', 'Dev. Std.');					
-	//Si no se ven detalles	
+					->setCellValue('E5', 'Dev. Std.');
+	//Si no se ven detalles
 	}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
 		$spreadsheet->setActiveSheetIndex(0)
-					->setCellValue('B5', DeSanitizar($arrEquipos[0]['Unimed']).' Promedio');								
+					->setCellValue('B5', DeSanitizar($arrEquipos[0]['Unimed']).' Promedio');
 	}
-			 
+
 	$nn=6;
 	foreach ($arrEquipos as $rutas) {
 		//Verifico si existen datos
 		if(isset($rutas['MedMin'])&&$rutas['MedMin']!=0&&$rutas['MedMin']!=''&&isset($rutas['MedMax'])&&$rutas['MedMax']!=0&&$rutas['MedMax']!=''){
-										
+
 			$spreadsheet->setActiveSheetIndex(0)
-						->setCellValue('A'.$nn, fecha_estandar($rutas['FechaSistema']));			
+						->setCellValue('A'.$nn, fecha_estandar($rutas['FechaSistema']));
 			//Si se ven detalles
 			if(isset($_GET['idDetalle'])&&$_GET['idDetalle']==1){
 			$spreadsheet->setActiveSheetIndex(0)
 						->setCellValue('B'.$nn, Cantidades($rutas['MedProm'], 2))
 						->setCellValue('C'.$nn, Cantidades($rutas['MedMin'], 2))
 						->setCellValue('D'.$nn, Cantidades($rutas['MedMax'], 2))
-						->setCellValue('E'.$nn, Cantidades($rutas['MedDesStan'], 2));		
-			//Si no se ven detalles	
+						->setCellValue('E'.$nn, Cantidades($rutas['MedDesStan'], 2));
+			//Si no se ven detalles
 			}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
 			$spreadsheet->setActiveSheetIndex(0)
-						->setCellValue('B'.$nn, Cantidades($rutas['MedProm'], 2));								
-			} 
-
+						->setCellValue('B'.$nn, Cantidades($rutas['MedProm'], 2));
+			}
 			$nn++;
-		}           
-	   
-	} 
+		}
+
+	}
 
 	// Rename worksheet
 	$spreadsheet->getActiveSheet()->setTitle('Max – Min Sensor');

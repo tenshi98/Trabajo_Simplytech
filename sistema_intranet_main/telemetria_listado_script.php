@@ -109,7 +109,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_script', $SIS_
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Editar Script Equipo <?php echo $rowdata['Nombre'];?></h5>
+			<h5>Editar Script Equipo <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
@@ -209,7 +209,7 @@ $rowdata = db_select_data (false, $SIS_query , 'telemetria_listado', $SIS_join, 
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Crear Script Equipo <?php echo $rowdata['Nombre'];?></h5>
+			<h5>Crear Script Equipo <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
@@ -290,9 +290,9 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Scripts');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Scripts'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Script</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Script</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -354,7 +354,7 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 									echo '<span class="label label-danger">'.$script['Modificado'].'</span>';
 								}else{
 									echo $script['Modificado'];
-								}?>
+								} ?>
 							</td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
@@ -362,7 +362,7 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$script['idScript']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($script['idScript'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar la observacion del usuario '.$script['nombre_usuario'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar la observacion del usuario '.$script['nombre_usuario'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -377,10 +377,9 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php } ?>
 <?php
@@ -388,4 +387,5 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

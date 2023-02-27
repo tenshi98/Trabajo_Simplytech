@@ -89,7 +89,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Asignacion borrada cor
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- if(!empty($_GET['editFecha'])){ 
+if(!empty($_GET['editFecha'])){
 // consulto los datos
 $query = "SELECT Programada_fecha
 FROM `alumnos_evaluaciones_asignadas`
@@ -107,8 +107,10 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$rowdata = mysqli_fetch_assoc ($resultado);
+
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -128,9 +130,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				$Form_Inputs->form_input_hidden('idAsignadas', $_GET['editFecha'], 2);
 				?>
-	   
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_modfecha"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_modfecha">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -142,6 +144,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['add'])){ ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -161,9 +164,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				$Form_Inputs->form_input_hidden('idAsignadas', $_GET['add'], 2);
 				?>
-	   
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_reintento"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_reintento">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -174,7 +177,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>	 
 	 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['paso_2a'])){ 
+}elseif(!empty($_GET['paso_2a'])){
 //Consulto por las categorias y el maximo de preguntas por cada una de estas
 $arrCategoria = array();
 $query = "SELECT 
@@ -230,19 +233,18 @@ array_push( $arrCategoria,$row );
 					$xxn++;
 					$Form_Inputs->form_input_hidden('n_categoria_'.$xxn, $cat['Cuenta'], 2);
 				}
-				
+
 				$Form_Inputs->form_input_hidden('idAsignar', $_GET['idAsignar'], 2);
 				$Form_Inputs->form_input_hidden('idCurso', $_GET['idCurso'], 2);
 				$Form_Inputs->form_input_hidden('idQuiz', $_GET['idQuiz'], 2);
 				$Form_Inputs->form_input_hidden('Programada_fecha', $_GET['Programada_fecha'], 2);
 				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
 				//$Form_Inputs->form_input_hidden('Semana', $_GET['Semana'], 2);
-				
-				
+
 				?>
-	   
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_pas_2a"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_pas_2a">
 					<a href="<?php echo $location.'&new=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -253,7 +255,7 @@ array_push( $arrCategoria,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['paso_2b'])){
+} elseif(!empty($_GET['paso_2b'])){
 //Consulto por las categorias y el maximo de preguntas por cada una de estas
 $arrCategoria = array();
 $query = "SELECT 
@@ -309,7 +311,7 @@ array_push( $arrCategoria,$row );
 					$xxn++;
 					$Form_Inputs->form_input_hidden('n_categoria_'.$xxn, $cat['Cuenta'], 2);
 				}
-				
+
 				$Form_Inputs->form_input_hidden('idAsignar', $_GET['idAsignar'], 2);
 				$Form_Inputs->form_input_hidden('idCurso', $_GET['idCurso'], 2);
 				$Form_Inputs->form_input_hidden('idQuiz', $_GET['idQuiz'], 2);
@@ -317,9 +319,9 @@ array_push( $arrCategoria,$row );
 				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
 				//$Form_Inputs->form_input_hidden('Semana', $_GET['Semana'], 2);
 				?>
-	   
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_pas_2b"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_pas_2b">
 					<a href="<?php echo $location.'&new=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -329,11 +331,12 @@ array_push( $arrCategoria,$row );
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -363,9 +366,9 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 
 				?>
-	   
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Asignar" name="submit"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Asignar" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -458,7 +461,9 @@ $arrUsers = db_select_array (false, $SIS_query, 'alumnos_evaluaciones_asignadas'
 
 //Verifico el tipo de usuario que esta ingresando
 $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
@@ -469,7 +474,7 @@ $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstad
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Asignar Evaluacion</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Asignar Evaluacion</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -608,7 +613,7 @@ $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstad
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&editFecha='.$usuarios['idAsignadas']; ?>" title="Editar Fecha Programada" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del_asignacion='.simpleEncode($usuarios['idAsignadas'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la evaluacion '.$usuarios['Quiz'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la evaluacion '.$usuarios['Quiz'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Asignacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -635,4 +640,5 @@ $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstad
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

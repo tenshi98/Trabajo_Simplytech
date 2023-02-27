@@ -104,7 +104,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 				if(isset($Descripcion)){ $x8  = $Descripcion; }else{$x8  = $rowdata['Descripcion'];}
 				if(isset($idEstado)){    $x9  = $idEstado;    }else{$x9  = $rowdata['idEstado'];}
 				if(isset($idValidado)){  $x10 = $idValidado;  }else{$x10 = $rowdata['idValidado'];}
-					
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Vecino','idCliente', $x1, 2, 'idCliente', 'Nombre', 'seg_vecinal_clientes_listado', $z, '', $dbConn);
@@ -284,15 +284,15 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 							<td><?php echo $eve['Direccion'].', '.$eve['Comuna'].', '.$eve['Ciudad']; ?></td>
 							<td><?php echo fecha_estandar($eve['Fecha']); ?></td>
 							<td><?php echo $eve['Hora']; ?></td>
-							<td><label class="label <?php if(isset($eve['idEstado'])&&$eve['idEstado']==1){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $eve['Estado']; ?></label></td>
-							<td><label class="label <?php if(isset($eve['idValidado'])&&$eve['idValidado']==2){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $eve['Validacion']; ?></label></td>
+							<td><label class="label <?php if(isset($eve['idEstado'])&&$eve['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $eve['Estado']; ?></label></td>
+							<td><label class="label <?php if(isset($eve['idValidado'])&&$eve['idValidado']==2){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $eve['Validacion']; ?></label></td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
 									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_seg_vecinal_peligro.php?view='.simpleEncode($eve['idPeligro'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$eve['idPeligro']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($eve['idPeligro'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar la zona de peligro '.$eve['Tipo'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar la zona de peligro '.$eve['Tipo'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -310,11 +310,11 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

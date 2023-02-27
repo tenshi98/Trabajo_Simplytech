@@ -54,7 +54,7 @@ $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 					$xcounter = 1;
 					foreach($arrReserva as $idOficina=>$reservas){
 						if($xcounter==1){$xactive = 'active';}else{$xactive = '';}
-						if($xcounter==4){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';} 
+						if($xcounter==4){echo '<li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu">';}
 						echo '<li class="'.$xactive.'"><a href="#res_id_'.$idOficina.'" data-toggle="tab"><i class="fa fa-tag" aria-hidden="true"></i> '.$reservas[0]['Oficina'].'</a></li>';
 						$xcounter++;
 					}
@@ -127,7 +127,7 @@ $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 																			echo "<td class='fc-Dia fc-wed fc-widget-content fc-other-Mes fc-future fc-state-none'> </td>";
 																		// mostramos el dia
 																		}else{?>
-																			<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';}?>">
+																			<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';} ?>">
 																				<div class="calendar_min">
 																					<div class="fc-Dia-number"><?php echo $Dia; ?></div>
 																					<div class="fc-Dia-content">
@@ -146,7 +146,7 @@ $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 																								echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor.'" href="'.$ver.'&return=true">Res. N° '.$res['idReserva'].' ('.$res['Hora_Inicio'].' a '.$res['Hora_Termino'].')</a>';
 
 																							}
-																						}?>
+																						} ?>
 																					</div>
 																				</div>
 																			</td>
@@ -174,7 +174,7 @@ $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 						</div>
 					<?php
 					$xcounter++;
-				}?>
+				} ?>
 
 			</div>
 		</div>

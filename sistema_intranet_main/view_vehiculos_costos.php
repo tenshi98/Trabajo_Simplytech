@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -60,7 +60,7 @@ $row_data = db_select_data (false, $SIS_query, 'vehiculos_costos', $SIS_join, $S
 
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
-					
+
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" style="margin-bottom:5px;">
 						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/bag_money.png">
 					</div>
@@ -68,18 +68,17 @@ $row_data = db_select_data (false, $SIS_query, 'vehiculos_costos', $SIS_join, $S
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 						<p class="text-muted">
 							<strong>Tipo: </strong><?php echo $row_data['Tipo']; ?><br/>
-							<strong>Vehiculo: </strong><?php echo $row_data['VehiculoNombre'].' Patente '.$row_data['VehiculoPatente'];?><br/>
-							<strong>Fecha: </strong><?php echo fecha_estandar($row_data['Creacion_fecha']);?><br/>
-							<strong>Valor: </strong><?php echo valores($row_data['Valor'],0);?>
+							<strong>Vehiculo: </strong><?php echo $row_data['VehiculoNombre'].' Patente '.$row_data['VehiculoPatente']; ?><br/>
+							<strong>Fecha: </strong><?php echo fecha_estandar($row_data['Creacion_fecha']); ?><br/>
+							<strong>Valor: </strong><?php echo valores($row_data['Valor'],0); ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Observaciones</h2>
-						<p class="text-muted" style="white-space: normal;"><?php echo $row_data['Observaciones'];?></p>
-					
-					
+						<p class="text-muted" style="white-space: normal;"><?php echo $row_data['Observaciones']; ?></p>
+
 					</div>
 					<div class="clearfix"></div>
-			
+
 				</div>
 			</div>
         </div>
@@ -101,7 +100,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -111,7 +110,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -122,4 +121,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

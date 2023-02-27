@@ -31,7 +31,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //formulario para crear
 if (!empty($_POST['submit'])){
 	//Llamamos al formulario
-	$form_trabajo= 'new_transform'; 
+	$form_trabajo= 'new_transform';
 	require_once 'A1XRXS_sys/xrxs_form/z_bodega_productos.php';
 }
 //formulario para editar
@@ -118,7 +118,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Gasto borrado correcta
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['addIns'])){ 
+if(!empty($_GET['addIns'])){
 //Se revisan los permisos a los productos
 $SIS_query = 'idProducto';
 $SIS_join  = '';
@@ -156,7 +156,7 @@ foreach ($arrPermisos as $prod) {
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_ins"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_ins">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -204,7 +204,7 @@ foreach ($arrPermisos as $prod) {
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_prod">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -214,7 +214,7 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['trans2'])){ 
+}elseif(!empty($_GET['trans2'])){
 // Se trae un listado con productos del documento
 $SIS_query = '
 productos_recetas.idReceta,
@@ -243,10 +243,8 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 
 //variable con el maximo a transformar
 $max = 1000000 ;
+
 ?>
-
-
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 <form class="facturacion" name="doc1" method="post" novalidate>
@@ -274,8 +272,8 @@ $max = 1000000 ;
 					?>
 					<tr class="item-row">
 						<td class="item-name" colspan="4"><?php echo $receta['NombreProd']; ?></td>
-						<td width="90"><?php echo Cantidades_decimales_justos($receta['Cantidad']).' '.$receta['UnidadMedida'];?></td>
-						<?php $total = $receta['ingreso']-$receta['egreso'];?>
+						<td width="90"><?php echo Cantidades_decimales_justos($receta['Cantidad']).' '.$receta['UnidadMedida']; ?></td>
+						<?php $total = $receta['ingreso']-$receta['egreso']; ?>
 						<td width="90"><?php echo $total.' '.$receta['UnidadMedida'] ?></td>
 						<?php 
 						$maximo = floor($total/$receta['Cantidad']);
@@ -283,14 +281,14 @@ $max = 1000000 ;
 						
 						?>
 					</tr>
-				<?php }?>
+				<?php } ?>
 				<tr class="item-row fact_tittle">
 					<td colspan="6">Maximo posible para crear : <strong><?php echo $max.' '.$arrRecetas[0]['UnidadMedida'] ?></strong></td>
 				</tr>
 				<?php if($inactivos==0&&$max>0){ ?>
 					<tr>
 						<td colspan="6">
-							<?php 
+							<?php
 							//se dibujan los inputs
 							$Form_Inputs = new Inputs();
 							$Form_Inputs->input_values_val('text',$rowdata['Medida'],'Cantidad',2,'','display:inline-block; width:200px;', '');
@@ -305,13 +303,13 @@ $max = 1000000 ;
 						<td colspan="6">Uno o mas de los componentes de la receta esta inactivo o no posee la cantidad necesaria para la transformacion, favor verificar</td>
 					</tr>
 
-				<?php }?>
+				<?php } ?>
             <?php } else {?>
 				<tr class="item-row fact_tittle">
 					<td colspan="6">Este producto no posee recetas</td>
 				</tr>
             
-            <?php }?>
+            <?php } ?>
              
             
             
@@ -332,9 +330,8 @@ $max = 1000000 ;
 <div class="clearfix"></div>
 </div>
 
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['trans1'])){ 
+} elseif(!empty($_GET['trans1'])){
 //Se revisan los permisos a los productos
 $SIS_query = 'idProducto';
 $SIS_join  = '';
@@ -367,10 +364,9 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
 				?>
-				
-			  
+
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf178; Continuar" name="submit_trans1"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf178; Continuar" name="submit_trans1">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -384,7 +380,9 @@ foreach ($arrPermisos as $prod) {
 }elseif(!empty($_GET['modCentroCosto'])){
 //sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -415,7 +413,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modCentroCosto"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_modCentroCosto">
 					<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 
@@ -431,7 +429,7 @@ $z2 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z1 .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
-} 
+}
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -477,21 +475,22 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['view'])){
 $Form_Inputs = new Inputs();
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
 
-		<?php 
+		<?php
 		$ubicacion = $location.'&clear_all=true';
-		$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+		$dialogo   = '¿Realmente deseas eliminar todos los registros?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
 
 		<a href="<?php echo $location; ?>"  class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
-		<?php 
+		<?php
 		$ubicacion = $location.'&view=true&trans_bodega=true';
-		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?';?>
+		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary"><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>		
 
 	</div>
@@ -505,7 +504,7 @@ $Form_Inputs = new Inputs();
 		<div id="header"> <?php echo $_SESSION['productos_transform_basicos']['TipoDocumento']; ?></div>
 
 		<div id="customer">
-			
+
 			<table id="meta" class="pull-left otdata">
 				<tbody>
 					<tr>
@@ -548,9 +547,7 @@ $Form_Inputs = new Inputs();
 					<th width="120">Ingreso</th>
 					<th width="120">Egreso</th>
 				</tr>
-				
 
-				
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Productos a Transformar</td>
 					<td>
@@ -558,17 +555,17 @@ $Form_Inputs = new Inputs();
 							<a href="<?php echo $location.'&clear_prod=true' ?>" title="Borrar Producto" class="btn btn-xs btn-danger tooltip" style="position: initial;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Producto</a>
 						<?php }else{ ?>
 							<a href="<?php echo $location.'&trans1=true' ?>" title="Agregar Producto" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Seleccionar Producto</a>
-						<?php }?>
-					
+						<?php } ?>
+
 					</td>
 				</tr>
-				<?php 
+				<?php
 				if (isset($_SESSION['productos_transform_productos'])){
 					//recorro el lsiatdo entregado por la base de datos
 					foreach ($_SESSION['productos_transform_productos'] as $key => $producto){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="3">
-								<?php echo $producto['Nombre'];?>
+								<?php echo $producto['Nombre']; ?>
 							</td>
 							<?php
 							if(isset($producto['prod_egreso'])&&$producto['prod_egreso']!=''){
@@ -584,7 +581,7 @@ $Form_Inputs = new Inputs();
 
 						</tr>
 				<?php }
-				}?>
+				} ?>
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Otros Productos a Utilizar</td>
 					<td>
@@ -592,29 +589,29 @@ $Form_Inputs = new Inputs();
 					</td>
 				</tr>
 
-				<?php 
+				<?php
 					if (isset($_SESSION['productos_transform_productos_prod'])){
 						//recorro el lsiatdo entregado por la base de datos
 						foreach ($_SESSION['productos_transform_productos_prod'] as $key => $producto){ ?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="2">
-									<?php echo $producto['Nombre'];?>
+									<?php echo $producto['Nombre']; ?>
 								</td>
 								<td class="item-name">
-									<?php echo Cantidades_decimales_justos($producto['Number']).' '.$producto['Unimed'];?>
+									<?php echo Cantidades_decimales_justos($producto['Number']).' '.$producto['Unimed']; ?>
 								</td>
 								<td class="item-name" align="right">
-									<?php echo Valores(Cantidades_decimales_justos($producto['ValorEgreso']), 0).' x '.$producto['Unimed'];?>
+									<?php echo Valores(Cantidades_decimales_justos($producto['ValorEgreso']), 0).' x '.$producto['Unimed']; ?>
 								</td>
 								<td class="item-name" align="right">
-									<?php echo 'Total '.Valores(Cantidades_decimales_justos($producto['ValorTotal']), 0);?>
+									<?php echo 'Total '.Valores(Cantidades_decimales_justos($producto['ValorTotal']), 0); ?>
 								</td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<?php 
+										<?php
 										$ubicacion = $location.'&del_prod='.$producto['idProducto'];
-										$dialogo   = '¿Realmente deseas eliminar el producto '.str_replace('"','',$prod['Nombre']).'?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Producto" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+										$dialogo   = '¿Realmente deseas eliminar el producto '.str_replace('"','',$prod['Nombre']).'?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Producto" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									</div>
 								</td>
 							</tr>
@@ -626,29 +623,29 @@ $Form_Inputs = new Inputs();
 						<a href="<?php echo $location.'&addIns=true' ?>" title="Agregar Insumo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Insumo</a>
 					</td>
 				</tr>
-				<?php 
+				<?php
 					if (isset($_SESSION['productos_transform_productos_ins'])){
 						//recorro el lsiatdo entregado por la base de datos
 						foreach ($_SESSION['productos_transform_productos_ins'] as $key => $producto){ ?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="2">
-									<?php echo $producto['Nombre'];?>
+									<?php echo $producto['Nombre']; ?>
 								</td>
 								<td class="item-name">
-									<?php echo Cantidades_decimales_justos($producto['Number']).' '.$producto['Unimed'];?>
+									<?php echo Cantidades_decimales_justos($producto['Number']).' '.$producto['Unimed']; ?>
 								</td>
 								<td class="item-name" align="right">
-									<?php echo Valores(Cantidades_decimales_justos($producto['ValorEgreso']), 0).' x '.$producto['Unimed'];?>
+									<?php echo Valores(Cantidades_decimales_justos($producto['ValorEgreso']), 0).' x '.$producto['Unimed']; ?>
 								</td>
 								<td class="item-name" align="right">
-									<?php echo 'Total '.Valores(Cantidades_decimales_justos($producto['ValorTotal']), 0);?>
+									<?php echo 'Total '.Valores(Cantidades_decimales_justos($producto['ValorTotal']), 0); ?>
 								</td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<?php 
+										<?php
 										$ubicacion = $location.'&del_ins='.$producto['idProducto'];
-										$dialogo   = '¿Realmente deseas eliminar el insumo '.str_replace('"','',$producto['Nombre']).'?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Insumo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+										$dialogo   = '¿Realmente deseas eliminar el insumo '.str_replace('"','',$producto['Nombre']).'?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Insumo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									</div>
 								</td>
 							</tr>
@@ -660,11 +657,11 @@ $Form_Inputs = new Inputs();
 		</table>
     	
     </div>
-    
+
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['productos_transform_basicos']['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $_SESSION['productos_transform_basicos']['Observaciones']; ?></p>
 		</div>
 	</div>
 
@@ -754,7 +751,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 $z1 = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $z2 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$z1 .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$z1 .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 /**********************************************************/
 //Variable con la ubicacion
@@ -790,7 +787,6 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
@@ -803,19 +799,19 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 
 	<?php if ($rowlevel['level']>=3){
 		if (isset($_SESSION['productos_transform_basicos'])&&$_SESSION['productos_transform_basicos']!=''){?>
-			
-		<?php 
+
+		<?php
 		$ubicacion = $location.'&clear_all=true';
-		$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+		$dialogo   = '¿Realmente deseas eliminar todos los registros?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar</a>
-		
+
 		<a href="<?php echo $location; ?>&view=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-arrow-right" aria-hidden="true"></i> Continuar Transformacion</a>
 	<?php }else{ ?>
 		<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Transformacion</a>
 	<?php }
-	 }?>
-</div>   
-<div class="clearfix"></div> 
+	 } ?>
+</div>
+<div class="clearfix"></div>
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -913,11 +909,11 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

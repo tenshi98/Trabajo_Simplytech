@@ -98,7 +98,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){        $x1  = $Nombre;        }else{$x1  = $rowdata['Nombre'];}
@@ -146,7 +146,7 @@ $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
-}?>
+} ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -156,7 +156,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-   
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){        $x1  = $Nombre;        }else{$x1  = '';}
@@ -181,7 +181,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_checkbox_active('Dias','idDia', $x5, 2, 'idDia', 'Nombre', 'core_tiempo_dias', 0, $dbConn);
 
 				$Form_Inputs->form_input_hidden('idCurso', $_GET['id'], 2);
-						
+
 				?>
 
 				<div class="form-group">
@@ -255,10 +255,11 @@ array_push( $arrVideo,$row );
 
 
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Curso', $rowdata['Nombre'], 'Editar VideoConferencia Relacionadas');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Curso', $rowdata['Nombre'], 'Editar VideoConferencia Relacionadas'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar VideoConferencia</a><?php }?>
+		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar VideoConferencia</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -308,11 +309,11 @@ array_push( $arrVideo,$row );
 					
 
 					<?php foreach ($arrVideo as $video){ ?>
-						<tr> 
+						<tr>
 							<td><?php echo $video['NombreVideo']; ?></td>
 							<td><?php echo $video['Usuario']; ?></td>
 							<td><?php echo $video['HoraInicio'].' - '.$video['HoraTermino']; ?></td>
-							
+
 							<td><?php if(isset($video['idDia_1'])&&$video['idDia_1']==2){echo 'Si';} ?></td>
 							<td><?php if(isset($video['idDia_2'])&&$video['idDia_2']==2){echo 'Si';} ?></td>
 							<td><?php if(isset($video['idDia_3'])&&$video['idDia_3']==2){echo 'Si';} ?></td>
@@ -326,7 +327,7 @@ array_push( $arrVideo,$row );
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$video['idVideoConferencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($video['idVideoConferencia'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar la videoconferencia '.$video['NombreVideo'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar la videoconferencia '.$video['NombreVideo'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -342,8 +343,8 @@ array_push( $arrVideo,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php } ?>
@@ -352,4 +353,5 @@ array_push( $arrVideo,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

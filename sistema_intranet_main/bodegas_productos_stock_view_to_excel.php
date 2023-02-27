@@ -27,6 +27,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 bodegas_productos_facturacion_existencias.Creacion_fecha,
 bodegas_productos_facturacion_existencias.Cantidad_ing,
@@ -87,7 +88,7 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('E5', 'Cant Ing')
             ->setCellValue('F5', 'Cant eg')
             ->setCellValue('G5', 'Unidad de Medida');
-            
+
 $nn=6;
 foreach ($arrProductos as $productos) { 
 	if(isset($productos['Proveedor'])&&$productos['Proveedor']){
@@ -95,7 +96,7 @@ foreach ($arrProductos as $productos) {
 	}else{
 		$empresa = 'Cliente : '.$productos['Cliente'];
 	}
-								
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($productos['TipoMovimiento']))
 				->setCellValue('B'.$nn, DeSanitizar($empresa))
@@ -106,9 +107,7 @@ foreach ($arrProductos as $productos) {
 				->setCellValue('G'.$nn, DeSanitizar($productos['UnidadMedida']));
 	$nn++;
 	   
-} 
-
-
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle(cortar('Bodega '.DeSanitizar($arrProductos[0]['NombreBodega']), 25));

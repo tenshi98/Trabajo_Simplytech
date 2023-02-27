@@ -289,7 +289,7 @@ require_once '0_validate_user_1.php';
 						//redirijo
 						header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 						die;
-						
+
 					//si da error, guardar en el log de errores una copia
 					}else{
 						//Genero numero aleatorio
@@ -299,7 +299,7 @@ require_once '0_validate_user_1.php';
 						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
 						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
 						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+
 					}
 				}
 			}
@@ -742,7 +742,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'insert_pasajero':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -767,7 +767,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'del_pasajero':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -909,7 +909,7 @@ require_once '0_validate_user_1.php';
 
 				// Se obtiene el nombre del documento actual
 				$rowVehiculo = db_select_data (false, 'doc_mantencion', 'vehiculos_listado', '', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 				// Se obtiene el nombre del documento a borrar
 				$rowMantencion = db_select_data (false, 'doc_mantencion', 'vehiculos_mantenciones', '', 'idMantenciones = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -1348,7 +1348,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 		//Cambia el nivel del permiso
 		case 'del_doc_revision_tecnica':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 

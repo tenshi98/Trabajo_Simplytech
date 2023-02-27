@@ -36,6 +36,7 @@ if(isset($_GET['Direccion'])&&$_GET['Direccion']!=''){      $SIS_where.=" AND pr
 if(isset($_GET['Giro'])&&$_GET['Giro']!=''){         $SIS_where.=" AND proveedor_listado.Giro LIKE '%".EstandarizarInput($_GET['Giro'])."%'";}
 
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 proveedor_listado.email, 
 proveedor_listado.Nombre,
@@ -87,7 +88,7 @@ $spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-          
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Tipo de Proveedor')
@@ -112,7 +113,7 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('T1', 'Telefono de Contacto')
             ->setCellValue('U1', 'Email de Contacto')
             ->setCellValue('V1', 'Forma de Pago');
-            
+
 $nn=2;
 foreach ($arrProveedores as $productos) { 
 
@@ -140,10 +141,8 @@ foreach ($arrProveedores as $productos) {
 				->setCellValue('U'.$nn, DeSanitizar($productos['PersonaContacto_email']))
 				->setCellValue('V'.$nn, DeSanitizar($productos['FormaPago']));
 	$nn++;
-   
-} 
 
-
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Datos Proveedores');

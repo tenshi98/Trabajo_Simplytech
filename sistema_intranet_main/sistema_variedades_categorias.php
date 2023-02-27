@@ -163,8 +163,9 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTiposEmbalaje,$row );
 }
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especie', $rowdata['Nombre'], 'Resumen');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Especie', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -188,8 +189,7 @@ array_push( $arrTiposEmbalaje,$row );
 
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
-					
-					
+
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/productos.jpg">
 					</div>
@@ -201,9 +201,9 @@ array_push( $arrTiposEmbalaje,$row );
 							<strong>Temp. Optima Max : </strong><?php echo Cantidades_decimales_justos($rowdata['Temp_optima_max']); ?><br/>
 							<strong>Temp. Margen Critico : </strong><?php echo Cantidades_decimales_justos($rowdata['Temp_optima_margen_critico']); ?><br/>
 						</p>
-						
+
 					</div>
-				
+
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="box">
 							<header>
@@ -225,15 +225,15 @@ array_push( $arrTiposEmbalaje,$row );
 											<tr class="odd">
 												<td><?php echo $subprocesos['Matriz']; ?></td>
 											</tr>
-										 <?php } 
-										}?>
+										 <?php }
+										} ?>
 													   
 									</tbody>
 								</table>
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="box">
 							<header>
@@ -255,15 +255,15 @@ array_push( $arrTiposEmbalaje,$row );
 											<tr class="odd">
 												<td><?php echo $subprocesos['Matriz']; ?></td>
 											</tr>
-										 <?php } 
-										}?>
+										 <?php }
+										} ?>
 													   
 									</tbody>
 								</table>
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<div class="box">
 							<header>
@@ -285,8 +285,8 @@ array_push( $arrTiposEmbalaje,$row );
 											<tr class="odd">
 												<td><?php echo $subprocesos['Embalaje']; ?></td>
 											</tr>
-										 <?php } 
-										}?>
+										 <?php }
+										} ?>
 													   
 									</tbody>
 								</table>
@@ -303,14 +303,14 @@ array_push( $arrTiposEmbalaje,$row );
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -457,7 +457,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'sistema_variedades_categor
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$cat['idCategoria']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($cat['idCategoria'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar la Especie '.$cat['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar la Especie '.$cat['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -481,4 +481,5 @@ $arrCategorias = db_select_array (false, $SIS_query, 'sistema_variedades_categor
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

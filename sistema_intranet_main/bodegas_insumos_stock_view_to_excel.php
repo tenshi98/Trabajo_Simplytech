@@ -27,6 +27,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 bodegas_insumos_facturacion_existencias.idFacturacion,
 bodegas_insumos_facturacion_existencias.Creacion_fecha,
@@ -69,7 +70,7 @@ $spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-			
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Bodega: '.DeSanitizar($arrProductos[0]['NombreBodega']));
@@ -89,7 +90,7 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('E5', 'Cant Ing')
             ->setCellValue('F5', 'Cant eg')
             ->setCellValue('G5', 'Unidad de Medida');
-            
+
 $nn=6;
 foreach ($arrProductos as $productos) { 
 	if(isset($productos['Proveedor'])&&$productos['Proveedor']){
@@ -99,7 +100,7 @@ foreach ($arrProductos as $productos) {
 		$empresa = 'Trabajador : '.$productos['trab_nombre'].' '.$productos['trab_appat'].' '.$productos['trab_apmat'];
 		$ndoc = 'Documento N° '.$productos['idFacturacion'];
 	}
-								
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, $productos['TipoMovimiento'])
 				->setCellValue('B'.$nn, DeSanitizar($empresa))
@@ -109,10 +110,8 @@ foreach ($arrProductos as $productos) {
 				->setCellValue('F'.$nn, cantidades_excel($productos['Cantidad_eg']))
 				->setCellValue('G'.$nn, DeSanitizar($productos['UnidadMedida']));
 	$nn++;
-   
-} 
 
-
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle(cortar('Bodega '.DeSanitizar($arrProductos[0]['NombreBodega']), 25));

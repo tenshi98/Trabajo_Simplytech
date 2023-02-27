@@ -74,7 +74,7 @@ $SIS_where.= " AND telemetria_listado.id_Geo='2'";
 $SIS_where.= " AND telemetria_listado_errores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$SIS_where .= " AND telemetria_listado.idTab=6";//CrossCrane	
+	$SIS_where .= " AND telemetria_listado.idTab=6";//CrossCrane
 }
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
@@ -143,7 +143,6 @@ foreach ($arrUnimed as $sen) {
 }
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -181,7 +180,7 @@ foreach ($arrUnimed as $sen) {
 							<td>
 								<div class="btn-group" style="width: 70px;" >
 									<a href="<?php echo $location.'&idErrores='.$error['idErrores'].'&idTelemetriaMarc='.$error['idTelemetria']; ?>" title="Marcar como leido" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
-									
+
 									<?php
 									$fecha_desde  = $error['Fecha'];
 									$fecha_hasta  = $error['Fecha'];
@@ -192,7 +191,7 @@ foreach ($arrUnimed as $sen) {
 									if($error['Hora']<'00:05:00'){
 										$fecha_desde = restarDias($error['Fecha'],1);
 									}
-									
+
 									//direccion
 									$subloc  = 'informe_telemetria_historial_operaciones_01.php';
 									$subloc .= '?idTelemetria='.$error['idTelemetria'];
@@ -226,4 +225,5 @@ foreach ($arrUnimed as $sen) {
 require_once 'core/Web.Footer.Views.php';
 //cuadro mensajes
 widget_avgrund();
+
 ?>

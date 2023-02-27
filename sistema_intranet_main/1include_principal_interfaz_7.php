@@ -147,7 +147,7 @@ LEFT JOIN `tareas_pendientes_listado_responsable`   ON tareas_pendientes_listado
 LEFT JOIN `usuarios_listado`                        ON usuarios_listado.idUsuario                      = tareas_pendientes_listado_responsable.idUsuario';
 $SIS_where = 'tareas_pendientes_listado.idTareas!=0';
 $SIS_where.= ' AND tareas_pendientes_listado.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-$SIS_where.= ' AND (tareas_pendientes_listado.idEstado=1 OR tareas_pendientes_listado.idEstado=2)';	
+$SIS_where.= ' AND (tareas_pendientes_listado.idEstado=1 OR tareas_pendientes_listado.idEstado=2)';
 $SIS_order = 'tareas_pendientes_listado.idEstado ASC, tareas_pendientes_listado.idPrioridad ASC, tareas_pendientes_listado.idTareas ASC';
 $arrTareasPend = array();
 $arrTareasPend = db_select_array (false, $SIS_query, 'tareas_pendientes_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTareas');
@@ -270,6 +270,5 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 			</div>
 		</div>
 	</div>
-
 
 </div>

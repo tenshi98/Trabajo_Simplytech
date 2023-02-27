@@ -75,7 +75,7 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-	
+
 		case 'insert':
 
 			//Se elimina la restriccion del sql 5.7
@@ -87,7 +87,7 @@ require_once '0_validate_user_1.php';
 			//Obtengo una lista de los clientes que tienen previred
 			$arrClientes = array();
 			$arrClientes = db_select_array (false, 'clientes_listado.idCliente, clientes_listado.Nombre AS ClienteNombre,clientes_listado.email AS ClienteEmail, core_sistemas.Nombre AS SistemaNombre,core_sistemas.email_principal AS SistemaEmail, core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, core_sistemas.Config_Gmail_Password AS Gmail_Password', 'clientes_listado', 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = clientes_listado.idSistema', 'clientes_listado.idPrevired=1', 'clientes_listado.Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 			//recorro los clientes
 			foreach ($arrClientes as $clientes){
 				//se comprueba si existen correos
@@ -183,8 +183,8 @@ require_once '0_validate_user_1.php';
 				if(isset($idTipo) && $idTipo!=''){               $SIS_data .= ",idTipo='".$idTipo."'";}
 				if(isset($fecha_auto) && $fecha_auto!=''){        $SIS_data .= ",fecha_auto='".$fecha_auto."'";}
 				if(isset($idEstado) && $idEstado!=''){           $SIS_data .= ",idEstado='".$idEstado."'";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
-					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
+					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'";
 				}

@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -108,7 +108,6 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 </div>
 <div class="clearfix"></div>
 
-
 <section class="invoice">
 
 
@@ -122,7 +121,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<?php
 
 
@@ -189,14 +188,14 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Diagnostico tecnico y acciones realizadas:</p>
-			<div class="text-muted well well-sm no-shadow" ><?php echo $row_data['Resumen'];?></div>
+			<div class="text-muted well well-sm no-shadow" ><?php echo $row_data['Resumen']; ?></div>
 		</div>
 	</div>
 
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Resumen de Visita:</p>
-			<div class="text-muted well well-sm no-shadow" ><?php echo $row_data['Resolucion'];?></div>
+			<div class="text-muted well well-sm no-shadow" ><?php echo $row_data['Resolucion']; ?></div>
 		</div>
 	</div>
 	
@@ -221,7 +220,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
     </div>
 
 	<div class="row firma">
-		
+
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont">
 			<?php if(isset($row_data['Path_Firma'])&&$row_data['Path_Firma']!=''){?>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcenter">
@@ -248,7 +247,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -258,14 +257,14 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

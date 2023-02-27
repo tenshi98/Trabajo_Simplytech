@@ -1057,8 +1057,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 				}else{
@@ -1087,8 +1087,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1119,8 +1119,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1151,8 +1151,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1184,8 +1184,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1217,8 +1217,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1249,8 +1249,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                    $SIS_data  = "'".$ultimo_id."'";                                    }else{$SIS_data  = "''";}
 							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1279,8 +1279,8 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                    $SIS_data  = "'".$ultimo_id."'";                                    }else{$SIS_data  = "''";}
 							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1308,8 +1308,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2NSemana($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
@@ -1342,8 +1342,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1372,8 +1372,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['ocompra_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -1617,7 +1617,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($idEstado) && $idEstado!=''){         $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idProveedor) && $idProveedor!=''){    $SIS_data .= ",idProveedor='".$idProveedor."'";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'";
@@ -1663,7 +1663,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
 				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
 				if(isset($idProveedor) && $idProveedor!=''){          $SIS_data .= ",'".$idProveedor."'";  }else{$SIS_data .= ",''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
 					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'";
@@ -1770,7 +1770,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idProveedor) && $idProveedor!=''){   $SIS_data .= ",idProveedor='".$idProveedor."'";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'";
@@ -1891,7 +1891,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
 				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
 				if(isset($idProveedor) && $idProveedor!=''){          $SIS_data .= ",'".$idProveedor."'";  }else{$SIS_data .= ",''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
 					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'";
@@ -1998,7 +1998,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idProveedor) && $idProveedor!=''){   $SIS_data .= ",idProveedor='".$idProveedor."'";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'";
@@ -2119,7 +2119,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
 				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
 				if(isset($idProveedor) && $idProveedor!=''){          $SIS_data .= ",'".$idProveedor."'";  }else{$SIS_data .= ",''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
 					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'";
@@ -2228,7 +2228,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idProveedor) && $idProveedor!=''){   $SIS_data .= ",idProveedor='".$idProveedor."'";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'";
@@ -2350,7 +2350,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
 				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
 				if(isset($idProveedor) && $idProveedor!=''){          $SIS_data .= ",'".$idProveedor."'";  }else{$SIS_data .= ",''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
 					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'";
@@ -2460,7 +2460,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idProveedor) && $idProveedor!=''){   $SIS_data .= ",idProveedor='".$idProveedor."'";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'";
@@ -2571,7 +2571,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
 				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
 				if(isset($idProveedor) && $idProveedor!=''){          $SIS_data .= ",'".$idProveedor."'";  }else{$SIS_data .= ",''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
 					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'";
@@ -2668,7 +2668,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idProveedor) && $idProveedor!=''){   $SIS_data .= ",idProveedor='".$idProveedor."'";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'";
@@ -2779,7 +2779,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";     }else{$SIS_data  = "''";}
 				if(isset($idSistema) && $idSistema!=''){              $SIS_data .= ",'".$idSistema."'";    }else{$SIS_data .= ",''";}
 				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
 					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'";
@@ -2874,7 +2874,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idOcompra) && $idOcompra!=''){       $SIS_data .= ",idOcompra='".$idOcompra."'";}
 				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
 				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'";
@@ -2983,7 +2983,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";     }else{$SIS_data  = "''";}
 				if(isset($idSistema) && $idSistema!=''){              $SIS_data .= ",'".$idSistema."'";    }else{$SIS_data .= ",''";}
 				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
 					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'";
@@ -3067,7 +3067,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idOcompra) && $idOcompra!=''){       $SIS_data .= ",idOcompra='".$idOcompra."'";}
 				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
 				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'";
@@ -3175,7 +3175,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
 				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
 				if(isset($idProveedor) && $idProveedor!=''){          $SIS_data .= ",'".$idProveedor."'";  }else{$SIS_data .= ",''";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
 					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'";
@@ -3273,7 +3273,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idProveedor) && $idProveedor!=''){   $SIS_data .= ",idProveedor='".$idProveedor."'";}
-				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'";
@@ -3376,7 +3376,7 @@ require_once '0_validate_user_1.php';
 			
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -3423,7 +3423,7 @@ require_once '0_validate_user_1.php';
 
 									//Creacion del nombre del archivo
 									$Nombre = $sufijo.$_FILES['exFile']['name'];
-									
+
 									//filtros
 									if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";     }else{$SIS_data  = "''";}
 									if(isset($idSistema) && $idSistema!=''){              $SIS_data .= ",'".$idSistema."'";    }else{$SIS_data .= ",''";}
@@ -3440,16 +3440,16 @@ require_once '0_validate_user_1.php';
 										$SIS_data .= ",''";
 									}
 									if(isset($Nombre) && $Nombre!=''){     $SIS_data .= ",'".$Nombre."'";      }else{$SIS_data .=",''";}
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, Nombre';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 									/*********************************************************************/
 									/*********************************************************************/
 									//Se realizan comparacion
 									$cambios = "Se agrega sube archivo ".$Nombre." con fecha ".$Creacion_fecha."." ;
-									
+
 									/******************************************/
 									//Se guarda en historial la accion
 									$fecha = fecha_actual();
@@ -3462,7 +3462,7 @@ require_once '0_validate_user_1.php';
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 									/*********************************************************************/
 									/*********************************************************************/
 										
@@ -3579,7 +3579,7 @@ require_once '0_validate_user_1.php';
 
 			//siempre pasa
 			$errorn = 0;
-			
+
 			if($errorn==0){
 				//Si no hay errores ejecuto el codigo
 				if(empty($error)){
@@ -3821,7 +3821,7 @@ require_once '0_validate_user_1.php';
 							}
 							break;
 					}
-					
+
 					//se borran los datos
 					$resultado = db_delete_data (false, 'ocompra_listado_sol_rel', 'idSolRel = "'.$_GET['del_sol_SolRel'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
@@ -3880,7 +3880,7 @@ require_once '0_validate_user_1.php';
 				$idTipo           = 2;
 				$Observacion      = 'La Orden de Compra ha sido modificada, queda en espera de aprobacion';
 				$idUsuario        = $_SESSION['usuario']['basic_data']['idUsuario'];
-				
+
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";         }else{$SIS_data  = "''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){    $SIS_data .= ",'".$Creacion_fecha."'";   }else{$SIS_data .= ",''";}
 				if(isset($idTipo) && $idTipo!=''){                   $SIS_data .= ",'".$idTipo."'";           }else{$SIS_data .= ",''";}
@@ -3903,7 +3903,7 @@ require_once '0_validate_user_1.php';
 
 /*******************************************************************************************************************/
 		case 'rechazo_ocompra':
-		
+
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 				//Filtros
@@ -3950,7 +3950,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'nula_ocompra':
-		
+
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 				//Filtros
@@ -3997,7 +3997,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'aprob_ocompra':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -4025,7 +4025,7 @@ require_once '0_validate_user_1.php';
 				//Creo los datos en el historial
 				$idTipo           = 2;
 				$Observacion      = 'La Orden de Compra ha sido aceptada por un aprobador';
-				
+
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";         }else{$SIS_data  = "''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){    $SIS_data .= ",'".$Creacion_fecha."'";   }else{$SIS_data .= ",''";}
 				if(isset($Creacion_hora) && $Creacion_hora!=''){      $SIS_data .= ",'".$Creacion_hora."'";    }else{$SIS_data .= ",''";}
@@ -4052,7 +4052,7 @@ require_once '0_validate_user_1.php';
 				//Reviso si las aprobaciones igualan a los aprobadores
 				$arrAprobado = array();
 				$arrAprobado = db_select_array (false, 'sistema_aprobador_oc.idUsuario, ocompra_listado.idOcompra, (SELECT COUNT(idAprobaciones) FROM `ocompra_listado_aprobaciones` WHERE idOcompra=ocompra_listado.idOcompra AND idUsuario=sistema_aprobador_oc.idUsuario  LIMIT 1) AS C_apro', 'ocompra_listado', 'LEFT JOIN `sistema_aprobador_oc`  ON sistema_aprobador_oc.idSistema   = ocompra_listado.idSistema', 'ocompra_listado.idOcompra ='.$idOcompra, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//variables
 				$napro_list = 0;
 				$napro_true = 0;
@@ -4083,8 +4083,7 @@ require_once '0_validate_user_1.php';
 					$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_productos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se actualizan los datos
 					$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_servicios', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
-					
+
 					//Creo los datos en el historial
 					$idTipo           = 1;
 					$Observacion      = 'La Orden de Compra ha sido aprobada';
@@ -4111,7 +4110,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'aprob_auto_ocompra':
-		
+
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 
@@ -4176,7 +4175,7 @@ require_once '0_validate_user_1.php';
 			if(isset($cant_ingresada)&&isset($CantComp)){
 				if($cant_ingresada!=$CantComp) {$error['ndata_1'] = 'error/Existen diferencias entre lo solicitado y lo recibido';}
 			}
-			
+
 			/*******************************************************************/
 
 			//Si no hay errores ejecuto el codigo

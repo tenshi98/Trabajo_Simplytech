@@ -49,7 +49,7 @@ if(isset($rowdata["FTP_Carpeta"])&&$rowdata["FTP_Carpeta"]!=''){
 	//se crea la ruta
 	$ruta     = DB_SITE_MAIN.'/ClientFiles/index.php?FTPFolder='.$rowdata["FTP_Carpeta"];
 	$s_folder = DB_SITE_MAIN.'/ClientFiles/_data/'.$rowdata["FTP_Carpeta"];
-		
+
 	//si no existe la carpeta, la creo
 	if (!file_exists($s_folder)){
 		try {
@@ -89,11 +89,10 @@ if(isset($rowdata["FTP_Carpeta"])&&$rowdata["FTP_Carpeta"]!=''){
 	
 ?>
 
-	
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -128,7 +127,7 @@ $SIS_where .= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_d
 $SIS_join = "";	
 if(isset($_SESSION['usuario']['basic_data']['idTipoUsuario'])&&$_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-	$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 /**********************************************************/
 //Se aplican los filtros
@@ -251,4 +250,5 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

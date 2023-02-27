@@ -26,6 +26,7 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 $ClaveUnica = 'Meeting_'.genera_password(8,'alfanumerico');
+
 ?>
 
 <script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/RTCMultiConnection/dist/RTCMultiConnection.js"></script>
@@ -62,7 +63,7 @@ $ClaveUnica = 'Meeting_'.genera_password(8,'alfanumerico');
 .messaging .inbox_msg .chating .inbox_chat .type_msg .input_msg_write .write_msg {background: rgba(0, 0, 0, 0) none repeat scroll 0 0;border: medium none;color: #4c4c4c;font-size: 15px;min-height: 48px;width: 100%;padding-top: 5px;padding-right: 40px;padding-bottom: 5px;padding-left: 5px;}
 
 .messaging .inbox_msg {white-space: initial!important;}
-</style> 
+</style>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" id="msg_options">
 	
@@ -87,7 +88,7 @@ $ClaveUnica = 'Meeting_'.genera_password(8,'alfanumerico');
 					</div>
 				</div>
 			</form>
-			
+
 		</div>
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 			<button id="open-room" class="btn btn-primary pull-right margin_form_btn fmrbtn" ><i class="fa fa-video-camera" aria-hidden="true"></i> Iniciar Reunion</button>
@@ -104,7 +105,7 @@ $ClaveUnica = 'Meeting_'.genera_password(8,'alfanumerico');
 	alert_post_data(2,1,1, $Alert_Text);
 	?>
 
-</div>	
+</div>
 
 <div class="clearfix"></div>
 
@@ -124,32 +125,29 @@ $ClaveUnica = 'Meeting_'.genera_password(8,'alfanumerico');
 						</div>
 					</div>
 					<div class="inbox_chat">
-									
+
 						<div class="msg_history chat-output" id="file-container" >
 							<br/>
 											
 										
 						</div>
-									
+
 						<div class="type_msg">
 							<div class="input_msg_write">
 								<input type="hidden" id="user-id"/>
 								<input type="text" disabled class="write_msg" placeholder="Escriba su mensaje" id="input-text-chat"/>
-								
+
 							</div>
 							<button id="share-file" disabled class="btn btn-success" style="width: 98%;margin-left: 1%;margin-right: 1%;"><i class="fa fa-file-o" aria-hidden="true"></i> Adjuntar Archivo</button>
-							
+
 						</div>
-										
+
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-
-
-
 
 <script>
 //Oculto los div
@@ -270,7 +268,7 @@ var CodecsHandler = connection.CodecsHandler;
 
 connection.processSdp = function(sdp) {
     var codecs = 'vp8';
-    
+
     if (codecs.length) {
         sdp = CodecsHandler.preferCodec(sdp, codecs.toLowerCase());
     }
@@ -318,10 +316,10 @@ connection.iceServers = [{
 
 connection.videosContainer = document.getElementById('videos-container');
 connection.onstream = function(event) {
-    
+
     document.getElementById('share-file').disabled = false;
     document.getElementById('input-text-chat').disabled = false;
-    
+
     var existing = document.getElementById(event.streamid);
     if(existing && existing.parentNode) {
       existing.parentNode.removeChild(existing);
@@ -503,7 +501,7 @@ document.getElementById('input-text-chat').onkeyup = function(e) {
     this.value = this.value.replace(/^\s+|\s+$/g, '');
     if (!this.value.length) return;
 	var msgxx = '<p><strong><?php echo $_SESSION['usuario']['basic_data']['Nombre'] ?> dijo:</strong><br/>' + this.value + '</p>';
-				
+
     connection.send(msgxx);
     appendDIV(msgxx);
     this.value = '';
@@ -519,15 +517,15 @@ var chatContainer = document.querySelector('.chat-output');
     div.focus();
 
     document.getElementById('input-text-chat').focus();
-} */           
+} */
 
 function appendDIV(event) {
     var div = document.createElement('div');
-    var data = event.data || event;  
+    var data = event.data || event;
     div.innerHTML = '<div class="incoming_msg">'
 						+ '<div class="received_msg">'
 							+ '<div class="received_withd_msg">'
-								+ data	
+								+ data
 							+ '</div>'
 						+ '</div>'
 					+ '</div>';
@@ -538,17 +536,16 @@ function appendDIV(event) {
 
     document.getElementById('input-text-chat').focus();
 }
-    
+
 connection.onmessage = appendDIV;
 connection.filesContainer = document.getElementById('file-container');
 
-
-                       
 </script>
-   
+
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

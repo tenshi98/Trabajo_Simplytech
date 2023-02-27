@@ -26,7 +26,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -86,6 +86,7 @@ $Ubicacion = str_replace("'", '', $Ubicacion);
 	
 $Ubicacion = str_replace("Av.", 'Avenida', $Ubicacion);
 $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
+
 ?>
 <!DOCTYPE html>
 <html lang="es-ES">
@@ -95,13 +96,13 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport"              content="width=device-width, initial-scale=1">
 		<meta http-equiv="Content-Type"    content="text/html; charset=UTF-8">
-		
+
 		<!-- Informacion del sitio-->
 		<title>Imprimir</title>
 		<meta name="description"           content="">
 		<meta name="author"                content="">
 		<meta name="keywords"              content="">
-		
+
 		<!-- WEB FONT -->
 		<?php
 		//verifica la capa de desarrollo
@@ -111,7 +112,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 		if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 			echo '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIB_assets/lib/font-awesome/css/font-awesome.min.css">';
 			//echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
-			
+
 		////////////////////////////////////////////////////////////////////////////////
 		//si estoy en ambiente de produccion
 		}else{
@@ -119,7 +120,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 			echo '<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">';
 		}
 		?>
-		
+
 		<!-- CSS Base -->
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/font-awesome-animation/font-awesome-animation.min.css">
@@ -142,7 +143,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/chosen/chosen.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/modal/colorbox.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/tooltipster/css/tooltipster.bundle.min.css">
-		
+
 		<!-- Javascript -->
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/js/main.min.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/form_functions.min.js"></script>
@@ -162,7 +163,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/country_picker/js/bootstrap-select.min.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/plotly_js/dist/plotly.min.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/plotly_js/dist/plotly-locale-es-ar.js"></script>
-		
+
 		<!-- Correcciones CSS -->
 		<style>
 			body {background-color: #FFF !important;}
@@ -233,7 +234,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 							function initialize() {
 								
 								var myLatlng = new google.maps.LatLng(-33.4372, -70.6506);
-								
+
 								var myOptions = {
 									zoom: 15,
 									center: myLatlng,
@@ -249,7 +250,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 							function dibuja_zona() {
 								
 								var polygons = [];
-								<?php 
+								<?php
 								//variables
 								$Latitud_z       = 0;
 								$Longitud_z      = 0;
@@ -272,7 +273,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 									//Variables con la primera posicion
 									$Latitud_x = '';
 									$Longitud_x = '';
-									
+
 									foreach ($zonas as $puntos) {
 										if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
 											echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
@@ -294,7 +295,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 									if(isset($Longitud_x)&&$Longitud_x!=''){
 										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
 									}
-									
+
 									echo '];';
 									
 									echo '
@@ -316,7 +317,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 									// The label that pops up when the mouse moves within each polygon.
 									echo '
 									myLatlng = new google.maps.LatLng('.$Latitud_z_prom_2.', '.$Longitud_z_prom_2.');
-									
+
 									var marker = new MyMarker({
 										position: myLatlng,
 										label: "'.$zonas[0]['Nombre'].'"
@@ -337,11 +338,11 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 										});
 									});
 									';
-									
+
 									$zcounter2++;
 										
 								}
-								
+
 								//Centralizado del mapa
 								if($zcounter!=0){
 									$Latitud_z_prom  = $Latitud_z/$zcounter;
@@ -386,6 +387,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Print.php';
+
 ?>
 <script>
 setTimeout(function(){ window.print();}, 5000);

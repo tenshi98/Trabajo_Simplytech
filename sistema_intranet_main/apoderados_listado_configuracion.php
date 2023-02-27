@@ -45,27 +45,15 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Vehiculo borrado corre
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // consulto los datos
-$query = "SELECT Nombre,ApellidoPat, ApellidoMat, File_Contrato, idOpciones_1,idOpciones_2
-FROM `apoderados_listado`
-WHERE idApoderado = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre,ApellidoPat, ApellidoMat, File_Contrato, idOpciones_1,idOpciones_2';
+$SIS_join  = '';
+$SIS_where = 'idApoderado = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Configuracion');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Configuracion'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -81,11 +69,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<ul class="dropdown-menu" role="menu">
 						<li class="active"><a href="<?php echo 'apoderados_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 						<?php
-						//Si se utiliza la APP 
+						//Si se utiliza la APP
 						if(isset($rowdata['idOpciones_1'])&&$rowdata['idOpciones_1']==1){ ?>
 							<li class=""><a href="<?php echo 'apoderados_listado_subcuentas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sitemap" aria-hidden="true"></i> Subcuentas</a></li>
 						<?php } ?>
-						<?php 
+						<?php
 						//Si se utiliza subcuentas
 						if(isset($rowdata['idOpciones_2'])&&$rowdata['idOpciones_2']==1){ ?>
 							<li class=""><a href="<?php echo 'apoderados_listado_password.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-key" aria-hidden="true"></i> Password</a></li>
@@ -95,7 +83,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class=""><a href="<?php echo 'apoderados_listado_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Contrato</a></li>
 						<li class=""><a href="<?php echo 'apoderados_listado_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Foto</a></li>
 						<li class=""><a href="<?php echo 'apoderados_listado_observaciones.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
-						
+
 					</ul>
                 </li>
 			</ul>
@@ -104,46 +92,44 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-					<?php 
+					<?php
 					//Se verifican si existen los datos
 					if(isset($idOpciones_1)){    $x1  = $idOpciones_1;    }else{$x1  = $rowdata['idOpciones_1'];}
 					if(isset($idOpciones_2)){    $x2  = $idOpciones_2;    }else{$x2  = $rowdata['idOpciones_2'];}
-					
-					
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select('Utilizar APP','idOpciones_1', $x1, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_select('Utilizar Subcuentas APP','idOpciones_2', $x2, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-					
+
 					$Form_Inputs->form_input_hidden('idApoderado', $_GET['id'], 2);
 					?>
 					<script>
-						document.getElementById('div_idOpciones_2').style.display = 'none';	
-						
-						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)	
-							let Sensores_val= $("#idOpciones_1").val();	
+						document.getElementById('div_idOpciones_2').style.display = 'none';
+
+						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
+							let Sensores_val= $("#idOpciones_1").val();
 							//si es SI
 							if(Sensores_val == 1){
-								document.getElementById('div_idOpciones_2').style.display = '';	
+								document.getElementById('div_idOpciones_2').style.display = '';
 							//si es NO
 							} else if(Sensores_val == 2){
 								document.getElementById('div_idOpciones_2').style.display = 'none';
 							}
 						});
-								
+
 						$("#idOpciones_1").on("change", function(){ //se ejecuta al cambiar valor del select
 							let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
 							//si es SI
 							if(modelSelected1 == 1){
-								document.getElementById('div_idOpciones_2').style.display = '';			
+								document.getElementById('div_idOpciones_2').style.display = '';
 							//si es NO
 							} else if(modelSelected1 == 2){
 								document.getElementById('div_idOpciones_2').style.display = 'none';
 								document.getElementById('idOpciones_2').selectedIndex = 0;
 							}
 						});
-								
-								
+
 					</script>
 
 					<div class="form-group">
@@ -158,14 +144,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

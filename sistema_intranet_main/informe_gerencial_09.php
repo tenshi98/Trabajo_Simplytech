@@ -39,7 +39,7 @@ $w      = "idHistorial!=0";
 $v      = "idHistorial!=0";
 $search = '';
 //filtro el año
-if(isset($Ano)&&$Ano!=''){ 
+if(isset($Ano)&&$Ano!=''){
 	$z.=" AND F_Pago_ano=".$Ano;
 	$y.=" AND contab_caja_gastos.Creacion_ano=".$Ano;
 	$w.=" AND pagos_leyes_fiscales.Pago_ano=".$Ano;
@@ -151,7 +151,7 @@ foreach ($arrTemporal_7 as $temp) {
 
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<div class="">	
+	<div class="">
 		<div id="calendar_content" class="body">
 			<div id="calendar" class="fc fc-ltr">
 				<table class="fc-header" style="width:100%">
@@ -182,7 +182,6 @@ foreach ($arrTemporal_7 as $temp) {
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table']});</script>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -198,7 +197,7 @@ foreach ($arrTemporal_7 as $temp) {
 			<div class="tab-pane fade active in" id="tab1">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-									
+
 						<script>
 							
 							google.charts.setOnLoadCallback(drawColColors);
@@ -318,7 +317,7 @@ foreach ($arrTemporal_7 as $temp) {
 		
 							</div>
 						</div>
-						
+
 					</div>
 				</div>
 			</div>
@@ -327,7 +326,7 @@ foreach ($arrTemporal_7 as $temp) {
 			<div class="tab-pane fade" id="tab2">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-									
+
 						<script>
 								
 							google.charts.setOnLoadCallback(drawChart1);
@@ -379,7 +378,7 @@ foreach ($arrTemporal_7 as $temp) {
 			<div class="tab-pane fade" id="tab3">
 				<div class="wmd-panel">
 					<div class="table-responsive">
-									
+
 						<script>
 								
 							google.charts.setOnLoadCallback(drawChart2);
@@ -435,9 +434,6 @@ foreach ($arrTemporal_7 as $temp) {
 	</div>
 </div>
 
-
-
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -445,6 +441,7 @@ foreach ($arrTemporal_7 as $temp) {
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -479,4 +476,5 @@ foreach ($arrTemporal_7 as $temp) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

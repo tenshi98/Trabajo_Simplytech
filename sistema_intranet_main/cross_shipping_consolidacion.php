@@ -115,7 +115,7 @@ if(!empty($_GET['addFile'])){ ?>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
-			
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idArchivoTipo)){    $x1  = $idArchivoTipo;  }else{$x1  = '';}
@@ -128,7 +128,7 @@ if(!empty($_GET['addFile'])){ ?>
 				
 				
 				
-				$Form_Inputs->form_input_hidden('randompass', $_GET['view'], 2);	
+				$Form_Inputs->form_input_hidden('randompass', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('CTNNombreCompañia', $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CTNNombreCompañia'], 2);	
 				?>
 
@@ -143,7 +143,8 @@ if(!empty($_GET['addFile'])){ ?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['cloneEstiba'])){ ?>
+} elseif(!empty($_GET['cloneEstiba'])){ ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -166,7 +167,7 @@ if(!empty($_GET['addFile'])){ ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
-										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0, 
+										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
@@ -177,9 +178,7 @@ if(!empty($_GET['addFile'])){ ?>
 
 				$Form_Inputs->form_input_hidden('randompass', $_GET['view'], 2);
 				?>
-				
-				
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_estiba">
 					<a href="<?php echo $location.'&view='.$_GET['view']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -191,7 +190,8 @@ if(!empty($_GET['addFile'])){ ?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['editEstiba'])){ ?>
+} elseif(!empty($_GET['editEstiba'])){ ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -214,7 +214,7 @@ if(!empty($_GET['addFile'])){ ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
-										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0, 
+										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
@@ -226,9 +226,7 @@ if(!empty($_GET['addFile'])){ ?>
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['cross_shipping_consolidacion_estibas'][$_GET['view']][$_GET['editEstiba']]['idInterno'], 2);
 				$Form_Inputs->form_input_hidden('randompass', $_GET['view'], 2);
 				?>
-				
-				
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_estiba">
 					<a href="<?php echo $location.'&view='.$_GET['view']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -240,7 +238,8 @@ if(!empty($_GET['addFile'])){ ?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['addEstiba'])){ ?>
+} elseif(!empty($_GET['addEstiba'])){ ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -264,7 +263,7 @@ if(!empty($_GET['addFile'])){ ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
-										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0, 
+										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
@@ -293,6 +292,7 @@ if(!empty($_GET['addFile'])){ ?>
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -347,7 +347,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_time('Hora Termino Carga','HoraTerminoCarga', $x6, 1, 1, 24);
 				$Form_Inputs->form_select_filter('Planta Despachadora','idPlantaDespacho', $x7, 1, 'idPlantaDespacho', 'Nombre', 'cross_shipping_plantas', $w, '', $dbConn);
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x8, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x9, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 'Variedad','idProducto', $x9, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_number_integer('Cantidad de Cajas', 'CantidadCajas', $x10, 1);
 				$Form_Inputs->form_select_filter('N° Instructivo','idInstructivo', $x11, 1, 'idInstructivo', 'Codigo,Nombre', 'cross_shipping_instructivo', $w, '', $dbConn);
@@ -403,17 +403,17 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
 
-		<?php 
+		<?php
 		$ubicacion = $location.'&clear_all='.$_GET['view'];
-		$dialogo   = '¿Realmente deseas eliminar todos los registros?';?>
+		$dialogo   = '¿Realmente deseas eliminar todos los registros?'; ?>
 		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-danger"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Todo</a>
 
 		<a href="<?php echo $location; ?>"  class="btn btn-danger"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 
 		<?php
 		$ubicacion = $location.'&view='.$_GET['view'].'&ing_Doc=true';
-		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?';?>
-		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>			
+		$dialogo   = '¿Realmente desea ingresar el documento, una vez realizada no podra realizar cambios?'; ?>
+		<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" class="btn btn-primary" ><i class="fa fa-check-square-o" aria-hidden="true"></i> Ingresar Documento</a>
 
 	</div>
 	<div class="clearfix"></div>
@@ -425,21 +425,20 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		<div id="header"> Control Proceso Preembarque - T° y Estiba de Contenedores</div>
 
 		<div id="customer">
-			
+
 			<table id="meta" class="pull-left" style="width:100%" >
 				<tbody>
 					<tr>
 						<td class="meta-head" colspan="3"><strong>DATOS MAESTROS</strong></td>
 						<td class="meta-head"><a href="<?php echo $location.'&view='.$_GET['view'].'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
-					
-					
+
 					<tr><td class="meta-head" colspan="4"><strong>Cuerpo Identificacion</strong></td></tr>
 					<tr>
 						<td class="meta-head">Contenedor Nro.</td>
 						<td><?php echo $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CTNNombreCompañia']; ?></td>
 						<td class="meta-head">Nro. Del Informe</td>
-						<td><?php //if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['NInforme'])&&$_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['NInforme']!=''){echo $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['NInforme'];}else{echo 'Sin Datos';}?></td>
+						<td><?php //if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['NInforme'])&&$_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['NInforme']!=''){echo $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['NInforme'];}else{echo 'Sin Datos';} ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha del informe</td>
@@ -464,7 +463,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						<td><?php echo $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['PlantaDespacho']; ?></td>
 						<td class="meta-head">Especie/Variedad</td>
 						<td><?php echo $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['ProdMuestra']; ?></td>
-						
+
 					</tr>
 					<tr>
 						<td class="meta-head">Cantidad de Cajas</td>
@@ -543,7 +542,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					
 				</tbody>
 			</table>
-			
+
 		</div>
 		
 		
@@ -554,9 +553,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					<th colspan="8">Detalle</th>
 					<th width="160">Acciones</th>
 				</tr>
-				
-				
-				
+
 				<?php /**********************************************************************************/?>
 				<tr class="item-row fact_tittle">
 					<td colspan="8">Estibas</td>
@@ -576,59 +573,58 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					<td></td>
 				</tr>
 
-				<?php 
+				<?php
 				if (isset($_SESSION['cross_shipping_consolidacion_estibas'][$_GET['view']])){
 					//recorro el lsiatdo entregado por la base de datos
 					foreach ($_SESSION['cross_shipping_consolidacion_estibas'][$_GET['view']] as $key => $producto){ ?>
 						<tr class="item-row linea_punteada">
-							<td class="item-name"><?php echo $producto['Estiba'];?></td>
-							<td class="item-name"><?php echo $producto['EstibaUbicacion'];?></td>
-							<td class="item-name"><?php echo $producto['Posicion'];?></td>
-							<td class="item-name"><?php echo $producto['Envase'];?></td>
-							<td class="item-name"><?php echo $producto['NPallet'];?></td>
-							<td class="item-name"><?php echo $producto['Temperatura'];?></td>
-							<td class="item-name"><?php echo $producto['Termografo'];?></td>
-							<td class="item-name"><?php echo $producto['NSerieSensor'];?></td>
+							<td class="item-name"><?php echo $producto['Estiba']; ?></td>
+							<td class="item-name"><?php echo $producto['EstibaUbicacion']; ?></td>
+							<td class="item-name"><?php echo $producto['Posicion']; ?></td>
+							<td class="item-name"><?php echo $producto['Envase']; ?></td>
+							<td class="item-name"><?php echo $producto['NPallet']; ?></td>
+							<td class="item-name"><?php echo $producto['Temperatura']; ?></td>
+							<td class="item-name"><?php echo $producto['Termografo']; ?></td>
+							<td class="item-name"><?php echo $producto['NSerieSensor']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
 									<a href="<?php echo $location.'&view='.$_GET['view'].'&cloneEstiba='.$producto['idInterno']; ?>" title="Clonar Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a>
 									<a href="<?php echo $location.'&view='.$_GET['view'].'&editEstiba='.$producto['idInterno']; ?>" title="Editar Registro" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-									<?php 
+									<?php
 									$ubicacion = $location.'&view='.$_GET['view'].'&del_estiba='.$producto['idInterno'];
-									$dialogo   = '¿Realmente deseas eliminar el registro ?';?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Registro" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+									$dialogo   = '¿Realmente deseas eliminar el registro ?'; ?>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Registro" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
 					<?php }
 					}else{
 						echo '<tr class="item-row linea_punteada"><td colspan="9">No hay muestras asignadas</td></tr>';
-					}?>
+					} ?>
 
 				
 					<tr id="hiderow"><td colspan="9"></td></tr>
-					
-					<td colspan="9" class="blank word_break"> 
-						<?php echo $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['Observaciones'];?>
+
+					<td colspan="9" class="blank word_break">
+						<?php echo $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['Observaciones']; ?>
 					</td>
-						
+
 				</tr>
 				<tr><td colspan="9" class="blank"><p>Observaciones</p></td></tr>
 
-				
 			</tbody>
 		</table>
     </div>
-    
+
 	<table id="items" style="margin-bottom: 20px;">
         <tbody>
-            
+
 			<tr class="invoice-total" bgcolor="#f1f1f1">
                 <td>Archivos Adjuntos</td>
                 <td width="160"><a href="<?php echo $location.'&view='.$_GET['view'].'&addFile=true' ?>" title="Agregar Archivo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Archivos</a></td>
             </tr>
-            
-			<?php 
+
+			<?php
 			if (isset($_SESSION['cross_shipping_consolidacion_archivos'][$_GET['view']])){
 
 				//recorro el lsiatdo entregado por la base de datos
@@ -642,29 +638,29 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								<td>
 									<div class="btn-group" style="width: 70px;" >
 										<a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($producto['Nombre'], fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a>
-										<?php 
+										<?php
 										$ubicacion = $location.'&view='.$_GET['view'].'&idArchivoTipo='.$producto['idArchivoTipo'].'&del_file='.$producto['idFile'];
-										$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?';?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>								
+										$dialogo   = '¿Realmente deseas eliminar  '.str_replace('"','',$producto['Nombre']).'?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Archivo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									</div>
 								</td>
 							</tr>
-						<?php 
+						<?php
 						}
 					}
 				}
-			}?>
+			} ?>
 
 		</tbody>
     </table>
 
 </div>
 
-
 <div class="clearfix"></div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['cloneConsolidacion'])){ ?>
+} elseif(!empty($_GET['cloneConsolidacion'])){ ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -677,7 +673,6 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				<?php
 				//Se verifican si existen los datos
 				if(isset($CTNNombreCompañia)){   $x2 = $CTNNombreCompañia;  }else{$x2 = '';}
-				
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
@@ -700,7 +695,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -724,7 +719,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_date('Fecha del informe','Creacion_fecha', $x1, 2);
 				$Form_Inputs->form_input_text('Contenedor Nro.', 'CTNNombreCompañia', $x2, 2);
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x3, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x4, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 'Variedad','idProducto', $x4, 2, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x5, 1);
@@ -826,7 +821,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 
 	<?php if ($rowlevel['level']>=3){ ?>
 		<a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Consolidacion</a>
-	<?php }?>
+	<?php } ?>
 </div>
 <div class="clearfix"></div>
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
@@ -844,7 +839,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha del informe','Creacion_fecha', $x1, 1);
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x2, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
-										 'Variedad','idProducto', $x3, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0, 
+										 'Variedad','idProducto', $x3, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_input_text('Contenedor Nro.', 'CTNNombreCompañia', $x4, 1);
 
@@ -902,7 +897,7 @@ if(isset($pasa)&&$pasa!=0){ ?>
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&view='.$tipo['randompass']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&clear_all='.$tipo['randompass'];
-										$dialogo   = '¿Realmente deseas eliminar el ingreso de '.$tipo['CTNNombreCompañia'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar el ingreso de '.$tipo['CTNNombreCompañia'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -915,6 +910,7 @@ if(isset($pasa)&&$pasa!=0){ ?>
 		</div>
 	</div>
 <?php } ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -988,11 +984,11 @@ if(isset($pasa)&&$pasa!=0){ ?>
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

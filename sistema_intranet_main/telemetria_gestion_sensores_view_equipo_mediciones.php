@@ -16,7 +16,7 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 
 $aa = '';
-for ($i = 1; $i <= $_GET['cantSensores']; $i++) { 
+for ($i = 1; $i <= $_GET['cantSensores']; $i++) {
 	$aa .= ',SensoresNombre_'.$i;
 	$aa .= ',SensoresUniMed_'.$i;
 	$aa .= ',SensoresMedActual_'.$i;
@@ -63,11 +63,11 @@ foreach ($arrUnimed as $sen) {
 				
 		</header>
         <div class="table-responsive">
-			<?php 
+			<?php
 			$explanation  = '<strong>'.fecha_estandar($rowdata['LastUpdateFecha']).' - '.$rowdata['LastUpdateHora'].'</strong><br/>';
 			for ($i = 1; $i <= $_GET['cantSensores']; $i++) { 
 				//solo sensores activos
-				if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==1){ 
+				if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==1){
 					if(isset($rowdata['SensoresMedActual_'.$i])&&$rowdata['SensoresMedActual_'.$i]<99900){$xdata=Cantidades_decimales_justos($rowdata['SensoresMedActual_'.$i]);}else{$xdata='Sin Datos';}
 					$explanation .= '<strong>'.$rowdata['SensoresNombre_'.$i].': </strong>'.$xdata;
 					$explanation .= ' '.$arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]];
@@ -98,4 +98,5 @@ foreach ($arrUnimed as $sen) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

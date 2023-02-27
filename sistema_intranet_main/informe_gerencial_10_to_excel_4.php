@@ -53,6 +53,7 @@ $SIS_where_3.=" GROUP BY bodegas_productos_facturacion.idTrabajador, bodegas_pro
 $SIS_where_4.=" GROUP BY bodegas_servicios_facturacion.idTrabajador, bodegas_servicios_facturacion.Creacion_mes";
 
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 bodegas_arriendos_facturacion.idTrabajador,
 bodegas_arriendos_facturacion.Creacion_mes,
@@ -67,6 +68,7 @@ $arrTemporal_1 = array();
 $arrTemporal_1 = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', $SIS_join, $SIS_where_1, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_1');
 
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 bodegas_insumos_facturacion.idTrabajador,
 bodegas_insumos_facturacion.Creacion_mes,
@@ -81,6 +83,7 @@ $arrTemporal_2 = array();
 $arrTemporal_2 = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $SIS_join, $SIS_where_2, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_2');
 
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 bodegas_productos_facturacion.idTrabajador,
 bodegas_productos_facturacion.Creacion_mes,
@@ -95,6 +98,7 @@ $arrTemporal_3 = array();
 $arrTemporal_3 = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', $SIS_join, $SIS_where_3, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_3');
 
 /*******************************************************/
+// consulto los datos
 $SIS_query = '
 bodegas_servicios_facturacion.idTrabajador,
 bodegas_servicios_facturacion.Creacion_mes,
@@ -232,7 +236,7 @@ foreach ($arrCreativo as $datais) {
 			$Total_3 = $Total_3 + $prod['Total_3'];
 			$Total_4 = $Total_4 + $prod['Total_4']; 
 		}          
-	}  
+	}
 } 
 $spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A'.$nn, '')

@@ -20,7 +20,7 @@ function set_bootstrap_theme() {
 function set_header($bootstrap_css) {
 
     global $options;
-    
+
     if ($options['general']['custom_title'] === null) {
         $server  = $_SERVER['HTTP_HOST'];
         $request = htmlentities(urldecode($_SERVER['REQUEST_URI']), ENT_QUOTES, 'utf-8');

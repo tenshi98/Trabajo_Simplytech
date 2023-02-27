@@ -221,7 +221,7 @@ $arrCamaras = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Permisos de acceso a Camaras');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Usuario', $rowdata['Nombre'], 'Editar Permisos de acceso a Camaras'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -275,9 +275,9 @@ $arrCamaras = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $
 						<th width="10">Acciones</th>
 					</tr>
 					<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){$colspan=4;}else{$colspan=3;} ?>
-					<?php echo widget_sherlock(1, $colspan, 'TableFiltered');?>
+					<?php echo widget_sherlock(1, $colspan, 'TableFiltered'); ?>
 				</thead>
-								  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 					<tr class="odd" >
 						<td style="background-color:#DDD"  <?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){echo 'colspan="3"';}else{echo 'colspan="2"';} ?>>
@@ -308,24 +308,24 @@ $arrCamaras = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $
 							</td>
 						</tr>
 					<?php } ?>
-               
+
 				</tbody>
 			</table>
-			
+
 		</div>
 	</div>
 </div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

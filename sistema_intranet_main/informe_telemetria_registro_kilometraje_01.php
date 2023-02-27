@@ -34,12 +34,12 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 }
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
-			
+
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
 }else{
-	
+
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo', 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowEquipo');
 
@@ -55,20 +55,20 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	foreach ($arrEquipos as $fac) {
 		$Kilometros = $Kilometros + $fac['GeoMovimiento'];
 	}
-	
+
 	//variable vacia
 	$arrData  = array();
 	//recorro los datos del equipo
 	foreach ($arrEquipos as $rutas) {
 		//titulos
 		$arrData['Name'] = "'Medicion'";
-		//fechas					
+		//fechas
 		if(isset($arrData['Fecha'])&&$arrData['Fecha']!=''){$arrData['Fecha'] .= ",'".Fecha_estandar($rutas['FechaSistema'])." ".$rutas['HoraSistema']."'"; }else{ $arrData['Fecha'] = "'".Fecha_estandar($rutas['FechaSistema'])." ".$rutas['HoraSistema']."'"; }
-		//datos											
+		//datos
 		if(isset($arrData['Value'])&&$arrData['Value']!=''){$arrData['Value'] .= ", ".$rutas['GeoMovimiento'];  }else{ $arrData['Value'] = $rutas['GeoMovimiento'];}
 
 	}
-	/******************************************/  
+	/******************************************/
 	//variables
 	$Graphics_xData       = 'var xData = [';
 	$Graphics_yData       = 'var yData = [';
@@ -107,7 +107,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$Graphics_lineWidth  .= '];';
 	?>
 
-	
 	<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 		<div class="box box-blue box-solid">
 			<div class="box-header with-border">
@@ -124,7 +123,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	</div>
 
 	<div class="clearfix"></div>
-		
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
@@ -135,7 +134,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				<?php
 				$gr_tittle = 'Informe Kilometros Recorridos equipo '.$rowEquipo['NombreEquipo'];
 				echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', 'KM', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0);
-				?>		
+				?>
 			</div>
 		</div>
 	</div>
@@ -155,7 +154,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<th>Hora</th>
 							<th>Velocidad</th>
 							<th>Kilometros Recorridos</th>
-							<th>Ubicacion</th> 
+							<th>Ubicacion</th>
 						</tr>
 					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -178,17 +177,14 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		</div>
 	</div>
 
-
-	
 <?php } ?>
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-			
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //filtros
@@ -205,8 +201,9 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 alert_post_data(2,1,1, $Alert_Text);
+
 ?>
-		
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -215,7 +212,7 @@ alert_post_data(2,1,1, $Alert_Text);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
+
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
@@ -240,8 +237,7 @@ alert_post_data(2,1,1, $Alert_Text);
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				?>
-	   
-				
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -252,12 +248,10 @@ alert_post_data(2,1,1, $Alert_Text);
 </div>
 <?php } ?>
 
-	
-
-          
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

@@ -173,7 +173,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['cotizacion_prospectos_basicos']['Usuario'] = '';
 				}
 				/********************************************************************************/
-				if(isset($idProspecto) && $idProspecto!=''){ 
+				if(isset($idProspecto) && $idProspecto!=''){
 					$rowProspecto = db_select_data (false, 'Nombre', 'prospectos_listado', '', 'idProspecto ='.$idProspecto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['cotizacion_prospectos_basicos']['Prospecto'] = $rowProspecto['Nombre'];
@@ -263,7 +263,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['cotizacion_prospectos_basicos']['Usuario'] = '';
 				}
 				/********************************************************************************/
-				if(isset($idProspecto) && $idProspecto!=''){ 
+				if(isset($idProspecto) && $idProspecto!=''){
 					$rowProspecto = db_select_data (false, 'Nombre', 'prospectos_listado', '', 'idProspecto ='.$idProspecto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
 					$_SESSION['cotizacion_prospectos_basicos']['Prospecto'] = $rowProspecto['Nombre'];
@@ -599,7 +599,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -803,8 +803,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['cotizacion_prospectos_basicos']['idSistema']) && $_SESSION['cotizacion_prospectos_basicos']['idSistema']!=''){      $SIS_data  = "'".$_SESSION['cotizacion_prospectos_basicos']['idSistema']."'";     }else{$SIS_data  = "''";}
 				if(isset($_SESSION['cotizacion_prospectos_basicos']['idUsuario']) && $_SESSION['cotizacion_prospectos_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['cotizacion_prospectos_basicos']['idProspecto']) && $_SESSION['cotizacion_prospectos_basicos']['idProspecto']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idProspecto']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha'])."'";
 				}else{
@@ -845,8 +845,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['cotizacion_prospectos_basicos']['idSistema']) && $_SESSION['cotizacion_prospectos_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_prospectos_basicos']['idUsuario']) && $_SESSION['cotizacion_prospectos_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_prospectos_basicos']['idProspecto']) && $_SESSION['cotizacion_prospectos_basicos']['idProspecto']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idProspecto']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -876,8 +876,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['cotizacion_prospectos_basicos']['idSistema']) && $_SESSION['cotizacion_prospectos_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_prospectos_basicos']['idUsuario']) && $_SESSION['cotizacion_prospectos_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_prospectos_basicos']['idProspecto']) && $_SESSION['cotizacion_prospectos_basicos']['idProspecto']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idProspecto']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -907,8 +907,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['cotizacion_prospectos_basicos']['idSistema']) && $_SESSION['cotizacion_prospectos_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_prospectos_basicos']['idUsuario']) && $_SESSION['cotizacion_prospectos_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_prospectos_basicos']['idProspecto']) && $_SESSION['cotizacion_prospectos_basicos']['idProspecto']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idProspecto']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -939,8 +939,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['cotizacion_prospectos_basicos']['idSistema']) && $_SESSION['cotizacion_prospectos_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_prospectos_basicos']['idUsuario']) && $_SESSION['cotizacion_prospectos_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_prospectos_basicos']['idProspecto']) && $_SESSION['cotizacion_prospectos_basicos']['idProspecto']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idProspecto']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -971,8 +971,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['cotizacion_prospectos_basicos']['idSistema']) && $_SESSION['cotizacion_prospectos_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_prospectos_basicos']['idUsuario']) && $_SESSION['cotizacion_prospectos_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_prospectos_basicos']['idProspecto']) && $_SESSION['cotizacion_prospectos_basicos']['idProspecto']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['idProspecto']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha'])."'";
 							}else{

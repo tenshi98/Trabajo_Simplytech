@@ -133,6 +133,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
 //Verifico el tipo de usuario que esta ingresando
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -352,13 +353,13 @@ $arrInasHoras = db_select_array (false, $SIS_query, 'trabajadores_inasistencias_
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $plan['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php 
+								<?php
 								//mientras no haya sido utilizado se puede modificar y borrar el dato
 								if(isset($plan['idUso'])&&$plan['idUso']==1){ ?>
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$plan['idInasistenciaHora']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($plan['idInasistenciaHora'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar la inasistencia del '.$plan['Creacion_fecha'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar la inasistencia del '.$plan['Creacion_fecha'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								<?php } ?>
@@ -382,4 +383,5 @@ $arrInasHoras = db_select_array (false, $SIS_query, 'trabajadores_inasistencias_
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

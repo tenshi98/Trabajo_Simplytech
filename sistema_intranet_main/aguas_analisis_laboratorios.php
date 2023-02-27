@@ -110,9 +110,9 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_laboratorios', $SI
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['new'])){
+} elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -301,7 +301,7 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_analisis_laboratorios', $SI
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$uml['idLaboratorio']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($uml['idLaboratorio'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar el Laboratorio '.$uml['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar el Laboratorio '.$uml['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -324,4 +324,5 @@ $arrUML = db_select_array (false, $SIS_query, 'aguas_analisis_laboratorios', $SI
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

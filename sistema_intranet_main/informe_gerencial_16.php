@@ -244,7 +244,6 @@ switch ($_GET['idTipoProd']) {
 
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -378,6 +377,7 @@ foreach ($arrPermisos as $prod) {
 }
 
  ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -414,7 +414,7 @@ foreach ($arrPermisos as $prod) {
 
 				$Form_Inputs->form_date('Fecha Mov Desde','f_inicio', $x9, 1);
 				$Form_Inputs->form_date('Fecha Mov Hasta','f_termino', $x10, 1);
-						
+
 				?>
 
 				<script>
@@ -424,7 +424,7 @@ foreach ($arrPermisos as $prod) {
 					document.getElementById('div_idInsumo').style.display = 'none';
 					document.getElementById('div_idProducto').style.display = 'none';
 					document.getElementById('div_idServicio').style.display = 'none';
-					
+
 					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 						
 						$("#idTipoMov").on("change", function(){ //se ejecuta al cambiar valor del select
@@ -525,4 +525,5 @@ foreach ($arrPermisos as $prod) {
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

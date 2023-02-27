@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -156,7 +156,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								<strong>Mostrar Repositorio Comun : </strong><?php echo $rowdata['OpcionesGen_9']; ?><br/>
 								<strong>Gestor de Correo : </strong><?php echo $rowdata['OpcionesGen_8']; ?><br/>
 							</p>
-									
+
 							<h3 class="text-muted" style="font-size: 16px!important;color: #337ab7;">Visualizacion Pagina Inicio</h3>
 							<p class="text-muted word_break">
 								<strong>Interfaz : </strong><?php echo $rowdata['OpcionesGen_7']; ?><br/>
@@ -167,7 +167,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								<strong>Valores promedios de las mediciones : </strong><?php echo $rowdata['OpcionesGen_3']; ?><br/>
 								<strong>Nuevo Widget CrossC : </strong><?php echo $rowdata['OpcionesGen_10']; ?><br/>
 							</p>
-									
+
 							<h3 class="text-muted" style="font-size: 16px!important;color: #337ab7;">Configuracion Sistema</h3>
 							<p class="text-muted word_break">
 								<strong>Memoria Ram Maxima : </strong><?php if(isset($rowdata['ConfigRam'])&&$rowdata['ConfigRam']!=0){echo $rowdata['ConfigRam'].' MB';}else{ echo '4096 MB';} ?><br/>
@@ -188,7 +188,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 							<strong>ApiKey (Firebase) : </strong><?php echo $rowdata['Config_FCM_apiKey']; ?><br/>
 							<strong>Main ApiKey (Firebase) : </strong><?php echo $rowdata['Config_FCM_Main_apiKey']; ?><br/>
 						</p>
-							
+
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Bodegas OT</h2>
 						<p class="text-muted word_break">
 							<strong>Bodega Productos : </strong><?php echo $rowdata['BodegaProd']; ?><br/>
@@ -230,7 +230,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 				</div>
 			</div>
 			<div class="clearfix"></div>
-			
+
 		</div>
 	</div>
 </div>
@@ -251,7 +251,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -261,14 +261,14 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
-	
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

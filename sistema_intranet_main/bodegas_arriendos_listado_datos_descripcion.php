@@ -43,27 +43,16 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Proveedor borrado corr
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Se traen todos los datos del producto
-$query = "SELECT Nombre,Descripcion
-FROM `bodegas_arriendos_listado`
-WHERE idBodega = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);?>
+// consulto los datos
+$SIS_query = 'Nombre,Descripcion';
+$SIS_join  = '';
+$SIS_where = 'idBodega = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'bodegas_arriendos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Bodega', $rowdata['Nombre'], 'Editar Descripcion');?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Bodega', $rowdata['Nombre'], 'Editar Descripcion'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -86,20 +75,19 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-			
-					<?php 
+
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Descripcion)){     $x1  = $Descripcion;    }else{$x1  = $rowdata['Descripcion'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_ckeditor('Descripcion','Descripcion', $x1, 1, 2);
-					
+
 					$Form_Inputs->form_input_hidden('idBodega', $_GET['id'], 2);
 					?>
-					
-				  
-					<div class="form-group">	
+
+					<div class="form-group">
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>
 				</form>
@@ -111,14 +99,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);?>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
-
 
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

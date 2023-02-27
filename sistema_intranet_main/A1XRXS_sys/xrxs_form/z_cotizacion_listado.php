@@ -602,7 +602,7 @@ require_once '0_validate_user_1.php';
 
 			if(empty($error)){
 
-				//Se verifica 
+				//Se verifica
 				if(isset($_FILES["exFile"])){
 					if ($_FILES["exFile"]["error"] > 0){
 						$error['exFile'] = 'error/'.uploadPHPError($_FILES["exFile"]["error"]);
@@ -806,8 +806,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema']!=''){  $SIS_data  = "'".$_SESSION['cotizacion_basicos']['idSistema']."'";   }else{$SIS_data  = "''";}
 				if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'";  
+				if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'";
 				}else{
@@ -848,8 +848,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idSistema']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -879,8 +879,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idSistema']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -910,8 +910,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idSistema']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -942,8 +942,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'";
 							}else{
@@ -974,8 +974,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['cotizacion_basicos']['idSistema']) && $_SESSION['cotizacion_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_basicos']['idUsuario']) && $_SESSION['cotizacion_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cotizacion_basicos']['idCliente']) && $_SESSION['cotizacion_basicos']['idCliente']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['idCliente']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha']!=''){  
-								$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'";  
+							if(isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) && $_SESSION['cotizacion_basicos']['Creacion_fecha']!=''){
+								$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'";
 								$SIS_data .= ",'".fecha2Ano($_SESSION['cotizacion_basicos']['Creacion_fecha'])."'";
 							}else{

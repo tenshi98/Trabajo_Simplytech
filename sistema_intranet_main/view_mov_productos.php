@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -334,7 +334,7 @@ if($row_data['MontoPagado']!=0){?>
 								<?php foreach ($arrPagosProv as $pagos) { ?>
 									<tr class="odd">
 										<td><?php echo $pagos['UsuarioPago']; ?></td>
-										<td><?php echo $pagos['Nombre'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];}?></td>
+										<td><?php echo $pagos['Nombre'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];} ?></td>
 										<td><?php echo fecha_estandar($pagos['F_Pago']); ?></td>
 										<td align="right" style="padding-right: 22px !important;"><?php echo Valores($pagos['MontoPagado'], 0); ?></td>
 									</tr>
@@ -342,7 +342,7 @@ if($row_data['MontoPagado']!=0){?>
 								<?php foreach ($arrPagosClien as $pagos) { ?>
 									<tr class="odd">
 										<td><?php echo $pagos['UsuarioPago']; ?></td>
-										<td><?php echo $pagos['Nombre'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];}?></td>
+										<td><?php echo $pagos['Nombre'];if(isset($pagos['N_DocPago'])&&$pagos['N_DocPago']!=''){echo ' Doc N° '.$pagos['N_DocPago'];} ?></td>
 										<td><?php echo fecha_estandar($pagos['F_Pago']); ?></td>
 										<td align="right" style="padding-right: 22px !important;"><?php echo Valores($pagos['MontoPagado'], 0); ?></td>
 									</tr>
@@ -358,7 +358,7 @@ if($row_data['MontoPagado']!=0){?>
 							</tbody>
 						</table>
 					</div>
-						
+
 					<div class="row invoice-payment">
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8"></div>
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
@@ -374,7 +374,7 @@ if($row_data['MontoPagado']!=0){?>
 									</tr>
 									<tr>
 										<th>Diferencia:</th>
-										<?php 
+										<?php
 										$diferencia = $row_data['MontoPagado'] - $row_data['ValorTotal'];
 										if($diferencia<0){
 											echo '<td align="right" class="text-danger"><h6><i class="fa fa-arrow-down" aria-hidden="true"></i> '.Valores($diferencia, 0).'</h6></td>';
@@ -389,7 +389,7 @@ if($row_data['MontoPagado']!=0){?>
 							</table>
 						</div>
 					</div>
-					
+
 				</div>
 			</div>
 		</div>
@@ -443,7 +443,7 @@ if($row_data['MontoPagado']!=0){?>
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<?php
 		//se verifica el tipo de movimiento
 		switch ($row_data['idTipo']) {
@@ -621,7 +621,7 @@ if($row_data['MontoPagado']!=0){?>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-					
+
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
@@ -654,7 +654,7 @@ if($row_data['MontoPagado']!=0){?>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-					
+
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
@@ -688,7 +688,7 @@ if($row_data['MontoPagado']!=0){?>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-					
+
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
@@ -764,7 +764,7 @@ if($row_data['MontoPagado']!=0){?>
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-					
+
 				</div>
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
@@ -869,8 +869,8 @@ if($row_data['MontoPagado']!=0){?>
 				echo '</div>';
 				
 				break;
-		}?>
-		
+		} ?>
+
 	</div>
 
 	<div class="">
@@ -890,8 +890,8 @@ if($row_data['MontoPagado']!=0){?>
 						<tr class="active"><td colspan="5"><strong>Productos</strong></td></tr>
 						<?php foreach ($arrProductos as $prod) {?>
 							<tr>
-								<td><?php echo '<strong>'.$prod['NombreBodega'].'</strong> - '.$prod['Nombre'];?></td>
-								<?php 
+								<td><?php echo '<strong>'.$prod['NombreBodega'].'</strong> - '.$prod['Nombre']; ?></td>
+								<?php
 								//Verifico la existencia de la abreviatura de la unidad de medida
 								if(isset($prod['UnimedAbrev'])&&$prod['UnimedAbrev']!=''){
 									$prodUnimed = $prod['UnimedAbrev'];
@@ -905,9 +905,9 @@ if($row_data['MontoPagado']!=0){?>
 								if(isset($prod['Cantidad_eg'])&&$prod['Cantidad_eg']!=0){
 									echo '<td align="right"></td>';
 									echo '<td align="right">'.Cantidades_decimales_justos($prod['Cantidad_eg']).' '.$prodUnimed.'</td>';
-								}?>
-								<td align="right"><?php echo Valores(Cantidades_decimales_justos($prod['Valor']), 0).' x '.$prodUnimed;?></td>
-								<td align="right"><?php echo Valores(Cantidades_decimales_justos($prod['ValorTotal']), 0);?></td>
+								} ?>
+								<td align="right"><?php echo Valores(Cantidades_decimales_justos($prod['Valor']), 0).' x '.$prodUnimed; ?></td>
+								<td align="right"><?php echo Valores(Cantidades_decimales_justos($prod['ValorTotal']), 0); ?></td>
 							</tr>
 						<?php } ?>
 					<?php } ?>
@@ -915,8 +915,8 @@ if($row_data['MontoPagado']!=0){?>
 						<tr class="active"><td colspan="5"><strong>Guias de Despacho</strong></td></tr>
 						<?php foreach ($arrGuias as $guia) { ?>
 							<tr>
-								<td colspan="4"><?php echo 'Guia de Despacho N°'.$guia['N_Doc'];?></td>
-								<td align="right"><?php echo Valores($guia['ValorNeto'], 0);?></td>
+								<td colspan="4"><?php echo 'Guia de Despacho N°'.$guia['N_Doc']; ?></td>
+								<td align="right"><?php echo Valores($guia['ValorNeto'], 0); ?></td>
 							</tr>
 						<?php } ?>
 					<?php } ?>
@@ -924,15 +924,15 @@ if($row_data['MontoPagado']!=0){?>
 						<tr class="active"><td colspan="5"><strong>Otros</strong></td></tr>
 						<?php foreach ($arrOtros as $otro) { ?>
 							<tr>
-								<td colspan="4"><?php echo $otro['Nombre'];?></td>
-								<td align="right"><?php echo Valores($otro['vTotal'], 0);?></td>
+								<td colspan="4"><?php echo $otro['Nombre']; ?></td>
+								<td align="right"><?php echo Valores($otro['vTotal'], 0); ?></td>
 							</tr>
 						<?php } ?>
 					<?php } ?>
 				</tbody>
 			</table>
 			<table class="table">
-				<tbody>	
+				<tbody>
 					<?php if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong>Subtotal</strong></td>
@@ -1026,19 +1026,19 @@ if($row_data['MontoPagado']!=0){?>
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
 		</div>
 	</div>
 
 	<?php
 	//Traspaso de Productos a otra Empresa
 	if($row_data['idTipo']==6){?>
-		
+
 		<div class="row firma">
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont"><p>Firma Transportista</p></div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont" style="left:50%;"><p>Firma Receptor</p></div>
 		</div>
-		
+
 	<?php } ?>
 
 	<?php
@@ -1118,7 +1118,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -1128,7 +1128,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -1137,4 +1137,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

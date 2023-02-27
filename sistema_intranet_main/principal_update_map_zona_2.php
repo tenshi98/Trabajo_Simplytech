@@ -55,7 +55,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',SensoresUniMed_'.$i;
 	$subquery .= ',SensoresActivo_'.$i;
 }
-				
+
 //Listar los equipos
 $arrEquipo = array();
 $query = "SELECT 
@@ -99,7 +99,6 @@ foreach ($arrUnimed as $data) {
 }	
 
 ?>
-
 
 <script>
 	var HoraRefresco = '<?php echo hora_actual(); ?>';

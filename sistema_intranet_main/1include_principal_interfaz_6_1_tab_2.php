@@ -80,7 +80,7 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 ?>
 <style>
 .float_table table{margin-right: auto !important;margin-left: auto !important;float: none !important;}
-#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif';?>");background-repeat: no-repeat;background-position: center;}
+#loading {display: block;position: absolute;top: 0;left: 0;z-index: 100;width: 100%;height: 100%;background-color: rgba(192, 192, 192, 0.5);background-image: url("<?php echo DB_SITE_REPO.'/LIB_assets/img/loader.gif'; ?>");background-repeat: no-repeat;background-position: center;}
 </style>
 
 
@@ -530,10 +530,10 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 									<?php foreach ( $arrMediciones as $pos ) {
 										if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){
 											if((isset($pos['Sensor_1'])&&$pos['Sensor_1']>0) OR (isset($pos['Sensor_2'])&&$pos['Sensor_2']>0)){ ?>
-												['<?php echo $pos['idTabla']; ?>', <?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>], 					
+												['<?php echo $pos['idTabla']; ?>', <?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>],
 									<?php 	}
 										}
-									}?>
+									} ?>
 								];
 
 								<?php
@@ -545,7 +545,7 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 
 								<?php 	}
 									}
-								}?>
+								} ?>
 
 								//lineas del mapa
 								var poly = new google.maps.Polyline({

@@ -432,9 +432,9 @@ if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) {$Co
 						<?php echo $grua['eq_ok_icon'].$grua['status_icon']; ?>
 					</div>
 				</td>
-				<td><?php echo $grua['Nombre'];?><br/><?php echo $grua['LastUpdate'];?></td>
-				<td><?php echo $grua['Voltaje'];?></td>
-				<td><?php echo $grua['Viento'];?></td>
+				<td><?php echo $grua['Nombre']; ?><br/><?php echo $grua['LastUpdate']; ?></td>
+				<td><?php echo $grua['Voltaje']; ?></td>
+				<td><?php echo $grua['Viento']; ?></td>
 				<td width="10">
 					<div class="btn-group" style="width: 175px;" >
 						<?php
@@ -467,9 +467,9 @@ if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) {$Co
 						<?php echo $grua['eq_ok_icon'].$grua['status_icon']; ?>
 					</div>
 				</td>
-				<td><?php echo $grua['Nombre'];?><br/><?php echo $grua['LastUpdate'];?></td>
-				<td><?php echo $grua['Voltaje'];?></td>
-				<td><?php echo $grua['Viento'];?></td>
+				<td><?php echo $grua['Nombre']; ?><br/><?php echo $grua['LastUpdate']; ?></td>
+				<td><?php echo $grua['Voltaje']; ?></td>
+				<td><?php echo $grua['Viento']; ?></td>
 				<td width="10">
 					<div class="btn-group" style="width: 175px;" >
 						<?php
@@ -502,9 +502,9 @@ if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) {$Co
 						<?php echo $grua['eq_ok_icon'].$grua['status_icon']; ?>
 					</div>
 				</td>
-				<td><?php echo $grua['Nombre'];?><br/><?php echo $grua['LastUpdate'];?></td>
-				<td><?php echo $grua['Voltaje'];?></td>
-				<td><?php echo $grua['Viento'];?></td>
+				<td><?php echo $grua['Nombre']; ?><br/><?php echo $grua['LastUpdate']; ?></td>
+				<td><?php echo $grua['Voltaje']; ?></td>
+				<td><?php echo $grua['Viento']; ?></td>
 				<td width="10">
 					<div class="btn-group" style="width: 175px;" >
 						<?php
@@ -575,5 +575,4 @@ if(isset($arrGruas[1][3])){foreach ( $arrGruas[1][3] as $categoria=>$grua ) {$Co
 	?>
 </script>
 
-
-<?php widget_tooltipster();?>
+<?php widget_tooltipster(); ?>

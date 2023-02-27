@@ -81,6 +81,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);
 //Verifico el tipo de usuario que esta ingresando
 $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1';
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -276,14 +277,14 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 							<td><?php echo $eve['Direccion'].', '.$eve['Comuna'].', '.$eve['Ciudad']; ?></td>
 							<td><?php echo fecha_estandar($eve['Fecha']); ?></td>
 							<td><?php echo $eve['Hora']; ?></td>
-							<td><label class="label <?php if(isset($eve['idValidado'])&&$eve['idValidado']==2){echo 'label-success';}else{echo 'label-danger';}?>"><?php echo $eve['Validacion']; ?></label></td>
+							<td><label class="label <?php if(isset($eve['idValidado'])&&$eve['idValidado']==2){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $eve['Validacion']; ?></label></td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
 									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_seg_vecinal_evento.php?view='.simpleEncode($eve['idEvento'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$eve['idEvento']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($eve['idEvento'], fecha_actual());
-										$dialogo   = '¿Realmente deseas eliminar el evento '.$eve['Tipo'].'?';?>
+										$dialogo   = '¿Realmente deseas eliminar el evento '.$eve['Tipo'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -301,11 +302,11 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 	</div>
 </div>
 
-
 <?php } ?>
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

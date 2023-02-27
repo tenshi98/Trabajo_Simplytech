@@ -23,7 +23,7 @@ if (isset($_GET['idCiudad'])&&$_GET['idCiudad']!=''){
 	$SIS_where .= " AND telemetria_listado.idCiudad=".$_GET['idCiudad'];
 }
 if (isset($_GET['idComuna'])&&$_GET['idComuna']!=''){
-	$SIS_where .= " AND telemetria_listado.idComuna=".$_GET['idComuna'];	
+	$SIS_where .= " AND telemetria_listado.idComuna=".$_GET['idComuna'];
 }
 if (isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$SIS_where .= " AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
@@ -131,9 +131,9 @@ foreach ($arrUnimed as $sen) {
 
 <script>
 	var marcadores_ex = [
-		<?php 
+		<?php
 		$in=0;
-		foreach ($arrEquipo as $data) { 
+		foreach ($arrEquipo as $data) {
 			$explanation = "<div class='iw-subTitle'>Equipo: ".$data['Nombre']."</div>";
 			$explanation .= '<p>'.fecha_estandar($data['LastUpdateFecha']).' - '.$data['LastUpdateHora'].'</p>';
 			$explanation .= "<div class='iw-subTitle'>Sensores: </div><p>";
@@ -146,7 +146,7 @@ foreach ($arrUnimed as $sen) {
 			}
 			$explanation .= '</p>';	
 					
-			if($in==0){$in=1;}else{echo ',';}?>
+			if($in==0){$in=1;}else{echo ',';} ?>
 			{  
 				contenido: 	"<div id='iw-container'>" +
 							"<div class='iw-title'>Datos</div>" +

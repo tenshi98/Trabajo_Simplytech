@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -68,7 +68,7 @@ $arrRutasAlt = db_select_array (false, $SIS_query, 'vehiculos_ruta_alternativa_u
 
 			<div class="tab-pane fade active in" id="basicos">
 				<div class="wmd-panel">
-					
+
 					<?php
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
@@ -94,20 +94,20 @@ $arrRutasAlt = db_select_array (false, $SIS_query, 'vehiculos_ruta_alternativa_u
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 								RutasAlternativas();
 							}
-							
+
 							/* ************************************************************************** */
 							function RutasAlternativas() {
 								
 								var route1=[];
 								var route2=[];
 								var tmp;
-								
+
 								var locations1 = [ 
 								<?php foreach ( $arrRutas as $pos ) { ?>
 									['<?php echo $pos['idUbicaciones']; ?>', <?php echo $pos['Latitud']; ?>, <?php echo $pos['Longitud']; ?>], 					
 								<?php } ?>
 								];
-								
+
 								var locations2 = [ 
 								<?php foreach ( $arrRutasAlt as $pos ) { ?>
 									['<?php echo $pos['idUbicaciones']; ?>', <?php echo $pos['Latitud']; ?>, <?php echo $pos['Longitud']; ?>], 					
@@ -131,7 +131,7 @@ $arrRutasAlt = db_select_array (false, $SIS_query, 'vehiculos_ruta_alternativa_u
 									strokeOpacity: 1,
 									strokeWeight: 5
 								});
-								
+
 								var drawn = new google.maps.Polyline({
 									map: map,
 									path: route2,
@@ -149,9 +149,9 @@ $arrRutasAlt = db_select_array (false, $SIS_query, 'vehiculos_ruta_alternativa_u
 								  content: ''
 								});
 								var marcadores = [
-								<?php 
+								<?php
 								$in=0;
-								foreach ($arrRutas as $pos) { 
+								foreach ($arrRutas as $pos) {
 										if($in==0){
 											$in=1;
 										}else{
@@ -166,9 +166,9 @@ $arrRutasAlt = db_select_array (false, $SIS_query, 'vehiculos_ruta_alternativa_u
 								  contenido: "<?php echo $pos['direccion']; ?>"
 								}
 								<?php } ?>
-								<?php 
+								<?php
 								$in=0;
-								foreach ($arrRutasAlt as $pos) { 
+								foreach ($arrRutasAlt as $pos) {
 										if($in==0){
 											echo ',';
 										}else{
@@ -208,7 +208,7 @@ $arrRutasAlt = db_select_array (false, $SIS_query, 'vehiculos_ruta_alternativa_u
 									});
 								  })(marker, contenido);
 								}
-								
+
 								// *
 								// START INFOWINDOW CUSTOMIZE.
 								// The google.maps.event.addListener() event expects
@@ -283,7 +283,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -293,7 +293,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -302,4 +302,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

@@ -113,7 +113,7 @@ if(!empty($_GET['new_oc'])){  ?>
 
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['edit_Otros'])){ 
+} elseif(!empty($_GET['edit_Otros'])){
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 // Se traen todos los datos
@@ -136,6 +136,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	 
 	 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -191,6 +192,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	 
 	 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -222,9 +224,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['edit_Insumos'])){
+} elseif(!empty($_GET['edit_Insumos'])){
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; 
 // Se traen todos los datos
@@ -247,6 +248,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	 
 	 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -278,9 +280,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['edit_Arriendos'])){
+} elseif(!empty($_GET['edit_Arriendos'])){
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 // Se traen todos los datos
@@ -303,6 +304,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	 
 	 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -334,9 +336,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['edit_Servicios'])){
+} elseif(!empty($_GET['edit_Servicios'])){
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 // Se traen todos los datos
@@ -359,6 +360,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	 
 	 
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -391,7 +393,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- } elseif(!empty($_GET['submit'])){ 
+} elseif(!empty($_GET['submit'])){
 //Se verifica si se creo sistema
 $aa1 = '';
 $aa2 = '';
@@ -603,7 +605,6 @@ array_push( $arrProveedores,$row );
 	 
 ?>
 
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -618,7 +619,7 @@ array_push( $arrProveedores,$row );
 						<th width="120">Cantidad</th>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>	
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrProveedores as $prov) {
 							//Se cuenta si es que tiene productos asignados
@@ -768,7 +769,7 @@ array_push( $arrProveedores,$row );
 						<th width="120">Cantidad</th>
 						<th width="10">Acciones</th>
 					</tr>
-				</thead>	
+				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<?php
 							//Productos
@@ -910,4 +911,5 @@ array_push( $arrProveedores,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

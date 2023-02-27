@@ -64,7 +64,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Servicio borrado corre
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
- if(!empty($_GET['map'])){ 
+if(!empty($_GET['map'])){ 
 $query = "SELECT Nombre,GeoLatitud, GeoLongitud, Direccion
 FROM `seg_vecinal_servicios_listado`
 WHERE idServicio = ".$_GET['map'];
@@ -141,7 +141,7 @@ echo '</div>';
 									mapTypeId: google.maps.MapTypeId.ROADMAP
 								};
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-								
+
 								marker = new google.maps.Marker({
 									draggable	: true,
 									position	: myLatlng,
@@ -150,7 +150,7 @@ echo '</div>';
 									animation 	:google.maps.Animation.DROP,
 									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_blue.png"
 								});
-							
+
 								google.maps.event.addListener(marker, 'dragend', function (event) {
 
 									document.getElementById("GeoLatitud").value = event.latLng.lat();
@@ -199,7 +199,7 @@ echo '</div>';
 							/* ************************************************************************** */
 							google.maps.event.addDomListener(window, "load", initialize());
 						</script>
-					
+
 					<?php } ?>
 				</div>
 			</div>
@@ -224,13 +224,13 @@ echo '</div>';
 						<div class="form-group">
 							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit">
 						</div>
-							  
+
 					</form>
 					<?php widget_validator(); ?>
-					
+
 				</div>
 			</div>
-			
+
 		</div>
 		
 		
@@ -262,6 +262,7 @@ if(!$resultado){
 					
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -296,10 +297,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 												  'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 												  $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');	 
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');
 				$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x6, 2, 2);
 				$Form_Inputs->form_time('Hora Termino','HoraTermino', $x7, 2, 2);
-					
+
 				$Form_Inputs->form_tittle(3, 'Datos de contacto');
 				$Form_Inputs->form_input_phone('Telefono Fijo', 'Fono1', $x8, 1);
 				$Form_Inputs->form_input_phone('Telefono Movil', 'Fono2', $x9, 1);
@@ -310,7 +311,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_hidden('idServicio', $_GET['id'], 2);
 
 				?>
-								
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -324,7 +325,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['new'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
+validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -358,10 +359,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 												  'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 												  $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');	 
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');
 				$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x6, 2, 2);
 				$Form_Inputs->form_time('Hora Termino','HoraTermino', $x7, 2, 2);
-					
+
 				$Form_Inputs->form_tittle(3, 'Datos de contacto');
 				$Form_Inputs->form_input_phone('Telefono Fijo', 'Fono1', $x8, 1);
 				$Form_Inputs->form_input_phone('Telefono Movil', 'Fono2', $x9, 1);
@@ -370,7 +371,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);?>
 				$Form_Inputs->form_input_icon('Web', 'Web', $x12, 1,'fa fa-internet-explorer');
 
 				?>
-								
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -442,7 +443,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'seg_vecinal_servicios_listado',
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Servicio</a><?php }?>
+	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Servicio</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -525,7 +526,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'seg_vecinal_servicios_listado',
 								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&map='.$usuarios['idServicio']; ?>" title="Corregir Mapa" class="btn btn-success btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idServicio'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar al Servicio '.$usuarios['Nombre'].'?';?>
+									$dialogo   = '¿Realmente deseas eliminar al Servicio '.$usuarios['Nombre'].'?'; ?>
 									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
@@ -543,7 +544,6 @@ $arrUsers = db_select_array (false, $SIS_query, 'seg_vecinal_servicios_listado',
 	</div>
 </div>
 
-
 <?php } ?>
 
 <?php
@@ -551,4 +551,5 @@ $arrUsers = db_select_array (false, $SIS_query, 'seg_vecinal_servicios_listado',
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

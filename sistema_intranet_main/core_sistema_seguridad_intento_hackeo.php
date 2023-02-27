@@ -91,6 +91,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCarga,$row );
 }
 ?>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
 	<ul class="btn-group btn-breadcrumb pull-left">
@@ -149,7 +150,7 @@ array_push( $arrCarga,$row );
 									<?php if(isset($carga['Cuenta'])&&$carga['Cuenta']!=1){ 
 										$ubicacion = $location.'&block_ip='.simpleEncode($carga['IP_Client'], fecha_actual());
 										$ubicacion.='&Relacion='.simpleEncode('del intento de hackeo fecha '.fecha_estandar($carga['Fecha']).', usuario '.$carga['usuario'].', IP '.$carga['IP_Client'], fecha_actual());
-										$dialogo   = '¿Realmente deseas bloquear la IP '.$carga['IP_Client'].'?';?>
+										$dialogo   = '¿Realmente deseas bloquear la IP '.$carga['IP_Client'].'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Bloquear Direccion IP" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-ban" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
@@ -162,7 +163,6 @@ array_push( $arrCarga,$row );
 	</div>
 </div>
 
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -171,6 +171,7 @@ array_push( $arrCarga,$row );
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -195,7 +196,7 @@ array_push( $arrCarga,$row );
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 
 				?>
-	   
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -211,4 +212,5 @@ array_push( $arrCarga,$row );
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>

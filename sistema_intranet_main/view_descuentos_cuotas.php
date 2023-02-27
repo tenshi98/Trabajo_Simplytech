@@ -30,7 +30,7 @@ if (validarNumero($_GET['view'])){
 	} else {
 		$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 	}
-} else { 
+} else {
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
@@ -69,7 +69,7 @@ LEFT JOIN `trabajadores_listado`                    ON trabajadores_listado.idTr
 LEFT JOIN `trabajadores_listado_tipos`              ON trabajadores_listado_tipos.idTipo            = trabajadores_listado.idTipo';
 $SIS_where = 'trabajadores_descuentos_cuotas.idFacturacion ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'trabajadores_descuentos_cuotas', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
-			
+
 // Se trae un listado de datos
 $SIS_query = 'Fecha, nCuota, TotalCuotas, monto_cuotas';
 $SIS_join  = '';
@@ -101,7 +101,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 	</div>
 
 	<div class="row invoice-info">
-		
+
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Datos del Trabajador
 			<address>
@@ -139,9 +139,9 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 			if(isset($row_data['N_Cuotas'])&&$row_data['N_Cuotas']!=''&&$row_data['N_Cuotas']!='0'){ 
 				echo '<strong>N° Cuotas: </strong>'.$row_data['N_Cuotas'].'<br/>';
 			}
-			?>	
+			?>
 		</div>
-		
+
 	</div>
 
 	<div class="">
@@ -158,14 +158,14 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 					<?php if ($arrCuotas!=false && !empty($arrCuotas) && $arrCuotas!='') { ?>
 						<?php foreach ($arrCuotas as $prod) {?>
 							<tr>
-								<td><?php echo fecha_estandar($prod['Fecha']);?></td>
-								<td><?php echo 'Cuota '.$prod['nCuota'].' de '.$prod['TotalCuotas'];?></td>
-								<td align="right"><?php echo Valores(Cantidades_decimales_justos($prod['monto_cuotas']), 0);?></td>
+								<td><?php echo fecha_estandar($prod['Fecha']); ?></td>
+								<td><?php echo 'Cuota '.$prod['nCuota'].' de '.$prod['TotalCuotas']; ?></td>
+								<td align="right"><?php echo Valores(Cantidades_decimales_justos($prod['monto_cuotas']), 0); ?></td>
 							</tr>
 						<?php } ?>
 					<?php } ?>
 					<tr class="invoice-total" bgcolor="#f1f1f1">
-						<td colspan="2" align="right"><strong>Total Cuotas</strong></td> 
+						<td colspan="2" align="right"><strong>Total Cuotas</strong></td>
 						<td width="160" align="right"><?php echo Valores($row_data['Monto'], 0); ?></td>
 					</tr>
 				</tbody>
@@ -176,7 +176,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
-			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones'];?></p>
+			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
 		</div>
 	</div>
 
@@ -207,7 +207,6 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
     
 </div>
 
-
 <?php 
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
@@ -220,7 +219,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 		</div>
 	<?php 
 	//para las versiones nuevas que indican donde volver
-	}else{ 
+	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");
 		$array  = explode("&return=", $string, 3);
 		$volver = $array[1];
@@ -230,7 +229,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="<?php echo $volver; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-		
+
 	<?php }
 } ?>
 
@@ -239,4 +238,5 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Views.php';
+
 ?>

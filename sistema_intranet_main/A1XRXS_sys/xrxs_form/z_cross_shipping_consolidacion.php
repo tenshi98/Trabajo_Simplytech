@@ -882,7 +882,7 @@ require_once '0_validate_user_1.php';
 
 			//Variable
 			$randompass = $_GET['view'];
-			
+
 			/*********************************************************************/
 			//variables
 			$n_data1 = 0;
@@ -954,7 +954,7 @@ require_once '0_validate_user_1.php';
 			}else{
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NInforme'] = 1;
 			}
-			
+
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -963,8 +963,8 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSistema']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSistema']!=''){      $SIS_data  = "'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSistema']."'";    }else{$SIS_data  = "''";}
 				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idUsuario']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idUsuario']."'";   }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['fecha_auto']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['fecha_auto']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha']!=''){  
-					$SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha']."'";  
+				if(isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha']) && $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha']!=''){
+					$SIS_data .= ",'".$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2NMes($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha'])."'";
 					$SIS_data .= ",'".fecha2Ano($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha'])."'";
@@ -1018,7 +1018,7 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de las estibas	
-					if(isset($_SESSION['cross_shipping_consolidacion_estibas'][$randompass])){		
+					if(isset($_SESSION['cross_shipping_consolidacion_estibas'][$randompass])){
 						foreach ($_SESSION['cross_shipping_consolidacion_estibas'][$randompass] as $key => $producto){
 
 							//filtros
@@ -1040,7 +1040,7 @@ require_once '0_validate_user_1.php';
 					}
 					/*********************************************************************/
 					//Archivos
-					if(isset($_SESSION['cross_shipping_consolidacion_archivos'][$randompass])){		
+					if(isset($_SESSION['cross_shipping_consolidacion_archivos'][$randompass])){
 						foreach ($_SESSION['cross_shipping_consolidacion_archivos'][$randompass] as $key => $productos){
 							foreach ($productos as $producto) {
 								if(isset($producto['idFile'])&&$producto['idFile']!=0){
@@ -1048,11 +1048,11 @@ require_once '0_validate_user_1.php';
 									if(isset($ultimo_id) && $ultimo_id!=''){                                  $SIS_data  = "'".$ultimo_id."'";                   }else{$SIS_data  = "''";}
 									if(isset($producto['idArchivoTipo']) && $producto['idArchivoTipo']!=''){  $SIS_data .= ",'".$producto['idArchivoTipo']."'";  }else{$SIS_data .= ",''";}
 									if(isset($producto['Nombre']) && $producto['Nombre']!=''){         $SIS_data .= ",'".$producto['Nombre']."'";         }else{$SIS_data .= ",''";}
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idConsolidacion, idArchivoTipo,Nombre';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_shipping_consolidacion_archivo', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								}
 							}
 						}
@@ -1065,8 +1065,8 @@ require_once '0_validate_user_1.php';
 
 					//Declaracion de variables
 					$ProdMuestra         = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['ProdMuestra'];     
-					$Instructivo         = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Instructivo'];  
-					$Pais                = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Pais'];  
+					$Instructivo         = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Instructivo'];
+					$Pais                = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Pais'];
 					$Mercado             = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Mercado'];
 					$Naviera             = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Naviera'];
 					$PlantaDespacho      = $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PlantaDespacho'];
@@ -1121,13 +1121,12 @@ require_once '0_validate_user_1.php';
 				}
 
 			}
-	
 
 		break;
 
 /*******************************************************************************************************************/
 		case 'rechazo_consolidacion':
-		
+
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 				//Filtros
@@ -1151,7 +1150,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'nula_consolidacion':
-		
+
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 				//Filtros
@@ -1176,7 +1175,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'aprob_consolidacion':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -1215,7 +1214,7 @@ require_once '0_validate_user_1.php';
 				//Reviso si las aprobaciones igualan a los aprobadores
 				$arrAprobado = array();
 				$arrAprobado = db_select_array (false, 'sistema_aprobador_cross.idUsuario, cross_shipping_consolidacion.idConsolidacion, (SELECT COUNT(idAprobaciones) FROM `cross_shipping_consolidacion_aprobaciones` WHERE idConsolidacion=cross_shipping_consolidacion.idConsolidacion AND idUsuario=sistema_aprobador_cross.idUsuario  LIMIT 1) AS C_apro', 'cross_shipping_consolidacion', 'LEFT JOIN `sistema_aprobador_cross`  ON sistema_aprobador_cross.idSistema   = cross_shipping_consolidacion.idSistema', 'cross_shipping_consolidacion.idConsolidacion = '.$idConsolidacion, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				//variables
 				$napro_list = 0;
 				$napro_true = 0;
@@ -1233,8 +1232,7 @@ require_once '0_validate_user_1.php';
 					/*******************************************************/
 					//se actualizan los datos
 					$resultado = db_update_data (false, $SIS_data, 'cross_shipping_consolidacion', 'idConsolidacion = "'.$_GET['consolidacion_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
-					
+
 					/*********************************************************************/
 					/*********************************************************************/
 					//envio correos
@@ -1321,7 +1319,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'aprob_auto_consolidacion':
-		
+
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 
@@ -1407,7 +1405,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idUsuario) && $idUsuario!=''){    $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($fecha_auto) && $fecha_auto!=''){   $SIS_data .= ",fecha_auto='".$fecha_auto."'";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){      
-					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";  
+					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_Semana='".fecha2NSemana($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'";
@@ -1661,7 +1659,7 @@ require_once '0_validate_user_1.php';
 								if(isset($idConsolidacion) && $idConsolidacion!=''){  $SIS_data  = "'".$idConsolidacion."'";   }else{$SIS_data  = "''";}
 								if(isset($idArchivoTipo) && $idArchivoTipo!=''){      $SIS_data .= ",'".$idArchivoTipo."'";    }else{$SIS_data .= ",''";}
 								if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",'".$Nombre."'";           }else{$SIS_data .= ",''";}
-								
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idConsolidacion, idArchivoTipo, Nombre';
 								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_shipping_consolidacion_archivo', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1770,7 +1768,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'reversar':
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 

@@ -43,7 +43,7 @@ if(isset($_GET['type'])&&$_GET['type']!=''&&$_GET['type']==1){
 /***********************************************************************************/
 //Si se busca desde una factura	
 }elseif(isset($_GET['type'])&&$_GET['type']!=''&&$_GET['type']==2){
-	
+
 	//variables
 	$z0 = " WHERE ocompra_listado.idOcompra!=0";
 	$z1 = " WHERE bodegas_insumos_facturacion.idFacturacion!=0";
@@ -197,7 +197,9 @@ if(isset($_GET['type'])&&$_GET['type']!=''&&$_GET['type']==1){
 } else {
 //Verifico el tipo de usuario que esta ingresando
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
+
 ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -206,7 +208,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#tab_1" data-toggle="tab"><i class="fa fa-search" aria-hidden="true"></i> Por OC</a></li>
 				<li class=""><a href="#tab_2" data-toggle="tab"><i class="fa fa-search" aria-hidden="true"></i> Por Facturas</a></li>
-				
+
 			</ul>
 		</header>
 		<div class="body">
@@ -218,7 +220,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				if(isset($idDocumentos)){   $x2  = $idDocumentos;   }else{$x2  = '';}
 				if(isset($N_Doc)){          $x3  = $N_Doc;          }else{$x3  = '';}
 				if(isset($idProveedor)){    $x4  = $idProveedor;    }else{$x4  = '';}
-				
+
 				$Form_Inputs = new Form_Inputs();
 				?>
 
@@ -269,4 +271,5 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/
 require_once 'core/Web.Footer.Main.php';
+
 ?>
