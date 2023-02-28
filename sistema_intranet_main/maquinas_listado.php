@@ -97,9 +97,8 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
-	
-	
+</div>
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['id'])){
 //valido los permisos
@@ -743,7 +742,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 										<?php //Se imprime el arbol
 										echo arrayToUL($array3d, $TipoMaq, $Trabajo, 0, $rowlevel['level'],$location, $nmax);
 										?>
-										
+
 										<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 											<div class="modal-dialog">
 												<div class="modal-content">              

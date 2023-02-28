@@ -127,7 +127,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			/*****************************************************************/
 			//Verifico si esta dentro del mismo dia
 			if($fecha!=''&&$fecha==$con['EquipoFecha']){
-				
+
 				/***************************************/
 				//Verifico hora inicio
 				if($HoraInicio>$con['EquipoHora']&&$con['EquipoValor']==$con['EquipoActivacionValor']){

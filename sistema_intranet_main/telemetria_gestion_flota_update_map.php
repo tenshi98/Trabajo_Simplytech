@@ -94,10 +94,10 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 			if($in_eq_alertas>0){    
 				$danger = 'warning';
 				$eq_ok  = '<a href="#" title="Con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';
-			}elseif($in_eq_fueralinea>0){ 
+			}elseif($in_eq_fueralinea>0){
 				$danger = 'danger';
 				$eq_ok  = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';
-			}elseif($in_eq_detenidos>0){ 
+			}elseif($in_eq_detenidos>0){
 				$danger = 'danger';
 				$eq_ok  = '<a href="#" title="Vehiculo Detenido" class="btn btn-danger btn-sm tooltip"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></a>';
 			}else{

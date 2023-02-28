@@ -232,9 +232,8 @@ $rowData = db_select_data (false, 'NSolicitud, f_programacion, horaProg, f_progr
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
-	
-	
+</div>
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['edit_Cuarteles'])){
 //Verifico el tipo de usuario que esta ingresando
@@ -836,8 +835,7 @@ array_push( $arrCuenta2,$row );
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	
-	
+
 	<div id="clone_producto" class="prod_container">
 		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
@@ -871,13 +869,12 @@ array_push( $arrCuenta2,$row );
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	
-	
+
 	<div id="clone_tractor"> 	
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 			<div class="form-group">
 			<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-				$Form_Inputs->select('Tractor','idTelemetria[]', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w,'', $dbConn);	
+				$Form_Inputs->select('Tractor','idTelemetria[]', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w,'', $dbConn);
 			}else{
 				$Form_Inputs->select_bodega('Tractor','idTelemetria[]', '', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 			} ?>
@@ -932,7 +929,7 @@ array_push( $arrCuenta2,$row );
 
 	/**********************************************************/
 	//Se agrega cuartel
-	function cuartel_add() { 
+	function cuartel_add() {
 		//se incrementa en 1
 		room1++;
 		//se estancian los objetos a clonar
@@ -946,7 +943,7 @@ array_push( $arrCuenta2,$row );
     }
 
 	//Se agrega cuartel
-	function cuartel_add_2() { 
+	function cuartel_add_2() {
 		//se incrementa en 1
 		room1++;
 		incre++;
@@ -1002,7 +999,7 @@ array_push( $arrCuenta2,$row );
 
 	/**********************************************************/
 	//Se agrega tractor
-	function tractor_add() { 
+	function tractor_add() {
 		//se incrementa en 1
 		room3++;
 		//se estancian los objetos a clonar
@@ -1015,7 +1012,7 @@ array_push( $arrCuenta2,$row );
 		objTo.appendChild(clone_tractor);
     }
 	//Se agrega cuartel
-	function tractor_add_2() { 
+	function tractor_add_2() {
 		//se incrementa en 1
 		room3++;
 		incr2++;
@@ -1050,7 +1047,7 @@ array_push( $arrCuenta2,$row );
 
 	/**********************************************************/
 	//Se agrega tractor
-	function material_add() { 
+	function material_add() {
 		//se incrementa en 1
 		room4++;
 		//se estancian los objetos a clonar
@@ -1104,7 +1101,7 @@ array_push( $arrCuenta2,$row );
 				
 		foreach ($arrTipo as $tipo) {
 			echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
-			echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+			echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 		}
 		?>
 		let Componente = select.options[select.selectedIndex].value;
@@ -1124,7 +1121,7 @@ array_push( $arrCuenta2,$row );
 			echo 'let id_hectarea_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['Hectareas']).'";';	
 			echo 'let id_hilera_'.$tipo['idZona'].'= "'.$tipo['Hileras'].'";';	
 			echo 'let id_distancia_p_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['DistanciaPlant']).'";';	
-			echo 'let id_distancia_h_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['DistanciaHileras']).'";';	
+			echo 'let id_distancia_h_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['DistanciaHileras']).'";';
 		}
 		?>
 		let Componente = select.options[select.selectedIndex].value;
@@ -1783,8 +1780,7 @@ array_push( $arrCuenta2,$row );
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	
-	
+
 	<div id="clone_producto" class="prod_container">
 		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
 			<div class="form-group">
@@ -1818,13 +1814,12 @@ array_push( $arrCuenta2,$row );
 		</div>
 		<div class="clearfix"></div>
 	</div>
-	
-	
+
 	<div id="clone_tractor"> 	
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 			<div class="form-group">
 			<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-				$Form_Inputs->select('Tractor','idTelemetria[]', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w,'', $dbConn);	
+				$Form_Inputs->select('Tractor','idTelemetria[]', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w,'', $dbConn);
 			}else{
 				$Form_Inputs->select_bodega('Tractor','idTelemetria[]', '', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 			} ?>
@@ -1879,7 +1874,7 @@ array_push( $arrCuenta2,$row );
 
 	/**********************************************************/
 	//Se agrega cuartel
-	function cuartel_add() { 
+	function cuartel_add() {
 		//se incrementa en 1
 		room1++;
 		//se estancian los objetos a clonar
@@ -1893,7 +1888,7 @@ array_push( $arrCuenta2,$row );
     }
 
 	//Se agrega cuartel
-	function cuartel_add_2() { 
+	function cuartel_add_2() {
 		//se incrementa en 1
 		room1++;
 		incre++;
@@ -1949,7 +1944,7 @@ array_push( $arrCuenta2,$row );
 
 	/**********************************************************/
 	//Se agrega tractor
-	function tractor_add() { 
+	function tractor_add() {
 		//se incrementa en 1
 		room3++;
 		//se estancian los objetos a clonar
@@ -1962,7 +1957,7 @@ array_push( $arrCuenta2,$row );
 		objTo.appendChild(clone_tractor);
     } 
     //Se agrega cuartel
-	function tractor_add_2() { 
+	function tractor_add_2() {
 		//se incrementa en 1
 		room3++;
 		incr2++;
@@ -1997,7 +1992,7 @@ array_push( $arrCuenta2,$row );
 
 	/**********************************************************/
 	//Se agrega tractor
-	function material_add() { 
+	function material_add() {
 		//se incrementa en 1
 		room4++;
 		//se estancian los objetos a clonar
@@ -2051,7 +2046,7 @@ array_push( $arrCuenta2,$row );
 				
 		foreach ($arrTipo as $tipo) {
 			echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
-			echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+			echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 		}
 		?>
 		let Componente = select.options[select.selectedIndex].value;
@@ -2071,7 +2066,7 @@ array_push( $arrCuenta2,$row );
 			echo 'let id_hectarea_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['Hectareas']).'";';	
 			echo 'let id_hilera_'.$tipo['idZona'].'= "'.$tipo['Hileras'].'";';	
 			echo 'let id_distancia_p_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['DistanciaPlant']).'";';	
-			echo 'let id_distancia_h_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['DistanciaHileras']).'";';	
+			echo 'let id_distancia_h_'.$tipo['idZona'].'= "'.Cantidades_decimales_justos($tipo['DistanciaHileras']).'";';
 		}
 		?>
 		let Componente = select.options[select.selectedIndex].value;

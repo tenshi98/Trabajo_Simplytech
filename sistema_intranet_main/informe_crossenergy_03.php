@@ -156,7 +156,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=9";//CrossEnergy			
+	$z .= " AND telemetria_listado.idTab=9";//CrossEnergy
 }
 
 ?>
@@ -169,7 +169,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
+
                <?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}

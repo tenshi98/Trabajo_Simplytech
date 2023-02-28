@@ -609,7 +609,7 @@ require_once '0_validate_user_1.php';
 				//$_SESSION['arriendos_ing_productos'][$idEquipo]['idFrecuencia']     = $temp_idFrecuencia;
 				$_SESSION['arriendos_ing_productos'][$idEquipo]['cant_ingresada']   = $temp_cant_ingresada;
 				$_SESSION['arriendos_ing_productos'][$idEquipo]['cant_max']         = $temp_cant_max;
-				
+
 				$_SESSION['arriendos_ing_productos'][$idEquipo]['idEquipo']      = $idEquipo;
 				$_SESSION['arriendos_ing_productos'][$idEquipo]['Cantidad_ing']  = $Cantidad_ing;
 				$_SESSION['arriendos_ing_productos'][$idEquipo]['ValorIngreso']  = $vUnitario;
@@ -654,7 +654,7 @@ require_once '0_validate_user_1.php';
 
 				//Se traen los datos de la guia seleccionada
 				$rowGuia = db_select_data (false, 'N_Doc, ValorNeto', 'bodegas_arriendos_facturacion', '', 'idFacturacion = "'.$idGuia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				$_SESSION['arriendos_ing_guias'][$idGuia]['idGuia']     = $idGuia;
 				$_SESSION['arriendos_ing_guias'][$idGuia]['N_Doc']      = $rowGuia['N_Doc'];
 				$_SESSION['arriendos_ing_guias'][$idGuia]['ValorNeto']  = $rowGuia['ValorNeto'];
@@ -1156,7 +1156,7 @@ require_once '0_validate_user_1.php';
 								$nueva_cant = $producto['cant_ingresada'] + $producto['Cantidad_ing'];
 								$SIS_data = "idExistencia='".$producto['idExistencia']."'";
 								$SIS_data .= ",cant_ingresada='".$nueva_cant."'";
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_arriendos', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1174,7 +1174,7 @@ require_once '0_validate_user_1.php';
 								
 								$SIS_data  = "DocRel='".$ultimo_id."'";    
 								$SIS_data .= ",idEstado='2'";
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_arriendos_facturacion', 'idFacturacion = "'.$guias['idGuia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1654,7 +1654,7 @@ require_once '0_validate_user_1.php';
 
 				//Se traen los datos de la guia seleccionada
 				$rowGuia = db_select_data (false, 'N_Doc, ValorNeto', 'bodegas_arriendos_facturacion', '', 'idFacturacion = "'.$idGuia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				$_SESSION['arriendos_egr_guias'][$idGuia]['idGuia']     = $idGuia;
 				$_SESSION['arriendos_egr_guias'][$idGuia]['N_Doc']      = $rowGuia['N_Doc'];
 				$_SESSION['arriendos_egr_guias'][$idGuia]['ValorNeto']  = $rowGuia['ValorNeto'];
@@ -2208,7 +2208,7 @@ require_once '0_validate_user_1.php';
 								
 								$SIS_data  = "DocRel='".$ultimo_id."'";    
 								$SIS_data .= ",idEstado='2'";
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_arriendos_facturacion', 'idFacturacion = "'.$guias['idGuia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

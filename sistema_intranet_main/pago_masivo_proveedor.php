@@ -157,7 +157,7 @@ if(isset($_SESSION['pago_proveedor_productos'])){
 			if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']==''){
 				$Data_Pendientes++;
 			}
-		}	
+		}
 	}	
 }
 
@@ -177,7 +177,7 @@ if(isset($_SESSION['pago_proveedor_arriendo'])){
 			if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']==''){
 				$Data_Pendientes++;
 			}
-		}	
+		}
 	}	
 }
 
@@ -197,7 +197,7 @@ if(isset($_SESSION['pago_proveedor_servicio'])){
 			if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']==''){
 				$Data_Pendientes++;
 			}
-		}	
+		}
 	}	
 }
 
@@ -339,7 +339,7 @@ $Form_Inputs = new Inputs();
 							<tr class="odd">
 								<td style="background-color: #E5E5E5;" colspan="11"><strong>FACTURAS DE PRODUCTOS</strong></td>
 							</tr>
-							<?php 
+							<?php
 							foreach ($_SESSION['pago_proveedor_productos'] as $key => $tipo){ 
 								$Registro_total++; ?>
 								<tr class="odd">
@@ -417,7 +417,7 @@ $Form_Inputs = new Inputs();
 							<tr class="odd">
 								<td style="background-color: #E5E5E5;" colspan="11"><strong>FACTURAS DE ARRIENDOS</strong></td>
 							</tr>
-							<?php 
+							<?php
 							foreach ($_SESSION['pago_proveedor_arriendo'] as $key => $tipo){ 
 								$Registro_total++; ?>
 								<tr class="odd">
@@ -495,7 +495,7 @@ $Form_Inputs = new Inputs();
 							<tr class="odd">
 								<td style="background-color: #E5E5E5;" colspan="11"><strong>FACTURAS DE SERVICIOS</strong></td>
 							</tr>
-							<?php 
+							<?php
 							foreach ($_SESSION['pago_proveedor_servicio'] as $key => $tipo){ 
 								$Registro_total++; ?>
 								<tr class="odd">
@@ -718,7 +718,7 @@ $Form_Inputs = new Inputs();
 		}
 		?>
 		
-		setTimeout ("window.location.reload(false);", 1000); 
+		setTimeout ("window.location.reload(false);", 1000);
 	}
 	//////////////////////////////////////////////////////////
 	function delpago(level, number) {
@@ -742,7 +742,7 @@ $Form_Inputs = new Inputs();
 			saveFact(level, number, value, text, valor);
 			setTimeout ("window.location.reload(false);", 1000);
 		}else{
-			alert('Selecciona una opcion');	
+			alert('Selecciona una opcion');
 		}
 		
 		
@@ -855,7 +855,7 @@ $Form_Inputs = new Inputs();
 					</div>
 				</div>
 			</div>
-		
+
 			<script>
 				
 				
@@ -875,7 +875,7 @@ $Form_Inputs = new Inputs();
 				});
 
 				$('#submitmodal').click(function(){
-					$("#submitCadastroHidden").click(); 
+					$("#submitCadastroHidden").click();
 				});
 
 			</script>
@@ -1525,7 +1525,7 @@ array_push( $arrTipo4,$row );
 		else if (prec >= 1 && decPos === -1) {
 			s += dec+new Array(prec).join(0)+'0';
 		}
-		return '$ '+s; 
+		return '$ '+s;
 	}
 
 	//////////////////////////////////////////////////////////

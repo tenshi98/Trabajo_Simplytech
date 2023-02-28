@@ -104,9 +104,8 @@ if(!empty($_GET['clone_idMatriz'])){
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
-	
-	
+</div>
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['mod'])){
 //Armo cadena

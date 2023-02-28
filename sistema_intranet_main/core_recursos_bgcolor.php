@@ -210,7 +210,7 @@ require_once 'core/Web.Header.Main.php';
 						<li class="btn-danger">Danger</li>
 					</ul>
 				</div>
-					
+
 			</div>
 
 			<div class="tab-pane fade" id="mycolors">
@@ -267,7 +267,6 @@ require_once 'core/Web.Header.Main.php';
 
 				<div class="clearfix"></div>
 
-				
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
 					<ul class="list-unstyled">
 						<li class="bkg-red">color</li>

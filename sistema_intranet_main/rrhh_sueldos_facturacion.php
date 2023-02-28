@@ -221,7 +221,7 @@ array_push( $arrArchivos,$row );
 
 				
 		</div>
-		
+
 			<table id="items">
 				<tbody>
 
@@ -460,7 +460,7 @@ array_push( $arrArchivos,$row );
 
 				
 		</div>
-		
+
 			<table id="items">
 				<tbody>
 

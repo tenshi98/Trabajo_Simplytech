@@ -49,7 +49,7 @@
 						<?php
 						//Se trae el saldo anterior si es que este existe
 						if($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteEstado']=='Sin Problemas'){
-							echo 'VENCIMIENTO: '.Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFechaVencimiento']);	
+							echo 'VENCIMIENTO: '.Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteFechaVencimiento']);
 						}else{
 							echo $_SESSION['Facturacion_clientes'][$X_Puntero]['ClienteEstado'];
 						}
@@ -511,7 +511,7 @@
 				</div>
 			</div>
 		</div>
-			
+
 	</div>
 
 

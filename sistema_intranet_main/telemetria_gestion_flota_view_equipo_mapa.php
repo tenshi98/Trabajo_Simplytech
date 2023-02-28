@@ -122,11 +122,9 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 									
 				echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Ultima Ubicacion', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)
 				?>
-			
-			
+
 			</div>
-			
-			
+
 			<?php if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){ ?>
 				<div class="tab-pane fade" id="mediciones">
 					<div class="wmd-panel">
@@ -224,7 +222,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 										<th>Min</th>
 										<th>Max</th>
 										<?php if($rowdata['id_Geo']==1){ ?>
-											<th>Ubicacion</th> 
+											<th>Ubicacion</th>
 										<?php } ?>
 									</tr>
 								</thead>
@@ -278,7 +276,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 										<th>Hora Termino</th>
 										<th>Tiempo</th>
 										<?php if($rowdata['id_Geo']==1){ ?>
-											<th>Ubicacion</th> 
+											<th>Ubicacion</th>
 										<?php } ?>
 									</tr>
 								</thead>

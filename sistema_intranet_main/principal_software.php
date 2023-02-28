@@ -109,42 +109,38 @@ $arrCategorias = db_select_array (false, $SIS_query, 'soporte_software_listado_c
 			</div>
 		<?php } ?>
 	</div>
-	
-	
+
 	<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 mail-left-box">
   		<div class="list-group inbox-options">
 			<?php $todos = 0; foreach ($arrCategorias as $cat) { $todos = $todos + $cat['cuenta'];} ?>
-					
+
 			<div class="list-group-item">Filtro</div>
 			<a href="<?php echo $original.'?pagina=1'; ?>" class="list-group-item">
-				<i class="fa fa-inbox" aria-hidden="true"></i> 
-				Mostrar Todos
-				<span class="badge  bg-primary"><?php echo $todos; ?></span> 
+				<i class="fa fa-inbox" aria-hidden="true"></i> Mostrar Todos
+				<span class="badge  bg-primary"><?php echo $todos; ?></span>
 			</a>
-					
+
 			<?php foreach ($arrCategorias as $cat) { ?>
 				<a href="<?php echo $original.'?pagina=1&filterCat='.$cat['idCategoria']; ?>" class="list-group-item">
 					<i class="fa fa-inbox" aria-hidden="true"></i>
 					<?php echo $cat['Nombre']; ?>
 					<span class="badge bg-primary"><?php echo $cat['cuenta']; ?></span>
-				</a>	
+				</a>
 			<?php } ?>
-					
-					
+
   		</div>
 	</div>
-				
+
 </div>
 
 <?php echo paginador_1($total_paginas, $original, '', $num_pag); ?>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px; margin-top:30px">
-<a href="principal.php" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="principal.php" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
-          
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

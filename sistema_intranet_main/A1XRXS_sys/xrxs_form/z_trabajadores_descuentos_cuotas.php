@@ -137,7 +137,6 @@ require_once '0_validate_user_1.php';
 					}
 					//calculo de saldo
 					$total_temporal = $total_temporal - $monto_cuotas;
-					
 				}
 
 				/****************************************************/
@@ -249,7 +248,6 @@ require_once '0_validate_user_1.php';
 					}
 					//calculo de saldo
 					$total_temporal = $total_temporal - $monto_cuotas;
-					
 				}
 
 				/****************************************************/

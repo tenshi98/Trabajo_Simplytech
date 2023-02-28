@@ -108,7 +108,7 @@ foreach($arrHistorial as $hist) {
 			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$x_hora.':'.$x_minuto.'</td>
 			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$temp_real.'</td>
 			<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$temp_predic.'</td>
-		</tr>';		
+		</tr>';
 	}
 }
 /********************************************************************/
@@ -225,7 +225,7 @@ if(isset($rowEmpresa['idOpcionesGen_5'])&&$rowEmpresa['idOpcionesGen_5']!=0){
 				// The '@' character is used to indicate that follows an image data stream and not an image file name
 				$pdf->Image('@'.$imgdata, 15, 30, 180, 120, 'PNG', '', '', true, 150, '', false, false, 1, false, false, false);
 			}
-			
+
 			$pdf->writeHTML($html, true, false, true, false, '');
 			$pdf->lastPage();
 			$pdf->Output(DeSanitizar($pdf_file), 'I');

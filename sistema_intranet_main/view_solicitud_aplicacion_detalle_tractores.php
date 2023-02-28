@@ -158,15 +158,15 @@ filtrar($arrOTS, 'idTelemetria');
 										<td><?php echo $ot['CuartelNombre']; ?></td>
 										<td><?php echo $ot['VariedadCat']; ?></td>
 										<td><?php echo $ot['VariedadNombre']; ?></td>
-										
+
 										<td><?php echo Cantidades($ot['GeoVelocidadMin'], 1); ?></td>
 										<td><?php echo Cantidades($ot['GeoVelocidadMax'], 1); ?></td>
 										<td><?php echo Cantidades($ot['GeoVelocidadProm'], 1); ?></td>
 										<td><?php echo Cantidades($ot['VelTractor'], 1); ?></td>
-										
+
 										<td><?php echo Cantidades($ot['Sensor_1_Prom'], 2); ?></td>
 										<td><?php echo Cantidades($ot['Sensor_2_Prom'], 2); ?></td>
-										
+
 										<td><?php echo Cantidades($ot['Sensor_3_Min'], 0); ?></td>
 										<td><?php echo Cantidades($ot['Sensor_3_Max'], 0); ?></td>
 
@@ -218,14 +218,14 @@ filtrar($arrOTS, 'idTelemetria');
 										<td><?php echo $ot['CuartelNombre']; ?></td>
 										<td><?php echo $ot['VariedadCat']; ?></td>
 										<td><?php echo $ot['VariedadNombre']; ?></td>
-										
+
 										<td><?php echo Cantidades($ot['GeoVelocidadMin_out'], 2); ?></td>
 										<td><?php echo Cantidades($ot['GeoVelocidadMax_out'], 2); ?></td>
 										<td><?php echo Cantidades($ot['GeoVelocidadProm_out'], 2); ?></td>
 										<td><?php echo Cantidades($ot['VelTractor'], 2); ?></td>
-										
+
 										<td><?php echo Cantidades($ot['GeoDistance_out'], 2); ?></td>
-										
+
 										<td><?php echo Cantidades($ot['Sensor_out_1_Sum'], 2); ?></td>
 										<td><?php echo Cantidades($ot['Sensor_out_2_Sum'], 2); ?></td>
 	
@@ -243,7 +243,7 @@ filtrar($arrOTS, 'idTelemetria');
 	</div>
 </div>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -253,7 +253,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

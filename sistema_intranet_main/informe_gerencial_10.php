@@ -251,7 +251,7 @@ $Total_4 = 0;
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#netos" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Netos</a></li>
-				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Totales</a></li>          
+				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Totales</a></li>
 			</ul>
 		</header>
         <div class="tab-content">
@@ -694,7 +694,7 @@ $Total_4 = 0;
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#netos" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Netos</a></li>
-				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Totales</a></li>          
+				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Totales</a></li>
 			</ul>
 		</header>
         <div class="tab-content">
@@ -1134,7 +1134,7 @@ $Total_4 = 0;
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#netos" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Netos</a></li>
-				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Totales</a></li>          
+				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Totales</a></li>
 			</ul>
 		</header>
         <div class="tab-content">
@@ -1583,7 +1583,7 @@ $Total_4 = 0;
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#netos" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Netos</a></li>
-				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Totales</a></li>          
+				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Totales</a></li>
 			</ul>
 		</header>
         <div class="tab-content">

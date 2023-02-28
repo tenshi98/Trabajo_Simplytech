@@ -51,7 +51,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		$datosx .= '&f_inicio='.$_GET['f_inicio'];
 		$datosx .= '&f_termino='.$_GET['f_termino'];
 		$datosx .= '&num='.$i;
-		
+
 		$Alert_Text  = '<span class="pull-left">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>';
 		$Alert_Text .= '<a target="new" href="informe_telemetria_registro_sensores_13_to_excel.php?bla=bla'.$datosx.'" class="btn btn-sm btn-metis-2 pull-right "><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>';
 		$Alert_Text .= '<div class="clearfix"></div>';
@@ -61,7 +61,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 //Si no se slecciono se traen todos los equipos a los cuales tiene permiso
 }else{
 	//Inicia variable
-	$SIS_where  = "telemetria_listado.idTelemetria>0"; 
+	$SIS_where  = "telemetria_listado.idTelemetria>0";
 	$SIS_where .= " AND telemetria_listado.id_Geo='2'";
 	$SIS_where .= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	//Solo para plataforma CrossTech
@@ -76,10 +76,10 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 
 	//Verifico el tipo de usuario que esta ingresando
 	if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-		$SIS_join = "";	
+		$SIS_join = "";
 	}else{
 		$SIS_join   = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-		$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+		$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 	}
 
 	/*********************************************/
@@ -119,9 +119,9 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	for ($i = 1; $i <= $total_files; $i++) {
 		$reg_ini = (5000*$i)-4999;
 		$reg_fin = 5000*$i;
-		
+
 		$datosx .= '&num='.$i;
-		
+
 		$Alert_Text  = '<span class="pull-left">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>';
 		$Alert_Text .= '<a target="new" href="informe_telemetria_registro_sensores_13_to_excel.php?bla=bla'.$datosx.'" class="btn btn-sm btn-metis-2 pull-right "><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>';
 		$Alert_Text .= '<div class="clearfix"></div>';

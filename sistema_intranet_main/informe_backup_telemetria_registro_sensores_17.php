@@ -31,7 +31,7 @@ $search    = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $search   .= '&idGrupo='.$_GET['idGrupo'].'&idTelemetria='.$_GET['idTelemetria'].'&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
 //si se definio el minimo y maximo
 if(isset($_GET['RangoMinimo'])&&$_GET['RangoMinimo']!=''&&isset($_GET['RangoMaximo'])&&$_GET['RangoMaximo']!=''){
-	$search .= '&RangoMinimo='.$_GET['RangoMinimo'].'&RangoMaximo='.$_GET['RangoMaximo'];													
+	$search .= '&RangoMinimo='.$_GET['RangoMinimo'].'&RangoMaximo='.$_GET['RangoMaximo'];
 }
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
 	$SIS_where .= " (backup_telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
@@ -72,7 +72,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	//consulto unidad de medida
 	$arrUnimed = array();
 	$arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
-	//consulto grupos											
+	//consulto grupos
 	$rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$_GET['idGrupo'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowGrupo');
 
 	//guardo las unidades de medida
@@ -91,12 +91,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	//oculto el loader
 	document.getElementById("loading").style.display = "none";
 	</script>
-							
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trazabilidad', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo']); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
 			<a target="new" href="<?php echo 'informe_backup_telemetria_registro_sensores_17_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
-		
+
 			<?php if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 				<input class="btn btn-sm btn-metis-3 pull-right margin_width fa-input" type="button" onclick="Export()" value="&#xf1c1; Exportar a PDF"/>
 			<?php }else{ ?>
@@ -107,9 +107,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	</div>
 	<div class="clearfix"></div>
 
-	<?php 
+	<?php
 	//Se verifica si se pidieron los graficos
-	if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ 
+	if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){
 		/****************************************************************/
 		//Variables
 		$Temp_1   = '';
@@ -122,7 +122,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				//Variables
 			$Temp_1  .= "'".Fecha_estandar($fac['FechaSistema'])." - ".$fac['HoraSistema']."',";
 			$xcount   = 0;
-										
+
 			for ($x = 1; $x <= $rowEquipo['cantSensores']; $x++) {
 				if($fac['SensoresGrupo_'.$x]==$_GET['idGrupo']){
 					//Que el valor medido sea distinto de 999
@@ -159,9 +159,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				}
 			}
 			//contador
-			$count++;		
+			$count++;
 		}
-		/******************************************/  
+		/******************************************/
 		//variables
 		$Graphics_xData       = 'var xData = [';
 		$Graphics_yData       = 'var yData = [';
@@ -285,7 +285,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						<tr class="odd">
 							<th>Fecha</th>
 							<th>Hora</th>
-							<?php 
+							<?php
 							for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 								if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 									echo '<th style="text-align:center">'.$arrEquipos[0]['SensorNombre_'.$i].'</th>';
@@ -294,13 +294,13 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							?>
 						</tr>
 
-						<?php 
+						<?php
 						foreach ($arrEquipos as $rutas) {
 							//variables
 							$y_counter = 0;
 							$x_counter = 0;
 							$td_data   = '';
-							
+
 							for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 								if($rutas['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 									if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]<99900){
@@ -310,7 +310,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 												$x_counter++;
 											}
 										}
-										
+
 										$xdata = Cantidades_decimales_justos($rutas['SensorValue_'.$i]).$Unimed[$rutas['SensoresUniMed_'.$i]];
 										$td_data .= '<td>'.$xdata.'</td>';
 										$y_counter++;
@@ -337,8 +337,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										<?php echo $td_data; ?>
 									</tr>
 								<?php }
-							} 
-						} ?>        
+							}
+						} ?>
 					</tbody>
 				</table>
 			</div>
@@ -379,7 +379,7 @@ alert_post_data(2,1,1, $Alert_Text);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
+
                <?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
@@ -407,8 +407,8 @@ alert_post_data(2,1,1, $Alert_Text);
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 2, $dbConn);
-				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
-				
+				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+
 				$Form_Inputs->form_post_data(2, '<strong>Opcional:</strong> Esta opcion solo mostrara los datos que esten dentro del rango minimo y maximo, ignorando el resto.' );
 				$Form_Inputs->form_input_number('Rango Voltaje Minimo','RangoMinimo', $x9, 1);
 				$Form_Inputs->form_input_number('Rango Voltaje Maximo','RangoMaximo', $x10, 1);

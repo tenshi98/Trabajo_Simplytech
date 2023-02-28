@@ -209,7 +209,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Contratista</h5>
 		</header>
-		<div class="body" style="min-height:500px;">	
+		<div class="body" style="min-height:500px;">
 			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
 				<?php

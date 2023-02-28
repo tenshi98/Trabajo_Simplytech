@@ -314,7 +314,7 @@ require_once '0_validate_user_1.php';
 				if(isset($f_creacion)&&$f_creacion!=''){          $_SESSION['ot_basicos']['f_creacion']      = $f_creacion;      }else{$_SESSION['ot_basicos']['f_creacion']     = '';}
 				if(isset($Observaciones)&&$Observaciones!=''){    $_SESSION['ot_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['ot_basicos']['Observaciones']  = '';}
 				if(isset($idCliente)&&$idCliente!=''){            $_SESSION['ot_basicos']['idCliente']       = $idCliente;       }else{$_SESSION['ot_basicos']['idCliente']      = '';}
-			
+
 				/********************************************************************************/
 				if(isset($idMaquina) && $idMaquina!=''){ 
 					// consulto los datos
@@ -2027,8 +2027,7 @@ require_once '0_validate_user_1.php';
 			/*********************************************************************/
 			//variables
 			$n_trabajos = 0;
-			
-			
+
 			//Se verifica que los trabajos tengan datos asignados
 			if (isset($_SESSION['ot_trabajos_temp'])){
 				foreach ($_SESSION['ot_trabajos_temp'] as $key => $x_tabla){

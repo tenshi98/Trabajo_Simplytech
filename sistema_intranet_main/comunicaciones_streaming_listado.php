@@ -428,8 +428,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 										}
 									}
 								} ?>
-								
-								
+
 								<?php if(($Conferencia[0]['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$Streaming; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){

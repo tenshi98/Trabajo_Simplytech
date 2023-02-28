@@ -192,7 +192,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				->setCellValue('A1', 'Fecha')
 				->setCellValue('B1', 'Hora');
 
-	$count = 0;           
+	$count = 0;
 	foreach ($arrEquipos as $fac) {
 		//columna inicial
 		$yy = 3;
@@ -214,10 +214,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				}
 			}
 		}
-		$count++;	
+		$count++;
 	}
 
-	$nn=2; 
+	$nn=2;
 	foreach ($arrEquipos as $fac) {
 		//columna inicial
 		$yy = 3;
@@ -225,14 +225,13 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, $fac['FechaSistema'])
 					->setCellValue('B'.$nn, $fac['HoraSistema']);
-												
+
 		for ($x = 1; $x <= $rowEquipo['cantSensores']; $x++) {
 			if($fac['SensoresGrupo_'.$x]==$_GET['idGrupo']){
 				//Verifico si el sensor esta activo para guardar el dato
 				if(isset($fac['SensoresActivo_'.$x])&&$fac['SensoresActivo_'.$x]==1){
 					//Que el valor medido sea distinto de 999
 					if(isset($fac['SensorValue_'.$x])&&$fac['SensorValue_'.$x]<99900){
-					
 						$spreadsheet->setActiveSheetIndex(0)
 									->setCellValue($arrData[$yy].$nn, cantidades($fac['SensorValue_'.$x], 2));
 						//avanzo columna
@@ -241,13 +240,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				}
 			}
 		}
-												
+
 		//avanzo fila
-		$nn++;				
+		$nn++;
 	}
-
-
-
 
 	// Rename worksheet
 	$spreadsheet->getActiveSheet()->setTitle('Resumen Dia');

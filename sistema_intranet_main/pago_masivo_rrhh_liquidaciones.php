@@ -233,7 +233,7 @@ $Form_Inputs = new Inputs();
 		}
 		?>
 		
-		setTimeout ("window.location.reload(false);", 1000); 
+		setTimeout ("window.location.reload(false);", 1000);
 	}
 	//////////////////////////////////////////////////////////
 	function delpago(number) {
@@ -328,11 +328,11 @@ $Form_Inputs = new Inputs();
 			});
 
 			$('#submitmodal').click(function(){
-				$("#submitCadastroHidden").click(); 
+				$("#submitCadastroHidden").click();
 			});
 
 		</script>
-			
+
 	</div>
 <?php } ?>
 
@@ -428,7 +428,7 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 										<td align="right"><?php echo valores($tipo['TotalAPagar'], 0); ?></td>
 										<td align="right"><?php echo valores($tipo['MontoPagado'], 0); ?></td>
 										<td align="right"><?php echo valores($TotalPagar, 0); ?></td>
-										
+
 										<td>
 											<div class="btn-group" style="width: 35px;" >
 												<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_rrhh_sueldos.php?view='.simpleEncode($tipo['idFactTrab'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
@@ -495,7 +495,7 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 		else if (prec >= 1 && decPos === -1) {
 			s += dec+new Array(prec).join(0)+'0';
 		}
-		return '$ '+s; 
+		return '$ '+s;
 	}
 
 	//////////////////////////////////////////////////////////

@@ -242,7 +242,7 @@ $rowDatos = db_select_data (false, $SIS_query, 'vehiculos_facturacion_listado_de
 
 				</tbody>
 			</table>
-		
+
 			<div class="row">
 				<div class="col-xs-12">
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 well well-sm no-shadow" style="background-color: #fff;">
@@ -258,7 +258,7 @@ $rowDatos = db_select_data (false, $SIS_query, 'vehiculos_facturacion_listado_de
  
           
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -268,7 +268,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

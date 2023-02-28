@@ -139,7 +139,7 @@ if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario'][
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div id="page-wrap">
 			<div id="header"> TAREAS PENDIENTES</div>
-		
+
 			<div id="customer">
 				<table id="meta" class="pull-left otdata">
 					<tbody>
@@ -266,7 +266,7 @@ if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario'][
 
 </div>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -276,7 +276,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

@@ -118,7 +118,7 @@ foreach($arrHistorial as $hist) {
 					->setCellValue('C'.$nn, Cantidades($temp_real, 2))
 					->setCellValue('D'.$nn, Cantidades($temp_predic, 2)); 					
 								
-		$nn++;	
+		$nn++;
 	}
 				
 }

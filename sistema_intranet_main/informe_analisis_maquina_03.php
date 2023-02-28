@@ -254,8 +254,7 @@ array_push( $arrGrupo,$row );
 				</div>';
 			?>
 	</div>
-	
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive"  style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<?php 
@@ -355,7 +354,7 @@ array_push( $arrGrupo,$row );
 														//alerta naranja
 														if(isset($res['Analisis_Medida_'.$i])&&$res['Analisis_Medida_'.$i]!=''&&$res['Analisis_Medida_'.$i]>$res['Analisis_PuntoMedCondenatorio_'.$i]&&$res['Analisis_Medida_'.$i]<=$res['Analisis_PuntoMedAlerta_'.$i]){
 															//variables alerta naranja
-															$alert_lvl = 'color-yellow'; //naranja	
+															$alert_lvl = 'color-yellow'; //naranja
 														}
 														//alerta roja
 														if(isset($res['Analisis_Medida_'.$i])&&$res['Analisis_Medida_'.$i]!=''&&$res['Analisis_Medida_'.$i]<=$res['Analisis_PuntoMedCondenatorio_'.$i]){

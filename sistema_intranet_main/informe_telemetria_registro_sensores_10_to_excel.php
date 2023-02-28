@@ -204,7 +204,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 				->setCellValue('C'.$s4, 'Desviacion Estandar');
 				
 	//Recorro cada sensor por separado
-	for ($i = 1; $i <= $arrTemporal[0]['cantSensores']; $i++) { 
+	for ($i = 1; $i <= $arrTemporal[0]['cantSensores']; $i++) {
 		//variable de cuenta
 		$min_val = 0 ;
 		$max_val = 0 ;
@@ -272,10 +272,10 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 
 	//Verifico el tipo de usuario que esta ingresando
 	if($_GET['idTipoUsuario']==1){
-		$SIS_join = "";	
+		$SIS_join = "";
 	}else{
 		$SIS_join  = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-		$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_GET['idUsuario'];	
+		$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_GET['idUsuario'];
 	}
 	/****************************************************************/
 	//se traen lo datos del equipo
@@ -371,7 +371,6 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 					//AVG
 					$count_val++;
 					$sum_val   = $sum_val + $weight ;
-					
 				}
 			}
 			if($count_val!=0){

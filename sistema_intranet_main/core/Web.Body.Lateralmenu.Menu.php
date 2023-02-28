@@ -74,7 +74,7 @@ if(isset($_SESSION['usuario']['menu'])){
 						/**************************************************/
 						//valido
 						if($view_trans!=0){
-							echo '<li class=""><a href="'.$menuList['TransaccionURL'].'"><i class="'.$menuList['CategoriaIcono'].'" '.$Bgicolor.'></i> '.TituloMenu($menuList['TransaccionNombre']).'</a> </li>';	
+							echo '<li class=""><a href="'.$menuList['TransaccionURL'].'"><i class="'.$menuList['CategoriaIcono'].'" '.$Bgicolor.'></i> '.TituloMenu($menuList['TransaccionNombre']).'</a> </li>';
 						}
 					}
 				}

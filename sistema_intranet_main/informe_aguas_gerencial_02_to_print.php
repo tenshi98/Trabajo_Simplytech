@@ -160,7 +160,6 @@ require_once 'core/Web.Header.PrintFact.php';
 						<td align="right" class="info"><strong><?php echo Valores($x5 - $x6, 0); ?></strong></td>
 
 					</tr>
-					                 
 				</tbody>
 			</table>
 		</div>

@@ -83,13 +83,13 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	//se arman datos
 	foreach ($arrEquipos as $fac) {
-									
+
 		//numero sensores equipo
 		$Temperatura       = 0;
 		$Temperatura_N     = 0;
 		$Humedad           = 0;
 		$Humedad_N         = 0;
-											
+
 		for ($x = 1; $x <= $rowEquipo['cantSensores']; $x++) {
 			if($fac['SensoresGrupo_'.$x]==$_GET['idGrupo']){
 				//Verifico si el sensor esta activo para guardar el dato
@@ -104,7 +104,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				}
 			}
 		}
-											
+
 		if($Temperatura_N!=0){  $New_Temperatura = $Temperatura/$Temperatura_N; }else{$New_Temperatura = 0;}
 		if($Humedad_N!=0){      $New_Humedad     = $Humedad/$Humedad_N;         }else{$New_Humedad = 0;}
 
@@ -132,11 +132,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$m_table .= '<td>'.cantidades($New_Temperatura, 2).' °C</td>';
 			$m_table .= '<td>'.cantidades($New_Humedad, 2).' %</td>';
 			$m_table .= '</tr>';
-		}	
+		}
 		//contador
 		$count++;
-	} 
-	
+	}
 
 	//si hay mas de 9000 registros
 	if(isset($count)&&$count>9000){
@@ -145,7 +144,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
 			alert_post_data(3,1,1, $Alert_Text);
 		echo '</div>';
-	} 
+	}
 	?>
 
 	<style>
@@ -156,12 +155,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	//oculto el loader
 	document.getElementById("loading").style.display = "none";
 	</script>
-							
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Trazabilidad', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo']); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
 			<a target="new" href="<?php echo 'informe_telemetria_registro_sensores_11_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
-		
+
 			<?php if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 				<input class="btn btn-sm btn-metis-3 pull-right margin_width fa-input" type="button" onclick="Export()" value="&#xf1c1; Exportar a PDF"/>
 			<?php }else{ ?>
@@ -172,7 +171,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	</div>
 	<div class="clearfix"></div>
 
-	<?php 
+	<?php
 	//Se verifica si se pidieron los graficos
 	if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -203,7 +202,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 				<?php if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){?>       <input type="hidden" name="h_inicio"     id="h_inicio"    value="<?php echo $_GET['h_inicio']; ?>" /><?php } ?>
 				<?php if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){?>     <input type="hidden" name="h_termino"    id="h_termino"   value="<?php echo $_GET['h_termino']; ?>" /><?php } ?>
-										
+
 				<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
 
 			</form>
@@ -303,7 +302,7 @@ alert_post_data(2,1,1, $Alert_Text);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
+
                <?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
@@ -328,7 +327,7 @@ alert_post_data(2,1,1, $Alert_Text);
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 2, $dbConn);
-				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				?>
 
 				<div class="form-group">

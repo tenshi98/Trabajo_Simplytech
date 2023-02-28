@@ -134,7 +134,7 @@ require_once '0_validate_user_1.php';
 								$MontoPactado   = $tipo['ValorTotal']-$tipo['MontoPagado'];
 								$idSistema      = $tipo['idSistema'];
 								$idProveedor    = $tipo['idProveedor'];
-								
+
 								//Filtros
 								$SIS_data = "idFacturacion='".$idFacturacion."'";
 								if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuarioPago='".$idUsuario."'";}
@@ -188,7 +188,7 @@ require_once '0_validate_user_1.php';
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 								/**************************************************************************************/
 								//Si la NC es igual a la Fac la anula
 								if($ValorNC!=$ValorTotal){
@@ -227,7 +227,7 @@ require_once '0_validate_user_1.php';
 							
 								$idFacturacion     = $tipo['idFacturacion'];
 								$idFacRelacionada  = $tipo['idFacRelacionada'];
-								
+
 								//Filtros
 								$SIS_data = "idFacturacion='".$idFacturacion."'";
 								if(isset($idFacRelacionada) && $idFacRelacionada!=''){       $SIS_data .= ",idFacturacionRelacionado='".$idFacRelacionada."'";}
@@ -243,7 +243,7 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",''";
 								}
 								$SIS_data .= ",idEstado='2'" ;
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_insumos_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -268,7 +268,7 @@ require_once '0_validate_user_1.php';
 								$MontoPactado   = $tipo['ValorTotal']-$tipo['MontoPagado'];
 								$idSistema      = $tipo['idSistema'];
 								$idProveedor    = $tipo['idProveedor'];
-								
+
 								//Filtros
 								$SIS_data = "idFacturacion='".$idFacturacion."'";
 								if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuarioPago='".$idUsuario."'";}
@@ -322,7 +322,7 @@ require_once '0_validate_user_1.php';
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 								/**************************************************************************************/
 								//Si la NC es igual a la Fac la anula
 								if($ValorNC!=$ValorTotal){
@@ -361,7 +361,7 @@ require_once '0_validate_user_1.php';
 							
 								$idFacturacion     = $tipo['idFacturacion'];
 								$idFacRelacionada  = $tipo['idFacRelacionada'];
-								
+
 								//Filtros
 								$SIS_data = "idFacturacion='".$idFacturacion."'";
 								if(isset($idFacRelacionada) && $idFacRelacionada!=''){       $SIS_data .= ",idFacturacionRelacionado='".$idFacRelacionada."'";}
@@ -377,7 +377,7 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",''";
 								}
 								$SIS_data .= ",idEstado='2'" ;
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_productos_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -402,7 +402,7 @@ require_once '0_validate_user_1.php';
 								$MontoPactado   = $tipo['ValorTotal']-$tipo['MontoPagado'];
 								$idSistema      = $tipo['idSistema'];
 								$idProveedor    = $tipo['idProveedor'];
-								
+
 								//Filtros
 								$SIS_data = "idFacturacion='".$idFacturacion."'";
 								if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuarioPago='".$idUsuario."'";}
@@ -456,7 +456,7 @@ require_once '0_validate_user_1.php';
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 								/**************************************************************************************/
 								//Si la NC es igual a la Fac la anula
 								if($ValorNC!=$ValorTotal){
@@ -495,7 +495,7 @@ require_once '0_validate_user_1.php';
 							
 								$idFacturacion     = $tipo['idFacturacion'];
 								$idFacRelacionada  = $tipo['idFacRelacionada'];
-								
+
 								//Filtros
 								$SIS_data = "idFacturacion='".$idFacturacion."'";
 								if(isset($idFacRelacionada) && $idFacRelacionada!=''){       $SIS_data .= ",idFacturacionRelacionado='".$idFacRelacionada."'";}
@@ -511,7 +511,7 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",''";
 								}
 								$SIS_data .= ",idEstado='2'" ;
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_arriendos_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -536,7 +536,7 @@ require_once '0_validate_user_1.php';
 								$MontoPactado   = $tipo['ValorTotal']-$tipo['MontoPagado'];
 								$idSistema      = $tipo['idSistema'];
 								$idProveedor    = $tipo['idProveedor'];
-								
+
 								//Filtros
 								$SIS_data = "idFacturacion='".$idFacturacion."'";
 								if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuarioPago='".$idUsuario."'";}
@@ -590,7 +590,7 @@ require_once '0_validate_user_1.php';
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_servicios_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 								/**************************************************************************************/
 								//Si la NC es igual a la Fac la anula
 								if($ValorNC!=$ValorTotal){
@@ -628,7 +628,7 @@ require_once '0_validate_user_1.php';
 							
 								$idFacturacion     = $tipo['idFacturacion'];
 								$idFacRelacionada  = $tipo['idFacRelacionada'];
-								
+
 								//Filtros
 								$SIS_data = "idFacturacion='".$idFacturacion."'";
 								if(isset($idFacRelacionada) && $idFacRelacionada!=''){       $SIS_data .= ",idFacturacionRelacionado='".$idFacRelacionada."'";}
@@ -644,7 +644,7 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",''";
 								}
 								$SIS_data .= ",idEstado='2'" ;
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_servicios_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

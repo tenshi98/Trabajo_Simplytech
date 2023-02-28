@@ -55,7 +55,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 	//Se escribe el dato
 	$Alert_Text  = 'Total de registros encontrados de '.$row_data['Nombre'].': '.Cantidades($row_data['Total'], 0);
 	alert_post_data(1,1,1, $Alert_Text);
-	
+
 	$total_files = ceil($row_data['Total']/5000);
 	for ($i = 1; $i <= $total_files; $i++) {
 		$reg_ini = (5000*$i)-4999;
@@ -64,7 +64,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 		$datosx .= '&f_inicio='.$_GET['f_inicio'];
 		$datosx .= '&f_termino='.$_GET['f_termino'];
 		$datosx .= '&num='.$i;
-		
+
 		$Alert_Text  = '<span class="pull-left">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>';
 		$Alert_Text .= '<a target="new" href="informe_vehiculos_registro_sensores_3_to_excel.php?bla=bla'.$datosx.'" class="btn btn-sm btn-metis-2 pull-right "><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>';
 		$Alert_Text .= '<div class="clearfix"></div>';
@@ -74,7 +74,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 //Si no se slecciono se traen todos los equipos a los cuales tiene permiso
 }else{
 	//Inicia variable
-	$z = "WHERE vehiculos_listado.idVehiculo>0"; 
+	$z = "WHERE vehiculos_listado.idVehiculo>0";
 	$z.= " AND vehiculos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	$datosx  = '&f_inicio='.$_GET['f_inicio'];
 	$datosx .= '&f_termino='.$_GET['f_termino'];
@@ -150,9 +150,9 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 	for ($i = 1; $i <= $total_files; $i++) {
 		$reg_ini = (5000*$i)-4999;
 		$reg_fin = 5000*$i;
-		
+
 		$datosx .= '&num='.$i;
-		
+
 		$Alert_Text  = '<span class="pull-left">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>';
 		$Alert_Text .= '<a target="new" href="informe_vehiculos_registro_sensores_3_to_excel.php?bla=bla'.$datosx.'" class="btn btn-sm btn-metis-2 pull-right "><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>';
 		$Alert_Text .= '<div class="clearfix"></div>';
@@ -178,7 +178,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 } else {
 //Verifico el tipo de usuario que esta ingresando
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
- ?>		
+ ?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>

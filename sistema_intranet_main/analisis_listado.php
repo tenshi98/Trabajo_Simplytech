@@ -220,7 +220,7 @@ foreach ($arrPermisos as $prod) {
 
 				$Form_Inputs->form_tittle(3, 'Datos Iniciales');
 				$Form_Inputs->form_input_number('N° de muestra', 'n_muestra', $x6, 2);
-				
+
 				foreach ($arrGrupo as $grupo) {
 					$Form_Inputs->form_tittle(3, $grupo['Nombre']);
 				
@@ -424,7 +424,7 @@ foreach ($arrPermisos as $prod) {
 
 				$Form_Inputs->form_tittle(3, 'Datos Iniciales');
 				$Form_Inputs->form_input_number('N° de muestra', 'n_muestra', $x3, 2);
-				
+
 				foreach ($arrGrupo as $grupo) {
 					//Cuento si hay items dentro de la categoria
 					$x_con = 0;

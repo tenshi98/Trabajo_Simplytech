@@ -134,7 +134,7 @@ require_once '0_validate_user_1.php';
 	if(isset($PersonaContacto_email)&&!validarEmail($PersonaContacto_email)){ $error['email']                  = 'error/El Email ingresado no es valido';}
 	if(isset($PersonaContacto_Fono)&&!validarNumero($PersonaContacto_Fono)){ $error['PersonaContacto_Fono']   = 'error/Ingrese un numero telefonico valido';}
 	if(isset($password)&&isset($repassword)){
-		if ( $password <> $repassword )                  $error['password']  = 'error/Las contraseñas ingresadas no coinciden'; 
+		if ( $password <> $repassword )                  $error['password']  = 'error/Las contraseñas ingresadas no coinciden';
 	}
 	if(isset($password)){
 		if (strpos($password, " ")){                     $error['Password1'] = 'error/La contraseña contiene espacios vacios';}
@@ -389,7 +389,7 @@ require_once '0_validate_user_1.php';
 				//se obtienen los archivos
 				// Se obtiene el nombre de la imagen de perfil
 				$rowdata = db_select_data (false, 'Direccion_img', 'seg_vecinal_clientes_listado', '', 'idCliente = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				$arrEventos  = array();
 				$arrArchivos = array();
 				$arrEventos  = db_select_array (false, 'seg_vecinal_eventos_listado_archivos.Nombre AS DATA', 'seg_vecinal_eventos_listado', 'LEFT JOIN seg_vecinal_eventos_listado_archivos ON seg_vecinal_eventos_listado_archivos.idEvento = seg_vecinal_eventos_listado.idEvento', 'seg_vecinal_eventos_listado.idCliente='.$indice, 'seg_vecinal_eventos_listado.idEvento ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -434,7 +434,7 @@ require_once '0_validate_user_1.php';
 						}
 					}
 				}
-			
+
 				/********************************************************************/
 				//se borran los datos del cliente
 				$resultado_1 = db_delete_data (false, 'seg_vecinal_clientes_listado', 'idCliente = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

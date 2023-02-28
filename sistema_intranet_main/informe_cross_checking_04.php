@@ -300,17 +300,17 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 										<td><?php echo $ot['CuartelNombre']; ?></td>
 										<td><?php echo $ot['VariedadCat']; ?></td>
 										<td><?php echo $ot['VariedadNombre']; ?></td>
-										
+
 										<td><?php echo Cantidades($ot['GeoVelocidadMin'], 1); ?></td>
 										<td><?php echo Cantidades($ot['GeoVelocidadMax'], 1); ?></td>
 										<td><?php echo Cantidades($ot['GeoVelocidadProm'], 1); ?></td>
 										<td><?php echo Cantidades($ot['VelTractor'], 1); ?></td>
-										
+
 										<td><?php echo Cantidades($ot['Sensor_1_Prom'], 2); ?></td>
 										<td><?php echo Cantidades($ot['Sensor_2_Prom'], 2); ?></td>
-										
+
 										<td><?php echo Cantidades($ot['Diferencia'], 0); ?></td>
-										
+
 										<td><?php echo Cantidades($ot['Sensor_3_Min'], 0); ?></td>
 										<td><?php echo Cantidades($ot['Sensor_3_Max'], 0); ?></td>
 
@@ -332,7 +332,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 											?>
 											
 										</td>
-										
+
 										<td>
 											<div class="btn-group" style="width: 70px;" >
 												<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
@@ -391,19 +391,19 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 										<td><?php echo $ot['CuartelNombre']; ?></td>
 										<td><?php echo $ot['VariedadCat']; ?></td>
 										<td><?php echo $ot['VariedadNombre']; ?></td>
-										
+
 										<td><?php echo Cantidades($ot['GeoVelocidadMin_out'], 2); ?></td>
 										<td><?php echo Cantidades($ot['GeoVelocidadMax_out'], 2); ?></td>
 										<td><?php echo Cantidades($ot['GeoVelocidadProm_out'], 2); ?></td>
 										<td><?php echo Cantidades($ot['VelTractor'], 2); ?></td>
-										
+
 										<td><?php echo Cantidades($ot['GeoDistance_out'], 2); ?></td>
-										
+
 										<td><?php echo Cantidades($ot['Sensor_out_1_Prom'], 2); ?></td>
 										<td><?php echo Cantidades($ot['Sensor_out_2_Prom'], 2); ?></td>
 
 										<td><?php echo Cantidades($ot['Diferencia_out'], 0); ?></td>
-										
+
 										<td>
 											<div class="btn-group" style="width: 70px;" >
 												<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>

@@ -544,8 +544,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 			</table>
 
 		</div>
-		
-		
+
 		<table id="items">
 			<tbody>
 

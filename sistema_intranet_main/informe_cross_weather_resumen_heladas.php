@@ -200,7 +200,7 @@ document.getElementById("loading").style.display = "none";
 </div>
 <div class="clearfix"></div>
 
-<?php 
+<?php
 //Se verifica si se pidieron los graficos
 if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -425,7 +425,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','fecha', $x1, 2);
-				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x2, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x2, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x3, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);

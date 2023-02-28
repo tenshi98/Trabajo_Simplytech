@@ -56,7 +56,7 @@
 						if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['idTipoMedicion'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['idTipoMedicion']!=''&&$_SESSION['Facturacion_clientes'][$X_Puntero]['idTipoMedicion']!=0){
 							$ndecim = 2;
 						}else{
-							$ndecim = 0;	
+							$ndecim = 0;
 						}
 					?>
 								
@@ -264,7 +264,7 @@
 										} ?>
 										<div class="pull-left">Lectura Mes anterior <?php echo '('.$mes_anterior.')'; ?></div>
 										<small class="pull-right"><?php echo valores_truncados($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesAnteriorCantidad']) ?> m3</small>
-										
+
 										<br/>
 										<?php 
 										if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesActualFecha'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesActualFecha']!='0000-00-00'&&$_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesActualFecha']!=''){
@@ -274,7 +274,7 @@
 										} ?>
 										<div class="pull-left">Lectura Mes actual <?php echo '('.$mes_actual.')'; ?></div>
 										<small class="pull-right"><?php echo valores_truncados($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesActualCantidad']) ?> m3</small>
-										
+
 										<br/>
 										<div class="pull-left">Diferencia de lecturas</div>
 										<small class="pull-right"><?php echo valores_truncados($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesDiferencia']) ?> m3</small>
@@ -296,7 +296,7 @@
 												echo $bla.' m3'; ?>
 											</small>	
 										<?php } ?>
-										
+
 										<br/>
 										<div class="pull-left">Consumo Mes Total</div>
 										<small class="pull-right"><?php echo Cantidades($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsMesTotalCantidad'], $ndecim) ?> m3</small>
@@ -320,7 +320,7 @@
 									<p>
 										<div class="pull-left">Emergencias 24 horas </div>
 										<small class="pull-right"><?php echo formatPhone($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsFonoEmergencias']) ?></small>
-										
+
 										<br/>
 										<div class="pull-left">Consultas Lunes a Viernes </div>
 										<small class="pull-right"><?php echo formatPhone($_SESSION['Facturacion_clientes'][$X_Puntero]['DetConsFonoConsultas']) ?></small>

@@ -82,14 +82,13 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SI
 				<strong>Usuario Queja: </strong>'.$rowdata['UsuarioQueja'].'<br/>
 				<strong>Trabajador Queja: </strong>'.$rowdata['TrabajadorNombre'].' '.$rowdata['TrabajadorApellidoPat'].' '.$rowdata['TrabajadorApellidoMat'].'<br/>
 				<strong>Persona Queja: </strong>'.$rowdata['NombreQueja'].'<br/>
-				<strong>Tipo Queja: </strong>'.$rowdata['TipoQueja'].'<br/>	
+				<strong>Tipo Queja: </strong>'.$rowdata['TipoQueja'].'<br/>
 			</address>
 		</div>';
 		?>
 
 	</div>
-	
-	
+
 	<?php if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){?>
 		<div class="col-xs-12">
 			<div class="row">
@@ -103,7 +102,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SI
       
 </section>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -113,7 +112,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

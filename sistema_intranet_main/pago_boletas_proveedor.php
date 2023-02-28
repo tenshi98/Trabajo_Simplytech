@@ -236,7 +236,7 @@ if(isset($_SESSION['pagos_boletas_empresas'])){
 		
 		?>
 		
-		setTimeout ("window.location.reload(false);", 1000); 
+		setTimeout ("window.location.reload(false);", 1000);
 	}
 	//////////////////////////////////////////////////////////
 	function delData(idFacturacion) {
@@ -337,7 +337,7 @@ if(isset($_SESSION['pagos_boletas_empresas'])){
 					</div>
 				</div>
 			</div>
-		
+
 			<script>
 				
 				
@@ -357,7 +357,7 @@ if(isset($_SESSION['pagos_boletas_empresas'])){
 				});
 
 				$('#submitmodal').click(function(){
-					$("#submitCadastroHidden").click(); 
+					$("#submitCadastroHidden").click();
 				});
 
 			</script>
@@ -575,7 +575,7 @@ array_push( $arrBoletas,$row );
 		else if (prec >= 1 && decPos === -1) {
 			s += dec+new Array(prec).join(0)+'0';
 		}
-		return '$ '+s; 
+		return '$ '+s;
 	}
 
 	//////////////////////////////////////////////////////////

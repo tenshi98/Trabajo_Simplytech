@@ -279,7 +279,7 @@ foreach ($arrGrupos as $sen) {
 								$tiempo1     = $tel['LastUpdateHora'];
 								$tiempo2     = hora_actual();
 								$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
-								
+
 								//Comparaciones de tiempo
 								$Time_Tiempo     = horas2segundos($Tiempo);
 								$Time_Tiempo_FL  = horas2segundos($tel['TiempoFueraLinea']);

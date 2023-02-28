@@ -166,8 +166,8 @@ foreach ($arrUnimed as $sen) {
 			</div>
 
 			<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-				<div class="row">	
-					
+				<div class="row">
+
 					<?php
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
@@ -253,7 +253,7 @@ foreach ($arrUnimed as $sen) {
 								}
 													
 								transMarker(10000);
-								
+
 								// *
 								// START INFOWINDOW CUSTOMIZE.
 								// The google.maps.event.addListener() event expects

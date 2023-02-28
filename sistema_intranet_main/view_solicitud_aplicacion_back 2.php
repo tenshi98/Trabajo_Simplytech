@@ -712,9 +712,9 @@ array_push( $arrHistorial,$row );
 
 								<td class="item-name"><i class="fa fa-flask" aria-hidden="true"></i> <?php echo $prod['ProductoNombre']; ?></td>
 								<td class="item-name"><?php echo Cantidades((($row_data['Mojamiento']*$TotalCuartelHectareas)/100)*$prod['DosisAplicar'], 2).' '.$prod['Unimed']; ?></td>
-	
+
 							</tr>
-	
+
 							<?php
 							//se suma 1
 							$nmb++;
@@ -729,8 +729,7 @@ array_push( $arrHistorial,$row );
 			</table>
 		</div>
 	</div>
-	
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive">
 			<table class="table">
@@ -788,7 +787,7 @@ array_push( $arrHistorial,$row );
 
 </div>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -798,7 +797,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

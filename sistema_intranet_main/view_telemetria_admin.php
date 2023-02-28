@@ -319,8 +319,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 					
 				</div>
 			</div>
-			
-			
+
 			<?php if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){ ?>
 				<div class="tab-pane fade" id="mediciones">
 					<div class="wmd-panel">
@@ -439,8 +438,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 					</div>
 				</div>
 			<?php } ?>
-			
-			
+
 			<?php if(isset($rowdata['idBodega'])&&$rowdata['idBodega']!=0){?>
 				<div class="tab-pane fade" id="bodega">
 					<div class="wmd-panel">
@@ -574,7 +572,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 	</div>
 </div>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -584,7 +582,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

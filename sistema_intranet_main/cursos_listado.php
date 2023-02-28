@@ -265,7 +265,7 @@ array_push( $arrVideo,$row );
 										<td><?php echo $video['NombreVideo']; ?></td>
 										<td><?php echo $video['Usuario']; ?></td>
 										<td><?php echo $video['HoraInicio'].' - '.$video['HoraTermino']; ?></td>
-										
+
 										<td><?php if(isset($video['idDia_1'])&&$video['idDia_1']==2){echo 'Si';} ?></td>
 										<td><?php if(isset($video['idDia_2'])&&$video['idDia_2']==2){echo 'Si';} ?></td>
 										<td><?php if(isset($video['idDia_3'])&&$video['idDia_3']==2){echo 'Si';} ?></td>

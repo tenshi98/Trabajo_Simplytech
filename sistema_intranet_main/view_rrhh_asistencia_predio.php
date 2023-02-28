@@ -152,7 +152,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 								};
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 								map.setTilt(0);
-								
+
 								// InfoWindow content
 								var content_1 = '<div id="iw-container">' +
 												'<div class="iw-title">Ingreso-Egreso</div>' +
@@ -186,18 +186,18 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 									title		: "Tu Ubicacion",
 									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
-								
+
 								// This event expects a click on a marker
 								// When this event is fired the Info Window is opened.
 								google.maps.event.addListener(marker, 'click', function() {
 									infowindow.open(map,marker);
 								});
-								
+
 								// Event that closes the Info Window with a click on the map
 								google.maps.event.addListener(map, 'click', function() {
 									infowindow.close();
 								});
-								
+
 								// *
 								// START INFOWINDOW CUSTOMIZE.
 								// The google.maps.event.addListener() event expects
@@ -369,7 +369,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 	</div>
 </div>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -379,7 +379,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

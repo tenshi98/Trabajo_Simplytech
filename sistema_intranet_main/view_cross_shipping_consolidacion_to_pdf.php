@@ -344,7 +344,7 @@ $html .= '
 						</tr>
 					</tbody>
 				</table>';
-				
+
 				$html .= '
 				<br/>
 				<br/>

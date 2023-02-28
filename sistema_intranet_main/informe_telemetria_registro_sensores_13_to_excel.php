@@ -211,10 +211,10 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	}
 	//Verifico el tipo de usuario que esta ingresando
 	if($_GET['idTipoUsuario']==1){
-		$SIS_join  = "";	
+		$SIS_join  = "";
 	}else{
 		$SIS_join  = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-		$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_GET['idUsuario'];	
+		$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_GET['idUsuario'];
 	}
 
 	/*********************************************/

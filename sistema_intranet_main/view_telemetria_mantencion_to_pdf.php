@@ -276,7 +276,7 @@ $html .= '
 					$html .= '
 					</tbody>
 				</table>';
-				
+
 				$html .= '
 					<table style="text-align: left; width: 100%;" cellpadding="0" cellspacing="0">
 						<tbody>

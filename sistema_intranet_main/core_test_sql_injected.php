@@ -65,13 +65,13 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					$rowUser = mysqli_fetch_assoc ($resultado);
-					
+
 					echo '<pre>';
 						var_dump($query);
 						echo '<br/>';
 						var_dump($rowUser);
 					echo '</pre>';
-					
+
 					echo '<pre>';
 						var_dump($_POST);
 					echo '</pre>';
@@ -100,13 +100,13 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 					//Consulta
 					$resultado = mysqli_query ($dbConn, $query);
 					$rowUser = mysqli_fetch_assoc ($resultado);
-					
+
 					echo '<pre>';
 						var_dump($query);
 						echo '<br/>';
 						var_dump($rowUser);
 					echo '</pre>';
-					
+
 					echo '<pre>';
 						var_dump($_POST);
 					echo '</pre>';

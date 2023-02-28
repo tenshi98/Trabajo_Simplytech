@@ -18,13 +18,13 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Se revisan los datos
-if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){ $idSistema     = $_GET['idSistema'];     }elseif(isset($_POST['idSistema'])&&$_POST['idSistema']!=''){$idSistema     = $_POST['idSistema'];}
-if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''){   $f_inicio      = $_GET['f_inicio'];      }elseif(isset($_POST['f_inicio'])&&$_POST['f_inicio']!=''){  $f_inicio      = $_POST['f_inicio'];}
-if(isset($_GET['f_termino'])&&$_GET['f_termino']!=''){ $f_termino     = $_GET['f_termino'];     }elseif(isset($_POST['f_termino'])&&$_POST['f_termino']!=''){$f_termino     = $_POST['f_termino'];}
-if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){   $h_inicio      = $_GET['h_inicio'];      }elseif(isset($_POST['h_inicio'])&&$_POST['h_inicio']!=''){  $h_inicio      = $_POST['h_inicio'];}
-if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){ $h_termino     = $_GET['h_termino'];     }elseif(isset($_POST['h_termino'])&&$_POST['h_termino']!=''){$h_termino     = $_POST['h_termino'];}
+if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){        $idSistema     = $_GET['idSistema'];     }elseif(isset($_POST['idSistema'])&&$_POST['idSistema']!=''){       $idSistema     = $_POST['idSistema'];}
+if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''){          $f_inicio      = $_GET['f_inicio'];      }elseif(isset($_POST['f_inicio'])&&$_POST['f_inicio']!=''){         $f_inicio      = $_POST['f_inicio'];}
+if(isset($_GET['f_termino'])&&$_GET['f_termino']!=''){        $f_termino     = $_GET['f_termino'];     }elseif(isset($_POST['f_termino'])&&$_POST['f_termino']!=''){       $f_termino     = $_POST['f_termino'];}
+if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){          $h_inicio      = $_GET['h_inicio'];      }elseif(isset($_POST['h_inicio'])&&$_POST['h_inicio']!=''){         $h_inicio      = $_POST['h_inicio'];}
+if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){        $h_termino     = $_GET['h_termino'];     }elseif(isset($_POST['h_termino'])&&$_POST['h_termino']!=''){       $h_termino     = $_POST['h_termino'];}
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){  $idTelemetria  = $_GET['idTelemetria'];  }elseif(isset($_POST['idTelemetria'])&&$_POST['idTelemetria']!=''){ $idTelemetria  = $_POST['idTelemetria'];}
-if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){     $idGrupo       = $_GET['idGrupo'];       }elseif(isset($_POST['idGrupo'])&&$_POST['idGrupo']!=''){    $idGrupo       = $_POST['idGrupo'];}
+if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){            $idGrupo       = $_GET['idGrupo'];       }elseif(isset($_POST['idGrupo'])&&$_POST['idGrupo']!=''){           $idGrupo       = $_POST['idGrupo'];}
 
 //Se buscan la imagen i el tipo de PDF
 if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
@@ -83,12 +83,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	//se arman datos
 	foreach ($arrEquipos as $fac) {
-									
+
 		//numero sensores equipo
 		$m_table          .= '<tr class="odd">';
 		$m_table          .= '<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.fecha_estandar($fac['FechaSistema']).'</td>';
 		$m_table          .= '<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$fac['HoraSistema'].'</td>';
-												
+
 		for ($x = 1; $x <= $rowEquipo['cantSensores']; $x++) {
 			if($fac['SensoresGrupo_'.$x]==$idGrupo){
 				//Verifico si el sensor esta activo para guardar el dato
@@ -106,11 +106,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			}
 		}
 		$m_table .= '</tr>';
-											
-		$count++;	
-		
-	} 
 
+		$count++;
+
+	}
 
 	/********************************************************************/
 	//Se define el contenido del PDF
@@ -138,8 +137,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			'.$m_table.'
 		</tbody>
 	</table>';
-	 
-
 
 	/**********************************************************************************************************************************/
 	/*                                                          Impresion PDF                                                         */

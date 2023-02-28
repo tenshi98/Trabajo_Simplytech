@@ -13,7 +13,7 @@ if($n_permisos['idOpcionesGen_9']=='1' OR $idTipoUsuario==1){?>
 				}
 			</script>
  
-	<?php 
+	<?php
 	//Se dibuja el explorador de archivos
 	echo file_explorer(1, 'connector_repositorio', DB_SITE_MAIN_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 1); ?>
 		</div>

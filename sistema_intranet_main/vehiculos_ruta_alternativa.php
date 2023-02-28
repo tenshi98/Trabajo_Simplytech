@@ -215,7 +215,7 @@ array_push( $arrRutasAlt,$row );
 									strokeOpacity: 1,
 									strokeWeight: 5
 								});
-								
+
 								//llamo a los puntos
 								Puntos();
 							}

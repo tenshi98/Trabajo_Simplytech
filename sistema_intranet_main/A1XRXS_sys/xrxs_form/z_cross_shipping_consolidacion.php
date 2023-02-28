@@ -1583,8 +1583,7 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			
+
 			//Se verifica que el archivo subido no exceda los 100 kb
 			$limite_kb = 10000;
 			//Sufijo

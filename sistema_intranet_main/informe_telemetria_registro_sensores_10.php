@@ -64,7 +64,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		$datosx .= '&f_inicio='.$_GET['f_inicio'];
 		$datosx .= '&f_termino='.$_GET['f_termino'];
 		$datosx .= '&num='.$i;
-		
+
 		$Alert_Text  = '<span class="pull-left">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>';
 		$Alert_Text .= '<a target="new" href="informe_telemetria_registro_sensores_10_to_excel.php?bla=bla'.$datosx.'" class="btn btn-sm btn-metis-2 pull-right "><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>';
 		alert_post_data(2,1,1, $Alert_Text);
@@ -73,7 +73,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 //Si no se slecciono se traen todos los equipos a los cuales tiene permiso
 }else{
 	//Inicia variable
-	$z = "WHERE telemetria_listado.idTelemetria>0"; 
+	$z = "WHERE telemetria_listado.idTelemetria>0";
 	$z.= " AND telemetria_listado.id_Geo='2'";
 	$z.= " AND telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	$datosx  = '&f_inicio='.$_GET['f_inicio'];
@@ -84,10 +84,10 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 
 	//Verifico el tipo de usuario que esta ingresando
 	if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-		$join = "";	
+		$join = "";
 	}else{
 		$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-		$z.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+		$z.=" AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 	}
 
 	/*********************************************/
@@ -140,7 +140,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 							
 		}
 		$row_data = mysqli_fetch_assoc ($resultado);
-		
+
 		$Alert_Text .= 'Total de registros encontrados de '.$equipo['Nombre'].': '.Cantidades($row_data['Total'], 0).'<br/>';
 		//verifico el valor maximo
 		if($s_max<$row_data['Total']){
@@ -157,13 +157,13 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	for ($i = 1; $i <= $total_files; $i++) {
 		$reg_ini = (5000*$i)-4999;
 		$reg_fin = 5000*$i;
-		
+
 		$datosx .= '&num='.$i;
-		
+
 		$Alert_Text  = '<span class="pull-left">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>';
 		$Alert_Text .= '<a target="new" href="informe_telemetria_registro_sensores_10_to_excel.php?bla=bla'.$datosx.'" class="btn btn-sm btn-metis-2 pull-right "><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>';
 		alert_post_data(2,1,1,  $Alert_Text);
-		
+
 	}
 
 }

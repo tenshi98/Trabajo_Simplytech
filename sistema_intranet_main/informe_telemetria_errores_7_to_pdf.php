@@ -30,7 +30,7 @@ $SIS_where.= " AND telemetria_listado.id_Geo='2'";
 $SIS_where.= " AND telemetria_listado_errores.idSistema=".$_GET['idSistema'];
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$SIS_where .= " AND telemetria_listado.idTab=9";//CrossEnergy			
+	$SIS_where .= " AND telemetria_listado.idTab=9";//CrossEnergy
 }
 //verifico si existen los parametros de fecha
 if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
@@ -122,7 +122,7 @@ $html .= '
 					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($error['Valor_max']).$arrUnimedX[$error['SensoresUniMed_'.$error['Sensor']]].'</td>
 				</tr>
 				';
-			
+
 		}
 
 $html .='</tbody>

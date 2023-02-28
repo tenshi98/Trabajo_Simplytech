@@ -120,7 +120,7 @@ $xmlstr =
         <Servicio codigo_servicio="'.$codigo_servicio.'">';
         
 			filtrar($arrProductos, 'codigo_sector');  
-			foreach($arrProductos as $codigo_sector=>$sec_list){ 
+			foreach($arrProductos as $codigo_sector=>$sec_list){
 				$xmlstr .= '<Sector codigo_sector="'.$codigo_sector.'">';
 				foreach ($sec_list as $productos) {
 					$xmlstr .= '

@@ -147,9 +147,7 @@ array_push( $arrEquipos,$row );
 			</ul>
 		</header>
         <div class="table-responsive">
-			
-			
-			
+
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">

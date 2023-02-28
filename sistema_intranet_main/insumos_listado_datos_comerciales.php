@@ -112,7 +112,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 
 					$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
 					?>
-				  
+
 					<div class="form-group">
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>

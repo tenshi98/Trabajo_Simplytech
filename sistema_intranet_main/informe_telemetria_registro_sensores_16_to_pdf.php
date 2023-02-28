@@ -18,14 +18,14 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Se revisan los datos
-if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){ $idSistema     = $_GET['idSistema'];     }elseif(isset($_POST['idSistema'])&&$_POST['idSistema']!=''){$idSistema     = $_POST['idSistema'];}
-if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''){   $f_inicio      = $_GET['f_inicio'];      }elseif(isset($_POST['f_inicio'])&&$_POST['f_inicio']!=''){  $f_inicio      = $_POST['f_inicio'];}
-if(isset($_GET['f_termino'])&&$_GET['f_termino']!=''){ $f_termino     = $_GET['f_termino'];     }elseif(isset($_POST['f_termino'])&&$_POST['f_termino']!=''){$f_termino     = $_POST['f_termino'];}
-if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){   $h_inicio      = $_GET['h_inicio'];      }elseif(isset($_POST['h_inicio'])&&$_POST['h_inicio']!=''){  $h_inicio      = $_POST['h_inicio'];}
-if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){ $h_termino     = $_GET['h_termino'];     }elseif(isset($_POST['h_termino'])&&$_POST['h_termino']!=''){$h_termino     = $_POST['h_termino'];}
+if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){        $idSistema     = $_GET['idSistema'];     }elseif(isset($_POST['idSistema'])&&$_POST['idSistema']!=''){       $idSistema     = $_POST['idSistema'];}
+if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''){          $f_inicio      = $_GET['f_inicio'];      }elseif(isset($_POST['f_inicio'])&&$_POST['f_inicio']!=''){         $f_inicio      = $_POST['f_inicio'];}
+if(isset($_GET['f_termino'])&&$_GET['f_termino']!=''){        $f_termino     = $_GET['f_termino'];     }elseif(isset($_POST['f_termino'])&&$_POST['f_termino']!=''){       $f_termino     = $_POST['f_termino'];}
+if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){          $h_inicio      = $_GET['h_inicio'];      }elseif(isset($_POST['h_inicio'])&&$_POST['h_inicio']!=''){         $h_inicio      = $_POST['h_inicio'];}
+if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){        $h_termino     = $_GET['h_termino'];     }elseif(isset($_POST['h_termino'])&&$_POST['h_termino']!=''){       $h_termino     = $_POST['h_termino'];}
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){  $idTelemetria  = $_GET['idTelemetria'];  }elseif(isset($_POST['idTelemetria'])&&$_POST['idTelemetria']!=''){ $idTelemetria  = $_POST['idTelemetria'];}
-if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){     $idGrupo       = $_GET['idGrupo'];       }elseif(isset($_POST['idGrupo'])&&$_POST['idGrupo']!=''){    $idGrupo       = $_POST['idGrupo'];}
-if(isset($_GET['idUniMed'])&&$_GET['idUniMed']!=''){   $idUniMed      = $_GET['idUniMed'];      }elseif(isset($_POST['idUniMed'])&&$_POST['idUniMed']!=''){  $idUniMed      = $_POST['idUniMed'];}
+if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){            $idGrupo       = $_GET['idGrupo'];       }elseif(isset($_POST['idGrupo'])&&$_POST['idGrupo']!=''){           $idGrupo       = $_POST['idGrupo'];}
+if(isset($_GET['idUniMed'])&&$_GET['idUniMed']!=''){          $idUniMed      = $_GET['idUniMed'];      }elseif(isset($_POST['idUniMed'])&&$_POST['idUniMed']!=''){         $idUniMed      = $_POST['idUniMed'];}
 
 //Se buscan la imagen i el tipo de PDF
 if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
@@ -80,7 +80,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		//verifico si existe
 		if(isset($sub['idGrupo'])&&$sub['idGrupo']!=''){
 			$SIS_where .= ' OR idGrupo='.$sub['idGrupo'];
-		}	
+		}
 	}
 
 	//consulto grupos
@@ -96,12 +96,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$m_table  = '';
 	//se arman datos
 	foreach ($arrEquipos as $fac) {
-									
+
 		//numero sensores equipo
 		$arrDato            = array();
 		$Dato               = 0;
 		$Dato_N             = 0;
-											
+
 		for ($x = 1; $x <= $rowEquipo['cantSensores']; $x++) {
 			//Que el valor medido sea distinto de 999
 			if(isset($fac['SensorValue_'.$x])&&$fac['SensorValue_'.$x]<99900){
@@ -124,7 +124,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				}
 			}
 		}
-											
+
 		//verifico si el grupo existe
 		if(isset($idGrupo)&&$idGrupo!=''){
 			if($Dato_N!=0){  $New_Dato = $Dato/$Dato_N; }else{$New_Dato = 0;}
@@ -149,7 +149,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				}
 			}
 			$m_table .= '</tr>';
-			
+
 		}
 
 	}
@@ -175,16 +175,14 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				foreach ($arrGrupos as $gru) {
 					$html .='<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">'.DeSanitizar($gru['Nombre']).'</th>';
 				}
-			
+
 			$html .='
 			</tr>
 		</thead>
-		<tbody>';				
-		$html .= $m_table;						
+		<tbody>';
+		$html .= $m_table;
 	$html .='</tbody>
 	</table>';
- 
-
 
 	/**********************************************************************************************************************************/
 	/*                                                          Impresion PDF                                                         */

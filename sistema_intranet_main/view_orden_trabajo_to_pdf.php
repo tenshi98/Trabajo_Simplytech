@@ -279,7 +279,7 @@ $html ='<style>
             
 			/**********************************************************************************/
             $html .='<tr class="item-row fact_tittle"><td colspan="6">Trabajadores</td></tr>';
-			foreach ($arrTrabajadores as $trab) { 
+			foreach ($arrTrabajadores as $trab) {
 				$html .='<tr class="item-row linea_punteada">
 					<td class="item-name">'.$trab['Rut'].'</td>
 					<td class="item-name" colspan="4">'.$trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'].'</td>
@@ -322,7 +322,7 @@ $html ='<style>
 				$html .='<tr id="hiderow"><td colspan="6"></td></tr>';
 			}
 			/**********************************************************************************/
-			if($arrTrabajo!=false && !empty($arrTrabajo) && $arrTrabajo!='') { 
+			if($arrTrabajo!=false && !empty($arrTrabajo) && $arrTrabajo!='') {
 				$html .='<tr class="item-row fact_tittle"><td colspan="6">';
 				if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){$html .='Trabajos Programados';}else{$html .='Trabajos Ejecutados';}
 				$html .='</td></tr>';
@@ -362,7 +362,7 @@ $html ='<style>
 						}
 						$html .='
 						</td>
-					</tr>'; 
+					</tr>';
 				}
 				$html .='<tr id="hiderow"><td colspan="6"></td></tr>';
 			} 

@@ -159,7 +159,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 						});
 						
 					</script>
-				  
+
 					<div class="form-group">
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>

@@ -133,7 +133,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 				<?php $calculo = $rowFacturacion['MontoTotal'] - $rowFacturacion['montoPago']; ?>
 				<small class="pull-right"><strong><?php echo Valores($calculo, 0); ?></strong></small>
 				<br/>
-					
+
 			</li>
 		</ul>
 
@@ -184,7 +184,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 			</form>
 			<?php widget_validator(); ?>
 		</ul>
-			
+
 	</div> 
 	
 							

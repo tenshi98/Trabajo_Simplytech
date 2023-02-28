@@ -604,7 +604,7 @@ input[type="date"].form-control{
 
 	/**********************************************************/
 	//Se agrega cuartel
-	function pago_iva_add() { 
+	function pago_iva_add() {
 		//se incrementa en 1
 		nPagoIva++;
 		//se estancian los objetos a clonar
@@ -618,7 +618,7 @@ input[type="date"].form-control{
     } 
     /**********************************************************/
 	//Se agrega cuartel
-	function pago_ppm_add() { 
+	function pago_ppm_add() {
 		//se incrementa en 1
 		nPagoPPM++;
 		//se estancian los objetos a clonar
@@ -632,7 +632,7 @@ input[type="date"].form-control{
     }
 	/**********************************************************/
 	//Se agrega cuartel
-	function pago_ret_add() { 
+	function pago_ret_add() {
 		//se incrementa en 1
 		nPagoRet++;
 		//se estancian los objetos a clonar
@@ -646,7 +646,7 @@ input[type="date"].form-control{
     }
     /**********************************************************/
 	//Se agrega cuartel
-	function pago_impuesto_renta_add() { 
+	function pago_impuesto_renta_add() {
 		//se incrementa en 1
 		nImpRent++;
 		//se estancian los objetos a clonar
@@ -887,7 +887,7 @@ input[type="date"].form-control{
 
 	/**********************************************************/
 	//Se agrega cuartel
-	function pago_iva_add() { 
+	function pago_iva_add() {
 		//se incrementa en 1
 		nPagoIva++;
 		//se estancian los objetos a clonar
@@ -901,7 +901,7 @@ input[type="date"].form-control{
     } 
     /**********************************************************/
 	//Se agrega cuartel
-	function pago_ppm_add() { 
+	function pago_ppm_add() {
 		//se incrementa en 1
 		nPagoPPM++;
 		//se estancian los objetos a clonar
@@ -915,7 +915,7 @@ input[type="date"].form-control{
     }
 	/**********************************************************/
 	//Se agrega cuartel
-	function pago_ret_add() { 
+	function pago_ret_add() {
 		//se incrementa en 1
 		nPagoRet++;
 		//se estancian los objetos a clonar
@@ -929,7 +929,7 @@ input[type="date"].form-control{
     }
     /**********************************************************/
 	//Se agrega cuartel
-	function pago_impuesto_renta_add() { 
+	function pago_impuesto_renta_add() {
 		//se incrementa en 1
 		nImpRent++;
 		//se estancian los objetos a clonar

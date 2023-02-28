@@ -160,7 +160,7 @@ $html .= '
 				<br/>
 				<br/>
 				';
-				
+
 			$html .= '</td>
 		</tr>
 	</tbody>

@@ -4098,7 +4098,6 @@ require_once '0_validate_user_1.php';
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario';
 					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
 				}
 
 				//redirijo

@@ -218,7 +218,7 @@
 			if($rowDatos['DetalleTotalVenta']>0){
 				echo Valores($rowDatos['DetalleTotalVenta'], 0).'<br>';
 				echo Valores($Exento, 0).'<br>'; 
-				echo Valores($rowDatos['DetalleTotalAPagar'], 0).'<br>'; 
+				echo Valores($rowDatos['DetalleTotalAPagar'], 0).'<br>';
 			}else{
 				echo Valores(0, 0).'<br>';
 				echo Valores(0, 0).'<br>';

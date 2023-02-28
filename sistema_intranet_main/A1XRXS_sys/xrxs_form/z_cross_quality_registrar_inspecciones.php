@@ -698,7 +698,7 @@ require_once '0_validate_user_1.php';
 
 				// consulto los datos
 				$rowProductor = db_select_data (false, 'Nombre', 'productores_listado', '', 'idProductor ='.$idProductor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				$idInterno = $idInterno+1;
 				$_SESSION['cross_quality_reg_insp_muestras'][$idInterno]['idMuestra']       = $idInterno;
 				$_SESSION['cross_quality_reg_insp_muestras'][$idInterno]['idProductor']     = $idProductor;
@@ -714,7 +714,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['cross_quality_reg_insp_muestras'][$idInterno]['Resolucion_1']    = $Resolucion_1;
 				$_SESSION['cross_quality_reg_insp_muestras'][$idInterno]['Resolucion_2']    = $Resolucion_2;
 				$_SESSION['cross_quality_reg_insp_muestras'][$idInterno]['Resolucion_3']    = $Resolucion_3;
-				
+
 				for ($i = 1; $i <= 100; $i++) {
 					if(isset($Medida[$i])){
 						$_SESSION['cross_quality_reg_insp_muestras'][$idInterno]['Medida_'.$i]   = $Medida[$i];
@@ -822,7 +822,7 @@ require_once '0_validate_user_1.php';
 
 				// consulto los datos
 				$rowProductor = db_select_data (false, 'Nombre', 'productores_listado', '', 'idProductor ='.$idProductor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				$_SESSION['cross_quality_reg_insp_muestras'][$oldidProducto]['idMuestra']         = $oldidProducto;
 				$_SESSION['cross_quality_reg_insp_muestras'][$oldidProducto]['idProductor']       = $idProductor;
 				$_SESSION['cross_quality_reg_insp_muestras'][$oldidProducto]['ProductorNombre']   = $rowProductor['Nombre'];
@@ -837,7 +837,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['cross_quality_reg_insp_muestras'][$oldidProducto]['Resolucion_1']      = $Resolucion_1;
 				$_SESSION['cross_quality_reg_insp_muestras'][$oldidProducto]['Resolucion_2']      = $Resolucion_2;
 				$_SESSION['cross_quality_reg_insp_muestras'][$oldidProducto]['Resolucion_3']      = $Resolucion_3;
-				
+
 				for ($i = 1; $i <= 100; $i++) {
 					if(isset($Medida[$i])){
 						$_SESSION['cross_quality_reg_insp_muestras'][$oldidProducto]['Medida_'.$i]   = $Medida[$i];

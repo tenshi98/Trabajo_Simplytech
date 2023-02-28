@@ -22,7 +22,7 @@ if(isset($_GET['data_3'])&&isset($_GET['data_4'])&&isset($_GET['data_5'])&&isset
 		$db_con = mysqli_connect($servidor, $usuario, $password, $base_datos);
 		$db_con->set_charset("utf8");
 		return $db_con;
-	}	
+	}
 	//ejecuto conexion
 	$dbConn = conectarDB($_GET['data_3'], $_GET['data_4'], $_GET['data_5'], $_GET['data_6']);	
 		
@@ -185,8 +185,7 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 					
 				</div>
 			</div>
-			
-			
+
 			<?php if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){ ?>
 				<div class="tab-pane fade" id="mediciones">
 					<div class="wmd-panel">

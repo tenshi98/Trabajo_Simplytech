@@ -223,7 +223,6 @@ require_once '0_validate_user_1.php';
 					case 8:  $h_noMolestar  = '18:00:00'; break;
 					case 9:  $h_noMolestar  = '21:00:00'; break;
 					case 10: $h_noMolestar  = '24:00:00'; break;
-					
 				}
 
 				//Se calcula prediccion de tiempo condicionando dias hacia adelante

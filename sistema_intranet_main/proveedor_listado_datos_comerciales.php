@@ -106,7 +106,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 					$Form_Inputs->form_input_hidden('idProveedor', $_GET['id'], 2);
 					
 					?>
-				  
+
 					<div class="form-group">
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>

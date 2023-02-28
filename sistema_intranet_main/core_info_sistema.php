@@ -67,8 +67,7 @@ if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 			</ul>
 		</header>
         <div class="tab-content">
-			
-			
+
 			<div class="tab-pane fade active in" id="data1">
 				<div class="wmd-panel">
 

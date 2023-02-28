@@ -75,7 +75,7 @@ $my_html ='
 							</tr>
 						</thead>
 						<tbody>';
-							
+
 							foreach ($arrProductos as $productos) { 
 								$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];
 								if ($stock_actual!=0){

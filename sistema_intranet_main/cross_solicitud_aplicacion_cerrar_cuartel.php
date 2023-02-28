@@ -236,7 +236,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					<td><strong>Temp Max</strong></td>
 					<td><strong>Hum Temp Max</strong></td>
 					<td></td>
-										
+
 				</tr>
 				<?php
 					//recorro el lsiatdo entregado por la base de datos
@@ -274,7 +274,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 			</tbody>
 		</table>
 		<div class="clearfix"></div>
-			
+
 	</div>
 
 	<div id="page-wrap">

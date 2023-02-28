@@ -57,7 +57,7 @@ require_once 'core/Web.Header.Views.php';
 
 		</header>
 			<div class="table-responsive">
-					
+
 			<?php
 			$unimed = ' '.$arrFinalUnimed[$rowdata['SensoresUniMed_'.$rowdata['Sensor']]];
 			$explanation  = '<strong>'.fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].'</strong><br/>';

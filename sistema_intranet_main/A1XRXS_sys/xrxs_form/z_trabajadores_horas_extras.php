@@ -724,7 +724,7 @@ require_once '0_validate_user_1.php';
 												$SIS_data .= ",'".$producto[$nSem][$DiaActual_ex]['horas_dia']."'";
 												$SIS_data .= ",'".$producto[$nSem][$DiaActual_ex]['porcentaje_dia']."'";
 												$SIS_data .= ",'1'";
-												
+
 												// inserto los datos de registro en la db
 												$SIS_columns = 'idFacturacion, idSistema, idUsuario, fecha_auto, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTrabajador,
 												nSem, Fecha, N_Horas, idPorcentaje, idUso';

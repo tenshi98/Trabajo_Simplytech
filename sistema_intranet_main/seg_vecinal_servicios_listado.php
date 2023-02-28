@@ -160,7 +160,7 @@ echo '</div>';
 			
 
 								});
-								
+
 								//Se define el cuadro de busqueda
 								var searchBox = new google.maps.places.SearchBox(document.getElementById('pac-input'));
 								map.controls[google.maps.ControlPosition.TOP_CENTER].push(document.getElementById('pac-input'));

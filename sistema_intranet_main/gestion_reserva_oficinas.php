@@ -169,7 +169,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 					$x1  = fecha_actual();
 					$x2  = hora_actual();
 					$x3  = hora_actual();
-					$x7  = $_GET['idOficina']; 
+					$x7  = $_GET['idOficina'];
 				}
 
 				//se dibujan los inputs

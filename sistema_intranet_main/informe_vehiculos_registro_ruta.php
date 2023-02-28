@@ -70,9 +70,7 @@ array_push( $arrRutas,$row );
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ruta</h5>
 		</header>
         <div class="table-responsive">
-			
-			
-			
+
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="row">
 					<?php
@@ -115,7 +113,7 @@ array_push( $arrRutas,$row );
 									mapTypeId: google.maps.MapTypeId.ROADMAP
 								};
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-								
+
 								//Se llama a la ruta
 								RutasAlternativas();
 								//Se llama al marcador y se anima
@@ -236,7 +234,7 @@ array_push( $arrRutas,$row );
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Verifico el tipo de usuario que esta ingresando
-$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; ?>		
+$w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1"; ?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>

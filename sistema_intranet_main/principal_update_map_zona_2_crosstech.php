@@ -127,7 +127,7 @@ foreach ($arrUnimed as $data) {
 	<?php
 	$GPS = 'var new_locations = [ ';
 			foreach ( $arrEquipo as $data ) {
-				
+
 				/**********************************************/
 				//Se resetean
 				$in_eq_fueralinea  = 0;

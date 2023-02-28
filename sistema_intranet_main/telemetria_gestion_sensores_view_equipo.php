@@ -106,8 +106,7 @@ foreach ($arrUnimed as $sen) {
 					
 				</div>
 			</div>
-			
-			
+
 			<?php if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){ ?>
 				<div class="tab-pane fade" id="mediciones">
 					<div class="wmd-panel">

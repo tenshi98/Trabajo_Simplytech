@@ -262,9 +262,7 @@ $arrCajas = db_select_array (false, $SIS_query, 'caja_chica_listado', $SIS_join,
 			</ul>
 		</header>
         <div class="table-responsive">
-			
-			
-			
+
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">

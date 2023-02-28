@@ -143,7 +143,7 @@ require_once '0_validate_user_1.php';
 											if(isset($nRows)&&$nRows!=0){
 												$ndata_1++;
 											}
-											
+
 											//conteo de predios
 											$nPredios++;
 										}
@@ -164,12 +164,12 @@ require_once '0_validate_user_1.php';
 								$rowPais   = db_select_data (false, 'idPais', 'core_paises', '', 'Nombre="'.$Predio_Pais.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								$rowCiudad = db_select_data (false, 'idCiudad', 'core_ubicacion_ciudad', '', 'Nombre="'.$Predio_Ciudad.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								$rowComuna = db_select_data (false, 'idComuna', 'core_ubicacion_comunas', '', 'Nombre="'.$Predio_Comuna.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 								//Asigno valores
 								$idPais    = $rowPais['idPais'];
 								$idCiudad  = $rowCiudad['idCiudad'];
 								$idComuna  = $rowComuna['idComuna'];
-								
+
 								//filtros
 								if(isset($idSistema) && $idSistema!=''){                $SIS_data  = "'".$idSistema."'";          }else{$SIS_data  = "''";}
 								if(isset($idEstado) && $idEstado!=''){                 $SIS_data .= ",'".$idEstado."'";          }else{$SIS_data .= ",''";}
@@ -182,7 +182,7 @@ require_once '0_validate_user_1.php';
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idSistema, idEstado, Nombre,idPais, idCiudad, idComuna, Direccion';
 								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_predios_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 								//Si ejecuto correctamente la consulta
 								if($ultimo_id!=0){
 									/*******************************************************************/
@@ -237,7 +237,7 @@ require_once '0_validate_user_1.php';
 												$DistanciaPlantacion = $worksheet->getCellByColumnAndRow(11,  $row)->getValue();
 												$DistanciaHileras    = $worksheet->getCellByColumnAndRow(12,  $row)->getValue();
 												$Estado              = $worksheet->getCellByColumnAndRow(13,  $row)->getValue();
-												
+
 												//Mientras exista dato ejecuta
 												if(isset($ID)&&$ID!=''){
 													//Se cambian comas por puntos
@@ -294,7 +294,6 @@ require_once '0_validate_user_1.php';
 				}else{
 					//se devuelve error
 					$error['FilePredio'] = 'error/No ha seleccionado un archivo';
-					
 				}
 
 			}

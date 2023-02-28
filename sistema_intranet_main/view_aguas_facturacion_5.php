@@ -79,7 +79,7 @@
 				$ndecim = 0;
 				}
 			?>
-					
+
 			<tr>
 				<td>Cargo Fijo Cliente</td>
 				<td>Afecto</td>
@@ -238,9 +238,7 @@
 				<td align="right"><?php echo '(+) '.Valores($rowDatos['DetalleSaldoAnterior'], 0)?></td>
 				</tr>
 			<?php } ?>
-			
-			
-			
+
 			</tbody>
 		</table>
 		<div class="row text-right" style="margin-top:20px;">
@@ -261,7 +259,7 @@
 				echo Valores(($rowDatos['DetalleTotalVenta']/1.19), 0).'<br>';
 				echo Valores(($rowDatos['DetalleTotalVenta']-($rowDatos['DetalleTotalVenta']/1.19)), 0).'<br>';
 				echo Valores($Exento, 0).'<br>'; 
-				echo Valores($rowDatos['DetalleTotalAPagar'], 0).'<br>'; 
+				echo Valores($rowDatos['DetalleTotalAPagar'], 0).'<br>';
 				}else{
 				echo Valores(0, 0).'<br>';
 				echo Valores(0, 0).'<br>';

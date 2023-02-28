@@ -217,7 +217,7 @@ if (isset($_SESSION['desc_cuotas_listado'])){
 		$vtotal_neto = $vtotal_neto + $producto['monto']; 
 		if(isset($producto['fecha'])&&$producto['fecha']=='0000-00-00'){
 			$xval_inc++;
-		}	
+		}
 	}
 }	
 ?>

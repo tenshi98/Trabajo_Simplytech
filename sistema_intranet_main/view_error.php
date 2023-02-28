@@ -59,9 +59,9 @@ $rowdata = db_select_data (false, $SIS_query, 'error_log', $SIS_join, $SIS_where
 					<?php
 
 					//Se muestra el error
-					echo '<p><strong>Usuario : </strong>'.$rowdata['Usuario'].'</p>'; 
-					echo '<p><strong>Fecha : </strong>'.$rowdata['Fecha'].'</p>'; 
-					echo '<p><strong>Mensaje : </strong>'.$rowdata['Mensaje'].'</p>'; 
+					echo '<p><strong>Usuario : </strong>'.$rowdata['Usuario'].'</p>';
+					echo '<p><strong>Fecha : </strong>'.$rowdata['Fecha'].'</p>';
+					echo '<p><strong>Mensaje : </strong>'.$rowdata['Mensaje'].'</p>';
 					echo '<pre>'.$rowdata['Consulta'].'</pre>';
 					
 					?>
@@ -73,7 +73,7 @@ $rowdata = db_select_data (false, $SIS_query, 'error_log', $SIS_join, $SIS_where
 
         
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -83,7 +83,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

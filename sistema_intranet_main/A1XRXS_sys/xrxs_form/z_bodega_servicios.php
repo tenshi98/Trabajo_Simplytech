@@ -871,7 +871,7 @@ require_once '0_validate_user_1.php';
 
 				//Se borran los productos
 				unset($_SESSION['servicios_ing_productos']);
-				
+
 				$SIS_query = '
 				ocompra_listado_existencias_servicios.idExistencia, 
 				ocompra_listado_existencias_servicios.idServicio, 
@@ -1103,7 +1103,7 @@ require_once '0_validate_user_1.php';
 								$nueva_cant = $producto['cant_ingresada'] + $producto['Cantidad_ing'];
 								$SIS_data = "idExistencia='".$producto['idExistencia']."'";
 								$SIS_data .= ",cant_ingresada='".$nueva_cant."'";
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_servicios', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1121,7 +1121,7 @@ require_once '0_validate_user_1.php';
 								
 								$SIS_data  = "DocRel='".$ultimo_id."'";    
 								$SIS_data .= ",idEstado='2'";
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_servicios_facturacion', 'idFacturacion = "'.$guias['idGuia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -2115,7 +2115,7 @@ require_once '0_validate_user_1.php';
 								
 								$SIS_data  = "DocRel='".$ultimo_id."'";    
 								$SIS_data .= ",idEstado='2'";
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_servicios_facturacion', 'idFacturacion = "'.$guias['idGuia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

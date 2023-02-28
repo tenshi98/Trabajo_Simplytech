@@ -778,7 +778,7 @@ require_once '0_validate_user_1.php';
 								
 								//Actualizo 
 								$SIS_data = "idUso='2'" ;
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_boletas', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1965,7 +1965,7 @@ require_once '0_validate_user_1.php';
 								$nuevo_total = $producto['vTotal'] + $producto['Total_ing'];
 								//Actualizo 
 								$SIS_data = "Total_Ingresado='".$nuevo_total."'";
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_boletas_empresas', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

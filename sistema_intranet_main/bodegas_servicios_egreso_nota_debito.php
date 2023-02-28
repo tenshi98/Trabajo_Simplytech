@@ -708,7 +708,7 @@ $Form_Inputs = new Inputs();
 						<td align="right"><?php echo Valores($vtotal_neto, 0); ?></td>
 						<td></td>
 					</tr>
-					
+
 			</tbody>
 		</table>
     </div>

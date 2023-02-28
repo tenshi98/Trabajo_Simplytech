@@ -116,9 +116,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-			
-			
-			
+
 			<div id="pswd_info">
 				<h4>Requerimientos</h4>
 				<ul>

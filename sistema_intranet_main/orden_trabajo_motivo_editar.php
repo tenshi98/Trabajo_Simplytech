@@ -1376,7 +1376,6 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 					<tr id="hiderow"><td colspan="6"></td></tr>
 				<?php /**********************************************************************************/?>
 
-				
 				<tr>
 					<td colspan="5" class="blank"><p><?php echo $rowdata['Observaciones']?></p></td>
 					<td class="blank">

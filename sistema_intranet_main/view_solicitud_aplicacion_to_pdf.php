@@ -545,7 +545,7 @@ $html .= '
 				</table>
 				<br/>
 				<br/>';
-				
+
 			$html .= '</td>
 		</tr>
 	</tbody>

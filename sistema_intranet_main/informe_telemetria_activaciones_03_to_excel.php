@@ -108,7 +108,7 @@ foreach($arrConsulta as $categoria=>$permisos){
 	$CodigoInterno      = '';
 							
 	//Recorrido
-	foreach ($permisos as $con) { 
+	foreach ($permisos as $con) {
 		//Contrato Codigo
 		$Direccion          = $con['Direccion'];
 		$CodigoInterno      = $con['CodigoInterno'];
@@ -116,7 +116,7 @@ foreach($arrConsulta as $categoria=>$permisos){
 		/*****************************************************************/
 		//Verifico si esta dentro del mismo dia
 		if($fecha!=''&&$fecha==$con['EquipoFecha']){
-			
+
 			/***************************************/
 			//Verifico hora inicio
 			if($HoraInicio>$con['EquipoHora']&&$con['EquipoValor']==$con['EquipoActivacionValor']){
@@ -192,7 +192,7 @@ foreach($arrConsulta as $categoria=>$permisos){
 			if($con['EquipoJornada_termino']>=$HoraTermino){
 				$TiempoPerdido = sumahoras($TiempoPerdido, restahoras($HoraTermino, $con['EquipoJornada_termino'] ));
 			}
-			
+
 			$spreadsheet->setActiveSheetIndex(0)
 						->setCellValue('A'.$nn, DeSanitizar($categoria))
 						->setCellValue('B'.$nn, DeSanitizar($CodigoInterno))

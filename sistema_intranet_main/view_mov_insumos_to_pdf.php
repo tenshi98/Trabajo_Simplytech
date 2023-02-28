@@ -504,7 +504,7 @@ $html .= '
 									break;
 								//Transpaso de insumos a otras empresas
 								case 6:
-									$html .= '	
+									$html .= '
 									<td style="vertical-align: top; width:33%;">
 										Empresa Origen
 										<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -574,7 +574,7 @@ $html .= '
 									break;
 								//Traspaso Manual de Insumos a otra Empresa	
 								case 8:
-									$html .= '	
+									$html .= '
 									<td style="vertical-align: top; width:33%;">
 										Empresa Origen
 										<strong>'.$row_data['SistemaOrigen'].'</strong><br/>

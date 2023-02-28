@@ -1,5 +1,5 @@
 <div role="tabpanel" class="tab-pane fade" id="resumen">
-<?php 
+<?php
 //Se traen todas las solicitudes		
 $SIS_query = '
 cross_solicitud_aplicacion_listado.idSolicitud,

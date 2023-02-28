@@ -146,7 +146,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		
 		foreach ($arrCategoria as $cat) {
 			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $grafico[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']];}else{$grafico[$xcontador][$cat['idCategoria']] = 0;};
-		}	
+		}
 	}
 	$xmes = $xmes-1;								
 }
@@ -353,7 +353,7 @@ foreach ($arrBodegas as $bod) {
 		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][10][$cat['idCategoria']];
 		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][11][$cat['idCategoria']]; 
 		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][12][$cat['idCategoria']]; 
-		$Total = $Total + $SubTotal; 
+		$Total = $Total + $SubTotal;
 	}
 	//Verifico que tenga un total
 	if($Total!=0){

@@ -94,7 +94,7 @@ foreach ($arrGrupos as $sen) {
 								$tiempo1     = $rowDatos['LastUpdateHora'];
 								$tiempo2     = $HoraSistema;
 								$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
-								
+
 								//Comparaciones de tiempo
 								$Time_Tiempo     = horas2segundos($Tiempo);
 								$Time_Tiempo_FL  = horas2segundos($rowDatos['TiempoFueraLinea']);

@@ -89,13 +89,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		<?php }else{ ?>
 			<a target="new" href="<?php echo 'informe_telemetria_registro_sensores_6_to_pdf.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
 		<?php } ?>
-	</div> 
+	</div>
 
-
-	<?php 
+	<?php
 	//Se verifica si se pidieron los graficos
-	if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ 
-		
+	if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){
+
 		/****************************************************************/
 		//Variables
 		$Temp_1   = '';
@@ -108,7 +107,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				//Variables
 			$Temp_1  .= "'".Fecha_estandar($fac['FechaSistema'])." - ".$fac['HoraSistema']."',";
 			$xcount   = 0;
-										
+
 			for ($x = 1; $x <= $rowEquipo['cantSensores']; $x++) {
 				if($fac['SensoresGrupo_'.$x]==$_GET['idGrupo']){
 					//Que el valor medido sea distinto de 999
@@ -131,9 +130,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				}
 			}
 			//contador
-			$count++;		
+			$count++;
 		}
-		/******************************************/  
+		/******************************************/
 		//variables
 		$Graphics_xData       = 'var xData = [';
 		$Graphics_yData       = 'var yData = [';
@@ -172,8 +171,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$Graphics_lineWidth  .= '];';
 
 		?>
-		
-		
+
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">
 				<header>
@@ -244,7 +242,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 			</script>
 		</div>
-			
+
 	<?php } ?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -260,7 +258,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						<tr class="odd">
 							<td></td>
 							<td></td>
-							<?php 
+							<?php
 							for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 								if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 									echo '<th style="text-align:center">'.$arrEquipos[0]['SensorNombre_'.$i].'</th>';
@@ -271,7 +269,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						<tr class="odd">
 							<th>Fecha</th>
 							<th>Hora</th>
-							<?php 
+							<?php
 							for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 								if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 									echo '<th>Medicion</th>';
@@ -284,7 +282,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						<tr class="odd">
 							<td><?php echo fecha_estandar($rutas['FechaSistema']); ?></td>
 							<td><?php echo $rutas['HoraSistema']; ?></td>
-							<?php 
+							<?php
 							for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 								if($rutas['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 									if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]<99900){
@@ -337,7 +335,7 @@ alert_post_data(2,1,1, $Alert_Text);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
+
                <?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
@@ -362,7 +360,7 @@ alert_post_data(2,1,1, $Alert_Text);
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 2, $dbConn);
-				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				?>
 
 				<div class="form-group">

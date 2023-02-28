@@ -103,7 +103,7 @@ require_once '0_validate_user_1.php';
 	if(isset($PersonaContacto_email)&&!validarEmail($PersonaContacto_email)){  $error['email']                  = 'error/El Email ingresado no es valido';}
 	if(isset($PersonaContacto_Fono)&&!validarNumero($PersonaContacto_Fono)){  $error['PersonaContacto_Fono']   = 'error/Ingrese un numero telefonico valido';}
 	if(isset($password)&&isset($repassword)){
-		if ( $password <> $repassword )                  $error['password']  = 'error/Las contraseñas ingresadas no coinciden'; 
+		if ( $password <> $repassword )                  $error['password']  = 'error/Las contraseñas ingresadas no coinciden';
 	}
 	
 	if(isset($email)&&contar_palabras_censuradas($email)!=0){                                  $error['email']                 = 'error/Edita email, contiene palabras no permitidas';}

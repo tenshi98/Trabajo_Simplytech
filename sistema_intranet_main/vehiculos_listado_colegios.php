@@ -92,9 +92,8 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 			<?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
-	
-	
+</div>
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos

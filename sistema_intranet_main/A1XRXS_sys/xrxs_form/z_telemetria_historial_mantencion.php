@@ -101,7 +101,7 @@ require_once '0_validate_user_1.php';
 
 			//se verifican las horas para obtener la duracion
 			if($h_Termino<$h_Inicio){
-				$error['duracion'] = 'error/La hora de inicio es superior a la hora de termino'; 
+				$error['duracion'] = 'error/La hora de inicio es superior a la hora de termino';
 			}
 
 			//Si no hay errores ejecuto el codigo
@@ -162,7 +162,7 @@ require_once '0_validate_user_1.php';
 
 			//se verifican las horas para obtener la duracion
 			if($h_Termino<$h_Inicio){
-				$error['duracion'] = 'error/La hora de inicio es superior a la hora de termino'; 
+				$error['duracion'] = 'error/La hora de inicio es superior a la hora de termino';
 			}
 
 			//Si no hay errores ejecuto el codigo
@@ -444,7 +444,7 @@ require_once '0_validate_user_1.php';
 											//filtros
 											if(isset($idMantencion) && $idMantencion!=''){    $SIS_data  = "'".$idMantencion."'";  }else{$SIS_data  = "''";}
 											if(isset($nombre_arc) && $nombre_arc!=''){        $SIS_data .= ",'".$nombre_arc."'";   }else{$SIS_data .= ",''";}
-											
+
 											// inserto los datos de registro en la db
 											$SIS_columns = 'idMantencion,Nombre';
 											$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_historial_mantencion_archivos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

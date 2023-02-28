@@ -858,7 +858,6 @@ array_push( $arrProveedores,$row );
 								}
 							}
 						?>
-					                 
 				</tbody>
 			</table>
 		</div>

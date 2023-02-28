@@ -211,9 +211,8 @@ if(!empty($_GET['clone_idMaquina'])){
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
-	
-	
+</div>
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['clone_idMatriz'])){ ?>
 
@@ -2689,8 +2688,7 @@ array_push( $arrMaquina,$row );
 								<?php if(isset($maq['idConfig_2'])&&$maq['idConfig_2']==1){ ?>
 									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&matriz='.$maq['idMaquina']; ?>" title="Editar Matriz" class="btn btn-primary btn-sm tooltip"><i class="fa fa-server" aria-hidden="true"></i></a><?php } ?>
 								<?php } ?>
-								
-								
+
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($maq['idMaquina'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el registro '.$maq['Nombre'].'?'; ?>

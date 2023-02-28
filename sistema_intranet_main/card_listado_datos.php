@@ -69,7 +69,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 			<ul class="nav nav-tabs pull-right">
 				<li class=""><a href="<?php echo 'card_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class="active"><a href="<?php echo 'card_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'card_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>          
+				<li class=""><a href="<?php echo 'card_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 			</ul>
 		</header>
         <div class="table-responsive">
@@ -93,7 +93,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 				
 					$Form_Inputs->form_input_hidden('idCard', $_GET['id'], 2);
 					?>
-				  
+
 					<div class="form-group">
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>

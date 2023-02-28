@@ -232,7 +232,7 @@ if($n_permisos['idOpcionesGen_2']=='1' OR $idTipoUsuario==1){
 		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_insumos_facturacion      INNER JOIN usuarios_bodegas_insumos   ON usuarios_bodegas_insumos.idBodega = bodegas_insumos_facturacion.idBodegaDestino        WHERE bodegas_insumos_facturacion.idEstado=1    AND bodegas_insumos_facturacion.idTipo=2     AND bodegas_insumos_facturacion.".$SIS_where_3."     AND bodegas_insumos_facturacion.Pago_Semana=".semana_actual()."     AND bodegas_insumos_facturacion.Pago_ano=".ano_actual()."    AND usuarios_bodegas_insumos.".$SIS_where_4." LIMIT 1) AS CountFactInsumoVent";
 		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_productos_facturacion    INNER JOIN usuarios_bodegas_productos ON usuarios_bodegas_productos.idBodega = bodegas_productos_facturacion.idBodegaDestino    WHERE bodegas_productos_facturacion.idEstado=1  AND bodegas_productos_facturacion.idTipo=2   AND bodegas_productos_facturacion.".$SIS_where_3."   AND bodegas_productos_facturacion.Pago_Semana=".semana_actual()."   AND bodegas_productos_facturacion.Pago_ano=".ano_actual()."  AND usuarios_bodegas_productos.".$SIS_where_4." LIMIT 1) AS CountFactProductoVent";
 		$subquery .= ",(SELECT COUNT(idFacturacion) FROM bodegas_servicios_facturacion WHERE bodegas_servicios_facturacion.idEstado=1  AND bodegas_servicios_facturacion.idTipo=2   AND bodegas_servicios_facturacion.".$SIS_where_3." AND bodegas_servicios_facturacion.Pago_Semana=".semana_actual()." AND bodegas_servicios_facturacion.Pago_ano=".ano_actual()." LIMIT 1) AS CountFactServicioVent";
-		
+
 	}
 
 	/*** Devolucion Arriendos ***/
@@ -318,7 +318,7 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SI
 	/*****************************************************************************************************************/
 	/*                                Visualizacion del widget del administrador                                     */
 	/*****************************************************************************************************************/
-	if($idTipoUsuario==1) { 
+	if($idTipoUsuario==1) {
 		//verifica la capa de desarrollo
 		$SIS_where_2hitelist = array( 'localhost', '127.0.0.1', '::1' );
 		//si estoy en ambiente de desarrollo
@@ -414,12 +414,12 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SI
 			echo widget_GPS_equipos('Mapa GPS','Fijos', 2, 2, $_SESSION['usuario']['basic_data']['idSistema'], 
 									$_SESSION['usuario']['basic_data']['Config_IDGoogle'],
 									$_SESSION['usuario']['basic_data']['idTipoUsuario'],
-									$_SESSION['usuario']['basic_data']['idUsuario'],$dbConn);	
+									$_SESSION['usuario']['basic_data']['idUsuario'],$dbConn);
 			echo widget_GPS_equipos_lista('Ultimas Mediciones', 2, 0, $trans[8], 
 										  $_SESSION['usuario']['basic_data']['idSistema'],
 										  $_SESSION['usuario']['basic_data']['idTipoUsuario'],
 										  $_SESSION['usuario']['basic_data']['idUsuario'], $dbConn);
-			
+
 		}
 		//Equipos		
 		if($prm_x[9]=='1' OR $idTipoUsuario==1) {

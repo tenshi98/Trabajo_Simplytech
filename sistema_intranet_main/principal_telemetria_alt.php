@@ -26,7 +26,7 @@ switch ($_GET['idOpcionesTel']) {
 		echo widget_GPS_equipos('Equipos Telemetria','Equipos', 2, 2, $_GET['idSistema'], 
 					$_GET['Config_IDGoogle'],
 					$_GET['idTipoUsuario'],
-					$_GET['idUsuario'],$dbConn);	
+					$_GET['idUsuario'],$dbConn);
 		echo widget_GPS_equipos_lista('Ultimas Mediciones', 2, 0, $_GET['trans_8'], 
 				$_GET['idSistema'],
 				$_GET['idTipoUsuario'],
@@ -49,7 +49,7 @@ switch ($_GET['idOpcionesTel']) {
 		echo widget_GPS_equipos('Equipos Fijos','Fijos', 2, 2, $_GET['idSistema'], 
 					$_GET['Config_IDGoogle'],
 					$_GET['idTipoUsuario'],
-					$_GET['idUsuario'],$dbConn);	
+					$_GET['idUsuario'],$dbConn);
 		echo widget_GPS_equipos_lista('Ultimas Mediciones', 2, 0, $_GET['trans_8'], 
 				$_GET['idSistema'],
 				$_GET['idTipoUsuario'],
@@ -113,7 +113,7 @@ switch ($_GET['idOpcionesTel']) {
 		echo widget_GPS_equipos('Equipos Fijos','Fijos', 2, 2, $_GET['idSistema'], 
 					$_GET['Config_IDGoogle'],
 					$_GET['idTipoUsuario'],
-					$_GET['idUsuario'],$dbConn);	
+					$_GET['idUsuario'],$dbConn);
 		echo widget_GPS_equipos_lista('Ultimas Mediciones', 2, 0, $_GET['trans_8'], 
 				$_GET['idSistema'],
 				$_GET['idTipoUsuario'],
@@ -156,11 +156,11 @@ switch ($_GET['idOpcionesTel']) {
 		echo widget_GPS_equipos('Equipos Fijos','Fijos', 2, 2, $_GET['idSistema'], 
 					$_GET['Config_IDGoogle'],
 					$_GET['idTipoUsuario'],
-					$_GET['idUsuario'],$dbConn);	
+					$_GET['idUsuario'],$dbConn);
 		echo widget_GPS_equipos_lista('Ultimas Mediciones', 2, 0, $_GET['trans_8'], 
 				$_GET['idSistema'],
 				$_GET['idTipoUsuario'],
-				$_GET['idUsuario'], $dbConn);		  
+				$_GET['idUsuario'], $dbConn);	  
 	break;
 	/*****************************************************/
 	//Detalle por Equipos
@@ -193,7 +193,7 @@ switch ($_GET['idOpcionesTel']) {
 								$_GET['idTipoUsuario'],
 								$_GET['idUsuario'],
 								$x_seg,
-								$dbConn);		
+								$dbConn);	
 	break;
 	/*****************************************************/
 	//Gestion de Equipos
@@ -204,7 +204,7 @@ switch ($_GET['idOpcionesTel']) {
 									$_GET['idTipoUsuario'],
 									$_GET['idUsuario'],
 									$x_seg,
-									$dbConn);		
+									$dbConn);	
 	break;
 	
 	

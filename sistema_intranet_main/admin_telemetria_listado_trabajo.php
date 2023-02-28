@@ -87,7 +87,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-					<?php  
+					<?php
 					//Se verifican si existen los datos
 					if(isset($Jornada_inicio)){    $x1 = $Jornada_inicio;      }else{$x1 = $rowdata['Jornada_inicio'];}
 					if(isset($Jornada_termino)){   $x2 = $Jornada_termino;     }else{$x2 = $rowdata['Jornada_termino'];}

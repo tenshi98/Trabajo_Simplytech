@@ -127,7 +127,7 @@ require_once '0_validate_user_1.php';
 	if(isset($PersonaContacto_Fono)&&!validarNumero($PersonaContacto_Fono)){ $error['PersonaContacto_Fono'] = 'error/Ingrese un numero telefonico valido';}
 	if(isset($MailBanco)&&!validarEmail($MailBanco)){                         $error['MailBanco']            = 'error/El Email ingresado no es valido';}
 	if(isset($password)&&isset($repassword)){
-		if ( $password <> $repassword )                  $error['password']  = 'error/Las contraseñas ingresadas no coinciden'; 
+		if ( $password <> $repassword )                  $error['password']  = 'error/Las contraseñas ingresadas no coinciden';
 	}
 	if(isset($password)){
 		if (strpos($password, " ")){                     $error['Password1'] = 'error/La contraseña contiene espacios vacios';}

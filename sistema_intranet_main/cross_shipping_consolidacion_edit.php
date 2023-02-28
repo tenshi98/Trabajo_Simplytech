@@ -774,8 +774,7 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 			</table>
 
 		</div>
-		
-		
+
 		<table id="items">
 			<tbody>
 
@@ -828,7 +827,6 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 					</tr>
 				<?php } ?>
 
-				
 				<tr id="hiderow"><td colspan="9"></td></tr>
 
 				<td colspan="9" class="blank word_break">

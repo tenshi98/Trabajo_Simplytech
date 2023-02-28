@@ -246,7 +246,7 @@ $html .= '
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-			   
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</strong><br/>
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>';

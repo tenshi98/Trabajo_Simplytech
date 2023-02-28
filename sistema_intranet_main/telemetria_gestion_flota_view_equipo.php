@@ -141,8 +141,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 					
 				</div>
 			</div>
-			
-			
+
 			<?php if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){ ?>
 				<div class="tab-pane fade" id="mediciones">
 					<div class="wmd-panel">
@@ -240,7 +239,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 										<th>Min</th>
 										<th>Max</th>
 										<?php if($rowdata['id_Geo']==1){ ?>
-											<th>Ubicacion</th> 
+											<th>Ubicacion</th>
 										<?php } ?>
 									</tr>
 								</thead>
@@ -294,7 +293,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 										<th>Hora Termino</th>
 										<th>Tiempo</th>
 										<?php if($rowdata['id_Geo']==1){ ?>
-											<th>Ubicacion</th> 
+											<th>Ubicacion</th>
 										<?php } ?>
 									</tr>
 								</thead>

@@ -714,7 +714,7 @@ if(($folder_list) || ($file_list)){
 				$tr_link    = htmlentities(rawurlencode($item['bname']), ENT_QUOTES, 'utf-8');
 				$tr_new_tab = '';
 			}
-			
+
 			$table_body .= "<a ".$tr_new_tab." href=\"" . $tr_link . "\"$file_attr$file_data$virtual_attr$size_attr>" . utf8ify($display_name) . "</a></td>" . PHP_EOL;
 
             // Size

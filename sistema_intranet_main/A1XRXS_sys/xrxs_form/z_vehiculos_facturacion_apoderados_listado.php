@@ -237,14 +237,13 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'apoderados_listado.idApoderado ASC';
 				$arrApoderado = array();
 				$arrApoderado = db_select_array (false, $SIS_query, 'apoderados_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				foreach ($arrApoderado as $apo) {
 					$_SESSION['vehiculos_apoderados_detalle'][$apo['idApoderado']]['idApoderado']   = $apo['idApoderado'];
 					$_SESSION['vehiculos_apoderados_detalle'][$apo['idApoderado']]['Apoderado']     = $apo['ApoderadoNombre'].' '.$apo['ApoderadoApellidoPat'].' '.$apo['ApoderadoApellidoMat'];
 					$_SESSION['vehiculos_apoderados_detalle'][$apo['idApoderado']]['idPlan']        = $apo['idPlan'];
 					$_SESSION['vehiculos_apoderados_detalle'][$apo['idApoderado']]['PlanNombre']    = $apo['PlanNombre'];
 					$_SESSION['vehiculos_apoderados_detalle'][$apo['idApoderado']]['MontoPactado']  = $apo['PlanValor_Mensual'];
-					
 				}
 
 				//redirijo a la vista

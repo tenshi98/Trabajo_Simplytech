@@ -637,8 +637,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$n_trabajadores = 0;
 			$n_trabajos     = 0;
-			
-			
+
 			//Se verifican los datos basicos
 			if (isset($_SESSION['ot_motivo_basicos'])){
 				if(!isset($_SESSION['ot_motivo_basicos']['idSistema']) OR $_SESSION['ot_motivo_basicos']['idSistema']=='' ){                  $error['idSistema']          = 'error/No ha ingresado el id del sistema';}
@@ -2656,8 +2655,7 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			
+
 			//Se verifica que el archivo subido no exceda los 100 kb
 			$limite_kb = 10000;
 			//Sufijo
@@ -2694,7 +2692,7 @@ require_once '0_validate_user_1.php';
 			//Verifico errores en los archivos
 			foreach($_FILES["NombreArchivo"]["tmp_name"] as $key=>$tmp_name){
 				if ($_FILES["NombreArchivo"]["error"][$key] > 0){
-					$error['NombreArchivo'] = 'error/'.uploadPHPError($_FILES["NombreArchivo"]["error"][$key]); 
+					$error['NombreArchivo'] = 'error/'.uploadPHPError($_FILES["NombreArchivo"]["error"][$key]);
 				}
 				if (in_array($_FILES['NombreArchivo']['type'][$key], $permitidos) && $_FILES['NombreArchivo']['size'][$key] <= $limite_kb * 1024){
 					//Se especifica carpeta de destino
@@ -2750,7 +2748,7 @@ require_once '0_validate_user_1.php';
 								idUbicacion_lvl_5,idUsuario, idEstado,idPrioridad,idTipo,f_creacion,f_programacion,
 								idTrabajoOT, NombreArchivo';
 								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'orden_trabajo_tareas_listado_tareas_adjuntos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 								/*********************************************************************/
 								//Se guarda en historial la accion
 								if(isset($idOT) && $idOT!=''){    $SIS_data  = "'".$idOT."'";  }else{$SIS_data  = "''";}

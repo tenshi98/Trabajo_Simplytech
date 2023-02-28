@@ -585,7 +585,6 @@ require_once '0_validate_user_1.php';
 					$_SESSION['sol_apli_materiales'][$nmc4]['Nombre']          = $arrMat[$idMatSeguridad[$j4]]['Nombre'];
 					$_SESSION['sol_apli_materiales'][$nmc4]['Codigo']          = $arrMat[$idMatSeguridad[$j4]]['Codigo'];
 					$_SESSION['sol_apli_materiales'][$nmc4]['valor_id']        = $nmc4;
-					
 				}
 
 				//se redirije
@@ -1007,7 +1006,6 @@ require_once '0_validate_user_1.php';
 					$_SESSION['sol_apli_materiales'][$nmc4]['Nombre']          = $arrMat[$idMatSeguridad[$j4]]['Nombre'];
 					$_SESSION['sol_apli_materiales'][$nmc4]['Codigo']          = $arrMat[$idMatSeguridad[$j4]]['Codigo'];
 					$_SESSION['sol_apli_materiales'][$nmc4]['valor_id']        = $nmc4;
-					
 				}
 
 				//se redirije
@@ -1396,8 +1394,7 @@ require_once '0_validate_user_1.php';
 			$n_tractores  = 0;
 			$n_productos  = 0;
 			$n_materiales = 0;
-			
-			
+
 			//Se verifican los datos basicos
 			if (isset($_SESSION['sol_apli_basicos'])){
 				if(!isset($_SESSION['sol_apli_basicos']['idPredio']) OR $_SESSION['sol_apli_basicos']['idPredio']=='' ){                       $error['idPredio']             = 'error/No ha seleccionado el predio';}
@@ -1610,7 +1607,7 @@ require_once '0_validate_user_1.php';
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idSolicitud, idZona, Mojamiento, VelTractor, VelViento, TempMin, TempMax, HumTempMax, idEstado, idCategoria, idProducto';
 								$ultimo_cuartel = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_cuarteles', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 								//Si ejecuto correctamente la consulta
 								if($ultimo_cuartel!=0){
 									/*******************************************/
@@ -1624,7 +1621,7 @@ require_once '0_validate_user_1.php';
 											if(isset($tract['idTelemetria']) && $tract['idTelemetria']!=''){  $SIS_data .= ",'".$tract['idTelemetria']."'";   }else{$SIS_data .= ",''";}
 											if(isset($tract['idVehiculo']) && $tract['idVehiculo']!=''){      $SIS_data .= ",'".$tract['idVehiculo']."'";     }else{$SIS_data .= ",''";}
 											if(isset($tract['idTrabajador']) && $tract['idTrabajador']!=''){  $SIS_data .= ",'".$tract['idTrabajador']."'";   }else{$SIS_data .= ",''";}
-											
+
 											// inserto los datos de registro en la db
 											$SIS_columns = 'idSolicitud, idCuarteles, idTelemetria, idVehiculo, idTrabajador';
 											$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_tractores', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1645,7 +1642,7 @@ require_once '0_validate_user_1.php';
 											if(isset($prod['DosisAplicar']) && $prod['DosisAplicar']!=''){   $SIS_data .= ",'".$prod['DosisAplicar']."'";       }else{$SIS_data .= ",''";}
 											if(isset($prod['idUml']) && $prod['idUml']!=''){                 $SIS_data .= ",'".$prod['idUml']."'";              }else{$SIS_data .= ",''";}
 											if(isset($prod['Objetivo']) && $prod['Objetivo']!=''){           $SIS_data .= ",'".$prod['Objetivo']."'";           }else{$SIS_data .= ",''";}
-											
+
 											// inserto los datos de registro en la db
 											$SIS_columns = 'idSolicitud, idCuarteles, idProducto, DosisRecomendada, DosisAplicar, idUml, Objetivo';
 											$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1697,7 +1694,7 @@ require_once '0_validate_user_1.php';
 														 $correo['Gmail_Usuario'], 
 														 $correo['Gmail_Password']);
 							//se guarda el log
-							log_response(1, $rmail, $correo['UsuarioEmail'].' (Asunto:Notificacion creacion de Consolidacion)');	
+							log_response(1, $rmail, $correo['UsuarioEmail'].' (Asunto:Notificacion creacion de Consolidacion)');
 						}
 					
 					
@@ -1986,7 +1983,7 @@ require_once '0_validate_user_1.php';
 								$SIS_order = 'cross_solicitud_aplicacion_listado_tractores.idTractores ASC';
 								$arrTractores = array();
 								$arrTractores = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 								//se corrige la geodistancia en la tabla relacionada
 								foreach ($arrTractores as $trac) {
 
@@ -2060,7 +2057,7 @@ require_once '0_validate_user_1.php';
 								$SIS_order = 0;
 								$arrCorreosInt = array();
 								$arrCorreosInt = db_select_array (false, $SIS_query, 'core_permisos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 								//Notificaciones a los correos
 								foreach ($arrCorreosInt as $correo) {
 									/*******************/
@@ -2376,7 +2373,7 @@ require_once '0_validate_user_1.php';
 								//se consulta por los datos
 								$arrTelemetria = array();
 								$arrTelemetria = db_select_array (false, 'idTabla, GeoLatitud, GeoLongitud', 'telemetria_listado_tablarelacionada_'.$trac['idTelemetria'], '', 'idZona = '.$trac['idZona'].' AND idSolicitud = '.$trac['idSolicitud'], 'idTabla ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 								//reset
 								$GeoLatitud  = 0;
 								$GeoLongitud = 0;
@@ -2442,7 +2439,7 @@ require_once '0_validate_user_1.php';
 								$In_T_Aplicacion     = segundos2horas($rowTablaRel['Segundos']);
 								$In_T_Aplicacion_out = segundos2horas($rowTablaRel_out['Segundos']);
 								$Total_Seg           = $Total_Seg + $rowTablaRel['Segundos'];
-								
+
 								//se guardan los datos
 								$SIS_data = "idTractores='".$trac['idTractores']."'";
 								if(isset($rowTablaRel['GeoVelocidadMin']) && $rowTablaRel['GeoVelocidadMin']!=''){      $SIS_data .= ",GeoVelocidadMin='".$rowTablaRel['GeoVelocidadMin']."'";}
@@ -3109,7 +3106,7 @@ require_once '0_validate_user_1.php';
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idSolicitud, idZona, Mojamiento, VelTractor, VelViento, TempMin, TempMax, HumTempMax, idEstado, idCategoria, idProducto';
 								$ultimo_cuartel = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_cuarteles', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 								/*******************************************/
 								//se recorren los tractores
 								if($arrTractores!=false && !empty($arrTractores) && $arrTractores!=''){
@@ -3123,7 +3120,7 @@ require_once '0_validate_user_1.php';
 											if(isset($tract['idTelemetria']) && $tract['idTelemetria']!=''){  $SIS_data .= ",'".$tract['idTelemetria']."'";   }else{$SIS_data .= ",''";}
 											if(isset($tract['idVehiculo']) && $tract['idVehiculo']!=''){      $SIS_data .= ",'".$tract['idVehiculo']."'";     }else{$SIS_data .= ",''";}
 											if(isset($tract['idTrabajador']) && $tract['idTrabajador']!=''){  $SIS_data .= ",'".$tract['idTrabajador']."'";   }else{$SIS_data .= ",''";}
-											
+
 											// inserto los datos de registro en la db
 											$SIS_columns = 'idSolicitud, idCuarteles, idTelemetria, idVehiculo, idTrabajador';
 											$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_tractores', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -3146,7 +3143,7 @@ require_once '0_validate_user_1.php';
 											if(isset($prod['DosisAplicar']) && $prod['DosisAplicar']!=''){   $SIS_data .= ",'".$prod['DosisAplicar']."'";       }else{$SIS_data .= ",''";}
 											if(isset($prod['idUml']) && $prod['idUml']!=''){                 $SIS_data .= ",'".$prod['idUml']."'";              }else{$SIS_data .= ",''";}
 											if(isset($prod['Objetivo']) && $prod['Objetivo']!=''){           $SIS_data .= ",'".$prod['Objetivo']."'";           }else{$SIS_data .= ",''";}
-											
+
 											// inserto los datos de registro en la db
 											$SIS_columns = 'idSolicitud, idCuarteles, idProducto, DosisRecomendada, DosisAplicar, idUml, Objetivo';
 											$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_solicitud_aplicacion_listado_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

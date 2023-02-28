@@ -294,7 +294,6 @@ array_push( $arrTiposEmbalaje,$row );
 						</div>
 					</div>
 
-				
 				</div>
 			</div>
         </div>

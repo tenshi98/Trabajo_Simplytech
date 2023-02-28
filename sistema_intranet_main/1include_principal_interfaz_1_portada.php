@@ -229,7 +229,7 @@ echo '<div class="wrapper">';
 
 			/* Capturamos una celda para mostrar el Reloj */
 			document.getElementById("hora_actual").innerHTML = Hora + ":" + Minutos + ":" + Segundos;
-			
+
 		}
 	</script>';
 			

@@ -1945,7 +1945,7 @@ require_once '0_validate_user_1.php';
 								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                               $SIS_data .= ",'".$pago['F_Pago']."'";                                           }else{$SIS_data .= ",''";}
 								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                 $SIS_data .= ",'".$pago['Monto']."'";                                            }else{$SIS_data .= ",''";}
 								$SIS_data .= ",'1'" ;
-								
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idFactFiscal, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
 								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1964,7 +1964,7 @@ require_once '0_validate_user_1.php';
 								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                               $SIS_data .= ",'".$pago['F_Pago']."'";                                           }else{$SIS_data .= ",''";}
 								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                 $SIS_data .= ",'".$pago['Monto']."'";                                            }else{$SIS_data .= ",''";}
 								$SIS_data .= ",'2'" ;
-								
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idFactFiscal, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
 								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1983,7 +1983,7 @@ require_once '0_validate_user_1.php';
 								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                               $SIS_data .= ",'".$pago['F_Pago']."'";                                           }else{$SIS_data .= ",''";}
 								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                 $SIS_data .= ",'".$pago['Monto']."'";                                            }else{$SIS_data .= ",''";}
 								$SIS_data .= ",'3'" ;
-								
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idFactFiscal, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
 								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -2002,7 +2002,7 @@ require_once '0_validate_user_1.php';
 								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                               $SIS_data .= ",'".$pago['F_Pago']."'";                                           }else{$SIS_data .= ",''";}
 								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                 $SIS_data .= ",'".$pago['Monto']."'";                                            }else{$SIS_data .= ",''";}
 								$SIS_data .= ",'4'" ;
-								
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idFactFiscal, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
 								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_fiscales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

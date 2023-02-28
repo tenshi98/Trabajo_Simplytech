@@ -244,7 +244,7 @@ if($rowDatos['idEstado']==2){ ?>
 		</div>
 	</div>
 
-	<?php 
+	<?php
 	//cuento la cantidad de pagos relacionados
 	$nn = 0;
 	foreach ($arrPagosRel as $pagos) {
@@ -264,7 +264,7 @@ if($rowDatos['idEstado']==2){ ?>
 								<thead>
 									<tr role="row">
 										<th>Documento</th>
-										<th>Fecha</th> 
+										<th>Fecha</th>
 										<th>Monto</th>
 									</tr>
 								</thead>
@@ -316,7 +316,7 @@ if(isset($rowDatos['SII_idFacturable'])&&$rowDatos['SII_idFacturable']!=''){
 
 ?>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -326,7 +326,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

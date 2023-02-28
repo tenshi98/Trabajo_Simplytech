@@ -573,7 +573,7 @@ $Form_Inputs = new Inputs();
 		foreach ($arrTipo as $tipo) {
 			echo 'let id_prov_'.$tipo['idProducto'].'= "'.$tipo['Proveedor'].'";';
 			echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
-			echo 'let id_value_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['ValorIngreso']).'";';		
+			echo 'let id_value_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['ValorIngreso']).'";';
 		}
 		?>
 		let Componente = select.options[select.selectedIndex].value;
@@ -982,7 +982,6 @@ $Form_Inputs = new Inputs();
 				echo '<tr id="hiderow"><td colspan="6"><a name="Ancla_obs"></a></td></tr>';
 				?>
 
-				
 				<?php if($_SESSION['insumos_ing_basicos']['idDocumentos']==2){ ?>
 
 					<tr class="item-row fact_tittle">

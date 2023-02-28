@@ -103,14 +103,14 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 				<div class="pull-left">Total</div>
 				<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['MontoPactado'], 0)?></small>
 				<br/>
-		
+
 			</li>
 			<li class="list-group-item">
 
 				<div class="pull-left">TOTAL A PAGAR</div>
 				<small class="pull-right"><strong><?php echo Valores($rowFacturacion['MontoPactado'], 0); ?></strong></small>
 				<br/>
-					
+
 			</li>
 		</ul>
 
@@ -159,7 +159,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 			</form>
 			<?php widget_validator(); ?>
 		</ul>
-			
+
 	</div> 
 	
 							

@@ -458,7 +458,7 @@ if($row_data['MontoPagado']!=0){?>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-			   
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</strong><br/>
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>';
@@ -722,8 +722,7 @@ if($row_data['MontoPagado']!=0){?>
 			</table>
 		</div>
 	</div>
-	
-	
+
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>
@@ -807,7 +806,7 @@ if($row_data['MontoPagado']!=0){?>
     
 </div>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -817,7 +816,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

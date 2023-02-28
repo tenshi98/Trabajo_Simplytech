@@ -38,8 +38,7 @@ if(isset($_GET['idRuta'])&&$_GET['idRuta']!=''){
 	$arrRutas = array();
 	$arrRutas = db_select_array (false, 'idUbicaciones, Latitud, Longitud, direccion', 'telemetria_rutas_ubicaciones', '', 'idRuta ='.$_GET['idRuta'], 'idUbicaciones ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrRutas');
 
-} 
-
+}
 
 //Variable
 $SIS_where  = "telemetria_listado.idEstado = 1 ";//solo equipos activos
@@ -208,10 +207,10 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 									mapTypeId: google.maps.MapTypeId.ROADMAP
 								};
 								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-								
+
 								//Se cargan las posiciones de los iconos
 								intro();
-								
+
 								//Se llama a la ruta
 								<?php if(isset($_GET['idRuta'])&&$_GET['idRuta']!=''){?>
 									RutasAlternativas();

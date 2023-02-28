@@ -66,14 +66,12 @@ $ClaveUnica = 'Meeting_'.genera_password(8,'alfanumerico');
 </style>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" id="msg_options">
-	
-	
+
 	<?php
 	$Alert_Text  = 'Puedes iniciar una Reunion o puedes Unirte a una utilizando el codigo que recibiste';
 	alert_post_data(2,1,1, $Alert_Text);
 	?>
-	
-	
+
 	<div class="row">
 		<div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
 			<form class="form-horizontal" id="form1" name="form1" novalidate>

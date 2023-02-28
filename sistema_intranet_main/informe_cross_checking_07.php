@@ -235,9 +235,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 						}else{
 							$VariedadNombre = 'Todas las variedades';
 						}
-						
-						
-						
+
 						?>
 
 						<tr class="odd">

@@ -111,8 +111,7 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 					</div>
 				</div>
 			</div>
-			
-			
+
 			<div class="tab-pane fade" id="data2">
 				<div class="wmd-panel">
 					<div class="table-responsive">

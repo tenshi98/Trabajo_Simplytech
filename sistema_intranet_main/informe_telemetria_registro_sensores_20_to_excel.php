@@ -37,8 +37,8 @@ $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelaciona
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
-}else{			
-	
+}else{
+
 	//variables
 	$arrData = array();
 	$xx = 1;
@@ -249,7 +249,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				$spreadsheet->setActiveSheetIndex(0)
 							->setCellValue($arrData[$x].'1', $Grupo[$rowEquipo['SensoresGrupo_'.$i]]);
 				$x++;
-				$arrTableTemp[$i] = 0;//se resetea	
+				$arrTableTemp[$i] = 0;//se resetea
 			}
 		}
 	}
@@ -302,7 +302,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			}
 		}
 		//se crea la fila
-		if($count!=0){				
+		if($count!=0){
 			//variables
 			$anterior    = $posit - 1;
 			$diaInicio   = $arrTable[$anterior]['FechaHasta'];
@@ -328,14 +328,14 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			//Guardo el ultimo registro
 			$Ult_diaInicio   = $fac['FechaSistema'];
 			$Ult_horaInicio  = $fac['HoraSistema'];
-		}	
-		
+		}
+
 		//Guardo el ultimo registro
 		$Ult_diaTermino  = $fac['FechaSistema'];
-		$Ult_horaTermino = $fac['HoraSistema'];										
+		$Ult_horaTermino = $fac['HoraSistema'];
 		//recorrer
 		for ($x = 1; $x <= $Maincount; $x++) {
-			$arrTable3[$x]['Contenido']  = $arrTableTemp3[$x];		
+			$arrTable3[$x]['Contenido']  = $arrTableTemp3[$x];
 		}
 
 	}
@@ -345,20 +345,20 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$nn=2;
 	//recorro los registros
 	for ($y = 1; $y < $posit; $y++) {
-		
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, $arrTable[$y]['FechaDesde'])
 					->setCellValue('B'.$nn, $arrTable[$y]['HoraDesde'])
 					->setCellValue('C'.$nn, $arrTable[$y]['FechaHasta'])
 					->setCellValue('D'.$nn, $arrTable[$y]['HoraHasta'])
-					->setCellValue('E'.$nn, $arrTable[$y]['Duracion']); 
-		
+					->setCellValue('E'.$nn, $arrTable[$y]['Duracion']);
+
 		for ($x = 1; $x <= $Maincount; $x++) {
 			$spreadsheet->setActiveSheetIndex(0)
 						->setCellValue($arrData[$x].$nn, DeSanitizar($arrTable2[$y][$x]['Contenido']));
 		}
 
-		$nn++;	
+		$nn++;
 	}
 
 	/*****************************************************************/
@@ -368,8 +368,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				->setCellValue('B'.$nn, $Ult_horaInicio)
 				->setCellValue('C'.$nn, $Ult_diaTermino)
 				->setCellValue('D'.$nn, $Ult_horaTermino)
-				->setCellValue('E'.$nn, $HorasTrans); 
-		
+				->setCellValue('E'.$nn, $HorasTrans);
+
 	for ($x = 1; $x <= $Maincount; $x++) {
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue($arrData[$x].$nn, DeSanitizar($arrTable3[$x]['Contenido']));

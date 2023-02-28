@@ -107,7 +107,7 @@ foreach ($arrUnimed as $sen) {
 			if($in_eq_alertas>0){    
 				$danger = 'warning';
 				$eq_ok  = '<a href="#" title="Con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';
-			}elseif($in_eq_fueralinea>0){ 
+			}elseif($in_eq_fueralinea>0){
 				$danger = 'danger';
 				$eq_ok  = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';
 			}else{

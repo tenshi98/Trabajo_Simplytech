@@ -96,7 +96,7 @@ foreach ($arrFacturacion as $fact) {
 	$t_TotalConIva  = $t_TotalConIva + $TotalConIva;
 	$t_iva          = $t_iva + $iva;
 	$t_TotalSinIva  = $t_TotalSinIva + $TotalSinIva;
-	
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, $fact['ClienteIdentificador'])
 				->setCellValue('B'.$nn, $consumo_mes)

@@ -83,13 +83,13 @@ $arrData[2]['Name'] = "'Humedad'";
 
 //se arman datos
 foreach ($arrEquipos as $fac) {
-									
+
 	//numero sensores equipo
 	$Temperatura       = 0;
 	$Temperatura_N     = 0;
 	$Humedad           = 0;
 	$Humedad_N         = 0;
-											
+
 	for ($x = 1; $x <= $rowEquipo['cantSensores']; $x++) {
 		if($fac['SensoresGrupo_'.$x]==$_GET['idGrupo']){
 			//Verifico si el sensor esta activo para guardar el dato
@@ -104,7 +104,7 @@ foreach ($arrEquipos as $fac) {
 			}
 		}
 	}
-											
+
 	if($Temperatura_N!=0){  $New_Temperatura = $Temperatura/$Temperatura_N; }else{$New_Temperatura = 0;}
 	if($Humedad_N!=0){      $New_Humedad     = $Humedad/$Humedad_N;         }else{$New_Humedad = 0;}
 
@@ -132,17 +132,17 @@ foreach ($arrEquipos as $fac) {
 		$m_table .= '<td>'.cantidades($New_Temperatura, 2).' °C</td>';
 		$m_table .= '<td>'.cantidades($New_Humedad, 2).' %</td>';
 		$m_table .= '</tr>';*/
-	}	
+	}
 	//contador
 	//$count++;
-} 
-	
+}
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Graficos del equipo <?php echo $rowEquipo['NombreEquipo']; if(isset($rowGrupo['Nombre'])&&$rowGrupo['Nombre']!=''){echo ' del grupo '.$rowGrupo['Nombre'];} ?></h5>
 		</header>
 		<div class="table-responsive">
@@ -154,7 +154,7 @@ foreach ($arrEquipos as $fac) {
 	</div>
 </div>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -164,7 +164,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

@@ -324,7 +324,7 @@ $Form_Inputs = new Inputs();
 	</div>
 </div>
 <div class="clearfix"></div>
-				
+
 <div style="display: none;">
 	<div id="clone_producto" class="prod_container">
 		<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
@@ -430,7 +430,7 @@ $Form_Inputs = new Inputs();
 		foreach ($arrTipo as $tipo) {
 			echo 'let id_prov_'.$tipo['idProducto'].'= "'.$tipo['Proveedor'].'";';
 			echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
-			echo 'let id_value_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['ValorIngreso']).'";';		
+			echo 'let id_value_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['ValorIngreso']).'";';
 		}
 		?>
 		let Componente = select.options[select.selectedIndex].value;

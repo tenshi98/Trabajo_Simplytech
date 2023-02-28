@@ -270,7 +270,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 								$Longitud_z_prom  = 0;
 								$zcounter         = 0;
 								$zcounter2        = 0;
-								
+
 								//Se filtra por zona
 								filtrar($arrZonas, 'idZona');
 								//se recorre

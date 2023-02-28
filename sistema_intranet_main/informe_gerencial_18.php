@@ -550,7 +550,7 @@ if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''&&$rowdata['idCliente'
 	//arreglo	
 	foreach ($arrFacCliente as $ot){
 		$CompCliente[$ot['idDocPago']]['Nombre']                                            = $ot['Documento'];
-		$CompCliente[$ot['idDocPago']][$ot['Creacion_ano']][$ot['Creacion_mes']]['Total']   = $ot['Total'];		
+		$CompCliente[$ot['idDocPago']][$ot['Creacion_ano']][$ot['Creacion_mes']]['Total']   = $ot['Total'];
 	}
 }
 
@@ -630,7 +630,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 
 				//Recorro los años
 				$interruptor_mes = 0;
-				
+
 				for ($z_ano = $ano_min; $z_ano <= $ano_max; $z_ano++) {
 					$suma_real       = 0;
 
@@ -908,7 +908,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 											$interruptor_mes++;
 										}
 										?>
-										
+
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 										<td colspan="1" align="center" style="background-color: #ccc;">Total</td>
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
@@ -978,7 +978,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 											$interruptor_mes++;
 										}
 										?>
-										
+
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 										<td colspan="1" align="center" style="background-color: #ccc;">Total</td>
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
@@ -1048,7 +1048,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 											$interruptor_mes++;
 										}
 										?>
-										
+
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 										<td colspan="1" align="center" style="background-color: #ccc;">Total</td>
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
@@ -1148,7 +1148,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 											$interruptor_mes++;
 										}
 										?>
-										
+
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 										<td colspan="1" align="center" style="background-color: #ccc;">Total</td>
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
@@ -1218,7 +1218,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 											$interruptor_mes++;
 										}
 										?>
-										
+
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 										<td colspan="1" align="center" style="background-color: #ccc;">Total</td>
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
@@ -1315,7 +1315,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 											$interruptor_mes++;
 										}
 										?>
-										
+
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>
 										<td colspan="1" align="center" style="background-color: #ccc;">Total</td>
 										<td colspan="1" align="center" style="background-color: #ccc;"></td>

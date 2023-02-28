@@ -1256,7 +1256,7 @@ foreach ($arrProductos as $prod) {
 					<td><strong>Hum Temp Max</strong></td>
 					<td>
 						<?php if(isset($row_data['idEstado'])&&$row_data['idEstado']!=3){ ?><a href="<?php echo $location.'&addCuartel=true' ?>" title="Agregar Cuartel" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Cuartel</a><?php } ?>
-					</td>			
+					</td>
 				</tr>
 				<?php
 					//recorro el lsiatdo entregado por la base de datos
@@ -1348,11 +1348,11 @@ foreach ($arrProductos as $prod) {
 					}else{
 						echo '<tr class="item-row linea_punteada"><td colspan="9">No hay cuarteles asignados</td></tr>';
 					} ?>
-					
+
 			</tbody>
 		</table>
 		<div class="clearfix"></div>
-			
+
 	</div>
 
 	<div id="page-wrap">

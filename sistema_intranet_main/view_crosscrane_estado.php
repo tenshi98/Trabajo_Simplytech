@@ -211,7 +211,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				$alimentacion_promedio      = 0;
 				$alimentacion_min_promedio  = 0;
 				$alimentacion_max_promedio  = 0;
-				
+
 				$elevacion_total            = 0;
 				$elevacion_min              = 9999;
 				$elevacion_max              = -9999;
@@ -219,7 +219,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				$elevacion_promedio         = 0;
 				$elevacion_min_promedio     = 0;
 				$elevacion_max_promedio     = 0;
-				
+
 				$giro_total                 = 0;
 				$giro_min                   = 9999;
 				$giro_max                   = -9999;
@@ -227,7 +227,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				$giro_promedio              = 0;
 				$giro_min_promedio          = 0;
 				$giro_max_promedio          = 0;
-				
+
 				$carro_total                = 0;
 				$carro_min                  = 9999;
 				$carro_max                  = -9999;
@@ -235,7 +235,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				$carro_promedio             = 0;
 				$carro_min_promedio         = 0;
 				$carro_max_promedio         = 0;
-				
+
 				$voltaje_prom_total         = 0;
 				$voltaje_prom_cuenta        = 0;
 				$voltaje_actual_total       = 0;
@@ -989,7 +989,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 	</div>
 </div>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -999,7 +999,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

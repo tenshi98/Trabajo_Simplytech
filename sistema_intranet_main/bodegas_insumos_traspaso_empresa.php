@@ -373,7 +373,7 @@ $Form_Inputs = new Inputs();
 			$Total_existencias = $tipo['ingreso'] - $tipo['egreso'];
 			echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 			echo 'let id_value_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['ValorIngreso']).'";';	
-			echo 'let id_exist_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($Total_existencias).'";';			
+			echo 'let id_exist_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($Total_existencias).'";';
 		}
 		?>
 		let Componente = select.options[select.selectedIndex].value;

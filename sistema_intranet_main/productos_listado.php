@@ -353,7 +353,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 							//Materia prima
 							if(modelSelected == 1){
 								document.getElementById('div_idTipoReceta').style.display = 'none';
-								
+
 								//lo vacio
 								document.getElementById('idTipoReceta').length = 1
 								document.getElementById('idTipoReceta').options[0].value = "0"
@@ -362,7 +362,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 							//Producto Terminado	
 							} else if(modelSelected == 2){
 								document.getElementById('div_idTipoReceta').style.display = '';
-								
+
 								//lo vacio
 								document.getElementById('idTipoReceta').length = 3
 								document.getElementById('idTipoReceta').options[0].value = "0"

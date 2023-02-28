@@ -74,7 +74,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['clone_idMatriz'])){
 //valido los permisos
-validaPermisoUser($rowlevel['level'], 3, $dbConn);		
+validaPermisoUser($rowlevel['level'], 3, $dbConn);	
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -106,9 +106,8 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
-	
-	
+</div>
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['mod'])){
 //Armo cadena

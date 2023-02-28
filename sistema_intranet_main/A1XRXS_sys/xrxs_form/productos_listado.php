@@ -466,7 +466,7 @@ require_once '0_validate_user_1.php';
 								$img_base_height  = imageSY($img_base);
 								$img_logo_width   = imageSX($img_logo);
 								$img_logo_height  = imageSY($img_logo);
-								
+
 								//se reescala la imagen en caso de ser necesario
 								if ($img_logo_width > $img_logo_height) {
 									if($img_logo_width < $max_width){
@@ -487,7 +487,7 @@ require_once '0_validate_user_1.php';
 								}
 
 								$img_logo = imagescale($img_logo, $newwidth, $newheight);
-								
+
 								//se posiciona la imagen
 								switch ($idTipoImagen) {
 
@@ -602,7 +602,7 @@ require_once '0_validate_user_1.php';
 								//se reescala la imagen en caso de ser necesario
 								$imgBase_width = imagesx( $imgBase );
 								$imgBase_height = imagesy( $imgBase );
-								
+
 								//Se establece el tamaño maximo
 								$max_width  = 640;
 								$max_height = 640;
@@ -629,10 +629,10 @@ require_once '0_validate_user_1.php';
 
 								//se establece la calidad del archivo
 								$quality = 75;
-								
+
 								//se crea la imagen
 								imagejpeg($imgBase, $ruta, $quality);
-								
+
 								//se elimina la imagen base
 								try {
 									if(!is_writable('upload/xxxsxx_'.$_FILES['Direccion_img']['name'])){

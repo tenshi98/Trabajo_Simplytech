@@ -42,7 +42,7 @@ include '1include_ocompra.php'; ?>
 		$zz  = '?idSistema='.$row_data['idSistema'];
 		$zz .= '&view='.$_GET['view'];
 		?>
-		
+
 			<div class="col-xs-12" style="margin-bottom:30px">
 				<a target="new" href="view_ocompra_to_print.php<?php echo $zz ?>" class="btn btn-default pull-right" style="margin-right: 5px;">
 					<i class="fa fa-print" aria-hidden="true"></i> Imprimir
@@ -51,7 +51,7 @@ include '1include_ocompra.php'; ?>
 
 	<?php } ?>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -61,7 +61,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

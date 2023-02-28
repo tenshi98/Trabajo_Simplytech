@@ -142,7 +142,7 @@ require_once '0_validate_user_1.php';
 							//se crea el cuerpo del correo	
 							$BodyMail  = $BodyMail_1;
 							$BodyMail .= '¡Hola <strong>'.$noti['Nombre'].'</strong>!<br/>';
-							$BodyMail .= $BodyMail_2;	
+							$BodyMail .= $BodyMail_2;
 						}else{
 							//Se crea el cuerpo del correo	
 							$BodyMail_1  = '<div style="background-color: #D9D9D9; padding: 10px;">';

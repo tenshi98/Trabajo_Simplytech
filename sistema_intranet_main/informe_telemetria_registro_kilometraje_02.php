@@ -157,7 +157,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<th>Ubicacion</th>
 						</tr>
 					</thead>
-				  
+
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<?php foreach ($arrEquipos as $rutas) { ?>
 							<tr class="odd">

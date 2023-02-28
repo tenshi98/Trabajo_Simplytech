@@ -181,8 +181,7 @@ foreach ($arrTemporal as $fac) {
 
 	//contador
 	$count++;			
-} 
-
+}
 
 //si hay mas de 9000 registros
 if(isset($count)&&$count>9000){
@@ -297,7 +296,7 @@ if(isset($_GET['idGraficos'])&&$_GET['idGraficos']==1){ ?>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>	
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Informe equipo <?php echo $rowEquipo['NombreEquipo']; if(isset($rowGrupo['Nombre'])&&$rowGrupo['Nombre']!=''){echo ' del grupo '.$rowGrupo['Nombre'];} ?></h5>
 		</header>
 		<div class="table-responsive">

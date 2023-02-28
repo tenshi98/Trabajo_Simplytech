@@ -258,11 +258,11 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",'".$pre['idAlumno']."'";
 								$SIS_data .= ",'1'" ;
 								$SIS_data .= ",'".$Programada_fecha."'";
-								
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idAsignadas, idAlumno, idTipo, Programada_fecha';
 								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_evaluaciones_asignadas_alumnos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 								//Si ejecuto correctamente la consulta
 								if($ultimo_id2!=0){
 									/*******************************************************/
@@ -484,7 +484,7 @@ require_once '0_validate_user_1.php';
 				$BPreg            = array();
 				$MemoLastID       = array();
 				$Total_Alumnos    = 0;
-				
+
 				foreach ($arrAlumnos as $pre) {		
 					//recorro las categorias
 					$xxn = 0;
@@ -900,7 +900,6 @@ require_once '0_validate_user_1.php';
 					//se actualizan los datos
 					$SIS_data = "idEstadoAprobacion='3'" ;
 					$resultado = db_update_data (false, $SIS_data, 'quiz_realizadas', 'idQuizRealizadas = "'.$pre['idQuizRealizadas'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
 				}
 
 				/*******************************************************/
@@ -930,7 +929,7 @@ require_once '0_validate_user_1.php';
 				$idEstadoAprobacion  = 0;
 				$Respondido          = 0;
 				$Rendimiento         = 0;
-				
+
 				$R_Correctas         = 0;
 				$R_Respuestas        = 0;
 
@@ -1098,7 +1097,7 @@ require_once '0_validate_user_1.php';
 				if(isset($Programada_fecha) && $Programada_fecha!=''){    
 					$SIS_data .= ",Programada_fecha='".$Programada_fecha."'";
 					$SIS_data .= ",Programada_mes='".fecha2NMes($Programada_fecha)."'";
-					$SIS_data .= ",Programada_ano='".fecha2Ano($Programada_fecha)."'"; 
+					$SIS_data .= ",Programada_ano='".fecha2Ano($Programada_fecha)."'";
 				}
 
 				/*******************************************************/
@@ -1118,7 +1117,7 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",Programada_fecha='".$Programada_fecha."'"; 
 					$SIS_data .= ",Programada_dia='".fecha2NdiaMes($Programada_fecha)."'"; 
 					$SIS_data .= ",Programada_mes='".fecha2NMes($Programada_fecha)."'";
-					$SIS_data .= ",Programada_ano='".fecha2Ano($Programada_fecha)."'"; 
+					$SIS_data .= ",Programada_ano='".fecha2Ano($Programada_fecha)."'";
 				}
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'quiz_realizadas', 'idAsignadas = "'.$idAsignadas.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

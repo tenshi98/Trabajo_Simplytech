@@ -116,7 +116,7 @@ foreach($arrHistorial as $hist) {
 			<td>'.Hora_estandar($hist['HeladaHora']).'</td>
 			<td>'.$temp_real.'</td>
 			<td>'.$temp_predic.'</td>
-		</tr>';		
+		</tr>';
 	}
 }
 $arrData[1]['Name'] = "'Temperatura Real'";
@@ -147,7 +147,7 @@ document.getElementById("loading").style.display = "none";
 </div>
 <div class="clearfix"></div>
 
-<?php 
+<?php
 //Se verifica si se pidieron los graficos
 if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

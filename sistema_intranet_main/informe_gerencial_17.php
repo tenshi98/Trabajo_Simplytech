@@ -105,7 +105,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.cs
 								$tiempo1     = $equip['LastUpdateHora'];
 								$tiempo2     = $HoraSistema;
 								$Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
-								
+
 								//Comparaciones de tiempo
 								$Time_Tiempo     = horas2segundos($Tiempo);
 								$Time_Tiempo_FL  = horas2segundos($equip['TiempoFueraLinea']);

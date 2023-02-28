@@ -36,7 +36,7 @@ require_once 'core/Web.Header.Main.php';
 			</ul>
 		</header>
         <div class="tab-content">
-		
+
 			<div class="tab-pane fade active in" id="lineal">
 				<?php
 				$Graphics_xData = 'var xData = [

@@ -55,8 +55,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 				
 		</header>
         <div class="tab-content">
-			
-			
+
 			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 					<thead>
@@ -93,7 +92,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 										';
 									}
 									break;
-								
+
 								//En caso de que el equipo este fuera de linea
 								case 2:
 									/**********************************************/
@@ -125,12 +124,12 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 										';
 									}
 									break;
-								
+
 								//En caso de que este fuera de ruta	
 								case 3:
 									
 									break;
-								
+
 								//Equipos en buen estado	
 								case 4:
 									/**********************************************/
@@ -196,7 +195,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 							}
 							
 							
-						} ?>        
+						} ?>
 					</tbody>
 				</table>
 			</div>

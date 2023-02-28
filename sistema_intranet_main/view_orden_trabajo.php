@@ -189,7 +189,7 @@ $zz .= '&view='.$_GET['view'];
 	<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11 fcenter table-responsive">
 		<div id="page-wrap">
 			<div id="header"> ORDEN DE TRABAJO N° <?php echo n_doc($X_Puntero, 8); ?></div>
-		
+
 			<div id="customer">
 
 				<table id="meta" class="pull-left otdata">
@@ -305,7 +305,7 @@ $zz .= '&view='.$_GET['view'];
 									<td class="item-name"><?php echo Cantidades_decimales_justos($insumos['Cantidad']).' '.$insumos['UnidadMedida']; ?></td>
 								</tr>
 							<?php
-							} 
+							}
 						} ?>
 						<tr id="hiderow"><td colspan="6"></td></tr>
 					<?php } 
@@ -377,7 +377,7 @@ $zz .= '&view='.$_GET['view'];
 	</div>
 </div>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -387,7 +387,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

@@ -272,7 +272,6 @@ require_once '0_validate_user_1.php';
 					$qry .= ',PuntoidTipo_'.$i;
 					$qry .= ',PuntoidGrupo_'.$i;
 					$qry .= ',Validacion_'.$i;
-					
 				}
 
 				/*******************************************************************/
@@ -350,7 +349,6 @@ require_once '0_validate_user_1.php';
 					$qry .= ',PuntoidTipo_'.$i;
 					$qry .= ',PuntoidGrupo_'.$i;
 					$qry .= ',Validacion_'.$i;
-					
 				}
 
 				/*******************************************************************/

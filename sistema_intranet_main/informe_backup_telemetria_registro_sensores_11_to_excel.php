@@ -61,7 +61,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	//Se trae el dato del grupo
 	$rowGrupo = db_select_data (false, 'Nombre', 'telemetria_listado_grupos', '', 'idGrupo='.$_GET['idGrupo'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowGrupo');
-	
 
 	/**********************************************************************************************************************************/
 	/*                                                          Ejecucion                                                             */
@@ -84,14 +83,14 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				->setCellValue('C1', 'Temperatura')
 				->setCellValue('D1', 'Humedad');
 
-	$nn=2; 
+	$nn=2;
 	foreach ($arrEquipos as $fac) {
 		//numero sensores equipo
 		$Temperatura    = 0;
 		$Temperatura_N  = 0;
 		$Humedad        = 0;
 		$Humedad_N      = 0;
-												
+
 		for ($x = 1; $x <= $rowEquipo['cantSensores']; $x++) {
 			if($fac['SensoresGrupo_'.$x]==$_GET['idGrupo']){
 				//Verifico si el sensor esta activo para guardar el dato
@@ -106,7 +105,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				}
 			}
 		}
-												
+
 		if($Temperatura_N!=0){  $New_Temperatura = $Temperatura/$Temperatura_N; }else{$New_Temperatura = 0;}
 		if($Humedad_N!=0){      $New_Humedad     = $Humedad/$Humedad_N;         }else{$New_Humedad = 0;}
 
@@ -116,10 +115,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						->setCellValue('A'.$nn, $fac['FechaSistema'])
 						->setCellValue('B'.$nn, $fac['HoraSistema'])
 						->setCellValue('C'.$nn, $New_Temperatura)
-						->setCellValue('D'.$nn, $New_Humedad); 					
-								
-			$nn++;	
-		}	
+						->setCellValue('D'.$nn, $New_Humedad);
+			$nn++;
+		}
 	}
 
 

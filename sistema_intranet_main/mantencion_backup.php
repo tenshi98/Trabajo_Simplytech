@@ -36,7 +36,7 @@ if (!empty($_GET['backup'])){
 
 		//time limit execution	
 		set_time_limit(36000);
-		
+
 		$mtables = array(); $contents = "-- Database: `".$params['db_to_backup']."` --\n";
 	   
 		$mysqli = new mysqli($params['db_host'], $params['db_uname'], $params['db_password'], $params['db_to_backup']);

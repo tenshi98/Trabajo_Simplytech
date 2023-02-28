@@ -106,7 +106,7 @@ $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$subquery .= ',telemetria_listado.SensoresNombre_'.$i.' AS Tel_Sensor_Nombre_'.$i;
 	$subquery .= ',telemetria_listado.SensoresTipo_'.$i.' AS Tel_Sensor_Tipo_'.$i;
-	
+
 	$subquery .= ',telemetria_mantencion_matriz.PuntoNombre_'.$i.' AS Matriz_Punto_'.$i;
 	$subquery .= ',telemetria_mantencion_matriz.SensoresTipo_'.$i.' AS Matriz_Sensor_Tipo_'.$i;
 	$subquery .= ',telemetria_mantencion_matriz.SensoresValor_'.$i.' AS Matriz_Sensor_Valor_'.$i;
@@ -212,13 +212,12 @@ echo '
 					<strong></strong>
 				</address>
 			</div>
-					
+
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 
 			</div>
 		</div>
-		
-		
+
 		<div class="">
 			<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 				<table class="table table-striped">

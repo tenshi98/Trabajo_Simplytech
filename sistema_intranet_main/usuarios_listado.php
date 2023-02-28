@@ -18,14 +18,14 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['usuario']) && $_GET['usuario']!=''){        $location .= "&usuario=".$_GET['usuario'];              $search .= "&usuario=".$_GET['usuario'];}
+if(isset($_GET['usuario']) && $_GET['usuario']!=''){               $location .= "&usuario=".$_GET['usuario'];              $search .= "&usuario=".$_GET['usuario'];}
 if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario']!=''){   $location .= "&idTipoUsuario=".$_GET['idTipoUsuario'];  $search .= "&idTipoUsuario=".$_GET['idTipoUsuario'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){          $location .= "&Nombre=".$_GET['Nombre'];                $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['Fono']) && $_GET['Fono']!=''){              $location .= "&Fono=".$_GET['Fono'];                    $search .= "&Fono=".$_GET['Fono'];}
-if(isset($_GET['email']) && $_GET['email']!=''){            $location .= "&email=".$_GET['email'];                  $search .= "&email=".$_GET['email'];}
-if(isset($_GET['Rut']) && $_GET['Rut']!=''){                $location .= "&Rut=".$_GET['Rut'];                      $search .= "&Rut=".$_GET['Rut'];}
-if(isset($_GET['fNacimiento']) && $_GET['fNacimiento']!=''){$location .= "&fNacimiento=".$_GET['fNacimiento'];      $search .= "&fNacimiento=".$_GET['fNacimiento'];}
-if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){    $location .= "&idSistema=".$_GET['idSistema'];          $search .= "&idSistema=".$_GET['idSistema'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){                 $location .= "&Nombre=".$_GET['Nombre'];                $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['Fono']) && $_GET['Fono']!=''){                     $location .= "&Fono=".$_GET['Fono'];                    $search .= "&Fono=".$_GET['Fono'];}
+if(isset($_GET['email']) && $_GET['email']!=''){                   $location .= "&email=".$_GET['email'];                  $search .= "&email=".$_GET['email'];}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){                       $location .= "&Rut=".$_GET['Rut'];                      $search .= "&Rut=".$_GET['Rut'];}
+if(isset($_GET['fNacimiento']) && $_GET['fNacimiento']!=''){       $location .= "&fNacimiento=".$_GET['fNacimiento'];      $search .= "&fNacimiento=".$_GET['fNacimiento'];}
+if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){           $location .= "&idSistema=".$_GET['idSistema'];          $search .= "&idSistema=".$_GET['idSistema'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -66,7 +66,7 @@ if (isset($_GET['clone'])){   $error['clone']   = 'sucess/Usuario clonado correc
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['clone_idUsuario'])){
-	
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -126,9 +126,8 @@ if(!empty($_GET['clone_idUsuario'])){
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
-	
-	
+</div>
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['id'])){
 //valido los permisos
@@ -164,7 +163,7 @@ core_permisos_categorias.Nombre AS CategoriaNombre,
 core_font_awesome.Codigo AS CategoriaIcono,
 core_permisos_listado.Direccionbase AS TransaccionURLBase,
 core_permisos_listado.Direccionweb AS TransaccionURL,
-core_permisos_listado.Nombre AS TransaccionNombre,	
+core_permisos_listado.Nombre AS TransaccionNombre,
 usuarios_permisos.level';
 $SIS_join  = '
 INNER JOIN core_permisos_listado      ON core_permisos_listado.idAdmpm        = usuarios_permisos.idAdmpm
@@ -465,7 +464,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 									echo '</ul>
 									</li>';
 								}
-								?>			
+								?>
 							</ul>
 						</div>
 					<?php } ?>
@@ -484,7 +483,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 										<div class="clearfix"></div>
 									</div>
 									<ul style="padding-left: 20px;">';
-												
+
 							foreach($arrBodega1 as $bod) {
 								echo '
 								<li>
@@ -533,8 +532,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 							echo '</ul></li>';
 							echo '</ul>';
 						}
-						
-						
+
 						/***************************************************************/
 						if($arrTelemetria!=false && !empty($arrTelemetria) && $arrTelemetria!=''){
 							echo '<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos a Equipos Telemetria</h2>';
@@ -547,7 +545,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 										<div class="clearfix"></div>
 									</div>
 									<ul style="padding-left: 20px;">';
-												
+
 							foreach($arrTelemetria as $bod) {
 								echo '
 								<li>
@@ -572,7 +570,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 										<div class="clearfix"></div>
 									</div>
 									<ul style="padding-left: 20px;">';
-												
+
 							foreach($arrDocumento as $bod) {
 								echo '
 								<li>
@@ -585,9 +583,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 							echo '</ul></li>';
 							echo '</ul>';
 						}
-						
-						
-						
+
 						?>
 					</div>
 
@@ -654,18 +650,15 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('password', 1234, 2);
-				 
-				?>
-				
 
-								
+				?>
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 			</form>
 			<?php widget_validator(); ?>
-
 
 		</div>
 	</div>
@@ -702,12 +695,12 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 $SIS_where = "usuarios_listado.idTipoUsuario!=1";
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['usuario']) && $_GET['usuario']!=''){       $SIS_where .= " AND usuarios_listado.usuario LIKE '%".EstandarizarInput($_GET['usuario'])."%'";}
+if(isset($_GET['usuario']) && $_GET['usuario']!=''){              $SIS_where .= " AND usuarios_listado.usuario LIKE '%".EstandarizarInput($_GET['usuario'])."%'";}
 if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario']!=''){  $SIS_where .= " AND usuarios_listado.idTipoUsuario=".$_GET['idTipoUsuario'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $SIS_where .= " AND usuarios_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
-if(isset($_GET['Fono']) && $_GET['Fono']!=''){             $SIS_where .= " AND usuarios_listado.Fono LIKE '%".EstandarizarInput($_GET['Fono'])."%'";}
-if(isset($_GET['email']) && $_GET['email']!=''){           $SIS_where .= " AND usuarios_listado.email LIKE '%".EstandarizarInput($_GET['email'])."%'";}
-if(isset($_GET['Rut']) && $_GET['Rut']!=''){               $SIS_where .= " AND usuarios_listado.Rut LIKE '%".EstandarizarInput($_GET['Rut'])."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){                $SIS_where .= " AND usuarios_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['Fono']) && $_GET['Fono']!=''){                    $SIS_where .= " AND usuarios_listado.Fono LIKE '%".EstandarizarInput($_GET['Fono'])."%'";}
+if(isset($_GET['email']) && $_GET['email']!=''){                  $SIS_where .= " AND usuarios_listado.email LIKE '%".EstandarizarInput($_GET['email'])."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){                      $SIS_where .= " AND usuarios_listado.Rut LIKE '%".EstandarizarInput($_GET['Rut'])."%'";}
 if(isset($_GET['fNacimiento']) && $_GET['fNacimiento']!=''){      $SIS_where .= " AND usuarios_listado.fNacimiento='".$_GET['fNacimiento']."'";}
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes

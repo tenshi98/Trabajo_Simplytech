@@ -174,7 +174,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 //Si no se slecciono se traen todos los equipos a los cuales tiene permiso
 }else{
 	//Inicia variable
-	$SIS_where = "vehiculos_listado.idVehiculo>0"; 
+	$SIS_where = "vehiculos_listado.idVehiculo>0";
 
 	//Verifico el tipo de usuario que esta ingresando
 	$SIS_where.= " AND vehiculos_listado.idSistema=".$_GET['idSistema'];

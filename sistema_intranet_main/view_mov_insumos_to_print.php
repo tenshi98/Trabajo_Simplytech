@@ -272,7 +272,7 @@ $html .= '<div class="row">
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-			   
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>'.$row_data['Documento'].' N°'.$row_data['N_Doc'].'</strong><br/>
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
@@ -411,7 +411,7 @@ $html .= '<div class="row">
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-			   
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Datos del Trabajador
 					<address>
@@ -522,7 +522,7 @@ $html .= '<div class="row">
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-			   
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
@@ -600,7 +600,7 @@ $html .= '<div class="row">
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-			   
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					Empresa Destino
 					<address>
@@ -658,7 +658,7 @@ $html .= '<div class="row">
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-			   
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Doc N°'.N_doc($row_data['idFacturacion'], 5).'</strong><br/>
 					<strong>Bodega Destino: </strong>'.$row_data['BodegaHacia'].'<br/>';

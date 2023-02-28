@@ -1,4 +1,4 @@
-<?php 
+<?php
 // consulto los datos
 $SIS_query = '
 ocompra_listado.Creacion_fecha,
@@ -303,15 +303,14 @@ foreach ($arrHistorial as $doc){
 						Giro de la Empresa: '.$row_data['GiroProveedor'].'
 					</address>
 				</div>
-			   
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<b>Estado: </b>'.$row_data['Estado'].'<br/>
 				</div>';
 		?>
 
 	</div>
-	
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive"  style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<table class="table table-striped">
@@ -405,8 +404,7 @@ foreach ($arrHistorial as $doc){
 			</table>
 		</div>
 	</div>
-	
-	
+
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>

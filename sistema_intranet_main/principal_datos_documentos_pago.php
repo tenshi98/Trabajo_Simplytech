@@ -112,13 +112,11 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 							<li class="active"><a href="<?php echo 'principal_datos_documentos_pago.php'?>" ><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Documentos Pago</a></li>
 						<?php } ?>
 					</ul>
-                </li>          
+                </li>
 			</ul>
 		</header>
         <div class="table-responsive">
-			
-			
-			
+
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -133,7 +131,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 							<td><?php echo '<strong>Documento: </strong>'.$permiso['Nombre']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
-									<?php if ( $permiso['contar']=='1' ){ ?> 
+									<?php if ( $permiso['contar']=='1' ){ ?>
 										<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_SESSION['usuario']['basic_data']['idUsuario'].'&doc_del='.$permiso['idpermiso']; ?>">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
 									<?php } else {?>
@@ -144,15 +142,9 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 							</td>
 						</tr>
 					<?php } ?>
-					                 
 				</tbody>
 			</table>
-			
-			
-			
-			
-			
-			
+
 		</div>
 	</div>
 </div>

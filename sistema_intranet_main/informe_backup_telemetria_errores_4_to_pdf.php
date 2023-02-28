@@ -102,7 +102,7 @@ $html .= '
 					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.Cantidades_decimales_justos($error['Valor']).$unimed.'</td>
 				</tr>
 				';
-			
+
 		}
 
 $html .='</tbody>

@@ -151,7 +151,7 @@ array_push( $arrMediciones,$row );
 	if($cuenta_derecho!=0){    $Prom_derecho   = $total_derecho/$cuenta_derecho;      }else{$Prom_derecho   = 0;}
 	if($cuenta_izquierdo!=0){  $Prom_izquierdo = $total_izquierdo/$cuenta_izquierdo;  }else{$Prom_izquierdo = 0;}
 	
-	$data_caud  = 'var data_caud_x = [';						
+	$data_caud  = 'var data_caud_x = [';
 	$data_caud .= '["Grupo 1",';
 	$data_caud .= Cantidades_decimales_justos($Prom_derecho).',';
 	$data_caud .= '"'.Cantidades($Prom_derecho, 2).'",';
@@ -191,7 +191,7 @@ array_push( $arrMediciones,$row );
 	echo $data_caud;
 	echo $data_gauge;
 	echo $data_locations;
-	
+
 	?>
 </script>
 

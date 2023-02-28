@@ -18,13 +18,13 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Se revisan los datos
-if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){ $idSistema     = $_GET['idSistema'];     }elseif(isset($_POST['idSistema'])&&$_POST['idSistema']!=''){$idSistema     = $_POST['idSistema'];}
-if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''){   $f_inicio      = $_GET['f_inicio'];      }elseif(isset($_POST['f_inicio'])&&$_POST['f_inicio']!=''){  $f_inicio      = $_POST['f_inicio'];}
-if(isset($_GET['f_termino'])&&$_GET['f_termino']!=''){ $f_termino     = $_GET['f_termino'];     }elseif(isset($_POST['f_termino'])&&$_POST['f_termino']!=''){$f_termino     = $_POST['f_termino'];}
-if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){   $h_inicio      = $_GET['h_inicio'];      }elseif(isset($_POST['h_inicio'])&&$_POST['h_inicio']!=''){  $h_inicio      = $_POST['h_inicio'];}
-if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){ $h_termino     = $_GET['h_termino'];     }elseif(isset($_POST['h_termino'])&&$_POST['h_termino']!=''){$h_termino     = $_POST['h_termino'];}
+if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''){        $idSistema     = $_GET['idSistema'];     }elseif(isset($_POST['idSistema'])&&$_POST['idSistema']!=''){       $idSistema     = $_POST['idSistema'];}
+if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''){          $f_inicio      = $_GET['f_inicio'];      }elseif(isset($_POST['f_inicio'])&&$_POST['f_inicio']!=''){         $f_inicio      = $_POST['f_inicio'];}
+if(isset($_GET['f_termino'])&&$_GET['f_termino']!=''){        $f_termino     = $_GET['f_termino'];     }elseif(isset($_POST['f_termino'])&&$_POST['f_termino']!=''){       $f_termino     = $_POST['f_termino'];}
+if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){          $h_inicio      = $_GET['h_inicio'];      }elseif(isset($_POST['h_inicio'])&&$_POST['h_inicio']!=''){         $h_inicio      = $_POST['h_inicio'];}
+if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){        $h_termino     = $_GET['h_termino'];     }elseif(isset($_POST['h_termino'])&&$_POST['h_termino']!=''){       $h_termino     = $_POST['h_termino'];}
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){  $idTelemetria  = $_GET['idTelemetria'];  }elseif(isset($_POST['idTelemetria'])&&$_POST['idTelemetria']!=''){ $idTelemetria  = $_POST['idTelemetria'];}
-if(isset($_GET['sensorn'])&&$_GET['sensorn']!=''){     $sensorn       = $_GET['sensorn'];       }elseif(isset($_POST['sensorn'])&&$_POST['sensorn']!=''){    $sensorn       = $_POST['sensorn'];}
+if(isset($_GET['sensorn'])&&$_GET['sensorn']!=''){            $sensorn       = $_GET['sensorn'];       }elseif(isset($_POST['sensorn'])&&$_POST['sensorn']!=''){           $sensorn       = $_POST['sensorn'];}
 
 //Se buscan la imagen i el tipo de PDF
 if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
@@ -94,22 +94,18 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			foreach ($arrEquipos as $fac) {
 				//Que el valor medido sea distinto de 999
 				if(isset($fac['SensorValue'])&&$fac['SensorValue']<99900){
-					$html .='	
+					$html .='
 					<tr>
 						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.fecha_estandar($fac['FechaSistema']).'</td>
 						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$fac['HoraSistema'].'</td>
 						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.cantidades($fac['SensorValue'], 2).' '.$fac['SensoresUniMed'].'</td>
 					</tr>';
-					
 				}
 
 			}
-			
-								
+
 	$html .='</tbody>
 	</table>';
-	 
-
 
 	/**********************************************************************************************************************************/
 	/*                                                          Impresion PDF                                                         */

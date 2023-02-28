@@ -164,7 +164,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		
 		foreach ($arrCategoria as $cat) {
 			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $graficoMain[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']];}else{$graficoMain[$xcontador][$cat['idCategoria']] = 0;};
-		}	
+		}
 	}
 	$xmes = $xmes-1;								
 }

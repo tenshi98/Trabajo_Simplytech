@@ -302,7 +302,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('div_Opcion_5').style.display = '';
 								document.getElementById('div_Opcion_6').style.display = '';
 								document.getElementById('div_OpcionCorrecta').style.display = '';
-								
+
 								//lo vacio
 								document.getElementById('OpcionCorrecta').length = 1
 								document.getElementById('OpcionCorrecta').options[0].value = ""
@@ -333,7 +333,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('div_Opcion_5').style.display = 'none';
 								document.getElementById('div_Opcion_6').style.display = 'none';
 								document.getElementById('div_OpcionCorrecta').style.display = '';
-								
+
 								//lo vacio
 								document.getElementById('OpcionCorrecta').length = 1
 								document.getElementById('OpcionCorrecta').options[0].value = ""
@@ -529,7 +529,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('div_Opcion_5').style.display = '';
 								document.getElementById('div_Opcion_6').style.display = '';
 								document.getElementById('div_OpcionCorrecta').style.display = '';
-								
+
 								//lo vacio
 								document.getElementById('OpcionCorrecta').length = 1
 								document.getElementById('OpcionCorrecta').options[0].value = ""
@@ -560,7 +560,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('div_Opcion_5').style.display = 'none';
 								document.getElementById('div_Opcion_6').style.display = 'none';
 								document.getElementById('div_OpcionCorrecta').style.display = '';
-								
+
 								//lo vacio
 								document.getElementById('OpcionCorrecta').length = 1
 								document.getElementById('OpcionCorrecta').options[0].value = ""

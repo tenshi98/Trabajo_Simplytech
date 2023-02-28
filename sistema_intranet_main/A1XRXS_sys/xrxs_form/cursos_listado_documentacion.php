@@ -134,7 +134,7 @@ require_once '0_validate_user_1.php';
 												
 								//Filtro para idSistema
 								$File = $sufijo.$_FILES['File_Curso']['name'];
-								
+
 								//filtros
 								if(isset($idCurso) && $idCurso!=''){  $SIS_data  = "'".$idCurso."'";   }else{$SIS_data  = "''";}
 								if(isset($File) && $File!=''){        $SIS_data .= ",'".$File."'";     }else{$SIS_data .= ",''";}
@@ -143,7 +143,7 @@ require_once '0_validate_user_1.php';
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idCurso, File, Semana';
 								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cursos_listado_documentacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 								//Si ejecuto correctamente la consulta
 								if($ultimo_id!=0){
 									//redirijo

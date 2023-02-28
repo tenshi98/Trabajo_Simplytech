@@ -214,7 +214,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							</td>
 							<td width="33%" style="text-align: center; background-color:#ccc;font-size: 22px;">
 								Orden de Compra';
-								
+
 								//se verifica si la orden de comora esta rechazada
 								if($row_data['idEstado']==3){
 									$html .= '<br/>Rechazada';

@@ -474,7 +474,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 			//variable
 			$sis_count = 1;
 			//arreglo
-			foreach ($arrSistemas as $sistema) { 
+			foreach ($arrSistemas as $sistema) {
 				$sis_act = '';
 				if($sis_count==1){$sis_act = 'active in';}else{$sis_act = '';} ?>
 				<div class="tab-pane fade <?php echo $sis_act; ?>" id="tab_sis_<?php echo $sis_count; ?>">

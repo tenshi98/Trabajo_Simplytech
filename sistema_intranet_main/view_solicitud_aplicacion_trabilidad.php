@@ -161,8 +161,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 	
 							
 	</div>
-	
-	
+
 	<div class="row" style="margin-bottom:15px;">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<table class="table table-striped">
@@ -193,11 +192,10 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 
 	<div class="row" style="margin-bottom:15px;">
 		<div class="col-xs-12" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
-		
+
 			<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 			<script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table']});</script>
-			
-			
+
 			<?php
 				/********************************************************************/
 				//Caudales
@@ -348,8 +346,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 
 		</div>
 	</div>
-	
-	
+
 	<div class="row">
 		<div class="col-xs-12" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<?php
@@ -439,7 +436,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
       
 </section>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -449,7 +446,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

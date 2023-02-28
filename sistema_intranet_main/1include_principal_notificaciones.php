@@ -1,4 +1,4 @@
-<?php 
+<?php
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //Se inicializa el paginador de resultados
 //tomo el numero de la pagina si es que este existe
@@ -157,7 +157,7 @@ echo '
 					Mostrar Todos
 					<span class="badge  bg-primary"><?php echo $todos; ?></span> 
 				</a>
-					
+
 			<?php foreach ($arrCategorias as $cat) { ?>
 				<?php if($cat['usuario']!=''){?>
 					<a href="<?php echo $original.'?pagina=1&filtersender='.$cat['idusuario']; ?>" class="list-group-item">
@@ -173,8 +173,7 @@ echo '
 					</a>
 				<?php } ?>
 			<?php } ?>
-					
-					
+
   		</div>
 	</div> 
 							

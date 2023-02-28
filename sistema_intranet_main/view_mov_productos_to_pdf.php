@@ -494,7 +494,7 @@ $html .= '
 									break;
 								//traspaso maeriales a otra empresa
 								case 6:
-									$html .= '	
+									$html .= '
 									<td style="vertical-align: top; width:33%;">
 										Empresa Origen
 										<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -564,7 +564,7 @@ $html .= '
 									break;
 								//Traspaso de Productos Manual a otra Empresa
 								case 8:
-									$html .= '	
+									$html .= '
 									<td style="vertical-align: top; width:33%;">
 										Empresa Origen
 										<strong>'.$row_data['SistemaOrigen'].'</strong><br/>
@@ -667,7 +667,7 @@ $html .= '
 						foreach ($arrProductos as $prod) {
 							$html .= '<tr>
 								<td style="vertical-align: top;"><strong>'.$prod['NombreBodega'].'</strong> - '.$prod['Nombre'].'</td>';
-								
+
 								//Verifico la existencia de la abreviatura de la unidad de medida
 								if(isset($prod['UnimedAbrev'])&&$prod['UnimedAbrev']!=''){
 									$prodUnimed = $prod['UnimedAbrev'];

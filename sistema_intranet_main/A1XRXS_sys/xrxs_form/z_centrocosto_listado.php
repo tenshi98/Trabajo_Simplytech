@@ -356,7 +356,6 @@ require_once '0_validate_user_1.php';
 				for ($i = $_GET['lvl']; $i <= $_GET['nmax']; $i++) {
 					//se borran los datos
 					$resultado = db_delete_data (false, 'centrocosto_listado_level_'.$i, 'idLevel_'.$_GET['lvl'].' = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
 				}
 
 				//redirijo

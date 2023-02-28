@@ -638,7 +638,7 @@ foreach ($arrTabs as $tab) {
 									if(isset($cliente['idTab_12'])&&$cliente['idTab_12']==2&&isset($arrTabsSorter[12])){ echo ' - '.$arrTabsSorter[12].'<br/>';} 
 									if(isset($cliente['idTab_13'])&&$cliente['idTab_13']==2&&isset($arrTabsSorter[13])){ echo ' - '.$arrTabsSorter[13].'<br/>';} 
 									if(isset($cliente['idTab_14'])&&$cliente['idTab_14']==2&&isset($arrTabsSorter[14])){ echo ' - '.$arrTabsSorter[14].'<br/>';} 
-									if(isset($cliente['idTab_15'])&&$cliente['idTab_15']==2&&isset($arrTabsSorter[15])){ echo ' - '.$arrTabsSorter[15].'<br/>';} 
+									if(isset($cliente['idTab_15'])&&$cliente['idTab_15']==2&&isset($arrTabsSorter[15])){ echo ' - '.$arrTabsSorter[15].'<br/>';}
 								?>
 							</td>
 						<?php } ?>

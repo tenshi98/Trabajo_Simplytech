@@ -220,11 +220,11 @@ require_once '0_validate_user_1.php';
 								if(isset($Creacion_fecha) && $Creacion_fecha!=''){               $SIS_data .= ",'".$Creacion_fecha."'";         }else{$SIS_data .= ",''";}
 								if(isset($Estado) && $Estado!=''){                               $SIS_data .= ",'".$Estado."'";                 }else{$SIS_data .= ",''";}
 								$SIS_data .= ",'".hora_actual()."'";
-								
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idSistema,idUsuario,Notificacion, Fecha, idEstado, Hora';
 								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'principal_notificaciones_ver', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 								/***********************************************/
 								//Se verifica que existan datos
 								if(isset($rowEmpresa['EmpresaEmail'])&&$rowEmpresa['EmpresaEmail']!=''&&isset($usuario['UsuarioEmail'])&&$usuario['UsuarioEmail']!=''){
@@ -421,11 +421,11 @@ require_once '0_validate_user_1.php';
 								if(isset($Creacion_fecha) && $Creacion_fecha!=''){               $SIS_data .= ",'".$Creacion_fecha."'";         }else{$SIS_data .= ",''";}
 								if(isset($Estado) && $Estado!=''){                               $SIS_data .= ",'".$Estado."'";                 }else{$SIS_data .= ",''";}
 								$SIS_data .= ",'".hora_actual()."'";
-								
+
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idSistema,idUsuario,Notificacion, Fecha, idEstado, Hora';
 								$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'principal_notificaciones_ver', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 								/***********************************************/
 								//Se verifica que existan datos
 								if(isset($EmpresaEmail)&&$EmpresaEmail!=''&&isset($usuario['UsuarioEmail'])&&$usuario['UsuarioEmail']!=''){

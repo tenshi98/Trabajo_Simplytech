@@ -83,7 +83,7 @@ $html .= '
 				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.DeSanitizar($error['Descripcion']).'</td>
 				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.fecha_estandar($error['Fecha']).'</td>
 				<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.$error['Hora'].'</td>
-			</tr>';						
+			</tr>';
 		}
 
 $html .='</tbody>

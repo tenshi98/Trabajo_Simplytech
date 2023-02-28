@@ -76,7 +76,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 						</tr>
 					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
-						<?php 
+						<?php
 						foreach ($arrEquipos as $equip) {
 								
 							/**********************************************/

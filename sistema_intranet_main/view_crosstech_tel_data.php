@@ -147,7 +147,7 @@ if($in_eq_fueralinea!=0){
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"><div class="float_table" id="chart_gauge_3" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 2, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"><div class="float_table" id="chart_gauge_1" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 3, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
 				<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3"><div class="float_table" id="chart_gauge_4" ></div> <div class="clearfix"></div><a href="<?php echo 'view_crosstech_historial.php?idTelemetria='.$_GET['idTelemetria'].'&Type='.simpleEncode( 4, fecha_actual()).'&return=view_crosstech_tel_data.php?idTelemetria='.$_GET['idTelemetria']; ?>" class="btn btn-default width100" style="margin-bottom:10px;" ><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a></div>
-					
+
 			</div>
 			<?php
 			
@@ -381,7 +381,6 @@ if($in_eq_fueralinea!=0){
 					//dibujo
 					chart_gauge_2 = new google.visualization.Gauge(document.getElementById("chart_gauge_2"));
 					chart_gauge_2.draw(data_gauge_2, options_gauge_2);
-					
 				}
 				function update_correccion_2(data) {
 					//Formateo
@@ -636,7 +635,7 @@ if($in_eq_fueralinea!=0){
 
 
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -646,7 +645,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

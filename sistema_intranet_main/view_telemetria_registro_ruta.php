@@ -174,9 +174,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				<header>
 					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 					<h5>
-						Ruta Equipo 
 						<?php
-						echo $rowEquipo['NombreEquipo'].' ';
+						echo 'Ruta Equipo '.$rowEquipo['NombreEquipo'].' ';
 						if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
 							echo 'desde '.fecha_estandar($_GET['f_inicio']).'-'.$_GET['h_inicio'].' hasta '.fecha_estandar($_GET['f_termino']).'-'.$_GET['h_termino'];
 						}elseif(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
@@ -248,9 +247,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									</div>
 								</div>
 							</div>
-							
-							
-							
+
 							<div class="clearfix"></div>
 
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -272,7 +269,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 												</tr>
 											</thead>
 											<tbody role="alert" aria-live="polite" aria-relevant="all">
-												<?php 
+												<?php
 												foreach ($arrCuartel as $todosCuartel=>$zonas) {
 													foreach ($zonas as $med) { ?>
 														<tr class="odd">
@@ -282,7 +279,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 															<td><?php echo Cantidades($med['Kilometros'], 2).' Km'; ?></td>
 															<td><?php echo Cantidades($med['LitrosAplicados'], 0).' L'; ?></td>
 															<td>
-																<?php 
+																<?php
 																if(isset($med['VelCount'])&&$med['VelCount']!=''){
 																	$VelProm = $med['VelSum']/$med['VelCount'];
 																}else{
@@ -291,7 +288,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 																echo Cantidades($VelProm, 0).' Km/h'; ?>
 															</td>
 															<td>
-																<?php 
+																<?php
 																if($med['TractorDerechoProm']>$med['TractorIzquierdoProm']){
 																	if($med['TractorIzquierdoProm']!=0){$correccion = (($med['TractorDerechoProm'] - $med['TractorIzquierdoProm'])/$med['TractorIzquierdoProm'])*100;}else{$correccion = 0;}
 																}else{
@@ -299,7 +296,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 																}
 																echo Cantidades($correccion, 2).' %'; ?>
 															</td>
-															
+
 														</tr>
 													<?php } ?>
 												<?php } ?>
@@ -310,7 +307,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							</div>
 							<div class="clearfix"></div>
 
-	
 							<?php
 							//Si no existe una ID se utiliza una por defecto
 							if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
@@ -356,7 +352,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										//map.setTilt(0);
 										//dibuja zonas
 										dibuja_zona();
-								
+
 									}
 
 									/* ************************************************************************** */
@@ -373,11 +369,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										for(var i in locations){
 											//toma desde la segunda medicion
 											if(in_lat!=0 && in_long!=0){
-												
+
 												//posicion anterior y actual
 												var pos1 = new google.maps.LatLng(in_lat, in_long);
 												var pos2 = new google.maps.LatLng(locations[i][1], locations[i][2]);
-												
+
 												//verifico que esta dentro de un cuartel
 												if(locations[i][5]!=0){
 													//verifico que este regando
@@ -394,7 +390,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 														color = color_1;
 													}
 												}
-												
+
 												var polyline = new google.maps.Polyline({
 													map: map,
 													path: [pos1, pos2],
@@ -403,7 +399,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 													strokeWeight: 5
 												});
 											}
-											
+
 											//guardo la posicion actual
 											in_lat  = locations[i][1];
 											in_long = locations[i][2];
@@ -446,10 +442,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									}
 									/* ************************************************************************** */
 									function dibuja_zona() {
-														
+
 										var polygons = [];
-										
-										<?php			
+
+										<?php
 										//variables
 										$Latitud_z        = 0;
 										$Longitud_z       = 0;
@@ -457,25 +453,25 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										$Longitud_z_prom  = 0;
 										$zcounter         = 0;
 										$zcounter2        = 0;
-														
+
 										//se recorre
 										foreach ($arrPredios as $todaszonas=>$zonas) {
-											
+
 											$Latitud_z_2       = 0;
 											$Longitud_z_2      = 0;
 											$Latitud_z_prom_2  = 0;
 											$Longitud_z_prom_2 = 0;
 											$zcounter3         = 0;
-											
+
 											?>
-																			
+
 											var path<?php echo $todaszonas; ?> = [
-											
+
 												<?php
 												//Variables con la primera posicion
 												$Latitud_x = '';
 												$Longitud_x = '';
-																
+
 												foreach ($zonas as $puntos) {
 													if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){?>
 														{lat: <?php echo $puntos['Latitud']; ?>, lng: <?php echo $puntos['Longitud']; ?>},
@@ -495,11 +491,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 												}
 												//se cierra la figura
 												if(isset($Longitud_x)&&$Longitud_x!=''){?>
-													{lat: <?php echo $Latitud_x; ?>, lng: <?php echo $Longitud_x; ?>} 
+													{lat: <?php echo $Latitud_x; ?>, lng: <?php echo $Longitud_x; ?>}
 												<?php } ?>
 											];
-															
-											
+
 											polygons.push(new google.maps.Polygon({
 												paths: path<?php echo $todaszonas; ?>,
 												strokeColor: '#FF0000',
@@ -509,25 +504,23 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 												fillOpacity: 0
 											}));
 											polygons[polygons.length-1].setMap(map);
-											
+
 											<?php
 											if($zcounter3!=0){
 												$Latitud_z_prom_2  = $Latitud_z_2/$zcounter3;
 												$Longitud_z_prom_2 = $Longitud_z_2/$zcounter3;
 											}
 											?>
-											
-											
+
 											myLatlng = new google.maps.LatLng(<?php echo $Latitud_z_prom_2; ?>, <?php echo $Longitud_z_prom_2; ?>);
-															
+
 											var marker2 = new MyMarker({
 												position: myLatlng,
 												label: "<?php echo $zonas[0]['Nombre']; ?>",
 												zIndex:9999
 											});
 											marker2.setMap(map);
-											
-											
+
 											// When the mouse moves within the polygon, display the label and change the BG color.
 											google.maps.event.addListener(polygons[<?php echo $zcounter2; ?>], "mousemove", function(event) {
 												polygons[<?php echo $zcounter2; ?>].setOptions({
@@ -541,17 +534,16 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 													fillColor: "#FF0000"
 												});
 											});
-											
+
 											<?php $zcounter2++; ?>
-										
+
 										<?php } ?>
-										
+
 									}
 									/* ************************************************************************** */
 									google.maps.event.addDomListener(window, "load", initialize());
 								</script>
-								
-								
+
 								<?php
 								//Se escribe el dato
 								$Alert_Text  = '';
@@ -564,7 +556,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									alert_post_data(2,1,1, $Alert_Text);
 								echo '</div>';
 								echo '<div class="clearfix"></div>';
-								
+
 								/********************************************************************/
 								//solo mostrar aplicaciones
 								//if(isset($_GET['idOpciones'])&&$_GET['idOpciones']!=''&&$_GET['idOpciones']==1){
@@ -631,13 +623,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 									$gr_tittle = 'Grafico Velocidades de '.$rowEquipo['NombreEquipo'];
 									$gr_unimed = 'Km * hr';
-									echo GraphLinear_1('graphLinear_3', $gr_tittle, 'Hora', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
-									
-								//} 
+									echo GraphLinear_1('graphLinear_3', $gr_tittle, 'Hora', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0);
+
+								//}
 								?>
-								
-								
-					
+
 							<?php } ?>
 						</div>
 					</div>
@@ -669,8 +659,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$z .= " AND telemetria_listado.idTab=1";//CrossChecking
-} 
-
+}
 
 //se verifica si es un numero lo que se recibe
 if (validarNumero($_GET['view'])){
@@ -687,9 +676,6 @@ if (validarNumero($_GET['view'])){
 
 ?>
 
-
-				
-				
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<br/>
 	<?php
@@ -723,7 +709,6 @@ if (validarNumero($_GET['view'])){
 				$Form_Inputs->form_input_hidden('idTelemetria', $X_Puntero, 2);
 				?>
 
-				
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>
@@ -734,7 +719,7 @@ if (validarNumero($_GET['view'])){
 </div>
 <?php } ?>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -744,7 +729,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

@@ -249,7 +249,7 @@ array_push( $arrGrupo,$row );
 				$Form_Inputs->form_input_number('Peso Caja', 'peso', $x9, 2);
 
 				$Form_Inputs->form_tittle(3, 'Datos Tipo Planilla');
-				
+
 				foreach ($arrGrupo as $grupo) {
 					//Cuento si hay items dentro de la categoria
 					$x_con = 0;

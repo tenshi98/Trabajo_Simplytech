@@ -304,7 +304,7 @@ foreach ($arrEquipos as $equipo) {
 	$spreadsheet->setActiveSheetIndex($sheet)
 				->setCellValue('A2', 'Equipo')
 				->setCellValue('B2', 'Fecha');
-	
+
 	$yy = 1;			
 	for ($i = 1; $i <= $equipo['cantSensores']; $i++) {
 		if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){

@@ -1189,7 +1189,7 @@ require_once '0_validate_user_1.php';
 						
 								//Filtro para idSistema
 								$SIS_data = "File_Licencia='".$sufijo.$_FILES['File_Licencia']['name']."'";
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1522,7 +1522,7 @@ require_once '0_validate_user_1.php';
 									if ($loadedSheetName == "Trabajadores"){ 
 										//recorro
 										for ($row=2; $row<=$highestRow; $row++){
-											
+
 											$Post_Nombre           = $worksheet->getCellByColumnAndRow(1,   $row)->getValue();
 											$Post_Ape_Pat          = $worksheet->getCellByColumnAndRow(2,   $row)->getValue();
 											$Post_Ape_Mat          = $worksheet->getCellByColumnAndRow(3,   $row)->getValue();
@@ -1542,7 +1542,7 @@ require_once '0_validate_user_1.php';
 											
 											//Mientras exista dato ejecuta
 											if(isset($Post_Nombre)&&$Post_Nombre!=''&&isset($Post_Rut)&&$Post_Rut!=''){
-												
+
 												//verifico si existen los datos
 												if(isset($Post_Sexo)&&isset($arrSexoMod[$Post_Sexo]['ID'])){                                $ID_Sexo            = $arrSexoMod[$Post_Sexo]['ID'];}   
 												if(isset($Post_Ciudad)&&isset($arrCiudadMod[$Post_Ciudad]['ID'])){                          $ID_Ciudad          = $arrCiudadMod[$Post_Ciudad]['ID'];}  
@@ -1578,7 +1578,7 @@ require_once '0_validate_user_1.php';
 												// inserto los datos de registro en la db
 												$SIS_columns = 'idSistema,idEstado,Nombre,ApellidoPat,ApellidoMat, Rut,idSexo,Fono,idCiudad,idComuna,Direccion,email,idEstadoCivil,idTipoTrabajador, idTipoContrato,idAFP,idSalud,SueldoLiquido';
 												$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-												
+
 												//Si ejecuto correctamente la consulta
 												if($ultimo_id!=0){
 													/****************************************************/
@@ -1647,7 +1647,6 @@ require_once '0_validate_user_1.php';
 				}else{
 					//se devuelve error
 					$error['FileTrabajador'] = 'error/No ha seleccionado un archivo';
-					
 				}
 
 			}

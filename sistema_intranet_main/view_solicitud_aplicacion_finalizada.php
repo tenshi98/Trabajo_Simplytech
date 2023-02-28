@@ -848,7 +848,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 				
 												//ubicacion mapa		
 												latlngset = new google.maps.LatLng(latitude, longitude);
-												
+
 												//defino marcador
 												/*switch (icon) {
 													case 0: 
@@ -1000,7 +1000,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 																	<a href="<?php echo 'view_solicitud_aplicacion_fuera_linea.php?view='.simpleEncode($row_data['idSolicitud'], fecha_actual()).'&idTelemetria='.simpleEncode($trac['idTelemetria'], fecha_actual()).'&idZona='.simpleEncode($tractda['idZona'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Fuera de Linea" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 																</div>
 															</td>
-															
+
 														</tr>
 													
 														<?php 
@@ -1156,7 +1156,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	</div>
 <?php } ?>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -1166,7 +1166,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

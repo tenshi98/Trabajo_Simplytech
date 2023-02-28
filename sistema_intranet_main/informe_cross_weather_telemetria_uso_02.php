@@ -114,7 +114,7 @@ $arrConsulta = db_select_array (false, 'Fecha'.$subquery, 'telemetria_listado_hi
 					<?php } ?>
 					<tr class="odd">
 						<td><strong>Total</strong></td>
-						<?php 
+						<?php
 						foreach ($arrColumnas as $col) { 
 								echo '<td><strong>'.segundos2horas($arrSuma[$col['idGrupo']]).'</strong></td>';
 						} ?>

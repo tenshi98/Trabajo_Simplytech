@@ -92,7 +92,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		
 		foreach ($arrCategoria as $cat) {
 			if(isset($mes[$xaño][$xmes][$cat['idCategoria']])){ $graficoMain[$xcontador][$cat['idCategoria']] = $mes[$xaño][$xmes][$cat['idCategoria']];}else{$graficoMain[$xcontador][$cat['idCategoria']] = 0;};
-		}	
+		}
 	}
 	$xmes = $xmes-1;								
 }
@@ -219,17 +219,17 @@ foreach ($arrCategoria as $cat) {
 	 
 	$SubTotalGen = 0;
 
-	$SubTotalGen = $SubTotalGen+$graficoMain[1][$cat['idCategoria']]; 
-	$SubTotalGen = $SubTotalGen+$graficoMain[2][$cat['idCategoria']]; 
-	$SubTotalGen = $SubTotalGen+$graficoMain[3][$cat['idCategoria']]; 
-	$SubTotalGen = $SubTotalGen+$graficoMain[4][$cat['idCategoria']]; 
-	$SubTotalGen = $SubTotalGen+$graficoMain[5][$cat['idCategoria']]; 
-	$SubTotalGen = $SubTotalGen+$graficoMain[6][$cat['idCategoria']]; 
-	$SubTotalGen = $SubTotalGen+$graficoMain[7][$cat['idCategoria']]; 
-	$SubTotalGen = $SubTotalGen+$graficoMain[8][$cat['idCategoria']]; 
-	$SubTotalGen = $SubTotalGen+$graficoMain[9][$cat['idCategoria']]; 
-	$SubTotalGen = $SubTotalGen+$graficoMain[10][$cat['idCategoria']]; 
-	$SubTotalGen = $SubTotalGen+$graficoMain[11][$cat['idCategoria']]; 
+	$SubTotalGen = $SubTotalGen+$graficoMain[1][$cat['idCategoria']];
+	$SubTotalGen = $SubTotalGen+$graficoMain[2][$cat['idCategoria']];
+	$SubTotalGen = $SubTotalGen+$graficoMain[3][$cat['idCategoria']];
+	$SubTotalGen = $SubTotalGen+$graficoMain[4][$cat['idCategoria']];
+	$SubTotalGen = $SubTotalGen+$graficoMain[5][$cat['idCategoria']];
+	$SubTotalGen = $SubTotalGen+$graficoMain[6][$cat['idCategoria']];
+	$SubTotalGen = $SubTotalGen+$graficoMain[7][$cat['idCategoria']];
+	$SubTotalGen = $SubTotalGen+$graficoMain[8][$cat['idCategoria']];
+	$SubTotalGen = $SubTotalGen+$graficoMain[9][$cat['idCategoria']];
+	$SubTotalGen = $SubTotalGen+$graficoMain[10][$cat['idCategoria']];
+	$SubTotalGen = $SubTotalGen+$graficoMain[11][$cat['idCategoria']];
 	$SubTotalGen = $SubTotalGen+$graficoMain[12][$cat['idCategoria']]; 
 
 	$SubTotal_1   = $SubTotal_1+$graficoMain[1][$cat['idCategoria']];

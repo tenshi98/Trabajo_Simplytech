@@ -140,7 +140,7 @@ require_once '0_validate_user_1.php';
 								<p>Estimado '.$correo['ClienteNombre'].', se le recuerda que debe pagar previred este me
 								, tiene solo hasta el 15 del presente mes para pagar</p>
 								';
-								
+
 								//Envio de correo
 								$rmail = tareas_envio_correo($clientes['SistemaEmail'], $clientes['SistemaNombre'], 
 															 $clientes['ClienteEmail'], $clientes['ClienteNombre'], 

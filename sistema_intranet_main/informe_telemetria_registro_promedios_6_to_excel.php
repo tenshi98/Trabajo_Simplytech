@@ -150,7 +150,7 @@ foreach ($arrTemporal as $fac) {
 	$Temperatura_N  = 0;
 	$Humedad        = 0;
 	$Humedad_N      = 0;
-											
+
 	for ($x = 1; $x <= $rowEquipo['cantSensores']; $x++) {
 		if($fac['SensoresGrupo_'.$x]==$_GET['idGrupo']){
 			//Que el valor medido sea distinto de 999
@@ -162,7 +162,7 @@ foreach ($arrTemporal as $fac) {
 			}
 		}
 	}
-											
+
 	if($Temperatura_N!=0){  $New_Temperatura = $Temperatura/$Temperatura_N; }else{$New_Temperatura = 0;}
 	if($Humedad_N!=0){      $New_Humedad     = $Humedad/$Humedad_N;         }else{$New_Humedad = 0;}
 

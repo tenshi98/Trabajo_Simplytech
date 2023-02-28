@@ -284,7 +284,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								document.getElementById('idOpcionesGen_1').selectedIndex = 1;
 								document.getElementById('idOpcionesGen_2').selectedIndex = 1;
 								document.getElementById('idOpcionesGen_10').selectedIndex = 1;
-							} 
+							}
 						});
 						
 						/*******************************************/

@@ -84,8 +84,7 @@ require_once 'core/Web.Header.Views.php';
 				
 		</header>
         <div class="tab-content">
-			
-			
+
 			<div class="table-responsive">
 				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 					<thead>
@@ -119,7 +118,7 @@ require_once 'core/Web.Header.Views.php';
 										';
 									}
 									break;
-								
+
 								//En caso de que el equipo este fuera de linea
 								case 2:
 									/**********************************************/
@@ -147,12 +146,12 @@ require_once 'core/Web.Header.Views.php';
 										';
 									}
 									break;
-								
+
 								//En caso de que este fuera de ruta	
 								case 3:
 									
 									break;
-								
+
 								//Equipos en buen estado	
 								case 4:
 									/**********************************************/
@@ -211,7 +210,7 @@ require_once 'core/Web.Header.Views.php';
 									}
 									break;
 							}
-						} ?>        
+						} ?>
 					</tbody>
 				</table>
 			</div>

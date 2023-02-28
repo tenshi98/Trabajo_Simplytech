@@ -70,7 +70,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		//verifico si existe
 		if(isset($sub['idGrupo'])&&$sub['idGrupo']!=''){
 			$SIS_where .= ' OR idGrupo='.$sub['idGrupo'];
-		}	
+		}
 	}
 
 	//consulto grupos
@@ -105,7 +105,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$Dato     = 0;
 		$Dato_N   = 0;
 		$n2       = 1;
-											
+
 		for ($x = 1; $x <= $rowEquipo['cantSensores']; $x++) {
 			//Que el valor medido sea distinto de 999
 			if(isset($fac['SensorValue_'.$x])&&$fac['SensorValue_'.$x]<99900){
@@ -129,16 +129,16 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				}
 			}
 		}
-											
+
 		//verifico si el grupo existe
 		if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
 			if($Dato_N!=0){  $New_Dato = $Dato/$Dato_N; }else{$New_Dato = 0;}
-			
+
 			$arrData[$n1]['FechaSistema']  = fecha_estandar($fac['FechaSistema']);
 			$arrData[$n1]['HoraSistema']   = $fac['HoraSistema'];
 			$arrData[$n1][$n2]['Dato']     = cantidades($New_Dato, 2);
 			$n2++;
-		
+
 		}else{
 			$arrData[$n1]['FechaSistema']  = fecha_estandar($fac['FechaSistema']);
 			$arrData[$n1]['HoraSistema']   = $fac['HoraSistema'];
@@ -194,8 +194,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				->setCellValue('U1', DeSanitizar($arrTitulo[19]['Nombre']))
 				->setCellValue('V1', DeSanitizar($arrTitulo[20]['Nombre']));
 
-	$nn = 2; 
-	$nw = 1; 
+	$nn = 2;
+	$nw = 1;
 	foreach ($arrEquipos as $fac) {
 
 		$spreadsheet->setActiveSheetIndex(0)
@@ -220,10 +220,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				->setCellValue('S'.$nn, DeSanitizar($arrData[$nw][17]['Dato']))
 				->setCellValue('T'.$nn, DeSanitizar($arrData[$nw][18]['Dato']))
 				->setCellValue('U'.$nn, DeSanitizar($arrData[$nw][19]['Dato']))
-				->setCellValue('V'.$nn, DeSanitizar($arrData[$nw][20]['Dato'])); 					
-							
+				->setCellValue('V'.$nn, DeSanitizar($arrData[$nw][20]['Dato']));
+
 		$nn++;
-		$nw++;					
+		$nw++;
 	}
 
 

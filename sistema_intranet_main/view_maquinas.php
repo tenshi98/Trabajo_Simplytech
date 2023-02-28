@@ -559,7 +559,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 										<?php //Se imprime el arbol
 										echo arrayToUL($array3d, $TipoMaq, $Trabajo, 0, '','', $nmax);
 										?>
-										
+
 										<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 											<div class="modal-dialog">
 												<div class="modal-content">              
@@ -594,7 +594,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 	</div>
 </div>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -604,7 +604,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

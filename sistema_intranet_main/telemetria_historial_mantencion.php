@@ -255,7 +255,7 @@ array_push( $arrArchivos,$row );
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Equipos</h2>
 						<table  class="table table-bordered">
-							<?php 
+							<?php
 							foreach ($arrEquipos as $equipo) { ?>
 								<tr class="item-row">
 									<td><?php echo $equipo['Identificador']; ?></td>

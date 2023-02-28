@@ -171,20 +171,20 @@ $arrFinalDispersancia = array();
 $arrFinalFlashpoint   = array();
 
 //Se recorren los datos
-foreach ($arrUnimed as $datos) { 	
+foreach ($arrUnimed as $datos) {
 	$arrFinalUnimed[$datos['idUml']]['Nombre']      = $datos['Nombre'];
 	$arrFinalUnimed[$datos['idUml']]['Abreviatura'] = $datos['Abreviatura'];
 }
-foreach ($arrGrupo as $datos) { 	
+foreach ($arrGrupo as $datos) {
 	$arrFinalGrupo[$datos['idGrupo']]['Nombre'] = $datos['Nombre'];
 }
-foreach ($arrProducto as $datos) { 	
+foreach ($arrProducto as $datos) {
 	$arrFinalProducto[$datos['idProducto']]['Nombre'] = $datos['Nombre'];
 }
-foreach ($arrDispersancia as $datos) { 	
+foreach ($arrDispersancia as $datos) {
 	$arrFinalDispersancia[$datos['idDispersancia']]['Nombre'] = $datos['Nombre'];
 }
-foreach ($arrFlashpoint as $datos) { 	
+foreach ($arrFlashpoint as $datos) {
 	$arrFinalFlashpoint[$datos['idFlashPoint']]['Nombre'] = $datos['Nombre'];
 }
 
@@ -219,7 +219,7 @@ foreach ($arrFlashpoint as $datos) {
 							Email: '.$row_data['SistemaOrigenEmail'].'<br/>
 						</address>
 					</div>';
-				//si es externo muestro los datos del laboratorio	
+				//si es externo muestro los datos del laboratorio
 				}else{
 					echo '
 					<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
@@ -265,7 +265,7 @@ foreach ($arrFlashpoint as $datos) {
 					echo '
 					</address>
 				</div>
-			   
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Datos</strong><br/>
 					<strong>Estado: </strong>'.$row_data['Analisis_Estado'].'<br/>
@@ -290,8 +290,7 @@ foreach ($arrFlashpoint as $datos) {
 			?>
 
 	</div>
-	
-	
+
 	<div class="row">
 		<div class="col-xs-12 table-responsive"  style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<?php foreach ($arrGrupo as $grupo) {
@@ -305,7 +304,7 @@ foreach ($arrFlashpoint as $datos) {
 
 				//si hay items se muestra todo
 				if($x_con!=0){
-					
+
 					echo '<table class="table table-striped">';
 					echo '<tbody><tr class="active"><td colspan="5"><strong>'.$grupo['Nombre'].'</strong></td></tr>';
 					if($grupo['idGrupo']==4 OR $grupo['idGrupo']==5){
@@ -318,7 +317,7 @@ foreach ($arrFlashpoint as $datos) {
 							<td><strong>Condenatorio</strong></td>
 						</tr>';
 					}
-					
+
 					for ($i = 1; $i <= $rowpre['cantPuntos']; $i++) {
 						if($grupo['idGrupo']==$row_data['PuntoidGrupo_'.$i]){
 							//obtengo la unidad de medida
@@ -350,7 +349,7 @@ foreach ($arrFlashpoint as $datos) {
 										//alerta naranja
 										if(isset($row_data['Analisis_Medida_'.$i])&&$row_data['Analisis_Medida_'.$i]!=''&&$row_data['Analisis_Medida_'.$i]>$row_data['PuntoMedCondenatorio_'.$i]&&$row_data['Analisis_Medida_'.$i]<=$row_data['PuntoMedAlerta_'.$i]){
 											//variables alerta naranja
-											$alert_lvl = 'color-yellow'; //naranja	
+											$alert_lvl = 'color-yellow'; //naranja
 										}
 										//alerta roja
 										if(isset($row_data['Analisis_Medida_'.$i])&&$row_data['Analisis_Medida_'.$i]!=''&&$row_data['Analisis_Medida_'.$i]<=$row_data['PuntoMedCondenatorio_'.$i]){
@@ -377,7 +376,7 @@ foreach ($arrFlashpoint as $datos) {
 										}
 
 									}
-								
+
 									/*******************************/
 									echo '<tr>';
 										echo '<td>'.$row_data['PuntoNombre_'.$i].'</td>';
@@ -412,19 +411,14 @@ foreach ($arrFlashpoint as $datos) {
 						}
 					}
 					echo '</tbody>';
-					echo '</table>';	
-						
-				} 	
+					echo '</table>';
+
+				}
 			} ?>
-			
 
-
-			
-			
 		</div>
 	</div>
-	
-	
+
 	<div class="col-xs-12">
 		<div class="row">
 			<p class="lead"><a name="Ancla_obs"></a>Diagnostico:</p>
@@ -438,14 +432,10 @@ foreach ($arrFlashpoint as $datos) {
 			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Analisis_obs_Accion']; ?></p>
 		</div>
 	</div>
-	
 
-
-	
-      
 </section>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -455,7 +445,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

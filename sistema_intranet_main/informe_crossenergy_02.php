@@ -97,12 +97,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	//se arman datos
 	foreach ($arrEquipos as $fac) {
-									
+
 		//Variables
 		$Temp_1           .= "'".Fecha_estandar($fac['FechaSistema'])." - ".$fac['HoraSistema']."',";
 		$xcount            = 0;
 		$m_table          .= '<tr class="odd"><td>'.fecha_estandar($fac['FechaSistema']).'</td><td>'.$fac['HoraSistema'].'</td>';
-												
+
 		for ($x = 1; $x <= $rowEquipo['cantSensores']; $x++) {
 			if($fac['SensoresGrupo_'.$x]==$_GET['idGrupo']){
 				//Verifico si el sensor esta activo para guardar el dato
@@ -151,8 +151,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		/*******************************/
 		//cierro tabla
 		$m_table .= '</tr>';
-		//contador	
-		$count++;	
+		//contador
+		$count++;
 	}
 	/*******************************/
 	//Totales
@@ -198,7 +198,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$Graphics_texts      .= '];';
 	$Graphics_lineColors .= '];';
 	$Graphics_lineDash   .= '];';
-	$Graphics_lineWidth  .= '];'; 
+	$Graphics_lineWidth  .= '];';
 
 	//si hay mas de 9000 registros
 	if(isset($count)&&$count>9000){
@@ -219,7 +219,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	//oculto el loader
 	document.getElementById("loading").style.display = "none";
 	</script>
-							
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Resumen Hora', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe grupo '.$rowGrupo['Nombre'].' del equipo '.$rowEquipo['NombreEquipo']); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
@@ -231,10 +231,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			if(isset($_GET['inform_unimed'])&&$_GET['inform_unimed']!=''){$search2.= '&inform_unimed='.$_GET['inform_trans'];}
 			?>
 			<a target="new" href="<?php echo 'informe_crossenergy_01.php?bla=bla'.$search.$search2 ; ?>" class="btn btn-sm btn-metis-1 pull-right margin_width"><i class="fa fa-area-chart" aria-hidden="true"></i> Ir a Resumen Dia</a>
-			
-			
+
 			<a target="new" href="<?php echo 'informe_crossenergy_02_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
-		
+
 			<?php if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 				<input class="btn btn-sm btn-metis-3 pull-right margin_width fa-input" type="button" onclick="Export()" value="&#xf1c1; Exportar a PDF"/>
 			<?php }else{ ?>
@@ -245,7 +244,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	</div>
 	<div class="clearfix"></div>
 
-	<?php 
+	<?php
 	//Se verifica si se pidieron los graficos
 	if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 
@@ -265,8 +264,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						?>
 					</h5>
 				</header>
-				<div class="table-responsive" id="grf">	
-					
+				<div class="table-responsive" id="grf">
+
 					<?php
 					//si se envian los datos desde afuera
 					if(isset($_GET['inform_tittle'])&&$_GET['inform_tittle']!=''&&isset($_GET['inform_unimed'])&&$_GET['inform_unimed']!=''){
@@ -279,12 +278,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						$gr_unimed = $uni;
 					}
 					echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); ?>
-										
+
 				</div>
 			</div>
 		</div>
-				
-				
+
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: none;">
 
 			<form method="post" id="make_pdf" action="informe_crossenergy_02_to_pdf.php">
@@ -357,8 +355,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<?php echo $m_table_title; ?>
 						</tr>
 
-						<?php echo $m_table; ?>			
-										
+						<?php echo $m_table; ?>
+
 					</tbody>
 				</table>
 			</div>
@@ -384,7 +382,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=9";//CrossEnergy			
+	$z .= " AND telemetria_listado.idTab=9";//CrossEnergy
 }
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
@@ -400,7 +398,7 @@ alert_post_data(2,1,1, $Alert_Text);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
+
                <?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}
@@ -426,7 +424,7 @@ alert_post_data(2,1,1, $Alert_Text);
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
 				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 2, $dbConn);
-				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);	
+				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				?>
 
 				<div class="form-group">

@@ -217,7 +217,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 			$spreadsheet->setActiveSheetIndex(0)
 						->setCellValue($arrData[$x].'1', DeSanitizar($arrEquipos[0]['SensorNombre_'.$i]));
-			$x++;	
+			$x++;
 		}
 	}
 
@@ -255,7 +255,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		}
 		$nn++;
 	}
-			 
 
 
 	// Rename worksheet

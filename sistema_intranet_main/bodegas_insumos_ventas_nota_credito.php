@@ -430,7 +430,7 @@ $Form_Inputs = new Inputs();
 		foreach ($arrTipo as $tipo) {
 			echo 'let id_cli_'.$tipo['idProducto'].'= "'.$tipo['Cliente'].'";';
 			echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
-			echo 'let id_value_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['ValorEgreso']).'";';		
+			echo 'let id_value_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['ValorEgreso']).'";';
 		}
 		?>
 		let Componente = select.options[select.selectedIndex].value;

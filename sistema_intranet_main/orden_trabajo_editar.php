@@ -2343,7 +2343,7 @@ array_push( $arrTrabajo,$row );
 										}else{
 											echo '<td colspan="2"><span style="color:red;">Sin itemizado asignado</span></td><td></td>';
 										}
-										echo '	
+										echo '
 											<td>
 												<div class="btn-group" style="width: 70px;" >';
 													//Se muestra el de trabajo boton unicamente cuando no se tiene asignado uno
@@ -2361,7 +2361,7 @@ array_push( $arrTrabajo,$row );
 										</tr>';
 									}
 								}
-							} 
+							}
 						}
 					}
 						?>
@@ -2369,7 +2369,6 @@ array_push( $arrTrabajo,$row );
 					<tr id="hiderow"><td colspan="6"></td></tr>
 				<?php /**********************************************************************************/?>
 
-				
 				<tr>
 					<td colspan="5" class="blank"><p><?php echo $rowdata['Observaciones']?></p></td>
 					<td class="blank">

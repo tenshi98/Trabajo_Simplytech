@@ -495,7 +495,7 @@ input[type="date"].form-control{
 
 	/**********************************************************/
 	//Se agrega cuartel
-	function pago_afp_add() { 
+	function pago_afp_add() {
 		//se incrementa en 1
 		nPagoAFP++;
 		//se estancian los objetos a clonar
@@ -509,7 +509,7 @@ input[type="date"].form-control{
     } 
     /**********************************************************/
 	//Se agrega cuartel
-	function pago_salud_add() { 
+	function pago_salud_add() {
 		//se incrementa en 1
 		nPagoSalud++;
 		//se estancian los objetos a clonar
@@ -523,7 +523,7 @@ input[type="date"].form-control{
     }
 	/**********************************************************/
 	//Se agrega cuartel
-	function pago_seguridad_add() { 
+	function pago_seguridad_add() {
 		//se incrementa en 1
 		nPagoSeguridad++;
 		//se estancian los objetos a clonar
@@ -720,7 +720,7 @@ input[type="date"].form-control{
 
 	/**********************************************************/
 	//Se agrega cuartel
-	function pago_afp_add() { 
+	function pago_afp_add() {
 		//se incrementa en 1
 		nPagoAFP++;
 		//se estancian los objetos a clonar
@@ -734,7 +734,7 @@ input[type="date"].form-control{
     } 
     /**********************************************************/
 	//Se agrega cuartel
-	function pago_salud_add() { 
+	function pago_salud_add() {
 		//se incrementa en 1
 		nPagoSalud++;
 		//se estancian los objetos a clonar
@@ -748,7 +748,7 @@ input[type="date"].form-control{
     }
 	/**********************************************************/
 	//Se agrega cuartel
-	function pago_seguridad_add() { 
+	function pago_seguridad_add() {
 		//se incrementa en 1
 		nPagoSeguridad++;
 		//se estancian los objetos a clonar

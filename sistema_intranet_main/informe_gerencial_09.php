@@ -287,7 +287,7 @@ foreach ($arrTemporal_7 as $temp) {
 											$Acumulado_10 = $Acumulado_9 + $Total_10;
 											$Acumulado_11 = $Acumulado_10 + $Total_11;
 											$Acumulado_12 = $Acumulado_11 + $Total_12;
-											
+
 											?>
 										
 											

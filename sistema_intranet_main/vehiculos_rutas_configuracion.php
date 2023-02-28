@@ -391,7 +391,7 @@ array_push( $arrRutas,$row );
 									strokeOpacity: 1,
 									strokeWeight: 5
 								});
-								
+
 								//llamo a los puntos
 								Puntos();
 							}

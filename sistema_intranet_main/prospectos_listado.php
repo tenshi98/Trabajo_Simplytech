@@ -416,7 +416,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 
 	//para el resto se filtra al vendedor	
 	}else{
-		$SIS_where.= " AND prospectos_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];	
+		$SIS_where.= " AND prospectos_listado.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
 	}
 }
 
@@ -669,7 +669,7 @@ foreach ($arrTabs as $tab) {
 									if(isset($prospect['idTab_12'])&&$prospect['idTab_12']==2&&isset($arrTabsSorter[12])){ echo ' - '.$arrTabsSorter[12].'<br/>';} 
 									if(isset($prospect['idTab_13'])&&$prospect['idTab_13']==2&&isset($arrTabsSorter[13])){ echo ' - '.$arrTabsSorter[13].'<br/>';} 
 									if(isset($prospect['idTab_14'])&&$prospect['idTab_14']==2&&isset($arrTabsSorter[14])){ echo ' - '.$arrTabsSorter[14].'<br/>';} 
-									if(isset($prospect['idTab_15'])&&$prospect['idTab_15']==2&&isset($arrTabsSorter[15])){ echo ' - '.$arrTabsSorter[15].'<br/>';} 
+									if(isset($prospect['idTab_15'])&&$prospect['idTab_15']==2&&isset($arrTabsSorter[15])){ echo ' - '.$arrTabsSorter[15].'<br/>';}
 								?>
 							</td>
 						<?php } ?>

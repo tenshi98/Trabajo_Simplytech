@@ -853,7 +853,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn" style="margin-top:10px;margin-bottom:10px;"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
 				<div class="clearfix"></div>
-					
+
 			<?php }else{ ?>
 
 				<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>

@@ -17,7 +17,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /**********************************************************************************************************************************/
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
-				
+
 //Se buscan la imagen i el tipo de PDF
 if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
 	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
@@ -37,7 +37,7 @@ $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelaciona
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
-}else{			
+}else{
 	/****************************************************************/
 	$consql = '';
 	for ($i = 1; $i <= 72; $i++) {
@@ -141,7 +141,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			}
 		}
 		//se crea la fila
-		if($count!=0){				
+		if($count!=0){
 			//variables
 			$anterior    = $posit - 1;
 			$diaInicio   = $arrTable[$anterior]['FechaHasta'];
@@ -164,13 +164,13 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			//Guardo el ultimo registro
 			$Ult_diaInicio   = $fac['FechaSistema'];
 			$Ult_horaInicio  = $fac['HoraSistema'];
-			
+
 		}
 
 		//Guardo el ultimo registro
 		$Ult_diaTermino  = $fac['FechaSistema'];
 		$Ult_horaTermino = $fac['HoraSistema'];
-		
+
 	}
 
 	//recorro los registros
@@ -182,7 +182,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$m_table .= '<td>'.$arrTable[$x]['HoraHasta'].'</td>';
 		$m_table .= '<td>'.$arrTable[$x]['Duracion'].'</td>';
 		$m_table .= $arrTable[$x]['Contenido'];
-		$m_table .= '</tr>';	
+		$m_table .= '</tr>';
 	}
 
 	//Ultima linea

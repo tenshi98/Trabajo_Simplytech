@@ -216,7 +216,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 			$spreadsheet->setActiveSheetIndex(0)
 						->setCellValue($arrData[$x].'1', DeSanitizar($arrEquipos[0]['SensorNombre_'.$i]));
-			$x++;	
+			$x++;
 		}
 	}
 
@@ -228,14 +228,14 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		if($arrEquipos[0]['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 			$spreadsheet->setActiveSheetIndex(0)
 						->setCellValue($arrData[$x].'2', 'Medicion');
-			$x++;			
+			$x++;
 		}
 	}
 
 	$nn=3;
 
-	foreach ($arrEquipos as $rutas) { 
-		
+	foreach ($arrEquipos as $rutas) {
+
 		//variables
 		$y_counter = 0;
 		$x_counter = 0;
@@ -257,19 +257,19 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 		//si se definio el minimo y maximo
 		if(isset($_GET['RangoMinimo'])&&$_GET['RangoMinimo']!=''&&isset($_GET['RangoMaximo'])&&$_GET['RangoMaximo']!=''){
-			if (isset($y_counter)&&$y_counter!=0&&isset($x_counter)&&$x_counter==0){ 
+			if (isset($y_counter)&&$y_counter!=0&&isset($x_counter)&&$x_counter==0){
 				$x = 1;
 				$spreadsheet->setActiveSheetIndex(0)
 							->setCellValue('A'.$nn, $rutas['FechaSistema'])
-							->setCellValue('B'.$nn, $rutas['HoraSistema']); 
-						
+							->setCellValue('B'.$nn, $rutas['HoraSistema']);
+
 				for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 					if($rutas['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 						if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]<99900){
 							$xdata=Cantidades_decimales_justos($rutas['SensorValue_'.$i]);
 							$spreadsheet->setActiveSheetIndex(0)
 										->setCellValue($arrData[$x].$nn, $xdata);
-							$x++;	
+							$x++;
 						}
 					}
 				}
@@ -279,8 +279,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				$x = 1;
 				$spreadsheet->setActiveSheetIndex(0)
 							->setCellValue('A'.$nn, $rutas['FechaSistema'])
-							->setCellValue('B'.$nn, $rutas['HoraSistema']); 
-						
+							->setCellValue('B'.$nn, $rutas['HoraSistema']);
+
 				for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 					if($rutas['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 						if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]<99900){
@@ -295,10 +295,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		}
 		$nn++;
 	}
-			 
-
-
-
 
 	// Rename worksheet
 	$spreadsheet->getActiveSheet()->setTitle('Registro Trazabilidad');

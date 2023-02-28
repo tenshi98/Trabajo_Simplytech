@@ -556,7 +556,7 @@ $Form_Inputs = new Inputs();
 			$Total_existencias = $tipo['ingreso'] - $tipo['egreso'];
 			echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 			echo 'let id_value_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['ValorEgreso']).'";';	
-			echo 'let id_exist_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($Total_existencias).'";';			
+			echo 'let id_exist_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($Total_existencias).'";';
 		}
 		?>
 		let Componente = select.options[select.selectedIndex].value;
@@ -1090,7 +1090,7 @@ $Form_Inputs = new Inputs();
 						<td align="right"><?php echo Valores($vtotal_neto, 0); ?></td>
 						<td></td>
 					</tr>
-					
+
 			</tbody>
 		</table>
     </div>

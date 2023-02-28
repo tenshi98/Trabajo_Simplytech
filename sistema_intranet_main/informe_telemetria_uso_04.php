@@ -124,7 +124,7 @@ $arrConsulta = db_select_array (false, 'Fecha, Horas_Sensor_activo'.$subquery, '
 					<tr class="odd">
 						<td><strong>Total</strong></td>
 						<td><strong><?php echo segundos2horas($t_s_activo); ?></strong></td>
-						<?php 
+						<?php
 						foreach ($arrColumnas as $col) {
 							//verifico si existe
 							if(isset($arrSuma[$col['idGrupo']])&&$arrSuma[$col['idGrupo']]!=''){

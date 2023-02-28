@@ -244,7 +244,7 @@ require_once '0_validate_user_1.php';
 				$SIS_order = 'BY apoderados_listado.idApoderado, apoderados_listado_hijos.Nombre ASC';
 				$arrHijos = array();
 				$arrHijos = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				foreach ($arrHijos as $hijo) {
 					$_SESSION['vehiculos_hijos'][$hijo['idHijos']]['idHijos']           = $hijo['idHijos'];
 					$_SESSION['vehiculos_hijos'][$hijo['idHijos']]['idApoderado']       = $hijo['idApoderado'];

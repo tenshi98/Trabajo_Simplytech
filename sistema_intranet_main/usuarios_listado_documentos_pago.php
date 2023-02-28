@@ -243,9 +243,7 @@ $arrDocumentos = db_select_array (false, $SIS_query, 'sistema_documentos_pago', 
 			</ul>
 		</header>
         <div class="table-responsive">
-			
-			
-			
+
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
@@ -261,7 +259,7 @@ $arrDocumentos = db_select_array (false, $SIS_query, 'sistema_documentos_pago', 
 							<td><?php echo '<strong>Documento: </strong>'.$permiso['Nombre']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
-									<?php if ( $permiso['contar']=='1' ){ ?> 
+									<?php if ( $permiso['contar']=='1' ){ ?>
 										<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&doc_del='.$permiso['idpermiso']; ?>">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
 									<?php } else {?>
@@ -272,7 +270,6 @@ $arrDocumentos = db_select_array (false, $SIS_query, 'sistema_documentos_pago', 
 							</td>
 						</tr>
 					<?php } ?>
-					                 
 				</tbody>
 			</table>
 

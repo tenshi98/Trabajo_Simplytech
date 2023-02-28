@@ -78,8 +78,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				->setCellValue('C1', DeSanitizar($arrEquipos[0]['Grupo'].'-'.$arrEquipos[0]['SensorNombre']))
 				->setCellValue('D1', 'Unidad Medida');
 
-	 
-	$nn=2; 
+	$nn=2;
 	foreach ($arrEquipos as $fac) {
 
 		//Que el valor medido sea distinto de 999
@@ -88,10 +87,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					->setCellValue('A'.$nn, $fac['FechaSistema'])
 					->setCellValue('B'.$nn, $fac['HoraSistema'])
 					->setCellValue('C'.$nn, $fac['SensorValue'])
-					->setCellValue('D'.$nn, DeSanitizar($fac['SensoresUniMed'])); 					
-								
+					->setCellValue('D'.$nn, DeSanitizar($fac['SensoresUniMed']));
 			$nn++;
-		}	
+		}
 	}
 
 	// Rename worksheet

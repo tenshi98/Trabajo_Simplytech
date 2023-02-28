@@ -186,7 +186,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 						});
 						
 					</script>
-				  
+
 					<div class="form-group">
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
 					</div>

@@ -268,9 +268,7 @@ $arrContratos = db_select_array (false, $SIS_query, 'licitacion_listado', $SIS_j
 			</ul>
 		</header>
         <div class="table-responsive">
-			
-			
-			
+
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">

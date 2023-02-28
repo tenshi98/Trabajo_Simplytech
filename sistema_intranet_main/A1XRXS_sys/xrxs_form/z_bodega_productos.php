@@ -555,7 +555,7 @@ require_once '0_validate_user_1.php';
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
 				$arrProductos = db_select_array (false, 'productos_listado.idProducto, productos_listado.Nombre,sistema_productos_uml.Nombre AS Unimed', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'productos_listado.idEstado=1', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				$arrProd = array();
 				foreach ($arrProductos as $producto){
 					$arrProd['Prod'][$producto['idProducto']]['Nombre'] = $producto['Nombre'];
@@ -1187,7 +1187,7 @@ require_once '0_validate_user_1.php';
 								$nueva_cant = $producto['cant_ingresada'] + $producto['Number'];
 								$SIS_data = "idExistencia='".$producto['idExistencia']."'";
 								$SIS_data .= ",cant_ingresada='".$nueva_cant."'";
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_productos', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1205,7 +1205,7 @@ require_once '0_validate_user_1.php';
 								
 								$SIS_data  = "DocRel='".$ultimo_id."'";    
 								$SIS_data .= ",idEstado='2'";
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_productos_facturacion', 'idFacturacion = "'.$guias['idGuia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -2310,7 +2310,7 @@ require_once '0_validate_user_1.php';
 								
 								$SIS_data  = "DocRel='".$ultimo_id."'";    
 								$SIS_data .= ",idEstado='2'";
-								
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_productos_facturacion', 'idFacturacion = "'.$guias['idGuia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -3948,7 +3948,7 @@ require_once '0_validate_user_1.php';
 				/****************************************************/
 				// consulto los datos
 				$rowProducto = db_select_data (false, 'productos_listado.Nombre,sistema_productos_uml.Nombre AS Unimed', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				$_SESSION['productos_transform_productos'][$idProducto]['idProducto']    = $idProducto;
 				$_SESSION['productos_transform_productos'][$idProducto]['prod_ingreso']  = $Cantidad;
 				$_SESSION['productos_transform_productos'][$idProducto]['ValorEgreso']   = $ValorEgreso;
@@ -5817,7 +5817,7 @@ require_once '0_validate_user_1.php';
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
 				$arrProductos = db_select_array (false, 'productos_listado.idProducto, productos_listado.Nombre,sistema_productos_uml.Nombre AS Unimed', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'productos_listado.idEstado=1', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				$arrProd = array();
 				foreach ($arrProductos as $producto){
 					$arrProd['Prod'][$producto['idProducto']]['Nombre'] = $producto['Nombre'];
@@ -6586,7 +6586,7 @@ require_once '0_validate_user_1.php';
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
 				$arrProductos = db_select_array (false, 'productos_listado.idProducto, productos_listado.Nombre,sistema_productos_uml.Nombre AS Unimed', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'productos_listado.idEstado=1', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				$arrProd = array();
 				foreach ($arrProductos as $producto){
 					$arrProd['Prod'][$producto['idProducto']]['Nombre'] = $producto['Nombre'];
@@ -7468,7 +7468,7 @@ require_once '0_validate_user_1.php';
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
 				$arrProductos = db_select_array (false, 'productos_listado.idProducto, productos_listado.Nombre,sistema_productos_uml.Nombre AS Unimed', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'productos_listado.idEstado=1', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				$arrProd = array();
 				foreach ($arrProductos as $producto){
 					$arrProd['Prod'][$producto['idProducto']]['Nombre'] = $producto['Nombre'];
@@ -8345,7 +8345,7 @@ require_once '0_validate_user_1.php';
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
 				$arrProductos = db_select_array (false, 'productos_listado.idProducto, productos_listado.Nombre,sistema_productos_uml.Nombre AS Unimed', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'productos_listado.idEstado=1', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				$arrProd = array();
 				foreach ($arrProductos as $producto){
 					$arrProd['Prod'][$producto['idProducto']]['Nombre'] = $producto['Nombre'];
@@ -9226,7 +9226,7 @@ require_once '0_validate_user_1.php';
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
 				$arrProductos = db_select_array (false, 'productos_listado.idProducto, productos_listado.Nombre,sistema_productos_uml.Nombre AS Unimed', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'productos_listado.idEstado=1', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				$arrProd = array();
 				foreach ($arrProductos as $producto){
 					$arrProd['Prod'][$producto['idProducto']]['Nombre'] = $producto['Nombre'];

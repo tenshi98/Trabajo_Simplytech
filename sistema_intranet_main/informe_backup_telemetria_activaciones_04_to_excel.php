@@ -196,7 +196,7 @@ foreach ($arrMediciones as $med) {
 		}
 	}
 	if($exd>0){
-		
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, fecha_estandar($med['FechaConsultada']));
         

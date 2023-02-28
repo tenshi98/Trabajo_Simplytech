@@ -73,7 +73,7 @@ $spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-         
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Nombre Equipo')

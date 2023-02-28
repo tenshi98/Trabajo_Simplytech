@@ -1085,7 +1085,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 									}else{
 										echo '<td colspan="2"><span style="color:red;">Sin itemizado asignado</span></td><td></td>';
 									}
-									echo '	
+									echo '
 										<td>
 											<div class="btn-group" style="width: 70px;" >';
 												//Se muestra el de trabajo boton unicamente cuando no se tiene asignado uno
@@ -1102,7 +1102,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 										</td>
 									</tr>';
 								}
-							} 
+							}
 						} 
 					
 					}else{

@@ -561,7 +561,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalHorasExtras']   = 0;
 					for ($x = 0; $x <= 31; $x++) {
 						if(isset($_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['HorasExtras'][$x]['N_Horas'])&&$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['HorasExtras'][$x]['N_Horas']!=0){
-							$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalHorasExtras']   = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalHorasExtras'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['HorasExtras'][$x]['TotalHora'];	
+							$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalHorasExtras']   = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalHorasExtras'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['HorasExtras'][$x]['TotalHora'];
 						}
 					}
 					//Calculo de las cargas familiares
@@ -1266,7 +1266,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalHorasExtras']   = 0;
 					for ($x = 0; $x <= 31; $x++) {
 						if(isset($_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['HorasExtras'][$x]['N_Horas'])&&$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['HorasExtras'][$x]['N_Horas']!=0){
-							$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalHorasExtras']   = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalHorasExtras'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['HorasExtras'][$x]['TotalHora'];	
+							$_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalHorasExtras']   = $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['TotalHorasExtras'] + $_SESSION['fact_sueldos_sueldos'][$trab['idTrabajador']]['HorasExtras'][$x]['TotalHora'];
 						}
 					}
 					//Calculo de las cargas familiares

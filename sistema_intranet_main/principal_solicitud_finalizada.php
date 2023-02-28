@@ -278,7 +278,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 													
 		
 		
-		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">	
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">
 			<script>
 				<!--
 					function soloNumerosNaturales_NSolicitud(evt){
@@ -643,8 +643,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 												mapTypeId: google.maps.MapTypeId.SATELLITE
 											};
 											map_1 = new google.maps.Map(document.getElementById("map_canvas_x1"), myOptions1);
-											
-											
+
 											//Ubicacion de los distintos dispositivos
 											var locations = [<?php echo $marker_loc; ?>];
 													
@@ -838,7 +837,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 				
 												//ubicacion mapa		
 												latlngset = new google.maps.LatLng(latitude, longitude);
-												
+
 												//defino marcador
 												/*switch (icon) {
 													case 0: 
@@ -993,7 +992,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 																	<a href="<?php echo 'view_solicitud_aplicacion_fuera_linea.php?view='.simpleEncode($row_data['idSolicitud'], fecha_actual()).'&idTelemetria='.simpleEncode($trac['idTelemetria'], fecha_actual()).'&idZona='.simpleEncode($tractda['idZona'], fecha_actual()); ?>" title="Ver Fuera de Linea" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 																</div>
 															</td>
-															
+
 														</tr>
 													
 														<?php
@@ -1235,7 +1234,7 @@ if($ndata_1==0) {
 	$SIS_where, 
 	$SIS_order, 
 	$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrBorrame');
-	
+
 	?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

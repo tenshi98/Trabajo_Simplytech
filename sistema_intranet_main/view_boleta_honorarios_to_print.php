@@ -163,7 +163,7 @@ $html .= '<div class="row">
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-			   
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Fecha Creacion : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					<strong>Usuario Ingreso : </strong>'.$row_data['BoletaUsuario'].'<br/>';
@@ -260,7 +260,7 @@ $html .= '<div class="row">
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
-			   
+
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 					<strong>Fecha Creacion : </strong>'.Fecha_estandar($row_data['Creacion_fecha']).'<br/>
 					<strong>Usuario Ingreso : </strong>'.$row_data['BoletaUsuario'].'<br/>';

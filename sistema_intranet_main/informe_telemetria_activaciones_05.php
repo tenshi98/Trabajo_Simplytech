@@ -76,7 +76,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$SIS_order = 'telemetria_listado_historial_activaciones.idTelemetria ASC, telemetria_listado_historial_activaciones.Fecha ASC, telemetria_listado_historial_activaciones.Hora ASC';
 	$arrConsulta = array();
 	$arrConsulta = db_select_array (false, $SIS_query,  'telemetria_listado_historial_activaciones', $SIS_join,  $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrConsulta');
-	
 
 	/**************************************************************************************/
 	//variables 

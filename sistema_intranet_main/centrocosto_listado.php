@@ -252,8 +252,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 									<?php //Se imprime el arbol
 									echo arrayToUL($array3d, 0, $rowlevel['level'],$location, $nmax);
 									?>
-								
-								
+
 								</td>
 							</tr>
 						</tbody>

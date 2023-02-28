@@ -70,8 +70,7 @@ foreach ($arrSolicitud as $sol) {
 				alert_post_data(2,1,1,  $Alert_Text);
 			?>
 		</div>
-		
-		
+
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">
 				<header>

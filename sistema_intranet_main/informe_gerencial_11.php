@@ -530,7 +530,7 @@ array_push( $arrInsumos2,$row );
 					</thead>
 					  
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
-						<?php 
+						<?php
 						foreach ($arrOT as $consumos) { 
 							$cantidad = 0;
 							if(isset($consumos['Grasa_inicial'])&&$consumos['Grasa_inicial']!=0){          $cantidad = $consumos['Grasa_inicial'];}
@@ -545,8 +545,8 @@ array_push( $arrInsumos2,$row );
 									<td align="right"><?php echo valores($cantidad*$consumos['ValorIngreso'], 0); ?></td>
 								</tr>
 						<?php 
-							} 
-						} ?>        
+							}
+						} ?>
 					</tbody>
 				</table>
 			</div>
@@ -664,7 +664,7 @@ array_push( $arrInsumos2,$row );
 					 
 					  
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
-						<?php 
+						<?php
 						foreach ($arrInsumos as $consumos) { ?>
 							<tr class="odd">
 								<td><?php echo $consumos['NombreInsumo']; ?></td>

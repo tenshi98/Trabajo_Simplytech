@@ -176,10 +176,9 @@ document.getElementById("loading").style.display = "none";
 				Estimada: <?php echo Cantidades(($row_data['CuartelDistanciaPlant']*$row_data['CuartelCantPlantas'])/1000, 2); ?><br/>
 				Faltante: <?php echo Cantidades((($row_data['CuartelDistanciaPlant']*$row_data['CuartelCantPlantas'])/1000) - $row_data['GeoDistance'], 2); ?><br/>
 		</div>
-							
+
 	</div>
-	
-	
+
 	<div class="row" style="margin-bottom:15px;">
 		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<table class="table table-striped">
@@ -210,7 +209,7 @@ document.getElementById("loading").style.display = "none";
 
 	<div class="row" style="margin-bottom:15px;">
 		<div id="charts" class="col-xs-12" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
-		
+
 			<?php
 			/*******************************************************************************/
 			//las fechas
@@ -339,7 +338,7 @@ document.getElementById("loading").style.display = "none";
 	</script>
 </div>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -349,7 +348,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

@@ -168,7 +168,7 @@ $arrVideo = db_select_array (false, $SIS_query, 'cursos_listado_videoconferencia
 										<td><?php echo $video['NombreVideo']; ?></td>
 										<td><?php echo $video['Usuario']; ?></td>
 										<td><?php echo $video['HoraInicio'].' - '.$video['HoraTermino']; ?></td>
-										
+
 										<td><?php if(isset($video['idDia_1'])&&$video['idDia_1']==2){echo 'Si';} ?></td>
 										<td><?php if(isset($video['idDia_2'])&&$video['idDia_2']==2){echo 'Si';} ?></td>
 										<td><?php if(isset($video['idDia_3'])&&$video['idDia_3']==2){echo 'Si';} ?></td>
@@ -206,7 +206,7 @@ $arrVideo = db_select_array (false, $SIS_query, 'cursos_listado_videoconferencia
 
 
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -216,7 +216,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

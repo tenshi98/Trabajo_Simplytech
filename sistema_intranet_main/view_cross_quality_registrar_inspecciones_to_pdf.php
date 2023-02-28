@@ -248,7 +248,7 @@ $html .= '
 						</tr>
 					</tbody>
 				</table>';
-				
+
 			$html .= '</td>
 		</tr>
 	</tbody>

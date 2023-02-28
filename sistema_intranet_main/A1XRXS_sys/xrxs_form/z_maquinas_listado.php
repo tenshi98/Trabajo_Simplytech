@@ -2013,7 +2013,7 @@ require_once '0_validate_user_1.php';
 			}
 			$arrLVL[$i] = array();
 			$arrLVL[$i] = db_select_array (false, 'idSistema, idUtilizable, Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero, idMaquina '.$cadena, 'maquinas_listado_level_'.$i, '', 'idLevel_'.$lvl.' = '.$idLevel, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-			
+
 		}
 		
 		
@@ -2268,7 +2268,7 @@ require_once '0_validate_user_1.php';
 										if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
 										if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
 										if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										
+
 										$x = 1;
 										if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
 										if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
@@ -3527,7 +3527,6 @@ require_once '0_validate_user_1.php';
 					$qry .= ',PuntoUniMed_'.$i;
 					$qry .= ',PuntoidTipo_'.$i;
 					$qry .= ',PuntoidGrupo_'.$i;
-					
 				}
 
 				/*******************************************************************/

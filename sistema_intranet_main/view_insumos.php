@@ -128,7 +128,7 @@ foreach ($arrPromedioProd as $productos) {
 						<?php if ($rowdata['Direccion_img']=='') { ?>
 							<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/productos.jpg">
 						<?php }else{
-							echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowdata['Direccion_img']);	
+							echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowdata['Direccion_img']);
 						} ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
@@ -289,7 +289,7 @@ foreach ($arrPromedioProd as $productos) {
 	</div>
 </div>
 
-<?php 
+<?php
 //si se entrega la opcion de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
@@ -299,7 +299,7 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 			<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
 			<div class="clearfix"></div>
 		</div>
-	<?php 
+	<?php
 	//para las versiones nuevas que indican donde volver
 	}else{
 		$string = basename($_SERVER["REQUEST_URI"], ".php");

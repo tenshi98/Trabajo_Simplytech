@@ -76,7 +76,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			if(isset($Fecha) && $Fecha!=''){ 
+			if(isset($Fecha) && $Fecha!=''){
 				$Ano       = fecha2Ano($Fecha);
 				$Mes       = fecha2NMes($Fecha);
 				$Dia       = fecha2NdiaMes($Fecha);
@@ -128,7 +128,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			if(isset($Fecha) && $Fecha!=''){ 
+			if(isset($Fecha) && $Fecha!=''){
 				$Ano       = fecha2Ano($Fecha);
 				$Mes       = fecha2NMes($Fecha);
 				$Dia       = fecha2NdiaMes($Fecha);

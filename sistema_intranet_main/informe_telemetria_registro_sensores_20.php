@@ -42,7 +42,7 @@ $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelaciona
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
-}else{			
+}else{
 	/****************************************************************/
 	$consql = '';
 	for ($i = 1; $i <= 72; $i++) {
@@ -178,8 +178,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			}
 		}
 		//se crea la fila
-		if($count!=0){				
-			
+		if($count!=0){
+
 			//variables
 			$anterior    = $posit - 1;
 			$diaInicio   = $arrTable[$anterior]['FechaHasta'];
@@ -187,7 +187,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$horaInicio  = $arrTable[$anterior]['HoraHasta'];
 			$horaTermino = $fac['HoraSistema'];
 			$HorasTrans  = horas_transcurridas($diaInicio, $diaTermino, $horaInicio, $horaTermino);
-				
+
 			$healthy   = array("STR_f_inicio", "STR_f_termino", "STR_h_inicio", "STR_h_termino");
 			$yummy     = array($diaInicio, $diaTermino, $horaInicio, $horaTermino);
 			$new_table = str_replace($healthy, $yummy, $table);
@@ -206,17 +206,16 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			//Guardo el ultimo registro
 			$Ult_diaInicio   = $fac['FechaSistema'];
 			$Ult_horaInicio  = $fac['HoraSistema'];
-		}	
-		
+		}
+
 		//Guardo el ultimo registro
 		$Ult_diaTermino  = $fac['FechaSistema'];
 		$Ult_horaTermino = $fac['HoraSistema'];
-		
+
 		$healthy    = array("STR_f_inicio", "STR_f_termino", "STR_h_inicio", "STR_h_termino");
 		$yummy      = array($Ult_diaInicio, $Ult_diaTermino, $Ult_horaInicio, $Ult_horaTermino);
 		$new_table2 = str_replace($healthy, $yummy, $table2);
-			
-	
+
 	}
 
 	//recorro los registros
@@ -226,7 +225,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$m_table .= '<td>'.fecha_estandar($arrTable[$x]['FechaHasta']).' - '.$arrTable[$x]['HoraHasta'].'</td>';
 		$m_table .= '<td>'.$arrTable[$x]['Duracion'].'</td>';
 		$m_table .= $arrTable[$x]['Contenido'];
-		$m_table .= '</tr>';	
+		$m_table .= '</tr>';
 	}
 
 	//Ultima linea
@@ -237,9 +236,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$m_table .= '<td>'.$HorasTrans.'</td>';
 	$m_table .= $new_table2;
 	$m_table .= '</tr>';
-	
+
 	?>
-						
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apertura Puertas', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe del equipo '.$rowEquipo['NombreEquipo']); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
@@ -306,7 +305,7 @@ alert_post_data(2,1,1, $Alert_Text);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
+
                <?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}

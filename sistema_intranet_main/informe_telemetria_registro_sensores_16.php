@@ -98,12 +98,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	//se arman datos
 	foreach ($arrEquipos as $fac) {
-									
+
 		//numero sensores equipo
 		$N_Maximo_Sensores  = $rowEquipo['cantSensores'];
 		$arrDato            = array();
 
-		//recorro los sensores									
+		//recorro los sensores
 		for ($x = 1; $x <= $N_Maximo_Sensores; $x++) {
 			//Que el valor medido sea distinto de 999
 			if(isset($fac['SensorValue_'.$x])&&$fac['SensorValue_'.$x]<99900){
@@ -139,15 +139,15 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 		//Guardo la fecha
 		$Temp_1 .= "'".Fecha_estandar($fac['FechaSistema'])." - ".$fac['HoraSistema']."',";
-												
+
 		//verifico si el grupo existe
 		if(isset($_GET['idGrupo'])&&$_GET['idGrupo']!=''){
-			
+
 			/***********************************************/
 			//realizo los calculos
 			//verifico si hay datos
-			if($arrDato[$_GET['idGrupo']]['Cuenta']!=0){ 
-				$New_Dato = $arrDato[$_GET['idGrupo']]['Valor']/$arrDato[$_GET['idGrupo']]['Cuenta']; 
+			if($arrDato[$_GET['idGrupo']]['Cuenta']!=0){
+				$New_Dato = $arrDato[$_GET['idGrupo']]['Valor']/$arrDato[$_GET['idGrupo']]['Cuenta'];
 			}else{
 				$New_Dato = 0;
 			}
@@ -171,7 +171,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				<td>'.cantidades($New_Dato, 2).' '.$rowUnimed['Nombre'].'</td>
 			</tr>';
 		}else{
-			
+
 			/***********************************************/
 			//imprimo tabla
 			$m_table .= '
@@ -180,12 +180,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				<td>'.$fac['HoraSistema'].'</td>';
 
 			foreach ($arrGrupos as $gru) {
-				
+
 				/***********************************************/
 				//realizo los calculos
 				//verifico si hay datos
 				if($arrDato[$gru['idGrupo']]['Cuenta']!=0){
-					$New_Dato = $arrDato[$gru['idGrupo']]['Valor']/$arrDato[$gru['idGrupo']]['Cuenta']; 
+					$New_Dato = $arrDato[$gru['idGrupo']]['Valor']/$arrDato[$gru['idGrupo']]['Cuenta'];
 				}else{
 					$New_Dato = 0;
 				}
@@ -199,20 +199,20 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				}else{
 					$arrData[$gru['idGrupo']]['Value'] = $New_Dato;
 				}
-			
+
 				/***********************************************/
 				//imprimo tabla
 				$m_table .= '<td>'.cantidades($New_Dato, 2).' '.$rowUnimed['Nombre'].'</td>';
 
 			}
 			/***********************************************/
-			//imprimo tabla	
+			//imprimo tabla
 			$m_table .= '</tr>';
-			
+
 		}
-		//contador	
+		//contador
 		$count++;
-	}  
+	}
 	//variables
 	$Graphics_xData       = 'var xData = [';
 	$Graphics_yData       = 'var yData = [';
@@ -242,7 +242,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			//los anchos de la linea
 			$Graphics_lineWidth  .= "'',";
 		}
-	} 
+	}
 	$Graphics_xData      .= '];';
 	$Graphics_yData      .= '];';
 	$Graphics_names      .= '];';
@@ -271,13 +271,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	//oculto el loader
 	document.getElementById("loading").style.display = "none";
 	</script>
-			
-							
+
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Comparacion Grupos Sensores', $_SESSION['usuario']['basic_data']['RazonSocial'], 'Informe del equipo '.$rowEquipo['NombreEquipo']); ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 clearfix">
 			<a target="new" href="<?php echo 'informe_telemetria_registro_sensores_16_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
-		
+
 			<?php if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 				<input class="btn btn-sm btn-metis-3 pull-right margin_width fa-input" type="button" onclick="Export()" value="&#xf1c1; Exportar a PDF"/>
 			<?php }else{ ?>
@@ -289,7 +288,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	<div class="clearfix"></div>
 
 
-	<?php 
+	<?php
 	//Se verifica si se pidieron los graficos
 	if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 
@@ -299,20 +298,19 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 					<h5> Graficos del equipo <?php echo $rowEquipo['NombreEquipo']; ?></h5>
 				</header>
-				<div class="table-responsive" id="grf">	
-					
+				<div class="table-responsive" id="grf">
+
 					<?php
 					if(isset($rowUnimed['Nombre'])&&$rowUnimed['Nombre']!=''){$uni = $rowUnimed['Nombre'];}else{$uni = 'Consumo';}
 					$gr_tittle = 'Grafico ('.$uni.')';
 					$gr_unimed = $uni;
-					
+
 					echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Fecha', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); ?>
-										
+
 				</div>
 			</div>
 		</div>
-				
-				
+
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="display: none;">
 
 			<form method="post" id="make_pdf" action="informe_telemetria_registro_sensores_16_to_pdf.php">
@@ -429,7 +427,7 @@ alert_post_data(2,1,1, $Alert_Text);
 		</header>
 		<div class="body">
 			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
-               
+
                <?php
 				//Se verifican si existen los datos
 				if(isset($f_inicio)){      $x1  = $f_inicio;     }else{$x1  = '';}

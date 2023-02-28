@@ -115,9 +115,8 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
-	
-	
+</div>
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['mod'])){
 //Armo cadena

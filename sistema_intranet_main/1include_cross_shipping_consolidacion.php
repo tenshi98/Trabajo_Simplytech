@@ -258,7 +258,7 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 							
 								<table id="items" style="margin: 0;">
 									<tbody>
-										
+
 										<tr class="item-row fact_tittle">
 											<td>Ubicacion</td>
 											<td>Posicion</td>
@@ -294,7 +294,7 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 							</div>
 						</div>
 					</div>
-				</div>'; 
+				</div>';
 			} ?>
 		</div>
 						

@@ -503,9 +503,9 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 
 								<td class="item-name"><i class="fa fa-flask" aria-hidden="true"></i> <?php echo $prod['ProductoNombre']; ?></td>
 								<td class="item-name"><?php echo Cantidades((($row_data['Mojamiento']*$TotalCuartelHectareas)/100)*$prod['DosisAplicar'], 2).' '.$prod['Unimed']; ?></td>
-	
+
 							</tr>
-	
+
 							<?php
 							//se suma 1
 							$nmb++;
