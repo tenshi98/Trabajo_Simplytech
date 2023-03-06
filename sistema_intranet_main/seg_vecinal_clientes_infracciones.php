@@ -79,7 +79,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	
+$rowdata = mysqli_fetch_assoc ($resultado);
 /******************************************************************************/
 //Verifico el tipo de usuario que esta ingresando
 $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1'; ?>
@@ -173,11 +173,11 @@ if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) *
 //Creo la variable con la ubicacion
 /**********************************************************/
 //Variable de busqueda
-$SIS_where = "seg_vecinal_clientes_infracciones.idInfraccion!=0";	
+$SIS_where = "seg_vecinal_clientes_infracciones.idInfraccion!=0";
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){  $SIS_where .= " AND seg_vecinal_clientes_infracciones.Fecha=".$_GET['Fecha'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idInfraccion', 'seg_vecinal_clientes_infracciones', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -207,7 +207,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 		<li class="btn btn-default">Fecha Descendente</li>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Infraccion</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Infraccion</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>

@@ -59,7 +59,7 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 }
 
 /*********************************************************/
-//Consulto								
+//consulto							
 $SIS_query = '
 core_sistemas.Nombre AS Sistema,
 telemetria_listado.Nombre AS EquipoNombre,

@@ -248,7 +248,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 				<tbody>
 					<?php if ($arrRendiciones!=false && !empty($arrRendiciones) && $arrRendiciones!='') { ?>
 						<tr class="active"><td colspan="3"><strong>Rendiciones</strong></td></tr>
-						<?php foreach ($arrRendiciones as $prod) {?>
+						<?php foreach ($arrRendiciones as $prod) { ?>
 							<tr>
 								<td><?php echo $prod['Item']; ?></td>
 								<?php 
@@ -265,7 +265,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 
 					<?php if ($arrDocumentos!=false && !empty($arrDocumentos) && $arrDocumentos!='') { ?>
 						<tr class="active"><td colspan="3"><strong>Montos</strong></td></tr>
-						<?php foreach ($arrDocumentos as $prod) {?>
+						<?php foreach ($arrDocumentos as $prod) { ?>
 							<tr>
 								<td>
 									<?php 
@@ -287,7 +287,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 						<?php } ?>
 					<?php } ?>
 
-					<?php if(isset($row_data['Valor'])&&$row_data['Valor']!=0){?>
+					<?php if(isset($row_data['Valor'])&&$row_data['Valor']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td align="right"><strong>Total</strong></td>
 							<?php 
@@ -315,14 +315,14 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 
 	<?php
 	//Egreso
-	if($row_data['idTipo']==2){?>
+	if($row_data['idTipo']==2){ ?>
 		<div class="row firma">
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont"><p>Firma Emisor</p></div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div>
 		</div>
 	<?php }
 	//Si es una rendicion
-	if($row_data['idTipo']==3&&isset($row_data['idSolicitado'])&&$row_data['idSolicitado']!=''&&isset($row_data['idRevisado'])&&$row_data['idRevisado']!=''&&isset($row_data['idAprobado'])&&$row_data['idAprobado']!=''){?>
+	if($row_data['idTipo']==3&&isset($row_data['idSolicitado'])&&$row_data['idSolicitado']!=''&&isset($row_data['idRevisado'])&&$row_data['idRevisado']!=''&&isset($row_data['idAprobado'])&&$row_data['idAprobado']!=''){ ?>
 
 		<div class="row firma">
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 fcont"><p>Solicitado Por:<br/><?php echo $row_data['SolicitadoNombre'].' '.$row_data['SolicitadoApellidoPat']; ?><br/>Firma</p></div>
@@ -362,7 +362,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 					<th>Usuario</th>
 					<th>Observacion</th>
 				</tr>
-				<?php foreach ($arrHistorial as $doc){?>
+				<?php foreach ($arrHistorial as $doc){ ?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
@@ -379,7 +379,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'caja_chica_facturacion_hist
 				<tr>
 					<th colspan="6">Archivos Adjuntos</th>
 				</tr>
-				<?php foreach ($arrArchivo as $producto){?>
+				<?php foreach ($arrArchivo as $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
 						<td width="160">

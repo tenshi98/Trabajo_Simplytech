@@ -106,6 +106,7 @@ foreach ($arrPromedioProd as $productos) {
 		$arreglo[$productos['Creacion_mes']]['venta']  = $productos['Precio'];
 	}
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

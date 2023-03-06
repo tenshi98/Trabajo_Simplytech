@@ -142,8 +142,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($idTrabajo)){         $x7  = $idTrabajo;          }else{$x7  = $rowdata['idTrabajo'];}
 				if(isset($Valor)){             $x8  = $Valor;             }else{$x8  = $rowdata['Valor'];}
 				if(isset($ValorTotal)){        $x9  = $ValorTotal;         }else{$x9  = $rowdata['ValorTotal'];}
-				
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -190,9 +189,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById('div_idTrabajo').style.display = 'none';
 					document.getElementById('div_Valor').style.display = 'none';
 					document.getElementById('div_ValorTotal').style.display = 'none';
-							
+
 					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-								
+
 						let Sensores_val= $("#idUtilizable").val();
 								
 						//si es SI
@@ -216,10 +215,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								
 								
 					});
-							
+
 					$("#idUtilizable").on("change", function(){ //se ejecuta al cambiar valor del select
 						modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-						
+
 						//si es SI
 						if(modelSelected1 == 1){
 							document.getElementById('div_idFrecuencia').style.display = 'none';
@@ -235,7 +234,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							document.getElementById('idTrabajo').selectedIndex = 0;
 							document.getElementById('Valor').value = "0";
 							document.getElementById('ValorTotal').value = "0";
-																
+
 						//si es NO
 						} else if(modelSelected1 == 2){
 							document.getElementById('div_idFrecuencia').style.display = '';
@@ -247,13 +246,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 						}
 					});
-							
-							
+
 				</script>
 
 				<div class="form-group">
-				
-					
+
 					<?php if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){  $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);} ?>
 					<?php if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){  $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);} ?>
 					<?php if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){  $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);} ?>
@@ -279,8 +276,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){$Form_Inputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
 					<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){$Form_Inputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
 					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){$Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
-			
-				
+
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel">
 					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
@@ -314,8 +310,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($idTrabajo)){         $x7  = $idTrabajo;          }else{$x7  = '';}
 				if(isset($Valor)){             $x8  = $Valor;             }else{$x8  = '';}
 				if(isset($ValorTotal)){        $x9  = $ValorTotal;         }else{$x9  = '';}
-				
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -364,10 +359,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById('div_idTrabajo').style.display = 'none';
 					document.getElementById('div_Valor').style.display = 'none';
 					document.getElementById('div_ValorTotal').style.display = 'none';
-							
+
 					$("#idUtilizable").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-						
+
 						//si es SI
 						if(modelSelected1 == 1){
 							document.getElementById('div_idFrecuencia').style.display = 'none';
@@ -383,7 +378,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							document.getElementById('idTrabajo').selectedIndex = 0;
 							document.getElementById('Valor').value = "0";
 							document.getElementById('ValorTotal').value = "0";
-																
+
 						//si es NO
 						} else if(modelSelected1 == 2){
 							document.getElementById('div_idFrecuencia').style.display = '';
@@ -395,8 +390,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 						}
 					});
-							
-							
+
 				</script>
 
 				<div class="form-group">
@@ -426,11 +420,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){$Form_Inputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
 					<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){$Form_Inputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
 					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){$Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
-					
-				
-					
-					
-					
+
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_idLevel">
 					<a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
@@ -441,9 +431,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	</div>
 </div>
 
-
-
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['itemizado'])){
 // consulto los datos
@@ -724,7 +711,7 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 	}else{
 		echo '<ul style="padding-left: 20px;">';
 	}
-    
+
     foreach ($array as $key => $value){
 		//Rearmo la ubicacion de acuerdo a la profundidad
 		if (isset($value['id'])){
@@ -764,18 +751,19 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 			echo '</div>';
 		}
         if (!empty($value) && is_array($value)){
-			
+
             echo arrayToUL($value, $TipoMaq, $lv, $rowlevel,$loc, $nmax);
         }
         echo '</li>';
     }
     echo '</ul>';
-}	
+}
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'].'&new_itemizado=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$_GET['itemizado'].'&idSistema='.$rowdata['idSistema'].'&new_itemizado=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -797,8 +785,8 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -846,11 +834,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<td><?php echo 'Contrato '.$rowdata['Nombre'].' '.$rowdata['estado']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
-								<?php if ($rowlevel['level']>=2){?>
+								<?php if ($rowlevel['level']>=2){ ?>
 								   <?php if ( $rowdata['estado']=='Activo' ){ ?>
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$_GET['id'].'&status='.$_GET['status'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
-								   <?php } else {?>
+								   <?php } else { ?>
 										<a class="btn btn-sm btn-info locked_active" href="#">OFF</a>
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$_GET['id'].'&status='.$_GET['status'].'&estado='.simpleEncode(1, fecha_actual()) ; ?>" >ON</a>
 									<?php } ?>
@@ -866,8 +854,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1050,10 +1038,10 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				<script>
 					document.getElementById('div_ValorMensual').style.display = 'none';
 					document.getElementById('div_Presupuesto').style.display = 'none';
-							
+
 					$("#idTipoLicitacion").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-						
+
 						//si es A suma Alzada
 						if(modelSelected1 == 1){
 							document.getElementById('div_ValorMensual').style.display = '';
@@ -1146,7 +1134,7 @@ array_push( $arrArea,$row );
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Proyecto', $rowdata['Nombre'], 'Contratos'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Contrato</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Contrato</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -1162,7 +1150,7 @@ array_push( $arrArea,$row );
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'clientes_proyectos_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
-						<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){?>
+						<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
 							<li class=""><a href="<?php echo 'clientes_proyectos_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'clientes_proyectos_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
@@ -1196,11 +1184,11 @@ array_push( $arrArea,$row );
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $area['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 175px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_licitacion.php?view='.simpleEncode($area['idLicitacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$area['idLicitacion']; ?>" title="Editar Contrato" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&status='.$area['idLicitacion']; ?>" title="Editar Estado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-power-off" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_licitacion.php?view='.simpleEncode($area['idLicitacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$area['idLicitacion']; ?>" title="Editar Contrato" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&status='.$area['idLicitacion']; ?>" title="Editar Estado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-power-off" aria-hidden="true"></i></a><?php } ?>
 								<?php if(isset($area['idOpcionItem'])&&$area['idOpcionItem']==1){ ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$area['idLicitacion']; ?>" title="Editar Itemizado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-server" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&itemizado='.$area['idLicitacion']; ?>" title="Editar Itemizado" class="btn btn-primary btn-sm tooltip"><i class="fa fa-server" aria-hidden="true"></i></a><?php } ?>
 								<?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $new_location.'&del='.simpleEncode($area['idLicitacion'], fecha_actual());

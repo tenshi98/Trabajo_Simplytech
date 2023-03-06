@@ -122,7 +122,7 @@ $arrAlumnos = db_select_array (false, $SIS_query, 'alumnos_evaluaciones_asignada
 							</thead>
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($arrAlumnos as $alum) { 
-									if(isset($alum['idTipo'])&&$alum['idTipo']==1){?>
+									if(isset($alum['idTipo'])&&$alum['idTipo']==1){ ?>
 										<tr class="odd">
 											<td><?php echo $alum['AlumnoNombre'].' '.$alum['AlumnoApellidoPat'].' '.$alum['AlumnoApellidoMat']; ?></td>
 											<td><?php echo $alum['Programada_fecha']; ?></td>
@@ -147,7 +147,7 @@ $arrAlumnos = db_select_array (false, $SIS_query, 'alumnos_evaluaciones_asignada
 							</thead>
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($arrAlumnos as $alum) { 
-									if(isset($alum['idTipo'])&&$alum['idTipo']==3){?>
+									if(isset($alum['idTipo'])&&$alum['idTipo']==3){ ?>
 										<tr class="odd">
 											<td><?php echo $alum['AlumnoNombre'].' '.$alum['AlumnoApellidoPat'].' '.$alum['AlumnoApellidoMat']; ?></td>
 											<td><?php echo $alum['Programada_fecha']; ?></td>
@@ -172,7 +172,7 @@ $arrAlumnos = db_select_array (false, $SIS_query, 'alumnos_evaluaciones_asignada
 							</thead>
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php foreach ($arrAlumnos as $alum) { 
-									if(isset($alum['idTipo'])&&$alum['idTipo']==2){?>
+									if(isset($alum['idTipo'])&&$alum['idTipo']==2){ ?>
 										<tr class="odd">
 											<td><?php echo $alum['AlumnoNombre'].' '.$alum['AlumnoApellidoPat'].' '.$alum['AlumnoApellidoMat']; ?></td>
 											<td><?php echo $alum['Programada_fecha']; ?></td>

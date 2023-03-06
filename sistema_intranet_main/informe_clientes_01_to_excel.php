@@ -36,7 +36,7 @@ if(isset($_GET['idCiudad'])&&$_GET['idCiudad']!=''){ $SIS_where.=" AND clientes_
 if(isset($_GET['idComuna'])&&$_GET['idComuna']!=''){ $SIS_where.=" AND clientes_listado.idComuna=".$_GET['idComuna'];}
 if(isset($_GET['Direccion'])&&$_GET['Direccion']!=''){      $SIS_where.=" AND clientes_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";}
 if(isset($_GET['Giro'])&&$_GET['Giro']!=''){         $SIS_where.=" AND clientes_listado.Giro LIKE '%".EstandarizarInput($_GET['Giro'])."%'";}
-				
+
 /**********************************************************************/             
 // Se trae un listado con todos los elementos
 $SIS_query = '

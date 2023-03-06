@@ -26,7 +26,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 
-//------------------------------------- Licitacion -------------------------------------// 
+//------------------------------------- Licitacion -------------------------------------//
 //formulario para crear
 if (!empty($_POST['submit_Licitacion'])){
 	//Llamamos al formulario
@@ -178,7 +178,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 	}else{
 		echo '<ul style="padding-left: 20px;">';
 	}
-    
+
     foreach ($array as $key => $value){
 		//Rearmo la ubicacion de acuerdo a la profundidad
 		if (isset($value['id'])){
@@ -194,7 +194,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 			echo '</div>';
 		}
         if (!empty($value) && is_array($value)){
-			
+
             echo arrayToUL($value, $lv, $rowlevel,$loc, $nmax);
         }
         echo '</li>';
@@ -261,11 +261,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 			</div>
 		</div>
 	</div>
-</div>	
-	
-
-
-
+</div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -307,7 +303,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 			</form>
 			<?php widget_validator(); ?>
-                    
+
 		</div>
 	</div>
 </div>
@@ -344,7 +340,7 @@ $SIS_where.= " AND ubicacion_listado.idSistema=".$_SESSION['usuario']['basic_dat
 //Se aplican los filtros
 if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){$SIS_where .= " AND ubicacion_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
 if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){   $SIS_where .= " AND ubicacion_listado.idEstado='".$_GET['idEstado']."'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idUbicacion', 'ubicacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -372,12 +368,12 @@ $arrArea = db_select_array (false, $SIS_query, 'ubicacion_listado', $SIS_join, $
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Ubicacion</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Ubicacion</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -392,7 +388,7 @@ $arrArea = db_select_array (false, $SIS_query, 'ubicacion_listado', $SIS_join, $
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
 				$Form_Inputs->form_select('Estado','idEstado', $x2, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
@@ -451,8 +447,8 @@ $arrArea = db_select_array (false, $SIS_query, 'ubicacion_listado', $SIS_join, $
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $area['sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ubicacion.php?view='.simpleEncode($area['idUbicacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$area['idUbicacion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_ubicacion.php?view='.simpleEncode($area['idUbicacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$area['idUbicacion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($area['idUbicacion'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el registro '.$area['Nombre'].'?'; ?>

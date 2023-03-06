@@ -109,7 +109,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seguridad_accesos', $SIS_join, $S
 		?>
 	</div>
 
-	<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
+	<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){ ?>
 		<div class="row">
 			<div class="col-xs-12">
 				<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">

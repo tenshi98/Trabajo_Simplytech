@@ -87,8 +87,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
-				
+
 				//filtros
 				if(isset($idVehiculo) && $idVehiculo!=''){    $SIS_data  = "'".$idVehiculo."'";    }else{$SIS_data  = "''";}
 				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
@@ -210,4 +209,5 @@ require_once '0_validate_user_1.php';
 					
 /*******************************************************************************************************************/
 	}
+
 ?>

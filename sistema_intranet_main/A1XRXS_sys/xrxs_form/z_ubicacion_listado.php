@@ -263,8 +263,8 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El dato ya existe';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el Nombre	
+
+			// si no hay errores ejecuto
 			if(empty($error)){
 
 				//filtros
@@ -302,7 +302,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// si no hay errores ejecuto el Nombre	
+			// si no hay errores ejecuto
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idLevel_".$lvl."='".$idLevel[$lvl]."'";
@@ -321,7 +321,7 @@ require_once '0_validate_user_1.php';
 					die;
 
 				}
-			
+
 			}
 
 		break;
@@ -417,4 +417,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

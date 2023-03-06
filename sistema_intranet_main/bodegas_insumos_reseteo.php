@@ -85,7 +85,7 @@ array_push( $arrProductos,$row );
 						<th>Stock Actual</th>
 					</tr>
 				</thead>
-							  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrProductos as $productos) { ?>
 					<?php $stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];

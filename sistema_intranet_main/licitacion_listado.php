@@ -35,7 +35,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 
-//------------------------------------- Licitacion -------------------------------------// 
+//------------------------------------- Licitacion -------------------------------------//
 //formulario para crear
 if (!empty($_POST['submit_Licitacion'])){
 	//Llamamos al formulario
@@ -278,9 +278,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Nombre'] = $n['25'];
 			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Codigo'] = $c['25'];
 		}*/
-		
-		
-		
+
 	}
 
 
@@ -292,7 +290,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 		}else{
 			echo '<ul style="padding-left: 20px;">';
 		}
-		
+
 		foreach ($array as $key => $value){
 			//Rearmo la ubicacion de acuerdo a la profundidad
 			if (isset($value['id'])){
@@ -311,7 +309,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 				echo '</div>';
 			}
 			if (!empty($value) && is_array($value)){
-				
+
 				echo arrayToUL($value, $lv, $rowlevel,$loc, $nmax);
 			}
 			echo '</li>';
@@ -320,6 +318,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 	}
 
 }
+
 ?>
 
 
@@ -369,7 +368,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 								<td><?php echo $rowdata['Sistema']; ?></td>
 							</tr>
 
-							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){?>
+							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){ ?>
 								<tr class="odd">
 									<td>Cliente</td>
 									<td><?php echo $rowdata['Cliente']; ?></td>
@@ -454,7 +453,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 					<th>Usuario</th>
 					<th>Observacion</th>
 				</tr>
-				<?php foreach ($arrHistorial as $doc){?>
+				<?php foreach ($arrHistorial as $doc){ ?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
@@ -534,10 +533,10 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				<script>
 					document.getElementById('div_ValorMensual').style.display = 'none';
 					document.getElementById('div_Presupuesto').style.display = 'none';
-							
+
 					$("#idTipoLicitacion").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-						
+
 						//si es A suma Alzada
 						if(modelSelected1 == 1){
 							document.getElementById('div_ValorMensual').style.display = '';
@@ -562,7 +561,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 			</form>
 			<?php widget_validator(); ?>
-                    
+
 		</div>
 	</div>
 </div>
@@ -647,12 +646,12 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Contrato</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Contrato</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -677,7 +676,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x1, 1);
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 1); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 1);
 				$Form_Inputs->form_date('Fecha de Inicio Contrato','FechaInicio', $x3, 1);
 				$Form_Inputs->form_date('Fecha de Termino Contrato','FechaTermino', $x4, 1);
 				$Form_Inputs->form_values('Presupuesto', 'Presupuesto', $x5, 1);
@@ -765,8 +764,8 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $area['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_licitacion.php?view='.simpleEncode($area['idLicitacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$area['idLicitacion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_licitacion.php?view='.simpleEncode($area['idLicitacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$area['idLicitacion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($area['idLicitacion'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el registro '.$area['Nombre'].'?'; ?>

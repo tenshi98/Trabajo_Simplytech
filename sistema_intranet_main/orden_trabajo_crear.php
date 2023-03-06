@@ -209,7 +209,8 @@ array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
-}	
+}
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -365,7 +366,7 @@ foreach ($arrPermisos as $prod) {
 				/**********************************************************************/
 				
 	 
-					$("#idSubTipo").on("change", function(){ 
+					$("#idSubTipo").on("change", function(){
 						let modelSelected = $(this).val(); 
 				
 						//si es grasa
@@ -378,7 +379,7 @@ foreach ($arrPermisos as $prod) {
 							//Reseteo los valores a 0
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
-							
+
 						//si es aceite
 						} else if(modelSelected == 2){
 							document.getElementById('div_Grasa_inicial').style.display = 'none';
@@ -390,7 +391,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Grasa_inicial').value = "0";
 							document.getElementById('Grasa_relubricacion').value = "0";
 							document.getElementById('Cantidad').value = "0";
-							
+
 						//si es normal
 						} else if(modelSelected == 3){
 							document.getElementById('div_Grasa_inicial').style.display = 'none';
@@ -427,7 +428,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
 						}
-				 
+
 					});	
 					
 						
@@ -894,7 +895,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){?>
+} elseif(!empty($_GET['view'])){ ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
@@ -927,7 +928,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
 						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
-					<?php if(isset($_SESSION['ot_basicos']['NombreCliente'])&&$_SESSION['ot_basicos']['NombreCliente']!=''){?>
+					<?php if(isset($_SESSION['ot_basicos']['NombreCliente'])&&$_SESSION['ot_basicos']['NombreCliente']!=''){ ?>
 						<tr>
 							<td class="meta-head">Cliente</td>
 							<td><?php echo $_SESSION['ot_basicos']['NombreCliente']; ?></td>
@@ -1053,7 +1054,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 									$ubicacion  = $location.'&view=true';
 									$ubicacion .= '&idInterno='.$x_idInterno['valor_id'];
 									$ubicacion .= '&id_tabla='.$x_idInterno['id_tabla'];      
-									$ubicacion .= '&tabla='.$x_idInterno['tabla'];          
+									$ubicacion .= '&tabla='.$x_idInterno['tabla'];
 									$dialogo   = '¿Realmente deseas eliminar este trabajo asignado?';
 												
 									echo '
@@ -1236,7 +1237,7 @@ if(isset($_GET['idPrioridad']) && $_GET['idPrioridad']!=''){$SIS_where .= " AND 
 if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){          $SIS_where .= " AND orden_trabajo_listado.idTipo=".$_GET['idTipo'];}
 if(isset($_GET['f_programacion']) && $_GET['f_programacion']!=''){ $SIS_where .= " AND orden_trabajo_listado.f_programacion='".$_GET['f_programacion']."'";}
 if(isset($_GET['idTrabajador']) && $_GET['idTrabajador']!=''){     $SIS_where .= " AND orden_trabajo_listado.idTrabajador=".$_GET['idTrabajador'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idOT', 'orden_trabajo_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -1259,7 +1260,7 @@ LEFT JOIN `clientes_listado`     ON clientes_listado.idCliente      = orden_trab
 $SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrOTS = array();
 $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOTS');
-	
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
@@ -1267,13 +1268,13 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
 	<?php if ($rowlevel['level']>=3){
-	if (isset($_SESSION['ot_basicos']['idMaquina'])&&$_SESSION['ot_basicos']['idMaquina']!=''){?>
+	if (isset($_SESSION['ot_basicos']['idMaquina'])&&$_SESSION['ot_basicos']['idMaquina']!=''){ ?>
 
 		<?php
 		$ubicacion = $location.'&clear_all=true';
@@ -1392,9 +1393,9 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join
 						<td><?php echo $ot['NombreTipo']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 140px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_orden_trabajo.php?view='.simpleEncode($ot['idOT'], fecha_actual()); ?>" title="Ver Orden de Trabajo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'orden_trabajo_editar.php?view='.$ot['idOT']; ?>" title="Editar Orden de Trabajo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location.'&clone='.$ot['idOT']; ?>" title="Duplicar Orden de Trabajo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_orden_trabajo.php?view='.simpleEncode($ot['idOT'], fecha_actual()); ?>" title="Ver Orden de Trabajo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'orden_trabajo_editar.php?view='.$ot['idOT']; ?>" title="Editar Orden de Trabajo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location.'&clone='.$ot['idOT']; ?>" title="Duplicar Orden de Trabajo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del_ot='.simpleEncode($ot['idOT'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el registro de la OT  '.n_doc($ot['idOT'], 5).'?'; ?>

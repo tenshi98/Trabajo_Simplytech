@@ -88,6 +88,7 @@ $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -170,8 +171,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				if(isset($idDia_5)){       $x5 .= ','.$idDia_5;   }else{$x5 .= ',';}
 				if(isset($idDia_6)){       $x5 .= ','.$idDia_6;   }else{$x5 .= ',';}
 				if(isset($idDia_7)){       $x5 .= ','.$idDia_7;   }else{$x5 .= ',';}
-				
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -259,7 +259,7 @@ array_push( $arrVideo,$row );
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Curso', $rowdata['Nombre'], 'Editar VideoConferencia Relacionadas'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar VideoConferencia</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar VideoConferencia</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -324,7 +324,7 @@ array_push( $arrVideo,$row );
 
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$video['idVideoConferencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$video['idVideoConferencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($video['idVideoConferencia'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la videoconferencia '.$video['NombreVideo'].'?'; ?>

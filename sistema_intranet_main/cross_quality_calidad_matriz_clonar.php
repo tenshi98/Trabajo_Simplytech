@@ -126,7 +126,7 @@ if(isset($_GET['cantPuntos']) && $_GET['cantPuntos']!=''){  $SIS_where .= " AND 
 if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){   $SIS_where .= " AND cross_quality_calidad_matriz.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
 if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){   $SIS_where .= " AND cross_quality_calidad_matriz.idTipo=".$_GET['idTipo'];}
 if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){    $SIS_where .= " AND cross_quality_calidad_matriz.idSistema=".$_GET['idSistema'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idMatriz', 'cross_quality_calidad_matriz', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -156,7 +156,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz',
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
@@ -176,7 +176,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz',
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
 				$Form_Inputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 1, 1, 100);
 				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x3, 1, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Estado','idEstado', $x4, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
@@ -196,8 +196,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz',
 	</div>
 </div>
 <div class="clearfix"></div>
-                     
-                         
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -260,8 +259,8 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz',
 							<td><?php echo $maq['RazonSocial']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_cross_quality_calidad_matriz.php?view='.simpleEncode($maq['idMatriz'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&nombre_matriz='.$maq['Nombre'].'&clone_idMatriz='.$maq['idMatriz']; ?>" title="Clonar Tipo Planilla" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_cross_quality_calidad_matriz.php?view='.simpleEncode($maq['idMatriz'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&nombre_matriz='.$maq['Nombre'].'&clone_idMatriz='.$maq['idMatriz']; ?>" title="Clonar Tipo Planilla" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>

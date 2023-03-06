@@ -110,7 +110,7 @@ $rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $
 							var marker;
 							/* ************************************************************************** */
 							function initialize() {
-								<?php if(isset($rowdata['GeoLatitud'])&&$rowdata['GeoLatitud']!=0&&isset($rowdata['GeoLongitud'])&&$rowdata['GeoLongitud']!=0){?>
+								<?php if(isset($rowdata['GeoLatitud'])&&$rowdata['GeoLatitud']!=0&&isset($rowdata['GeoLongitud'])&&$rowdata['GeoLongitud']!=0){ ?>
 									var myLatlng = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud']; ?>, <?php echo $rowdata['GeoLongitud']; ?>);
 								<?php }else{ ?>
 									var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);

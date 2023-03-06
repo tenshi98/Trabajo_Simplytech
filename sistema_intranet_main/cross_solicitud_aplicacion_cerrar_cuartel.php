@@ -47,7 +47,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(isset($error1)&&$error1!=''){echo notifications_list($error1);};
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['addDetalle'])){?>
+if(!empty($_GET['addDetalle'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -83,7 +83,7 @@ if(!empty($_GET['addDetalle'])){?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['lock_cuartel'])){?>
+}elseif(!empty($_GET['lock_cuartel'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -292,7 +292,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					<th colspan="6">Observacion</th>
 				</tr>
 
-				<?php foreach ($arrHistorial as $doc){?>
+				<?php foreach ($arrHistorial as $doc){ ?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Estado']; ?></td>

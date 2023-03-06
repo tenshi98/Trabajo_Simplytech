@@ -72,8 +72,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
-				
+
 				/***********************************************************************************/
 				//se verifica si la imagen existe
 				if (!empty($_FILES['Archivo']['name'])){
@@ -407,4 +406,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

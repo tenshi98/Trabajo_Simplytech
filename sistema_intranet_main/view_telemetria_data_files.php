@@ -74,6 +74,7 @@ if (!file_exists($s_folder)){
 		<iframe class="embed-responsive-item" src="'.$ruta.'" allowfullscreen></iframe>
 	</div>';
 }
+
 ?>
 
 <?php

@@ -448,8 +448,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['servicios_ing_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -1555,8 +1554,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['servicios_egr_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -2516,8 +2514,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['servicios_ing_nd_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -3355,8 +3352,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['servicios_ing_nc_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -4190,8 +4186,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['servicios_egr_nd_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -5027,8 +5022,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['servicios_egr_nc_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -5565,4 +5559,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

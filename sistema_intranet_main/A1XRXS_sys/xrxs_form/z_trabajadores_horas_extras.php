@@ -708,7 +708,7 @@ require_once '0_validate_user_1.php';
 												if(isset($_SESSION['horas_extras_ing_basicos']['idUsuario']) && $_SESSION['horas_extras_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
 												if(isset($_SESSION['horas_extras_ing_basicos']['fecha_auto']) && $_SESSION['horas_extras_ing_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['fecha_auto']."'"; }else{$SIS_data .= ",''";}
 												if(isset($_SESSION['horas_extras_ing_basicos']['Creacion_fecha']) && $_SESSION['horas_extras_ing_basicos']['Creacion_fecha']!=''){  
-													$SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['Creacion_fecha']."'";  
+													$SIS_data .= ",'".$_SESSION['horas_extras_ing_basicos']['Creacion_fecha']."'";
 													$SIS_data .= ",'".fecha2NSemana($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'";
 													$SIS_data .= ",'".fecha2NMes($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'";
 													$SIS_data .= ",'".fecha2Ano($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])."'";
@@ -896,4 +896,5 @@ require_once '0_validate_user_1.php';
 
 /*******************************************************************************************************************/
 	}
+
 ?>

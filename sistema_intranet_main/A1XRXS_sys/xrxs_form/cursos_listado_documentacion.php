@@ -60,7 +60,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				if ($_FILES["File_Curso"]["error"] > 0){
 					$error['File_Curso'] = 'error/'.uploadPHPError($_FILES["File_Curso"]["error"]);
 				} else {
@@ -231,4 +231,5 @@ require_once '0_validate_user_1.php';
 
 /*******************************************************************************************************************/
 	}
+
 ?>

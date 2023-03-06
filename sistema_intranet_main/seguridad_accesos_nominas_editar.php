@@ -108,7 +108,7 @@ $SIS_query = 'Nombre,Rut, NDocCedula';
 $SIS_join  = '';
 $SIS_where = 'idNomina ='.$_GET['editPersona'];
 $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
-	
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">

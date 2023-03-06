@@ -178,6 +178,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 }else{
 	$IMPRENT_CC = '';
 }
+
 ?>
 
 <section class="invoice">
@@ -654,7 +655,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
 		</div>
 	</div>
-	 
+
 </section>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:15px;">
@@ -670,7 +671,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 					<th>Usuario</th>
 					<th>Observacion</th>
 				</tr>
-				<?php foreach ($arrHistorial as $doc){?>
+				<?php foreach ($arrHistorial as $doc){ ?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
@@ -687,7 +688,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 				<tr>
 					<th colspan="6">Archivos Adjuntos</th>
 				</tr>
-				<?php foreach ($arrArchivo as $producto){?>
+				<?php foreach ($arrArchivo as $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
 						<td width="160">

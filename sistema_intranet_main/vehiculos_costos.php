@@ -212,7 +212,7 @@ if(isset($_GET['idVehiculo']) && $_GET['idVehiculo']!=''){   $SIS_where .= " AND
 if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){  $SIS_where .= " AND vehiculos_costos_tipo.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
 if(isset($_GET['Valor']) && $_GET['Valor']!=''){             $SIS_where .= " AND vehiculos_costos_tipo.Valor LIKE '%".EstandarizarInput($_GET['Valor'])."%'";}
 if(isset($_GET['Observaciones']) && $_GET['Observaciones']!=''){    $SIS_where .= " AND vehiculos_costos_tipo.Observaciones LIKE '%".EstandarizarInput($_GET['Observaciones'])."%'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idCosto', 'vehiculos_costos', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -240,12 +240,12 @@ $arrCategorias = db_select_array (false, $SIS_query, 'vehiculos_costos', $SIS_jo
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Costo</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Costo</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -339,8 +339,8 @@ $arrCategorias = db_select_array (false, $SIS_query, 'vehiculos_costos', $SIS_jo
 						<td align="right"><?php echo valores($cat['Valor'], 0); ?></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_vehiculos_costos.php?view='.simpleEncode($cat['idCosto'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$cat['idCosto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_vehiculos_costos.php?view='.simpleEncode($cat['idCosto'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$cat['idCosto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($cat['idCosto'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la zona '.$cat['VehiculoNombre'].' Patente '.$cat['VehiculoPatente'].'?'; ?>

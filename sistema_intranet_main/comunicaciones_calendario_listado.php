@@ -152,7 +152,7 @@ $row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $
 						<p class="text-muted" style="white-space: normal;"><?php echo $row_data['Cuerpo']; ?></p>
 
 						<div class="form-group" >
-							<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$_GET["view"]; ?>" class="btn btn-default pull-right margin_width" >Editar Evento</a><?php } ?>
+							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$_GET["view"]; ?>" class="btn btn-default pull-right margin_width" >Editar Evento</a><?php } ?>
 							<?php if ($rowlevel['level']>=4){
 								$ubicacion = $location.'&del='.simpleEncode($_GET['view'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar el registro?'; ?>
@@ -184,6 +184,7 @@ $row_data = db_select_data (false, $SIS_query, 'principal_calendario_listado', $
 if(isset($rowlevel['level'])&&$rowlevel['level']!=''){
 	validaPermisoUser($rowlevel['level'], 3, $dbConn);
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -249,7 +250,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado'
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Evento</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location.'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Evento</a><?php } ?>
 </div>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -312,7 +313,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado'
 										if($i<$diaSemana || $i>=$last_cell){
 											echo "<td class='fc-Dia fc-wed fc-widget-content fc-other-Mes fc-future fc-state-none'> </td>";
 										// mostramos el dia
-										}else{?>
+										}else{ ?>
 											<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';} ?>">
 												<div class="calendar_min">
 													<div class="fc-Dia-number"><?php echo $Dia; ?></div>

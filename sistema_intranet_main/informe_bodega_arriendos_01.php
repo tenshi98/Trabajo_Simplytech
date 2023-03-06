@@ -87,7 +87,7 @@ array_push( $arrProductos,$row );
 						<th width="10">Acciones</th>
 					</tr>
 				</thead>
-							  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrProductos as $productos) { ?>
 						<tr class="odd <?php if ($productos['Devolucion_ano']==ano_actual()&&$productos['Devolucion_Semana']<semana_actual()){echo 'danger';} ?>">
@@ -102,7 +102,7 @@ array_push( $arrProductos,$row );
 							<td><?php echo fecha_estandar($productos['Devolucion_fecha']); ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_arriendos.php?view='.simpleEncode($productos['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_arriendos.php?view='.simpleEncode($productos['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>

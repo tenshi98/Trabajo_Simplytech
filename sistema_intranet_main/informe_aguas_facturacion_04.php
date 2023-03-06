@@ -85,7 +85,7 @@ array_push( $arrFacturacion,$row );
 						<th width="10">Total Sin IVA</th>
 					</tr>
 				</thead>
-							  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php 	
 					//variables en 0
@@ -96,7 +96,7 @@ array_push( $arrFacturacion,$row );
 					$t_iva          = 0;
 					$t_TotalSinIva  = 0;
 					//se recorre arreglo
-					foreach ($arrFacturacion as $fact) { 
+					foreach ($arrFacturacion as $fact) {
 						//Se hacen los calculos
 						$consumo_mes  = $fact['DetalleCargoFijoValor'] + $fact['DetalleConsumoValor'] + $fact['DetalleRecoleccionValor'];
 						$OtrosCargos  = $fact['DetalleVisitaCorte'] + $fact['DetalleCorte1Valor'] + $fact['DetalleCorte2Valor'] + $fact['DetalleReposicion1Valor'] + $fact['DetalleReposicion2Valor'] + $fact['DetalleOtrosCargos1Valor'] + $fact['DetalleOtrosCargos2Valor'] + $fact['DetalleOtrosCargos3Valor'] + $fact['DetalleOtrosCargos4Valor'] + $fact['DetalleOtrosCargos5Valor'];
@@ -149,7 +149,7 @@ array_push( $arrFacturacion,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {?>
+} else { ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">

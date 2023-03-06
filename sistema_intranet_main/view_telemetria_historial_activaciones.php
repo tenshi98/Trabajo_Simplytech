@@ -71,7 +71,7 @@ $arrConsulta = array();
 $arrConsulta = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$X_Puntero, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrConsulta');
 
 //Arreglo temporal
-$arrTable = array(); 
+$arrTable = array();
 $arrTable['inicio']['EquipoFecha']   = '';
 $arrTable['termino']['EquipoFecha']  = '';
 
@@ -93,7 +93,7 @@ foreach ($arrConsulta as $con) {
 					if(isset($con['SensoresRevision_'.$i])&&$con['SensoresRevision_'.$i]==1){
 						//verifico que pertenezca al grupo actual
 						if($con['SensoresRevisionGrupo_'.$i]==$sen['idGrupo']){
-							
+
 							//verifico que el valor sea igual o superior al establecido
 							if(isset($_GET['Amp'])&&$_GET['Amp']!=''&&simpleDecode($_GET['Amp'], fecha_actual())!=0){
 								$valor_amp = simpleDecode($_GET['Amp'], fecha_actual());

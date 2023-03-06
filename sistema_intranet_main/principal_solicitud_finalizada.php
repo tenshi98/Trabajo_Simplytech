@@ -357,7 +357,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							</li>
 							<?php $xcounter++;
 						}
-						if($xcounter>3){?></ul></li><?php } ?>
+						if($xcounter>3){ ?></ul></li><?php } ?>
 					</ul>
 				</header>
 				<div class="tab-content">
@@ -624,7 +624,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
 									$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
 									alert_post_data(4,2,2, $Alert_Text);
-								}else{?>
+								}else{ ?>
 									<div id="map_canvas_x1" style="width: 100%; height: 550px;"></div>
 									<script>
 										
@@ -1293,7 +1293,7 @@ if($ndata_1==0) {
 <?php } ?>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {?>
+} else { ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">

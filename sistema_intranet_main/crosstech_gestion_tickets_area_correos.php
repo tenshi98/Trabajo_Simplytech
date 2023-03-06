@@ -200,7 +200,7 @@ $SIS_where = "crosstech_gestion_tickets_area_correos.idCorreos!=0";
 //Se aplican los filtros
 if(isset($_GET['idArea']) && $_GET['idArea']!=''){  $SIS_where .= " AND crosstech_gestion_tickets_area_correos.idArea=".$_GET['idArea'];}
 if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){   $SIS_where .= " AND crosstech_gestion_tickets_area_correos.idUsuario=".$_GET['idUsuario'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'crosstech_gestion_tickets_area_correos.idCorreos', 'crosstech_gestion_tickets_area_correos', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -226,12 +226,12 @@ $arrComunas = db_select_array (false, $SIS_query, 'crosstech_gestion_tickets_are
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Correo</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Correo</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -311,7 +311,7 @@ $arrComunas = db_select_array (false, $SIS_query, 'crosstech_gestion_tickets_are
 						<td><?php echo $comunas['Email']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$comunas['idCorreos']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$comunas['idCorreos']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($comunas['idCorreos'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el correo '.$comunas['NombreEmail'].'?'; ?>

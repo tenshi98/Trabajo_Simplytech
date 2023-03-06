@@ -23,7 +23,7 @@ if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
 }
 /********************************************************************/
 //Inicia variable
-$SIS_where = "backup_telemetria_listado_errores.idErrores>0"; 
+$SIS_where = "backup_telemetria_listado_errores.idErrores>0";
 $SIS_where.= " AND backup_telemetria_listado_errores.idTipo!='999'";
 $SIS_where.= " AND backup_telemetria_listado_errores.Valor<'99900'";
 $SIS_where.= " AND telemetria_listado.id_Geo='2'";

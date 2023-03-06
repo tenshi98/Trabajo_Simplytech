@@ -253,7 +253,7 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 				<tr>
 					<th colspan="6">Archivos Adjuntos</th>
 				</tr>
-				<?php foreach ($arrArchivo as $producto){?>
+				<?php foreach ($arrArchivo as $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
 						<td width="160">

@@ -126,8 +126,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 											$search .="&fecha_hasta=".$_GET['fecha_hasta'];
 										}
 										?>
-										<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'informe_cross_telemetria_01_map.php?bla=bla'.$search; ?>" title="Ver Mapa" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-map" aria-hidden="true"></i></a><?php } ?>
-										<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'informe_cross_telemetria_01_view.php?bla=bla'.$search; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'informe_cross_telemetria_01_map.php?bla=bla'.$search; ?>" title="Ver Mapa" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-map" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'informe_cross_telemetria_01_view.php?bla=bla'.$search; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									</div>
 								</td>
 							</tr>

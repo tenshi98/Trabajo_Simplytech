@@ -51,7 +51,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&silenciar_uno=true' );
 					die;
 
@@ -84,7 +84,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&silenciar_todos=true' );
 					die;
 
@@ -95,4 +95,5 @@ require_once '0_validate_user_1.php';
 
 /*******************************************************************************************************************/
 	}
+
 ?>

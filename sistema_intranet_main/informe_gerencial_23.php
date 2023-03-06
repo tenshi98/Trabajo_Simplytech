@@ -39,10 +39,10 @@ $sub_table_3 = 'bodegas_productos_facturacion';
 $sub_table_4 = 'bodegas_servicios_facturacion';
 
 //Solo compras pagadas totalmente
-$z1 = "(".$table_1.".idTipo=2 OR ".$table_1.".idTipo=12 OR ".$table_1.".idTipo=13 OR ".$table_1.".idTipo=1 OR ".$table_1.".idTipo=10 OR ".$table_1.".idTipo=11)"; 
+$z1 = "(".$table_1.".idTipo=2 OR ".$table_1.".idTipo=12 OR ".$table_1.".idTipo=13 OR ".$table_1.".idTipo=1 OR ".$table_1.".idTipo=10 OR ".$table_1.".idTipo=11)";
 $z2 = "(".$table_2.".idTipo=2 OR ".$table_2.".idTipo=12 OR ".$table_2.".idTipo=13 OR ".$table_2.".idTipo=1 OR ".$table_2.".idTipo=10 OR ".$table_2.".idTipo=11)";   
-$z3 = "(".$table_3.".idTipo=2 OR ".$table_3.".idTipo=12 OR ".$table_3.".idTipo=13 OR ".$table_3.".idTipo=1 OR ".$table_3.".idTipo=10 OR ".$table_3.".idTipo=11)"; 
-$z4 = "(".$table_4.".idTipo=2 OR ".$table_4.".idTipo=12 OR ".$table_4.".idTipo=13 OR ".$table_4.".idTipo=1 OR ".$table_4.".idTipo=10 OR ".$table_4.".idTipo=11)"; 
+$z3 = "(".$table_3.".idTipo=2 OR ".$table_3.".idTipo=12 OR ".$table_3.".idTipo=13 OR ".$table_3.".idTipo=1 OR ".$table_3.".idTipo=10 OR ".$table_3.".idTipo=11)";
+$z4 = "(".$table_4.".idTipo=2 OR ".$table_4.".idTipo=12 OR ".$table_4.".idTipo=13 OR ".$table_4.".idTipo=1 OR ".$table_4.".idTipo=10 OR ".$table_4.".idTipo=11)";
 $z5 = "(idFacturacion!=0)";     //siempre pasa
 $z6 = "(idFactTrab!=0)";        //siempre pasa
 $z7 = "(idFacturacion!=0)";     //siempre pasa
@@ -381,7 +381,7 @@ foreach ($arrTemporal_9 as $trab) {
 					</tr>
 					<?php
 					//recorro
-					foreach ($arrArriendos as $trab) { 
+					foreach ($arrArriendos as $trab) {
 						//creo variables en 0
 						for ($i = 1; $i <= 13; $i++) {
 							$arrTotalCIVA[$i] = 0;
@@ -438,7 +438,7 @@ foreach ($arrTemporal_9 as $trab) {
 					</tr>
 					<?php
 					//recorro
-					foreach ($arrInsumos as $trab) { 
+					foreach ($arrInsumos as $trab) {
 						//creo variables en 0
 						for ($i = 1; $i <= 13; $i++) {
 							$arrTotalCIVA[$i] = 0;
@@ -495,7 +495,7 @@ foreach ($arrTemporal_9 as $trab) {
 					</tr>
 					<?php
 					//recorro
-					foreach ($arrProductos as $trab) { 
+					foreach ($arrProductos as $trab) {
 						//creo variables en 0
 						for ($i = 1; $i <= 13; $i++) {
 							$arrTotalCIVA[$i] = 0;
@@ -552,7 +552,7 @@ foreach ($arrTemporal_9 as $trab) {
 					</tr>
 					<?php
 					//recorro
-					foreach ($arrServicios as $trab) { 
+					foreach ($arrServicios as $trab) {
 						//creo variables en 0
 						for ($i = 1; $i <= 13; $i++) {
 							$arrTotalCIVA[$i] = 0;
@@ -690,7 +690,7 @@ foreach ($arrTemporal_9 as $trab) {
 					</tr>
 					<?php
 					//recorro
-					foreach ($arrArriendos as $trab) { 
+					foreach ($arrArriendos as $trab) {
 						//creo variables en 0
 						for ($i = 1; $i <= 13; $i++) {
 							$arrTotalCIVA[$i] = 0;
@@ -747,7 +747,7 @@ foreach ($arrTemporal_9 as $trab) {
 					</tr>
 					<?php
 					//recorro
-					foreach ($arrInsumos as $trab) { 
+					foreach ($arrInsumos as $trab) {
 						//creo variables en 0
 						for ($i = 1; $i <= 13; $i++) {
 							$arrTotalCIVA[$i] = 0;
@@ -804,7 +804,7 @@ foreach ($arrTemporal_9 as $trab) {
 					</tr>
 					<?php
 					//recorro
-					foreach ($arrProductos as $trab) { 
+					foreach ($arrProductos as $trab) {
 						//creo variables en 0
 						for ($i = 1; $i <= 13; $i++) {
 							$arrTotalCIVA[$i] = 0;
@@ -861,7 +861,7 @@ foreach ($arrTemporal_9 as $trab) {
 					</tr>
 					<?php
 					//recorro
-					foreach ($arrServicios as $trab) { 
+					foreach ($arrServicios as $trab) {
 						//creo variables en 0
 						for ($i = 1; $i <= 13; $i++) {
 							$arrTotalCIVA[$i] = 0;

@@ -96,7 +96,7 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 						<td><?php echo 'Postulante '.$rowdata['EstadoContrato']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
-								<?php if ($rowlevel['level']>=2){?>
+								<?php if ($rowlevel['level']>=2){ ?>
 									<?php if ( $rowdata['idEstadoContrato']==1 ) {   
 										$ubicacion = $new_location.'&id='.$rowdata['idPostulante'].'&estadoContrato='.simpleEncode(2, fecha_actual());
 										$dialogo   = 'Esta a punto de contratar al postulante '.$rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'].', una vez hecho se desactivara como postulante y sera registrado como trabajador activo'; ?>

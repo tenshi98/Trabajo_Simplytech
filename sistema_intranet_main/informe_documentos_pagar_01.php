@@ -137,7 +137,7 @@ array_push( $arrCheques,$row );
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php 
-					filtrar($arrCheques, 'Documento'); 
+					filtrar($arrCheques, 'Documento');
 					$total = 0; 
 					foreach($arrCheques as $categoria=>$permisos){ 
 						echo '<tr class="odd" ><td colspan="7"  style="background-color:#DDD"><strong>'.$categoria.'</strong></td></tr>';
@@ -174,7 +174,7 @@ array_push( $arrCheques,$row );
 										echo '<a href="'.$ver.'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 											
 										?>
-										
+
 									</div>
 								</td>
 							</tr>

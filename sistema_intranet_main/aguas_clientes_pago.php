@@ -196,7 +196,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 				<?php } ?>
 
 			</li>
-			<?php if($rowFacturacion['montoPago']!=0){?>
+			<?php if($rowFacturacion['montoPago']!=0){ ?>
 				<li class="list-group-item">
 
 					<div class="pull-left">Pagado</div>
@@ -342,7 +342,8 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrFacturaciones,$row );
-}	
+}
+
 ?>
 
 <div class="row inbox">
@@ -352,7 +353,7 @@ array_push( $arrFacturaciones,$row );
 	</div>
 </div>
 
-<?php if(isset($rowFacturacion['DetalleTotalAPagar'])&&$rowFacturacion['DetalleTotalAPagar']!=''){?>
+<?php if(isset($rowFacturacion['DetalleTotalAPagar'])&&$rowFacturacion['DetalleTotalAPagar']!=''){ ?>
 	<div class="row inbox">
 							
 		<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
@@ -380,7 +381,7 @@ array_push( $arrFacturaciones,$row );
 								<td align="right"><?php echo  Valores($fac['DetalleTotalAPagar'], 0); ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_aguas_facturacion.php?view='.simpleEncode($fac['idFacturacionDetalle'], fecha_actual()); ?>" title="Ver Facturacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_aguas_facturacion.php?view='.simpleEncode($fac['idFacturacionDetalle'], fecha_actual()); ?>" title="Ver Facturacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									</div>
 								</td>
 							</tr>
@@ -479,7 +480,7 @@ array_push( $arrFacturaciones,$row );
 						<br/>
 					<?php } ?>
 				</li>
-				<?php if($rowFacturacion['montoPago']!=0){?>
+				<?php if($rowFacturacion['montoPago']!=0){ ?>
 					<li class="list-group-item">
 
 						<div class="pull-left">Pagado</div>
@@ -504,7 +505,7 @@ array_push( $arrFacturaciones,$row );
 
 	<div class="clearfix"></div>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-		<?php if($rowFacturacion['DetalleTotalAPagar']!=0){?>
+		<?php if($rowFacturacion['DetalleTotalAPagar']!=0){ ?>
 		<a href="<?php echo $location.'&idCliente='.$_GET['idCliente'].'&pagar=true'; ?>"  class="btn btn-primary pull-right margin_form_btn"><i class="fa fa-credit-card-alt" aria-hidden="true"></i> Pagar</a>
 		<?php } ?>
 		<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -597,7 +598,7 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/
 //Variable de busqueda
-$SIS_where = "aguas_clientes_pago.idPago!=0";	
+$SIS_where = "aguas_clientes_pago.idPago!=0";
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idClienteFilt']) && $_GET['idClienteFilt']!=''){    $SIS_where .= " AND aguas_clientes_pago.idCliente='".$_GET['idClienteFilt']."'";}
@@ -635,12 +636,12 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Ingresar Pago</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Ingresar Pago</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>

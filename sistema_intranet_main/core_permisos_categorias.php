@@ -113,7 +113,7 @@ select {
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['new'])){?>
+} elseif(!empty($_GET['new'])){ ?>
 <style>
 select {
   font-family: 'FontAwesome', 'sans-serif';

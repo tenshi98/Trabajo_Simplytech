@@ -177,10 +177,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								?>
 							</tbody>
 						</table>
-						
-						
 
-						
 					</div>
 					<div class="clearfix"></div>
 
@@ -272,7 +269,7 @@ $SIS_where = "variedades_listado.idProducto >= 1";
 if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){     $SIS_where .= " AND variedades_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
 if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){     $SIS_where .= " AND variedades_listado.idTipo=".$_GET['idTipo'];}
 if(isset($_GET['idCategoria']) && $_GET['idCategoria']!=''){  $SIS_where .= " AND variedades_listado.idCategoria=".$_GET['idCategoria'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idProducto', 'variedades_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -301,12 +298,12 @@ $arrProductos = db_select_array (false, $SIS_query, 'variedades_listado', $SIS_j
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Variedad</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Variedad</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -388,7 +385,7 @@ $arrProductos = db_select_array (false, $SIS_query, 'variedades_listado', $SIS_j
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-				<?php foreach ($arrProductos as $prod) {?>
+				<?php foreach ($arrProductos as $prod) { ?>
 					<tr class="odd">
 						<td><?php echo $prod['Categoria']; ?></td>
 						<td><?php echo $prod['Tipo']; ?></td>
@@ -396,8 +393,8 @@ $arrProductos = db_select_array (false, $SIS_query, 'variedades_listado', $SIS_j
 						<td><label class="label <?php if(isset($prod['idEstado'])&&$prod['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $prod['Estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_variedades.php?view='.simpleEncode($prod['idProducto'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$prod['idProducto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_variedades.php?view='.simpleEncode($prod['idProducto'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$prod['idProducto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($prod['idProducto'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la Variedad '.$prod['NombreProd'].'?'; ?>

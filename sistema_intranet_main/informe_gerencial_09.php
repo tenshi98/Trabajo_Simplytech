@@ -146,6 +146,7 @@ foreach ($arrTemporal_7 as $temp) {
 	$arrEgreso[$temp['F_Pago_mes']]['Pagado']                     = $arrEgreso[$temp['F_Pago_mes']]['Pagado'] + $temp['Pagado'];
 	$arrEgreso[$temp['F_Pago_mes']][$temp['idDocPago']]['Pagado'] = $arrEgreso[$temp['F_Pago_mes']][$temp['idDocPago']]['Pagado'] + $temp['Pagado'];
 }
+
 ?>
 
 
@@ -417,7 +418,7 @@ foreach ($arrTemporal_7 as $temp) {
 								  var chart = new google.visualization.ColumnChart(document.getElementById('chart_div_3'));
 								  chart.draw(data, options);
 								  var table_3 = new google.visualization.Table(document.getElementById('table_div_3'));
-								  table_3.draw(data, {showRowNumber: true, width: '100%', height: '100%'});		
+								  table_3.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
 									
 							}
 						</script>
@@ -440,7 +441,7 @@ foreach ($arrTemporal_7 as $temp) {
 <div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {?>
+} else { ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">

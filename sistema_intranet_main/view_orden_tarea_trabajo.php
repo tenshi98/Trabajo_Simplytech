@@ -221,7 +221,7 @@ $SIS_order = 'orden_trabajo_tareas_quejas.idQueja DESC';
 $arrQuejas = array();
 $arrQuejas = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrQuejas');
 
-if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
+if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="bs-callout bs-callout-danger" >
@@ -278,31 +278,31 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 				<table id="meta" class="otdata2">
 					<tbody>
 
-						<?php if($rowdata['f_creacion']!='0000-00-00'){?>
+						<?php if($rowdata['f_creacion']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha creacion</td>
 								<td><?php if($rowdata['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_creacion']);} ?></td>
 							</tr>
 						<?php } ?>
-						<?php if($rowdata['f_programacion']!='0000-00-00'){?>
+						<?php if($rowdata['f_programacion']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha programada</td>
 								<td><?php if($rowdata['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_programacion']);} ?></td>
 							</tr>
 						<?php } ?>
-						<?php if($rowdata['f_termino']!='0000-00-00'){?>
+						<?php if($rowdata['f_termino']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha termino</td>
 								<td><?php if($rowdata['f_termino']!='0000-00-00'){echo Fecha_estandar($rowdata['f_termino']);} ?></td>
 							</tr>
 						<?php } ?>
-						<?php if($rowdata['hora_Inicio']!='00:00:00'){?>
+						<?php if($rowdata['hora_Inicio']!='00:00:00'){ ?>
 							<tr>
 								<td class="meta-head">Hora inicio</td>
 								<td><?php if($rowdata['hora_Inicio']!='00:00:00'){echo $rowdata['hora_Inicio'];} ?></td>
 							</tr>
 						<?php } ?>
-						<?php if($rowdata['hora_Termino']!='00:00:00'){?>
+						<?php if($rowdata['hora_Termino']!='00:00:00'){ ?>
 							<tr>
 								<td class="meta-head">Hora termino</td>
 								<td><?php if($rowdata['hora_Termino']!='00:00:00'){echo $rowdata['hora_Termino'];} ?></td>
@@ -333,7 +333,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 					if($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Insumos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td></tr>
 						<?php foreach ($arrInsumos as $insumos) {
-							if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){?>
+							if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){ ?>
 								<tr class="item-row linea_punteada">
 									<td class="item-name" colspan="5"><?php echo $insumos['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
 									<td class="item-name"><?php echo Cantidades_decimales_justos($insumos['Cantidad']).' '.$insumos['UnidadMedida']; ?></td>
@@ -347,7 +347,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 					if($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Productos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Utilizados';} ?></td></tr>
 						<?php foreach ($arrProductos as $prod) {
-							if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){?>
+							if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){ ?>
 								<tr class="item-row linea_punteada">
 									<td class="item-name" colspan="5"><?php echo $prod['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
 									<td class="item-name"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['UnidadMedida']; ?></td>
@@ -453,7 +453,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 					<th>Usuario</th>
 					<th>Observacion</th>
 				</tr>
-				<?php foreach ($arrHistorial as $doc){?>
+				<?php foreach ($arrHistorial as $doc){ ?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
@@ -474,7 +474,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){?>
 					<th>Usuario</th>
 					<th>Observacion</th>
 				</tr>
-				<?php foreach ($arrQuejas as $doc){?>
+				<?php foreach ($arrQuejas as $doc){ ?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['FechaQueja']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>

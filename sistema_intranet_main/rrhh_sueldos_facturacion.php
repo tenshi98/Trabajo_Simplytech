@@ -103,7 +103,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	
+$rowdata = mysqli_fetch_assoc ($resultado);
 // Se trae un listado con todos los trabajadores
 $arrTrabajador = array();
 $query = "SELECT  idFactTrab, TrabajadorNombre,TrabajadorRut, TotalHaberes,
@@ -146,7 +146,8 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrArchivos,$row );
-}	
+}
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -282,7 +283,7 @@ array_push( $arrArchivos,$row );
                 <td width="160"></td>
             </tr>
 
-			<?php foreach ($arrArchivos as $producto){?>
+			<?php foreach ($arrArchivos as $producto){ ?>
 				<tr class="item-row">
 					<td colspan="5"><?php echo $producto['Nombre']; ?></td>
 					<td>
@@ -339,7 +340,7 @@ array_push( $arrArchivos,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modBase'])){?>
+} elseif(!empty($_GET['modBase'])){ ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<a target="_blank" rel="noopener noreferrer" href="https://www.previred.com/web/previred/indicadores-previsionales" class="btn btn-default pull-right margin_width" ><i class="fa fa-search" aria-hidden="true"></i> Indicadores Previsionales</a>
@@ -405,7 +406,7 @@ array_push( $arrArchivos,$row );
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){?>
+} elseif(!empty($_GET['view'])){ ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
@@ -523,7 +524,7 @@ array_push( $arrArchivos,$row );
 			if (isset($_SESSION['fact_sueldos_archivos'])){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
-				foreach ($_SESSION['fact_sueldos_archivos'] as $key => $producto){?>
+				foreach ($_SESSION['fact_sueldos_archivos'] as $key => $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
 						<td>
@@ -658,7 +659,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){  $SIS_where .= " AND rrhh_sueldos_facturacion.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
 if(isset($_GET['Creacion_mes']) && $_GET['Creacion_mes']!=''){      $SIS_where .= " AND rrhh_sueldos_facturacion.Creacion_mes=".$_GET['Creacion_mes'];}
 if(isset($_GET['Creacion_ano']) && $_GET['Creacion_ano']!=''){      $SIS_where .= " AND rrhh_sueldos_facturacion.Creacion_ano=".$_GET['Creacion_ano'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idFacturacion', 'rrhh_sueldos_facturacion', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -685,13 +686,13 @@ $arrTipo = db_select_array (false, $SIS_query, 'rrhh_sueldos_facturacion', $SIS_
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
 	<?php if ($rowlevel['level']>=3){ ?>
-		<?php if (isset($_SESSION['fact_sueldos_basicos']['idUsuario'])&&$_SESSION['fact_sueldos_basicos']['idUsuario']!=''){?>
+		<?php if (isset($_SESSION['fact_sueldos_basicos']['idUsuario'])&&$_SESSION['fact_sueldos_basicos']['idUsuario']!=''){ ?>
 
 			<?php
 			$ubicacion = $location.'&clear_all=true';
@@ -778,7 +779,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'rrhh_sueldos_facturacion', $SIS_
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&details='.$tipo['idFacturacion']; ?>" title="Ver Facturacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo $location.'&details='.$tipo['idFacturacion']; ?>" title="Ver Facturacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>

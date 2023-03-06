@@ -140,7 +140,7 @@ foreach ($arrNotificaciones as $noti) {
 				?>
 
 				<div class="form-group">
-					<?php if($total_usr){?>
+					<?php if($total_usr){ ?>
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf003; Enviar" name="submit">
 					<?php } ?>
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -279,7 +279,7 @@ $arrNotificaciones = db_select_array (false, $SIS_query, 'comunicaciones_interna
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Email Masivo</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Email Masivo</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -323,7 +323,7 @@ $arrNotificaciones = db_select_array (false, $SIS_query, 'comunicaciones_interna
 							<td><?php echo $noti['Asunto']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_correos_masivos.php?view='.simpleEncode($noti['idEmail'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_correos_masivos.php?view='.simpleEncode($noti['idEmail'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($noti['idEmail'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el correo masivo?'; ?>

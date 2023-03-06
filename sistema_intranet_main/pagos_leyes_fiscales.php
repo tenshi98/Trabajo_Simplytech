@@ -706,7 +706,7 @@ input[type="date"].form-control{
 			<div class="body">
 
 				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
-					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['IVA_MontoPago']!=0){?>
+					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['IVA_MontoPago']!=0){ ?>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
 							<p class="pull-left" style="margin-top: 0px;margin-bottom: 0px;">IVA a Pagar <strong><?php echo valores($_SESSION['pagos_leyes_fiscales_basicos']['IVA_MontoPago'], 0); ?></strong></p>
 							<a onclick="pago_iva_add();"  class="btn btn-default pull-right margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
@@ -715,7 +715,7 @@ input[type="date"].form-control{
 						<div id="insert_pago_iva"></div>
 					<?php } ?>
 
-					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['PPM_Pago']!=0){?>
+					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['PPM_Pago']!=0){ ?>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
 							<p class="pull-left" style="margin-top: 0px;margin-bottom: 0px;">PPM a Pagar <strong><?php echo valores($_SESSION['pagos_leyes_fiscales_basicos']['PPM_Pago'], 0); ?></strong></p>
 							<a onclick="pago_ppm_add();"  class="btn btn-default pull-right margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
@@ -724,7 +724,7 @@ input[type="date"].form-control{
 						<div id="insert_pago_ppm"></div>
 					<?php } ?>
 
-					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['Retencion']!=0){?>
+					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['Retencion']!=0){ ?>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
 							<p class="pull-left" style="margin-top: 0px;margin-bottom: 0px;">Retencion a Pagar <strong><?php echo valores($_SESSION['pagos_leyes_fiscales_basicos']['Retencion'], 0); ?></strong></p>
 							<a onclick="pago_ret_add();"  class="btn btn-default pull-right margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
@@ -733,7 +733,7 @@ input[type="date"].form-control{
 						<div id="insert_pago_ret"></div>
 					<?php } ?>
 
-					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['ImpuestoRenta']!=0){?>
+					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['ImpuestoRenta']!=0){ ?>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
 							<p class="pull-left" style="margin-top: 0px;margin-bottom: 0px;">Impuesto a la Renta a Pagar <strong><?php echo valores($_SESSION['pagos_leyes_fiscales_basicos']['ImpuestoRenta'], 0); ?></strong></p>
 							<a onclick="pago_impuesto_renta_add();"  class="btn btn-default pull-right margin_width" ><i class="fa fa-plus-square-o" aria-hidden="true"></i> Agregar Pago</a>
@@ -1303,7 +1303,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_Diferencia'], 0); ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_TotalSaldo']>0){?><a href="<?php echo $location.'&edit_iva=1'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_TotalSaldo']>0){ ?><a href="<?php echo $location.'&edit_iva=1'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
 				</tr>
@@ -1316,7 +1316,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_Diferencia'], 0); ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo']>0){?><a href="<?php echo $location.'&edit_iva=2'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo']>0){ ?><a href="<?php echo $location.'&edit_iva=2'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
 				</tr>
@@ -1329,7 +1329,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_Diferencia'], 0); ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo']>0){?><a href="<?php echo $location.'&edit_iva=3'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo']>0){ ?><a href="<?php echo $location.'&edit_iva=3'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
 				</tr>
@@ -1342,7 +1342,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_Diferencia'], 0); ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo']>0){?><a href="<?php echo $location.'&edit_iva=4'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo']>0){ ?><a href="<?php echo $location.'&edit_iva=4'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
 				</tr> 
@@ -1377,7 +1377,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Diferencia'], 0)?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_ppm=1'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_ppm=1'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
 				</tr>
@@ -1389,7 +1389,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Diferencia'], 0)?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_ppm=2'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_ppm=2'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
 				</tr>
@@ -1401,7 +1401,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Diferencia'], 0)?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_ppm=3'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_ppm=3'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
 				</tr>
@@ -1413,7 +1413,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Diferencia'], 0)?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_ppm=4'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_ppm=4'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
 				</tr> 
@@ -1678,7 +1678,7 @@ $Form_Inputs = new Inputs();
 			if (isset($_SESSION['pagos_leyes_fiscales_archivos'])){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
-				foreach ($_SESSION['pagos_leyes_fiscales_archivos'] as $key => $producto){?>
+				foreach ($_SESSION['pagos_leyes_fiscales_archivos'] as $key => $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
 						<td>
@@ -1821,6 +1821,7 @@ $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
@@ -1828,7 +1829,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
@@ -1937,8 +1938,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_pagos_leyes_fiscales.php?view='.simpleEncode($tipo['idFactFiscal'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2&&isset($tipo['idEstadoPago'])&&$tipo['idEstadoPago']==1){?><a href="<?php echo $location.'&newPago='.$tipo['idFactFiscal']; ?>" title="Ingresar Pagos" class="btn btn-success btn-sm tooltip"><i class="fa fa-usd" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_pagos_leyes_fiscales.php?view='.simpleEncode($tipo['idFactFiscal'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2&&isset($tipo['idEstadoPago'])&&$tipo['idEstadoPago']==1){ ?><a href="<?php echo $location.'&newPago='.$tipo['idFactFiscal']; ?>" title="Ingresar Pagos" class="btn btn-success btn-sm tooltip"><i class="fa fa-usd" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

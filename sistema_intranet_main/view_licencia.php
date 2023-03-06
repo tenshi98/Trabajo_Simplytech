@@ -94,7 +94,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_licencias', $SIS_joi
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos Relacionados</h2>
 						<table id="items" style="margin-bottom: 20px;">
 							<tbody>
-								<?php if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){?>
+								<?php if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){ ?>
 									<tr class="odd">
 										<td>Copia de la Licencia</td>
 										<td width="10">

@@ -472,7 +472,7 @@ foreach ($arrPermisos as $prod) {
 				});
 				/**********************************************************************/
 				
-					$("#idSubTipo").on("change", function(){ 
+					$("#idSubTipo").on("change", function(){
 						let modelSelected = $(this).val(); 
 				
 						//si es grasa
@@ -485,7 +485,7 @@ foreach ($arrPermisos as $prod) {
 							//Reseteo los valores a 0
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
-							
+
 						//si es aceite
 						} else if(modelSelected == 2){
 							document.getElementById('div_Grasa_inicial').style.display = 'none';
@@ -497,7 +497,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Grasa_inicial').value = "0";
 							document.getElementById('Grasa_relubricacion').value = "0";
 							document.getElementById('Cantidad').value = "0";
-							
+
 						//si es normal
 						} else if(modelSelected == 3){
 							document.getElementById('div_Grasa_inicial').style.display = 'none';
@@ -534,7 +534,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
 						}
-				 
+
 					});	
 					
 						
@@ -751,6 +751,7 @@ array_push( $arrPermisos,$row );
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']} AND idSubTipo={$rowdata['idSubTipo']})";
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -953,6 +954,7 @@ array_push( $arrPermisos,$row );
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -1097,6 +1099,7 @@ array_push( $arrPermisos,$row );
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -1981,7 +1984,7 @@ array_push( $arrTrabajo,$row );
  
 
 
-<?php if(isset($_GET['ter'])&&$_GET['ter']!=''){?>
+<?php if(isset($_GET['ter'])&&$_GET['ter']!=''){ ?>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
 
 		<?php
@@ -2005,7 +2008,7 @@ array_push( $arrTrabajo,$row );
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
 						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
-					<?php if(isset($rowdata['NombreCliente'])&&$rowdata['NombreCliente']!=''){?>
+					<?php if(isset($rowdata['NombreCliente'])&&$rowdata['NombreCliente']!=''){ ?>
 						<tr>
 							<td class="meta-head">Cliente</td>
 							<td><?php echo $rowdata['NombreCliente'] ?></td>
@@ -2028,65 +2031,64 @@ array_push( $arrTrabajo,$row );
 						<td><?php echo $rowdata['NombreEstado']?></td>
 					</tr>
 
-					<?php if(isset($rowdata['idSupervisor'])&&$rowdata['idSupervisor']!=''&&$rowdata['idSupervisor']!=0){?>
+					<?php if(isset($rowdata['idSupervisor'])&&$rowdata['idSupervisor']!=''&&$rowdata['idSupervisor']!=0){ ?>
 						<tr>
 							<td class="meta-head">Supervisor</td>
 							<td><?php echo $rowdata['NombreTrab'].' '.$rowdata['ApellidoPat']?></td>
 						</tr>
-					<?php }elseif(isset($_GET['ter'])&&$_GET['ter']!=''){?>
+					<?php }elseif(isset($_GET['ter'])&&$_GET['ter']!=''){ ?>
 						<tr>
 							<td class="meta-head">Supervisor</td>
 							<td><strong style="color:red;">Modificar datos basicos</strong></td>
 						</tr>
 					<?php } ?>
-					
-					
+
 				</tbody>
 			</table>
 			<table id="meta" class="otdata2">
 				<tbody>
 
-					<?php if($rowdata['f_creacion']!='0000-00-00'){?>
+					<?php if($rowdata['f_creacion']!='0000-00-00'){ ?>
 						<tr>
 							<td class="meta-head">Fecha creacion</td>
 							<td><?php if($rowdata['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_creacion']);} ?></td>
 						</tr>
 					<?php } ?>
 
-					<?php if($rowdata['f_programacion']!='0000-00-00'){?>
+					<?php if($rowdata['f_programacion']!='0000-00-00'){ ?>
 						<tr>
 							<td class="meta-head">Fecha programada</td>
 							<td><?php if($rowdata['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_programacion']);} ?></td>
 						</tr>
 					<?php } ?>
 
-					<?php if($rowdata['f_termino']!='0000-00-00'){?>
+					<?php if($rowdata['f_termino']!='0000-00-00'){ ?>
 						<tr>
 							<td class="meta-head">Fecha termino</td>
 							<td><?php if($rowdata['f_termino']!='0000-00-00'){echo Fecha_estandar($rowdata['f_termino']);} ?></td>
 						</tr>
-					<?php }elseif(isset($_GET['ter'])&&$_GET['ter']!=''){?>
+					<?php }elseif(isset($_GET['ter'])&&$_GET['ter']!=''){ ?>
 						<tr>
 							<td class="meta-head">Fecha termino</td>
 							<td><strong style="color:red;">Modificar datos basicos</strong></td>
 						</tr>
 					<?php } ?>
 
-					<?php if($rowdata['horaInicio']!='00:00:00'){?>
+					<?php if($rowdata['horaInicio']!='00:00:00'){ ?>
 						<tr>
 							<td class="meta-head">Hora inicio</td>
 							<td><?php if($rowdata['horaInicio']!='00:00:00'){echo $rowdata['horaInicio'];} ?></td>
 						</tr>
 					<?php } ?>
 
-					<?php if($rowdata['horaTermino']!='00:00:00'){?>
+					<?php if($rowdata['horaTermino']!='00:00:00'){ ?>
 						<tr>
 							<td class="meta-head">Hora termino</td>
 							<td><?php if($rowdata['horaTermino']!='00:00:00'){echo $rowdata['horaTermino'];} ?></td>
 						</tr>
 					<?php } ?>
 
-					<?php if($rowdata['horaProg']!='00:00:00'){?>
+					<?php if($rowdata['horaProg']!='00:00:00'){ ?>
 						<tr>
 							<td class="meta-head">Tiempo Programado</td>
 							<td><?php if($rowdata['horaProg']!='00:00:00'){echo $rowdata['horaProg'];} ?></td>
@@ -2143,7 +2145,7 @@ array_push( $arrTrabajo,$row );
 						</td>
 					</tr>
 					<?php foreach ($arrInsumos as $insumos) {
-						if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){?>
+						if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){ ?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="4"><?php echo $insumos['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
 								<td class="item-name"><?php echo $insumos['Cantidad'].' '.$insumos['UnidadMedida']; ?></td>
@@ -2175,7 +2177,7 @@ array_push( $arrTrabajo,$row );
 						</td>
 					</tr>
 					<?php foreach ($arrProductos as $prod) {
-						if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){?>
+						if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){ ?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="4"><?php echo $prod['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
 								<td class="item-name"><?php echo $prod['Cantidad'].' '.$prod['UnidadMedida']; ?></td>

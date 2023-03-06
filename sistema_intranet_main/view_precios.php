@@ -117,7 +117,7 @@ switch ($X_type) {
     break;
 }
 ///////////////////////////////////////////////
-if($arrProducto!=false && !empty($arrProducto) && $arrProducto!=''){?>
+if($arrProducto!=false && !empty($arrProducto) && $arrProducto!=''){ ?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
@@ -203,7 +203,7 @@ if($arrProducto!=false && !empty($arrProducto) && $arrProducto!=''){?>
 								</thead>
 			  
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
-								<?php foreach ($arrProducto as $prod) {?>
+								<?php foreach ($arrProducto as $prod) { ?>
 
 									<tr class="odd">
 										<td><?php echo Fecha_estandar($prod['Creacion_fecha']); ?></td>

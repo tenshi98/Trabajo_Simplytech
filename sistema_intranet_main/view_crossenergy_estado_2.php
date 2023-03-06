@@ -497,6 +497,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 		alert_post_data(4,2,2, 'No existen datos');
 	echo '</div>';
 }
+
 ?>
 
 <?php

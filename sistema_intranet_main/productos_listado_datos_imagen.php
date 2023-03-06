@@ -102,7 +102,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 
-				<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
+				<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 						<?php echo widget_TipoImagen($rowdata['idTipoImagen'], DB_SITE_REPO, DB_SITE_MAIN_PATH, 'upload', $rowdata['Direccion_img']); ?>

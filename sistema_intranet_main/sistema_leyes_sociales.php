@@ -77,7 +77,7 @@ if(!$resultado){
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
 					
 }
-$rowdata = mysqli_fetch_assoc ($resultado);	
+$rowdata = mysqli_fetch_assoc ($resultado);
 //sistema
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
@@ -312,7 +312,7 @@ $ndata_1 = db_select_nrows (false, 'idSistema', 'sistema_leyes_sociales', '', "i
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
 	<?php if (isset($ndata_1)&&$ndata_1==0){ ?>
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>?new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Mantenedor</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>?new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Mantenedor</a><?php } ?>
 	<?php } ?>
 </div>
                     
@@ -365,7 +365,7 @@ $ndata_1 = db_select_nrows (false, 'idSistema', 'sistema_leyes_sociales', '', "i
 						</td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'?id='.$imp['idMantenedor']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'?id='.$imp['idMantenedor']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'?del='.simpleEncode($imp['idMantenedor'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar los datos del mantenedor?'; ?>

@@ -101,7 +101,7 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 						<li class="<?php echo $xactive; ?>"><a href="" onClick="chngEquipo(<?php echo $cli['idTelemetria']; ?>, '<?php echo $cli['Nombre']; ?>', '<?php echo $cli['Identificador']; ?>', <?php echo $cli['cantSensores']; ?>)"  data-toggle="tab"><i class="fa fa-map-marker" aria-hidden="true"></i> <?php echo $cli['Nombre']; ?></a></li>
 						<?php $xcounter++;
 					}
-					if($xcounter>4){?></ul></li><?php } ?>
+					if($xcounter>4){ ?></ul></li><?php } ?>
 				</ul>
 			</header>
 

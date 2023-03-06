@@ -137,6 +137,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	<?php
 }
+
 ?>
 
 <div class="clearfix"></div>

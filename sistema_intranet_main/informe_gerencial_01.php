@@ -147,7 +147,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$xaño = $xaño-1;
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
-		
+
 		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1'];}else{$grafico[$xcontador]['tipo1'] = 0;};
 		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2'];}else{$grafico[$xcontador]['tipo2'] = 0;};
 		if(isset($mes[$xaño][$xmes]['tipo3'])){ $grafico[$xcontador]['tipo3'] = $mes[$xaño][$xmes]['tipo3'];}else{$grafico[$xcontador]['tipo3'] = 0;};
@@ -831,7 +831,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$xaño = $xaño-1;
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
-		
+
 		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1'];}else{$grafico[$xcontador]['tipo1'] = 0;};
 		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2'];}else{$grafico[$xcontador]['tipo2'] = 0;};
 		if(isset($mes[$xaño][$xmes]['tipo3'])){ $grafico[$xcontador]['tipo3'] = $mes[$xaño][$xmes]['tipo3'];}else{$grafico[$xcontador]['tipo3'] = 0;};
@@ -865,6 +865,7 @@ if($s_Traspaso_empresa=='true'){  $s_data .= ',tipo6';}
 if($s_Gasto_OT=='true'){          $s_data .= ',tipo7';}
 if($s_Traspaso_Manual=='true'){   $s_data .= ',tipo8';}
 if($s_Ingreso_Manual=='true'){    $s_data .= ',tipo9';}
+
 ?>
 
 <div class="clearfix"></div>
@@ -1469,7 +1470,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$xaño = $xaño-1;
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
-		
+
 		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1'];}else{$grafico[$xcontador]['tipo1'] = 0;};
 		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2'];}else{$grafico[$xcontador]['tipo2'] = 0;};
 			
@@ -1482,6 +1483,7 @@ $s_Ventas              = 'true';
 //Se crea la cadena para generar los graficos
 $s_data = 'tipo1';
 if($s_Ventas=='true'){            $s_data .= ',tipo2';}
+
 ?>
 
 <div class="clearfix"></div>

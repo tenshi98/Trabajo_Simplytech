@@ -137,8 +137,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	}	
 }
 
-
-	 
 //Se filtran solo las ramas de la licitacion, no las subramas con los datos
 $w = 'idUtilizable=1';
 
@@ -210,8 +208,7 @@ $w = 'idUtilizable=1';
 										  'Nivel 23','idLevel_23',$x23 ,1,'idLevel_23','Nombre','licitacion_listado_level_23',$w,0,
 										  'Nivel 24','idLevel_24',$x24 ,1,'idLevel_24','Nombre','licitacion_listado_level_24',$w,0,
 										  $dbConn, 'form1');
-										  
-									  
+
 				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
 				$Form_Inputs->form_input_hidden('addTrabajo', $_GET['addTrabajo'], 2);
 				?>
@@ -295,6 +292,7 @@ array_push( $arrPermisos,$row );
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -435,7 +433,7 @@ foreach ($arrPermisos as $prod) {
 						document.getElementById('div_idUml').style.display = 'none';
 						document.getElementById('div_Frecuencia').style.display = 'none';
 						document.getElementById('div_idFrecuencia').style.display = 'none';
-						
+
 						let Sensores_val_1= $("#idUtilizable").val();
 
 						//si es No Usable
@@ -455,8 +453,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('div_idUml').style.display = 'none';
 							document.getElementById('div_Frecuencia').style.display = 'none';
 							document.getElementById('div_idFrecuencia').style.display = 'none';
-							
-																
+
 						//si es Componente
 						} else if(Sensores_val_1 == 2){
 							document.getElementById('div_Modelo').style.display = '';
@@ -474,8 +471,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('div_idUml').style.display = 'none';
 							document.getElementById('div_Frecuencia').style.display = 'none';
 							document.getElementById('div_idFrecuencia').style.display = 'none';
-	
-							
+
 						//si es Subcomponente
 						} else if(Sensores_val_1 == 3){
 							document.getElementById('div_Modelo').style.display = 'none';
@@ -493,9 +489,9 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('div_idUml').style.display = 'none';
 							document.getElementById('div_Frecuencia').style.display = 'none';
 							document.getElementById('div_idFrecuencia').style.display = 'none';
-								
+
 						}
-					
+
 						let Sensores_val_2= $("#idSubTipo").val();
 
 						//si es grasa
@@ -514,7 +510,7 @@ foreach ($arrPermisos as $prod) {
 							//Reseteo los valores a 0
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
-							
+
 						//si es aceite
 						} else if(Sensores_val_2 == 2){
 							document.getElementById('div_Saf').style.display = '';
@@ -532,7 +528,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Grasa_inicial').value = "0";
 							document.getElementById('Grasa_relubricacion').value = "0";
 							document.getElementById('Cantidad').value = "0";
-							
+
 						//si es normal
 						} else if(Sensores_val_2 == 3){
 							document.getElementById('div_Saf').style.display = '';
@@ -569,18 +565,14 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
 						}
-				 
-											
-								
+
 					});
 
-					
-					
-					/**********************************************************************/	
-				
-					$("#idUtilizable").on("change", function(){ 
-						let TipoComp = $(this).val(); 
-						
+					/**********************************************************************/
+
+					$("#idUtilizable").on("change", function(){
+						let TipoComp = $(this).val();
+
 						//si es No Usable
 						if(TipoComp == 1){
 							document.getElementById('div_Modelo').style.display = 'none';
@@ -608,8 +600,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('idUml').value = "0";
 							document.getElementById('Frecuencia').value = "0";
 							document.getElementById('idFrecuencia').selectedIndex = 0;
-						
-																
+
 						//si es Componente
 						} else if(TipoComp == 2){
 							document.getElementById('div_Modelo').style.display = '';
@@ -637,8 +628,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('idUml').value = "0";
 							document.getElementById('Frecuencia').value = "0";
 							document.getElementById('idFrecuencia').selectedIndex = 0;
-	
-							
+
 						//si es Subcomponente
 						} else if(TipoComp == 3){
 							document.getElementById('div_Modelo').style.display = 'none';
@@ -666,13 +656,13 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('idUml').value = "0";
 							document.getElementById('Frecuencia').value = "0";
 							document.getElementById('idFrecuencia').selectedIndex = 0;
-								
+
 						}
 					});
-							
+
 					$("#idSubTipo").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected = $(this).val(); //Asignamos el valor seleccionado
-				
+
 						//si es grasa
 						if(modelSelected == 1){
 							document.getElementById('div_Saf').style.display = '';
@@ -689,7 +679,7 @@ foreach ($arrPermisos as $prod) {
 							//Reseteo los valores a 0
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
-							
+
 						//si es aceite
 						} else if(modelSelected == 2){
 							document.getElementById('div_Saf').style.display = '';
@@ -707,7 +697,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Grasa_inicial').value = "0";
 							document.getElementById('Grasa_relubricacion').value = "0";
 							document.getElementById('Cantidad').value = "0";
-							
+
 						//si es normal
 						} else if(modelSelected == 3){
 							document.getElementById('div_Saf').style.display = '';
@@ -762,15 +752,13 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
 						}
-				 
+
 					});
-					
-					   		
+
 				</script>
 
 				<div class="form-group">
-				
-					
+
 					<?php if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){$Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);} ?>
 					<?php if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){$Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);} ?>
 					<?php if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){$Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);} ?>
@@ -796,8 +784,7 @@ foreach ($arrPermisos as $prod) {
 					<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){$Form_Inputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
 					<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){$Form_Inputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
 					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){$Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
-			
-				
+
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
@@ -842,8 +829,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</header>
 		<div class="body">
 
-			<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
-        
+			<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){ ?>
+
 				<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 					 <img src="upload/<?php echo $rowdata['Direccion_img']; ?>" width="100%" >
 				</div>
@@ -862,12 +849,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_multiple_upload('Seleccionar archivo','Direccion_img', 1, '"jpg", "png", "gif", "jpeg"');
-						
-						
+
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);
 					$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
-						
+
 					?>
 
 					<div class="form-group">
@@ -901,13 +887,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_img">
 						<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 					</div>
-							  
+
 				</form>
 				<?php widget_validator(); ?>
 			<?php } ?>
-			
-			
-			      
+
 		</div>
 	</div>
 </div>  
@@ -941,7 +925,8 @@ array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
-}	
+}
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -1080,9 +1065,9 @@ foreach ($arrPermisos as $prod) {
 					document.getElementById('div_Frecuencia').style.display = 'none';
 					document.getElementById('div_idFrecuencia').style.display = 'none';
 
-					$("#idUtilizable").on("change", function(){ 
-						let TipoComp = $(this).val(); 
-						
+					$("#idUtilizable").on("change", function(){
+						let TipoComp = $(this).val();
+
 						//si es No Usable
 						if(TipoComp == 1){
 							document.getElementById('div_Modelo').style.display = 'none';
@@ -1110,7 +1095,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('idUml').value = "0";
 							document.getElementById('Frecuencia').value = "0";
 							document.getElementById('idFrecuencia').selectedIndex = 0;
-																
+
 						//si es Componente
 						} else if(TipoComp == 2){
 							document.getElementById('div_Modelo').style.display = '';
@@ -1138,7 +1123,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('idUml').value = "0";
 							document.getElementById('Frecuencia').value = "0";
 							document.getElementById('idFrecuencia').selectedIndex = 0;
-							
+
 						//si es Subcomponente
 						} else if(TipoComp == 3){
 							document.getElementById('div_Modelo').style.display = 'none';
@@ -1156,13 +1141,13 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('div_idUml').style.display = 'none';
 							document.getElementById('div_Frecuencia').style.display = 'none';
 							document.getElementById('div_idFrecuencia').style.display = 'none';
-								
+
 						}
 					});
-							
+
 					$("#idSubTipo").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected = $(this).val(); //Asignamos el valor seleccionado
-				
+
 						//si es grasa
 						if(modelSelected == 1){
 							document.getElementById('div_Saf').style.display = '';
@@ -1179,8 +1164,7 @@ foreach ($arrPermisos as $prod) {
 							//Reseteo los valores a 0
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
-							
-							
+
 						//si es aceite
 						} else if(modelSelected == 2){
 							document.getElementById('div_Saf').style.display = '';
@@ -1198,7 +1182,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Grasa_inicial').value = "0";
 							document.getElementById('Grasa_relubricacion').value = "0";
 							document.getElementById('Cantidad').value = "0";
-							
+
 						//si es normal
 						} else if(modelSelected == 3){
 							document.getElementById('div_Saf').style.display = '';
@@ -1253,10 +1237,9 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
 						}
-				 
+
 					});
-					
-					   		
+
 				</script>
 
 				<div class="form-group">
@@ -1286,11 +1269,7 @@ foreach ($arrPermisos as $prod) {
 					<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){$Form_Inputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
 					<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){$Form_Inputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
 					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){$Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
-					
-				
-					
-					
-					
+
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_idLevel">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
@@ -1301,9 +1280,6 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 
-
-
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos
@@ -1457,19 +1433,18 @@ foreach($arrItemizado as $key) {
 		$y[$i]  = '';
 		$m[$i]  = '';
 		$t[$i]  = '';
-				
+
 		//si el dato solicitado tiene valores sobreescribe la variable
-		if(isset($key['LVL_'.$i.'_id'])&&$key['LVL_'.$i.'_id']!=''){              $d[$i]  = $key['LVL_'.$i.'_id'];}  
-		if(isset($key['LVL_'.$i.'_Nombre'])&&$key['LVL_'.$i.'_Nombre']!=''){      $n[$i]  = $key['LVL_'.$i.'_Nombre'];}   
+		if(isset($key['LVL_'.$i.'_id'])&&$key['LVL_'.$i.'_id']!=''){              $d[$i]  = $key['LVL_'.$i.'_id'];}
+		if(isset($key['LVL_'.$i.'_Nombre'])&&$key['LVL_'.$i.'_Nombre']!=''){      $n[$i]  = $key['LVL_'.$i.'_Nombre'];}
 		if(isset($key['LVL_'.$i.'_Codigo'])&&$key['LVL_'.$i.'_Codigo']!=''){      $c[$i]  = $key['LVL_'.$i.'_Codigo'];}
 		if(isset($key['LVL_'.$i.'_idUtilizable'])&&$key['LVL_'.$i.'_idUtilizable']!=''){ $u[$i]  = $key['LVL_'.$i.'_idUtilizable'];}
 		if(isset($key['LVL_'.$i.'_idLicitacion'])&&$key['LVL_'.$i.'_idLicitacion']!=''){ $x[$i]  = $key['LVL_'.$i.'_idLicitacion'];}
 		if(isset($key['LVL_'.$i.'_table'])&&$key['LVL_'.$i.'_table']!=''){        $y[$i]  = $key['LVL_'.$i.'_table'];}
 		if(isset($key['LVL_'.$i.'_table_value'])&&$key['LVL_'.$i.'_table_value']!=''){   $m[$i]  = $key['LVL_'.$i.'_table_value'];}
 		if(isset($key['LVL_'.$i.'_imagen'])&&$key['LVL_'.$i.'_imagen']!=''){      $t[$i]  = $key['LVL_'.$i.'_imagen'];}
-				
+
 	}
-	
 
     if( $d['1']!=''){
 		$array3d[$d['1']]['id']         = $d['1'];
@@ -1711,8 +1686,7 @@ foreach($arrItemizado as $key) {
 		$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Tabla']      = $y['25'];
 		$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Valor']      = $m['25'];
 	}*/
-	
-	
+
 }
 
 function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,$location, $nmax)
@@ -1723,7 +1697,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 	}else{
 		echo '<ul style="padding-left: 20px;">';
 	}
-    
+
     foreach ($array as $key => $value){
 		//Rearmo la ubicacion de acuerdo a la profundidad
 		if (isset($value['id'])){
@@ -1732,7 +1706,6 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 			$loc = $location;
 		}
 
-			
         if (isset($value['Nombre'])){
 			echo '<li><div class="blum">';
 				echo '<div class="pull-left">';
@@ -1774,10 +1747,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 						echo '<a onClick="dialogBox(\''.$ubicacion.'\', \''.$dialogo.'\')" title="Borrar este Componente" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
 					}
 				echo '</div>';
-				
-				
-				
-				
+
 				//Boton para crear nueva subrama condicionado solo a componentes
 				if ($value['Tipo']==2){
 					echo '<div class="btn-group pull-right" style="margin-right:5px;" >';
@@ -1791,7 +1761,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 			echo '</div>';
 		}
         if (!empty($value) && is_array($value)){
-			
+
             echo arrayToUL($value, $TipoMaq, $Trabajo, $lv, $rowlevel,$loc, $nmax);
         }
         echo '</li>';
@@ -1806,7 +1776,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowdata['Nombre'], 'Componentes'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Componente</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Componente</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -1827,10 +1797,14 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 						<li class=""><a href="<?php echo 'unidad_negocio_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
-						<?php if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+						<?php
+						//Uso de componentes
+						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
 							<li class="active"><a href="<?php echo 'unidad_negocio_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Componentes</a></li>
 						<?php } ?>
-						<?php if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
+						<?php
+						//uso de matriz de analisis
+						if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
 							<li class=""><a href="<?php echo 'unidad_negocio_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
 
@@ -1846,7 +1820,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 
 			<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
-					<div class="modal-content">              
+					<div class="modal-content">
 						<div class="modal-body">
 							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 							<img src="" class="imagepreview" style="width: 100%;padding: 15px;" >
@@ -1858,8 +1832,8 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 				$(function() {
 					$('.pop').on('click', function() {
 						$('.imagepreview').attr('src',$(this).attr('src'));
-						$('#imagemodal').modal('show');   
-					});		
+						$('#imagemodal').modal('show');
+					});
 				});
 			</script>
 

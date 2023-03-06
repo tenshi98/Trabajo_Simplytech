@@ -73,7 +73,7 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Proveedor borrado corr
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['new_oc'])){  ?>
-	 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -654,7 +654,7 @@ array_push( $arrProveedores,$row );
 							?>
 								<tr class="info">
 									<td colspan="3"><?php echo $prov['Nombre']; ?></td>
-									<td><?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&new_oc='.$prov['idProveedor']; ?>" class="btn btn-primary btn-sm"><i class="fa fa-file-o" aria-hidden="true"></i> Crear OC</a><?php } ?></td>
+									<td><?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&new_oc='.$prov['idProveedor']; ?>" class="btn btn-primary btn-sm"><i class="fa fa-file-o" aria-hidden="true"></i> Crear OC</a><?php } ?></td>
 								</tr>
 								<?php
 								//Productos
@@ -666,9 +666,9 @@ array_push( $arrProveedores,$row );
 											<td><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unimed']; ?></td>
 											<td>
 												<div class="btn-group" style="width: 105px;" >
-													<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-													<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_Productos='.$prod['idExistencia']; ?>" title="Modificar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-													<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_precios.php?type='.simpleEncode( 1, fecha_actual()).'&view='.simpleEncode($prod['idProducto'], fecha_actual()); ?>" title="Ver Variacion Precios" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_Productos='.$prod['idExistencia']; ?>" title="Modificar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_precios.php?type='.simpleEncode( 1, fecha_actual()).'&view='.simpleEncode($prod['idProducto'], fecha_actual()); ?>" title="Ver Variacion Precios" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a><?php } ?>
 												</div>
 											</td>
 										</tr>
@@ -684,9 +684,9 @@ array_push( $arrProveedores,$row );
 											<td><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unimed']; ?></td>
 											<td>
 												<div class="btn-group" style="width: 105px;" >
-													<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-													<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_Insumos='.$prod['idExistencia']; ?>" title="Modificar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-													<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_precios.php?type='.simpleEncode( 2, fecha_actual()).'&view='.simpleEncode($prod['idProducto'], fecha_actual()); ?>" title="Ver Variacion Precios" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_Insumos='.$prod['idExistencia']; ?>" title="Modificar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_precios.php?type='.simpleEncode( 2, fecha_actual()).'&view='.simpleEncode($prod['idProducto'], fecha_actual()); ?>" title="Ver Variacion Precios" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a><?php } ?>
 												</div>
 											</td>
 										</tr>
@@ -702,9 +702,9 @@ array_push( $arrProveedores,$row );
 											<td><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Fecuencia']; ?></td>
 											<td>
 												<div class="btn-group" style="width: 105px;" >
-													<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-													<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_Arriendos='.$prod['idExistencia']; ?>" title="Modificar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-													<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_precios.php?type='.simpleEncode( 3, fecha_actual()).'&view='.simpleEncode($prod['idEquipo'], fecha_actual()); ?>" title="Ver Variacion Precios" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_Arriendos='.$prod['idExistencia']; ?>" title="Modificar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_precios.php?type='.simpleEncode( 3, fecha_actual()).'&view='.simpleEncode($prod['idEquipo'], fecha_actual()); ?>" title="Ver Variacion Precios" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a><?php } ?>
 												</div>
 											</td>
 										</tr>
@@ -720,9 +720,9 @@ array_push( $arrProveedores,$row );
 											<td><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Fecuencia']; ?></td>
 											<td>
 												<div class="btn-group" style="width: 105px;" >
-													<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-													<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_Servicios='.$prod['idExistencia']; ?>" title="Modificar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-													<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_precios.php?type='.simpleEncode( 4, fecha_actual()).'&view='.simpleEncode($prod['idServicio'], fecha_actual()); ?>" title="Ver Variacion Precios" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_Servicios='.$prod['idExistencia']; ?>" title="Modificar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_precios.php?type='.simpleEncode( 4, fecha_actual()).'&view='.simpleEncode($prod['idServicio'], fecha_actual()); ?>" title="Ver Variacion Precios" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a><?php } ?>
 												</div>
 											</td>
 										</tr>
@@ -738,8 +738,8 @@ array_push( $arrProveedores,$row );
 											<td><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Fecuencia']; ?></td>
 											<td>
 												<div class="btn-group" style="width: 105px;" >
-													<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-													<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_Otros='.$prod['idExistencia']; ?>" title="Modificar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_Otros='.$prod['idExistencia']; ?>" title="Modificar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 												</div>
 											</td>
 										</tr>
@@ -781,8 +781,8 @@ array_push( $arrProveedores,$row );
 										<td><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unimed']; ?></td>
 										<td>
 											<div class="btn-group" style="width: 105px;" >
-												<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-												<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_Productos='.$prod['idExistencia']; ?>" title="Asignar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_Productos='.$prod['idExistencia']; ?>" title="Asignar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 											</div>
 										</td>
 									</tr>
@@ -798,8 +798,8 @@ array_push( $arrProveedores,$row );
 										<td><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unimed']; ?></td>
 										<td>
 											<div class="btn-group" style="width: 105px;" >
-												<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-												<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_Insumos='.$prod['idExistencia']; ?>" title="Asignar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_Insumos='.$prod['idExistencia']; ?>" title="Asignar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 											</div>
 										</td>
 									</tr>
@@ -815,8 +815,8 @@ array_push( $arrProveedores,$row );
 										<td><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Fecuencia']; ?></td>
 										<td>
 											<div class="btn-group" style="width: 105px;" >
-												<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-												<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_Arriendos='.$prod['idExistencia']; ?>" title="Asignar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_Arriendos='.$prod['idExistencia']; ?>" title="Asignar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 											</div>
 										</td>
 									</tr>
@@ -832,8 +832,8 @@ array_push( $arrProveedores,$row );
 										<td><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Fecuencia']; ?></td>
 										<td>
 											<div class="btn-group" style="width: 105px;" >
-												<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-												<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_Servicios='.$prod['idExistencia']; ?>" title="Asignar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_Servicios='.$prod['idExistencia']; ?>" title="Asignar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 											</div>
 										</td>
 									</tr>
@@ -849,8 +849,8 @@ array_push( $arrProveedores,$row );
 										<td><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Fecuencia']; ?></td>
 										<td>
 											<div class="btn-group" style="width: 105px;" >
-												<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-												<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&edit_Otros='.$prod['idExistencia']; ?>" title="Modificar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($prod['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_Otros='.$prod['idExistencia']; ?>" title="Modificar Proveedor" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 											</div>
 										</td>
 									</tr>
@@ -875,7 +875,7 @@ array_push( $arrProveedores,$row );
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else { ?>
-	 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>

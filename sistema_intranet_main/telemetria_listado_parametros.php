@@ -397,7 +397,7 @@ $arrFinalGruposRev[0] = 'S/C';
 					</td>
 					<td width="10">
 						<div class="btn-group" style="width: 70px;" >
-							<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&modAct=true'; ?>" title="Editar Sensor Activacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&modAct=true'; ?>" title="Editar Sensor Activacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							<?php if ($rowlevel['level']>=2){
 								//se verifica que el usuario no sea uno mismo
 								$ubicacion = $new_location.'&id='.$_GET['id'].'&modDelAct=true';
@@ -454,7 +454,7 @@ $arrFinalGruposRev[0] = 'S/C';
 							<td><?php echo '<span style="color:#'.$Color.'">'.$Estado.'</span>'; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>

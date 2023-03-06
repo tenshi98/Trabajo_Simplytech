@@ -75,6 +75,7 @@ $total_usr = 0;
 foreach ($arrNotificaciones as $noti) {
 	$total_usr++;
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">

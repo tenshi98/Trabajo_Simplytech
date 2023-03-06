@@ -178,7 +178,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_update_data (false, $SIS_data, 'sistema_leyes_sociales', 'idMantenedor = "'.$idMantenedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'?edited=true' );
 					die;
 
@@ -237,4 +237,5 @@ require_once '0_validate_user_1.php';
 
 /*******************************************************************************************************************/
 	}
+
 ?>

@@ -235,7 +235,7 @@ if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']
 if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){  $SIS_where .= " AND seguridad_recepcion_documentos.idTipo='".$_GET['idTipo']."'";}
 if(isset($_GET['De']) && $_GET['De']!=''){   $SIS_where .= " AND seguridad_recepcion_documentos.De LIKE '%".EstandarizarInput($_GET['De'])."%'";}
 if(isset($_GET['Para']) && $_GET['Para']!=''){      $SIS_where .= " AND seguridad_recepcion_documentos.Para LIKE '%".EstandarizarInput($_GET['Para'])."%'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idRecepcion', 'seguridad_recepcion_documentos', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -266,12 +266,12 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_recepcion_documentos',
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Recepcion</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Recepcion</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -389,7 +389,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_recepcion_documentos',
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idRecepcion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$tipo['idRecepcion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($tipo['idRecepcion'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la recepcion del documento ?'; ?>

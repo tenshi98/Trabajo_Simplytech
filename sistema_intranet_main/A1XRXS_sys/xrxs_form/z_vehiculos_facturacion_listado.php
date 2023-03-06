@@ -131,8 +131,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['vehiculos_basicos']['Sistema'] = '';
 				}
-				
-				
+
 				//redirijo a la vista
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -173,7 +172,7 @@ require_once '0_validate_user_1.php';
 			
 			
 			if(empty($error)){
-		
+
 				//Se guardan los datos basicos del formulario recien llenado
 				if(isset($Fecha)){$_SESSION['vehiculos_basicos']['Fecha'] = $Fecha;                   }else{$_SESSION['vehiculos_basicos']['Fecha'] = '';}
 				if(isset($Observaciones)){  $_SESSION['vehiculos_basicos']['Observaciones'] = $Observaciones;   }else{$_SESSION['vehiculos_basicos']['Observaciones'] = 'Sin Observaciones';}
@@ -465,8 +464,8 @@ require_once '0_validate_user_1.php';
 				if(isset($nDocPago) && $nDocPago!=''){                          $SIS_data .= ",'".$nDocPago."'";              }else{$SIS_data .= ",''";}
 				if(isset($Pagofecha) && $Pagofecha!=''){                        
 					$SIS_data .= ",'".$Pagofecha."'";
-					$SIS_data .= ",'".fecha2NdiaMes($Pagofecha)."'"; 
-					$SIS_data .= ",'".fecha2NMes($Pagofecha)."'"; 
+					$SIS_data .= ",'".fecha2NdiaMes($Pagofecha)."'";
+					$SIS_data .= ",'".fecha2NMes($Pagofecha)."'";
 					$SIS_data .= ",'".fecha2Ano($Pagofecha)."'";             
 				}else{
 					$SIS_data .= ",''";
@@ -508,8 +507,8 @@ require_once '0_validate_user_1.php';
 					if(isset($nDocPago) && $nDocPago!=''){            $SIS_data .= ",nDocPago='".$nDocPago."'";}
 					if(isset($Pagofecha) && $Pagofecha!=''){          
 						$SIS_data .= ",Pagofecha='".$Pagofecha."'";
-						$SIS_data .= ",PagoDia='".fecha2NdiaMes($Pagofecha)."'"; 
-						$SIS_data .= ",PagoidMes='".fecha2NMes($Pagofecha)."'"; 
+						$SIS_data .= ",PagoDia='".fecha2NdiaMes($Pagofecha)."'";
+						$SIS_data .= ",PagoidMes='".fecha2NMes($Pagofecha)."'";
 						$SIS_data .= ",PagoAno='".fecha2Ano($Pagofecha)."'";
 					}
 					//se verifica si se tiene algun pago anterior, si es asi se suman los montos
@@ -542,4 +541,5 @@ require_once '0_validate_user_1.php';
 
 /*******************************************************************************************************************/
 	}
+
 ?>

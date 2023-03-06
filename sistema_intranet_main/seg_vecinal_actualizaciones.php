@@ -165,11 +165,11 @@ if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) *
 //Creo la variable con la ubicacion
 /**********************************************************/
 //Variable de busqueda
-$SIS_where = "idLog!=0";	
+$SIS_where = "idLog!=0";
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){  $SIS_where .= " AND Fecha=".$_GET['Fecha'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idLog', 'seg_vecinal_actualizaciones', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -191,7 +191,7 @@ $arrBloqueo = db_select_array (false, $SIS_query, 'seg_vecinal_actualizaciones',
 		<li class="btn btn-default">Fecha Descendente</li>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Actualizacion</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Actualizacion</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>

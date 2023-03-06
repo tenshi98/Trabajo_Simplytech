@@ -279,9 +279,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 											<td><?php echo sumahoras($SobreTiempo_1,$SobreTiempo_2); ?></td>
 											<td>
 												<div class="btn-group" style="width: 105px;" >
-													<?php if ($rowlevel['level']>=1&&$fecha==''){?><a href="<?php echo 'view_telemetria_historial.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-													<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_telemetria_historial_activaciones.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()).'&cantSensores='.simpleEncode($con['EquipoN_Sensores'], fecha_actual()).$Ampx; ?>" title="Ver Amperes" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-power-off" aria-hidden="true"></i></a><?php } ?>
-													<?php if ($rowlevel['level']>=1&&$FueraHorario!=0&&$fecha==''){?><a href="<?php echo 'view_telemetria_historial.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()).'&fueraHorario=true'; ?>" title="Ver Apagado por Amp." class="iframe btn btn-danger btn-sm tooltip"><i class="fa fa-power-off" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=1&&$fecha==''){ ?><a href="<?php echo 'view_telemetria_historial.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_telemetria_historial_activaciones.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()).'&cantSensores='.simpleEncode($con['EquipoN_Sensores'], fecha_actual()).$Ampx; ?>" title="Ver Amperes" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-power-off" aria-hidden="true"></i></a><?php } ?>
+													<?php if ($rowlevel['level']>=1&&$FueraHorario!=0&&$fecha==''){ ?><a href="<?php echo 'view_telemetria_historial.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()).'&fueraHorario=true'; ?>" title="Ver Apagado por Amp." class="iframe btn btn-danger btn-sm tooltip"><i class="fa fa-power-off" aria-hidden="true"></i></a><?php } ?>
 												</div>
 											</td>
 										</tr>
@@ -383,9 +383,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									<td><?php echo sumahoras($SobreTiempo_1,$SobreTiempo_2); ?></td>
 									<td>
 										<div class="btn-group" style="width: 105px;" >
-											<?php if ($rowlevel['level']>=1&&$fecha==''){?><a href="<?php echo 'view_telemetria_historial.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_telemetria_historial_activaciones.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()).'&cantSensores='.simpleEncode($con['EquipoN_Sensores'], fecha_actual()).$Ampx; ?>" title="Ver Amperes" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-power-off" aria-hidden="true"></i></a><?php } ?>
-											<?php if ($rowlevel['level']>=1&&$FueraHorario!=0&&$fecha==''){?><a href="<?php echo 'view_telemetria_historial.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()).'&fueraHorario=true'; ?>" title="Ver Apagado por Amp." class="iframe btn btn-danger btn-sm tooltip"><i class="fa fa-power-off" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1&&$fecha==''){ ?><a href="<?php echo 'view_telemetria_historial.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_telemetria_historial_activaciones.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()).'&cantSensores='.simpleEncode($con['EquipoN_Sensores'], fecha_actual()).$Ampx; ?>" title="Ver Amperes" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-power-off" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1&&$FueraHorario!=0&&$fecha==''){ ?><a href="<?php echo 'view_telemetria_historial.php?view='.simpleEncode($con['idTelemetria'], fecha_actual()).'&dia='.simpleEncode($fecha, fecha_actual()).'&fueraHorario=true'; ?>" title="Ver Apagado por Amp." class="iframe btn btn-danger btn-sm tooltip"><i class="fa fa-power-off" aria-hidden="true"></i></a><?php } ?>
 										</div>
 									</td>
 								</tr>
@@ -414,6 +414,7 @@ $w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSiste
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">

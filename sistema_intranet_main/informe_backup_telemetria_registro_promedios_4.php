@@ -159,7 +159,7 @@ telemetria_listado.cantSensores';
 $SIS_order = 'telemetria_listado.idTelemetria ASC';
 $arrEquipos = array();
 $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipos');
-	
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

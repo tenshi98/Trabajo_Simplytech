@@ -89,7 +89,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SI
 
 	</div>
 
-	<?php if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){?>
+	<?php if(isset($rowdata['Observaciones'])&&$rowdata['Observaciones']!=''){ ?>
 		<div class="col-xs-12">
 			<div class="row">
 				<p class="lead"><a name="Ancla_obs"></a>Observaciones:</p>

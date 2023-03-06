@@ -117,7 +117,7 @@ if(!empty($_GET['moddatos'])){ ?>
 
 			</form>
 			<?php widget_validator(); ?>
-                    
+
 		</div>
 	</div>
 </div>
@@ -292,7 +292,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 			</form>
 			<?php widget_validator(); ?>
-                    
+
 		</div>
 	</div>
 </div>
@@ -331,7 +331,7 @@ $SIS_where.= " AND vehiculos_facturacion_listado.idSistema=".$_SESSION['usuario'
 //Se aplican los filtros
 if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){           $SIS_where .= " AND vehiculos_facturacion_listado.Fecha='".$_GET['Fecha']."'";}
 if(isset($_GET['Observaciones']) && $_GET['Observaciones']!=''){  $SIS_where .= " AND vehiculos_facturacion_listado.Observaciones LIKE '%".EstandarizarInput($_GET['Observaciones'])."%'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idFacturacion', 'vehiculos_facturacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -358,12 +358,12 @@ $arrDatos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado',
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Facturacion</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Facturacion</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -394,8 +394,8 @@ $arrDatos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado',
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
-                                 
+<div class="clearfix"></div>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -444,7 +444,7 @@ $arrDatos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado',
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $cont['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_vehiculos_facturacion_listado.php?view='.simpleEncode($cont['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_vehiculos_facturacion_listado.php?view='.simpleEncode($cont['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

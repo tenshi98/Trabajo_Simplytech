@@ -342,17 +342,17 @@ foreach ($arrBodegas as $bod) {
 	foreach ($arrCategoria as $cat) {
 		$SubTotal = 0;
 		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][1][$cat['idCategoria']];
-		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][2][$cat['idCategoria']]; 
+		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][2][$cat['idCategoria']];
 		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][3][$cat['idCategoria']];
-		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][4][$cat['idCategoria']]; 
-		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][5][$cat['idCategoria']]; 
-		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][6][$cat['idCategoria']]; 
-		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][7][$cat['idCategoria']]; 
-		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][8][$cat['idCategoria']]; 
-		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][9][$cat['idCategoria']]; 
+		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][4][$cat['idCategoria']];
+		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][5][$cat['idCategoria']];
+		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][6][$cat['idCategoria']];
+		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][7][$cat['idCategoria']];
+		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][8][$cat['idCategoria']];
+		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][9][$cat['idCategoria']];
 		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][10][$cat['idCategoria']];
-		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][11][$cat['idCategoria']]; 
-		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][12][$cat['idCategoria']]; 
+		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][11][$cat['idCategoria']];
+		$SubTotal = $SubTotal+$grafico[$bod['idBodega']][12][$cat['idCategoria']];
 		$Total = $Total + $SubTotal;
 	}
 	//Verifico que tenga un total
@@ -435,6 +435,7 @@ $z1 = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data'][
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z1 .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">

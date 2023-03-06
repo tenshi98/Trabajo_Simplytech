@@ -104,7 +104,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select('Etapa Fidelizacion','idEtapa', $x1, 2, 'idEtapa', 'Nombre', 'prospectos_etapa', 0, '', $dbConn);
 				$Form_Inputs->form_ckeditor('Observacion', 'Observacion', $x2, 2, 2);
 				//si existe archivo se mustra previsualizador
-				if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){?>
+				if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<h3>Archivo</h3>
@@ -235,7 +235,7 @@ array_push( $arrEtapa,$row );
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Prospecto', $rowdata['Nombre'], 'Etapa Fidelizacion'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar Etapa Fidelizacion</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar Etapa Fidelizacion</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -279,8 +279,8 @@ array_push( $arrEtapa,$row );
 						<td><?php echo $etapa['Etapa']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_prospecto_etapa.php?view='.simpleEncode($etapa['idEtapaFide'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$etapa['idEtapaFide']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>	
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_prospecto_etapa.php?view='.simpleEncode($etapa['idEtapaFide'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$etapa['idEtapaFide']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

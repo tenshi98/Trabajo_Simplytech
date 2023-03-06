@@ -458,7 +458,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		}
 	});
 	</script>
-	 
+
 <?php } ?>
 
 <div class="clearfix"></div>

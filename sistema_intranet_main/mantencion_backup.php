@@ -116,7 +116,7 @@ if (!empty($_GET['backup'])){
 		$Hora2     = hora_actual();
 		$Nombre    = 'Respaldo del '.$Fecha.' a las '.$Hora.' hrs';
 		$FileName  = 'sql-backup-'.$Fecha.'--'.$Hora.'.sql';
-				
+
 		//$backup_file_name = "sql-backup-".date( "d-m-Y--h-i-s").".sql";
 			 
 		$fp = fopen($params['db_backup_path'].$FileName ,'w+');
@@ -186,9 +186,6 @@ if(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn); ?>
 
-
-
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 /**********************************************************/
@@ -238,7 +235,7 @@ $arrBackup = db_select_array (false, $SIS_query, 'mantencion_backup', $SIS_join,
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&backup=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Backup</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&backup=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Backup</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -290,7 +287,7 @@ $arrBackup = db_select_array (false, $SIS_query, 'mantencion_backup', $SIS_join,
 						<td><?php echo $back['Nombre']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo '1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($back['FileName'], fecha_actual()); ?>" title="Descargar Backup" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo '1download.php?dir='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($back['FileName'], fecha_actual()); ?>" title="Descargar Backup" class="btn btn-primary btn-sm tooltip"><i class="fa fa-download" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

@@ -249,7 +249,7 @@ if(!empty($_GET['addOC'])){ ?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addDescuentos'])){?>
+} elseif(!empty($_GET['addDescuentos'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -312,7 +312,7 @@ if(!empty($_GET['addOC'])){ ?>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['editProd'])){?>
+}elseif(!empty($_GET['editProd'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -350,7 +350,7 @@ if(!empty($_GET['addOC'])){ ?>
 				?>
 
 				<script>
-					<?php if(isset($_SESSION['arriendos_ing_basicos']['idOcompra']) && $_SESSION['arriendos_ing_basicos']['idOcompra']!=''){?>
+					<?php if(isset($_SESSION['arriendos_ing_basicos']['idOcompra']) && $_SESSION['arriendos_ing_basicos']['idOcompra']!=''){ ?>
 						document.getElementById("div_idEquipo").style.display = 'none';
 						document.getElementById("div_idFrecuencia").style.display = 'none';
 						document.getElementById("div_idEquipo_fake").style.display = '';
@@ -374,7 +374,7 @@ if(!empty($_GET['addOC'])){ ?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['addProd'])){?>
+}elseif(!empty($_GET['addProd'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -539,6 +539,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_bodegas_arriendos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -688,7 +689,7 @@ $Form_Inputs = new Inputs(); ?>
 						<td class="meta-head"><strong>OC Relacionada</strong></td>
 						<td class="meta-head"><a href="<?php echo $location.'&addOC=true' ?>" title="Agregar Orden de Compra" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar OC</a></td>
 					</tr>
-					<?php if(isset($_SESSION['arriendos_ing_basicos']['idOcompra'])&&$_SESSION['arriendos_ing_basicos']['idOcompra']!=''){?>
+					<?php if(isset($_SESSION['arriendos_ing_basicos']['idOcompra'])&&$_SESSION['arriendos_ing_basicos']['idOcompra']!=''){ ?>
 						<tr>
 							<td class="meta-head">Orden de Compra</td>
 							<td><?php echo $_SESSION['arriendos_ing_basicos']['idOcompra']?></td>
@@ -722,10 +723,10 @@ $Form_Inputs = new Inputs(); ?>
 					</tr>
 					<?php
 					//Solo para facturas
-					if($_SESSION['arriendos_ing_basicos']['idDocumentos']==2){?>
+					if($_SESSION['arriendos_ing_basicos']['idDocumentos']==2){ ?>
 						<tr>
 							<td class="meta-head">Fecha Vencimiento</td>
-							<?php if($_SESSION['arriendos_ing_basicos']['Pago_fecha']!='0000-00-00'){?>
+							<?php if($_SESSION['arriendos_ing_basicos']['Pago_fecha']!='0000-00-00'){ ?>
 								<td><?php echo Fecha_estandar($_SESSION['arriendos_ing_basicos']['Pago_fecha']); ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
@@ -745,13 +746,13 @@ $Form_Inputs = new Inputs(); ?>
 								</td>
 							<?php } ?>
 						</tr>
-						<?php if(isset($_SESSION['arriendos_ing_basicos']['fecha_fact_desde'])&&$_SESSION['arriendos_ing_basicos']['fecha_fact_desde']!=''&&$_SESSION['arriendos_ing_basicos']['fecha_fact_desde']!='0'&&$_SESSION['arriendos_ing_basicos']['fecha_fact_desde']!='0000-00-00'){?>
+						<?php if(isset($_SESSION['arriendos_ing_basicos']['fecha_fact_desde'])&&$_SESSION['arriendos_ing_basicos']['fecha_fact_desde']!=''&&$_SESSION['arriendos_ing_basicos']['fecha_fact_desde']!='0'&&$_SESSION['arriendos_ing_basicos']['fecha_fact_desde']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Facturacion Desde</td>
 								<td colspan="2"><?php echo Fecha_estandar($_SESSION['arriendos_ing_basicos']['fecha_fact_desde'])?></td>
 							</tr>
 						<?php } ?>
-						<?php if(isset($_SESSION['arriendos_ing_basicos']['fecha_fact_hasta'])&&$_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']!=''&&$_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']!='0'&&$_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']!='0000-00-00'){?>
+						<?php if(isset($_SESSION['arriendos_ing_basicos']['fecha_fact_hasta'])&&$_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']!=''&&$_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']!='0'&&$_SESSION['arriendos_ing_basicos']['fecha_fact_hasta']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Facturacion Hasta</td>
 								<td colspan="2"><?php echo Fecha_estandar($_SESSION['arriendos_ing_basicos']['fecha_fact_hasta'])?></td>
@@ -861,7 +862,7 @@ $Form_Inputs = new Inputs(); ?>
 					<?php
 					if (isset($_SESSION['arriendos_ing_descuentos'])){
 						//recorro el lsiatdo entregado por la base de datos
-						foreach ($_SESSION['arriendos_ing_descuentos'] as $key => $producto){?>
+						foreach ($_SESSION['arriendos_ing_descuentos'] as $key => $producto){ ?>
 							<tr class="invoice-total" bgcolor="#f1f1f1">
 								<td class="item-name" colspan="4" align="right"><strong><?php echo $producto['Nombre']; ?></strong></td>
 								<td class="item-name" align="right">
@@ -956,7 +957,7 @@ $Form_Inputs = new Inputs(); ?>
 			if (isset($_SESSION['arriendos_ing_archivos'])){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
-				foreach ($_SESSION['arriendos_ing_archivos'] as $key => $producto){?>
+				foreach ($_SESSION['arriendos_ing_archivos'] as $key => $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
 						<td>
@@ -1039,6 +1040,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_bodegas_arriendos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -1202,13 +1204,13 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', 
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
 	<?php if ($rowlevel['level']>=3){ ?>
-		<?php if (isset($_SESSION['arriendos_ing_basicos']['idProveedor'])&&$_SESSION['arriendos_ing_basicos']['idProveedor']!=''){?>
+		<?php if (isset($_SESSION['arriendos_ing_basicos']['idProveedor'])&&$_SESSION['arriendos_ing_basicos']['idProveedor']!=''){ ?>
 
 			<?php
 			$ubicacion = $location.'&clear_all=true';
@@ -1317,7 +1319,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', 
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

@@ -199,7 +199,7 @@ $SIS_where.= " AND sistema_cross_analisis_embalaje.idSistema=".$_SESSION['usuari
 if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){ $SIS_where .= " AND sistema_cross_analisis_embalaje.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
 if(isset($_GET['Codigo']) && $_GET['Codigo']!=''){ $SIS_where .= " AND sistema_cross_analisis_embalaje.Codigo LIKE '%".EstandarizarInput($_GET['Codigo'])."%'";}
 if(isset($_GET['Peso']) && $_GET['Peso']!=''){     $SIS_where .= " AND sistema_cross_analisis_embalaje.Peso LIKE '%".EstandarizarInput($_GET['Peso'])."%'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idTipo', 'sistema_cross_analisis_embalaje', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -224,12 +224,12 @@ $arrUML = db_select_array (false, $SIS_query, 'sistema_cross_analisis_embalaje',
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Embalaje</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Embalaje</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -312,7 +312,7 @@ $arrUML = db_select_array (false, $SIS_query, 'sistema_cross_analisis_embalaje',
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $uml['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$uml['idTipo']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$uml['idTipo']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($uml['idTipo'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el embalaje '.$uml['Nombre'].'?'; ?>

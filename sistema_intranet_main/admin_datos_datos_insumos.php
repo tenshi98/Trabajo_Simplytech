@@ -173,24 +173,24 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						<li class=""><a href="<?php echo 'admin_datos_datos_configuracion.php'; ?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 						<li class=""><a href="<?php echo 'admin_datos_datos_temas.php'; ?>" ><i class="fa fa-tags" aria-hidden="true"></i> Temas</a></li>
 						<li class=""><a href="<?php echo 'admin_datos_datos_facturacion.php'; ?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Facturacion</a></li>
-						<?php if(isset($Count_OT)&&$Count_OT!=0){?>
+						<?php if(isset($Count_OT)&&$Count_OT!=0){ ?>
 							<li class=""><a href="<?php echo 'admin_datos_datos_ot.php'; ?>" ><i class="fa fa-cogs" aria-hidden="true"></i> OT</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'admin_datos_datos_imagen.php'; ?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Logo</a></li>
-						<?php if(isset($Count_OC)&&$Count_OC!=0){?>
+						<?php if(isset($Count_OC)&&$Count_OC!=0){ ?>
 							<li class=""><a href="<?php echo 'admin_datos_datos_oc.php'; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador OC</a></li>
 						<?php } ?>
-						<?php if(isset($Count_productos)&&$Count_productos!=0){?>
+						<?php if(isset($Count_productos)&&$Count_productos!=0){ ?>
 							<li class=""><a href="<?php echo 'admin_datos_datos_productos.php'; ?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Productos Usados</a></li>
 						<?php } ?>
-						<?php if(isset($Count_insumos)&&$Count_insumos!=0){?>
+						<?php if(isset($Count_insumos)&&$Count_insumos!=0){ ?>
 							<li class="active"><a href="<?php echo 'admin_datos_datos_insumos.php'; ?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Insumos Usados</a></li>
 						<?php } ?>
-						<?php if(isset($Count_Variedades)&&$Count_Variedades!=0){?>
+						<?php if(isset($Count_Variedades)&&$Count_Variedades!=0){ ?>
 							<li class=""><a href="<?php echo 'admin_datos_datos_variedades_especies.php'; ?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Especies</a></li>
 							<li class=""><a href="<?php echo 'admin_datos_datos_variedades_nombres.php'; ?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Variedades</a></li>
 						<?php } ?>
-						<?php if(isset($Count_Shipping)&&$Count_Shipping!=0){?>
+						<?php if(isset($Count_Shipping)&&$Count_Shipping!=0){ ?>
 							<li class=""><a href="<?php echo 'admin_datos_datos_cross.php'; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador CrossShipping</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'admin_datos_datos_social.php'; ?>" ><i class="fa fa-facebook-official" aria-hidden="true"></i> Social</a></li>
@@ -217,7 +217,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 									<?php if ( isset($productos['contar'])&&$productos['contar']!='0' ) { ?>
 										<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'?id='.$_SESSION['usuario']['basic_data']['idSistema'].'&sis_ins_del='.$productos['idpermiso']; ?>">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
-									<?php } else {?>
+									<?php } else { ?>
 										<a title="Quitar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'?id='.$_SESSION['usuario']['basic_data']['idSistema'].'&sis_ins_add='.$productos['idProducto']; ?>">ON</a>
 									<?php } ?>

@@ -81,7 +81,7 @@ if( ! defined('XMBCXRXSKGC')){
 			//generacion de errores
 			if($ndata_1>0) {  $error['ndata_1'] = 'error/Este trabajador ya tiene registrado su Ingreso-Egreso, favor revisar';}
 			/*******************************************************************/
-			
+
 			//si no hay errores
 			if(empty($error)){
 
@@ -212,4 +212,5 @@ if( ! defined('XMBCXRXSKGC')){
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

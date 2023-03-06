@@ -175,9 +175,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 	</div>
 </div>
 
-
-
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos
@@ -291,7 +288,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 	}else{
 		echo '<ul style="padding-left: 20px;">';
 	}
-    
+
     foreach ($array as $key => $value){
 		//Rearmo la ubicacion de acuerdo a la profundidad
 		if (isset($value['id'])){
@@ -331,7 +328,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 			echo '</div>';
 		}
         if (!empty($value) && is_array($value)){
-			
+
             echo arrayToUL($value, $lv, $rowlevel,$loc, $nmax);
         }
         echo '</li>';
@@ -346,7 +343,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Centro de Costo', $rowdata['Nombre'], 'Itemizado'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>

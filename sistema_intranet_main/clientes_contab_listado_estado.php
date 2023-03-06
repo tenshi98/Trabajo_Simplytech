@@ -85,7 +85,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'clientes_contab_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
-						<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){?>
+						<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
 							<li class=""><a href="<?php echo 'clientes_contab_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
 						<?php } ?>
 						<li class="active"><a href="<?php echo 'clientes_contab_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
@@ -108,11 +108,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<td><?php echo 'Cliente '.$rowdata['estado']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
-								<?php if ($rowlevel['level']>=2){?>
+								<?php if ($rowlevel['level']>=2){ ?>
 								   <?php if ( $rowdata['estado']=='Activo' ){ ?>
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idCliente'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
-								   <?php } else {?>
+								   <?php } else { ?>
 										<a class="btn btn-sm btn-info locked_active" href="#">OFF</a>
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idCliente'].'&estado='.simpleEncode(1, fecha_actual()) ; ?>" >ON</a>
 									<?php } ?>

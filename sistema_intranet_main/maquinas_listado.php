@@ -28,7 +28,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 
-//------------------------------------- Licitacion -------------------------------------// 
+//------------------------------------- Licitacion -------------------------------------//
 //formulario para crear
 if (!empty($_POST['submit_Maquina'])){
 	//Llamamos al formulario
@@ -65,7 +65,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['clone_idMaquina'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-	
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -103,26 +103,30 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn);
 }elseif(!empty($_GET['id'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 2, $dbConn);
-//se traen los datos basicos de la licitacion
-$query = "SELECT 
-maquinas_listado.Codigo, 
+
+/*******************************************************/
+// consulto los datos
+$SIS_query = '
+maquinas_listado.Codigo,
 maquinas_listado.Nombre,
-maquinas_listado.Modelo, 
-maquinas_listado.Serie, 
+maquinas_listado.Modelo,
+maquinas_listado.Serie,
 maquinas_listado.Fabricante,
 maquinas_listado.fincorporacion,
 maquinas_listado.Direccion_img,
-maquinas_listado.Descripcion, 
-maquinas_listado.FichaTecnica, 
-maquinas_listado.HDS, 
-maquinas_listado.idConfig_1, 
-maquinas_listado.idConfig_2, 
+maquinas_listado.Descripcion,
+maquinas_listado.FichaTecnica,
+maquinas_listado.HDS,
+maquinas_listado.idConfig_1,
+maquinas_listado.idConfig_2,
 maquinas_listado.idConfig_3,
+maquinas_listado.idConfig_4,
 
 core_estados.Nombre AS Estado,
 ops1.Nombre AS Componentes,
 ops2.Nombre AS Matriz,
 ops3.Nombre AS DependenciaCliente,
+ops4.Nombre AS UsoUbicacion,
 
 ubicacion_listado.Nombre AS Ubicacion,
 ubicacion_listado_level_1.Nombre AS Ubicacion_lvl_1,
@@ -131,36 +135,22 @@ ubicacion_listado_level_3.Nombre AS Ubicacion_lvl_3,
 ubicacion_listado_level_4.Nombre AS Ubicacion_lvl_4,
 ubicacion_listado_level_5.Nombre AS Ubicacion_lvl_5,
 
-clientes_listado.Nombre AS Cliente
-
-FROM `maquinas_listado`
+clientes_listado.Nombre AS Cliente';
+$SIS_join  = '
 LEFT JOIN `core_estados`                  ON core_estados.idEstado                 = maquinas_listado.idEstado
 LEFT JOIN `core_sistemas_opciones` ops1   ON ops1.idOpciones                       = maquinas_listado.idConfig_1
 LEFT JOIN `core_sistemas_opciones` ops2   ON ops2.idOpciones                       = maquinas_listado.idConfig_2
 LEFT JOIN `core_sistemas_opciones` ops3   ON ops3.idOpciones                       = maquinas_listado.idConfig_3
+LEFT JOIN `core_sistemas_opciones` ops4   ON ops4.idOpciones                       = maquinas_listado.idConfig_4
 LEFT JOIN `ubicacion_listado`             ON ubicacion_listado.idUbicacion         = maquinas_listado.idUbicacion
 LEFT JOIN `ubicacion_listado_level_1`     ON ubicacion_listado_level_1.idLevel_1   = maquinas_listado.idUbicacion_lvl_1
 LEFT JOIN `ubicacion_listado_level_2`     ON ubicacion_listado_level_2.idLevel_2   = maquinas_listado.idUbicacion_lvl_2
 LEFT JOIN `ubicacion_listado_level_3`     ON ubicacion_listado_level_3.idLevel_3   = maquinas_listado.idUbicacion_lvl_3
 LEFT JOIN `ubicacion_listado_level_4`     ON ubicacion_listado_level_4.idLevel_4   = maquinas_listado.idUbicacion_lvl_4
 LEFT JOIN `ubicacion_listado_level_5`     ON ubicacion_listado_level_5.idLevel_5   = maquinas_listado.idUbicacion_lvl_5
-LEFT JOIN `clientes_listado`              ON clientes_listado.idCliente            = maquinas_listado.idCliente
-
-WHERE maquinas_listado.idMaquina=".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+LEFT JOIN `clientes_listado`              ON clientes_listado.idCliente            = maquinas_listado.idCliente';
+$SIS_where = 'maquinas_listado.idMaquina = '.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 
 if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
@@ -188,56 +178,24 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 		$orderby.= ", maquinas_listado_level_".$i.".Codigo ASC";
 	}
 
-	//se hace la consulta
+	/*******************************************************/
+	// consulto los datos
+	$SIS_query = 'maquinas_listado_level_1.idLevel_1 AS bla'.$z;
+	$SIS_join  = $leftjoin;
+	$SIS_where = 'maquinas_listado_level_1.idMaquina='.$_GET['id'];
+	$SIS_order = 'maquinas_listado_level_1.Codigo ASC'.$orderby;
 	$arrItemizado = array();
-	$query = "SELECT
-	maquinas_listado_level_1.idLevel_1 AS bla
-	".$z."
-	FROM `maquinas_listado_level_1`
-	".$leftjoin."
-	WHERE maquinas_listado_level_1.idMaquina=".$_GET['id']."
-	ORDER BY maquinas_listado_level_1.Codigo ASC ".$orderby;
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)){
-	array_push( $arrItemizado,$row );
-	}
-	
-	
-	
-	/*********************************************************************/
+	$arrItemizado = db_select_array (false, $SIS_query, 'maquinas_listado_level_1', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrItemizado');
+
+	/*******************************************************/
 	// Se trae un listado con todos los tipos de componentes
+	$SIS_query = 'idUtilizable, Nombre';
+	$SIS_join  = '';
+	$SIS_where = '';
+	$SIS_order = 'idUtilizable ASC';
 	$arrTipos = array();
-	$query = "SELECT idUtilizable, Nombre
-	FROM `core_maquinas_tipo_componente`
-	ORDER BY idUtilizable ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)){
-	array_push( $arrTipos,$row );
-	}
+	$arrTipos = db_select_array (false, $SIS_query, 'core_maquinas_tipo_componente', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipos');
+
 	//Se crea el arreglo
 	$TipoMaq = array();
 	foreach($arrTipos as $tipo) {
@@ -245,33 +203,19 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 		$TipoMaq[$tipo['idUtilizable']]['Nombre']        = $tipo['Nombre'];
 	}
 	/*********************************************************************/
-	//Verifico el tipo de usuario que esta ingresando
-	$z="WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 	//Se crea el arreglo
 	$Trabajo = array();
 	//Creo el arreglo para saber los datos de las licitaciones
 	for ($i = 1; $i <= $nmax; $i++) {
-		// Se trae un listado con todos los datos
+		/*******************************************************/
+		// consulto los datos
+		$SIS_query = 'idLevel_'.$i.' AS lvl, idLicitacion, Nombre,Codigo';
+		$SIS_join  = '';
+		$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+		$SIS_order = 'Codigo ASC, Nombre ASC';
 		$arrTrabajo = array();
-		$query = "SELECT idLevel_".$i." AS lvl, idLicitacion, Nombre,Codigo
-		FROM `licitacion_listado_level_".$i."` ".$z."
-		ORDER BY Codigo ASC, Nombre ASC";
-		//Consulta
-		$resultado = mysqli_query ($dbConn, $query);
-		//Si ejecuto correctamente la consulta
-		if(!$resultado){
-			//Genero numero aleatorio
-			$vardata = genera_password(8,'alfanumerico');
-							
-			//Guardo el error en una variable temporal
-			$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-			$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-							
-		}
-		while ( $row = mysqli_fetch_assoc ($resultado)){
-		array_push( $arrTrabajo,$row );
-		}
+		$arrTrabajo = db_select_array (false, $SIS_query, 'licitacion_listado_level_'.$i, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTrabajo');
+
 		//se guardan los datos
 		foreach($arrTrabajo as $trab) {
 			$Trabajo[$trab['idLicitacion']][$i][$trab['lvl']]['Nombre']  = $trab['Nombre'];
@@ -298,17 +242,16 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			$t[$i]  = '';
 
 			//si el dato solicitado tiene valores sobreescribe la variable
-			if(isset($key['LVL_'.$i.'_id'])&&$key['LVL_'.$i.'_id']!=''){              $d[$i]  = $key['LVL_'.$i.'_id'];}  
-			if(isset($key['LVL_'.$i.'_Nombre'])&&$key['LVL_'.$i.'_Nombre']!=''){      $n[$i]  = $key['LVL_'.$i.'_Nombre'];}   
-			if(isset($key['LVL_'.$i.'_Codigo'])&&$key['LVL_'.$i.'_Codigo']!=''){      $c[$i]  = $key['LVL_'.$i.'_Codigo'];}
+			if(isset($key['LVL_'.$i.'_id'])&&$key['LVL_'.$i.'_id']!=''){                     $d[$i]  = $key['LVL_'.$i.'_id'];}
+			if(isset($key['LVL_'.$i.'_Nombre'])&&$key['LVL_'.$i.'_Nombre']!=''){             $n[$i]  = $key['LVL_'.$i.'_Nombre'];}
+			if(isset($key['LVL_'.$i.'_Codigo'])&&$key['LVL_'.$i.'_Codigo']!=''){             $c[$i]  = $key['LVL_'.$i.'_Codigo'];}
 			if(isset($key['LVL_'.$i.'_idUtilizable'])&&$key['LVL_'.$i.'_idUtilizable']!=''){ $u[$i]  = $key['LVL_'.$i.'_idUtilizable'];}
 			if(isset($key['LVL_'.$i.'_idLicitacion'])&&$key['LVL_'.$i.'_idLicitacion']!=''){ $x[$i]  = $key['LVL_'.$i.'_idLicitacion'];}
-			if(isset($key['LVL_'.$i.'_table'])&&$key['LVL_'.$i.'_table']!=''){        $y[$i]  = $key['LVL_'.$i.'_table'];}
+			if(isset($key['LVL_'.$i.'_table'])&&$key['LVL_'.$i.'_table']!=''){               $y[$i]  = $key['LVL_'.$i.'_table'];}
 			if(isset($key['LVL_'.$i.'_table_value'])&&$key['LVL_'.$i.'_table_value']!=''){   $m[$i]  = $key['LVL_'.$i.'_table_value'];}
-			if(isset($key['LVL_'.$i.'_imagen'])&&$key['LVL_'.$i.'_imagen']!=''){      $t[$i]  = $key['LVL_'.$i.'_imagen'];}
+			if(isset($key['LVL_'.$i.'_imagen'])&&$key['LVL_'.$i.'_imagen']!=''){             $t[$i]  = $key['LVL_'.$i.'_imagen'];}
 
 		}
-		
 
 		if( $d['1']!=''){
 			$array3d[$d['1']]['id']         = $d['1'];
@@ -545,26 +488,18 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Tabla']      = $y['25'];
 			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Valor']      = $m['25'];
 		}*/
-		
-		
-		
+
 	}
 
 
-
-
-
-
-
-	function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,$location, $nmax)
-	{
+	function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,$location, $nmax){
 		$lv++;
 		if($lv==1){
 			echo '<ul class="tree">';
 		}else{
 			echo '<ul style="padding-left: 20px;">';
 		}
-		
+
 		foreach ($array as $key => $value){
 			//Rearmo la ubicacion de acuerdo a la profundidad
 			if (isset($value['id'])){
@@ -588,14 +523,13 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							echo $Trabajo[$value['Licitacion']][$value['Tabla']][$value['Valor']]['Nombre'];
 							echo ')</strong>';
 						}
-					echo '</div>';		
+					echo '</div>';
 
-								
 					echo '<div class="clearfix"></div>';
 				echo '</div>';
 			}
 			if (!empty($value) && is_array($value)){
-				
+
 				echo arrayToUL($value, $TipoMaq, $Trabajo, $lv, $rowlevel,$loc, $nmax);
 			}
 			echo '</li>';
@@ -605,6 +539,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 //fin de la condicion
 }
+
 ?>
 
 
@@ -624,8 +559,14 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
+						<?php
+						//Dependencia Clientes
+						if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_datos_clientes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-users" aria-hidden="true"></i> Clientes</a></li>
+						<?php } ?>
+						<?php
+						//Uso Ubicacion
+						if(isset($rowdata['idConfig_4'])&&$rowdata['idConfig_4']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicacion</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'maquinas_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha Tecnica</a></li>
@@ -633,10 +574,14 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 						<li class=""><a href="<?php echo 'maquinas_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 						<li class=""><a href="<?php echo 'maquinas_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'maquinas_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
-						<?php if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+						<?php
+						//Uso de componentes
+						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Componentes</a></li>
 						<?php } ?>
-						<?php if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
+						<?php
+						//uso de matriz de analisis
+						if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
 
@@ -658,7 +603,9 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 						<p class="text-muted">
-							<?php if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
+							<?php
+							//Dependencia Clientes
+							if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
 								<strong>Cliente : </strong><?php echo $rowdata['Cliente']; ?><br/>
 							<?php } ?>
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
@@ -668,7 +615,9 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							<strong>Fabricante : </strong><?php echo $rowdata['Fabricante']; ?><br/>
 							<strong>Fecha incorporacion : </strong><?php echo fecha_estandar($rowdata['fincorporacion']); ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
-							<?php if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
+							<?php
+							//Dependencia Clientes
+							if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
 								<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=''){echo '<strong>Ubicacion : </strong>'.$rowdata['Ubicacion'];} ?>
 								<?php if(isset($rowdata['Ubicacion_lvl_1'])&&$rowdata['Ubicacion_lvl_1']!=''){echo ' - '.$rowdata['Ubicacion_lvl_1'];} ?>
 								<?php if(isset($rowdata['Ubicacion_lvl_2'])&&$rowdata['Ubicacion_lvl_2']!=''){echo ' - '.$rowdata['Ubicacion_lvl_2'];} ?>
@@ -682,7 +631,8 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 						<p class="text-muted">
 							<strong>Componentes : </strong><?php echo $rowdata['Componentes']; ?><br/>
 							<strong>Matriz de Analisis: </strong><?php echo $rowdata['Matriz']; ?><br/>
-							<strong>Dependencia Cliente: </strong><?php echo $rowdata['DependenciaCliente']; ?>
+							<strong>Dependencia Cliente: </strong><?php echo $rowdata['DependenciaCliente']; ?><br/>
+							<strong>Uso Ubicacion: </strong><?php echo $rowdata['UsoUbicacion']; ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripcion</h2>
@@ -723,14 +673,13 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 								?>
 							</tbody>
 						</table>
-						
-						
 
-						
 					</div>
 					<div class="clearfix"></div>
 
-					<?php if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+					<?php
+						//Uso de componentes
+						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<tr>
@@ -745,7 +694,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 										<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 											<div class="modal-dialog">
-												<div class="modal-content">              
+												<div class="modal-content">
 													<div class="modal-body">
 														<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 														<img src="" class="imagepreview" style="width: 100%;padding: 15px;" >
@@ -757,8 +706,8 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 											$(function() {
 													$('.pop').on('click', function() {
 														$('.imagepreview').attr('src',$(this).attr('src'));
-														$('#imagemodal').modal('show');   
-													});		
+														$('#imagemodal').modal('show');
+													});
 											});
 										</script>
 									</td>
@@ -772,11 +721,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 		</div>
 	</div>
-</div>	
-	
-
-
-
+</div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -788,10 +733,6 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 } elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
-//se crea filtro
-//verifico que sea un administrador
-$w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
-$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 ?>
 
@@ -806,15 +747,13 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 				<?php
 				//Se verifican si existen los datos
-				//if(isset($idCliente)){  $x1  = $idCliente;   }else{$x1  = '';}
-				if(isset($Codigo)){     $x2  = $Codigo;      }else{$x2  = '';}
-				if(isset($Nombre)){     $x3  = $Nombre;      }else{$x3  = '';}
+				if(isset($Codigo)){     $x1  = $Codigo;      }else{$x1  = '';}
+				if(isset($Nombre)){     $x2  = $Nombre;      }else{$x2  = '';}
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				//$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
-				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 1);
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x3, 2);
+				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x1, 1);
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -831,7 +770,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 			</form>
 			<?php widget_validator(); ?>
-                    
+
 		</div>
 	</div>
 </div>
@@ -865,15 +804,13 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 }
 /**********************************************************/
 //Verifico el tipo de usuario que esta ingresando
-$w         = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
-$y         = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $SIS_where = "maquinas_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){  $SIS_where .= " AND maquinas_listado.idCliente=".$_GET['idCliente'];}
-if(isset($_GET['Codigo']) && $_GET['Codigo']!=''){ $SIS_where .= " AND maquinas_listado.Codigo LIKE '%".EstandarizarInput($_GET['Codigo'])."%'";}
-if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){ $SIS_where .= " AND maquinas_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
-				
+if(isset($_GET['Codigo']) && $_GET['Codigo']!=''){        $SIS_where .= " AND maquinas_listado.Codigo LIKE '%".EstandarizarInput($_GET['Codigo'])."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){        $SIS_where .= " AND maquinas_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idMaquina', 'maquinas_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -904,12 +841,12 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Maquina</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Maquina</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -925,11 +862,10 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter('Cliente','idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
+				$Form_Inputs->form_select_filter('Cliente','idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado=1', 0, $dbConn);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x1, 1);
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 1); 
-				
-				
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 1);
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 
@@ -943,8 +879,8 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
-                                 
+<div class="clearfix"></div>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -1001,9 +937,9 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $maq['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 140px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_maquinas.php?view='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&nombre_maquina='.$maq['Nombre'].'&clone_idMaquina='.$maq['idMaquina']; ?>" title="Clonar Maquina" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$maq['idMaquina']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_maquinas.php?view='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&nombre_maquina='.$maq['Nombre'].'&clone_idMaquina='.$maq['idMaquina']; ?>" title="Clonar Maquina" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$maq['idMaquina']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($maq['idMaquina'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el registro '.$maq['Nombre'].'?'; ?>

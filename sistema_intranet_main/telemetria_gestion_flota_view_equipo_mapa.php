@@ -142,7 +142,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
 
-							<?php if(isset($rowdata['LimiteVelocidad'])&&$rowdata['LimiteVelocidad']!=0){?>
+							<?php if(isset($rowdata['LimiteVelocidad'])&&$rowdata['LimiteVelocidad']!=0){ ?>
 								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 									<thead>
 										<tr role="row">

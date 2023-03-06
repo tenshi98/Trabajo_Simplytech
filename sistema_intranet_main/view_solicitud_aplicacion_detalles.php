@@ -331,7 +331,7 @@ document.getElementById("loading").style.display = "none";
 						console.error('oops, something went wrong!', error);
 						alert('No se puede exportar!');
 						document.getElementById("loading").style.display = "none";
-					});		
+					});
 				}
 			, 3000);
 		}

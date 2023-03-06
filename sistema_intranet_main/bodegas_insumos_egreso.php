@@ -523,7 +523,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){?>
+} elseif(!empty($_GET['view'])){ ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
@@ -596,7 +596,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				<?php
 				if (isset($_SESSION['insumos_egr_productos'])){
 					//recorro el lsiatdo entregado por la base de datos
-					foreach ($_SESSION['insumos_egr_productos'] as $key => $producto){?>
+					foreach ($_SESSION['insumos_egr_productos'] as $key => $producto){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="4">
 								<?php echo Cantidades_decimales_justos($producto['Number']).' '.$producto['Unimed'].' de '.$producto['Nombre']; ?>
@@ -640,7 +640,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 			if (isset($_SESSION['insumos_egr_archivos'])){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
-				foreach ($_SESSION['insumos_egr_archivos'] as $key => $producto){?>
+				foreach ($_SESSION['insumos_egr_archivos'] as $key => $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
 						<td>
@@ -676,6 +676,7 @@ $z2 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstad
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z1 .= " AND usuarios_bodegas_insumos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -785,13 +786,13 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
 	<?php if ($rowlevel['level']>=3){ ?>
-		<?php if (isset($_SESSION['insumos_egr_basicos']['idBodega'])&&$_SESSION['insumos_egr_basicos']['idBodega']!=''){?>
+		<?php if (isset($_SESSION['insumos_egr_basicos']['idBodega'])&&$_SESSION['insumos_egr_basicos']['idBodega']!=''){ ?>
 
 			<?php
 			$ubicacion = $location.'&clear_all=true';
@@ -876,7 +877,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

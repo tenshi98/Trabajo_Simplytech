@@ -134,7 +134,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(isset($error1)&&$error1!=''){echo notifications_list($error1);};
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['addDetalle'])){?>
+if(!empty($_GET['addDetalle'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -170,7 +170,7 @@ if(!empty($_GET['addDetalle'])){?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*}elseif(!empty($_GET['lock_cuartel'])){?>
+/*}elseif(!empty($_GET['lock_cuartel'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -265,7 +265,7 @@ $SIS_where = 'idEstado=1';
 $SIS_order = 'idProducto ASC';
 $arrTipo = array();
 $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
-	
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -348,7 +348,7 @@ $SIS_where = 'idEstado=1';
 $SIS_order = 'idProducto ASC';
 $arrTipo = array();
 $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
-	
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -437,7 +437,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$w .= " AND telemetria_listado.idTab=1";//CrossChecking		
-}	
+}
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -1109,7 +1110,7 @@ foreach ($arrProductos as $prod) {
 						<td class="meta-head">Estado Fenológico</td>
 						<td><?php echo $row_data['EstadoFenCodigo'].' '.$row_data['EstadoFenNombre']?></td>
 					</tr>
-					<?php if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){?>
+					<?php if(isset($row_data['VariedadCat'])&&$row_data['VariedadCat']!=''){ ?>
 						<tr>
 							<td class="meta-head">Especie - Variedad</td>
 							<td>
@@ -1176,7 +1177,7 @@ foreach ($arrProductos as $prod) {
 						<td class="meta-head">Fecha termino requerido</td>
 						<td><?php echo fecha_estandar($row_data['f_programacion_fin']).' '.$row_data['horaProg_fin']?></td>
 					</tr>
-					<?php if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){?>
+					<?php if(isset($row_data['f_ejecucion'])&&$row_data['f_ejecucion']!='0000-00-00'){ ?>
 						<tr>
 							<td class="meta-head">Fecha inicio programación</td>
 							<td><?php echo fecha_estandar($row_data['f_ejecucion']).' '.$row_data['horaEjecucion']?></td>
@@ -1186,7 +1187,7 @@ foreach ($arrProductos as $prod) {
 							<td><?php echo fecha_estandar($row_data['f_ejecucion_fin']).' '.$row_data['horaEjecucion_fin']?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){?>
+					<?php if(isset($row_data['f_termino'])&&$row_data['f_termino']!='0000-00-00'){ ?>
 						<tr>
 							<td class="meta-head">Fecha inicio ejecución</td>
 							<td><?php echo fecha_estandar($row_data['f_termino']).' '.$row_data['horaTermino']?></td>
@@ -1196,7 +1197,7 @@ foreach ($arrProductos as $prod) {
 							<td><?php echo fecha_estandar($row_data['f_termino_fin']).' '.$row_data['horaTermino_fin']?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){?>
+					<?php if(isset($row_data['idDosificador'])&&$row_data['idDosificador']!=0){ ?>
 						<tr>
 							<td class="meta-head">Dosificador</td>
 							<td><?php echo $row_data['TrabajadorRut'].' '.$row_data['TrabajadorNombre'].' '.$row_data['TrabajadorApellidoPat']?></td>
@@ -1225,7 +1226,7 @@ foreach ($arrProductos as $prod) {
 				<?php
 					//recorro el lsiatdo entregado por la base de datos
 					if ($arrMateriales!=false && !empty($arrMateriales) && $arrMateriales!='') {
-						foreach ($arrMateriales as $prod) {?>
+						foreach ($arrMateriales as $prod) { ?>
 						
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="6"><i class="fa fa-eyedropper" aria-hidden="true"></i> <?php echo $prod['Nombre']; ?></td>
@@ -1293,7 +1294,7 @@ foreach ($arrProductos as $prod) {
 							<?php 
 							if($arrTrac[$cuartel['idCuarteles']]){
 								//Se recorren los tractores
-								foreach ($arrTrac[$cuartel['idCuarteles']] as $tract){?>
+								foreach ($arrTrac[$cuartel['idCuarteles']] as $tract){ ?>
 
 									<tr class="item-row linea_punteada">
 										<td class="item-name" colspan="2"><i class="fa fa-truck" aria-hidden="true"></i> <?php echo '<strong>Tractor: </strong>'.$tract['Nombre']; ?></td>
@@ -1316,7 +1317,7 @@ foreach ($arrProductos as $prod) {
 							}
 							if($arrProd[$cuartel['idCuarteles']]){
 								//Se recorren los quimicos a utilizar
-								foreach ($arrProd[$cuartel['idCuarteles']] as $prod){?>
+								foreach ($arrProd[$cuartel['idCuarteles']] as $prod){ ?>
 
 									<tr class="item-row linea_punteada">
 										<td class="item-name" colspan="5">
@@ -1370,7 +1371,7 @@ foreach ($arrProductos as $prod) {
 					<th colspan="6">Observacion</th>
 				</tr>
 
-				<?php foreach ($arrHistorial as $doc){?>
+				<?php foreach ($arrHistorial as $doc){ ?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Estado']; ?></td>

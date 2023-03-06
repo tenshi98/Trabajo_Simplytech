@@ -177,7 +177,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 									var locations = [
 										<?php foreach ( $arrEquipos as $pos ) {
-											if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){?>
+											if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){ ?>
 											['<?php echo $pos['idTabla']; ?>', <?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>],
 										<?php }
 										} ?>

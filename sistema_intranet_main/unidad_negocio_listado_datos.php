@@ -85,10 +85,14 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 						<li class=""><a href="<?php echo 'unidad_negocio_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
-						<?php if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+						<?php
+						//Uso de componentes
+						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
 							<li class=""><a href="<?php echo 'unidad_negocio_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Componentes</a></li>
 						<?php } ?>
-						<?php if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
+						<?php
+						//uso de matriz de analisis
+						if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
 							<li class=""><a href="<?php echo 'unidad_negocio_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
 
@@ -115,9 +119,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
 					$Form_Inputs->form_input_text('Codigo', 'Codigo', $x2, 1);
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x3, 2);
-					$Form_Inputs->form_input_text('Modelo', 'Modelo', $x4, 1); 
-					$Form_Inputs->form_input_text('Serie', 'Serie', $x5, 1); 
-					$Form_Inputs->form_input_text('Fabricante', 'Fabricante', $x6, 1); 
+					$Form_Inputs->form_input_text('Modelo', 'Modelo', $x4, 1);
+					$Form_Inputs->form_input_text('Serie', 'Serie', $x5, 1);
+					$Form_Inputs->form_input_text('Fabricante', 'Fabricante', $x6, 1);
 					$Form_Inputs->form_date('Fecha de Incorporacion','fincorporacion', $x7, 1); 
 					
 					
@@ -125,7 +129,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);
 					$Form_Inputs->form_input_hidden('FakeidCliente', $rowdata['idCliente'], 2);
-						 
+
 					?>
 
 					<div class="form-group">

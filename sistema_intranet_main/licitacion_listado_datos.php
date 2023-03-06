@@ -130,7 +130,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idLicitacion', $_GET['id'], 2);
-						 
+
 					?>
 					<script>
 						document.getElementById('div_ValorMensual').style.display = 'none';

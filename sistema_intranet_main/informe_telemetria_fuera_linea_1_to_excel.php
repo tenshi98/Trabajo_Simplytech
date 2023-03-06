@@ -24,7 +24,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Inicia variable
-$SIS_where  = "telemetria_listado_error_fuera_linea.idFueraLinea>0"; 
+$SIS_where  = "telemetria_listado_error_fuera_linea.idFueraLinea>0";
 $SIS_where .= " AND telemetria_listado.id_Geo='1'";
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
@@ -39,7 +39,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$SIS_where .= " AND telemetria_listado_error_fuera_linea.idTelemetria='".$_GET['idTelemetria']."'";
 }
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where .= " AND telemetria_listado_error_fuera_linea.idSistema=".$_GET['idSistema'];	
+$SIS_where .= " AND telemetria_listado_error_fuera_linea.idSistema=".$_GET['idSistema'];
 /********************************************************************/
 //Se consulta
 $SIS_query = '

@@ -120,7 +120,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_input_number('N° Dias', 'N_Dias', $x4, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observacion', $x5, 1);
 
-				if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){?>
+				if(isset($rowdata['File_Licencia'])&&$rowdata['File_Licencia']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<h3>Archivo</h3>
@@ -253,7 +253,7 @@ if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){     $SIS_where .= " AND
 if(isset($_GET['Fecha_inicio']) && $_GET['Fecha_inicio']!=''){      $SIS_where .= " AND trabajadores_licencias.Fecha_inicio=".$_GET['Fecha_inicio'];}
 if(isset($_GET['Fecha_termino']) && $_GET['Fecha_termino']!=''){    $SIS_where .= " AND trabajadores_licencias.Fecha_termino=".$_GET['Fecha_termino'];}
 if(isset($_GET['N_Dias']) && $_GET['N_Dias']!=''){           $SIS_where .= " AND trabajadores_licencias.N_Dias=".$_GET['N_Dias'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idLicencia', 'trabajadores_licencias', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -286,12 +286,12 @@ $arrInasHoras = db_select_array (false, $SIS_query, 'trabajadores_licencias', $S
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Licencia</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Licencia</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -387,11 +387,11 @@ $arrInasHoras = db_select_array (false, $SIS_query, 'trabajadores_licencias', $S
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $plan['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_licencia.php?view='.simpleEncode($plan['idLicencia'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_licencia.php?view='.simpleEncode($plan['idLicencia'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php
 								//mientras no haya sido utilizado se puede modificar y borrar el dato
 								if(isset($plan['idUso'])&&$plan['idUso']==1){ ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$plan['idLicencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$plan['idLicencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($plan['idLicencia'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la licencia del '.fecha_estandar($plan['Fecha_inicio']).'?'; ?>

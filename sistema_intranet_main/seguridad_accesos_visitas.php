@@ -145,7 +145,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 												  'Nivel 5', 'idUbicacion_lvl_5',  $x12,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 												  $dbConn, 'form1');
 				$Form_Inputs->form_input_text('Persona Reunion', 'PersonaReunion', $x13, 2);
-				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
+				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 					  <img src="upload/<?php echo $rowdata['Direccion_img'] ?>" width="100%" >
@@ -315,7 +315,7 @@ if(isset($_GET['idUbicacion_lvl_4']) && $_GET['idUbicacion_lvl_4']!=''){   $SIS_
 if(isset($_GET['idUbicacion_lvl_5']) && $_GET['idUbicacion_lvl_5']!=''){   $SIS_where .= " AND seguridad_accesos.idUbicacion_lvl_5='".$_GET['idUbicacion_lvl_5']."'";}
 if(isset($_GET['PersonaReunion']) && $_GET['PersonaReunion']!=''){  $SIS_where .= " AND seguridad_accesos.PersonaReunion LIKE '%".EstandarizarInput($_GET['PersonaReunion'])."%'";}
 if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){              $SIS_where .= " AND seguridad_accesos.idEstado='".$_GET['idEstado']."'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idAcceso', 'seguridad_accesos', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -362,12 +362,12 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_accesos', $SIS_join, $
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Acceso</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Acceso</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -534,13 +534,13 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_accesos', $SIS_join, $
 								?>
 							</td>
 							<td><?php echo $tipo['PersonaReunion']; ?></td>
-							<td><label class="label <?php if(isset($tipo['idEstado'])&&$tipo['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $tipo['Estado']; ?></label></td>	
+							<td><label class="label <?php if(isset($tipo['idEstado'])&&$tipo['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $tipo['Estado']; ?></label></td>
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_seguridad_accesos.php?view='.simpleEncode($tipo['idAcceso'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($tipo['Fecha']==fecha_actual()){?>
-										<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idAcceso']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_seguridad_accesos.php?view='.simpleEncode($tipo['idAcceso'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($tipo['Fecha']==fecha_actual()){ ?>
+										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$tipo['idAcceso']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($tipo['idAcceso'], fecha_actual());

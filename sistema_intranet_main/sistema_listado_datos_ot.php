@@ -158,6 +158,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$Count_Variedades   = $rowdata_x['tran_31'] + $rowdata_x['tran_32'] + $rowdata_x['tran_33'] + $rowdata_x['tran_34'];
 	$Count_Shipping     = $rowdata_x['tran_35'] + $rowdata_x['tran_36'] + $rowdata_x['tran_37'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -178,24 +179,24 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 						<li class=""><a href="<?php echo 'sistema_listado_datos_contrato.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-briefcase" aria-hidden="true"></i> Datos Contrato</a></li>
 						<li class=""><a href="<?php echo 'sistema_listado_datos_temas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-tags" aria-hidden="true"></i> Temas</a></li>
 						<li class=""><a href="<?php echo 'sistema_listado_datos_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
-						<?php if(isset($Count_OT)&&$Count_OT!=0){?>
+						<?php if(isset($Count_OT)&&$Count_OT!=0){ ?>
 							<li class="active"><a href="<?php echo 'sistema_listado_datos_ot.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-cogs" aria-hidden="true"></i> OT</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'sistema_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Logo</a></li>
-						<?php if(isset($Count_OC)&&$Count_OC!=0){?>
+						<?php if(isset($Count_OC)&&$Count_OC!=0){ ?>
 							<li class=""><a href="<?php echo 'sistema_listado_datos_oc.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador OC</a></li>
 						<?php } ?>
-						<?php if(isset($Count_productos)&&$Count_productos!=0){?>
+						<?php if(isset($Count_productos)&&$Count_productos!=0){ ?>
 							<li class=""><a href="<?php echo 'sistema_listado_datos_productos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Productos Usados</a></li>
 						<?php } ?>
-						<?php if(isset($Count_insumos)&&$Count_insumos!=0){?>
+						<?php if(isset($Count_insumos)&&$Count_insumos!=0){ ?>
 							<li class=""><a href="<?php echo 'sistema_listado_datos_insumos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Insumos Usados</a></li>
 						<?php } ?>
-						<?php if(isset($Count_Variedades)&&$Count_Variedades!=0){?>
+						<?php if(isset($Count_Variedades)&&$Count_Variedades!=0){ ?>
 							<li class=""><a href="<?php echo 'sistema_listado_datos_variedades_especies.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Especies</a></li>
 							<li class=""><a href="<?php echo 'sistema_listado_datos_variedades_nombres.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-recycle" aria-hidden="true"></i> Variedades</a></li>
 						<?php } ?>
-						<?php if(isset($Count_Shipping)&&$Count_Shipping!=0){?>
+						<?php if(isset($Count_Shipping)&&$Count_Shipping!=0){ ?>
 							<li class=""><a href="<?php echo 'sistema_listado_datos_cross.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Aprobador CrossShipping</a></li>
 							<li class=""><a href="<?php echo 'sistema_listado_datos_cross_aprobadas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Cross Shipping Correos Aprobados</a></li>
 						<?php } ?>

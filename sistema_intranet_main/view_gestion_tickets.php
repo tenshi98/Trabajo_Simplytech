@@ -105,7 +105,7 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_tickets', $SIS_join, $SIS
 		</div>
 	</div>
 
-	<?php if(isset($rowdata['FechaCierre'])&&$rowdata['FechaCierre']!='0000-00-00'){?>
+	<?php if(isset($rowdata['FechaCierre'])&&$rowdata['FechaCierre']!='0000-00-00'){ ?>
 		<div class="col-xs-12">
 			<div class="row">
 				<p class="lead"><a name="Ancla_obs"></a>Solucion (<?php echo fecha_estandar($rowdata['FechaCierre']); ?>)</p>
@@ -114,7 +114,7 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_tickets', $SIS_join, $SIS
 		</div>
 	<?php } ?>
 
-	<?php if(isset($rowdata['FechaCancelacion'])&&$rowdata['FechaCancelacion']!='0000-00-00'){?>
+	<?php if(isset($rowdata['FechaCancelacion'])&&$rowdata['FechaCancelacion']!='0000-00-00'){ ?>
 		<div class="col-xs-12">
 			<div class="row">
 				<p class="lead"><a name="Ancla_obs"></a>Solucion (<?php echo fecha_estandar($rowdata['FechaCancelacion']); ?>)</p>

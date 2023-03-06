@@ -74,7 +74,7 @@ $rowdata = db_select_data (false, $SIS_query, 'prospectos_etapa_fidelizacion', $
 				</div>
 			</p>
             
-            <?php if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){?>
+            <?php if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){ ?>
 				<h2 class="text-primary">Archivo</h2>
 				<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 					<?php echo preview_docs(DB_SITE_REPO.DB_SITE_MAIN_PATH, 'upload/'.$rowdata['Archivo'], ''); ?>

@@ -588,4 +588,5 @@ function SuperficieDisponibleCasas($idUniMed, $SupDisp, $UniMed){
 		return $data;
 	}
 }
+
 ?>

@@ -105,11 +105,11 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 						<td><?php echo 'Trabajador '.$rowdata['Estado']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 100px;" id="toggle_event_editing">
-								<?php if ($rowlevel['level']>=2){?>
+								<?php if ($rowlevel['level']>=2){ ?>
 									<?php if ( $rowdata['idEstado']==1 ){ ?>
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idTrabajador'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 										<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
-									<?php } else {?>
+									<?php } else { ?>
 										<a class="btn btn-sm btn-info locked_active" href="#">OFF</a>
 										<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idTrabajador'].'&estado='.simpleEncode(1, fecha_actual()) ; ?>">ON</a>
 									<?php } ?>

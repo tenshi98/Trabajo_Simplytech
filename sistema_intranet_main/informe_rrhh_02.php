@@ -57,7 +57,7 @@ if(isset($_GET['Creacion_ano'])&&$_GET['Creacion_ano']!=''){
 if(isset($_GET['Creacion_mes'])&&$_GET['Creacion_mes']!=''){  
 	$z1.=" AND rrhh_sueldos_facturacion_trabajadores.idTrabajador=".$_GET['Creacion_mes'];
 }
-				
+
 /*************************************************************************************/
 // Se trae un listado con todos los trabajadores
 $arrTrabajador = array();
@@ -100,7 +100,7 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 									<td align="right"><?php echo valores($TotalPagar, 0); ?></td>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_rrhh_sueldos.php?view='.simpleEncode($tipo['idFactTrab'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_rrhh_sueldos.php?view='.simpleEncode($tipo['idFactTrab'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 										</div>
 									</td>
 								</tr>

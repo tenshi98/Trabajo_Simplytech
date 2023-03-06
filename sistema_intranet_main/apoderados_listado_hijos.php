@@ -124,7 +124,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_date('FNacimiento','FNacimiento', $x6, 1);
 				$Form_Inputs->form_select_filter('Colegio','idColegio', $x7, 2, 'idColegio', 'Nombre', 'colegios_listado', 'idEstado=1', '',$dbConn);
 
-				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
+				if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 					  <img src="upload/<?php echo $rowdata['Direccion_img'] ?>" width="100%" >
@@ -265,7 +265,7 @@ array_push( $arrCargas,$row );
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Apoderado', $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat'], 'Hijos'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Hijo</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Hijo</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -325,7 +325,7 @@ array_push( $arrCargas,$row );
 							<td><?php echo $carga['Sexo']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$carga['idHijos']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$carga['idHijos']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($carga['idHijos'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la carga '.$carga['Nombre'].' '.$carga['ApellidoPat'].'?'; ?>

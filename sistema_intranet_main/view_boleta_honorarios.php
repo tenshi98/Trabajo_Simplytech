@@ -194,7 +194,7 @@ $arrPagosProv = array();
 $arrPagosProv = db_select_array (false, $SIS_query, 'pagos_boletas_empresas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPagosProv');
 
 //Si el documento esta pagado se muestran los datos relacionados al pago
-if($row_data['MontoPagado']!=0){?>
+if($row_data['MontoPagado']!=0){ ?>
 	<div class="" style="margin-top:10px;">
 		<div class="col-xs-12">
 			<div class="panel panel-success">
@@ -465,19 +465,19 @@ if($row_data['MontoPagado']!=0){?>
 			</table>
 			<table class="table">
 				<tbody>
-					<?php if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){?>
+					<?php if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong>Total Honorarios</strong></td>
 							<td width="160" align="right"><?php echo Valores($row_data['ValorNeto'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto'])&&$row_data['Impuesto']!=0){?>
+					<?php if(isset($row_data['Impuesto'])&&$row_data['Impuesto']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $row_data['Porcentaje_Ret_Boletas'].'%'; ?> Impuesto Retenido</strong></td>
 							<td width="160" align="right"><?php echo Valores($row_data['Impuesto'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){?>
+					<?php if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong>Total</strong></td>
 							<td align="right"><?php echo Valores($row_data['ValorTotal'], 0); ?></td>
@@ -497,7 +497,7 @@ if($row_data['MontoPagado']!=0){?>
 
 	<?php
 	//Gasto de Productos
-	if($row_data['idTipo']==3){?>
+	if($row_data['idTipo']==3){ ?>
 		<div class="row firma">
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont"><p>Firma Emisor</p></div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont" style="left:50%;"><p>Firma Trabajador</p></div>
@@ -506,7 +506,7 @@ if($row_data['MontoPagado']!=0){?>
 
 	<?php
 	//Traspaso de Productos a otra Empresa
-	if($row_data['idTipo']==6){?>
+	if($row_data['idTipo']==6){ ?>
 		<div class="row firma">
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont"><p>Firma Transportista</p></div>
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont" style="left:50%;"><p>Firma Receptor</p></div>
@@ -544,7 +544,7 @@ if($row_data['MontoPagado']!=0){?>
 					<th>Usuario</th>
 					<th>Observacion</th>
 				</tr>
-				<?php foreach ($arrHistorial as $doc){?>
+				<?php foreach ($arrHistorial as $doc){ ?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
@@ -561,7 +561,7 @@ if($row_data['MontoPagado']!=0){?>
 				<tr>
 					<th colspan="6">Archivos Adjuntos</th>
 				</tr>
-				<?php foreach ($arrArchivo as $producto){?>
+				<?php foreach ($arrArchivo as $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
 						<td width="160">

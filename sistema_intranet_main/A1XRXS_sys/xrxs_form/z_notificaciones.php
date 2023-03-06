@@ -95,7 +95,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_update_data (false, $SIS_data, 'principal_notificaciones_ver', 'idNoti = "'.$id.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&aprobar_uno=true' );
 					die;
 				
@@ -119,7 +119,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_update_data (false, $SIS_data, 'principal_notificaciones_ver', 'idUsuario = "'.$all.'"  AND idEstado=1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&aprobar_todos=true' );
 					die;
 				
@@ -237,11 +237,11 @@ require_once '0_validate_user_1.php';
 		case 'enviar_filtro':
 
 			$z = '&filtro=true';
-			if(isset($idTipoUsuario)&&$idTipoUsuario!='') {    $z .= '&idTipoUsuario='.$idTipoUsuario;}  
+			if(isset($idTipoUsuario)&&$idTipoUsuario!='') {    $z .= '&idTipoUsuario='.$idTipoUsuario;}
 			if(isset($Nombre)&&$Nombre!='') {                  $z .= '&Nombre='.$Nombre;} 
 			if(isset($rango_a)&&$rango_a!='') {                $z .= '&rango_a='.$rango_a;}  
-            if(isset($rango_b)&&$rango_b!='') {                $z .= '&rango_b='.$rango_b;}  
-			if(isset($idCiudad)&&$idCiudad!='') {              $z .= '&idCiudad='.$idCiudad; }  
+            if(isset($rango_b)&&$rango_b!='') {                $z .= '&rango_b='.$rango_b;}
+			if(isset($idCiudad)&&$idCiudad!='') {              $z .= '&idCiudad='.$idCiudad; }
 			if(isset($idComuna)&&$idComuna!='') {              $z .= '&idComuna='.$idComuna; } 
 			if(isset($Direccion)&&$Direccion!='') {            $z .= '&Direccion='.$Direccion;} 
 			if(isset($idSistema)&&$idSistema!='') {            $z .= '&idSistema='.$idSistema;}  
@@ -366,4 +366,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

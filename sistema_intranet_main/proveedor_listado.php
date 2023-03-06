@@ -132,7 +132,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
 						<li class=""><a href="<?php echo 'proveedor_listado_datos_persona_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-volume-control-phone" aria-hidden="true"></i> Persona Contacto</a></li>
-						<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){?>
+						<?php if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
 							<li class=""><a href="<?php echo 'proveedor_listado_datos_comerciales.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Comerciales</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'proveedor_listado_datos_facturacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Datos Facturacion</a></li>
@@ -153,11 +153,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								<strong>Tipo de Proveedor : </strong><?php echo $rowdata['tipoCliente']; ?><br/>
 								<?php
 								//Si el cliente es una empresa
-								if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){?>
+								if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
 									<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
 								<?php
 								//si es una persona
-								}else{?>
+								}else{ ?>
 									<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>
 									<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 								<?php } ?>
@@ -172,7 +172,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 							<?php
 							//Si el proveedor es una empresa
-							if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){?>
+							if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
 								<p class="text-muted word_break">
 									<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
@@ -273,7 +273,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 2,'fa fa-map'); 
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 2,'fa fa-map');
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -368,7 +368,7 @@ if(isset($_GET['idCiudad']) && $_GET['idCiudad']!=''){$SIS_where .= " AND provee
 if(isset($_GET['idComuna']) && $_GET['idComuna']!=''){$SIS_where .= " AND proveedor_listado.idComuna=".$_GET['idComuna'];}
 if(isset($_GET['Direccion']) && $_GET['Direccion']!=''){     $SIS_where .= " AND proveedor_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";}
 if(isset($_GET['Giro']) && $_GET['Giro']!=''){        $SIS_where .= " AND proveedor_listado.Giro LIKE '%".EstandarizarInput($_GET['Giro'])."%'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idProveedor', 'proveedor_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -396,12 +396,12 @@ $arrUsers = db_select_array (false, $SIS_query, 'proveedor_listado', $SIS_join, 
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Proveedor</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Proveedor</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -431,7 +431,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'proveedor_listado', $SIS_join, 
 				$Form_Inputs->form_select_depend1('Region','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 1,'fa fa-map'); 
+				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 1,'fa fa-map');
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x10, 1,'fa fa-industry');
 
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
@@ -497,8 +497,8 @@ $arrUsers = db_select_array (false, $SIS_query, 'proveedor_listado', $SIS_join, 
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_proveedor.php?view='.simpleEncode($usuarios['idProveedor'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idProveedor']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_proveedor.php?view='.simpleEncode($usuarios['idProveedor'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idProveedor']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idProveedor'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar al cliente '.$usuarios['Nombre'].'?'; ?>

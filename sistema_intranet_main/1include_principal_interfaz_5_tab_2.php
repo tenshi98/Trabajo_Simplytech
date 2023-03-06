@@ -98,7 +98,7 @@ $arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablare
 						<li class="<?php echo $xactive; ?>"><a href="" onClick="chngEquipo(<?php echo $cli['idTelemetria']; ?>, '<?php echo $cli['Nombre']; ?>', '<?php echo $cli['Identificador']; ?>', <?php echo $cli['cantSensores']; ?>)"  data-toggle="tab"><i class="fa fa-map-marker" aria-hidden="true"></i> <?php echo $cli['Nombre']; ?></a></li>
 						<?php $xcounter++;
 					}
-					if($xcounter>7){?></ul></li><?php } ?>
+					if($xcounter>7){ ?></ul></li><?php } ?>
 				</ul>
 			</header>
 

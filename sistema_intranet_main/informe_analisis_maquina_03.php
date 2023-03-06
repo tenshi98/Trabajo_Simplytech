@@ -272,7 +272,7 @@ array_push( $arrGrupo,$row );
 				</tr>';	
 
 			foreach ($arrResultados as $res) {
-				
+
 				echo '<tr  style="background-color: #f5f5f5;">';
 					echo '<td>'.$res['n_muestra'].'</td>';
 					echo '<td>'.fecha_estandar($res['f_muestreo']).'</td>';

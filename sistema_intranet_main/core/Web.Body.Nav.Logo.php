@@ -1,4 +1,4 @@
-<?php if (isset($_SESSION['usuario']['basic_data']['Config_imgLogo'])&&$_SESSION['usuario']['basic_data']['Config_imgLogo']!=''){?>
+<?php if (isset($_SESSION['usuario']['basic_data']['Config_imgLogo'])&&$_SESSION['usuario']['basic_data']['Config_imgLogo']!=''){ ?>
 	<div class="logo_empresa">
 		<div class="pull-left">
 			<img src="upload/<?php echo $_SESSION['usuario']['basic_data']['Config_imgLogo']; ?>" alt="">

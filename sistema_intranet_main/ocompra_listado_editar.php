@@ -673,7 +673,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros
 				?>
 
 				<script>
-					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){?>
+					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){ ?>
 						document.getElementById("div_Nombre").style.display = 'none';
 						document.getElementById("div_Cantidad").style.display = 'none';
 						document.getElementById("div_Nombre_fake").style.display = '';
@@ -824,7 +824,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_servi
 				?>
 
 				<script>
-					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){?>
+					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){ ?>
 						document.getElementById("div_idServicio").style.display = 'none';
 						document.getElementById("div_Cantidad").style.display = 'none';
 						document.getElementById("div_idServicio_fake").style.display = '';
@@ -974,7 +974,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_arrie
 				?>
 
 				<script>
-					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){?>
+					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){ ?>
 						document.getElementById("div_idEquipo").style.display = 'none';
 						document.getElementById("div_Cantidad").style.display = 'none';
 						document.getElementById("div_idEquipo_fake").style.display = '';
@@ -1138,7 +1138,7 @@ foreach ($arrPermisos as $prod) {
 				?>
 
 				<script>
-					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){?>
+					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){ ?>
 						document.getElementById("div_idProducto").style.display = 'none';
 						document.getElementById("div_Cantidad").style.display = 'none';
 						document.getElementById("div_idProducto_fake").style.display = '';
@@ -1265,6 +1265,7 @@ $zx1 = "idProducto=0";
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -1316,7 +1317,7 @@ foreach ($arrPermisos as $prod) {
 				?>
 
 				<script>
-					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){?>
+					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){ ?>
 						document.getElementById("div_idProducto").style.display = 'none';
 						document.getElementById("div_Cantidad").style.display = 'none';
 						document.getElementById("div_idProducto_fake").style.display = '';
@@ -1755,7 +1756,7 @@ $total = 0;
 			<?php
 			if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!=''){
 				//recorro el lsiatdo entregado por la base de datos
-				foreach ($arrProductos as $prod) {?>
+				foreach ($arrProductos as $prod) { ?>
 					<tr class="item-row linea_punteada">
 						<td class="item-name" colspan="2">
 							<?php echo $prod['Nombre']; ?>
@@ -1796,7 +1797,7 @@ $total = 0;
 			<?php
 			if ($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!=''){
 				//recorro el lsiatdo entregado por la base de datos
-				foreach ($arrInsumos as $prod) {?>
+				foreach ($arrInsumos as $prod) { ?>
 					<tr class="item-row linea_punteada">
 						<td class="item-name" colspan="2">
 							<?php echo $prod['Nombre']; ?>
@@ -1837,7 +1838,7 @@ $total = 0;
 			<?php
 			if ($arrArriendos!=false && !empty($arrArriendos) && $arrArriendos!=''){
 				//recorro el lsiatdo entregado por la base de datos
-				foreach ($arrArriendos as $prod){?>
+				foreach ($arrArriendos as $prod){ ?>
 					<tr class="item-row linea_punteada">
 						<td class="item-name" colspan="2">
 							<?php echo $prod['Nombre']; ?>
@@ -1880,7 +1881,7 @@ $total = 0;
 			<?php
 			if ($arrServicios!=false && !empty($arrServicios) && $arrServicios!=''){
 				//recorro el lsiatdo entregado por la base de datos
-				foreach ($arrServicios as $prod){?>
+				foreach ($arrServicios as $prod){ ?>
 					<tr class="item-row linea_punteada">
 						<td class="item-name" colspan="2">
 							<?php echo $prod['Nombre']; ?>
@@ -1922,7 +1923,7 @@ $total = 0;
 			<?php
 			if ($arrOtros!=false && !empty($arrOtros) && $arrOtros!=''){
 				//recorro el lsiatdo entregado por la base de datos
-				foreach ($arrOtros as $prod){?>
+				foreach ($arrOtros as $prod){ ?>
 					<tr class="item-row linea_punteada">
 						<td class="item-name" colspan="2"><?php echo $prod['Nombre']; ?></td>
 						<td class="item-name">
@@ -1962,7 +1963,7 @@ $total = 0;
 			<?php
 			if ($arrBoletas!=false && !empty($arrBoletas) && $arrBoletas!=''){
 				//recorro el lsiatdo entregado por la base de datos
-				foreach ($arrBoletas as $prod){?>
+				foreach ($arrBoletas as $prod){ ?>
 					<tr class="item-row linea_punteada">
 						<td class="item-name" colspan="2"><?php echo $prod['TrabRut'].' - '.$prod['TrabNombre'].' '.$prod['TrabApellidoPat']; ?></td>
 						<td class="item-name"><?php echo $prod['Descripcion']; ?></td>
@@ -1995,7 +1996,7 @@ $total = 0;
 			<?php
 			if ($arrBoletasEmp!=false && !empty($arrBoletasEmp) && $arrBoletasEmp!=''){
 				//recorro el lsiatdo entregado por la base de datos
-				foreach ($arrBoletasEmp as $prod){?>
+				foreach ($arrBoletasEmp as $prod){ ?>
 					<tr class="item-row linea_punteada">
 						<td class="item-name" colspan="4"><?php echo $prod['Descripcion']; ?></td>
 						<td align="right" class="item-name"><?php echo valores($prod['Valor'], 0); ?></td>
@@ -2236,7 +2237,7 @@ $total = 0;
 			if ($arrArchivo!=false && !empty($arrArchivo) && $arrArchivo!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
-				foreach ($arrArchivo as $producto){?>
+				foreach ($arrArchivo as $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
 						<td>

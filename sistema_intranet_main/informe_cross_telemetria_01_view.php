@@ -84,7 +84,7 @@ $arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablare
 							<td><?php echo $med['PredioNombre']; ?></td>
 							<td><?php echo $med['CuartelNombre']; ?></td>
 							<td><?php echo $med['EquipoNombre']; ?></td>
-							<td><?php echo $med['CantidadMuestra']; ?></td>	
+							<td><?php echo $med['CantidadMuestra']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
 									<a href="<?php echo 'informe_cross_telemetria_01_view_map.php?idTabla='.$med['idTabla'].$search.'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Mapa" class="btn btn-primary btn-sm tooltip"><i class="fa fa-map" aria-hidden="true"></i></a>
@@ -98,7 +98,7 @@ $arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablare
 	</div>
 </div>
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){?>
+<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
 	<div class="clearfix"></div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
 		<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>

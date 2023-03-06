@@ -28,10 +28,10 @@ require_once 'core/Web.Header.Main.php';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['submit_filter'])){
 //Solo compras pagadas totalmente
-$z1   = "(idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)"; 
+$z1   = "(idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";
 $z2   = "(idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";   
-$z3   = "(idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)"; 
-$z4   = "(idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)"; 
+$z3   = "(idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";
+$z4   = "(idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";
 $z5   = "(idFacturacion!=0)";     //siempre pasa
 $z6   = "(idFactTrab!=0)";        //siempre pasa
 $z7   = "(idFacturacion!=0)";     //siempre pasa
@@ -1096,6 +1096,7 @@ foreach ($arrCentroCosto_lv1 as $trab) {
 foreach ($arrCentroCosto_lv2 as $trab) {
 	$arrCC_lv2[$trab['idLevel_2']] = $trab['Nombre'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">

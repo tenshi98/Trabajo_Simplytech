@@ -78,7 +78,7 @@ require_once '0_validate_user_1.php';
 			case 'SEGURIDAD_Monto':            if(empty($SEGURIDAD_Monto)){            $error['SEGURIDAD_Monto']                    = 'error/No ha ingresado el monto pagado';}break;
 
 			case 'Creacion_fecha':             if(empty($Creacion_fecha)){             $error['Creacion_fecha']               = 'error/No ha ingresado la fecha de creacion';}break;
-	
+
 		}
 	}
 /*******************************************************************************************************************/
@@ -1093,8 +1093,7 @@ require_once '0_validate_user_1.php';
 
 					}
 				}
-				
-				
+
 				//Sumo todos los pagos y actualizo el monto
 				$rowMonto = db_select_data (false, 'SUM(Monto) AS Pagado', 'pagos_leyes_sociales_formas_pago', '', 'idFactSocial = "'.$idFactSocial.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				$rowData  = db_select_data (false, 'TotalGeneral', 'pagos_leyes_sociales', '', 'idFactSocial ='.$idFactSocial, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1122,4 +1121,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

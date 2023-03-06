@@ -801,7 +801,7 @@ require_once '0_validate_user_1.php';
 							idEstado, Total_Preguntas, Duracion_Max, Programada_fecha, Programada_dia, 
 							Programada_mes, Programada_ano, idAsignadas, Semana '.$cadena;
 							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'quiz_realizadas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 						}
 						break;
 					/********************************************************/
@@ -1114,8 +1114,8 @@ require_once '0_validate_user_1.php';
 				//tabla con la prueba
 				$SIS_data = "idAsignadas='".$idAsignadas."'";
 				if(isset($Programada_fecha) && $Programada_fecha!=''){    
-					$SIS_data .= ",Programada_fecha='".$Programada_fecha."'"; 
-					$SIS_data .= ",Programada_dia='".fecha2NdiaMes($Programada_fecha)."'"; 
+					$SIS_data .= ",Programada_fecha='".$Programada_fecha."'";
+					$SIS_data .= ",Programada_dia='".fecha2NdiaMes($Programada_fecha)."'";
 					$SIS_data .= ",Programada_mes='".fecha2NMes($Programada_fecha)."'";
 					$SIS_data .= ",Programada_ano='".fecha2Ano($Programada_fecha)."'";
 				}
@@ -1130,7 +1130,8 @@ require_once '0_validate_user_1.php';
 				}
 			}
 
-		break;	
+		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

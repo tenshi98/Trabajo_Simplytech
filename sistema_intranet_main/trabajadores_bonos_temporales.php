@@ -231,7 +231,7 @@ if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){  $SIS_where .
 if(isset($_GET['Ano']) && $_GET['Ano']!=''){                 $SIS_where .= " AND trabajadores_bonos_temporales.Creacion_ano=".$_GET['Ano'];}
 if(isset($_GET['idMes']) && $_GET['idMes']!=''){             $SIS_where .= " AND trabajadores_bonos_temporales.Creacion_mes=".$_GET['idMes'];}
 if(isset($_GET['idBonoTemporal']) && $_GET['idBonoTemporal']!=''){  $SIS_where .= " AND trabajadores_bonos_temporales.idBonoTemporal=".$_GET['idBonoTemporal'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idBonoTemp', 'trabajadores_bonos_temporales', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -257,7 +257,7 @@ LEFT JOIN `sistema_bonos_temporales`  ON sistema_bonos_temporales.idBonoTemporal
 $SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrInasHoras = array();
 $arrInasHoras = db_select_array (false, $SIS_query, 'trabajadores_bonos_temporales', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrInasHoras');
-	
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
@@ -265,12 +265,12 @@ $arrInasHoras = db_select_array (false, $SIS_query, 'trabajadores_bonos_temporal
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Asignacion</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Asignacion</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -379,7 +379,7 @@ $arrInasHoras = db_select_array (false, $SIS_query, 'trabajadores_bonos_temporal
 								<?php
 								//mientras no haya sido utilizado se puede modificar y borrar el dato
 								if(isset($plan['idUso'])&&$plan['idUso']==1){ ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$plan['idBonoTemp']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$plan['idBonoTemp']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($plan['idBonoTemp'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el bono asignado de '.$plan['Creacion_fecha'].'?'; ?>

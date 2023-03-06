@@ -135,7 +135,7 @@ array_push( $arrProductos,$row );
 					
 					<?php $Colors  = "'#FFB347'"; ?>
 					data.addColumn('number', 'Medicion');
-					<?php if(isset($cant)&&$cant<30){?>
+					<?php if(isset($cant)&&$cant<30){ ?>
 					data.addColumn({type: 'string', role: 'annotation'});
 					<?php } ?>
 					<?php if(isset($arrProductos[0]['Rango_max'])&&$arrProductos[0]['Rango_max']!=0){
@@ -168,7 +168,7 @@ array_push( $arrProductos,$row );
 						title: 'Analisis calidad de Agua de <?php echo $arrProductos[0]['Nombreparametro'].$extra; ?> ',
 						hAxis: { 
 							title: 'Fechas',
-							<?php if(isset($cant)&&$cant>=30){?> 
+							<?php if(isset($cant)&&$cant>=30){ ?> 
 								baselineColor: '#fff',
 								gridlineColor: '#fff',
 								textPosition: 'none'
@@ -237,7 +237,7 @@ array_push( $arrProductos,$row );
 						<th>idLaboratorio</th>
 					</tr>
 				</thead>
-							  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrProductos as $productos) { ?>
 

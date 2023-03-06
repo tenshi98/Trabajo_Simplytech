@@ -373,16 +373,16 @@ $html .= '
 
 						if($TotLitrosApliXhect!=0){$ndatax1 = porcentaje($TotLitrosApliXhect/$TotalMojamiento);}else{ $ndatax1 = '0 %';}
 						
-						$html .= '<tr>'; 
-							$html .= '<td><strong>Totales</strong></td>'; 
-							$html .= '<td></td>'; 
-							$html .= '<td></td>'; 
-							$html .= '<td></td>'; 
-							$html .= '<td>'.Cantidades($TotalMojamiento, 0).'</td>'; 
-							$html .= '<td>'.Cantidades($TotalLitrosAplicados, 1).'</td>'; 
-							$html .= '<td>'.Cantidades($TotLitrosApliXhect, 1).'</td>'; 
-							$html .= '<td>'.$ndatax1.'</td>'; 
-							$html .= '<td></td>'; 
+						$html .= '<tr>';
+							$html .= '<td><strong>Totales</strong></td>';
+							$html .= '<td></td>';
+							$html .= '<td></td>';
+							$html .= '<td></td>';
+							$html .= '<td>'.Cantidades($TotalMojamiento, 0).'</td>';
+							$html .= '<td>'.Cantidades($TotalLitrosAplicados, 1).'</td>';
+							$html .= '<td>'.Cantidades($TotLitrosApliXhect, 1).'</td>';
+							$html .= '<td>'.$ndatax1.'</td>';
+							$html .= '<td></td>';
 						$html .= '</tr>'; 
 						
 					}else{

@@ -1143,7 +1143,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 			if ($arrArchivos!=false && !empty($arrArchivos) && $arrArchivos!=''){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
-				foreach ($arrArchivos as $producto){?>
+				foreach ($arrArchivos as $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
 						<td>

@@ -192,7 +192,7 @@ $SIS_where = "cross_checking_materiales_seguridad.idMatSeguridad!=0";
 if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){      $SIS_where .= " AND cross_checking_materiales_seguridad.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
 if(isset($_GET['Codigo']) && $_GET['Codigo']!=''){      $SIS_where .= " AND cross_checking_materiales_seguridad.Codigo LIKE '%".EstandarizarInput($_GET['Codigo'])."%'";}
 if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){  $SIS_where .= " AND cross_checking_materiales_seguridad.idEstado=".$_GET['idEstado'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idMatSeguridad', 'cross_checking_materiales_seguridad', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -217,12 +217,12 @@ $arrCategorias = db_select_array (false, $SIS_query, 'cross_checking_materiales_
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Material de Seguridad</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Material de Seguridad</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -256,8 +256,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'cross_checking_materiales_
 	</div>
 </div>
 <div class="clearfix"></div>
-                     
-                         
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -304,7 +303,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'cross_checking_materiales_
 						<td><label class="label <?php if(isset($cat['idEstado'])&&$cat['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $cat['Estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$cat['idMatSeguridad']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$cat['idMatSeguridad']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($cat['idMatSeguridad'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el Material de Seguridad '.$cat['NombreNaviera'].'?'; ?>

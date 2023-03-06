@@ -331,6 +331,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrHistorial,$row );
 }
+
 ?>
 
 <div class="row no-print">
@@ -773,7 +774,7 @@ array_push( $arrHistorial,$row );
 					<th width="260">Usuario</th>
 					<th>Observacion</th>
 				</tr>
-				<?php foreach ($arrHistorial as $doc){?>
+				<?php foreach ($arrHistorial as $doc){ ?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Estado']; ?></td>

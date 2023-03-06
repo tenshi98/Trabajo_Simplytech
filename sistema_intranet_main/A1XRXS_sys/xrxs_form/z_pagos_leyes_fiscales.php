@@ -125,7 +125,7 @@ require_once '0_validate_user_1.php';
 			//case 'RET_Total_deuda':            if(empty($RET_Total_deuda)){            $error['RET_Total_deuda']              = 'error/No ha ingresado la retencion total';}break;
 			//case 'IMPRENT_Total_deuda':        if(empty($IMPRENT_Total_deuda)){        $error['IMPRENT_Total_deuda']          = 'error/No ha ingresado el impuesto a la renta total';}break;
 			case 'Creacion_fecha':             if(empty($Creacion_fecha)){             $error['Creacion_fecha']               = 'error/No ha ingresado la fecha de creacion';}break;
-	
+
 		}
 	}
 /*******************************************************************************************************************/
@@ -374,10 +374,10 @@ require_once '0_validate_user_1.php';
 
 				/****************************************************/
 				//Solo compras pagadas totalmente
-				$z1 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)"; 
+				$z1 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";
 				$z2 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";   
-				$z3 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)"; 
-				$z4 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)"; 
+				$z3 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";
+				$z4 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";
 				$z5 = "idFactFiscal=0";   //solo las emitidas por los empleados
 				$z6 = "idFactFiscal=0";   //solo las que no esten asignadas
 						
@@ -604,20 +604,20 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************/
 				//Calculos totales de IVA
-				$TotalSaldo = 0; 
+				$TotalSaldo = 0;
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_TotalSaldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo'];
 					
-				$MontoPago = 0; 
+				$MontoPago = 0;
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_MontoPago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_MontoPago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_MontoPago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_MontoPago'];
 					
-				$Diferencia = 0; 
+				$Diferencia = 0;
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior'];
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_Diferencia'];
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_Diferencia'];
@@ -646,19 +646,19 @@ require_once '0_validate_user_1.php';
 				$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Diferencia']  = $PPM_Saldo_4;
 
 				//Calculo totales PPM
-				$TotalSaldo = 0; 
+				$TotalSaldo = 0;
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Saldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Saldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Saldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Saldo'];
 					
-				$MontoPago = 0; 
+				$MontoPago = 0;
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Pago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Pago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Pago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Pago'];
 					
-				$Diferencia = 0; 
+				$Diferencia = 0;
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Diferencia'];
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Diferencia'];
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Diferencia'];
@@ -949,10 +949,10 @@ require_once '0_validate_user_1.php';
 
 				/****************************************************/
 				//Solo compras pagadas totalmente
-				$z1 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)"; 
+				$z1 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";
 				$z2 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";   
-				$z3 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)"; 
-				$z4 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)"; 
+				$z3 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";
+				$z4 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";
 				$z5 = "idFactFiscal=0";   //solo las emitidas por los empleados
 				$z6 = "idFactFiscal=0";   //solo las que no esten asignadas
 						
@@ -1179,20 +1179,20 @@ require_once '0_validate_user_1.php';
 				
 				/********************************************/
 				//Calculos totales de IVA
-				$TotalSaldo = 0; 
+				$TotalSaldo = 0;
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_TotalSaldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo'];
 					
-				$MontoPago = 0; 
+				$MontoPago = 0;
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_MontoPago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_MontoPago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_MontoPago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_MontoPago'];
 					
-				$Diferencia = 0; 
+				$Diferencia = 0;
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior'];
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_Diferencia'];
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_Diferencia'];
@@ -1221,19 +1221,19 @@ require_once '0_validate_user_1.php';
 				$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Diferencia']  = $PPM_Saldo_4;
 
 				//Calculo totales PPM
-				$TotalSaldo = 0; 
+				$TotalSaldo = 0;
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Saldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Saldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Saldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Saldo'];
 					
-				$MontoPago = 0; 
+				$MontoPago = 0;
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Pago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Pago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Pago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Pago'];
 					
-				$Diferencia = 0; 
+				$Diferencia = 0;
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Diferencia'];
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Diferencia'];
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Diferencia'];
@@ -1270,8 +1270,7 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			
+
 			/*******************************************************************/
 			//Defino donde verificar
 			switch ($edit_iva) {
@@ -1334,20 +1333,20 @@ require_once '0_validate_user_1.php';
 
 				/********************************************/
 				//Calculos totales de IVA
-				$TotalSaldo = 0; 
+				$TotalSaldo = 0;
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_TotalSaldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo'];
 					
-				$MontoPago = 0; 
+				$MontoPago = 0;
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_MontoPago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_MontoPago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_MontoPago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_MontoPago'];
 					
-				$Diferencia = 0; 
+				$Diferencia = 0;
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_basicos']['Saldos_IVA_Anterior'];
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_Diferencia'];
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_Diferencia'];
@@ -1438,19 +1437,19 @@ require_once '0_validate_user_1.php';
 				}
 				/********************************************/
 				//Calculo totales PPM
-				$TotalSaldo = 0; 
+				$TotalSaldo = 0;
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Saldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Saldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Saldo'];
 				$TotalSaldo = $TotalSaldo + $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Saldo'];
 					
-				$MontoPago = 0; 
+				$MontoPago = 0;
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Pago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Pago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Pago'];
 				$MontoPago = $MontoPago + $_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Pago'];
 					
-				$Diferencia = 0; 
+				$Diferencia = 0;
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Diferencia'];
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Diferencia'];
 				$Diferencia = $Diferencia + $_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Diferencia'];
@@ -2054,10 +2053,10 @@ require_once '0_validate_user_1.php';
 					
 					/*if(isset($Periodo_Ano)&&$Periodo_Ano!=''&&isset($Periodo_Mes)&&$Periodo_Mes!=''){
 						//Solo compras pagadas totalmente
-						$z1 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)"; 
+						$z1 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";
 						$z2 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";   
-						$z3 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)"; 
-						$z4 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)"; 
+						$z3 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";
+						$z4 = "idFactFiscal=0 AND (idTipo=2 OR idTipo=12 OR idTipo=13 OR idTipo=1 OR idTipo=10 OR idTipo=11)";
 						$z5 = "idFactFiscal=0";   //solo las emitidas por los empleados
 						$z6 = "idFactFiscal=0";   //solo las que no esten asignadas
 						
@@ -2341,4 +2340,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

@@ -477,8 +477,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_ing_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['arriendos_ing_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -1630,8 +1629,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['arriendos_egr_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['arriendos_egr_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -4994,4 +4992,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

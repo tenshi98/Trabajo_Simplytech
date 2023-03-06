@@ -190,7 +190,7 @@ $SIS_where = "cross_checking_estado_fenologico.idEstadoFen!=0";
 if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){      $SIS_where .= " AND cross_checking_estado_fenologico.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
 if(isset($_GET['Codigo']) && $_GET['Codigo']!=''){      $SIS_where .= " AND cross_checking_estado_fenologico.Codigo LIKE '%".EstandarizarInput($_GET['Codigo'])."%'";}
 if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){  $SIS_where .= " AND cross_checking_estado_fenologico.idEstado=".$_GET['idEstado'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idEstadoFen', 'cross_checking_estado_fenologico', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -218,12 +218,12 @@ $arrCategorias = db_select_array (false, $SIS_query, 'cross_checking_estado_feno
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Estado Fenologico</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Estado Fenologico</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -257,8 +257,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'cross_checking_estado_feno
 	</div>
 </div>
 <div class="clearfix"></div>
-                     
-                         
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -307,7 +306,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'cross_checking_estado_feno
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $cat['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$cat['idEstadoFen']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$cat['idEstadoFen']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($cat['idEstadoFen'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el Estado Fenologico '.$cat['NombreNaviera'].'?'; ?>

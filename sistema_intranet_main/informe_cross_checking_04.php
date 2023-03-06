@@ -236,8 +236,8 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 									</td>
 									<td>
 										<div class="btn-group" style="width: 70px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion_resumen.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()).'&NSolicitud='.simpleEncode($ot['NSolicitud'], fecha_actual()); ?>" title="Ver Resumen Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud_aplicacion_resumen.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()).'&NSolicitud='.simpleEncode($ot['NSolicitud'], fecha_actual()); ?>" title="Ver Resumen Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 										</div>
 									</td>
 								</tr>
@@ -335,8 +335,8 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 
 										<td>
 											<div class="btn-group" style="width: 70px;" >
-												<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-												<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion_detalles.php?view='.simpleEncode($ot['idTractores'], fecha_actual()); ?>" title="Ver Detalles Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud_aplicacion_detalles.php?view='.simpleEncode($ot['idTractores'], fecha_actual()); ?>" title="Ver Detalles Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											</div>
 										</td>
 									</tr>
@@ -406,8 +406,8 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 
 										<td>
 											<div class="btn-group" style="width: 70px;" >
-												<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-												<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion_trabilidad.php?view='.simpleEncode($ot['idTractores'], fecha_actual()); ?>" title="Ver Trazabilidad" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud_aplicacion_trabilidad.php?view='.simpleEncode($ot['idTractores'], fecha_actual()); ?>" title="Ver Trazabilidad" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											</div>
 										</td>
 									</tr>
@@ -504,7 +504,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 
 					$("#idEstado").on("change", function(){ //se ejecuta al cambiar valor del select
 						let idEstado = $(this).val(); //Asignamos el valor seleccionado
-						
+
 						//Solicitado
 						if(idEstado == 1){
 							document.getElementById('div_f_programacion_desde').style.display = 'block';

@@ -37,7 +37,7 @@ if(isset($_GET['idCiudad'])&&$_GET['idCiudad']!=''){ $z.=" AND clientes_listado.
 if(isset($_GET['idComuna'])&&$_GET['idComuna']!=''){ $z.=" AND clientes_listado.idComuna=".$_GET['idComuna'];                $search.= '&idComuna='.$_GET['idComuna'];}
 if(isset($_GET['Direccion'])&&$_GET['Direccion']!=''){      $z.=" AND clientes_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";  $search.= '&Direccion='.$_GET['Direccion'];}
 if(isset($_GET['Giro'])&&$_GET['Giro']!=''){         $z.=" AND clientes_listado.Giro LIKE '%".EstandarizarInput($_GET['Giro'])."%'";            $search.= '&Giro='.$_GET['Giro'];}
-				
+
 /**********************************************************************/             
 // Se trae un listado con todos los elementos
 $arrClientes = array();
@@ -128,7 +128,7 @@ array_push( $arrClientes,$row );
 						<th>Email de Contacto</th>			
 					</tr>
 				</thead>
-							  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrClientes as $cli) { ?>
 						<tr class="odd">
@@ -167,8 +167,8 @@ array_push( $arrClientes,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {?>
-	 
+} else { ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>

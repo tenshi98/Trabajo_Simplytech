@@ -232,7 +232,7 @@ if($rowDatos['idEstado']==2){ ?>
 											echo '<td align="right"><h6>Pago OK</h6></td>';
 										}
 										?>
-										
+
 									</tr>
 								</tbody>
 							</table>
@@ -251,7 +251,7 @@ if($rowDatos['idEstado']==2){ ?>
 		$nn++;
 	}
 	//si tiene mas de un pago relacionado se muestran los pagos relacionados
-	if($nn>1){?>
+	if($nn>1){ ?>
 		<div class="row" style="margin-top:10px;">
 			<div class="col-xs-12">
 				<div class="panel panel-success">

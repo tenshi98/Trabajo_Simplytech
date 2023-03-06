@@ -289,6 +289,7 @@ if($arriendos!=0){
 	$arrArriendos = db_select_array (false, $SIS_query, 'bodegas_arriendos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrArriendos');
 
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -369,7 +370,7 @@ if($arriendos!=0){
 									<?php if ( $ins['contar']=='1' ){ ?>    
 										<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&bod_ins_del='.$ins['idpermiso']; ?>">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
-									<?php } else {?>
+									<?php } else { ?>
 										<a title="Quitar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&bod_ins_add='.$ins['idBodega']; ?>">ON</a>
 									<?php } ?>
@@ -382,7 +383,7 @@ if($arriendos!=0){
 					}
 					/*******************************************************/
 					if($productos!=0){
-						foreach ($arrProductos as $prod) {?>
+						foreach ($arrProductos as $prod) { ?>
 						<tr class="odd">
 							<td><?php echo '<strong>Bodega Productos: </strong>'.$prod['Nombre']; ?></td>
 							<td><?php echo $prod['RazonSocial']; ?></td>
@@ -391,7 +392,7 @@ if($arriendos!=0){
 									<?php if ( $prod['contar']=='1' ){ ?>    
 										<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&bod_prod_del='.$prod['idpermiso']; ?>">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
-									<?php } else {?>
+									<?php } else { ?>
 										<a title="Quitar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&bod_prod_add='.$prod['idBodega']; ?>">ON</a>
 									<?php } ?>
@@ -404,7 +405,7 @@ if($arriendos!=0){
 					}
 					/*******************************************************/
 					if($arriendos!=0){
-						foreach ($arrArriendos as $prod) {?>
+						foreach ($arrArriendos as $prod) { ?>
 						<tr class="odd">
 							<td><?php echo '<strong>Bodega Arriendos: </strong>'.$prod['Nombre']; ?></td>
 							<td><?php echo $prod['RazonSocial']; ?></td>
@@ -413,7 +414,7 @@ if($arriendos!=0){
 									<?php if ( $prod['contar']=='1' ){ ?>    
 										<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&bod_arriendo_del='.$prod['idpermiso']; ?>">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
-									<?php } else {?>
+									<?php } else { ?>
 										<a title="Quitar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&bod_arriendo_add='.$prod['idBodega']; ?>">ON</a>
 									<?php } ?>

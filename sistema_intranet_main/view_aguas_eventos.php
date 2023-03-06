@@ -105,7 +105,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_eventos', $SIS_joi
 		</div>
 		<table id="items">
 			<tbody>
-				<?php if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){?>
+				<?php if(isset($rowdata['Archivo'])&&$rowdata['Archivo']!=''){ ?>
 					<tr><th>Archivo</th></tr>		  
 					<tr class="item-row linea_punteada" bgcolor="#F0F0F0">
 						<td>

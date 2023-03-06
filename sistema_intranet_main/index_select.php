@@ -36,6 +36,7 @@ if (!empty($_GET['ini'])){
 	$form_trabajo= 'select_sistema';
 	require_once 'A1XRXS_sys/xrxs_form/usuarios_listado.php';
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="es-ES">

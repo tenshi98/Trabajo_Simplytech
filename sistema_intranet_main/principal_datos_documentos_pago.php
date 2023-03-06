@@ -134,7 +134,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 									<?php if ( $permiso['contar']=='1' ){ ?>
 										<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_SESSION['usuario']['basic_data']['idUsuario'].'&doc_del='.$permiso['idpermiso']; ?>">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
-									<?php } else {?>
+									<?php } else { ?>
 										<a title="Quitar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_SESSION['usuario']['basic_data']['idUsuario'].'&doc_add='.$permiso['idDocPago']; ?>">ON</a>
 									<?php } ?>

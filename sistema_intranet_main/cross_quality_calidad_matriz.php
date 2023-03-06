@@ -133,9 +133,9 @@ $SIS_query .= ',Validacion_'.$_GET['mod'].' AS Validar';
 $SIS_join  = '';
 $SIS_where = 'idMatriz ='.$_GET['idMatriz'];
 $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
-	
+
 ?>
-	 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -170,7 +170,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 					document.getElementById('div_Validar').style.display = 'none';
 
 					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-								
+
 						let Sensores_val= $("#PuntoidTipo").val();
 
 						//si es Medicion (Decimal) con parametros limitantes
@@ -225,10 +225,10 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 
 						}
 					});
-							
+
 					$("#PuntoidTipo").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-						
+
 						//si es Medicion (Decimal) con parametros limitantes
 						if(modelSelected1 == 1){
 							document.getElementById('div_PuntoMedAceptable').style.display = '';
@@ -280,8 +280,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 							document.getElementById('Validar').value = "";
 						}
 					});
-							
-							
+
 				</script>
 
 				<div class="form-group">
@@ -293,8 +292,8 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div> 
-	 	 
+</div>
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['idMatriz'])){    
 // consulto los datos
@@ -381,7 +380,7 @@ $SIS_where = 'idMatriz ='.$_GET['idMatriz'];
 $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /************************************************/
-//consulto	
+//consulto
 $arrUnimed = array();
 $arrUnimed = db_select_array (false, 'idUml,Nombre', 'sistema_cross_analisis_uml', '', 'idUml!=0', 'idUml ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
 $arrTipos = array();
@@ -390,7 +389,7 @@ $arrGrupos = array();
 $arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'cross_quality_calidad_matriz_grupos', '', 'idGrupo!=0', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
 
 /************************************************/
-//Ordeno 
+//Ordeno
 $arrFinalUnimed = array();
 $arrFinalTipos = array();
 $arrFinalGrupos = array();
@@ -408,8 +407,7 @@ foreach ($arrGrupos as $data) {  $arrFinalGrupos[$data['idGrupo']] = $data['Nomb
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Puntos de Tipo Planilla</h5>
 		</header>
-		
-		
+
         <div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
@@ -425,7 +423,7 @@ foreach ($arrGrupos as $data) {  $arrFinalGrupos[$data['idGrupo']] = $data['Nomb
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) { 
+					<?php for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) {
 						//compruebo
 						if(isset($arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]])){ $unimed = $arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]];}else{ $unimed = '';}
 						if(isset($arrFinalTipos[$rowdata['PuntoidTipo_'.$i]])){     $tipo   = $arrFinalTipos[$rowdata['PuntoidTipo_'.$i]];     }else{ $tipo   = '';}
@@ -436,12 +434,12 @@ foreach ($arrGrupos as $data) {  $arrFinalGrupos[$data['idGrupo']] = $data['Nomb
 							<td><?php echo $grupo; ?></td>
 							<td><?php echo $rowdata['PuntoNombre_'.$i]; ?></td>
 							<td><?php echo $tipo; ?></td>
-							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAceptable_'.$i]).' '.$unimed;     }else{echo 'No Aplica';} ?></td>	
+							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAceptable_'.$i]).' '.$unimed;     }else{echo 'No Aplica';} ?></td>
 							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedAlerta_'.$i]).' '.$unimed;        }else{echo 'No Aplica';} ?></td>
 							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedCondenatorio_'.$i]).' '.$unimed;  }else{echo 'No Aplica';} ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -449,8 +447,7 @@ foreach ($arrGrupos as $data) {  $arrFinalGrupos[$data['idGrupo']] = $data['Nomb
 				</tbody>
 			</table>
 		</div>
-		
-			
+
 	</div>
 </div>
 
@@ -527,11 +524,11 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 					document.getElementById('div_Validar_3').style.display = 'none';
 
 					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-								
+
 						let Sensores_val_1 = $("#idNota_1").val();
 						let Sensores_val_2 = $("#idNota_2").val();
 						let Sensores_val_3 = $("#idNota_3").val();
-						
+
 						let Sensores_tipo_1 = $("#idNotaTipo_1").val();
 						let Sensores_tipo_2 = $("#idNotaTipo_2").val();
 						let Sensores_tipo_3 = $("#idNotaTipo_3").val();
@@ -620,7 +617,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 					/******************************************************************/
 					$("#idNota_1").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected_1 = $(this).val(); //Asignamos el valor seleccionado
-						
+
 						//si la opcion esta activa
 						if(modelSelected_1 == 1){
 							document.getElementById('div_idNotaTipo_1').style.display = '';
@@ -639,7 +636,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 					/******************************************************************/
 					$("#idNota_2").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected_2 = $(this).val(); //Asignamos el valor seleccionado
-						
+
 						//si la opcion esta activa
 						if(modelSelected_2 == 1){
 							document.getElementById('div_idNotaTipo_2').style.display = '';
@@ -658,7 +655,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 					/******************************************************************/
 					$("#idNota_3").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected_3 = $(this).val(); //Asignamos el valor seleccionado
-						
+
 						//si la opcion esta activa
 						if(modelSelected_3 == 1){
 							document.getElementById('div_idNotaTipo_3').style.display = '';
@@ -713,7 +710,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $S
 							//Reseteo los valores a vacio
 							document.getElementById('Validar_3').value = "";
 						}
-					});		
+					});
 							
 				</script>
 
@@ -774,7 +771,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 			</form>
 			<?php widget_validator(); ?>
-                    
+
 		</div>
 	</div>
 </div>
@@ -861,12 +858,12 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz',
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Tipo Planilla</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Tipo Planilla</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -885,7 +882,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz',
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1); 
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 1);
 				$Form_Inputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 1, 1, 100);
 				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x3, 1, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Nota Calidad','idNota_1', $x4, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
@@ -906,8 +903,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz',
 	</div>
 </div>
 <div class="clearfix"></div>
-                     
-                         
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -988,9 +984,9 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz',
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $maq['RazonSocial']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 140px;" >
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz_2='.$maq['idMatriz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&nombre_matriz='.$maq['Nombre'].'&clone_idMatriz='.$maq['idMatriz']; ?>" title="Clonar Tipo Planilla" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idMatriz='.$maq['idMatriz']; ?>" title="Editar Matriz" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idMatriz_2='.$maq['idMatriz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&nombre_matriz='.$maq['Nombre'].'&clone_idMatriz='.$maq['idMatriz']; ?>" title="Clonar Tipo Planilla" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idMatriz='.$maq['idMatriz']; ?>" title="Editar Matriz" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($maq['idMatriz'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la matriz '.$maq['Nombre'].'?'; ?>

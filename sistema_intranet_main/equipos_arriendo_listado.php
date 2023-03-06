@@ -258,7 +258,7 @@ $SIS_where = "equipos_arriendo_listado.idEquipo >= 1";
 //Se aplican los filtros
 if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){ $SIS_where .= " AND equipos_arriendo_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
 if(isset($_GET['Marca']) && $_GET['Marca']!=''){   $SIS_where .= " AND equipos_arriendo_listado.Marca LIKE '%".EstandarizarInput($_GET['Marca'])."%'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'equipos_arriendo_listado.idEquipo', 'equipos_arriendo_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -285,7 +285,7 @@ $arrProductos = db_select_array (false, $SIS_query, 'equipos_arriendo_listado', 
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Equipo</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Equipo</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -357,15 +357,15 @@ $arrProductos = db_select_array (false, $SIS_query, 'equipos_arriendo_listado', 
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-				<?php foreach ($arrProductos as $prod) {?>
+				<?php foreach ($arrProductos as $prod) { ?>
 					<tr class="odd">
 						<td><?php echo $prod['Marca']; ?></td>
 						<td><?php echo $prod['NombreProd']; ?></td>
 						<td><label class="label <?php if(isset($prod['idEstado'])&&$prod['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $prod['Estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_equipo_arriendo.php?view='.simpleEncode($prod['idEquipo'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$prod['idEquipo']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_equipo_arriendo.php?view='.simpleEncode($prod['idEquipo'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$prod['idEquipo']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($prod['idEquipo'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el producto '.$prod['NombreProd'].'?'; ?>

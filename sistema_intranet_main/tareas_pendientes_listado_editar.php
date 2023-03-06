@@ -108,6 +108,7 @@ switch ($_GET['edit_cambio_estado']) {
 	case 2: $slc_filter = 'idEstado>2';$slc_tittle = 'Cambiar Estado'; break;
 
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -361,6 +362,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$usrfil .= ' AND usuarios_sistemas.idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'];
 	$usrfil .= ' AND usuarios_listado.idTipoUsuario!=1';
 }
+
 ?>
 
 
@@ -661,7 +663,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 						<td class="meta-head">Fecha Creacion</td>
 						<td><?php echo Fecha_estandar($rowdata['f_creacion'])?></td>
 					</tr>
-					<?php if(isset($rowdata['f_termino'])&&$rowdata['f_termino']!='0000-00-00'){?>
+					<?php if(isset($rowdata['f_termino'])&&$rowdata['f_termino']!='0000-00-00'){ ?>
 						<tr>
 							<td class="meta-head">Fecha Termino</td>
 							<td><?php echo Fecha_estandar($rowdata['f_termino'])?></td>

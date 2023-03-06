@@ -31,7 +31,7 @@ backup_telemetria_listado_errores.GeoLatitud,
 backup_telemetria_listado_errores.GeoLongitud,
 telemetria_listado.Nombre AS NombreEquipo'.$subquery;
 $SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_errores.idTelemetria';
-$SIS_where = 'backup_telemetria_listado_errores.idErrores = '.simpleDecode($_GET['view'], fecha_actual()).' AND backup_telemetria_listado_errores.idTipo!=999 AND backup_telemetria_listado_errores.Valor<99900'; 
+$SIS_where = 'backup_telemetria_listado_errores.idErrores = '.simpleDecode($_GET['view'], fecha_actual()).' AND backup_telemetria_listado_errores.idTipo!=999 AND backup_telemetria_listado_errores.Valor<99900';
 $rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_errores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), $form_trabajo);
 /***********************************/
 //Se traen todas las unidades de medida

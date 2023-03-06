@@ -84,6 +84,7 @@ $arrFinalUnimed = array();
 foreach ($arrUnimed as $sen) {
 	$arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -304,7 +305,7 @@ foreach ($arrUnimed as $sen) {
 									iwCloseBtn.mouseout(function(){
 										$(this).css({opacity: '1'});
 									});
-								});					
+								});			
 													
 							} 
 							/* ************************************************************************** */
@@ -435,10 +436,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
         </div>
 	</div>
 </div>
-
-
-
-
 
 <?php } ?>
 <?php

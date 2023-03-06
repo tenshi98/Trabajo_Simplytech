@@ -74,7 +74,7 @@ if(isset($_GET['FechaVencimiento']) && $_GET['FechaVencimiento']!=''){  $SIS_whe
 if(isset($_GET['idDocPago']) && $_GET['idDocPago']!=''){         $SIS_where .= " AND telemetria_carga_bam.idDocPago=".$_GET['idDocPago'];}
 if(isset($_GET['N_DocPago']) && $_GET['N_DocPago']!=''){         $SIS_where .= " AND telemetria_carga_bam.N_DocPago LIKE '%".EstandarizarInput($_GET['N_DocPago'])."%'";}
 if(isset($_GET['Monto']) && $_GET['Monto']!=''){                 $SIS_where .= " AND telemetria_carga_bam.Monto LIKE '%".EstandarizarInput($_GET['Monto'])."%'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idCarga', 'telemetria_carga_bam', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');

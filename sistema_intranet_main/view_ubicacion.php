@@ -104,7 +104,7 @@ function arrayToUL(array $array, $lv, $nmax){
 	}else{
 		echo '<ul style="padding-left: 20px;">';
 	}
-    
+
     foreach ($array as $key => $value){
 		
 		
@@ -116,7 +116,7 @@ function arrayToUL(array $array, $lv, $nmax){
 			echo '</div>';
 		}
         if (!empty($value) && is_array($value)){
-			
+
             echo arrayToUL($value, $lv, $nmax);
         }
         echo '</li>';
@@ -126,10 +126,6 @@ function arrayToUL(array $array, $lv, $nmax){
 
 
 ?>
-
-
-
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">

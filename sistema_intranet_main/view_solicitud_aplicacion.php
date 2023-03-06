@@ -397,7 +397,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 								</td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<?php if(isset($cuartel['CuartelidEjecucion'])&&$cuartel['CuartelidEjecucion']==2){?>
+										<?php if(isset($cuartel['CuartelidEjecucion'])&&$cuartel['CuartelidEjecucion']==2){ ?>
 											<a href="<?php echo 'view_solicitud_aplicacion_finalizada.php?view='.simpleEncode($cuartel['idSolicitud'], fecha_actual()).'&idZona='.simpleEncode($cuartel['idZona'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										<?php } ?>
 									</div>
@@ -602,7 +602,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					<th width="260">Usuario</th>
 					<th>Observacion</th>
 				</tr>
-				<?php foreach ($arrHistorial as $doc){?>
+				<?php foreach ($arrHistorial as $doc){ ?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Estado']; ?></td>

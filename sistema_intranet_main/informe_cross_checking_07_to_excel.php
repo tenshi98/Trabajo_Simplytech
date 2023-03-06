@@ -30,7 +30,7 @@ $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.
 //Variable de busqueda
 $SIS_where = "cross_solicitud_aplicacion_listado.idSolicitud!=0";
 //Verifico el tipo de usuario que esta ingresando
-$SIS_where.= " AND cross_solicitud_aplicacion_listado.idSistema=".$_GET['idSistema'];	
+$SIS_where.= " AND cross_solicitud_aplicacion_listado.idSistema=".$_GET['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['NSolicitud']) && $_GET['NSolicitud']!=''){   $SIS_where .= " AND cross_solicitud_aplicacion_listado.NSolicitud=".$_GET['NSolicitud'];}

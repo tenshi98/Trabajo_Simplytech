@@ -275,8 +275,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['productos_ing_basicos']['Proveedor'] = '';
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -480,8 +479,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['productos_ing_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['productos_ing_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -1674,8 +1672,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['productos_egr_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['productos_egr_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -2661,8 +2658,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['productos_gasto_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['productos_gasto_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -3337,8 +3333,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['productos_traspaso_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['productos_traspaso_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -3869,8 +3864,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['productos_transform_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['productos_transform_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -4567,8 +4561,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['productos_traspasoempresa_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['productos_traspasoempresa_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -5163,8 +5156,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['productos_traspasomanualempresa_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['productos_traspasomanualempresa_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -5611,8 +5603,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['productos_ing_manual_basicos']['Proveedor'] = '';
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -5714,8 +5705,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['productos_ing_manual_basicos']['Proveedor'] = '';
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -5782,8 +5772,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['productos_ing_manual_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['productos_ing_manual_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -6551,8 +6540,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['productos_ing_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['productos_ing_nd_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -7433,8 +7421,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['productos_ing_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['productos_ing_nc_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -8310,8 +8297,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['productos_egr_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['productos_egr_nd_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -9191,8 +9177,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['productos_egr_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['productos_egr_nc_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -9755,4 +9740,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

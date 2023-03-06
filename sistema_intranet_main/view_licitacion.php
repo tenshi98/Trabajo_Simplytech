@@ -263,7 +263,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 				echo '</div>';
 			}
 			if (!empty($value) && is_array($value)){
-				
+
 				echo arrayToUL($value, $lv, $nmax);
 			}
 			echo '</li>';
@@ -271,6 +271,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 		echo '</ul>';
 	}
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -299,7 +300,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 								<td>Sistema</td>
 								<td><?php echo $rowdata['Sistema']; ?></td>
 							</tr>
-							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){?>
+							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){ ?>
 								<tr class="odd">
 									<td>Cliente</td>
 									<td><?php echo $rowdata['Cliente']; ?></td>
@@ -383,7 +384,7 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 					<th>Usuario</th>
 					<th>Observacion</th>
 				</tr>
-				<?php foreach ($arrHistorial as $doc){?>
+				<?php foreach ($arrHistorial as $doc){ ?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>

@@ -70,7 +70,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 $Alert_Text  = 'Descargar Plantilla';
 $Alert_Text .= '<a href="1download.php?dir='.simpleEncode('templates', fecha_actual()).'&file='.simpleEncode('plantilla_trabajador.xlsx', fecha_actual()).'" title="Descargar Plantilla" class="btn btn-primary btn-sm pull-right" ><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>';
 alert_post_data(2,1,2, $Alert_Text);
-	
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -233,6 +233,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCargas,$row );
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -324,7 +325,7 @@ array_push( $arrCargas,$row );
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Laborales</h2>
 						<p class="text-muted word_break">
-							<?php if(isset($rowdata['Contratista'])&&$rowdata['Contratista']!=''){?><strong>Contratista : </strong><?php echo $rowdata['Contratista']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Contratista'])&&$rowdata['Contratista']!=''){ ?><strong>Contratista : </strong><?php echo $rowdata['Contratista']; ?><br/><?php } ?>
 							<strong>Tipo Trabajador : </strong><?php echo $rowdata['TipoTrabajador']; ?><br/>
 							<strong>Cargo : </strong><?php echo $rowdata['Cargo']; ?><br/>
 							<strong>AFP : </strong><?php echo $rowdata['nombre_afp']; ?><br/>
@@ -572,7 +573,7 @@ if(isset($_GET['Rut']) && $_GET['Rut']!=''){           $SIS_where .= " AND traba
 if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){     $SIS_where .= " AND trabajadores_listado.idTipo=".$_GET['idTipo'];}
 if(isset($_GET['Cargo']) && $_GET['Cargo']!=''){       $SIS_where .= " AND trabajadores_listado.Cargo LIKE '%".EstandarizarInput($_GET['Cargo'])."%'";}
 if(isset($_GET['Fono']) && $_GET['Fono']!=''){         $SIS_where .= " AND trabajadores_listado.Fono LIKE '%".EstandarizarInput($_GET['Fono'])."%'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idTrabajador', 'trabajadores_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -604,13 +605,13 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'trabajadores_listado', $SI
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Trabajador</a><?php } ?>
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new_plantilla=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear con Plantilla</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Trabajador</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new_plantilla=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear con Plantilla</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -711,8 +712,8 @@ $arrTrabajador = db_select_array (false, $SIS_query, 'trabajadores_listado', $SI
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $trab['RazonSocial']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_trabajador.php?view='.simpleEncode($trab['idTrabajador'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$trab['idTrabajador']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_trabajador.php?view='.simpleEncode($trab['idTrabajador'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$trab['idTrabajador']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($trab['idTrabajador'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el trabajador '.$trab['Nombre'].' '.$trab['ApellidoPat'].' '.$trab['ApellidoMat'].'?'; ?>

@@ -105,8 +105,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($idTrabajo)){         $x7  = $idTrabajo;          }else{$x7  = $rowdata['idTrabajo'];}
 				if(isset($Valor)){             $x8  = $Valor;             }else{$x8  = $rowdata['Valor'];}
 				if(isset($ValorTotal)){        $x9  = $ValorTotal;         }else{$x9  = $rowdata['ValorTotal'];}
-				
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -156,9 +155,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById('div_idTrabajo').style.display = 'none';
 					document.getElementById('div_Valor').style.display = 'none';
 					document.getElementById('div_ValorTotal').style.display = 'none';
-							
+
 					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-								
+
 						let Sensores_val= $("#idUtilizable").val();
 								
 						//si es SI
@@ -182,10 +181,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								
 								
 					});
-							
+
 					$("#idUtilizable").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-						
+
 						//si es SI
 						if(modelSelected1 == 1){
 							document.getElementById('div_idFrecuencia').style.display = 'none';
@@ -201,7 +200,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							document.getElementById("idTrabajo").selectedIndex = 0;
 							document.getElementById('Valor').value = "0";
 							document.getElementById('ValorTotal').value = "0";
-																
+
 						//si es NO
 						} else if(modelSelected1 == 2){
 							document.getElementById('div_idFrecuencia').style.display = '';
@@ -213,13 +212,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 						}
 					});
-							
-							
+
 				</script>
 
 				<div class="form-group">
-				
-					
+
 					<?php if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){  $Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);} ?>
 					<?php if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){  $Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);} ?>
 					<?php if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){  $Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);} ?>
@@ -245,8 +242,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){$Form_Inputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
 					<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){$Form_Inputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
 					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){$Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
-			
-				
+
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
@@ -282,8 +278,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				if(isset($idTrabajo)){         $x7  = $idTrabajo;          }else{$x7  = '';}
 				if(isset($Valor)){             $x8  = $Valor;             }else{$x8  = '';}
 				if(isset($ValorTotal)){        $x9  = $ValorTotal;         }else{$x9  = '';}
-				
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -334,10 +329,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 					document.getElementById('div_idTrabajo').style.display = 'none';
 					document.getElementById('div_Valor').style.display = 'none';
 					document.getElementById('div_ValorTotal').style.display = 'none';
-							
+
 					$("#idUtilizable").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-						
+
 						//si es SI
 						if(modelSelected1 == 1){
 							document.getElementById('div_idFrecuencia').style.display = 'none';
@@ -353,7 +348,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 							document.getElementById('idTrabajo').selectedIndex = 0;
 							document.getElementById('Valor').value = "0";
 							document.getElementById('ValorTotal').value = "0";
-																
+
 						//si es NO
 						} else if(modelSelected1 == 2){
 							document.getElementById('div_idFrecuencia').style.display = '';
@@ -365,8 +360,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 						}
 					});
-							
-							
+
 				</script>
 
 				<div class="form-group">
@@ -396,11 +390,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 					<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){$Form_Inputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
 					<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){$Form_Inputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
 					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){$Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
-					
-				
-					
-					
-					
+
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_idLevel">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
@@ -411,9 +401,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 	</div>
 </div>
 
-
-
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
 // consulto los datos
@@ -694,7 +681,7 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 	}else{
 		echo '<ul style="padding-left: 20px;">';
 	}
-    
+
     foreach ($array as $key => $value){
 		//Rearmo la ubicacion de acuerdo a la profundidad
 		if (isset($value['id'])){
@@ -734,7 +721,7 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 			echo '</div>';
 		}
         if (!empty($value) && is_array($value)){
-			
+
             echo arrayToUL($value, $TipoMaq, $lv, $rowlevel,$loc, $nmax);
         }
         echo '</li>';
@@ -749,7 +736,7 @@ function arrayToUL(array $array, array $TipoMaq, $lv, $rowlevel,$location, $nmax
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contrato', $rowdata['Nombre'], 'Itemizado'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>

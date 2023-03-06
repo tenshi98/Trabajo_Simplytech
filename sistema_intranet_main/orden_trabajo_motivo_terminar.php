@@ -169,6 +169,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrOTS,$row );
 }
+
 ?>
                    
                                  
@@ -207,8 +208,8 @@ array_push( $arrOTS,$row );
 						<td><?php echo $ot['NombreTipo']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_orden_trabajo.php?view='.simpleEncode($ot['idOT'], fecha_actual()); ?>" title="Ver Orden de Trabajo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location.'&cerrar='.$ot['idOT']; ?>" title="Cerrar Orden de Trabajo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-lock" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_orden_trabajo.php?view='.simpleEncode($ot['idOT'], fecha_actual()); ?>" title="Ver Orden de Trabajo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location.'&cerrar='.$ot['idOT']; ?>" title="Cerrar Orden de Trabajo" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-lock" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

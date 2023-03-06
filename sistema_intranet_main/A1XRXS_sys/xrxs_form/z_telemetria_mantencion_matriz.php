@@ -118,7 +118,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			if(empty($error)){
-		
+
 				//Filtros
 				$SIS_data = "idMatriz='".$idMatriz."'";
 				if(isset($idSistema) && $idSistema!=''){      $SIS_data .= ",idSistema='".$idSistema."'";}
@@ -136,7 +136,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_update_data (false, $SIS_data, 'telemetria_mantencion_matriz', 'idMatriz = "'.$idMatriz.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location );
 					die;
 
@@ -198,8 +198,7 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -234,7 +233,6 @@ require_once '0_validate_user_1.php';
 				if(isset($rowdata['idEstado']) && $rowdata['idEstado']!=''){$SIS_data .= ",'".$rowdata['idEstado']."'";     }else{$SIS_data .= ",''";}
 				if(isset($rowdata['cantPuntos']) && $rowdata['cantPuntos']!=''){   $SIS_data .= ",'".$rowdata['cantPuntos']."'";   }else{$SIS_data .= ",''";}
 				if(isset($Nombre) && $Nombre!=''){                                $SIS_data .= ",'".$Nombre."'";                  }else{$SIS_data .= ",''";}
-				
 
 				for ($i = 1; $i <= 72; $i++) {
 					if(isset($rowdata['PuntoNombre_'.$i]) && $rowdata['PuntoNombre_'.$i]!=''){        $SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'";     }else{$SIS_data .= ",''";}
@@ -260,4 +258,5 @@ require_once '0_validate_user_1.php';
 
 /*******************************************************************************************************************/
 	}
+
 ?>

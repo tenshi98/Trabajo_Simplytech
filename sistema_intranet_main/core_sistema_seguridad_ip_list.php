@@ -71,7 +71,7 @@ if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){$SIS_where.=' AND '.$xtabl
 if(isset($_GET['idTransporte'])&&$_GET['idTransporte']!=''){ $SIS_where.=' AND '.$xtabla.'.idTransporte='.$_GET['idTransporte'];}
 if(isset($_GET['idApoderado'])&&$_GET['idApoderado']!=''){   $SIS_where.=' AND '.$xtabla.'.idApoderado='.$_GET['idApoderado'];}
 if(isset($_GET['idAlumno'])&&$_GET['idAlumno']!=''){  $SIS_where.=' AND '.$xtabla.'.idAlumno='.$_GET['idAlumno'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, $xtabla.'.IP_Client', $xtabla, $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -86,7 +86,7 @@ relacion.Nombre AS Relacion,
 $SIS_order = 'IP_Client ASC LIMIT '.$comienzo.', '.$cant_reg;
 $arrIpRelacionadas = array();
 $arrIpRelacionadas = db_select_array (false, $SIS_query, $xtabla, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrIpRelacionadas');
-	
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -205,7 +205,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 							document.getElementById('div_idTransporte').style.display = 'none';
 							document.getElementById('div_idApoderado').style.display = 'none';
 							document.getElementById('div_idAlumno').style.display = 'none';
-							
+
 						//IP Relacionadas - Clientes
 						} else if(idSeguridad == 2){
 							document.getElementById('div_idUsuario').style.display = 'none';
@@ -213,7 +213,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 							document.getElementById('div_idTransporte').style.display = 'none';
 							document.getElementById('div_idApoderado').style.display = 'none';
 							document.getElementById('div_idAlumno').style.display = 'none';
-							
+
 						//IP Relacionadas - Transportes
 						} else if(idSeguridad == 3){
 							document.getElementById('div_idUsuario').style.display = 'none';
@@ -221,7 +221,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 							document.getElementById('div_idTransporte').style.display = '';
 							document.getElementById('div_idApoderado').style.display = 'none';
 							document.getElementById('div_idAlumno').style.display = 'none';
-							
+
 						//IP Relacionadas - Apoderados
 						} else if(idSeguridad == 4){
 							document.getElementById('div_idUsuario').style.display = 'none';
@@ -229,7 +229,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 							document.getElementById('div_idTransporte').style.display = 'none';
 							document.getElementById('div_idApoderado').style.display = '';
 							document.getElementById('div_idAlumno').style.display = 'none';
-							
+
 						//IP Relacionadas - Alumnos
 						} else if(idSeguridad == 5){
 							document.getElementById('div_idUsuario').style.display = 'none';
@@ -237,7 +237,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 							document.getElementById('div_idTransporte').style.display = 'none';
 							document.getElementById('div_idApoderado').style.display = 'none';
 							document.getElementById('div_idAlumno').style.display = '';
-																
+
 						//Para el resto
 						} else {
 							document.getElementById('div_idUsuario').style.display = 'none';

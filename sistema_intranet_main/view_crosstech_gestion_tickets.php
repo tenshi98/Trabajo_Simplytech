@@ -105,7 +105,7 @@ $rowdata = db_select_data (false, $SIS_query, 'crosstech_gestion_tickets', $SIS_
 		</div>
 	</div>
 
-	<?php if(isset($rowdata['DescripcionCierre'])&&$rowdata['DescripcionCierre']!=''){?>
+	<?php if(isset($rowdata['DescripcionCierre'])&&$rowdata['DescripcionCierre']!=''){ ?>
 		<div class="col-xs-12">
 			<div class="row">
 				<p class="lead"><a name="Ancla_obs"></a>Observacion Solucion (<?php echo fecha_estandar($rowdata['FechaCierre']); ?>)</p>
@@ -114,7 +114,7 @@ $rowdata = db_select_data (false, $SIS_query, 'crosstech_gestion_tickets', $SIS_
 		</div>
 	<?php } ?>
 
-	<?php if(isset($rowdata['DescripcionCancelacion'])&&$rowdata['DescripcionCancelacion']!=''){?>
+	<?php if(isset($rowdata['DescripcionCancelacion'])&&$rowdata['DescripcionCancelacion']!=''){ ?>
 		<div class="col-xs-12">
 			<div class="row">
 				<p class="lead"><a name="Ancla_obs"></a>Observacion Cancelacion (<?php echo fecha_estandar($rowdata['FechaCancelacion']); ?>)</p>

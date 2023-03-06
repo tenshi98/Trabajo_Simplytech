@@ -244,7 +244,7 @@ foreach ($arrTemporal as $temp) {
 								<td><?php echo Cantidades($eva['PromRespondido'], 1); ?></td>
 								<td><?php echo Cantidades($eva['PromCorrectas'], 1); ?></td>
 								<td><?php echo Cantidades($eva['PromRendimiento'], 2).'%'; ?></td>
-								<td><?php echo $eva['Evaluacion']; ?></td>	
+								<td><?php echo $eva['Evaluacion']; ?></td>
 							</tr>
 						<?php } ?>
 					</tbody>

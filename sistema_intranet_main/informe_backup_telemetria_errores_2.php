@@ -32,7 +32,7 @@ $cant_reg = 30;
 //resto de variables
 if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 //Inicia variable
-$SIS_where = "backup_telemetria_listado_errores.idErrores>0"; 
+$SIS_where = "backup_telemetria_listado_errores.idErrores>0";
 $SIS_where.= " AND backup_telemetria_listado_errores.idTipo!='999'";
 $SIS_where.= " AND backup_telemetria_listado_errores.Valor<'99900'";
 $SIS_where.= " AND telemetria_listado.id_Geo='2'";

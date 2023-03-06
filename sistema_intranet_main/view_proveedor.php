@@ -154,11 +154,11 @@ $arrServicios = db_select_array (false, $SIS_query, 'bodegas_servicios_facturaci
 								<strong>Tipo de Proveedor : </strong><?php echo $rowdata['tipoCliente']; ?><br/>
 								<?php
 								//Si el cliente es una empresa
-								if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){?>
+								if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
 									<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
 								<?php
 								//si es una persona
-								}else{?>
+								}else{ ?>
 									<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>
 									<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 								<?php } ?>
@@ -173,7 +173,7 @@ $arrServicios = db_select_array (false, $SIS_query, 'bodegas_servicios_facturaci
 
 							<?php
 							//Si el proveedor es una empresa
-							if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){?>
+							if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
 								<p class="text-muted word_break">
 									<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>

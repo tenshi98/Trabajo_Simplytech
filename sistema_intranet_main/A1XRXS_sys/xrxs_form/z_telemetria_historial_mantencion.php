@@ -121,7 +121,7 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",'".$Fecha."'";
 					$SIS_data .= ",'".fecha2NdiaMes($Fecha)."'";
 					$SIS_data .= ",'".fecha2NMes($Fecha)."'";
-					$SIS_data .= ",'".fecha2NSemana($Fecha)."'"; 
+					$SIS_data .= ",'".fecha2NSemana($Fecha)."'";
 					$SIS_data .= ",'".fecha2Ano($Fecha)."'";    
 				}else{
 					$SIS_data .= ",''";
@@ -437,7 +437,7 @@ require_once '0_validate_user_1.php';
 										//Se mueve el archivo a la carpeta previamente configurada
 										$move_result = @move_uploaded_file($images["tmp_name"][$i], $ruta);
 										if ($move_result){
-											
+
 											//Filtro para nombre del archivo
 											$nombre_arc = $sufijo.$images['name'][$i] ;
 
@@ -581,7 +581,7 @@ require_once '0_validate_user_1.php';
 						//se reescala la imagen en caso de ser necesario
 						$imgBase_width = imagesx( $imgBase );
 						$imgBase_height = imagesy( $imgBase );
-							
+
 						//Se establece el tamaño maximo
 						$max_width  = 640;
 						$max_height = 640;
@@ -608,10 +608,10 @@ require_once '0_validate_user_1.php';
 
 						//se establece la calidad del archivo
 						$quality = 75;
-							
+
 						//se crea la imagen
 						imagejpeg($imgBase, $ruta, $quality);
-							
+
 						//se elimina la imagen base
 						try {
 							if(!is_writable('upload/xxxsxx_'.$_FILES['Path_Firma']['name'])){
@@ -693,4 +693,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

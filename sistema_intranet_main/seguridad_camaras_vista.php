@@ -78,6 +78,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCamaras,$row );
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -256,7 +257,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $SIS
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['RazonSocial']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&idCamara='.$tipo['idCamara']; ?>" title="Ver Camara" class="btn btn-primary btn-sm tooltip"><i class="fa fa-video-camera" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo $location.'&idCamara='.$tipo['idCamara']; ?>" title="Ver Camara" class="btn btn-primary btn-sm tooltip"><i class="fa fa-video-camera" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

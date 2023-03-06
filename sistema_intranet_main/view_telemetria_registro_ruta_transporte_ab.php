@@ -341,7 +341,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 												$Longitud_x = '';
 
 												foreach ($zonas as $puntos) {
-													if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){?>
+													if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){ ?>
 														{lat: <?php echo $puntos['Latitud']; ?>, lng: <?php echo $puntos['Longitud']; ?>},
 														<?php
 														if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'&&isset($puntos['Longitud'])&&$puntos['Longitud']!='0'){
@@ -358,7 +358,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 													}
 												}
 												//se cierra la figura
-												if(isset($Longitud_x)&&$Longitud_x!=''){?>
+												if(isset($Longitud_x)&&$Longitud_x!=''){ ?>
 													{lat: <?php echo $Latitud_x; ?>, lng: <?php echo $Longitud_x; ?>}
 												<?php } ?>
 											];

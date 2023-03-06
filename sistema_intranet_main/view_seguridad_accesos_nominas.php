@@ -185,7 +185,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 				<tr>
 					<th colspan="6">Archivos Adjuntos</th>
 				</tr>
-				<?php foreach ($arrArchivo as $producto){?>
+				<?php foreach ($arrArchivo as $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
 						<td width="160">

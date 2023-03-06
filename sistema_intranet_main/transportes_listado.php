@@ -148,11 +148,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								<strong>Tipo de Transportista : </strong><?php echo $rowdata['tipoTransporte']; ?><br/>
 								<?php
 								//Si el cliente es una empresa
-								if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){?>
+								if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
 									<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
 								<?php
 								//si es una persona
-								}else{?>
+								}else{ ?>
 									<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>
 									<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 								<?php } ?>
@@ -166,7 +166,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 							<?php
 							//Si el cliente es una empresa
-							if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){?>
+							if(isset($rowdata['idTipo'])&&$rowdata['idTipo']==1){ ?>
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
 								<p class="text-muted word_break">
 									<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
@@ -318,7 +318,7 @@ if(isset($_GET['idCiudad']) && $_GET['idCiudad']!=''){  $SIS_where .= " AND tran
 if(isset($_GET['idComuna']) && $_GET['idComuna']!=''){  $SIS_where .= " AND transportes_listado.idComuna=".$_GET['idComuna'];}
 if(isset($_GET['Direccion']) && $_GET['Direccion']!=''){$SIS_where .= " AND transportes_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";}
 if(isset($_GET['Giro']) && $_GET['Giro']!=''){          $SIS_where .= " AND transportes_listado.Giro LIKE '%".EstandarizarInput($_GET['Giro'])."%'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idTransporte', 'transportes_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -346,12 +346,12 @@ $arrUsers = db_select_array (false, $SIS_query, 'transportes_listado', $SIS_join
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Transportista</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Transportista</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -445,8 +445,8 @@ $arrUsers = db_select_array (false, $SIS_query, 'transportes_listado', $SIS_join
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_transporte.php?view='.simpleEncode($usuarios['idTransporte'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$usuarios['idTransporte']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_transporte.php?view='.simpleEncode($usuarios['idTransporte'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idTransporte']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idTransporte'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar al transporte '.$usuarios['Nombre'].'?'; ?>

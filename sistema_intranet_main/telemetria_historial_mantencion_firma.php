@@ -102,7 +102,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 
-				<?php if(isset($rowdata['Path_Firma'])&&$rowdata['Path_Firma']!=''){?>
+				<?php if(isset($rowdata['Path_Firma'])&&$rowdata['Path_Firma']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<img src="upload/<?php echo $rowdata['Path_Firma'] ?>" width="100%" class="img-thumbnail" >

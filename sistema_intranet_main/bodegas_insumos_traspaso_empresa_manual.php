@@ -588,7 +588,7 @@ if($valor_0!=0){
 				//codigo
 				if (isset($_SESSION['insumos_traspasomanualempresa_productos'])){
 					//recorro el lsiatdo entregado por la base de datos
-					foreach ($_SESSION['insumos_traspasomanualempresa_productos'] as $key => $producto){?>
+					foreach ($_SESSION['insumos_traspasomanualempresa_productos'] as $key => $producto){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="4">
 								<?php echo Cantidades_decimales_justos($producto['Number']).' '.$prod['Unimed'].' de '.$prod['Nombre']; ?>
@@ -751,13 +751,13 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
 	<?php if ($rowlevel['level']>=3){ ?>
-		<?php if (isset($_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen'])&&$_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']!=''){?>
+		<?php if (isset($_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen'])&&$_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']!=''){ ?>
 
 			<?php
 			$ubicacion = $location.'&clear_all=true';
@@ -854,7 +854,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 						<td><?php echo Fecha_estandar($tipo['Creacion_fecha']); ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

@@ -100,7 +100,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 
-				<?php if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){?>
+				<?php if(isset($rowdata['File_Contrato'])&&$rowdata['File_Contrato']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<h3>Archivo</h3>

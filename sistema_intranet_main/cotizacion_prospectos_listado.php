@@ -589,6 +589,7 @@ array_push( $arrPermisos,$row );
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -860,7 +861,7 @@ $vtotal_iva   = 0;
 				<?php
 				if (isset($_SESSION['cotizacion_prospectos_productos'])){
 					//recorro el lsiatdo entregado por la base de datos
-					foreach ($_SESSION['cotizacion_prospectos_productos'] as $key => $producto){?>
+					foreach ($_SESSION['cotizacion_prospectos_productos'] as $key => $producto){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="2">
 								<?php echo $producto['Nombre']; ?>
@@ -900,7 +901,7 @@ $vtotal_iva   = 0;
 				<?php
 				if (isset($_SESSION['cotizacion_prospectos_insumos'])){
 					//recorro el lsiatdo entregado por la base de datos
-					foreach ($_SESSION['cotizacion_prospectos_insumos'] as $key => $producto){?>
+					foreach ($_SESSION['cotizacion_prospectos_insumos'] as $key => $producto){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="2">
 								<?php echo $producto['Nombre']; ?>
@@ -940,7 +941,7 @@ $vtotal_iva   = 0;
 				<?php
 				if (isset($_SESSION['cotizacion_prospectos_arriendos'])){
 					//recorro el lsiatdo entregado por la base de datos
-					foreach ($_SESSION['cotizacion_prospectos_arriendos'] as $key => $producto){?>
+					foreach ($_SESSION['cotizacion_prospectos_arriendos'] as $key => $producto){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="2">
 								<?php echo $producto['Nombre']; ?>
@@ -982,7 +983,7 @@ $vtotal_iva   = 0;
 				<?php
 				if (isset($_SESSION['cotizacion_prospectos_servicios'])){
 					//recorro el lsiatdo entregado por la base de datos
-					foreach ($_SESSION['cotizacion_prospectos_servicios'] as $key => $producto){?>
+					foreach ($_SESSION['cotizacion_prospectos_servicios'] as $key => $producto){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="2">
 								<?php echo $producto['Nombre']; ?>
@@ -1050,7 +1051,7 @@ $vtotal_iva   = 0;
 										
 						$_SESSION['cotizacion_prospectos_basicos']['vtotal_neto']   = $vtotal_neto;
 						$_SESSION['cotizacion_prospectos_basicos']['vtotal_total']  = $vtotal_neto + $vtotal_iva;
-						
+
 					?>
 
 					<tr class="invoice-total" bgcolor="#f1f1f1">
@@ -1083,7 +1084,7 @@ $vtotal_iva   = 0;
 			if (isset($_SESSION['cotizacion_prospectos_archivos'])){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
-				foreach ($_SESSION['cotizacion_prospectos_archivos'] as $key => $producto){?>
+				foreach ($_SESSION['cotizacion_prospectos_archivos'] as $key => $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
 						<td>
@@ -1116,7 +1117,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
 ?>
-	 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -1195,7 +1196,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 //Se aplican los filtros
 if(isset($_GET['idProspecto']) && $_GET['idProspecto']!=''){ $SIS_where .= " AND cotizacion_prospectos_listado.idProspecto=".$_GET['idProspecto'];}
 if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){  $SIS_where .= " AND cotizacion_prospectos_listado.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idCotizacion', 'cotizacion_prospectos_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -1218,12 +1219,12 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_prospectos_li
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	<?php if ($rowlevel['level']>=3){?>
-		<?php if(isset($_SESSION['cotizacion_prospectos_basicos']['idProspecto'])&&$_SESSION['cotizacion_prospectos_basicos']['idProspecto']!=''){?>
+	<?php if ($rowlevel['level']>=3){ ?>
+		<?php if(isset($_SESSION['cotizacion_prospectos_basicos']['idProspecto'])&&$_SESSION['cotizacion_prospectos_basicos']['idProspecto']!=''){ ?>
 
 			<?php
 			$ubicacion = $location.'&clear_all=true';
@@ -1317,7 +1318,7 @@ $arrCotizaciones = db_select_array (false, $SIS_query, 'cotizacion_prospectos_li
 							<td><?php echo Fecha_estandar($sol['Creacion_fecha']); ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_prospecto_cotizacion.php?view='.simpleEncode($sol['idCotizacion'], fecha_actual()); ?>" title="Ver Cotizacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_prospecto_cotizacion.php?view='.simpleEncode($sol['idCotizacion'], fecha_actual()); ?>" title="Ver Cotizacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($sol['idCotizacion'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la Cotizacion N° '.$sol['idCotizacion'].'?'; ?>

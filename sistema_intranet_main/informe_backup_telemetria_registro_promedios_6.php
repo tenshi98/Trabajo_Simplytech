@@ -277,6 +277,7 @@ if(isset($count)&&$count>9000){
 		alert_post_data(3,1,1, $Alert_Text);
 	echo '</div>';
 }
+
 ?>
 
 <style>
@@ -334,11 +335,11 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 			<input type="hidden" name="idTelemetria"  id="idTelemetria" value="<?php echo $_GET['idTelemetria']; ?>" />
 			<input type="hidden" name="idGrupo"       id="idGrupo"      value="<?php echo $_GET['idGrupo']; ?>" />
 
-			<?php if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){?>       <input type="hidden" name="h_inicio"     id="h_inicio"    value="<?php echo $_GET['h_inicio']; ?>" /><?php } ?>
-			<?php if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){?>     <input type="hidden" name="h_termino"    id="h_termino"   value="<?php echo $_GET['h_termino']; ?>" /><?php } ?>
-			<?php if(isset($_GET['desde'])&&$_GET['desde']!=''){?>             <input type="hidden" name="desde"        id="desde"       value="<?php echo $_GET['desde']; ?>" /><?php } ?>
-			<?php if(isset($_GET['hasta'])&&$_GET['hasta']!=''){?>             <input type="hidden" name="hasta"        id="hasta"       value="<?php echo $_GET['hasta']; ?>" /><?php } ?>
-			<?php if(isset($_GET['idOpciones'])&&$_GET['idOpciones']!=''){?>   <input type="hidden" name="idOpciones"   id="idOpciones"  value="<?php echo $_GET['idOpciones']; ?>" /><?php } ?>
+			<?php if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){ ?>       <input type="hidden" name="h_inicio"     id="h_inicio"    value="<?php echo $_GET['h_inicio']; ?>" /><?php } ?>
+			<?php if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){ ?>     <input type="hidden" name="h_termino"    id="h_termino"   value="<?php echo $_GET['h_termino']; ?>" /><?php } ?>
+			<?php if(isset($_GET['desde'])&&$_GET['desde']!=''){ ?>             <input type="hidden" name="desde"        id="desde"       value="<?php echo $_GET['desde']; ?>" /><?php } ?>
+			<?php if(isset($_GET['hasta'])&&$_GET['hasta']!=''){ ?>             <input type="hidden" name="hasta"        id="hasta"       value="<?php echo $_GET['hasta']; ?>" /><?php } ?>
+			<?php if(isset($_GET['idOpciones'])&&$_GET['idOpciones']!=''){ ?>   <input type="hidden" name="idOpciones"   id="idOpciones"  value="<?php echo $_GET['idOpciones']; ?>" /><?php } ?>
 
 			<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
 					
@@ -373,7 +374,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 							console.error('oops, something went wrong!', error);
 							alert('No se puede exportar!');
 							document.getElementById("loading").style.display = "none";
-						});		
+						});
 					}
 				, 3000);
 			}
@@ -401,10 +402,6 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 		</div>
 	</div>
 </div>
-
-
-
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">

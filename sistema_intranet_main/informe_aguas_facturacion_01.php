@@ -77,13 +77,13 @@ array_push( $arrFacturacion,$row );
 						<th width="10">Monto Pagado</th>
 					</tr>
 				</thead>
-							  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php
 					$TotalFacturado = 0;
 					$TotalPagar     = 0;
 					$TotalPagado    = 0;
-					foreach ($arrFacturacion as $fact) { 
+					foreach ($arrFacturacion as $fact) {
 						//Se suma el total
 						$TotalFacturado = $TotalFacturado + $fact['DetalleTotalVenta'];
 						$TotalPagar     = $TotalPagar + $fact['DetalleTotalAPagar'];
@@ -122,7 +122,7 @@ array_push( $arrFacturacion,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {?>
+} else { ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">

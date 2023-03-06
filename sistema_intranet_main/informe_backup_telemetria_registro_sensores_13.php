@@ -130,6 +130,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	}
 
 }
+
 ?>
 
 <div class="clearfix"></div>

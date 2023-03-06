@@ -83,7 +83,7 @@ if(isset($_SESSION['usuario']['menu'])){
 	}
 }
 //Se crea el menu del super usuario
-if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){?>
+if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
 
     <li class="">
 		<a href="javascript:;">

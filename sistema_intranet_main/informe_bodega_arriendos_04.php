@@ -97,7 +97,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$xaño = $xaño-1;
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
-		
+
 		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1'];}else{$grafico[$xcontador]['tipo1'] = 0;};
 		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2'];}else{$grafico[$xcontador]['tipo2'] = 0;};
 			
@@ -110,6 +110,7 @@ $s_Ventas              = 'true';
 //Se crea la cadena para generar los graficos
 $s_data = 'tipo1';
 if($s_Ventas=='true'){            $s_data .= ',tipo2';}
+
 ?>
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>

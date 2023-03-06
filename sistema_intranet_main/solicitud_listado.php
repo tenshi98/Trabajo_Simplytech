@@ -602,6 +602,7 @@ array_push( $arrPermisos,$row );
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -636,7 +637,7 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['modBase'])){?>
+} elseif(!empty($_GET['modBase'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -855,7 +856,7 @@ $total = 0;
 				<?php
 				if (isset($_SESSION['solicitud_otros'])){
 					//recorro el lsiatdo entregado por la base de datos
-					foreach ($_SESSION['solicitud_otros'] as $key => $producto){?>
+					foreach ($_SESSION['solicitud_otros'] as $key => $producto){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="4">
 								<?php echo $producto['Nombre']; ?>
@@ -894,7 +895,7 @@ $total = 0;
 } elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
-	 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -967,7 +968,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 //Se aplican los filtros
 if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){  $SIS_where .= " AND solicitud_listado.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
 if(isset($_GET['Observaciones']) && $_GET['Observaciones']!=''){    $SIS_where .= " AND solicitud_listado.Observaciones LIKE '%".EstandarizarInput($_GET['Observaciones'])."%'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idSolicitud', 'solicitud_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -991,12 +992,12 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'solicitud_listado', $SIS_
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	<?php if ($rowlevel['level']>=3){?>
-		<?php if(isset($_SESSION['solicitud_basicos']['idProveedor'])&&$_SESSION['solicitud_basicos']['idProveedor']!=''){?>
+	<?php if ($rowlevel['level']>=3){ ?>
+		<?php if(isset($_SESSION['solicitud_basicos']['idProveedor'])&&$_SESSION['solicitud_basicos']['idProveedor']!=''){ ?>
 
 			<?php
 			$ubicacion = $location.'&clear_all=true';
@@ -1093,7 +1094,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'solicitud_listado', $SIS_
 						<td><?php echo $sol['Observaciones']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($sol['idSolicitud'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud.php?view='.simpleEncode($sol['idSolicitud'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($sol['idSolicitud'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la solicitud N° '.$sol['idSolicitud'].'?'; ?>

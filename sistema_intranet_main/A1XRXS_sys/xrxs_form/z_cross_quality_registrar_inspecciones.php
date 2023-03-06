@@ -394,8 +394,7 @@ require_once '0_validate_user_1.php';
 				if(isset($rowUbicacionLVL_5['Nombre'])&&$rowUbicacionLVL_5['Nombre']!=''){ $_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_5']    = ' - '.$rowUbicacionLVL_5['Nombre'];                  }else{$_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_5']    = '';}
 				if(isset($rowMatrizCali['idMatriz'])&&$rowMatrizCali['idMatriz']!=''){     $_SESSION['cross_quality_reg_insp_basicos']['idMatriz']          = $rowMatrizCali['idMatriz'];                          }else{$_SESSION['cross_quality_reg_insp_basicos']['idMatriz']          = '';}
 				if(isset($rowMatrizCali['cantPuntos'])&&$rowMatrizCali['cantPuntos']!=''){ $_SESSION['cross_quality_reg_insp_basicos']['cantPuntos']        = $rowMatrizCali['cantPuntos'];                        }else{$_SESSION['cross_quality_reg_insp_basicos']['cantPuntos']        = '';}
-				
-				
+
 				//Se guardan los datos basicos del formulario recien llenado
 				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']  = '';}
 				if(isset($idTipo)&&$idTipo!=''){                  $_SESSION['cross_quality_reg_insp_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['cross_quality_reg_insp_basicos']['idTipo']          = '';}
@@ -2096,4 +2095,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

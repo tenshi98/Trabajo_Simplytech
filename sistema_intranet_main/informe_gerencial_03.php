@@ -555,7 +555,8 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
         
     }
 
-}	
+}
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -572,7 +573,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 										  
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 		
-							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){?>
+							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){ ?>
 								<tr class="odd">
 									<td>Cliente</td>
 									<td><?php echo $rowdata['Cliente']; ?></td>
@@ -649,8 +650,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 							</tbody>
 						</table>
 					</div>
-					
-					
+
 				</div>
 			</div>
 		</div>

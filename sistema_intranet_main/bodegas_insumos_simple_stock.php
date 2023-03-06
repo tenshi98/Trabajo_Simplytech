@@ -72,6 +72,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
@@ -98,11 +99,11 @@ array_push( $arrProductos,$row );
 						<th>Stock Actual</th>
 					</tr>
 				</thead>
-							  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 				<?php foreach ($arrProductos as $productos) {
 					$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];
-					if ($stock_actual!=0&&$productos['NombreProd']!=''){?>
+					if ($stock_actual!=0&&$productos['NombreProd']!=''){ ?>
 					<tr class="odd <?php if ($productos['StockLimite']>$stock_actual){echo 'danger';} ?>">
 						<td><?php echo $productos['NombreProd']; ?></td>
 						<td><?php echo Cantidades_decimales_justos($productos['StockLimite']); ?> <?php echo $productos['UnidadMedida']; ?></td>
@@ -214,7 +215,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_listado', $SIS_j
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['RazonSocial']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&idBodega='.$tipo['idBodega']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo $location.'&idBodega='.$tipo['idBodega']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

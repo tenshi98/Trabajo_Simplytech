@@ -335,17 +335,17 @@ foreach($arrExistencias as $empresa=>$datos) {
 		 
 		$SubTotalGen = 0;
 
-		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][1][$cat['idCategoria']]; 
-		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][2][$cat['idCategoria']]; 
-		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][3][$cat['idCategoria']]; 
-		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][4][$cat['idCategoria']]; 
-		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][5][$cat['idCategoria']]; 
-		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][6][$cat['idCategoria']]; 
-		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][7][$cat['idCategoria']]; 
-		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][8][$cat['idCategoria']]; 
-		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][9][$cat['idCategoria']]; 
-		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][10][$cat['idCategoria']]; 
-		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][11][$cat['idCategoria']]; 
+		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][1][$cat['idCategoria']];
+		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][2][$cat['idCategoria']];
+		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][3][$cat['idCategoria']];
+		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][4][$cat['idCategoria']];
+		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][5][$cat['idCategoria']];
+		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][6][$cat['idCategoria']];
+		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][7][$cat['idCategoria']];
+		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][8][$cat['idCategoria']];
+		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][9][$cat['idCategoria']];
+		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][10][$cat['idCategoria']];
+		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][11][$cat['idCategoria']];
 		$SubTotalGen = $SubTotalGen+$grafico[$datos[0]['BodegaID']][12][$cat['idCategoria']]; 
 
 		$SubTotal_1   = $SubTotal_1+$grafico[$datos[0]['BodegaID']][1][$cat['idCategoria']];
@@ -362,7 +362,7 @@ foreach($arrExistencias as $empresa=>$datos) {
 		$SubTotal_12  = $SubTotal_12+$grafico[$datos[0]['BodegaID']][12][$cat['idCategoria']];
 
 		$Total = $Total + $SubTotalGen;
-		
+
 		if($SubTotalGen!=0){
 
 			$spreadsheet->setActiveSheetIndex($sheet)

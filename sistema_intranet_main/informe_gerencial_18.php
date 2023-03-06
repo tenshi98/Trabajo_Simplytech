@@ -744,7 +744,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 								<td><?php echo $rowdata['Sistema']; ?></td>
 							</tr>
 
-							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){?>
+							<?php if(isset($rowdata['idCliente'])&&$rowdata['idCliente']!=''){ ?>
 								<tr class="odd">
 									<td>Cliente</td>
 									<td><?php echo $rowdata['Cliente']; ?></td>
@@ -801,8 +801,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 							</tbody>
 						</table>
 					</div>
-					
-					
+
 				</div>
 			</div>
 		</div>
@@ -1101,8 +1100,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 							</tbody>
 						</table>
 					</div>
-					
-					
+
 				</div>
 			</div>
 		</div>
@@ -1268,8 +1266,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 							</tbody>
 						</table>
 					</div>
-					
-					
+
 				</div>
 			</div>
 		</div>
@@ -1368,8 +1365,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 							</tbody>
 						</table>
 					</div>
-					
-					
+
 				</div>
 			</div>
 		</div>

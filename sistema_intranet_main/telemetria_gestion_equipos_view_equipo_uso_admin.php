@@ -178,8 +178,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 						<?php } ?>
 					</div>
 					<div class="clearfix"></div>
-					
-					
+
 				</div>
 			</div>
 			

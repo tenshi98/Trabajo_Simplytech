@@ -248,7 +248,8 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrReportes,$row );
-}	
+}
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -420,7 +421,7 @@ array_push( $arrReportes,$row );
 										$ubicacion .= '&idTipofil='.$_GET['idTipofil'];
 										$ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
 										$ubicacion .= '&idCreador='.$report['idCliente']; ?>
-										<?php if ($rowlevel['level']>=2){?><a href="<?php echo $ubicacion; ?>" title="Notificar Infraccion Creador Reporte" class="btn btn-success btn-sm tooltip"><i class="fa fa-rss" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $ubicacion; ?>" title="Notificar Infraccion Creador Reporte" class="btn btn-success btn-sm tooltip"><i class="fa fa-rss" aria-hidden="true"></i></a><?php } ?>
 									</div>
 								</td>
 							</tr>
@@ -460,7 +461,7 @@ if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){      $SIS_where .= " AN
 if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){     $SIS_where .= " AND seg_vecinal_reportes_comment_listado.idTipo='".$_GET['idTipo']."'";}
 if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){       $SIS_where .= " AND seg_vecinal_reportes_comment_listado.Fecha='".$_GET['Fecha']."'";}
 if(isset($_GET['Hora']) && $_GET['Hora']!=''){         $SIS_where .= " AND seg_vecinal_reportes_comment_listado.Hora='".$_GET['Hora']."'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idReportes', 'seg_vecinal_reportes_comment_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -501,7 +502,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default">Fecha Ascendente</li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
@@ -540,8 +541,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 	</div>
 </div>
 <div class="clearfix"></div>
-                     
-                         
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -581,7 +581,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 							<td><?php echo $eve['Hora']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&idEventoPeligro='.$eve['idEventoPeligro'].'&idComentario='.$eve['idComentario'].'&idTipofil='.$eve['idTipo']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idEventoPeligro='.$eve['idEventoPeligro'].'&idComentario='.$eve['idComentario'].'&idTipofil='.$eve['idTipo']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>

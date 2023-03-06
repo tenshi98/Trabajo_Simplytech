@@ -199,8 +199,7 @@ foreach ($arrPreguntas as $preg) {
 					</table>
 				</div>
 			</div>
-		
-			
+
 		</div>
 	</div>
 
@@ -248,8 +247,7 @@ foreach ($arrPreguntas as $preg) {
 					</table>
 				</div>
 			</div>
-		
-			
+
 		</div>
 	</div>
 	

@@ -93,31 +93,31 @@
 				<td align="right"><?php echo Valores($rowDatos['DetalleRecoleccionValor'], 0); ?></td>
 				</tr>
 
-				<?php if(isset($rowDatos['DetalleVisitaCorte'])&&$rowDatos['DetalleVisitaCorte']!=0){?>
+				<?php if(isset($rowDatos['DetalleVisitaCorte'])&&$rowDatos['DetalleVisitaCorte']!=0){ ?>
 				<tr>
 					<td colspan="2">Visita Corte</td>
 					<td align="right"><?php echo Valores($rowDatos['DetalleVisitaCorte'], 0)?></td>
 				</tr>
 				<?php } ?>
-				<?php if(isset($rowDatos['DetalleCorte1Valor'])&&$rowDatos['DetalleCorte1Valor']!=0){?>
+				<?php if(isset($rowDatos['DetalleCorte1Valor'])&&$rowDatos['DetalleCorte1Valor']!=0){ ?>
 				<tr>
 					<td colspan="2">Corte 1° instancia <?php echo ' ('.Fecha_estandar($rowDatos['DetalleCorte1Fecha']).')'?></td>
 					<td align="right"><?php echo Valores($rowDatos['DetalleCorte1Valor'], 0)?></td>
 				</tr>
 				<?php } ?>
-				<?php if(isset($rowDatos['DetalleCorte2Valor'])&&$rowDatos['DetalleCorte2Valor']!=0){?>
+				<?php if(isset($rowDatos['DetalleCorte2Valor'])&&$rowDatos['DetalleCorte2Valor']!=0){ ?>
 				<tr>
 					<td colspan="2">Corte 2° instancia <?php echo ' ('.Fecha_estandar($rowDatos['DetalleCorte2Fecha']).')'?></td>
 					<td align="right"><?php echo Valores($rowDatos['DetalleCorte2Valor'], 0)?></td>
 				</tr>
 				<?php } ?>
-				<?php if(isset($rowDatos['DetalleReposicion1Valor'])&&$rowDatos['DetalleReposicion1Valor']!=0){?>
+				<?php if(isset($rowDatos['DetalleReposicion1Valor'])&&$rowDatos['DetalleReposicion1Valor']!=0){ ?>
 				<tr>
 					<td colspan="2">Reposicion 1° instancia <?php echo ' ('.Fecha_estandar($rowDatos['DetalleReposicion1Fecha']).')'?></td>
 					<td align="right"><?php echo Valores($rowDatos['DetalleReposicion1Valor'], 0)?></td>
 				</tr>
 				<?php } ?>
-				<?php if(isset($rowDatos['DetalleReposicion2Valor'])&&$rowDatos['DetalleReposicion2Valor']!=0){?>
+				<?php if(isset($rowDatos['DetalleReposicion2Valor'])&&$rowDatos['DetalleReposicion2Valor']!=0){ ?>
 				<tr>
 					<td colspan="2">Reposicion 2° instancia <?php echo ' ('.Fecha_estandar($rowDatos['DetalleReposicion2Fecha']).')'?></td>
 					<td align="right"><?php echo Valores($rowDatos['DetalleReposicion2Valor'], 0)?></td>
@@ -129,7 +129,7 @@
 				<td align="right"><strong><?php echo Valores($rowDatos['DetalleSubtotalServicio'], 0); ?></strong></td>
 				</tr>
 
-				<?php if(isset($rowDatos['DetalleInteresDeuda'])&&$rowDatos['DetalleInteresDeuda']!=0){?>
+				<?php if(isset($rowDatos['DetalleInteresDeuda'])&&$rowDatos['DetalleInteresDeuda']!=0){ ?>
 				<tr>
 					<td colspan="2">Interes Deuda</td>
 					<td align="right"><?php echo Valores($rowDatos['DetalleInteresDeuda'], 0)?></td>
@@ -138,35 +138,35 @@
 
 				<?php 
 				//Otros Cargos 1
-				if(isset($rowDatos['DetalleOtrosCargos1Valor'])&&$rowDatos['DetalleOtrosCargos1Valor']!=0){?>
+				if(isset($rowDatos['DetalleOtrosCargos1Valor'])&&$rowDatos['DetalleOtrosCargos1Valor']!=0){ ?>
 				<tr>
 					<td colspan="2"><?php echo $rowDatos['DetalleOtrosCargos1Texto'].' ('.Fecha_estandar($rowDatos['DetalleOtrosCargos1Fecha']).')'; ?></td>
 					<td align="right"><?php echo Valores($rowDatos['DetalleOtrosCargos1Valor'], 0)?></td>
 				</tr>
 				<?php } 
 				//Otros Cargos 2
-				if(isset($rowDatos['DetalleOtrosCargos2Valor'])&&$rowDatos['DetalleOtrosCargos2Valor']!=0){?>
+				if(isset($rowDatos['DetalleOtrosCargos2Valor'])&&$rowDatos['DetalleOtrosCargos2Valor']!=0){ ?>
 				<tr>
 					<td colspan="2"><?php echo $rowDatos['DetalleOtrosCargos2Texto'].' ('.Fecha_estandar($rowDatos['DetalleOtrosCargos2Fecha']).')'; ?></td>
 					<td align="right"><?php echo Valores($rowDatos['DetalleOtrosCargos2Valor'], 0)?></td>
 				</tr>
 				<?php } 
 				//Otros Cargos 3
-				if(isset($rowDatos['DetalleOtrosCargos3Valor'])&&$rowDatos['DetalleOtrosCargos3Valor']!=0){?>
+				if(isset($rowDatos['DetalleOtrosCargos3Valor'])&&$rowDatos['DetalleOtrosCargos3Valor']!=0){ ?>
 				<tr>
 					<td colspan="2"><?php echo $rowDatos['DetalleOtrosCargos3Texto'].' ('.Fecha_estandar($rowDatos['DetalleOtrosCargos3Fecha']).')'; ?></td>
 					<td align="right"><?php echo Valores($rowDatos['DetalleOtrosCargos3Valor'], 0)?></td>
 				</tr>
 				<?php } 
 				//Otros Cargos 4
-				if(isset($rowDatos['DetalleOtrosCargos4Valor'])&&$rowDatos['DetalleOtrosCargos4Valor']!=0){?>
+				if(isset($rowDatos['DetalleOtrosCargos4Valor'])&&$rowDatos['DetalleOtrosCargos4Valor']!=0){ ?>
 				<tr>
 					<td colspan="2"><?php echo $rowDatos['DetalleOtrosCargos4Texto'].' ('.Fecha_estandar($rowDatos['DetalleOtrosCargos4Fecha']).')'; ?></td>
 					<td align="right"><?php echo Valores($rowDatos['DetalleOtrosCargos4Valor'], 0)?></td>
 				</tr>
 				<?php } 
 				//Otros Cargos 5
-				if(isset($rowDatos['DetalleOtrosCargos5Valor'])&&$rowDatos['DetalleOtrosCargos5Valor']!=0){?>
+				if(isset($rowDatos['DetalleOtrosCargos5Valor'])&&$rowDatos['DetalleOtrosCargos5Valor']!=0){ ?>
 				<tr>
 					<td colspan="2"><?php echo $rowDatos['DetalleOtrosCargos5Texto'].' ('.Fecha_estandar($rowDatos['DetalleOtrosCargos5Fecha']).')'; ?></td>
 					<td align="right"><?php echo Valores($rowDatos['DetalleOtrosCargos5Valor'], 0)?></td>
@@ -176,13 +176,13 @@
 				<td colspan="2"><strong>TOTAL VENTA</strong></td>
 				<td align="right"><strong><?php if($rowDatos['DetalleTotalVenta']>0){echo Valores($rowDatos['DetalleTotalVenta'], 0);}else{echo '0';} ?></strong></td>
 				</tr>
-				<?php if(isset($rowDatos['DetalleSaldoFavor'])&&$rowDatos['DetalleSaldoFavor']!=0){?>
+				<?php if(isset($rowDatos['DetalleSaldoFavor'])&&$rowDatos['DetalleSaldoFavor']!=0){ ?>
 				<tr>
 					<td colspan="2">Saldo a Favor</td>
 					<td align="right"><?php echo '(-) '.Valores($rowDatos['DetalleSaldoFavor'], 0)?></td>
 				</tr>
 				<?php } ?>
-				<?php if(isset($rowDatos['DetalleSaldoAnterior'])&&$rowDatos['DetalleSaldoAnterior']!=0){?>
+				<?php if(isset($rowDatos['DetalleSaldoAnterior'])&&$rowDatos['DetalleSaldoAnterior']!=0){ ?>
 				<tr>
 					<td colspan="2">Saldo Anterior</td>
 					<td align="right"><?php echo Valores($rowDatos['DetalleSaldoAnterior'], 0)?></td>
@@ -257,7 +257,7 @@
 
 				<?php
 				//verificacion de remarcador
-				if(isset($rowDatos['ClienteRemarcador'])&&$rowDatos['ClienteRemarcador']!=''&&$rowDatos['ClienteRemarcador']!=0){?>
+				if(isset($rowDatos['ClienteRemarcador'])&&$rowDatos['ClienteRemarcador']!=''&&$rowDatos['ClienteRemarcador']!=0){ ?>
 				<br/>
 					<div class="pull-left">Adicionales por prorrateo</div>
 					<small class="pull-right">
@@ -285,7 +285,7 @@
 				<small class="pull-right"><?php echo Fecha_estandar($rowDatos['DetConsFechaProxLectura']); ?></small>
 				<?php
 				//verificacion de remarcador
-				if(isset($rowDatos['ClienteRemarcador'])&&$rowDatos['ClienteRemarcador']!=''&&$rowDatos['ClienteRemarcador']!=0){?>
+				if(isset($rowDatos['ClienteRemarcador'])&&$rowDatos['ClienteRemarcador']!=''&&$rowDatos['ClienteRemarcador']!=0){ ?>
 				<br/>
 				<div class="pull-left">Modalidad de prorrateo: <?php echo $rowDatos['DetConsModalidad']; ?></div>
 				<?php } ?>
@@ -353,7 +353,7 @@
 
 				<?php
 				//verificacion de remarcador
-				if(isset($rowDatos['ClienteRemarcador'])&&$rowDatos['ClienteRemarcador']!=''&&$rowDatos['ClienteRemarcador']!=0){?>
+				if(isset($rowDatos['ClienteRemarcador'])&&$rowDatos['ClienteRemarcador']!=''&&$rowDatos['ClienteRemarcador']!=0){ ?>
 				<br/>
 					<div class="pull-left">Diferencia medidor general</div>
 					<small class="pull-right">

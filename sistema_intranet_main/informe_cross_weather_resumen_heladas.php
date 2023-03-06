@@ -245,7 +245,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 
 			<input type="hidden" name="idSistema"     id="idSistema"    value="<?php echo $_SESSION['usuario']['basic_data']['idSistema']; ?>" />
 			<input type="hidden" name="fecha"         id="fecha"        value="<?php echo $_GET['fecha']; ?>" />
-			<?php if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){?>
+			<?php if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ ?>
 				<input type="hidden" name="idTelemetria"   id="idTelemetria"  value="<?php echo $_GET['idTelemetria']; ?>" />
 			<?php } ?>
 
@@ -282,7 +282,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 							console.error('oops, something went wrong!', error);
 							alert('No se puede exportar!');
 							document.getElementById("loading").style.display = "none";
-						});		
+						});
 					}
 				, 3000);
 			}

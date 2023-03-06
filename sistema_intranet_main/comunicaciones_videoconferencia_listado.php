@@ -119,6 +119,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrUsuarios,$row );
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -322,7 +323,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		<li class="btn btn-default">Listado</li>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear VideoConferencia</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear VideoConferencia</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -417,17 +418,17 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 											<?php 
 											//si es recurrente sienpre se muestra
 											if(isset($Conferencia[0]['idTipo'])&&$Conferencia[0]['idTipo']==1){
-												if ($rowlevel['level']>=1){?><a href="<?php echo 'comunicaciones_videoconferencia_room.php?view='.$VideoConferencia; ?>" title="Entrar en la Videoconferencia" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php }
+												if ($rowlevel['level']>=1){ ?><a href="<?php echo 'comunicaciones_videoconferencia_room.php?view='.$VideoConferencia; ?>" title="Entrar en la Videoconferencia" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php }
 											//si es por dia fijo 	
 											}elseif(isset($Conferencia[0]['idTipo'])&&$Conferencia[0]['idTipo']==2){
 												//se verifica la fecha
 												if(isset($Conferencia[0]['Fecha'])&&$Conferencia[0]['Fecha']==fecha_actual()){
-													if ($rowlevel['level']>=1){?><a href="<?php echo 'comunicaciones_videoconferencia_room.php?view='.$VideoConferencia; ?>" title="Entrar en la Videoconferencia" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php }
+													if ($rowlevel['level']>=1){ ?><a href="<?php echo 'comunicaciones_videoconferencia_room.php?view='.$VideoConferencia; ?>" title="Entrar en la Videoconferencia" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php }
 												}
 											}
 											//si es quien la creo, puede editarla o eliminarla
 											if(($Conferencia[0]['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
-												<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$VideoConferencia; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$VideoConferencia; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 												<?php if ($rowlevel['level']>=4){
 													$ubicacion = $location.'&del='.simpleEncode($VideoConferencia, fecha_actual());
 													$dialogo   = '¿Realmente deseas eliminar la videoconferencia '.$Conferencia[0]['Nombre'].'?'; ?>

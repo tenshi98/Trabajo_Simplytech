@@ -174,8 +174,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<?php } ?>
 					</div>
 					<div class="clearfix"></div>
-					
-					
+
 				</div>
 			</div>
 			

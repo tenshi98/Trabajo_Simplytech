@@ -282,7 +282,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 					}
 
 					//Se verifica si el sensor esta habilitado para la supervision
-					if(isset($rowMed['SensoresUso_'.$i])&&$rowMed['SensoresUso_'.$i]==1){ 
+					if(isset($rowMed['SensoresUso_'.$i])&&$rowMed['SensoresUso_'.$i]==1){
 						//si esta configurado el porcentaje de alerta
 						if(isset($rowMed['SensoresAccionAlerta_'.$i])&&$rowMed['SensoresAccionAlerta_'.$i]!=0){
 							/*****************************************/

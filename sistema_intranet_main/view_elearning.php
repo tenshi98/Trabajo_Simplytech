@@ -161,7 +161,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 								<td style="background-color:#DDD"><strong>Unidad <?php echo $categoria; ?></strong> - <?php echo $permisos[0]['Unidad_Nombre'].' ('.$permisos[0]['Unidad_Duracion'].' dias de duracion)'; ?></td>
 							</tr>
 							<?php foreach ($permisos as $preg) {
-								if(isset($preg['Contenido_Nombre'])&&$preg['Contenido_Nombre']!=''){?>
+								if(isset($preg['Contenido_Nombre'])&&$preg['Contenido_Nombre']!=''){ ?>
 									<tr class="item-row linea_punteada">
 										<td class="item-name">
 											<span style="word-wrap: break-word;white-space: initial;"><?php echo $preg['Contenido_Nombre']; ?></span>	

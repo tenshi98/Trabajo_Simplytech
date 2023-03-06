@@ -6,7 +6,7 @@ if(isset($_GET['Ano'])){      $Ano = $_GET['Ano'];         } else { $Ano  = ano_
 if(isset($_GET["idTipo"])){   $idTipo = $_GET["idTipo"];   } else { $idTipo  = 1; }
 
 $diaActual  = dia_actual();
-$MesActual  = mes_actual(); 
+$MesActual  = mes_actual();
 $AnoActual  = ano_actual();
 
 //calculo de los dias del mes, cuando inicia y cuando termina
@@ -125,7 +125,7 @@ $arrFacturas_4 = db_select_array (false, $SIS_query, 'bodegas_servicios_facturac
 										if($i<$diaSemana || $i>=$last_cell){
 											echo "<td class='fc-Dia fc-wed fc-widget-content fc-other-Mes fc-future fc-state-none'> </td>";
 										// mostramos el dia
-										}else{?>
+										}else{ ?>
 											<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';} ?>">
 												<div class="calendar_min">
 													<div class="fc-Dia-number"><?php echo $Dia; ?></div>

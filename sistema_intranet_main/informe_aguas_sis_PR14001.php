@@ -149,7 +149,7 @@ array_push( $arrProductos,$row );
 						<th>idLaboratorio</th>
 					</tr>
 				</thead>
-							  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrProductos as $productos) { ?>
 

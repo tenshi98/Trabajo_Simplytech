@@ -111,35 +111,21 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 }else{
 	//filtro
 	$z = "idLicitacion=0";
-	//Se revisan los permisos a los contratos
+	// consulto los datos
+	$SIS_query = 'idLicitacion';
+	$SIS_join  = '';
+	$SIS_where = 'idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_order = 'idLicitacion ASC';
 	$arrPermisos = array();
-	$query = "SELECT idLicitacion
-	FROM `usuarios_contratos`
-	WHERE idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)){
-	array_push( $arrPermisos,$row );
-	}
+	$arrPermisos = db_select_array (false, $SIS_query, 'usuarios_contratos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
+	//Se recorre
 	foreach ($arrPermisos as $prod) {
 		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion={$prod['idLicitacion']})";
 	}
 
 }
 
-
-	 
 //Se filtran solo las ramas de la licitacion, no las subramas con los datos
 $w = 'idUtilizable=1';
 
@@ -211,8 +197,7 @@ $w = 'idUtilizable=1';
 										  'Nivel 23','idLevel_23',$x23 ,1,'idLevel_23','Nombre','licitacion_listado_level_23',$w,0,
 										  'Nivel 24','idLevel_24',$x24 ,1,'idLevel_24','Nombre','licitacion_listado_level_24',$w,0,
 										  $dbConn, 'form1');
-										  
-									  
+
 				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
 				$Form_Inputs->form_input_hidden('addTrabajo', $_GET['addTrabajo'], 2);
 				?>
@@ -230,72 +215,48 @@ $w = 'idUtilizable=1';
 <?php
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['edit'])){
+/*******************************************************/
 // consulto los datos
-$query = "SELECT 
-maquinas_listado_level_".$_GET['lvl'].".Nombre,
-maquinas_listado_level_".$_GET['lvl'].".Codigo,
-maquinas_listado_level_".$_GET['lvl'].".Marca,
-maquinas_listado_level_".$_GET['lvl'].".idUtilizable,
-maquinas_listado_level_".$_GET['lvl'].".Modelo,
-maquinas_listado_level_".$_GET['lvl'].".AnoFab,
-maquinas_listado_level_".$_GET['lvl'].".Serie,
-maquinas_listado_level_".$_GET['lvl'].".idSubTipo,
-maquinas_listado_level_".$_GET['lvl'].".Saf,
-maquinas_listado_level_".$_GET['lvl'].".Numero,
-maquinas_listado_level_".$_GET['lvl'].".idProducto,
-maquinas_listado_level_".$_GET['lvl'].".Grasa_inicial,
-maquinas_listado_level_".$_GET['lvl'].".Grasa_relubricacion,
-maquinas_listado_level_".$_GET['lvl'].".Aceite,
-maquinas_listado_level_".$_GET['lvl'].".Cantidad,
-maquinas_listado_level_".$_GET['lvl'].".idUml,
-maquinas_listado_level_".$_GET['lvl'].".Frecuencia,
-maquinas_listado_level_".$_GET['lvl'].".idFrecuencia,
-sistema_productos_uml.Nombre AS UnidadMedida
-
-FROM `maquinas_listado_level_".$_GET['lvl']."`
-LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = maquinas_listado_level_".$_GET['lvl'].".idUml
-WHERE maquinas_listado_level_".$_GET['lvl'].".idLevel_".$_GET['lvl']." = ".$_GET['edit'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$SIS_query = '
+maquinas_listado_level_'.$_GET['lvl'].'.Nombre,
+maquinas_listado_level_'.$_GET['lvl'].'.Codigo,
+maquinas_listado_level_'.$_GET['lvl'].'.Marca,
+maquinas_listado_level_'.$_GET['lvl'].'.idUtilizable,
+maquinas_listado_level_'.$_GET['lvl'].'.Modelo,
+maquinas_listado_level_'.$_GET['lvl'].'.AnoFab,
+maquinas_listado_level_'.$_GET['lvl'].'.Serie,
+maquinas_listado_level_'.$_GET['lvl'].'.idSubTipo,
+maquinas_listado_level_'.$_GET['lvl'].'.Saf,
+maquinas_listado_level_'.$_GET['lvl'].'.Numero,
+maquinas_listado_level_'.$_GET['lvl'].'.idProducto,
+maquinas_listado_level_'.$_GET['lvl'].'.Grasa_inicial,
+maquinas_listado_level_'.$_GET['lvl'].'.Grasa_relubricacion,
+maquinas_listado_level_'.$_GET['lvl'].'.Aceite,
+maquinas_listado_level_'.$_GET['lvl'].'.Cantidad,
+maquinas_listado_level_'.$_GET['lvl'].'.idUml,
+maquinas_listado_level_'.$_GET['lvl'].'.Frecuencia,
+maquinas_listado_level_'.$_GET['lvl'].'.idFrecuencia,
+sistema_productos_uml.Nombre AS UnidadMedida';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = maquinas_listado_level_'.$_GET['lvl'].'.idUml';
+$SIS_where = 'maquinas_listado_level_'.$_GET['lvl'].'.idLevel_'.$_GET['lvl'].' = '.$_GET['edit'];
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_level_'.$_GET['lvl'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //filtro
 $zx1 = "idProducto=0";
-//Se revisan los permisos a los productos
+/*******************************************************/
+// consulto los datos
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 0;
 $arrPermisos = array();
-$query = "SELECT idProducto
-FROM `core_sistemas_productos`
-WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrPermisos,$row );
-}
+$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
+//Se recorre
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -330,9 +291,7 @@ foreach ($arrPermisos as $prod) {
 				if(isset($idUml)){                $x18 = $idUml;                  }else{$x18 = $rowdata['idUml'];}
 				if(isset($Frecuencia)){           $x19 = $Frecuencia;             }else{$x19 = $rowdata['Frecuencia'];}
 				if(isset($idFrecuencia)){         $x20 = $idFrecuencia;           }else{$x20 = $rowdata['idFrecuencia'];}
-				
-				
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -362,56 +321,40 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
 
-				//Imprimo las variables
-				$arrTipo = array();
-				$query = "SELECT 
+				/*******************************************************/
+				// consulto los datos
+				$SIS_query = '
 				productos_listado.idProducto,
 				sistema_productos_uml.Nombre AS Unimed,
-				productos_listado.idUml
-				FROM `productos_listado`
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-				ORDER BY sistema_productos_uml.Nombre";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)){
-				array_push( $arrTipo,$row );
-				}
-				
-				echo '<script>';
-				foreach ($arrTipo as $tipo) {
-					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
-					';
-				}
-				
-				foreach ($arrTipo as $tipo) {
-					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
-					';
-				}
+				productos_listado.idUml';
+				$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+				$SIS_where = '';
+				$SIS_order = 'sistema_productos_uml.Nombre ASC';
+				$arrTipo = array();
+				$arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
 				?>
-				</script>
 
 				<script>
-				document.getElementById("idProducto").onchange = function() {myFunction()};
-
-				function myFunction() {
-					let Componente = document.getElementById("idProducto").value;
-					if (Componente != "") {
-						//escribo dentro del input
-						document.getElementById("idUml_fake").value = eval("id_data1_" + Componente);
-						document.getElementById("idUml").value      = eval("id_data2_" + Componente);
+					<?php
+					//Imprimo las variables
+					foreach ($arrTipo as $tipo) {
+						echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
+						';
+						echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
+						';
 					}
-				}
+					?>
+					document.getElementById("idProducto").onchange = function() {myFunction()};
+
+					function myFunction() {
+						let Componente = document.getElementById("idProducto").value;
+						if (Componente != "") {
+							//escribo dentro del input
+							document.getElementById("idUml_fake").value = eval("id_data1_" + Componente);
+							document.getElementById("idUml").value      = eval("id_data2_" + Componente);
+						}
+					}
 				</script>
 
 				<script>
@@ -434,7 +377,7 @@ foreach ($arrPermisos as $prod) {
 						document.getElementById('div_idUml').style.display = 'none';
 						document.getElementById('div_Frecuencia').style.display = 'none';
 						document.getElementById('div_idFrecuencia').style.display = 'none';
-						
+
 						let Sensores_val_1= $("#idUtilizable").val();
 
 						//si es No Usable
@@ -454,8 +397,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('div_idUml').style.display = 'none';
 							document.getElementById('div_Frecuencia').style.display = 'none';
 							document.getElementById('div_idFrecuencia').style.display = 'none';
-							
-																
+
 						//si es Componente
 						} else if(Sensores_val_1 == 2){
 							document.getElementById('div_Modelo').style.display = '';
@@ -473,8 +415,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('div_idUml').style.display = 'none';
 							document.getElementById('div_Frecuencia').style.display = 'none';
 							document.getElementById('div_idFrecuencia').style.display = 'none';
-	
-							
+
 						//si es Subcomponente
 						} else if(Sensores_val_1 == 3){
 							document.getElementById('div_Modelo').style.display = 'none';
@@ -492,9 +433,9 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('div_idUml').style.display = 'none';
 							document.getElementById('div_Frecuencia').style.display = 'none';
 							document.getElementById('div_idFrecuencia').style.display = 'none';
-								
+
 						}
-					
+
 						let Sensores_val_2= $("#idSubTipo").val();
 
 						//si es grasa
@@ -513,7 +454,7 @@ foreach ($arrPermisos as $prod) {
 							//Reseteo los valores a 0
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
-							
+
 						//si es aceite
 						} else if(Sensores_val_2 == 2){
 							document.getElementById('div_Saf').style.display = '';
@@ -531,7 +472,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Grasa_inicial').value = "0";
 							document.getElementById('Grasa_relubricacion').value = "0";
 							document.getElementById('Cantidad').value = "0";
-							
+
 						//si es normal
 						} else if(Sensores_val_2 == 3){
 							document.getElementById('div_Saf').style.display = '';
@@ -568,18 +509,14 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
 						}
-				 
-											
-								
+
 					});
 
-					
-					
-					/**********************************************************************/	
-				
-					$("#idUtilizable").on("change", function(){ 
-						let TipoComp = $(this).val(); 
-						
+					/**********************************************************************/
+
+					$("#idUtilizable").on("change", function(){
+						let TipoComp = $(this).val();
+
 						//si es No Usable
 						if(TipoComp == 1){
 							document.getElementById('div_Modelo').style.display = 'none';
@@ -607,8 +544,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('idUml').value = "0";
 							document.getElementById('Frecuencia').value = "0";
 							document.getElementById('idFrecuencia').selectedIndex = 0;
-						
-																
+
 						//si es Componente
 						} else if(TipoComp == 2){
 							document.getElementById('div_Modelo').style.display = '';
@@ -636,8 +572,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('idUml').value = "0";
 							document.getElementById('Frecuencia').value = "0";
 							document.getElementById('idFrecuencia').selectedIndex = 0;
-	
-							
+
 						//si es Subcomponente
 						} else if(TipoComp == 3){
 							document.getElementById('div_Modelo').style.display = 'none';
@@ -665,13 +600,13 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('idUml').value = "0";
 							document.getElementById('Frecuencia').value = "0";
 							document.getElementById('idFrecuencia').selectedIndex = 0;
-								
+
 						}
 					});
-							
+
 					$("#idSubTipo").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected = $(this).val(); //Asignamos el valor seleccionado
-				
+
 						//si es grasa
 						if(modelSelected == 1){
 							document.getElementById('div_Saf').style.display = '';
@@ -688,7 +623,7 @@ foreach ($arrPermisos as $prod) {
 							//Reseteo los valores a 0
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
-							
+
 						//si es aceite
 						} else if(modelSelected == 2){
 							document.getElementById('div_Saf').style.display = '';
@@ -706,7 +641,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Grasa_inicial').value = "0";
 							document.getElementById('Grasa_relubricacion').value = "0";
 							document.getElementById('Cantidad').value = "0";
-							
+
 						//si es normal
 						} else if(modelSelected == 3){
 							document.getElementById('div_Saf').style.display = '';
@@ -761,15 +696,13 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
 						}
-				 
+
 					});
-					
-					   		
+
 				</script>
 
 				<div class="form-group">
-				
-					
+
 					<?php if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){$Form_Inputs->form_input_hidden('idLevel_1', $_GET['lv_1'], 2);} ?>
 					<?php if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){$Form_Inputs->form_input_hidden('idLevel_2', $_GET['lv_2'], 2);} ?>
 					<?php if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){$Form_Inputs->form_input_hidden('idLevel_3', $_GET['lv_3'], 2);} ?>
@@ -795,8 +728,7 @@ foreach ($arrPermisos as $prod) {
 					<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){$Form_Inputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
 					<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){$Form_Inputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
 					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){$Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
-			
-				
+
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_idLevel">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
@@ -809,27 +741,14 @@ foreach ($arrPermisos as $prod) {
 <?php
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['editimg'])){
+/*******************************************************/
 // consulto los datos
-$query = "SELECT 
-maquinas_listado_level_".$_GET['lvl'].".Nombre,
-maquinas_listado_level_".$_GET['lvl'].".Direccion_img
-
-FROM `maquinas_listado_level_".$_GET['lvl']."`
-WHERE maquinas_listado_level_".$_GET['lvl'].".idLevel_".$_GET['lvl']." = ".$_GET['editimg'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$SIS_query = '
+maquinas_listado_level_'.$_GET['lvl'].'.Nombre,
+maquinas_listado_level_'.$_GET['lvl'].'.Direccion_img';
+$SIS_join  = '';
+$SIS_where = 'maquinas_listado_level_'.$_GET['lvl'].'.idLevel_'.$_GET['lvl'].' = '.$_GET['editimg'];
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_level_'.$_GET['lvl'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
@@ -841,8 +760,8 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</header>
 		<div class="body">
 
-			<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){?>
-        
+			<?php if(isset($rowdata['Direccion_img'])&&$rowdata['Direccion_img']!=''){ ?>
+
 				<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 					 <img src="upload/<?php echo $rowdata['Direccion_img']; ?>" width="100%" >
 				</div>
@@ -861,12 +780,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_multiple_upload('Seleccionar archivo','Direccion_img', 1, '"jpg", "png", "gif", "jpeg"');
-						
-						
+
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);
 					$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
-						
+
 					?>
 
 					<div class="form-group">
@@ -900,13 +818,11 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_edit_img">
 						<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 					</div>
-							  
+
 				</form>
 				<?php widget_validator(); ?>
 			<?php } ?>
-			
-			
-			      
+
 		</div>
 	</div>
 </div>
@@ -914,33 +830,34 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 }elseif(!empty($_GET['new'])){
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
-//se crea filtro
-//filtro
-$zx1 = "idProducto=0";
-//Se revisan los permisos a los productos
+/*******************************************************/
+// consulto los datos
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 0;
 $arrPermisos = array();
-$query = "SELECT idProducto
-FROM `core_sistemas_productos`
-WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrPermisos,$row );
-}
+$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
+/*******************************************************/
+// consulto los datos
+$SIS_query = '
+productos_listado.idProducto,
+sistema_productos_uml.Nombre AS Unimed,
+productos_listado.idUml';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+$SIS_where = '';
+$SIS_order = 'sistema_productos_uml.Nombre ASC';
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
+/*******************************************************/
+//Recorro
+$zx1 = "idProducto=0";
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
-}	
+}
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -975,9 +892,7 @@ foreach ($arrPermisos as $prod) {
 				if(isset($idUml)){                $x18 = $idUml;                  }else{$x18 = '';}
 				if(isset($Frecuencia)){           $x19 = $Frecuencia;             }else{$x19 = '';}
 				if(isset($idFrecuencia)){         $x20 = $idFrecuencia;           }else{$x20 = '';}
-				
-				
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -1007,56 +922,29 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
 
-				//Imprimo las variables
-				$arrTipo = array();
-				$query = "SELECT 
-				productos_listado.idProducto,
-				sistema_productos_uml.Nombre AS Unimed,
-				productos_listado.idUml
-				FROM `productos_listado`
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-				ORDER BY sistema_productos_uml.Nombre";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)){
-				array_push( $arrTipo,$row );
-				}
-				
-				echo '<script>';
-				foreach ($arrTipo as $tipo) {
-					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
-					';
-				}
-				
-				foreach ($arrTipo as $tipo) {
-					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
-					';
-				}
 				?>
+				<script>
+					<?php
+					foreach ($arrTipo as $tipo) {
+						echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
+						';
+						echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
+						';
+					}
+					?>
 				</script>
 
 				<script>
-				document.getElementById("idProducto").onchange = function() {myFunction()};
+					document.getElementById("idProducto").onchange = function() {myFunction()};
 
-				function myFunction() {
-					let Componente = document.getElementById("idProducto").value;
-					if (Componente != "") {
-						//escribo dentro del input
-						document.getElementById("idUml_fake").value = eval("id_data1_" + Componente);
-						document.getElementById("idUml").value      = eval("id_data2_" + Componente);
+					function myFunction() {
+						let Componente = document.getElementById("idProducto").value;
+						if (Componente != "") {
+							//escribo dentro del input
+							document.getElementById("idUml_fake").value = eval("id_data1_" + Componente);
+							document.getElementById("idUml").value      = eval("id_data2_" + Componente);
+						}
 					}
-				}
 				</script>
 
 				<script>
@@ -1077,9 +965,9 @@ foreach ($arrPermisos as $prod) {
 					document.getElementById('div_Frecuencia').style.display = 'none';
 					document.getElementById('div_idFrecuencia').style.display = 'none';
 
-					$("#idUtilizable").on("change", function(){ 
-						let TipoComp = $(this).val(); 
-						
+					$("#idUtilizable").on("change", function(){
+						let TipoComp = $(this).val();
+
 						//si es No Usable
 						if(TipoComp == 1){
 							document.getElementById('div_Modelo').style.display = 'none';
@@ -1107,7 +995,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('idUml').value = "0";
 							document.getElementById('Frecuencia').value = "0";
 							document.getElementById('idFrecuencia').selectedIndex = 0;
-																
+
 						//si es Componente
 						} else if(TipoComp == 2){
 							document.getElementById('div_Modelo').style.display = '';
@@ -1135,7 +1023,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('idUml').value = "0";
 							document.getElementById('Frecuencia').value = "0";
 							document.getElementById('idFrecuencia').selectedIndex = 0;
-							
+
 						//si es Subcomponente
 						} else if(TipoComp == 3){
 							document.getElementById('div_Modelo').style.display = 'none';
@@ -1153,13 +1041,13 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('div_idUml').style.display = 'none';
 							document.getElementById('div_Frecuencia').style.display = 'none';
 							document.getElementById('div_idFrecuencia').style.display = 'none';
-								
+
 						}
 					});
-							
+
 					$("#idSubTipo").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected = $(this).val(); //Asignamos el valor seleccionado
-				
+
 						//si es grasa
 						if(modelSelected == 1){
 							document.getElementById('div_Saf').style.display = '';
@@ -1176,8 +1064,7 @@ foreach ($arrPermisos as $prod) {
 							//Reseteo los valores a 0
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
-							
-							
+
 						//si es aceite
 						} else if(modelSelected == 2){
 							document.getElementById('div_Saf').style.display = '';
@@ -1195,7 +1082,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Grasa_inicial').value = "0";
 							document.getElementById('Grasa_relubricacion').value = "0";
 							document.getElementById('Cantidad').value = "0";
-							
+
 						//si es normal
 						} else if(modelSelected == 3){
 							document.getElementById('div_Saf').style.display = '';
@@ -1250,10 +1137,9 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('Aceite').value = "0";
 							document.getElementById('Cantidad').value = "0";
 						}
-				 
+
 					});
-					
-					   		
+
 				</script>
 
 				<div class="form-group">
@@ -1283,11 +1169,7 @@ foreach ($arrPermisos as $prod) {
 					<?php if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){$Form_Inputs->form_input_hidden('idLevel_23', $_GET['lv_23'], 2);} ?>
 					<?php if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){$Form_Inputs->form_input_hidden('idLevel_24', $_GET['lv_24'], 2);} ?>
 					<?php if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){$Form_Inputs->form_input_hidden('idLevel_25', $_GET['lv_25'], 2);} ?>
-					
-				
-					
-					
-					
+
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_idLevel">
 					<a href="<?php echo $new_location.'&id='.$_GET['id']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
 				</div>
@@ -1298,29 +1180,14 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 
-
-
- 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }else{
+/*******************************************************/
 // consulto los datos
-$query = "SELECT Nombre,idSistema, idConfig_1, idConfig_2, idConfig_3
-FROM `maquinas_listado`
-WHERE idMaquina = ".$_GET['id'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'Nombre,idSistema, idConfig_1, idConfig_2, idConfig_3, idConfig_4';
+$SIS_join  = '';
+$SIS_where = 'idMaquina ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Se crean las variables
 $nmax = 15;
@@ -1346,55 +1213,24 @@ for ($i = 1; $i <= $nmax; $i++) {
     $orderby .= ', maquinas_listado_level_'.$i.'.Codigo ASC';
 }
 
-//se hace la consulta
+/*******************************************************/
+// consulto los datos
+$SIS_query = 'maquinas_listado_level_1.idLevel_1 AS bla'.$z;
+$SIS_join  = $leftjoin;
+$SIS_where = 'maquinas_listado_level_1.idMaquina='.$_GET['id'];
+$SIS_order = 'maquinas_listado_level_1.Codigo ASC'.$orderby;
 $arrItemizado = array();
-$query = "SELECT
-maquinas_listado_level_1.idLevel_1 AS bla
-".$z."
-FROM `maquinas_listado_level_1`
-".$leftjoin."
-WHERE maquinas_listado_level_1.idMaquina=".$_GET['id']."
-ORDER BY maquinas_listado_level_1.Codigo ASC ".$orderby."
+$arrItemizado = db_select_array (false, $SIS_query, 'maquinas_listado_level_1', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrItemizado');
 
-";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrItemizado,$row );
-}
-/*********************************************************************/
-// Se trae un listado con todos los tipos de componentes
+/*******************************************************/
+// consulto los datos
+$SIS_query = 'idUtilizable, Nombre';
+$SIS_join  = '';
+$SIS_where = '';
+$SIS_order = 'idUtilizable ASC';
 $arrTipos = array();
-$query = "SELECT idUtilizable, Nombre
-FROM `core_maquinas_tipo_componente`
-ORDER BY idUtilizable ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrTipos,$row );
-}
+$arrTipos = db_select_array (false, $SIS_query, 'core_maquinas_tipo_componente', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipos');
+
 //Se crea el arreglo
 $TipoMaq = array();
 foreach($arrTipos as $tipo) {
@@ -1402,33 +1238,19 @@ foreach($arrTipos as $tipo) {
 	$TipoMaq[$tipo['idUtilizable']]['Nombre']        = $tipo['Nombre'];
 }
 /*********************************************************************/
-//Verifico el tipo de usuario que esta ingresando
-$z="WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Se crea el arreglo
 $Trabajo = array();
 //Creo el arreglo para saber los datos de las licitaciones
 for ($i = 1; $i <= $nmax; $i++) {
-	// Se trae un listado con todos los datos
+	/*******************************************************/
+	// consulto los datos
+	$SIS_query = 'idLevel_'.$i.' AS lvl, idLicitacion, Nombre,Codigo';
+	$SIS_join  = '';
+	$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+	$SIS_order = 'Codigo ASC, Nombre ASC';
 	$arrTrabajo = array();
-	$query = "SELECT idLevel_".$i." AS lvl, idLicitacion, Nombre,Codigo
-	FROM `licitacion_listado_level_".$i."` ".$z."
-	ORDER BY Codigo ASC, Nombre ASC";
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)){
-	array_push( $arrTrabajo,$row );
-	}
+	$arrTrabajo = db_select_array (false, $SIS_query, 'licitacion_listado_level_'.$i, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTrabajo');
+
 	//se guardan los datos
 	foreach($arrTrabajo as $trab) {
 		$Trabajo[$trab['idLicitacion']][$i][$trab['lvl']]['Nombre']  = $trab['Nombre'];
@@ -1454,19 +1276,18 @@ foreach($arrItemizado as $key) {
 		$y[$i]  = '';
 		$m[$i]  = '';
 		$t[$i]  = '';
-				
+
 		//si el dato solicitado tiene valores sobreescribe la variable
-		if(isset($key['LVL_'.$i.'_id'])&&$key['LVL_'.$i.'_id']!=''){              $d[$i]  = $key['LVL_'.$i.'_id'];}  
-		if(isset($key['LVL_'.$i.'_Nombre'])&&$key['LVL_'.$i.'_Nombre']!=''){      $n[$i]  = $key['LVL_'.$i.'_Nombre'];}   
-		if(isset($key['LVL_'.$i.'_Codigo'])&&$key['LVL_'.$i.'_Codigo']!=''){      $c[$i]  = $key['LVL_'.$i.'_Codigo'];}
+		if(isset($key['LVL_'.$i.'_id'])&&$key['LVL_'.$i.'_id']!=''){                     $d[$i]  = $key['LVL_'.$i.'_id'];}
+		if(isset($key['LVL_'.$i.'_Nombre'])&&$key['LVL_'.$i.'_Nombre']!=''){             $n[$i]  = $key['LVL_'.$i.'_Nombre'];}
+		if(isset($key['LVL_'.$i.'_Codigo'])&&$key['LVL_'.$i.'_Codigo']!=''){             $c[$i]  = $key['LVL_'.$i.'_Codigo'];}
 		if(isset($key['LVL_'.$i.'_idUtilizable'])&&$key['LVL_'.$i.'_idUtilizable']!=''){ $u[$i]  = $key['LVL_'.$i.'_idUtilizable'];}
 		if(isset($key['LVL_'.$i.'_idLicitacion'])&&$key['LVL_'.$i.'_idLicitacion']!=''){ $x[$i]  = $key['LVL_'.$i.'_idLicitacion'];}
-		if(isset($key['LVL_'.$i.'_table'])&&$key['LVL_'.$i.'_table']!=''){        $y[$i]  = $key['LVL_'.$i.'_table'];}
+		if(isset($key['LVL_'.$i.'_table'])&&$key['LVL_'.$i.'_table']!=''){               $y[$i]  = $key['LVL_'.$i.'_table'];}
 		if(isset($key['LVL_'.$i.'_table_value'])&&$key['LVL_'.$i.'_table_value']!=''){   $m[$i]  = $key['LVL_'.$i.'_table_value'];}
-		if(isset($key['LVL_'.$i.'_imagen'])&&$key['LVL_'.$i.'_imagen']!=''){      $t[$i]  = $key['LVL_'.$i.'_imagen'];}
-				
+		if(isset($key['LVL_'.$i.'_imagen'])&&$key['LVL_'.$i.'_imagen']!=''){             $t[$i]  = $key['LVL_'.$i.'_imagen'];}
+
 	}
-	
 
     if( $d['1']!=''){
 		$array3d[$d['1']]['id']         = $d['1'];
@@ -1708,19 +1529,17 @@ foreach($arrItemizado as $key) {
 		$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Tabla']      = $y['25'];
 		$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Valor']      = $m['25'];
 	}*/
-	
-	
+
 }
 
-function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,$location, $nmax)
-{
+function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,$location, $nmax){
 	$lv++;
 	if($lv==1){
 		echo '<ul class="tree">';
 	}else{
 		echo '<ul style="padding-left: 20px;">';
 	}
-    
+
     foreach ($array as $key => $value){
 		//Rearmo la ubicacion de acuerdo a la profundidad
 		if (isset($value['id'])){
@@ -1729,7 +1548,6 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 			$loc = $location;
 		}
 
-			
         if (isset($value['Nombre'])){
 			echo '<li><div class="blum">';
 				echo '<div class="pull-left">';
@@ -1771,10 +1589,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 						echo '<a onClick="dialogBox(\''.$ubicacion.'\', \''.$dialogo.'\')" title="Borrar este Componente" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>';
 					}
 				echo '</div>';
-				
-				
-				
-				
+
 				//Boton para crear nueva subrama condicionado solo a componentes
 				if ($value['Tipo']==2){
 					echo '<div class="btn-group pull-right" style="margin-right:5px;" >';
@@ -1788,7 +1603,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 			echo '</div>';
 		}
         if (!empty($value) && is_array($value)){
-			
+
             echo arrayToUL($value, $TipoMaq, $Trabajo, $lv, $rowlevel,$loc, $nmax);
         }
         echo '</li>';
@@ -1803,7 +1618,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Componentes'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Componente</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Componente</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -1818,8 +1633,14 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<?php if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
+						<?php
+						//Dependencia Clientes
+						if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_datos_clientes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-users" aria-hidden="true"></i> Clientes</a></li>
+						<?php } ?>
+						<?php
+						//Uso Ubicacion
+						if(isset($rowdata['idConfig_4'])&&$rowdata['idConfig_4']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicacion</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'maquinas_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha Tecnica</a></li>
@@ -1827,10 +1648,14 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 						<li class=""><a href="<?php echo 'maquinas_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 						<li class=""><a href="<?php echo 'maquinas_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'maquinas_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
-						<?php if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+						<?php
+						//Uso de componentes
+						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
 							<li class="active"><a href="<?php echo 'maquinas_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Componentes</a></li>
 						<?php } ?>
-						<?php if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
+						<?php
+						//uso de matriz de analisis
+						if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
 
@@ -1846,7 +1671,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 
 			<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
-					<div class="modal-content">              
+					<div class="modal-content">
 						<div class="modal-body">
 							<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 							<img src="" class="imagepreview" style="width: 100%;padding: 15px;" >
@@ -1858,8 +1683,8 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 				$(function() {
 					$('.pop').on('click', function() {
 						$('.imagepreview').attr('src',$(this).attr('src'));
-						$('#imagemodal').modal('show');   
-					});		
+						$('#imagemodal').modal('show');
+					});
 				});
 			</script>
 

@@ -144,7 +144,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 		$xaño = $xaño-1;
 		$grafico[$xcontador]['mes'] = $xmes;
 		$grafico[$xcontador]['año'] = $xaño;
-		
+
 		if(isset($mes[$xaño][$xmes]['tipo1'])){ $grafico[$xcontador]['tipo1'] = $mes[$xaño][$xmes]['tipo1'];}else{$grafico[$xcontador]['tipo1'] = 0;};
 		if(isset($mes[$xaño][$xmes]['tipo2'])){ $grafico[$xcontador]['tipo2'] = $mes[$xaño][$xmes]['tipo2'];}else{$grafico[$xcontador]['tipo2'] = 0;};
 		if(isset($mes[$xaño][$xmes]['tipo3'])){ $grafico[$xcontador]['tipo3'] = $mes[$xaño][$xmes]['tipo3'];}else{$grafico[$xcontador]['tipo3'] = 0;};

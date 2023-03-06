@@ -32,7 +32,7 @@ $cant_reg = 30;
 //resto de variables
 if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 //Inicia variable
-$SIS_where = "telemetria_listado_error_geocerca.idErrores>0"; 
+$SIS_where = "telemetria_listado_error_geocerca.idErrores>0";
 $SIS_where.= " AND telemetria_listado.id_Geo='1'";
 $SIS_where.= " AND telemetria_listado_error_geocerca.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Solo para plataforma CrossTech

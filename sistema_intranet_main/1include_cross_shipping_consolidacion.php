@@ -119,6 +119,7 @@ if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 		<div class="clearfix" style="margin-bottom:15px;"></div>';
 	}
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

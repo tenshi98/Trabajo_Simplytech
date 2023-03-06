@@ -106,7 +106,7 @@ require_once '0_validate_user_1.php';
 			
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				if(!isset($N_DocPago) OR $N_DocPago == ''){
 					$N_DocPago = time();//clave unica
 				}
@@ -117,8 +117,7 @@ require_once '0_validate_user_1.php';
 					$rowDoc = db_select_data (false, 'Nombre', 'sistema_documentos_pago', '', 'idDocPago='.$idDocPago, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				
 				}
-				
-				
+
 				////////////////////////////////////////////////////////////////////////////////////////////////
 				//recorro todos los existentes y les doy pago
 				if(isset($_SESSION['pago_clientes_insumos'])){
@@ -653,8 +652,7 @@ require_once '0_validate_user_1.php';
 						}
 					}
 				}
-				
-				
+
 				////////////////////////////////////////////////////////////////////////////////////////////
 				//elimino los datos
 				unset($_SESSION['pago_clientes_insumos']);
@@ -671,4 +669,5 @@ require_once '0_validate_user_1.php';
 	
 	
 	}
+
 ?>

@@ -79,12 +79,12 @@ array_push( $arrFacturaciones,$row );
 						<th>SII</th>
 					</tr>
 				</thead>
-							  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrFacturaciones as $fac) { ?>
 						<tr class="odd">
 							<td>
-								<?php if ($rowlevel['level']>=1){?>
+								<?php if ($rowlevel['level']>=1){ ?>
 									<div class="btn-group" style="width: 35px;" >
 										<a href="<?php echo 'view_aguas_facturacion.php?view='.simpleEncode($fac['idFacturacionDetalle'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 									</div>

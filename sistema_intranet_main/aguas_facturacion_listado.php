@@ -203,17 +203,17 @@ array_push( $arrFacturacion,$row );
 	
 						<td>
 							<div class="btn-group" style="width: 175px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_aguas_cliente.php?view='.simpleEncode($clientes['idCliente'], fecha_actual()); ?>" title="Ver Cliente" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-id-card" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_aguas_facturacion.php?view='.simpleEncode($clientes['idFacturacionDetalle'], fecha_actual()); ?>" title="Ver Facturacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_aguas_cliente.php?view='.simpleEncode($clientes['idCliente'], fecha_actual()); ?>" title="Ver Cliente" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-id-card" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_aguas_facturacion.php?view='.simpleEncode($clientes['idFacturacionDetalle'], fecha_actual()); ?>" title="Ver Facturacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php
 								//verifico si hay alhun archivo asociado
 								$ruta = 'boleta_'.$rowdata['Ano'].'_'.$rowdata['idMes'].'_'.$clientes['ClienteIdentificador'];
 								if (file_exists('upload/'.$ruta)){ ?>
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($ruta, fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=1){?><a href="1download.php?dir=<?php echo simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($ruta, fecha_actual()); ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip" ><i class="fa fa-download" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_doc_preview.php?path='.simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($ruta, fecha_actual()); ?>" title="Ver Documento" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-eye" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="1download.php?dir=<?php echo simpleEncode('upload', fecha_actual()).'&file='.simpleEncode($ruta, fecha_actual()); ?>" title="Descargar Archivo" class="btn btn-primary btn-sm tooltip" ><i class="fa fa-download" aria-hidden="true"></i></a><?php } ?>
 								<?php } 
 								if(isset($clientes['ClienteEstado'])&&$clientes['ClienteEstado']=='Corte en Tramite'){ ?>
-									<?php if ($rowlevel['level']>=1){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'view_aguas_facturacion_carta.php?view='.simpleEncode($clientes['idFacturacionDetalle'], fecha_actual()).'&idCliente='.$clientes['idCliente']; ?>" title="Descargar Carta" class="btn btn-primary btn-sm tooltip"><i class="fa fa-cloud-download" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'view_aguas_facturacion_carta.php?view='.simpleEncode($clientes['idFacturacionDetalle'], fecha_actual()).'&idCliente='.$clientes['idCliente']; ?>" title="Descargar Carta" class="btn btn-primary btn-sm tooltip"><i class="fa fa-cloud-download" aria-hidden="true"></i></a><?php } ?>
 								<?php } ?>
 							</div>
 						</td>
@@ -328,7 +328,7 @@ array_push( $arrFacturacion,$row );
 						<td><strong>Ultimo Pago</strong></td>
 						<td><strong>Acciones</strong></td>
 					</tr>
-					<?php foreach ($_SESSION['Facturacion_clientes'] as $key => $clientes){?>
+					<?php foreach ($_SESSION['Facturacion_clientes'] as $key => $clientes){ ?>
 						<tr class="item-row linea_punteada">
 							<td><?php echo $clientes['ClienteIdentificador']; ?></td>
 							<td><?php echo $clientes['ClienteNombre']; ?></td>
@@ -498,12 +498,12 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Facturacion</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Facturacion</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -595,7 +595,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&view_facturacion='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo $location.'&view_facturacion='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($tipo['idFacturacion'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la facturacion '.n_doc($tipo['idFacturacion'], 7).'?'; ?>

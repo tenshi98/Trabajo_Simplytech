@@ -121,7 +121,7 @@ $SIS_where = 'solicitud_listado_existencias_otros.idSolicitud ='.$X_Puntero;
 $SIS_order = 'solicitud_listado_existencias_otros.Nombre ASC';
 $arrOtros = array();
 $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_otros', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrOtros');
-	
+
 ?>
 
 <section class="invoice">
@@ -163,7 +163,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 				<tbody>
 					<?php if ($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!='') { ?>
 						<tr class="active"><td colspan="2"><strong>Insumos</strong></td></tr>
-						<?php foreach ($arrInsumos as $prod) {?>
+						<?php foreach ($arrInsumos as $prod) { ?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unidad']; ?></td>
@@ -172,7 +172,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 					<?php } ?>
 					<?php if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') { ?>
 						<tr class="active"><td colspan="2"><strong>Productos</strong></td></tr>
-						<?php foreach ($arrProductos as $prod) {?>
+						<?php foreach ($arrProductos as $prod) { ?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unidad']; ?></td>
@@ -181,7 +181,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 					<?php } ?>
 					<?php if ($arrArriendos!=false && !empty($arrArriendos) && $arrArriendos!='') { ?>
 						<tr class="active"><td colspan="2"><strong>Arriendos</strong></td></tr>
-						<?php foreach ($arrArriendos as $prod) {?>
+						<?php foreach ($arrArriendos as $prod) { ?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?></td>
@@ -190,7 +190,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 					<?php } ?>
 					<?php if ($arrServicios!=false && !empty($arrServicios) && $arrServicios!='') { ?>
 						<tr class="active"><td colspan="2"><strong>Servicios</strong></td></tr>
-						<?php foreach ($arrServicios as $prod) {?>
+						<?php foreach ($arrServicios as $prod) { ?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?></td>
@@ -199,7 +199,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 					<?php } ?>
 					<?php if ($arrOtros!=false && !empty($arrOtros) && $arrOtros!='') { ?>
 						<tr class="active"><td colspan="2"><strong>Otros</strong></td></tr>
-						<?php foreach ($arrOtros as $prod) {?>
+						<?php foreach ($arrOtros as $prod) { ?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?></td>
@@ -217,7 +217,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 			<p class="text-muted well well-sm no-shadow" ><?php echo $row_data['Observaciones']; ?></p>
 		</div>
 	</div>
-	 
+
 </section>
 
 <?php

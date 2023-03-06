@@ -274,6 +274,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrInsumos2,$row );
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -595,7 +596,7 @@ array_push( $arrInsumos2,$row );
 	</div>
 </div>
 
-<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=4){?>
+<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=4){ ?>
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">
@@ -710,7 +711,7 @@ array_push( $arrInsumos2,$row );
 	</div>
 </div>
 
-<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=4){?>
+<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=4){ ?>
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box">

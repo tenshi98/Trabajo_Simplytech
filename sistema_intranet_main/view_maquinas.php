@@ -36,21 +36,22 @@ if (validarNumero($_GET['view'])){
 /**************************************************************/
 //se traen los datos basicos de la licitacion
 $SIS_query = '
-maquinas_listado.Codigo, 
+maquinas_listado.Codigo,
 maquinas_listado.Nombre,
-maquinas_listado.Modelo, 
-maquinas_listado.Serie, 
+maquinas_listado.Modelo,
+maquinas_listado.Serie,
 maquinas_listado.Fabricante,
 maquinas_listado.fincorporacion,
 maquinas_listado.Direccion_img,
-maquinas_listado.Descripcion, 
-maquinas_listado.FichaTecnica, 
+maquinas_listado.Descripcion,
+maquinas_listado.FichaTecnica,
 maquinas_listado.HDS,
 maquinas_listado.idConfig_3,
 core_estados.Nombre AS Estado,
 ops1.Nombre AS Componentes,
 ops2.Nombre AS Matriz,
 ops3.Nombre AS DependenciaCliente,
+ops4.Nombre AS UsoUbicacion,
 
 ubicacion_listado.Nombre AS Ubicacion,
 ubicacion_listado_level_1.Nombre AS Ubicacion_lvl_1,
@@ -65,6 +66,7 @@ LEFT JOIN `core_estados`                  ON core_estados.idEstado              
 LEFT JOIN `core_sistemas_opciones` ops1   ON ops1.idOpciones                       = maquinas_listado.idConfig_1
 LEFT JOIN `core_sistemas_opciones` ops2   ON ops2.idOpciones                       = maquinas_listado.idConfig_2
 LEFT JOIN `core_sistemas_opciones` ops3   ON ops3.idOpciones                       = maquinas_listado.idConfig_3
+LEFT JOIN `core_sistemas_opciones` ops4   ON ops4.idOpciones                       = maquinas_listado.idConfig_4
 LEFT JOIN `ubicacion_listado`             ON ubicacion_listado.idUbicacion         = maquinas_listado.idUbicacion
 LEFT JOIN `ubicacion_listado_level_1`     ON ubicacion_listado_level_1.idLevel_1   = maquinas_listado.idUbicacion_lvl_1
 LEFT JOIN `ubicacion_listado_level_2`     ON ubicacion_listado_level_2.idLevel_2   = maquinas_listado.idUbicacion_lvl_2
@@ -162,17 +164,16 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			$t[$i]  = '';
 
 			//si el dato solicitado tiene valores sobreescribe la variable
-			if(isset($key['LVL_'.$i.'_id'])&&$key['LVL_'.$i.'_id']!=''){              $d[$i]  = $key['LVL_'.$i.'_id'];}  
-			if(isset($key['LVL_'.$i.'_Nombre'])&&$key['LVL_'.$i.'_Nombre']!=''){      $n[$i]  = $key['LVL_'.$i.'_Nombre'];}   
-			if(isset($key['LVL_'.$i.'_Codigo'])&&$key['LVL_'.$i.'_Codigo']!=''){      $c[$i]  = $key['LVL_'.$i.'_Codigo'];}
+			if(isset($key['LVL_'.$i.'_id'])&&$key['LVL_'.$i.'_id']!=''){                     $d[$i]  = $key['LVL_'.$i.'_id'];}
+			if(isset($key['LVL_'.$i.'_Nombre'])&&$key['LVL_'.$i.'_Nombre']!=''){             $n[$i]  = $key['LVL_'.$i.'_Nombre'];}
+			if(isset($key['LVL_'.$i.'_Codigo'])&&$key['LVL_'.$i.'_Codigo']!=''){             $c[$i]  = $key['LVL_'.$i.'_Codigo'];}
 			if(isset($key['LVL_'.$i.'_idUtilizable'])&&$key['LVL_'.$i.'_idUtilizable']!=''){ $u[$i]  = $key['LVL_'.$i.'_idUtilizable'];}
 			if(isset($key['LVL_'.$i.'_idLicitacion'])&&$key['LVL_'.$i.'_idLicitacion']!=''){ $x[$i]  = $key['LVL_'.$i.'_idLicitacion'];}
-			if(isset($key['LVL_'.$i.'_table'])&&$key['LVL_'.$i.'_table']!=''){        $y[$i]  = $key['LVL_'.$i.'_table'];}
+			if(isset($key['LVL_'.$i.'_table'])&&$key['LVL_'.$i.'_table']!=''){               $y[$i]  = $key['LVL_'.$i.'_table'];}
 			if(isset($key['LVL_'.$i.'_table_value'])&&$key['LVL_'.$i.'_table_value']!=''){   $m[$i]  = $key['LVL_'.$i.'_table_value'];}
-			if(isset($key['LVL_'.$i.'_imagen'])&&$key['LVL_'.$i.'_imagen']!=''){      $t[$i]  = $key['LVL_'.$i.'_imagen'];}
+			if(isset($key['LVL_'.$i.'_imagen'])&&$key['LVL_'.$i.'_imagen']!=''){             $t[$i]  = $key['LVL_'.$i.'_imagen'];}
 
 		}
-		
 
 		if( $d['1']!=''){
 			$array3d[$d['1']]['id']         = $d['1'];
@@ -414,26 +415,17 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Tabla']      = $y['25'];
 			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Valor']      = $m['25'];
 		}*/
-		
-		
-		
+
 	}
 
-
-
-
-
-
-
-	function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,$location, $nmax)
-	{
+	function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,$location, $nmax)	{
 		$lv++;
 		if($lv==1){
 			echo '<ul class="tree">';
 		}else{
 			echo '<ul style="padding-left: 20px;">';
 		}
-		
+
 		foreach ($array as $key => $value){
 			//Rearmo la ubicacion de acuerdo a la profundidad
 			if (isset($value['id'])){
@@ -457,14 +449,13 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							echo $Trabajo[$value['Licitacion']][$value['Tabla']][$value['Valor']]['Nombre'];
 							echo ')</strong>';
 						}
-					echo '</div>';		
+					echo '</div>';
 
-								
 					echo '<div class="clearfix"></div>';
 				echo '</div>';
 			}
 			if (!empty($value) && is_array($value)){
-				
+
 				echo arrayToUL($value, $TipoMaq, $Trabajo, $lv, $rowlevel,$loc, $nmax);
 			}
 			echo '</li>';
@@ -473,11 +464,8 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 	}
 //fin de la condicion
 }
+
 ?>
-
-
-
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -499,7 +487,9 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 						<p class="text-muted">
-							<?php if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
+							<?php
+							//Dependencia Clientes
+							if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
 								<strong>Cliente : </strong><?php echo $rowdata['Cliente']; ?><br/>
 							<?php } ?>
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
@@ -509,7 +499,9 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							<strong>Fabricante : </strong><?php echo $rowdata['Fabricante']; ?><br/>
 							<strong>Fecha incorporacion : </strong><?php echo fecha_estandar($rowdata['fincorporacion']); ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
-							<?php if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
+							<?php
+							//Dependencia Clientes
+							if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
 								<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=''){echo '<strong>Ubicacion : </strong>'.$rowdata['Ubicacion'];} ?>
 								<?php if(isset($rowdata['Ubicacion_lvl_1'])&&$rowdata['Ubicacion_lvl_1']!=''){echo ' - '.$rowdata['Ubicacion_lvl_1'];} ?>
 								<?php if(isset($rowdata['Ubicacion_lvl_2'])&&$rowdata['Ubicacion_lvl_2']!=''){echo ' - '.$rowdata['Ubicacion_lvl_2'];} ?>
@@ -523,7 +515,8 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 						<p class="text-muted">
 							<strong>Componentes : </strong><?php echo $rowdata['Componentes']; ?><br/>
 							<strong>Matriz de Analisis: </strong><?php echo $rowdata['Matriz']; ?><br/>
-							<strong>Dependencia Cliente: </strong><?php echo $rowdata['DependenciaCliente']; ?>
+							<strong>Dependencia Cliente: </strong><?php echo $rowdata['DependenciaCliente']; ?><br/>
+							<strong>Uso Ubicacion: </strong><?php echo $rowdata['UsoUbicacion']; ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripcion</h2>
@@ -547,7 +540,9 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 					</div>
 					<div class="clearfix"></div>
 
-					<?php if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+					<?php
+						//Uso de componentes
+						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<tr>
@@ -562,7 +557,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 										<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 											<div class="modal-dialog">
-												<div class="modal-content">              
+												<div class="modal-content">
 													<div class="modal-body">
 														<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 														<img src="" class="imagepreview" style="width: 100%;padding: 15px;" >
@@ -574,22 +569,20 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 											$(function() {
 													$('.pop').on('click', function() {
 														$('.imagepreview').attr('src',$(this).attr('src'));
-														$('#imagemodal').modal('show');   
-													});		
+														$('#imagemodal').modal('show');
+													});
 											});
 										</script>
-										
+
 									</td>
 								</tr>
 							</tbody>
 						</table>
 					<?php } ?>
-					
-					
+
 				</div>
 			</div>
-		
-			
+
 		</div>
 	</div>
 </div>

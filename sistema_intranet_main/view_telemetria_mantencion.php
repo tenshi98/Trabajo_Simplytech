@@ -221,7 +221,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 	<div class="row firma">
 
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont">
-			<?php if(isset($row_data['Path_Firma'])&&$row_data['Path_Firma']!=''){?>
+			<?php if(isset($row_data['Path_Firma'])&&$row_data['Path_Firma']!=''){ ?>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcenter">
 					<img style="" class="media-object user-img width100" alt="Imagen Referencia" src="upload/<?php echo $row_data['Path_Firma']; ?>">
 				</div>

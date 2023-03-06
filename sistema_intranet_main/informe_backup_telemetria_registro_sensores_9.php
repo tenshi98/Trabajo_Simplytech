@@ -118,6 +118,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	}
 
 }
+
 ?>
 
 

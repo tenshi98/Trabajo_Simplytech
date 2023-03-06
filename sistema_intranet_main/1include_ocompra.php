@@ -235,6 +235,7 @@ foreach ($arrHistorial as $doc){
 	$alert_icon  = $doc['FonAwesome'];
 	$alert_obs   = $doc['Observacion'];
 }
+
 ?>
 <?php if(isset($alert_obs)&&$alert_obs!=''){ ?>
 	<div class="col-xs-12" style="margin-top:15px;">
@@ -325,7 +326,7 @@ foreach ($arrHistorial as $doc){
 				<tbody>
 					<?php if ($arrInsumos!=false && !empty($arrInsumos) && $arrInsumos!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Insumos</strong></td></tr>
-						<?php foreach ($arrInsumos as $prod) {?>
+						<?php foreach ($arrInsumos as $prod) { ?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unidad']; ?></td>
@@ -336,7 +337,7 @@ foreach ($arrHistorial as $doc){
 					<?php } ?>
 					<?php if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Productos</strong></td></tr>
-						<?php foreach ($arrProductos as $prod) {?>
+						<?php foreach ($arrProductos as $prod) { ?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Unidad']; ?></td>
@@ -347,7 +348,7 @@ foreach ($arrHistorial as $doc){
 					<?php } ?>
 					<?php if ($arrArriendos!=false && !empty($arrArriendos) && $arrArriendos!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Arriendos</strong></td></tr>
-						<?php foreach ($arrArriendos as $prod) {?>
+						<?php foreach ($arrArriendos as $prod) { ?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?></td>
@@ -358,7 +359,7 @@ foreach ($arrHistorial as $doc){
 					<?php } ?>
 					<?php if ($arrServicios!=false && !empty($arrServicios) && $arrServicios!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Servicios</strong></td></tr>
-						<?php foreach ($arrServicios as $prod) {?>
+						<?php foreach ($arrServicios as $prod) { ?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?></td>
@@ -369,7 +370,7 @@ foreach ($arrHistorial as $doc){
 					<?php } ?>
 					<?php if ($arrOtros!=false && !empty($arrOtros) && $arrOtros!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Otros</strong></td></tr>
-						<?php foreach ($arrOtros as $prod) {?>
+						<?php foreach ($arrOtros as $prod) { ?>
 							<tr>
 								<td><?php echo $prod['Nombre']; ?></td>
 								<td align="right"><?php echo Cantidades_decimales_justos($prod['Cantidad']).' '.$prod['Frecuencia']; ?></td>
@@ -380,7 +381,7 @@ foreach ($arrHistorial as $doc){
 					<?php } ?>
 					<?php if ($arrBoletas!=false && !empty($arrBoletas) && $arrBoletas!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Boletas de Honorarios Trabajadores</strong></td></tr>
-						<?php foreach ($arrBoletas as $prod) {?>
+						<?php foreach ($arrBoletas as $prod) { ?>
 							<tr>
 								<td><?php echo $prod['TrabRut'].' - '.$prod['TrabNombre'].' '.$prod['TrabApellidoPat']; ?></td>
 								<td><?php echo $prod['Descripcion']; ?></td>
@@ -391,7 +392,7 @@ foreach ($arrHistorial as $doc){
 					<?php } ?>
 					<?php if ($arrBoletasEmp!=false && !empty($arrBoletasEmp) && $arrBoletasEmp!='') { ?>
 						<tr class="active"><td colspan="4"><strong>Boletas de Honorarios Empresas</strong></td></tr>
-						<?php foreach ($arrBoletasEmp as $prod) {?>
+						<?php foreach ($arrBoletasEmp as $prod) { ?>
 							<tr>
 								<td colspan="3"><?php echo $prod['Descripcion']; ?></td>
 								<td align="right"><?php echo valores($prod['Valor'], 0); ?></td>
@@ -429,7 +430,7 @@ foreach ($arrHistorial as $doc){
 			<?php
 			if (isset($arrHistorial)){
 				//recorro el lsiatdo entregado por la base de datos
-				foreach ($arrHistorial as $doc){?>
+				foreach ($arrHistorial as $doc){ ?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
@@ -518,7 +519,7 @@ foreach ($arrHistorial as $doc){
 			<?php
 			if (isset($arrDocumentos)){
 				//recorro el lsiatdo entregado por la base de datos
-				foreach ($arrDocumentos as $doc){?>
+				foreach ($arrDocumentos as $doc){ ?>
 					<tr class="item-row">
 						<td><?php echo $doc['Documento'].' N°'.$doc['NDocPago'].' por '.valores($doc['vTotal'], 0).' (Pago para el '.fecha_estandar($doc['Fpago']).')'; ?></td>
 					</tr>
@@ -534,7 +535,7 @@ foreach ($arrHistorial as $doc){
 			<?php
 			if (isset($arrArchivo)){
 				//recorro el lsiatdo entregado por la base de datos
-				foreach ($arrArchivo as $producto){?>
+				foreach ($arrArchivo as $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
 						<td>

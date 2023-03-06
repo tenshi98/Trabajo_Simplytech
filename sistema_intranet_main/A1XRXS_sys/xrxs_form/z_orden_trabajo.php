@@ -701,8 +701,8 @@ require_once '0_validate_user_1.php';
 						break;
 							
 					case 2: //Aceite
-						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Aceite'] = $Aceite; 
-						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_1'] = $Aceite; 
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Aceite'] = $Aceite;
+						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_1'] = $Aceite;
 						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_2'] = '';
 						$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Aceite';
 						break;
@@ -1308,7 +1308,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_update_data (false, $SIS_data, 'orden_trabajo_listado_responsable', 'idResponsable = "'.$idResponsable.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&edittrab=true' );
 					die;
 
@@ -1443,7 +1443,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_update_data (false, $SIS_data, 'orden_trabajo_listado_insumos', 'idInsumos = "'.$idInsumos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&editins=true' );
 					die;
 
@@ -1576,7 +1576,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_update_data (false, $SIS_data, 'orden_trabajo_listado_productos', 'idProductos = "'.$idProductos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&editprod=true' );
 					die;
 
@@ -1722,7 +1722,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_update_data (false, $SIS_data, 'orden_trabajo_listado_trabajos', 'idTrabajoOT = "'.$idInterno.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&edittarea=true' );
 					die;
 
@@ -1994,8 +1994,8 @@ require_once '0_validate_user_1.php';
 						break;
 							
 					case 2: //Aceite
-						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Aceite'] = $Aceite; 
-						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1'] = $Aceite; 
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Aceite'] = $Aceite;
+						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1'] = $Aceite;
 						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_2'] = '';
 						$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_t'] = 'Aceite';
 						break;
@@ -2607,4 +2607,5 @@ require_once '0_validate_user_1.php';
 						
 /*******************************************************************************************************************/
 	}
+
 ?>

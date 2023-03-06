@@ -59,7 +59,7 @@ if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){
 	$location .="&idCliente=".$_GET['idCliente'];
 	$search .="&idCliente=".$_GET['idCliente'];
 }
-				
+
 /*************************************************************************************************/
 //Bodega de Arriendos
 $arrTemporal_1 = array();
@@ -381,8 +381,8 @@ $Total_4 = 0;
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrCreativo as $datais) { ?>
 						<tr class="odd"><td align="left" colspan="12" style="background-color: #BFBFBF;"><strong><?php echo $datais[0]['Cliente']; ?></strong></td></tr>
-						<?php foreach ($datais as $prod) {?>
-							<?php if(isset($prod['Creacion_mes'])&&$prod['Creacion_mes']!=''&&$prod['Creacion_mes']!=0){?>
+						<?php foreach ($datais as $prod) { ?>
+							<?php if(isset($prod['Creacion_mes'])&&$prod['Creacion_mes']!=''&&$prod['Creacion_mes']!=0){ ?>
 							<tr class="odd">
 								<td align="left"></td>
 								<td align="left"><?php echo numero_a_mes($prod['Creacion_mes']); ?></td>
@@ -817,8 +817,8 @@ $Total_4 = 0;
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrCreativo as $datais) { ?>
 						<tr class="odd"><td align="left" colspan="12" style="background-color: #BFBFBF;"><strong><?php echo $datais[0]['Cliente']; ?></strong></td></tr>
-						<?php foreach ($datais as $prod) {?>
-							<?php if(isset($prod['Creacion_fecha'])&&$prod['Creacion_fecha']!='0000-00-00'){?>
+						<?php foreach ($datais as $prod) { ?>
+							<?php if(isset($prod['Creacion_fecha'])&&$prod['Creacion_fecha']!='0000-00-00'){ ?>
 							<tr class="odd">
 								<td align="left"></td>
 								<td align="left"><?php echo Fecha_estandar($prod['Creacion_fecha']); ?></td>
@@ -930,7 +930,7 @@ if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){
 	$location .="&idCliente=".$_GET['idCliente'];
 	$search .="&idCliente=".$_GET['idCliente'];
 }
-				
+
 /*************************************************************************************************/
 //Bodega de Arriendos
 $arrTemporal_1 = array();
@@ -1253,8 +1253,8 @@ $Total_4 = 0;
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrCreativo as $datais) { ?>
 						<tr class="odd"><td align="left" colspan="12" style="background-color: #BFBFBF;"><strong><?php echo $datais[0]['Cliente']; ?></strong></td></tr>
-						<?php foreach ($datais as $prod) {?>
-							<?php if(isset($prod['Creacion_Semana'])&&$prod['Creacion_Semana']!=''&&$prod['Creacion_Semana']!=0){?>
+						<?php foreach ($datais as $prod) { ?>
+							<?php if(isset($prod['Creacion_Semana'])&&$prod['Creacion_Semana']!=''&&$prod['Creacion_Semana']!=0){ ?>
 							<tr class="odd">
 								<td align="left"></td>
 								<td align="left"><?php echo $prod['Creacion_Semana']; ?></td>
@@ -1697,7 +1697,7 @@ $Total_4 = 0;
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrCreativo as $prod) {?>
+					<?php foreach ($arrCreativo as $prod) { ?>
 						<tr class="odd">
 							<td align="left"><?php echo $prod['Cliente']; ?></td>
 
@@ -1735,9 +1735,9 @@ $Total_4 = 0;
 
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&details_mensual='.$prod['idCliente']; ?>" title="Ver detalle Mensual" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&details_semanal='.$prod['idCliente']; ?>" title="Ver detalle Semanal" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo $location.'&details_diario='.$prod['idCliente']; ?>" title="Ver detalle Diario" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo $location.'&details_mensual='.$prod['idCliente']; ?>" title="Ver detalle Mensual" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo $location.'&details_semanal='.$prod['idCliente']; ?>" title="Ver detalle Semanal" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo $location.'&details_diario='.$prod['idCliente']; ?>" title="Ver detalle Diario" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>

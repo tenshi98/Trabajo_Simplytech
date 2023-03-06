@@ -369,7 +369,7 @@ require_once 'core/Web.Header.Print.php';
 /**********************************************************************************************************************************/
 $html ='
 	<div id="identification_card">';
-		
+
 		if ($rowCard['idPosition']==1 OR $rowCard['idPosition']==4 OR $rowCard['idPosition']==7 OR $rowCard['idPosition']==2 OR $rowCard['idPosition']==5 OR $rowCard['idPosition']==8) {
 			$html .= '
 			<div id="card_text">

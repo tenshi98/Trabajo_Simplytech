@@ -124,7 +124,7 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('J1', 'Dias Grado Acumuladas');
 
  
-$nn       = 2; 
+$nn       = 2;
 $unifrio  = 0;
 $diasAcum = 0;
 foreach ($arrMed as $key => $med){

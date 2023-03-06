@@ -819,8 +819,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
-				
+
 				/*****************************************/
 				// Se trae la Caja
 				if(isset($idDocPago)&&$idDocPago!=''){
@@ -2002,8 +2001,7 @@ require_once '0_validate_user_1.php';
 				if(isset($rowAprobador['idTrabajador'])&&$rowAprobador['idTrabajador']!=''){
 					$_SESSION['caja_rendida_basicos']['Apro_Nombre']  = $rowAprobador['Nombre'].' '.$rowAprobador['ApellidoPat'].' '.$rowAprobador['ApellidoMat'];
 				}
-				
-				
+
 				//Se guardan los datos basicos del formulario recien llenado
 				if(isset($idCajaChica)&&$idCajaChica!=''){        $_SESSION['caja_rendida_basicos']['idCajaChica']     = $idCajaChica;    }else{$_SESSION['caja_rendida_basicos']['idCajaChica']     = '';}
 				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['caja_rendida_basicos']['Creacion_fecha']  = $Creacion_fecha; }else{$_SESSION['caja_rendida_basicos']['Creacion_fecha']  = '';}
@@ -2123,8 +2121,7 @@ require_once '0_validate_user_1.php';
 				if(isset($rowAprobador['idTrabajador'])&&$rowAprobador['idTrabajador']!=''){
 					$_SESSION['caja_rendida_basicos']['Apro_Nombre']  = $rowAprobador['Nombre'].' '.$rowAprobador['ApellidoPat'].' '.$rowAprobador['ApellidoMat'];
 				}
-				
-				
+
 				//Se guardan los datos basicos del formulario recien llenado
 				if(isset($idCajaChica)&&$idCajaChica!=''){        $_SESSION['caja_rendida_basicos']['idCajaChica']     = $idCajaChica;    }else{$_SESSION['caja_rendida_basicos']['idCajaChica']     = '';}
 				if(isset($Creacion_fecha)&&$Creacion_fecha!=''){  $_SESSION['caja_rendida_basicos']['Creacion_fecha']  = $Creacion_fecha; }else{$_SESSION['caja_rendida_basicos']['Creacion_fecha']  = '';}
@@ -2679,4 +2676,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

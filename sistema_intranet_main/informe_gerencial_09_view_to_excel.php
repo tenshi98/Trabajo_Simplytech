@@ -262,7 +262,7 @@ foreach ($arrTemporal_1 as $tipo) {
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){            
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('F'.$nn, $tipo['MontoPagado']);            
-		$total_egreso = $total_egreso + $tipo['MontoPagado']; 
+		$total_egreso = $total_egreso + $tipo['MontoPagado'];
 		$Subtotal_2   = $Subtotal_2 + $tipo['MontoPagado'];
 	}
 				
@@ -301,7 +301,7 @@ foreach ($arrTemporal_2 as $tipo) {
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){            
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('E'.$nn, $tipo['MontoPagado']);  
-		$total_ingreso = $total_ingreso + $tipo['MontoPagado']; 
+		$total_ingreso = $total_ingreso + $tipo['MontoPagado'];
 		$Subtotal_1    = $Subtotal_1 + $tipo['MontoPagado'];			          
 	}           
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){            

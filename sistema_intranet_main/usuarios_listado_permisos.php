@@ -323,16 +323,16 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 							<tr>
 								<td>
 									<a name="<?php echo $permiso['idAdmpm'] ?>"></a>
-									<?php if(isset($permiso['Descripcion'])&&$permiso['Descripcion']!=''){?>
+									<?php if(isset($permiso['Descripcion'])&&$permiso['Descripcion']!=''){ ?>
 										<a title="<?php echo $permiso['Descripcion']; ?>" class="btn btn-primary btn-sm tooltip"><i class="fa fa-question" aria-hidden="true"></i></a>
 									<?php } ?>
 								</td>
 								<td>
 									<?php echo ' '.TituloMenu($permiso['Nombre_permiso']).' '; ?> 
 									<div class="btn-group" style="width: 140px;" >
-										<?php if(isset($permiso['Habilita'])&&$permiso['Habilita']!=''){?><a title="<?php echo $permiso['Habilita']; ?>" class="btn btn-success btn-sm tooltip"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a><?php } ?>
-										<?php if(isset($permiso['Principal'])&&$permiso['Principal']!=''){?><a title="<?php echo $permiso['Principal']; ?>" class="btn btn-info btn-sm tooltip"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a><?php } ?>
-										
+										<?php if(isset($permiso['Habilita'])&&$permiso['Habilita']!=''){ ?><a title="<?php echo $permiso['Habilita']; ?>" class="btn btn-success btn-sm tooltip"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a><?php } ?>
+										<?php if(isset($permiso['Principal'])&&$permiso['Principal']!=''){ ?><a title="<?php echo $permiso['Principal']; ?>" class="btn btn-info btn-sm tooltip"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a><?php } ?>
+
 									</div>
 								</td>
 								<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php if($permiso['visualizacion']==9999){echo 'Solo Superadministradores';}elseif($permiso['visualizacion']==9998){echo 'Todos';}else{echo $permiso['ver'];} ?></td><?php } ?>
@@ -342,7 +342,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 										<?php if ( $permiso['contar']=='1' ){ ?>
 											<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.$xxx; ?>&prm_del=<?php echo simpleEncode($permiso['idpermiso'], fecha_actual()).$w; ?>">OFF</a>
 											<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
-										<?php } else {?>
+										<?php } else { ?>
 											<a title="Quitar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">OFF</a>
 											<a title="Dar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.$xxx; ?>&prm_add=<?php echo $permiso['idAdmpm'].$w; ?>">ON</a>
 										<?php } ?>
@@ -363,8 +363,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 					<?php } ?>
 				</tbody>
 			</table>
-		
-			
+
 		</div>
 	</div>
 </div>

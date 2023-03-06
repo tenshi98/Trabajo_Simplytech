@@ -549,7 +549,7 @@ require_once '0_validate_user_1.php';
 						$resultado = db_update_data (false, $SIS_data, 'clientes_listado', 'idCliente = "'.$rowCliente['idCliente'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//Si ejecuto correctamente la consulta
 						if($resultado==true){
-							
+
 							//Se crea la carpeta del cliente
 							if(isset($new_folder)&&$new_folder!=''&&$new_folder==1){
 								//verifico que exista el rut
@@ -699,4 +699,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

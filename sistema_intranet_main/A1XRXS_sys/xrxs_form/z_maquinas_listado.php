@@ -27,6 +27,7 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idConfig_1']))           $idConfig_1            = $_POST['idConfig_1'];
 	if (!empty($_POST['idConfig_2']))           $idConfig_2            = $_POST['idConfig_2'];
 	if (!empty($_POST['idConfig_3']))           $idConfig_3            = $_POST['idConfig_3'];
+	if (!empty($_POST['idConfig_4']))           $idConfig_4            = $_POST['idConfig_4'];
 	if (!empty($_POST['idUbicacion']))          $idUbicacion           = $_POST['idUbicacion'];
 	if (!empty($_POST['idUbicacion_lvl_1']))    $idUbicacion_lvl_1     = $_POST['idUbicacion_lvl_1'];
 	if (!empty($_POST['idUbicacion_lvl_2']))    $idUbicacion_lvl_2     = $_POST['idUbicacion_lvl_2'];
@@ -38,13 +39,13 @@ require_once '0_validate_user_1.php';
 
 	//formulario para componentes
 	if (!empty($_POST['idUtilizable']))         $idUtilizable          = $_POST['idUtilizable'];
-	if ( isset($_POST['Marca']))                 $Marca                 = $_POST['Marca'];
-	if ( isset($_POST['AnoFab']))                $AnoFab                = $_POST['AnoFab'];
-	if ( isset($_POST['idSubTipo']))             $idSubTipo             = $_POST['idSubTipo'];
-	if ( isset($_POST['Grasa_inicial']))         $Grasa_inicial         = $_POST['Grasa_inicial'];
-	if ( isset($_POST['Grasa_relubricacion']))   $Grasa_relubricacion   = $_POST['Grasa_relubricacion'];
-	if ( isset($_POST['Aceite']))                $Aceite                = $_POST['Aceite'];
-	if ( isset($_POST['Cantidad']))              $Cantidad              = $_POST['Cantidad'];
+	if ( isset($_POST['Marca']))                $Marca                 = $_POST['Marca'];
+	if ( isset($_POST['AnoFab']))               $AnoFab                = $_POST['AnoFab'];
+	if ( isset($_POST['idSubTipo']))            $idSubTipo             = $_POST['idSubTipo'];
+	if ( isset($_POST['Grasa_inicial']))        $Grasa_inicial         = $_POST['Grasa_inicial'];
+	if ( isset($_POST['Grasa_relubricacion']))  $Grasa_relubricacion   = $_POST['Grasa_relubricacion'];
+	if ( isset($_POST['Aceite']))               $Aceite                = $_POST['Aceite'];
+	if ( isset($_POST['Cantidad']))             $Cantidad              = $_POST['Cantidad'];
 	if (!empty($_POST['idUml']))                $idUml                 = $_POST['idUml'];
 	if (!empty($_POST['Frecuencia']))           $Frecuencia            = $_POST['Frecuencia'];
 	if (!empty($_POST['idFrecuencia']))         $idFrecuencia          = $_POST['idFrecuencia'];
@@ -53,7 +54,7 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['Numero']))               $Numero                = $_POST['Numero'];
 	if (!empty($_POST['lvl']))                  $lvl                   = $_POST['lvl'];
 	if (!empty($_POST['idLicitacion']))         $idLicitacion          = $_POST['idLicitacion'];
-	if (!empty($_POST['addTrabajo']))           $SIS_dataddTrabajo            = $_POST['addTrabajo'];
+	if (!empty($_POST['addTrabajo']))           $SIS_dataddTrabajo     = $_POST['addTrabajo'];
 
 	//formulario para matriz analisis
 	if (!empty($_POST['cantPuntos']))           $cantPuntos            = $_POST['cantPuntos'];
@@ -119,7 +120,8 @@ require_once '0_validate_user_1.php';
 			case 'Descripcion':         if(empty($Descripcion)){          $error['Descripcion']           = 'error/No ha ingresado la descripcion';}break;
 			case 'idConfig_1':          if(empty($idConfig_1)){           $error['idConfig_1']            = 'error/No ha seleccionado la opcion 1';}break;
 			case 'idConfig_2':          if(empty($idConfig_2)){           $error['idConfig_2']            = 'error/No ha seleccionado la opcion 2';}break;
-			case 'idConfig_3':          if(empty($idConfig_3)){           $error['idConfig_3']            = 'error/No ha seleccionado la opcion 2';}break;
+			case 'idConfig_3':          if(empty($idConfig_3)){           $error['idConfig_3']            = 'error/No ha seleccionado la opcion 3';}break;
+			case 'idConfig_4':          if(empty($idConfig_4)){           $error['idConfig_4']            = 'error/No ha seleccionado la opcion 4';}break;
 			case 'idUbicacion':         if(empty($idUbicacion)){          $error['idUbicacion']           = 'error/No ha seleccionado la ubicacion';}break;
 			case 'idUbicacion_lvl_1':   if(empty($idUbicacion_lvl_1)){    $error['idUbicacion_lvl_1']     = 'error/No ha seleccionado el nivel 1';}break;
 			case 'idUbicacion_lvl_2':   if(empty($idUbicacion_lvl_2)){    $error['idUbicacion_lvl_2']     = 'error/No ha seleccionado el nivel 2';}break;
@@ -129,13 +131,13 @@ require_once '0_validate_user_1.php';
 			case 'idCliente':           if(empty($idCliente)){            $error['idCliente']             = 'error/No ha seleccionado el cliente';}break;
 
 			case 'idUtilizable':        if(empty($idUtilizable)){         $error['idUtilizable']          = 'error/No ha seleccionado si es utilizable';}break;
-			case 'Marca':               if(!isset($Marca)){                $error['Marca']                 = 'error/No ha ingresado la marca';}break;
-			case 'AnoFab':              if(!isset($AnoFab)){               $error['AnoFab']                = 'error/No ha ingresado el año de fabricacion';}break;
-			case 'idSubTipo':           if(!isset($idSubTipo)){            $error['idSubTipo']             = 'error/No ha seleccionado el tipo';}break;
-			case 'Grasa_inicial':       if(!isset($Grasa_inicial)){        $error['Grasa_inicial']         = 'error/No ha ingresado la grasa inicial';}break;
-			case 'Grasa_relubricacion': if(!isset($Grasa_relubricacion)){  $error['Grasa_relubricacion']   = 'error/No ha ingresado la grasa de relubricacion';}break;
-			case 'Aceite':              if(!isset($Aceite)){               $error['Aceite']                = 'error/No ha ingresado el aceite';}break;
-			case 'Cantidad':            if(!isset($Cantidad)){             $error['Cantidad']              = 'error/No ha ingresado la cantidad';}break;
+			case 'Marca':               if(!isset($Marca)){               $error['Marca']                 = 'error/No ha ingresado la marca';}break;
+			case 'AnoFab':              if(!isset($AnoFab)){              $error['AnoFab']                = 'error/No ha ingresado el año de fabricacion';}break;
+			case 'idSubTipo':           if(!isset($idSubTipo)){           $error['idSubTipo']             = 'error/No ha seleccionado el tipo';}break;
+			case 'Grasa_inicial':       if(!isset($Grasa_inicial)){       $error['Grasa_inicial']         = 'error/No ha ingresado la grasa inicial';}break;
+			case 'Grasa_relubricacion': if(!isset($Grasa_relubricacion)){ $error['Grasa_relubricacion']   = 'error/No ha ingresado la grasa de relubricacion';}break;
+			case 'Aceite':              if(!isset($Aceite)){              $error['Aceite']                = 'error/No ha ingresado el aceite';}break;
+			case 'Cantidad':            if(!isset($Cantidad)){            $error['Cantidad']              = 'error/No ha ingresado la cantidad';}break;
 			case 'idUml':               if(empty($idUml)){                $error['idUml']                 = 'error/No ha seleccionado la unidad de medida';}break;
 			case 'Frecuencia':          if(empty($Frecuencia)){           $error['Frecuencia']            = 'error/No ha ingresado la frecuencia';}break;
 			case 'idFrecuencia':        if(empty($idFrecuencia)){         $error['idFrecuencia']          = 'error/No ha seleccionado la frecuencia';}break;
@@ -144,7 +146,7 @@ require_once '0_validate_user_1.php';
 			case 'Numero':              if(empty($Numero)){               $error['Numero']                = 'error/No ha ingresado el numero';}break;
 			case 'lvl':                 if(empty($lvl)){                  $error['lvl']                   = 'error/No ha ingresado el nivel';}break;
 			case 'idLicitacion':        if(empty($idLicitacion)){         $error['idLicitacion']          = 'error/No ha seleccionado la licitacion';}break;
-			case 'addTrabajo':          if(empty($SIS_dataddTrabajo)){           $error['addTrabajo']            = 'error/No ha seleccionado el trabajo';}break;
+			case 'addTrabajo':          if(empty($SIS_dataddTrabajo)){    $error['addTrabajo']            = 'error/No ha seleccionado el trabajo';}break;
 
 			case 'cantPuntos':          if(empty($cantPuntos)){           $error['cantPuntos']            = 'error/No ha ingresado la cantidad de puntos';}break;
 			case 'mod':                 if(empty($mod)){                  $error['mod']                   = 'error/No ha ingresado el mod';}break;
@@ -155,7 +157,7 @@ require_once '0_validate_user_1.php';
 			case 'PuntoMedAlerta':      if(empty($PuntoMedAlerta)){       $error['PuntoMedAlerta']        = 'error/No ha ingresado el valor de alerta';}break;
 			case 'PuntoMedCondenatorio':if(empty($PuntoMedCondenatorio)){ $error['PuntoMedCondenatorio']  = 'error/No ha ingresado el valor condenatorio';}break;
 			case 'PuntoUniMed':         if(empty($PuntoUniMed)){          $error['PuntoUniMed']           = 'error/No ha seleccionado la unidad de medida';}break;
-		
+
 			case 'idLevel_1':           if(empty($idLevel[1])){           $error['idLevel_1']             = 'error/No ha ingresado el idLevel_1';}break;
 			case 'idLevel_2':           if(empty($idLevel[2])){           $error['idLevel_2']             = 'error/No ha ingresado el idLevel_2';}break;
 			case 'idLevel_3':           if(empty($idLevel[3])){           $error['idLevel_3']             = 'error/No ha ingresado el idLevel_3';}break;
@@ -181,14 +183,14 @@ require_once '0_validate_user_1.php';
 			case 'idLevel_23':          if(empty($idLevel[23])){          $error['idLevel_23']            = 'error/No ha ingresado el idLevel_23';}break;
 			case 'idLevel_24':          if(empty($idLevel[24])){          $error['idLevel_24']            = 'error/No ha ingresado el idLevel_24';}break;
 			case 'idLevel_25':          if(empty($idLevel[25])){          $error['idLevel_25']            = 'error/No ha ingresado el idLevel_25';}break;
-	
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
 	if(isset($Codigo) && $Codigo!=''){            $Codigo      = EstandarizarInput($Codigo);}
-	if(isset($Nombre) && $Nombre!=''){           $Nombre      = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){            $Nombre      = EstandarizarInput($Nombre);}
 	if(isset($Modelo) && $Modelo!=''){            $Modelo      = EstandarizarInput($Modelo);}
 	if(isset($Serie) && $Serie!=''){              $Serie       = EstandarizarInput($Serie);}
 	if(isset($Fabricante) && $Fabricante!=''){    $Fabricante  = EstandarizarInput($Fabricante);}
@@ -238,18 +240,19 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){ $SIS_data  = "'".$idSistema."'";               }else{$SIS_data ="''";}
-				if(isset($idEstado) && $idEstado!=''){                    $SIS_data .= ",'".$idEstado."'";               }else{$SIS_data .=",''";}
+				if(isset($idSistema) && $idSistema!=''){                   $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  ="''";}
+				if(isset($idEstado) && $idEstado!=''){                     $SIS_data .= ",'".$idEstado."'";               }else{$SIS_data .=",''";}
 				if(isset($Codigo) && $Codigo!=''){                         $SIS_data .= ",'".$Codigo."'";                 }else{$SIS_data .=",''";}
-				if(isset($Nombre) && $Nombre!=''){                        $SIS_data .= ",'".$Nombre."'";                 }else{$SIS_data .=",''";}
+				if(isset($Nombre) && $Nombre!=''){                         $SIS_data .= ",'".$Nombre."'";                 }else{$SIS_data .=",''";}
 				if(isset($Modelo) && $Modelo!=''){                         $SIS_data .= ",'".$Modelo."'";                 }else{$SIS_data .=",''";}
 				if(isset($Serie) && $Serie!=''){                           $SIS_data .= ",'".$Serie."'";                  }else{$SIS_data .=",''";}
 				if(isset($Fabricante) && $Fabricante!=''){                 $SIS_data .= ",'".$Fabricante."'";             }else{$SIS_data .=",''";}
 				if(isset($fincorporacion) && $fincorporacion!=''){         $SIS_data .= ",'".$fincorporacion."'";         }else{$SIS_data .=",''";}
-				if(isset($Descripcion) && $Descripcion!=''){               $SIS_data .= ",'".$Descripcion."'";          }else{$SIS_data .=",''";}
+				if(isset($Descripcion) && $Descripcion!=''){               $SIS_data .= ",'".$Descripcion."'";            }else{$SIS_data .=",''";}
 				if(isset($idConfig_1) && $idConfig_1!=''){                 $SIS_data .= ",'".$idConfig_1."'";             }else{$SIS_data .=",''";}
 				if(isset($idConfig_2) && $idConfig_2!=''){                 $SIS_data .= ",'".$idConfig_2."'";             }else{$SIS_data .=",''";}
 				if(isset($idConfig_3) && $idConfig_3!=''){                 $SIS_data .= ",'".$idConfig_3."'";             }else{$SIS_data .=",''";}
+				if(isset($idConfig_4) && $idConfig_4!=''){                 $SIS_data .= ",'".$idConfig_4."'";             }else{$SIS_data .=",''";}
 				if(isset($idUbicacion) && $idUbicacion!=''){               $SIS_data .= ",'".$idUbicacion."'";            }else{$SIS_data .=",''";}
 				if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1!=''){   $SIS_data .= ",'".$idUbicacion_lvl_1."'";      }else{$SIS_data .=",''";}
 				if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2!=''){   $SIS_data .= ",'".$idUbicacion_lvl_2."'";      }else{$SIS_data .=",''";}
@@ -259,9 +262,9 @@ require_once '0_validate_user_1.php';
 				if(isset($idCliente) && $idCliente!=''){                   $SIS_data .= ",'".$idCliente."'";              }else{$SIS_data .=",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idSistema, idEstado, Codigo, Nombre,Modelo, Serie, Fabricante,
-				fincorporacion, Descripcion, idConfig_1, idConfig_2, idConfig_3, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2,
-				idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idCliente';
+				$SIS_columns = 'idSistema, idEstado, Codigo, Nombre,Modelo, Serie, Fabricante, fincorporacion, Descripcion, idConfig_1,
+				idConfig_2, idConfig_3, idConfig_4, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, idUbicacion_lvl_4,
+				idUbicacion_lvl_5, idCliente';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Si ejecuto correctamente la consulta
@@ -293,23 +296,23 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
-				
+
 				/***********************************************************************/
 				//Filtros
 				$SIS_data = "idMaquina='".$idMaquina."'";
-				if(isset($idSistema) && $idSistema!=''){$SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idSistema) && $idSistema!=''){                  $SIS_data .= ",idSistema='".$idSistema."'";}
 				if(isset($Codigo) && $Codigo!=''){                        $SIS_data .= ",Codigo='".$Codigo."'";}
-				if(isset($Nombre) && $Nombre!=''){                       $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                        $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Modelo) && $Modelo!=''){                        $SIS_data .= ",Modelo='".$Modelo."'";}
 				if(isset($Serie) && $Serie!=''){                          $SIS_data .= ",Serie='".$Serie."'";}
 				if(isset($Fabricante) && $Fabricante!=''){                $SIS_data .= ",Fabricante='".$Fabricante."'";}
-				if(isset($idEstado) && $idEstado!=''){                   $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idEstado) && $idEstado!=''){                    $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($fincorporacion) && $fincorporacion!=''){        $SIS_data .= ",fincorporacion='".$fincorporacion."'";}
 				if(isset($Descripcion) && $Descripcion!=''){              $SIS_data .= ",Descripcion='".$Descripcion."'";}
 				if(isset($idConfig_1) && $idConfig_1!=''){                $SIS_data .= ",idConfig_1='".$idConfig_1."'";}
 				if(isset($idConfig_2) && $idConfig_2!=''){                $SIS_data .= ",idConfig_2='".$idConfig_2."'";}
 				if(isset($idConfig_3) && $idConfig_3!=''){                $SIS_data .= ",idConfig_3='".$idConfig_3."'";}
+				if(isset($idConfig_4) && $idConfig_4!=''){                $SIS_data .= ",idConfig_4='".$idConfig_4."'";}
 				if(isset($idUbicacion) && $idUbicacion!=''){              $SIS_data .= ",idUbicacion='".$idUbicacion."'";}
 				if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1!=''){  $SIS_data .= ",idUbicacion_lvl_1='".$idUbicacion_lvl_1."'";}
 				if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2!=''){  $SIS_data .= ",idUbicacion_lvl_2='".$idUbicacion_lvl_2."'";}
@@ -523,7 +526,6 @@ require_once '0_validate_user_1.php';
 							//se eliminan las imagenes de la memoria
 							imagedestroy($imgBase);
 
-								
 							//Filtro para idSistema
 							$SIS_data = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'";
 
@@ -684,10 +686,6 @@ require_once '0_validate_user_1.php';
 				die;
 
 			}
-				
-			
-			
-
 
 		break;
 /*******************************************************************************************************************/
@@ -724,8 +722,6 @@ require_once '0_validate_user_1.php';
 				die;
 
 			}
-				
-					
 
 		break;
 /*******************************************************************************************************************/
@@ -760,12 +756,10 @@ require_once '0_validate_user_1.php';
 				//redirijo
 				header( 'Location: '.$location.'&id='.$_GET['del_hds'] );
 				die;
-	
-			}
-				
-					
 
-		break;	
+			}
+
+		break;
 /*******************************************************************************************************************/
 		case 'insert_item':
 
@@ -783,16 +777,16 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El dato ya existe';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el Nombre	
+
+			// si no hay errores ejecuto
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){     $SIS_data = "'".$idSistema."'";               }else{$SIS_data ="''";}
+				if(isset($idSistema) && $idSistema!=''){                       $SIS_data = "'".$idSistema."'";               }else{$SIS_data  ="''";}
 				if(isset($idMaquina) && $idMaquina!=''){                       $SIS_data .= ",'".$idMaquina."'";             }else{$SIS_data .=",''";}
 				if(isset($idUtilizable) && $idUtilizable!=''){                 $SIS_data .= ",'".$idUtilizable."'";          }else{$SIS_data .=",''";}
 				if(isset($Codigo) && $Codigo!=''){                             $SIS_data .= ",'".$Codigo."'";                }else{$SIS_data .=",''";}
-				if(isset($Nombre) && $Nombre!=''){                            $SIS_data .= ",'".$Nombre."'";                }else{$SIS_data .=",''";}
+				if(isset($Nombre) && $Nombre!=''){                             $SIS_data .= ",'".$Nombre."'";                }else{$SIS_data .=",''";}
 				if(isset($Marca) && $Marca!=''){                               $SIS_data .= ",'".$Marca."'";                 }else{$SIS_data .=",''";}
 				if(isset($Modelo) && $Modelo!=''){                             $SIS_data .= ",'".$Modelo."'";                }else{$SIS_data .=",''";}
 				if(isset($AnoFab) && $AnoFab!=''){                             $SIS_data .= ",'".$AnoFab."'";                }else{$SIS_data .=",''";}
@@ -809,9 +803,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idProducto) && $idProducto!=''){                     $SIS_data .= ",'".$idProducto."'";            }else{$SIS_data .=",''";}
 				if(isset($Saf) && $Saf!=''){                                   $SIS_data .= ",'".$Saf."'";                   }else{$SIS_data .=",''";}
 				if(isset($Numero) && $Numero!=''){                             $SIS_data .= ",'".$Numero."'";                }else{$SIS_data .=",''";}
-				
-				
-				
+
 				$xbla = '';
 				for ($i = 2; $i <= $lvl; $i++) {
 					//Ubico correctamente el puntero
@@ -823,9 +815,9 @@ require_once '0_validate_user_1.php';
 				}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idSistema,idMaquina, idUtilizable, Codigo, Nombre,Marca, 
-				Modelo, AnoFab, Serie, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, 
-				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia,idProducto,Saf , Numero 
+				$SIS_columns = 'idSistema,idMaquina, idUtilizable, Codigo, Nombre,Marca,
+				Modelo, AnoFab, Serie, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion,
+				Aceite, Cantidad, idUml, Frecuencia, idFrecuencia,idProducto,Saf , Numero
 				'.$xbla;
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$lvl, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -845,15 +837,15 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// si no hay errores ejecuto el Nombre	
+			// si no hay errores ejecuto
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idLevel_".$lvl."='".$idLevel[$lvl]."'";
-				if(isset($idSistema) && $idSistema!=''){    $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idSistema) && $idSistema!=''){                      $SIS_data .= ",idSistema='".$idSistema."'";}
 				if(isset($idMaquina) && $idMaquina!=''){                      $SIS_data .= ",idMaquina='".$idMaquina."'";}
 				if(isset($idUtilizable) && $idUtilizable!=''){                $SIS_data .= ",idUtilizable='".$idUtilizable."'";}
 				if(isset($Codigo) && $Codigo!=''){                            $SIS_data .= ",Codigo='".$Codigo."'";}
-				if(isset($Nombre) && $Nombre!=''){                           $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                            $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Marca) && $Marca!=''){                              $SIS_data .= ",Marca='".$Marca."'";}
 				if(isset($Modelo) && $Modelo!=''){                            $SIS_data .= ",Modelo='".$Modelo."'";}
 				if(isset($AnoFab) && $AnoFab!=''){                            $SIS_data .= ",AnoFab='".$AnoFab."'";}
@@ -882,7 +874,7 @@ require_once '0_validate_user_1.php';
 					die;
 
 				}
-			
+
 			}
 
 		break;
@@ -970,9 +962,6 @@ require_once '0_validate_user_1.php';
 
 			}
 
-			
-
-
 		break;
 /*******************************************************************************************************************/
 		case 'add_trabajo':
@@ -981,7 +970,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			if(empty($error)){
-				
+
 				if(isset($idLevel[1])&&$idLevel[1]!=''){   $xx = $idLevel[1];  $level=1; }
 				if(isset($idLevel[2])&&$idLevel[2]!=''){   $xx = $idLevel[2];  $level=2; }
 				if(isset($idLevel[3])&&$idLevel[3]!=''){   $xx = $idLevel[3];  $level=3; }
@@ -1007,8 +996,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idLevel[23])&&$idLevel[23]!=''){ $xx = $idLevel[23]; $level=23; }
 				if(isset($idLevel[24])&&$idLevel[24]!=''){ $xx = $idLevel[24]; $level=24; }
 				if(isset($idLevel[25])&&$idLevel[25]!=''){ $xx = $idLevel[25]; $level=25; }
-				
-				
+
 				//Filtros
 				$SIS_data = "idLevel_".$lvl."='".$SIS_dataddTrabajo."'";
 				if(isset($idLicitacion) && $idLicitacion!=''){   $SIS_data .= ",idLicitacion='".$idLicitacion."'";}
@@ -1020,7 +1008,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_update_data (false, $SIS_data, 'maquinas_listado_level_'.$lvl, 'idLevel_'.$lvl.' = "'.$SIS_dataddTrabajo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&view=true' );
 					die;
 
@@ -1050,9 +1038,9 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idMaquina) && $idMaquina!=''){       $SIS_data  = "'".$idMaquina."'";      }else{$SIS_data ="''";}
-				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .=",''";}
+				if(isset($Nombre) && $Nombre!=''){             $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .=",''";}
 				if(isset($cantPuntos) && $cantPuntos!=''){     $SIS_data .= ",'".$cantPuntos."'";    }else{$SIS_data .=",''";}
-				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",'".$idEstado."'";      }else{$SIS_data .=",''";}
+				if(isset($idEstado) && $idEstado!=''){         $SIS_data .= ",'".$idEstado."'";      }else{$SIS_data .=",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idMaquina, Nombre,cantPuntos, idEstado';
@@ -1074,10 +1062,10 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			if(empty($error)){
-		
+
 				//Filtros
 				$SIS_data = "idMatriz='".$idMatriz."'";
-				if(isset($Nombre) && $Nombre!=''){                             $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                              $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($cantPuntos) && $cantPuntos!=''){                      $SIS_data .= ",cantPuntos='".$cantPuntos."'";}
 				if(isset($PuntoNombre) && $PuntoNombre!=''){                    $SIS_data .= ",PuntoNombre_".$mod."='".$PuntoNombre."'";}
 				if(isset($PuntoidTipo) && $PuntoidTipo!=''){                    $SIS_data .= ",PuntoidTipo_".$mod."='".$PuntoidTipo."'";}
@@ -1086,14 +1074,14 @@ require_once '0_validate_user_1.php';
 				if(isset($PuntoMedCondenatorio) && $PuntoMedCondenatorio!=''){  $SIS_data .= ",PuntoMedCondenatorio_".$mod."='".$PuntoMedCondenatorio."'";}
 				if(isset($PuntoUniMed) && $PuntoUniMed!=''){                    $SIS_data .= ",PuntoUniMed_".$mod."='".$PuntoUniMed."'";}
 				if(isset($PuntoidGrupo) && $PuntoidGrupo!=''){                  $SIS_data .= ",PuntoidGrupo_".$mod."='".$PuntoidGrupo."'";}
-				if(isset($idEstado) && $idEstado!=''){                         $SIS_data .= ",idEstado".$mod."='".$idEstado."'";}
+				if(isset($idEstado) && $idEstado!=''){                          $SIS_data .= ",idEstado".$mod."='".$idEstado."'";}
 
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'maquinas_listado_matriz', 'idMatriz = "'.$idMatriz.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location );
 					die;
 
@@ -1156,7 +1144,7 @@ require_once '0_validate_user_1.php';
 
 			//obtengo los datos de la maquina previamente seleccionada
 			$rowdata = db_select_data (false, 'idSistema', 'maquinas_listado', '', 'idMaquina ='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -1173,27 +1161,28 @@ require_once '0_validate_user_1.php';
 
 				/*******************************************************************/
 				// Se traen todos los datos de la maquina
-				$rowdata = db_select_data (false, 'idSistema, Codigo, Modelo, Serie, Fabricante, fincorporacion, Descripcion, idConfig_1, idConfig_2, idConfig_3, idCliente', 'maquinas_listado', '', 'idMaquina ='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata = db_select_data (false, 'idSistema, Codigo, Modelo, Serie, Fabricante, fincorporacion, Descripcion, idConfig_1, idConfig_2, idConfig_3, idConfig_4, idCliente', 'maquinas_listado', '', 'idMaquina ='.$idMaquina, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Se crea la maquina
-				$SIS_data  = "'".$rowdata['idSistema']."'"; 
-				$SIS_data .= ",'2'" ;                        //inactivo hasta editar       
-				$SIS_data .= ",'".$rowdata['Codigo']."'"; 
-				$SIS_data .= ",'".$Nombre."'";          
-				$SIS_data .= ",'".$rowdata['Modelo']."'";          
-				$SIS_data .= ",'".$rowdata['Serie']."'";          
-				$SIS_data .= ",'".$rowdata['Fabricante']."'";           
-				$SIS_data .= ",'".$rowdata['fincorporacion']."'"; 
+				$SIS_data  = "'".$rowdata['idSistema']."'";
+				$SIS_data .= ",'2'" ;                        //inactivo hasta editar
+				$SIS_data .= ",'".$rowdata['Codigo']."'";
+				$SIS_data .= ",'".$Nombre."'";
+				$SIS_data .= ",'".$rowdata['Modelo']."'";
+				$SIS_data .= ",'".$rowdata['Serie']."'";
+				$SIS_data .= ",'".$rowdata['Fabricante']."'";
+				$SIS_data .= ",'".$rowdata['fincorporacion']."'";
 				$SIS_data .= ",'".$rowdata['Descripcion']."'";
 				$SIS_data .= ",'".$rowdata['idConfig_1']."'";
 				$SIS_data .= ",'".$rowdata['idConfig_2']."'";
 				$SIS_data .= ",'".$rowdata['idConfig_3']."'";
+				$SIS_data .= ",'".$rowdata['idConfig_4']."'";
 				$SIS_data .= ",'".$rowdata['idCliente']."'";
-        
+
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idSistema, idEstado, Codigo, Nombre,Modelo, 
-				Serie, Fabricante, fincorporacion, Descripcion, idConfig_1, 
-				idConfig_2, idConfig_3, idCliente';
+				$SIS_columns = 'idSistema, idEstado, Codigo, Nombre,Modelo,
+				Serie, Fabricante, fincorporacion, Descripcion, idConfig_1,
+				idConfig_2, idConfig_3, idConfig_4,idCliente';
 				$maquina_id = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*******************************************************************/
@@ -1249,690 +1238,689 @@ require_once '0_validate_user_1.php';
 				$arrLVL_25 = db_select_array (false, 'idLevel_25, idLevel_24, idLevel_23, idLevel_22, idLevel_21, idLevel_20,idLevel_19, idLevel_18, idLevel_17, idLevel_16, idLevel_15, idLevel_14, idLevel_13, idLevel_12, idLevel_11, idLevel_10, idLevel_9, idLevel_8, idLevel_7, idLevel_6, idLevel_5, idLevel_4, idLevel_3, idLevel_2, idLevel_1, idSistema, idUtilizable, Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero', 'maquinas_listado_level_25', '', 'idMaquina = '.$idMaquina, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*******************************************************************/
-				
-				
+
 				foreach ($arrLVL_1 as $lvl_1) {
 
 					//Se crea la maquina
-					$SIS_data  = "'".$lvl_1['idSistema']."'";          
-					$SIS_data .= ",'".$maquina_id."'"; 
+					$SIS_data  = "'".$lvl_1['idSistema']."'";
+					$SIS_data .= ",'".$maquina_id."'";
 					$SIS_data .= ",'".$lvl_1['idUtilizable']."'";
 					$SIS_data .= ",'".$lvl_1['Codigo']."'";
 					$SIS_data .= ",'".$lvl_1['Nombre']."'";
 					$SIS_data .= ",'".$lvl_1['Marca']."'";
 					$SIS_data .= ",'".$lvl_1['Modelo']."'";
 					$SIS_data .= ",'".$lvl_1['AnoFab']."'";
-					$SIS_data .= ",'".$lvl_1['Serie']."'"; 
-					$SIS_data .= ",'".$lvl_1['idLicitacion']."'"; 
-					$SIS_data .= ",'".$lvl_1['tabla']."'"; 
-					$SIS_data .= ",'".$lvl_1['table_value']."'"; 
-					$SIS_data .= ",'".$lvl_1['Direccion_img']."'"; 
-					$SIS_data .= ",'".$lvl_1['idSubTipo']."'"; 
-					$SIS_data .= ",'".$lvl_1['Grasa_inicial']."'"; 
-					$SIS_data .= ",'".$lvl_1['Grasa_relubricacion']."'"; 
-					$SIS_data .= ",'".$lvl_1['Aceite']."'"; 
-					$SIS_data .= ",'".$lvl_1['Cantidad']."'"; 
-					$SIS_data .= ",'".$lvl_1['idUml']."'"; 
-					$SIS_data .= ",'".$lvl_1['Frecuencia']."'"; 
-					$SIS_data .= ",'".$lvl_1['idFrecuencia']."'"; 
-					$SIS_data .= ",'".$lvl_1['idProducto']."'"; 
-					$SIS_data .= ",'".$lvl_1['Saf']."'"; 
-					$SIS_data .= ",'".$lvl_1['Numero']."'";      
-																															
+					$SIS_data .= ",'".$lvl_1['Serie']."'";
+					$SIS_data .= ",'".$lvl_1['idLicitacion']."'";
+					$SIS_data .= ",'".$lvl_1['tabla']."'";
+					$SIS_data .= ",'".$lvl_1['table_value']."'";
+					$SIS_data .= ",'".$lvl_1['Direccion_img']."'";
+					$SIS_data .= ",'".$lvl_1['idSubTipo']."'";
+					$SIS_data .= ",'".$lvl_1['Grasa_inicial']."'";
+					$SIS_data .= ",'".$lvl_1['Grasa_relubricacion']."'";
+					$SIS_data .= ",'".$lvl_1['Aceite']."'";
+					$SIS_data .= ",'".$lvl_1['Cantidad']."'";
+					$SIS_data .= ",'".$lvl_1['idUml']."'";
+					$SIS_data .= ",'".$lvl_1['Frecuencia']."'";
+					$SIS_data .= ",'".$lvl_1['idFrecuencia']."'";
+					$SIS_data .= ",'".$lvl_1['idProducto']."'";
+					$SIS_data .= ",'".$lvl_1['Saf']."'";
+					$SIS_data .= ",'".$lvl_1['Numero']."'";
+
 					// inserto los datos de registro en la db
-					$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
-					Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+					$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+					Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
 					$id_lvl_1 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_1', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																															 
+
 					//Nivel 2
 					foreach ($arrLVL_2 as $lvl_2) {
 						//Se verifica que sea el mismo sensor
 						if($lvl_1['idLevel_1']==$lvl_2['idLevel_1']){
-							
+
 							//Se crea la maquina
-							$SIS_data  = "'".$id_lvl_1."'";          
-							$SIS_data .= ",'".$lvl_2['idSistema']."'"; 
-							$SIS_data .= ",'".$maquina_id."'"; 
+							$SIS_data  = "'".$id_lvl_1."'";
+							$SIS_data .= ",'".$lvl_2['idSistema']."'";
+							$SIS_data .= ",'".$maquina_id."'";
 							$SIS_data .= ",'".$lvl_2['idUtilizable']."'";
 							$SIS_data .= ",'".$lvl_2['Codigo']."'";
 							$SIS_data .= ",'".$lvl_2['Nombre']."'";
 							$SIS_data .= ",'".$lvl_2['Marca']."'";
 							$SIS_data .= ",'".$lvl_2['Modelo']."'";
 							$SIS_data .= ",'".$lvl_2['AnoFab']."'";
-							$SIS_data .= ",'".$lvl_2['Serie']."'"; 
-							$SIS_data .= ",'".$lvl_2['idLicitacion']."'"; 
-							$SIS_data .= ",'".$lvl_2['tabla']."'"; 
-							$SIS_data .= ",'".$lvl_2['table_value']."'"; 
-							$SIS_data .= ",'".$lvl_2['Direccion_img']."'"; 
-							$SIS_data .= ",'".$lvl_2['idSubTipo']."'"; 
-							$SIS_data .= ",'".$lvl_2['Grasa_inicial']."'"; 
-							$SIS_data .= ",'".$lvl_2['Grasa_relubricacion']."'"; 
-							$SIS_data .= ",'".$lvl_2['Aceite']."'"; 
-							$SIS_data .= ",'".$lvl_2['Cantidad']."'"; 
-							$SIS_data .= ",'".$lvl_2['idUml']."'"; 
-							$SIS_data .= ",'".$lvl_2['Frecuencia']."'"; 
-							$SIS_data .= ",'".$lvl_2['idFrecuencia']."'"; 
-							$SIS_data .= ",'".$lvl_2['idProducto']."'"; 
-							$SIS_data .= ",'".$lvl_2['Saf']."'"; 
-							$SIS_data .= ",'".$lvl_2['Numero']."'";     
-																															
+							$SIS_data .= ",'".$lvl_2['Serie']."'";
+							$SIS_data .= ",'".$lvl_2['idLicitacion']."'";
+							$SIS_data .= ",'".$lvl_2['tabla']."'";
+							$SIS_data .= ",'".$lvl_2['table_value']."'";
+							$SIS_data .= ",'".$lvl_2['Direccion_img']."'";
+							$SIS_data .= ",'".$lvl_2['idSubTipo']."'";
+							$SIS_data .= ",'".$lvl_2['Grasa_inicial']."'";
+							$SIS_data .= ",'".$lvl_2['Grasa_relubricacion']."'";
+							$SIS_data .= ",'".$lvl_2['Aceite']."'";
+							$SIS_data .= ",'".$lvl_2['Cantidad']."'";
+							$SIS_data .= ",'".$lvl_2['idUml']."'";
+							$SIS_data .= ",'".$lvl_2['Frecuencia']."'";
+							$SIS_data .= ",'".$lvl_2['idFrecuencia']."'";
+							$SIS_data .= ",'".$lvl_2['idProducto']."'";
+							$SIS_data .= ",'".$lvl_2['Saf']."'";
+							$SIS_data .= ",'".$lvl_2['Numero']."'";
+
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idLevel_1, idSistema, idMaquina, idUtilizable, 
-							Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+							$SIS_columns = 'idLevel_1, idSistema, idMaquina, idUtilizable,
+							Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
 							$id_lvl_2 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_2', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																															 
+
 							//Nivel 3
 							foreach ($arrLVL_3 as $lvl_3) {
 								//Se verifica que sea el mismo sensor
 								if($lvl_2['idLevel_2']==$lvl_3['idLevel_2']){
 
 									//Se crea la maquina
-									$SIS_data  = "'".$id_lvl_2."'";          
-									$SIS_data .= ",'".$id_lvl_1."'"; 
-									$SIS_data .= ",'".$lvl_3['idSistema']."'"; 
-									$SIS_data .= ",'".$maquina_id."'"; 
+									$SIS_data  = "'".$id_lvl_2."'";
+									$SIS_data .= ",'".$id_lvl_1."'";
+									$SIS_data .= ",'".$lvl_3['idSistema']."'";
+									$SIS_data .= ",'".$maquina_id."'";
 									$SIS_data .= ",'".$lvl_3['idUtilizable']."'";
 									$SIS_data .= ",'".$lvl_3['Codigo']."'";
 									$SIS_data .= ",'".$lvl_3['Nombre']."'";
 									$SIS_data .= ",'".$lvl_3['Marca']."'";
 									$SIS_data .= ",'".$lvl_3['Modelo']."'";
 									$SIS_data .= ",'".$lvl_3['AnoFab']."'";
-									$SIS_data .= ",'".$lvl_3['Serie']."'"; 
-									$SIS_data .= ",'".$lvl_3['idLicitacion']."'"; 
-									$SIS_data .= ",'".$lvl_3['tabla']."'"; 
-									$SIS_data .= ",'".$lvl_3['table_value']."'"; 
-									$SIS_data .= ",'".$lvl_3['Direccion_img']."'"; 
-									$SIS_data .= ",'".$lvl_3['idSubTipo']."'"; 
-									$SIS_data .= ",'".$lvl_3['Grasa_inicial']."'"; 
-									$SIS_data .= ",'".$lvl_3['Grasa_relubricacion']."'"; 
-									$SIS_data .= ",'".$lvl_3['Aceite']."'"; 
-									$SIS_data .= ",'".$lvl_3['Cantidad']."'"; 
-									$SIS_data .= ",'".$lvl_3['idUml']."'"; 
-									$SIS_data .= ",'".$lvl_3['Frecuencia']."'"; 
-									$SIS_data .= ",'".$lvl_3['idFrecuencia']."'"; 
-									$SIS_data .= ",'".$lvl_3['idProducto']."'"; 
-									$SIS_data .= ",'".$lvl_3['Saf']."'"; 
-									$SIS_data .= ",'".$lvl_3['Numero']."'";     
-																															
+									$SIS_data .= ",'".$lvl_3['Serie']."'";
+									$SIS_data .= ",'".$lvl_3['idLicitacion']."'";
+									$SIS_data .= ",'".$lvl_3['tabla']."'";
+									$SIS_data .= ",'".$lvl_3['table_value']."'";
+									$SIS_data .= ",'".$lvl_3['Direccion_img']."'";
+									$SIS_data .= ",'".$lvl_3['idSubTipo']."'";
+									$SIS_data .= ",'".$lvl_3['Grasa_inicial']."'";
+									$SIS_data .= ",'".$lvl_3['Grasa_relubricacion']."'";
+									$SIS_data .= ",'".$lvl_3['Aceite']."'";
+									$SIS_data .= ",'".$lvl_3['Cantidad']."'";
+									$SIS_data .= ",'".$lvl_3['idUml']."'";
+									$SIS_data .= ",'".$lvl_3['Frecuencia']."'";
+									$SIS_data .= ",'".$lvl_3['idFrecuencia']."'";
+									$SIS_data .= ",'".$lvl_3['idProducto']."'";
+									$SIS_data .= ",'".$lvl_3['Saf']."'";
+									$SIS_data .= ",'".$lvl_3['Numero']."'";
+
 									// inserto los datos de registro en la db
-									$SIS_columns = 'idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-									Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+									$SIS_columns = 'idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable,
+									Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
 									$id_lvl_3 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_3', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																															 
+
 									//Nivel 4
 									foreach ($arrLVL_4 as $lvl_4) {
 										//Se verifica que sea el mismo sensor
 										if($lvl_3['idLevel_3']==$lvl_4['idLevel_3']){
-											
+
 											//Se crea la maquina
-											$SIS_data  = "'".$id_lvl_3."'";          
-											$SIS_data .= ",'".$id_lvl_2."'"; 
-											$SIS_data .= ",'".$id_lvl_1."'"; 
-											$SIS_data .= ",'".$lvl_4['idSistema']."'"; 
-											$SIS_data .= ",'".$maquina_id."'"; 
+											$SIS_data  = "'".$id_lvl_3."'";
+											$SIS_data .= ",'".$id_lvl_2."'";
+											$SIS_data .= ",'".$id_lvl_1."'";
+											$SIS_data .= ",'".$lvl_4['idSistema']."'";
+											$SIS_data .= ",'".$maquina_id."'";
 											$SIS_data .= ",'".$lvl_4['idUtilizable']."'";
 											$SIS_data .= ",'".$lvl_4['Codigo']."'";
 											$SIS_data .= ",'".$lvl_4['Nombre']."'";
 											$SIS_data .= ",'".$lvl_4['Marca']."'";
 											$SIS_data .= ",'".$lvl_4['Modelo']."'";
 											$SIS_data .= ",'".$lvl_4['AnoFab']."'";
-											$SIS_data .= ",'".$lvl_4['Serie']."'"; 
-											$SIS_data .= ",'".$lvl_4['idLicitacion']."'"; 
-											$SIS_data .= ",'".$lvl_4['tabla']."'"; 
-											$SIS_data .= ",'".$lvl_4['table_value']."'"; 
-											$SIS_data .= ",'".$lvl_4['Direccion_img']."'"; 
-											$SIS_data .= ",'".$lvl_4['idSubTipo']."'"; 
-											$SIS_data .= ",'".$lvl_4['Grasa_inicial']."'"; 
-											$SIS_data .= ",'".$lvl_4['Grasa_relubricacion']."'"; 
-											$SIS_data .= ",'".$lvl_4['Aceite']."'"; 
-											$SIS_data .= ",'".$lvl_4['Cantidad']."'"; 
-											$SIS_data .= ",'".$lvl_4['idUml']."'"; 
-											$SIS_data .= ",'".$lvl_4['Frecuencia']."'"; 
-											$SIS_data .= ",'".$lvl_4['idFrecuencia']."'"; 
-											$SIS_data .= ",'".$lvl_4['idProducto']."'"; 
-											$SIS_data .= ",'".$lvl_4['Saf']."'"; 
-											$SIS_data .= ",'".$lvl_4['Numero']."'";     
-																															
+											$SIS_data .= ",'".$lvl_4['Serie']."'";
+											$SIS_data .= ",'".$lvl_4['idLicitacion']."'";
+											$SIS_data .= ",'".$lvl_4['tabla']."'";
+											$SIS_data .= ",'".$lvl_4['table_value']."'";
+											$SIS_data .= ",'".$lvl_4['Direccion_img']."'";
+											$SIS_data .= ",'".$lvl_4['idSubTipo']."'";
+											$SIS_data .= ",'".$lvl_4['Grasa_inicial']."'";
+											$SIS_data .= ",'".$lvl_4['Grasa_relubricacion']."'";
+											$SIS_data .= ",'".$lvl_4['Aceite']."'";
+											$SIS_data .= ",'".$lvl_4['Cantidad']."'";
+											$SIS_data .= ",'".$lvl_4['idUml']."'";
+											$SIS_data .= ",'".$lvl_4['Frecuencia']."'";
+											$SIS_data .= ",'".$lvl_4['idFrecuencia']."'";
+											$SIS_data .= ",'".$lvl_4['idProducto']."'";
+											$SIS_data .= ",'".$lvl_4['Saf']."'";
+											$SIS_data .= ",'".$lvl_4['Numero']."'";
+
 											// inserto los datos de registro en la db
-											$SIS_columns = 'idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-											Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-											Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+											$SIS_columns = 'idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable,
+											Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+											Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 											idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
 											$id_lvl_4 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_4', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																															 
+
 											//Nivel 5
 											foreach ($arrLVL_5 as $lvl_5) {
 												//Se verifica que sea el mismo sensor
 												if($lvl_4['idLevel_4']==$lvl_5['idLevel_4']){
-													
+
 													//Se crea la maquina
-													$SIS_data  = "'".$id_lvl_4."'";          
-													$SIS_data .= ",'".$id_lvl_3."'"; 
-													$SIS_data .= ",'".$id_lvl_2."'"; 
-													$SIS_data .= ",'".$id_lvl_1."'";  
-													$SIS_data .= ",'".$lvl_5['idSistema']."'"; 
-													$SIS_data .= ",'".$maquina_id."'"; 
+													$SIS_data  = "'".$id_lvl_4."'";
+													$SIS_data .= ",'".$id_lvl_3."'";
+													$SIS_data .= ",'".$id_lvl_2."'";
+													$SIS_data .= ",'".$id_lvl_1."'";
+													$SIS_data .= ",'".$lvl_5['idSistema']."'";
+													$SIS_data .= ",'".$maquina_id."'";
 													$SIS_data .= ",'".$lvl_5['idUtilizable']."'";
 													$SIS_data .= ",'".$lvl_5['Codigo']."'";
 													$SIS_data .= ",'".$lvl_5['Nombre']."'";
 													$SIS_data .= ",'".$lvl_5['Marca']."'";
 													$SIS_data .= ",'".$lvl_5['Modelo']."'";
 													$SIS_data .= ",'".$lvl_5['AnoFab']."'";
-													$SIS_data .= ",'".$lvl_5['Serie']."'"; 
-													$SIS_data .= ",'".$lvl_5['idLicitacion']."'"; 
-													$SIS_data .= ",'".$lvl_5['tabla']."'"; 
-													$SIS_data .= ",'".$lvl_5['table_value']."'"; 
-													$SIS_data .= ",'".$lvl_5['Direccion_img']."'"; 
-													$SIS_data .= ",'".$lvl_5['idSubTipo']."'"; 
-													$SIS_data .= ",'".$lvl_5['Grasa_inicial']."'"; 
-													$SIS_data .= ",'".$lvl_5['Grasa_relubricacion']."'"; 
-													$SIS_data .= ",'".$lvl_5['Aceite']."'"; 
-													$SIS_data .= ",'".$lvl_5['Cantidad']."'"; 
-													$SIS_data .= ",'".$lvl_5['idUml']."'"; 
-													$SIS_data .= ",'".$lvl_5['Frecuencia']."'"; 
-													$SIS_data .= ",'".$lvl_5['idFrecuencia']."'"; 
-													$SIS_data .= ",'".$lvl_5['idProducto']."'"; 
-													$SIS_data .= ",'".$lvl_5['Saf']."'"; 
-													$SIS_data .= ",'".$lvl_5['Numero']."'";     
-																															
+													$SIS_data .= ",'".$lvl_5['Serie']."'";
+													$SIS_data .= ",'".$lvl_5['idLicitacion']."'";
+													$SIS_data .= ",'".$lvl_5['tabla']."'";
+													$SIS_data .= ",'".$lvl_5['table_value']."'";
+													$SIS_data .= ",'".$lvl_5['Direccion_img']."'";
+													$SIS_data .= ",'".$lvl_5['idSubTipo']."'";
+													$SIS_data .= ",'".$lvl_5['Grasa_inicial']."'";
+													$SIS_data .= ",'".$lvl_5['Grasa_relubricacion']."'";
+													$SIS_data .= ",'".$lvl_5['Aceite']."'";
+													$SIS_data .= ",'".$lvl_5['Cantidad']."'";
+													$SIS_data .= ",'".$lvl_5['idUml']."'";
+													$SIS_data .= ",'".$lvl_5['Frecuencia']."'";
+													$SIS_data .= ",'".$lvl_5['idFrecuencia']."'";
+													$SIS_data .= ",'".$lvl_5['idProducto']."'";
+													$SIS_data .= ",'".$lvl_5['Saf']."'";
+													$SIS_data .= ",'".$lvl_5['Numero']."'";
+
 													// inserto los datos de registro en la db
-													$SIS_columns = 'idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-													Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+													$SIS_columns = 'idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable,
+													Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
 													$id_lvl_5 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_5', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																															 
+
 													//Nivel 6
 													foreach ($arrLVL_6 as $lvl_6) {
 														//Se verifica que sea el mismo sensor
 														if($lvl_5['idLevel_5']==$lvl_6['idLevel_5']){
-															
+
 															//Se crea la maquina
-															$SIS_data  = "'".$id_lvl_5."'";          
-															$SIS_data .= ",'".$id_lvl_4."'"; 
-															$SIS_data .= ",'".$id_lvl_3."'"; 
-															$SIS_data .= ",'".$id_lvl_2."'"; 
-															$SIS_data .= ",'".$id_lvl_1."'";  
-															$SIS_data .= ",'".$lvl_6['idSistema']."'"; 
-															$SIS_data .= ",'".$maquina_id."'"; 
+															$SIS_data  = "'".$id_lvl_5."'";
+															$SIS_data .= ",'".$id_lvl_4."'";
+															$SIS_data .= ",'".$id_lvl_3."'";
+															$SIS_data .= ",'".$id_lvl_2."'";
+															$SIS_data .= ",'".$id_lvl_1."'";
+															$SIS_data .= ",'".$lvl_6['idSistema']."'";
+															$SIS_data .= ",'".$maquina_id."'";
 															$SIS_data .= ",'".$lvl_6['idUtilizable']."'";
 															$SIS_data .= ",'".$lvl_6['Codigo']."'";
 															$SIS_data .= ",'".$lvl_6['Nombre']."'";
 															$SIS_data .= ",'".$lvl_6['Marca']."'";
 															$SIS_data .= ",'".$lvl_6['Modelo']."'";
 															$SIS_data .= ",'".$lvl_6['AnoFab']."'";
-															$SIS_data .= ",'".$lvl_6['Serie']."'"; 
-															$SIS_data .= ",'".$lvl_6['idLicitacion']."'"; 
-															$SIS_data .= ",'".$lvl_6['tabla']."'"; 
-															$SIS_data .= ",'".$lvl_6['table_value']."'"; 
-															$SIS_data .= ",'".$lvl_6['Direccion_img']."'"; 
-															$SIS_data .= ",'".$lvl_6['idSubTipo']."'"; 
-															$SIS_data .= ",'".$lvl_6['Grasa_inicial']."'"; 
-															$SIS_data .= ",'".$lvl_6['Grasa_relubricacion']."'"; 
-															$SIS_data .= ",'".$lvl_6['Aceite']."'"; 
-															$SIS_data .= ",'".$lvl_6['Cantidad']."'"; 
-															$SIS_data .= ",'".$lvl_6['idUml']."'"; 
-															$SIS_data .= ",'".$lvl_6['Frecuencia']."'"; 
-															$SIS_data .= ",'".$lvl_6['idFrecuencia']."'"; 
-															$SIS_data .= ",'".$lvl_6['idProducto']."'"; 
-															$SIS_data .= ",'".$lvl_6['Saf']."'"; 
-															$SIS_data .= ",'".$lvl_6['Numero']."'";    
-																															
+															$SIS_data .= ",'".$lvl_6['Serie']."'";
+															$SIS_data .= ",'".$lvl_6['idLicitacion']."'";
+															$SIS_data .= ",'".$lvl_6['tabla']."'";
+															$SIS_data .= ",'".$lvl_6['table_value']."'";
+															$SIS_data .= ",'".$lvl_6['Direccion_img']."'";
+															$SIS_data .= ",'".$lvl_6['idSubTipo']."'";
+															$SIS_data .= ",'".$lvl_6['Grasa_inicial']."'";
+															$SIS_data .= ",'".$lvl_6['Grasa_relubricacion']."'";
+															$SIS_data .= ",'".$lvl_6['Aceite']."'";
+															$SIS_data .= ",'".$lvl_6['Cantidad']."'";
+															$SIS_data .= ",'".$lvl_6['idUml']."'";
+															$SIS_data .= ",'".$lvl_6['Frecuencia']."'";
+															$SIS_data .= ",'".$lvl_6['idFrecuencia']."'";
+															$SIS_data .= ",'".$lvl_6['idProducto']."'";
+															$SIS_data .= ",'".$lvl_6['Saf']."'";
+															$SIS_data .= ",'".$lvl_6['Numero']."'";
+
 															// inserto los datos de registro en la db
-															$SIS_columns = 'idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-															Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-															Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+															$SIS_columns = 'idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable,
+															Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+															Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 															idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
 															$id_lvl_6 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_6', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																															 
+
 															//Nivel 7
 															foreach ($arrLVL_7 as $lvl_7) {
 																//Se verifica que sea el mismo sensor
 																if($lvl_6['idLevel_6']==$lvl_7['idLevel_6']){
-																	
+
 																	//Se crea la maquina
-																	$SIS_data  = "'".$id_lvl_6."'";          
-																	$SIS_data .= ",'".$id_lvl_5."'"; 
-																	$SIS_data .= ",'".$id_lvl_4."'"; 
-																	$SIS_data .= ",'".$id_lvl_3."'"; 
-																	$SIS_data .= ",'".$id_lvl_2."'"; 
-																	$SIS_data .= ",'".$id_lvl_1."'"; 
-																	$SIS_data .= ",'".$lvl_7['idSistema']."'"; 
-																	$SIS_data .= ",'".$maquina_id."'"; 
+																	$SIS_data  = "'".$id_lvl_6."'";
+																	$SIS_data .= ",'".$id_lvl_5."'";
+																	$SIS_data .= ",'".$id_lvl_4."'";
+																	$SIS_data .= ",'".$id_lvl_3."'";
+																	$SIS_data .= ",'".$id_lvl_2."'";
+																	$SIS_data .= ",'".$id_lvl_1."'";
+																	$SIS_data .= ",'".$lvl_7['idSistema']."'";
+																	$SIS_data .= ",'".$maquina_id."'";
 																	$SIS_data .= ",'".$lvl_7['idUtilizable']."'";
 																	$SIS_data .= ",'".$lvl_7['Codigo']."'";
 																	$SIS_data .= ",'".$lvl_7['Nombre']."'";
 																	$SIS_data .= ",'".$lvl_7['Marca']."'";
 																	$SIS_data .= ",'".$lvl_7['Modelo']."'";
 																	$SIS_data .= ",'".$lvl_7['AnoFab']."'";
-																	$SIS_data .= ",'".$lvl_7['Serie']."'"; 
-																	$SIS_data .= ",'".$lvl_7['idLicitacion']."'"; 
-																	$SIS_data .= ",'".$lvl_7['tabla']."'"; 
-																	$SIS_data .= ",'".$lvl_7['table_value']."'"; 
-																	$SIS_data .= ",'".$lvl_7['Direccion_img']."'"; 
-																	$SIS_data .= ",'".$lvl_7['idSubTipo']."'"; 
-																	$SIS_data .= ",'".$lvl_7['Grasa_inicial']."'"; 
-																	$SIS_data .= ",'".$lvl_7['Grasa_relubricacion']."'"; 
-																	$SIS_data .= ",'".$lvl_7['Aceite']."'"; 
-																	$SIS_data .= ",'".$lvl_7['Cantidad']."'"; 
-																	$SIS_data .= ",'".$lvl_7['idUml']."'"; 
-																	$SIS_data .= ",'".$lvl_7['Frecuencia']."'"; 
-																	$SIS_data .= ",'".$lvl_7['idFrecuencia']."'"; 
-																	$SIS_data .= ",'".$lvl_7['idProducto']."'"; 
-																	$SIS_data .= ",'".$lvl_7['Saf']."'"; 
-																	$SIS_data .= ",'".$lvl_7['Numero']."'";    
-																															
+																	$SIS_data .= ",'".$lvl_7['Serie']."'";
+																	$SIS_data .= ",'".$lvl_7['idLicitacion']."'";
+																	$SIS_data .= ",'".$lvl_7['tabla']."'";
+																	$SIS_data .= ",'".$lvl_7['table_value']."'";
+																	$SIS_data .= ",'".$lvl_7['Direccion_img']."'";
+																	$SIS_data .= ",'".$lvl_7['idSubTipo']."'";
+																	$SIS_data .= ",'".$lvl_7['Grasa_inicial']."'";
+																	$SIS_data .= ",'".$lvl_7['Grasa_relubricacion']."'";
+																	$SIS_data .= ",'".$lvl_7['Aceite']."'";
+																	$SIS_data .= ",'".$lvl_7['Cantidad']."'";
+																	$SIS_data .= ",'".$lvl_7['idUml']."'";
+																	$SIS_data .= ",'".$lvl_7['Frecuencia']."'";
+																	$SIS_data .= ",'".$lvl_7['idFrecuencia']."'";
+																	$SIS_data .= ",'".$lvl_7['idProducto']."'";
+																	$SIS_data .= ",'".$lvl_7['Saf']."'";
+																	$SIS_data .= ",'".$lvl_7['Numero']."'";
+
 																	// inserto los datos de registro en la db
 																	$SIS_columns = 'idLevel_6,
-																	idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																	Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																	Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																	idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable,
+																	Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																	Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																	idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
 																	$id_lvl_7 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_7', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																															 
+
 																	//Nivel 8
 																	foreach ($arrLVL_8 as $lvl_8) {
 																		//Se verifica que sea el mismo sensor
 																		if($lvl_7['idLevel_7']==$lvl_8['idLevel_7']){
-																			
+
 																			//Se crea la maquina
-																			$SIS_data  = "'".$id_lvl_7."'";          
-																			$SIS_data .= ",'".$id_lvl_6."'"; 
-																			$SIS_data .= ",'".$id_lvl_5."'"; 
-																			$SIS_data .= ",'".$id_lvl_4."'"; 
-																			$SIS_data .= ",'".$id_lvl_3."'"; 
-																			$SIS_data .= ",'".$id_lvl_2."'"; 
-																			$SIS_data .= ",'".$id_lvl_1."'"; 
-																			$SIS_data .= ",'".$lvl_8['idSistema']."'"; 
-																			$SIS_data .= ",'".$maquina_id."'"; 
+																			$SIS_data  = "'".$id_lvl_7."'";
+																			$SIS_data .= ",'".$id_lvl_6."'";
+																			$SIS_data .= ",'".$id_lvl_5."'";
+																			$SIS_data .= ",'".$id_lvl_4."'";
+																			$SIS_data .= ",'".$id_lvl_3."'";
+																			$SIS_data .= ",'".$id_lvl_2."'";
+																			$SIS_data .= ",'".$id_lvl_1."'";
+																			$SIS_data .= ",'".$lvl_8['idSistema']."'";
+																			$SIS_data .= ",'".$maquina_id."'";
 																			$SIS_data .= ",'".$lvl_8['idUtilizable']."'";
 																			$SIS_data .= ",'".$lvl_8['Codigo']."'";
 																			$SIS_data .= ",'".$lvl_8['Nombre']."'";
 																			$SIS_data .= ",'".$lvl_8['Marca']."'";
 																			$SIS_data .= ",'".$lvl_8['Modelo']."'";
 																			$SIS_data .= ",'".$lvl_8['AnoFab']."'";
-																			$SIS_data .= ",'".$lvl_8['Serie']."'"; 
-																			$SIS_data .= ",'".$lvl_8['idLicitacion']."'"; 
-																			$SIS_data .= ",'".$lvl_8['tabla']."'"; 
-																			$SIS_data .= ",'".$lvl_8['table_value']."'"; 
-																			$SIS_data .= ",'".$lvl_8['Direccion_img']."'"; 
-																			$SIS_data .= ",'".$lvl_8['idSubTipo']."'"; 
-																			$SIS_data .= ",'".$lvl_8['Grasa_inicial']."'"; 
-																			$SIS_data .= ",'".$lvl_8['Grasa_relubricacion']."'"; 
-																			$SIS_data .= ",'".$lvl_8['Aceite']."'"; 
-																			$SIS_data .= ",'".$lvl_8['Cantidad']."'"; 
-																			$SIS_data .= ",'".$lvl_8['idUml']."'"; 
-																			$SIS_data .= ",'".$lvl_8['Frecuencia']."'"; 
-																			$SIS_data .= ",'".$lvl_8['idFrecuencia']."'"; 
-																			$SIS_data .= ",'".$lvl_8['idProducto']."'"; 
-																			$SIS_data .= ",'".$lvl_8['Saf']."'"; 
-																			$SIS_data .= ",'".$lvl_8['Numero']."'";   
-																															
+																			$SIS_data .= ",'".$lvl_8['Serie']."'";
+																			$SIS_data .= ",'".$lvl_8['idLicitacion']."'";
+																			$SIS_data .= ",'".$lvl_8['tabla']."'";
+																			$SIS_data .= ",'".$lvl_8['table_value']."'";
+																			$SIS_data .= ",'".$lvl_8['Direccion_img']."'";
+																			$SIS_data .= ",'".$lvl_8['idSubTipo']."'";
+																			$SIS_data .= ",'".$lvl_8['Grasa_inicial']."'";
+																			$SIS_data .= ",'".$lvl_8['Grasa_relubricacion']."'";
+																			$SIS_data .= ",'".$lvl_8['Aceite']."'";
+																			$SIS_data .= ",'".$lvl_8['Cantidad']."'";
+																			$SIS_data .= ",'".$lvl_8['idUml']."'";
+																			$SIS_data .= ",'".$lvl_8['Frecuencia']."'";
+																			$SIS_data .= ",'".$lvl_8['idFrecuencia']."'";
+																			$SIS_data .= ",'".$lvl_8['idProducto']."'";
+																			$SIS_data .= ",'".$lvl_8['Saf']."'";
+																			$SIS_data .= ",'".$lvl_8['Numero']."'";
+
 																			// inserto los datos de registro en la db
 																			$SIS_columns = 'idLevel_7,idLevel_6,
-																			idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																			Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																			Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																			idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable,
+																			Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																			Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																			idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
 																			$id_lvl_8 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_8', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																															 
+
 																			//Nivel 9
 																			foreach ($arrLVL_9 as $lvl_9) {
 																				//Se verifica que sea el mismo sensor
 																				if($lvl_8['idLevel_8']==$lvl_9['idLevel_8']){
-																					
+
 																					//Se crea la maquina
-																					$SIS_data  = "'".$id_lvl_8."'";          
-																					$SIS_data .= ",'".$id_lvl_7."'"; 
-																					$SIS_data .= ",'".$id_lvl_6."'"; 
-																					$SIS_data .= ",'".$id_lvl_5."'"; 
-																					$SIS_data .= ",'".$id_lvl_4."'"; 
-																					$SIS_data .= ",'".$id_lvl_3."'"; 
-																					$SIS_data .= ",'".$id_lvl_2."'"; 
+																					$SIS_data  = "'".$id_lvl_8."'";
+																					$SIS_data .= ",'".$id_lvl_7."'";
+																					$SIS_data .= ",'".$id_lvl_6."'";
+																					$SIS_data .= ",'".$id_lvl_5."'";
+																					$SIS_data .= ",'".$id_lvl_4."'";
+																					$SIS_data .= ",'".$id_lvl_3."'";
+																					$SIS_data .= ",'".$id_lvl_2."'";
 																					$SIS_data .= ",'".$id_lvl_1."'";
-																					$SIS_data .= ",'".$lvl_9['idSistema']."'"; 
-																					$SIS_data .= ",'".$maquina_id."'"; 
+																					$SIS_data .= ",'".$lvl_9['idSistema']."'";
+																					$SIS_data .= ",'".$maquina_id."'";
 																					$SIS_data .= ",'".$lvl_9['idUtilizable']."'";
 																					$SIS_data .= ",'".$lvl_9['Codigo']."'";
 																					$SIS_data .= ",'".$lvl_9['Nombre']."'";
 																					$SIS_data .= ",'".$lvl_9['Marca']."'";
 																					$SIS_data .= ",'".$lvl_9['Modelo']."'";
 																					$SIS_data .= ",'".$lvl_9['AnoFab']."'";
-																					$SIS_data .= ",'".$lvl_9['Serie']."'"; 
-																					$SIS_data .= ",'".$lvl_9['idLicitacion']."'"; 
-																					$SIS_data .= ",'".$lvl_9['tabla']."'"; 
-																					$SIS_data .= ",'".$lvl_9['table_value']."'"; 
-																					$SIS_data .= ",'".$lvl_9['Direccion_img']."'"; 
-																					$SIS_data .= ",'".$lvl_9['idSubTipo']."'"; 
-																					$SIS_data .= ",'".$lvl_9['Grasa_inicial']."'"; 
-																					$SIS_data .= ",'".$lvl_9['Grasa_relubricacion']."'"; 
-																					$SIS_data .= ",'".$lvl_9['Aceite']."'"; 
-																					$SIS_data .= ",'".$lvl_9['Cantidad']."'"; 
-																					$SIS_data .= ",'".$lvl_9['idUml']."'"; 
-																					$SIS_data .= ",'".$lvl_9['Frecuencia']."'"; 
-																					$SIS_data .= ",'".$lvl_9['idFrecuencia']."'"; 
-																					$SIS_data .= ",'".$lvl_9['idProducto']."'"; 
-																					$SIS_data .= ",'".$lvl_9['Saf']."'"; 
-																					$SIS_data .= ",'".$lvl_9['Numero']."'";   
-																															
+																					$SIS_data .= ",'".$lvl_9['Serie']."'";
+																					$SIS_data .= ",'".$lvl_9['idLicitacion']."'";
+																					$SIS_data .= ",'".$lvl_9['tabla']."'";
+																					$SIS_data .= ",'".$lvl_9['table_value']."'";
+																					$SIS_data .= ",'".$lvl_9['Direccion_img']."'";
+																					$SIS_data .= ",'".$lvl_9['idSubTipo']."'";
+																					$SIS_data .= ",'".$lvl_9['Grasa_inicial']."'";
+																					$SIS_data .= ",'".$lvl_9['Grasa_relubricacion']."'";
+																					$SIS_data .= ",'".$lvl_9['Aceite']."'";
+																					$SIS_data .= ",'".$lvl_9['Cantidad']."'";
+																					$SIS_data .= ",'".$lvl_9['idUml']."'";
+																					$SIS_data .= ",'".$lvl_9['Frecuencia']."'";
+																					$SIS_data .= ",'".$lvl_9['idFrecuencia']."'";
+																					$SIS_data .= ",'".$lvl_9['idProducto']."'";
+																					$SIS_data .= ",'".$lvl_9['Saf']."'";
+																					$SIS_data .= ",'".$lvl_9['Numero']."'";
+
 																					// inserto los datos de registro en la db
 																					$SIS_columns = 'idLevel_8,idLevel_7,idLevel_6,
-																					idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																					Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																					idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable,
+																					Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
 																					$id_lvl_9 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_9', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																															 
+
 																					//Nivel 10
 																					foreach ($arrLVL_10 as $lvl_10) {
 																						//Se verifica que sea el mismo sensor
 																						if($lvl_9['idLevel_9']==$lvl_10['idLevel_9']){
-																							
+
 																							//Se crea la maquina
-																							$SIS_data  = "'".$id_lvl_9."'";          
-																							$SIS_data .= ",'".$id_lvl_8."'"; 
-																							$SIS_data .= ",'".$id_lvl_7."'"; 
-																							$SIS_data .= ",'".$id_lvl_6."'"; 
-																							$SIS_data .= ",'".$id_lvl_5."'"; 
-																							$SIS_data .= ",'".$id_lvl_4."'"; 
-																							$SIS_data .= ",'".$id_lvl_3."'"; 
-																							$SIS_data .= ",'".$id_lvl_2."'"; 
+																							$SIS_data  = "'".$id_lvl_9."'";
+																							$SIS_data .= ",'".$id_lvl_8."'";
+																							$SIS_data .= ",'".$id_lvl_7."'";
+																							$SIS_data .= ",'".$id_lvl_6."'";
+																							$SIS_data .= ",'".$id_lvl_5."'";
+																							$SIS_data .= ",'".$id_lvl_4."'";
+																							$SIS_data .= ",'".$id_lvl_3."'";
+																							$SIS_data .= ",'".$id_lvl_2."'";
 																							$SIS_data .= ",'".$id_lvl_1."'";
-																							$SIS_data .= ",'".$lvl_10['idSistema']."'"; 
-																							$SIS_data .= ",'".$maquina_id."'"; 
+																							$SIS_data .= ",'".$lvl_10['idSistema']."'";
+																							$SIS_data .= ",'".$maquina_id."'";
 																							$SIS_data .= ",'".$lvl_10['idUtilizable']."'";
 																							$SIS_data .= ",'".$lvl_10['Codigo']."'";
 																							$SIS_data .= ",'".$lvl_10['Nombre']."'";
 																							$SIS_data .= ",'".$lvl_10['Marca']."'";
 																							$SIS_data .= ",'".$lvl_10['Modelo']."'";
 																							$SIS_data .= ",'".$lvl_10['AnoFab']."'";
-																							$SIS_data .= ",'".$lvl_10['Serie']."'"; 
-																							$SIS_data .= ",'".$lvl_10['idLicitacion']."'"; 
-																							$SIS_data .= ",'".$lvl_10['tabla']."'"; 
-																							$SIS_data .= ",'".$lvl_10['table_value']."'"; 
-																							$SIS_data .= ",'".$lvl_10['Direccion_img']."'"; 
-																							$SIS_data .= ",'".$lvl_10['idSubTipo']."'"; 
-																							$SIS_data .= ",'".$lvl_10['Grasa_inicial']."'"; 
-																							$SIS_data .= ",'".$lvl_10['Grasa_relubricacion']."'"; 
-																							$SIS_data .= ",'".$lvl_10['Aceite']."'"; 
-																							$SIS_data .= ",'".$lvl_10['Cantidad']."'"; 
-																							$SIS_data .= ",'".$lvl_10['idUml']."'"; 
-																							$SIS_data .= ",'".$lvl_10['Frecuencia']."'"; 
-																							$SIS_data .= ",'".$lvl_10['idFrecuencia']."'"; 
-																							$SIS_data .= ",'".$lvl_10['idProducto']."'"; 
-																							$SIS_data .= ",'".$lvl_10['Saf']."'"; 
-																							$SIS_data .= ",'".$lvl_10['Numero']."'";    
-																															
+																							$SIS_data .= ",'".$lvl_10['Serie']."'";
+																							$SIS_data .= ",'".$lvl_10['idLicitacion']."'";
+																							$SIS_data .= ",'".$lvl_10['tabla']."'";
+																							$SIS_data .= ",'".$lvl_10['table_value']."'";
+																							$SIS_data .= ",'".$lvl_10['Direccion_img']."'";
+																							$SIS_data .= ",'".$lvl_10['idSubTipo']."'";
+																							$SIS_data .= ",'".$lvl_10['Grasa_inicial']."'";
+																							$SIS_data .= ",'".$lvl_10['Grasa_relubricacion']."'";
+																							$SIS_data .= ",'".$lvl_10['Aceite']."'";
+																							$SIS_data .= ",'".$lvl_10['Cantidad']."'";
+																							$SIS_data .= ",'".$lvl_10['idUml']."'";
+																							$SIS_data .= ",'".$lvl_10['Frecuencia']."'";
+																							$SIS_data .= ",'".$lvl_10['idFrecuencia']."'";
+																							$SIS_data .= ",'".$lvl_10['idProducto']."'";
+																							$SIS_data .= ",'".$lvl_10['Saf']."'";
+																							$SIS_data .= ",'".$lvl_10['Numero']."'";
+
 																							// inserto los datos de registro en la db
 																							$SIS_columns = 'idLevel_9,idLevel_8,idLevel_7,idLevel_6,
-																							idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																							Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																							idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable,
+																							Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
 																							$id_lvl_10 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_10', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																															 
+
 																							//Nivel 11
 																							foreach ($arrLVL_11 as $lvl_11) {
 																								//Se verifica que sea el mismo sensor
 																								if($lvl_10['idLevel_10']==$lvl_11['idLevel_10']){
-																									
+
 																									//Se crea la maquina
-																									$SIS_data  = "'".$id_lvl_10."'";          
-																									$SIS_data .= ",'".$id_lvl_9."'"; 
-																									$SIS_data .= ",'".$id_lvl_8."'"; 
-																									$SIS_data .= ",'".$id_lvl_7."'"; 
-																									$SIS_data .= ",'".$id_lvl_6."'"; 
-																									$SIS_data .= ",'".$id_lvl_5."'"; 
-																									$SIS_data .= ",'".$id_lvl_4."'"; 
-																									$SIS_data .= ",'".$id_lvl_3."'"; 
-																									$SIS_data .= ",'".$id_lvl_2."'"; 
-																									$SIS_data .= ",'".$id_lvl_1."'"; 
-																									$SIS_data .= ",'".$lvl_11['idSistema']."'"; 
-																									$SIS_data .= ",'".$maquina_id."'"; 
+																									$SIS_data  = "'".$id_lvl_10."'";
+																									$SIS_data .= ",'".$id_lvl_9."'";
+																									$SIS_data .= ",'".$id_lvl_8."'";
+																									$SIS_data .= ",'".$id_lvl_7."'";
+																									$SIS_data .= ",'".$id_lvl_6."'";
+																									$SIS_data .= ",'".$id_lvl_5."'";
+																									$SIS_data .= ",'".$id_lvl_4."'";
+																									$SIS_data .= ",'".$id_lvl_3."'";
+																									$SIS_data .= ",'".$id_lvl_2."'";
+																									$SIS_data .= ",'".$id_lvl_1."'";
+																									$SIS_data .= ",'".$lvl_11['idSistema']."'";
+																									$SIS_data .= ",'".$maquina_id."'";
 																									$SIS_data .= ",'".$lvl_11['idUtilizable']."'";
 																									$SIS_data .= ",'".$lvl_11['Codigo']."'";
 																									$SIS_data .= ",'".$lvl_11['Nombre']."'";
 																									$SIS_data .= ",'".$lvl_11['Marca']."'";
 																									$SIS_data .= ",'".$lvl_11['Modelo']."'";
 																									$SIS_data .= ",'".$lvl_11['AnoFab']."'";
-																									$SIS_data .= ",'".$lvl_11['Serie']."'"; 
-																									$SIS_data .= ",'".$lvl_11['idLicitacion']."'"; 
-																									$SIS_data .= ",'".$lvl_11['tabla']."'"; 
-																									$SIS_data .= ",'".$lvl_11['table_value']."'"; 
-																									$SIS_data .= ",'".$lvl_11['Direccion_img']."'"; 
-																									$SIS_data .= ",'".$lvl_11['idSubTipo']."'"; 
-																									$SIS_data .= ",'".$lvl_11['Grasa_inicial']."'"; 
-																									$SIS_data .= ",'".$lvl_11['Grasa_relubricacion']."'"; 
-																									$SIS_data .= ",'".$lvl_11['Aceite']."'"; 
-																									$SIS_data .= ",'".$lvl_11['Cantidad']."'"; 
-																									$SIS_data .= ",'".$lvl_11['idUml']."'"; 
-																									$SIS_data .= ",'".$lvl_11['Frecuencia']."'"; 
-																									$SIS_data .= ",'".$lvl_11['idFrecuencia']."'"; 
-																									$SIS_data .= ",'".$lvl_11['idProducto']."'"; 
-																									$SIS_data .= ",'".$lvl_11['Saf']."'"; 
-																									$SIS_data .= ",'".$lvl_11['Numero']."'";   
-																															
+																									$SIS_data .= ",'".$lvl_11['Serie']."'";
+																									$SIS_data .= ",'".$lvl_11['idLicitacion']."'";
+																									$SIS_data .= ",'".$lvl_11['tabla']."'";
+																									$SIS_data .= ",'".$lvl_11['table_value']."'";
+																									$SIS_data .= ",'".$lvl_11['Direccion_img']."'";
+																									$SIS_data .= ",'".$lvl_11['idSubTipo']."'";
+																									$SIS_data .= ",'".$lvl_11['Grasa_inicial']."'";
+																									$SIS_data .= ",'".$lvl_11['Grasa_relubricacion']."'";
+																									$SIS_data .= ",'".$lvl_11['Aceite']."'";
+																									$SIS_data .= ",'".$lvl_11['Cantidad']."'";
+																									$SIS_data .= ",'".$lvl_11['idUml']."'";
+																									$SIS_data .= ",'".$lvl_11['Frecuencia']."'";
+																									$SIS_data .= ",'".$lvl_11['idFrecuencia']."'";
+																									$SIS_data .= ",'".$lvl_11['idProducto']."'";
+																									$SIS_data .= ",'".$lvl_11['Saf']."'";
+																									$SIS_data .= ",'".$lvl_11['Numero']."'";
+
 																									// inserto los datos de registro en la db
 																									$SIS_columns = 'idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
-																									idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																									Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																									idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable,
+																									Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
 																									$id_lvl_11 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_11', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																															 
+
 																									//Nivel 12
 																									foreach ($arrLVL_12 as $lvl_12) {
 																										//Se verifica que sea el mismo sensor
 																										if($lvl_11['idLevel_11']==$lvl_12['idLevel_11']){
-																											
+
 																											//Se crea la maquina
-																											$SIS_data  = "'".$id_lvl_11."'";          
-																											$SIS_data .= ",'".$id_lvl_10."'"; 
-																											$SIS_data .= ",'".$id_lvl_9."'"; 
-																											$SIS_data .= ",'".$id_lvl_8."'"; 
-																											$SIS_data .= ",'".$id_lvl_7."'"; 
-																											$SIS_data .= ",'".$id_lvl_6."'"; 
-																											$SIS_data .= ",'".$id_lvl_5."'"; 
-																											$SIS_data .= ",'".$id_lvl_4."'"; 
-																											$SIS_data .= ",'".$id_lvl_3."'"; 
-																											$SIS_data .= ",'".$id_lvl_2."'"; 
-																											$SIS_data .= ",'".$id_lvl_1."'"; 
-																											$SIS_data .= ",'".$lvl_12['idSistema']."'"; 
-																											$SIS_data .= ",'".$maquina_id."'"; 
+																											$SIS_data  = "'".$id_lvl_11."'";
+																											$SIS_data .= ",'".$id_lvl_10."'";
+																											$SIS_data .= ",'".$id_lvl_9."'";
+																											$SIS_data .= ",'".$id_lvl_8."'";
+																											$SIS_data .= ",'".$id_lvl_7."'";
+																											$SIS_data .= ",'".$id_lvl_6."'";
+																											$SIS_data .= ",'".$id_lvl_5."'";
+																											$SIS_data .= ",'".$id_lvl_4."'";
+																											$SIS_data .= ",'".$id_lvl_3."'";
+																											$SIS_data .= ",'".$id_lvl_2."'";
+																											$SIS_data .= ",'".$id_lvl_1."'";
+																											$SIS_data .= ",'".$lvl_12['idSistema']."'";
+																											$SIS_data .= ",'".$maquina_id."'";
 																											$SIS_data .= ",'".$lvl_12['idUtilizable']."'";
 																											$SIS_data .= ",'".$lvl_12['Codigo']."'";
 																											$SIS_data .= ",'".$lvl_12['Nombre']."'";
 																											$SIS_data .= ",'".$lvl_12['Marca']."'";
 																											$SIS_data .= ",'".$lvl_12['Modelo']."'";
 																											$SIS_data .= ",'".$lvl_12['AnoFab']."'";
-																											$SIS_data .= ",'".$lvl_12['Serie']."'"; 
-																											$SIS_data .= ",'".$lvl_12['idLicitacion']."'"; 
-																											$SIS_data .= ",'".$lvl_12['tabla']."'"; 
-																											$SIS_data .= ",'".$lvl_12['table_value']."'"; 
-																											$SIS_data .= ",'".$lvl_12['Direccion_img']."'"; 
-																											$SIS_data .= ",'".$lvl_12['idSubTipo']."'"; 
-																											$SIS_data .= ",'".$lvl_12['Grasa_inicial']."'"; 
-																											$SIS_data .= ",'".$lvl_12['Grasa_relubricacion']."'"; 
-																											$SIS_data .= ",'".$lvl_12['Aceite']."'"; 
-																											$SIS_data .= ",'".$lvl_12['Cantidad']."'"; 
-																											$SIS_data .= ",'".$lvl_12['idUml']."'"; 
-																											$SIS_data .= ",'".$lvl_12['Frecuencia']."'"; 
-																											$SIS_data .= ",'".$lvl_12['idFrecuencia']."'"; 
-																											$SIS_data .= ",'".$lvl_12['idProducto']."'"; 
-																											$SIS_data .= ",'".$lvl_12['Saf']."'"; 
-																											$SIS_data .= ",'".$lvl_12['Numero']."'";  
-																															
+																											$SIS_data .= ",'".$lvl_12['Serie']."'";
+																											$SIS_data .= ",'".$lvl_12['idLicitacion']."'";
+																											$SIS_data .= ",'".$lvl_12['tabla']."'";
+																											$SIS_data .= ",'".$lvl_12['table_value']."'";
+																											$SIS_data .= ",'".$lvl_12['Direccion_img']."'";
+																											$SIS_data .= ",'".$lvl_12['idSubTipo']."'";
+																											$SIS_data .= ",'".$lvl_12['Grasa_inicial']."'";
+																											$SIS_data .= ",'".$lvl_12['Grasa_relubricacion']."'";
+																											$SIS_data .= ",'".$lvl_12['Aceite']."'";
+																											$SIS_data .= ",'".$lvl_12['Cantidad']."'";
+																											$SIS_data .= ",'".$lvl_12['idUml']."'";
+																											$SIS_data .= ",'".$lvl_12['Frecuencia']."'";
+																											$SIS_data .= ",'".$lvl_12['idFrecuencia']."'";
+																											$SIS_data .= ",'".$lvl_12['idProducto']."'";
+																											$SIS_data .= ",'".$lvl_12['Saf']."'";
+																											$SIS_data .= ",'".$lvl_12['Numero']."'";
+
 																											// inserto los datos de registro en la db
 																											$SIS_columns = 'idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
-																											idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																											Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																											Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																											idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable,
+																											Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																											Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																											idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
 																											$id_lvl_12 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_12', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																															 
+
 																											//Nivel 13
 																											foreach ($arrLVL_13 as $lvl_13) {
 																												//Se verifica que sea el mismo sensor
 																												if($lvl_12['idLevel_12']==$lvl_13['idLevel_12']){
-																													
+
 																													//Se crea la maquina
-																													$SIS_data  = "'".$id_lvl_12."'";          
-																													$SIS_data .= ",'".$id_lvl_11."'"; 
-																													$SIS_data .= ",'".$id_lvl_10."'"; 
-																													$SIS_data .= ",'".$id_lvl_9."'"; 
-																													$SIS_data .= ",'".$id_lvl_8."'"; 
-																													$SIS_data .= ",'".$id_lvl_7."'"; 
-																													$SIS_data .= ",'".$id_lvl_6."'"; 
-																													$SIS_data .= ",'".$id_lvl_5."'"; 
-																													$SIS_data .= ",'".$id_lvl_4."'"; 
-																													$SIS_data .= ",'".$id_lvl_3."'"; 
-																													$SIS_data .= ",'".$id_lvl_2."'"; 
-																													$SIS_data .= ",'".$id_lvl_1."'"; 
-																													$SIS_data .= ",'".$lvl_13['idSistema']."'"; 
-																													$SIS_data .= ",'".$maquina_id."'"; 
+																													$SIS_data  = "'".$id_lvl_12."'";
+																													$SIS_data .= ",'".$id_lvl_11."'";
+																													$SIS_data .= ",'".$id_lvl_10."'";
+																													$SIS_data .= ",'".$id_lvl_9."'";
+																													$SIS_data .= ",'".$id_lvl_8."'";
+																													$SIS_data .= ",'".$id_lvl_7."'";
+																													$SIS_data .= ",'".$id_lvl_6."'";
+																													$SIS_data .= ",'".$id_lvl_5."'";
+																													$SIS_data .= ",'".$id_lvl_4."'";
+																													$SIS_data .= ",'".$id_lvl_3."'";
+																													$SIS_data .= ",'".$id_lvl_2."'";
+																													$SIS_data .= ",'".$id_lvl_1."'";
+																													$SIS_data .= ",'".$lvl_13['idSistema']."'";
+																													$SIS_data .= ",'".$maquina_id."'";
 																													$SIS_data .= ",'".$lvl_13['idUtilizable']."'";
 																													$SIS_data .= ",'".$lvl_13['Codigo']."'";
 																													$SIS_data .= ",'".$lvl_13['Nombre']."'";
 																													$SIS_data .= ",'".$lvl_13['Marca']."'";
 																													$SIS_data .= ",'".$lvl_13['Modelo']."'";
 																													$SIS_data .= ",'".$lvl_13['AnoFab']."'";
-																													$SIS_data .= ",'".$lvl_13['Serie']."'"; 
-																													$SIS_data .= ",'".$lvl_13['idLicitacion']."'"; 
-																													$SIS_data .= ",'".$lvl_13['tabla']."'"; 
-																													$SIS_data .= ",'".$lvl_13['table_value']."'"; 
-																													$SIS_data .= ",'".$lvl_13['Direccion_img']."'"; 
-																													$SIS_data .= ",'".$lvl_13['idSubTipo']."'"; 
-																													$SIS_data .= ",'".$lvl_13['Grasa_inicial']."'"; 
-																													$SIS_data .= ",'".$lvl_13['Grasa_relubricacion']."'"; 
-																													$SIS_data .= ",'".$lvl_13['Aceite']."'"; 
-																													$SIS_data .= ",'".$lvl_13['Cantidad']."'"; 
-																													$SIS_data .= ",'".$lvl_13['idUml']."'"; 
-																													$SIS_data .= ",'".$lvl_13['Frecuencia']."'"; 
-																													$SIS_data .= ",'".$lvl_13['idFrecuencia']."'"; 
-																													$SIS_data .= ",'".$lvl_13['idProducto']."'"; 
-																													$SIS_data .= ",'".$lvl_13['Saf']."'"; 
-																													$SIS_data .= ",'".$lvl_13['Numero']."'"; 
-																															
+																													$SIS_data .= ",'".$lvl_13['Serie']."'";
+																													$SIS_data .= ",'".$lvl_13['idLicitacion']."'";
+																													$SIS_data .= ",'".$lvl_13['tabla']."'";
+																													$SIS_data .= ",'".$lvl_13['table_value']."'";
+																													$SIS_data .= ",'".$lvl_13['Direccion_img']."'";
+																													$SIS_data .= ",'".$lvl_13['idSubTipo']."'";
+																													$SIS_data .= ",'".$lvl_13['Grasa_inicial']."'";
+																													$SIS_data .= ",'".$lvl_13['Grasa_relubricacion']."'";
+																													$SIS_data .= ",'".$lvl_13['Aceite']."'";
+																													$SIS_data .= ",'".$lvl_13['Cantidad']."'";
+																													$SIS_data .= ",'".$lvl_13['idUml']."'";
+																													$SIS_data .= ",'".$lvl_13['Frecuencia']."'";
+																													$SIS_data .= ",'".$lvl_13['idFrecuencia']."'";
+																													$SIS_data .= ",'".$lvl_13['idProducto']."'";
+																													$SIS_data .= ",'".$lvl_13['Saf']."'";
+																													$SIS_data .= ",'".$lvl_13['Numero']."'";
+
 																													// inserto los datos de registro en la db
 																													$SIS_columns = 'idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
-																													idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																													Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																													idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable,
+																													Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
 																													$id_lvl_13 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_13', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																															 
+
 																													//Nivel 14
 																													foreach ($arrLVL_14 as $lvl_14) {
 																														//Se verifica que sea el mismo sensor
 																														if($lvl_13['idLevel_13']==$lvl_14['idLevel_13']){
-																															
+
 																															//Se crea la maquina
-																															$SIS_data  = "'".$id_lvl_13."'";          
-																															$SIS_data .= ",'".$id_lvl_12."'"; 
-																															$SIS_data .= ",'".$id_lvl_11."'"; 
-																															$SIS_data .= ",'".$id_lvl_10."'"; 
-																															$SIS_data .= ",'".$id_lvl_9."'"; 
-																															$SIS_data .= ",'".$id_lvl_8."'"; 
-																															$SIS_data .= ",'".$id_lvl_7."'"; 
-																															$SIS_data .= ",'".$id_lvl_6."'"; 
-																															$SIS_data .= ",'".$id_lvl_5."'"; 
-																															$SIS_data .= ",'".$id_lvl_4."'"; 
-																															$SIS_data .= ",'".$id_lvl_3."'"; 
-																															$SIS_data .= ",'".$id_lvl_2."'"; 
-																															$SIS_data .= ",'".$id_lvl_1."'"; 
-																															$SIS_data .= ",'".$lvl_14['idSistema']."'"; 
-																															$SIS_data .= ",'".$maquina_id."'"; 
+																															$SIS_data  = "'".$id_lvl_13."'";
+																															$SIS_data .= ",'".$id_lvl_12."'";
+																															$SIS_data .= ",'".$id_lvl_11."'";
+																															$SIS_data .= ",'".$id_lvl_10."'";
+																															$SIS_data .= ",'".$id_lvl_9."'";
+																															$SIS_data .= ",'".$id_lvl_8."'";
+																															$SIS_data .= ",'".$id_lvl_7."'";
+																															$SIS_data .= ",'".$id_lvl_6."'";
+																															$SIS_data .= ",'".$id_lvl_5."'";
+																															$SIS_data .= ",'".$id_lvl_4."'";
+																															$SIS_data .= ",'".$id_lvl_3."'";
+																															$SIS_data .= ",'".$id_lvl_2."'";
+																															$SIS_data .= ",'".$id_lvl_1."'";
+																															$SIS_data .= ",'".$lvl_14['idSistema']."'";
+																															$SIS_data .= ",'".$maquina_id."'";
 																															$SIS_data .= ",'".$lvl_14['idUtilizable']."'";
 																															$SIS_data .= ",'".$lvl_14['Codigo']."'";
 																															$SIS_data .= ",'".$lvl_14['Nombre']."'";
 																															$SIS_data .= ",'".$lvl_14['Marca']."'";
 																															$SIS_data .= ",'".$lvl_14['Modelo']."'";
 																															$SIS_data .= ",'".$lvl_14['AnoFab']."'";
-																															$SIS_data .= ",'".$lvl_14['Serie']."'"; 
-																															$SIS_data .= ",'".$lvl_14['idLicitacion']."'"; 
-																															$SIS_data .= ",'".$lvl_14['tabla']."'"; 
-																															$SIS_data .= ",'".$lvl_14['table_value']."'"; 
-																															$SIS_data .= ",'".$lvl_14['Direccion_img']."'"; 
-																															$SIS_data .= ",'".$lvl_14['idSubTipo']."'"; 
-																															$SIS_data .= ",'".$lvl_14['Grasa_inicial']."'"; 
-																															$SIS_data .= ",'".$lvl_14['Grasa_relubricacion']."'"; 
-																															$SIS_data .= ",'".$lvl_14['Aceite']."'"; 
-																															$SIS_data .= ",'".$lvl_14['Cantidad']."'"; 
-																															$SIS_data .= ",'".$lvl_14['idUml']."'"; 
-																															$SIS_data .= ",'".$lvl_14['Frecuencia']."'"; 
-																															$SIS_data .= ",'".$lvl_14['idFrecuencia']."'"; 
-																															$SIS_data .= ",'".$lvl_14['idProducto']."'"; 
-																															$SIS_data .= ",'".$lvl_14['Saf']."'"; 
-																															$SIS_data .= ",'".$lvl_14['Numero']."'"; 
-																															
+																															$SIS_data .= ",'".$lvl_14['Serie']."'";
+																															$SIS_data .= ",'".$lvl_14['idLicitacion']."'";
+																															$SIS_data .= ",'".$lvl_14['tabla']."'";
+																															$SIS_data .= ",'".$lvl_14['table_value']."'";
+																															$SIS_data .= ",'".$lvl_14['Direccion_img']."'";
+																															$SIS_data .= ",'".$lvl_14['idSubTipo']."'";
+																															$SIS_data .= ",'".$lvl_14['Grasa_inicial']."'";
+																															$SIS_data .= ",'".$lvl_14['Grasa_relubricacion']."'";
+																															$SIS_data .= ",'".$lvl_14['Aceite']."'";
+																															$SIS_data .= ",'".$lvl_14['Cantidad']."'";
+																															$SIS_data .= ",'".$lvl_14['idUml']."'";
+																															$SIS_data .= ",'".$lvl_14['Frecuencia']."'";
+																															$SIS_data .= ",'".$lvl_14['idFrecuencia']."'";
+																															$SIS_data .= ",'".$lvl_14['idProducto']."'";
+																															$SIS_data .= ",'".$lvl_14['Saf']."'";
+																															$SIS_data .= ",'".$lvl_14['Numero']."'";
+
 																															// inserto los datos de registro en la db
 																															$SIS_columns = 'idLevel_13,idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
-																															idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																															Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																															Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																															idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable,
+																															Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																															Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																															idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
 																															$id_lvl_14 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_14', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																																	
+
 																															//Nivel 15
 																															foreach ($arrLVL_15 as $lvl_15) {
 																																//Se verifica que sea el mismo sensor
 																																if($lvl_14['idLevel_14']==$lvl_15['idLevel_14']){
-																																	
+
 																																	//Se crea la maquina
-																																	$SIS_data  = "'".$id_lvl_14."'";          
-																																	$SIS_data .= ",'".$id_lvl_13."'"; 
-																																	$SIS_data .= ",'".$id_lvl_12."'"; 
-																																	$SIS_data .= ",'".$id_lvl_11."'"; 
-																																	$SIS_data .= ",'".$id_lvl_10."'"; 
-																																	$SIS_data .= ",'".$id_lvl_9."'"; 
-																																	$SIS_data .= ",'".$id_lvl_8."'"; 
-																																	$SIS_data .= ",'".$id_lvl_7."'"; 
-																																	$SIS_data .= ",'".$id_lvl_6."'"; 
-																																	$SIS_data .= ",'".$id_lvl_5."'"; 
-																																	$SIS_data .= ",'".$id_lvl_4."'"; 
-																																	$SIS_data .= ",'".$id_lvl_3."'"; 
-																																	$SIS_data .= ",'".$id_lvl_2."'"; 
+																																	$SIS_data  = "'".$id_lvl_14."'";
+																																	$SIS_data .= ",'".$id_lvl_13."'";
+																																	$SIS_data .= ",'".$id_lvl_12."'";
+																																	$SIS_data .= ",'".$id_lvl_11."'";
+																																	$SIS_data .= ",'".$id_lvl_10."'";
+																																	$SIS_data .= ",'".$id_lvl_9."'";
+																																	$SIS_data .= ",'".$id_lvl_8."'";
+																																	$SIS_data .= ",'".$id_lvl_7."'";
+																																	$SIS_data .= ",'".$id_lvl_6."'";
+																																	$SIS_data .= ",'".$id_lvl_5."'";
+																																	$SIS_data .= ",'".$id_lvl_4."'";
+																																	$SIS_data .= ",'".$id_lvl_3."'";
+																																	$SIS_data .= ",'".$id_lvl_2."'";
 																																	$SIS_data .= ",'".$id_lvl_1."'";
-																																	$SIS_data .= ",'".$lvl_15['idSistema']."'"; 
-																																	$SIS_data .= ",'".$maquina_id."'"; 
+																																	$SIS_data .= ",'".$lvl_15['idSistema']."'";
+																																	$SIS_data .= ",'".$maquina_id."'";
 																																	$SIS_data .= ",'".$lvl_15['idUtilizable']."'";
 																																	$SIS_data .= ",'".$lvl_15['Codigo']."'";
 																																	$SIS_data .= ",'".$lvl_15['Nombre']."'";
 																																	$SIS_data .= ",'".$lvl_15['Marca']."'";
 																																	$SIS_data .= ",'".$lvl_15['Modelo']."'";
 																																	$SIS_data .= ",'".$lvl_15['AnoFab']."'";
-																																	$SIS_data .= ",'".$lvl_15['Serie']."'"; 
-																																	$SIS_data .= ",'".$lvl_15['idLicitacion']."'"; 
-																																	$SIS_data .= ",'".$lvl_15['tabla']."'"; 
-																																	$SIS_data .= ",'".$lvl_15['table_value']."'"; 
-																																	$SIS_data .= ",'".$lvl_15['Direccion_img']."'"; 
-																																	$SIS_data .= ",'".$lvl_15['idSubTipo']."'"; 
-																																	$SIS_data .= ",'".$lvl_15['Grasa_inicial']."'"; 
-																																	$SIS_data .= ",'".$lvl_15['Grasa_relubricacion']."'"; 
-																																	$SIS_data .= ",'".$lvl_15['Aceite']."'"; 
-																																	$SIS_data .= ",'".$lvl_15['Cantidad']."'"; 
-																																	$SIS_data .= ",'".$lvl_15['idUml']."'"; 
-																																	$SIS_data .= ",'".$lvl_15['Frecuencia']."'"; 
-																																	$SIS_data .= ",'".$lvl_15['idFrecuencia']."'"; 
-																																	$SIS_data .= ",'".$lvl_15['idProducto']."'"; 
-																																	$SIS_data .= ",'".$lvl_15['Saf']."'"; 
-																																	$SIS_data .= ",'".$lvl_15['Numero']."'"; 
-																																	
+																																	$SIS_data .= ",'".$lvl_15['Serie']."'";
+																																	$SIS_data .= ",'".$lvl_15['idLicitacion']."'";
+																																	$SIS_data .= ",'".$lvl_15['tabla']."'";
+																																	$SIS_data .= ",'".$lvl_15['table_value']."'";
+																																	$SIS_data .= ",'".$lvl_15['Direccion_img']."'";
+																																	$SIS_data .= ",'".$lvl_15['idSubTipo']."'";
+																																	$SIS_data .= ",'".$lvl_15['Grasa_inicial']."'";
+																																	$SIS_data .= ",'".$lvl_15['Grasa_relubricacion']."'";
+																																	$SIS_data .= ",'".$lvl_15['Aceite']."'";
+																																	$SIS_data .= ",'".$lvl_15['Cantidad']."'";
+																																	$SIS_data .= ",'".$lvl_15['idUml']."'";
+																																	$SIS_data .= ",'".$lvl_15['Frecuencia']."'";
+																																	$SIS_data .= ",'".$lvl_15['idFrecuencia']."'";
+																																	$SIS_data .= ",'".$lvl_15['idProducto']."'";
+																																	$SIS_data .= ",'".$lvl_15['Saf']."'";
+																																	$SIS_data .= ",'".$lvl_15['Numero']."'";
+
 																																	// inserto los datos de registro en la db
 																																	$SIS_columns = 'idLevel_14,
 																																	idLevel_13,idLevel_12,idLevel_11,idLevel_10,idLevel_9,idLevel_8,idLevel_7,idLevel_6,
-																																	idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable, 
-																																	Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																	Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																																	idLevel_5,idLevel_4,idLevel_3,idLevel_2, idLevel_1, idSistema, idMaquina, idUtilizable,
+																																	Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																																	Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																																	idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero';
 																																	$id_lvl_15 = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_15', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																																	
+
 																																}
 																															}
 																														}
@@ -1969,11 +1957,10 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'clone_component':
-		
-		
+
 		$idLevel  = $_GET['clone_compo'];
 		$lvl      = $_GET['lvl'];
-		
+
 		if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){  $lv_1     = $_GET['lv_1'];  }else{$lv_1 = 0;}
 		if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){  $lv_2     = $_GET['lv_2'];  }else{$lv_2 = 0;}
 		if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){  $lv_3     = $_GET['lv_3'];  }else{$lv_3 = 0;}
@@ -1999,10 +1986,7 @@ require_once '0_validate_user_1.php';
 		if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){$lv_23    = $_GET['lv_23'];}else{$lv_23 = 0;}
 		if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){$lv_24    = $_GET['lv_24'];}else{$lv_24 = 0;}
 		if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){$lv_25    = $_GET['lv_25'];}else{$lv_25 = 0;}
-		
-		
-		
-		
+
 		/*******************************************************************/
 		//Creo todas las consultas hasta el final del arbol
 		for ($i = $lvl; $i <= 15; $i++) {
@@ -2015,8 +1999,7 @@ require_once '0_validate_user_1.php';
 			$arrLVL[$i] = db_select_array (false, 'idSistema, idUtilizable, Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero, idMaquina '.$cadena, 'maquinas_listado_level_'.$i, '', 'idLevel_'.$lvl.' = '.$idLevel, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 		}
-		
-		
+
 		/*******************************************************************/
 		//Variables
 		$id_lvl = array();
@@ -2053,33 +2036,31 @@ require_once '0_validate_user_1.php';
 			foreach ($arrLVL[$dis_1] as $arreglo_1) {
 
 				//Se crea la maquina
-				$SIS_data  = "'".$arreglo_1['idSistema']."'";          
-				$SIS_data .= ",'".$arreglo_1['idMaquina']."'";        
+				$SIS_data  = "'".$arreglo_1['idSistema']."'";
+				$SIS_data .= ",'".$arreglo_1['idMaquina']."'";
 				$SIS_data .= ",'".$arreglo_1['idUtilizable']."'";
 				$SIS_data .= ",'".$arreglo_1['Codigo']."'";
 				$SIS_data .= ",'".$arreglo_1['Nombre']." (Nuevo)'" ;
 				$SIS_data .= ",'".$arreglo_1['Marca']."'";
 				$SIS_data .= ",'".$arreglo_1['Modelo']."'";
 				$SIS_data .= ",'".$arreglo_1['AnoFab']."'";
-				$SIS_data .= ",'".$arreglo_1['Serie']."'"; 
-				$SIS_data .= ",'".$arreglo_1['idLicitacion']."'"; 
-				$SIS_data .= ",'".$arreglo_1['tabla']."'"; 
-				$SIS_data .= ",'".$arreglo_1['table_value']."'"; 
-				$SIS_data .= ",'".$arreglo_1['Direccion_img']."'"; 
-				$SIS_data .= ",'".$arreglo_1['idSubTipo']."'"; 
-				$SIS_data .= ",'".$arreglo_1['Grasa_inicial']."'"; 
-				$SIS_data .= ",'".$arreglo_1['Grasa_relubricacion']."'"; 
-				$SIS_data .= ",'".$arreglo_1['Aceite']."'"; 
-				$SIS_data .= ",'".$arreglo_1['Cantidad']."'"; 
-				$SIS_data .= ",'".$arreglo_1['idUml']."'"; 
-				$SIS_data .= ",'".$arreglo_1['Frecuencia']."'"; 
-				$SIS_data .= ",'".$arreglo_1['idFrecuencia']."'"; 
-				$SIS_data .= ",'".$arreglo_1['idProducto']."'"; 
-				$SIS_data .= ",'".$arreglo_1['Saf']."'"; 
-				$SIS_data .= ",'".$arreglo_1['Numero']."'"; 
-				
-				
-			
+				$SIS_data .= ",'".$arreglo_1['Serie']."'";
+				$SIS_data .= ",'".$arreglo_1['idLicitacion']."'";
+				$SIS_data .= ",'".$arreglo_1['tabla']."'";
+				$SIS_data .= ",'".$arreglo_1['table_value']."'";
+				$SIS_data .= ",'".$arreglo_1['Direccion_img']."'";
+				$SIS_data .= ",'".$arreglo_1['idSubTipo']."'";
+				$SIS_data .= ",'".$arreglo_1['Grasa_inicial']."'";
+				$SIS_data .= ",'".$arreglo_1['Grasa_relubricacion']."'";
+				$SIS_data .= ",'".$arreglo_1['Aceite']."'";
+				$SIS_data .= ",'".$arreglo_1['Cantidad']."'";
+				$SIS_data .= ",'".$arreglo_1['idUml']."'";
+				$SIS_data .= ",'".$arreglo_1['Frecuencia']."'";
+				$SIS_data .= ",'".$arreglo_1['idFrecuencia']."'";
+				$SIS_data .= ",'".$arreglo_1['idProducto']."'";
+				$SIS_data .= ",'".$arreglo_1['Saf']."'";
+				$SIS_data .= ",'".$arreglo_1['Numero']."'";
+
 				$cadena = '';
 				$x = 1;
 				if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
@@ -2109,12 +2090,12 @@ require_once '0_validate_user_1.php';
 				if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
-				Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-				Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+				$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+				Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+				Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 				idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
 				$id_lvl[$dis_1] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_1, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 				/////////////////////////////////////////////////
 				if(isset($arrLVL[$dis_2])){
 					foreach ($arrLVL[$dis_2] as $arreglo_2) {
@@ -2122,31 +2103,31 @@ require_once '0_validate_user_1.php';
 						if($arreglo_1['idLevel_'.$dis_1]==$arreglo_2['idLevel_'.$dis_1]){
 
 							//Se crea la maquina
-							$SIS_data  = "'".$arreglo_2['idSistema']."'";          
-							$SIS_data .= ",'".$arreglo_2['idMaquina']."'";        
+							$SIS_data  = "'".$arreglo_2['idSistema']."'";
+							$SIS_data .= ",'".$arreglo_2['idMaquina']."'";
 							$SIS_data .= ",'".$arreglo_2['idUtilizable']."'";
 							$SIS_data .= ",'".$arreglo_2['Codigo']."'";
 							$SIS_data .= ",'".$arreglo_2['Nombre']."'";
 							$SIS_data .= ",'".$arreglo_2['Marca']."'";
 							$SIS_data .= ",'".$arreglo_2['Modelo']."'";
 							$SIS_data .= ",'".$arreglo_2['AnoFab']."'";
-							$SIS_data .= ",'".$arreglo_2['Serie']."'"; 
-							$SIS_data .= ",'".$arreglo_2['idLicitacion']."'"; 
-							$SIS_data .= ",'".$arreglo_2['tabla']."'"; 
-							$SIS_data .= ",'".$arreglo_2['table_value']."'"; 
-							$SIS_data .= ",'".$arreglo_2['Direccion_img']."'"; 
-							$SIS_data .= ",'".$arreglo_2['idSubTipo']."'"; 
-							$SIS_data .= ",'".$arreglo_2['Grasa_inicial']."'"; 
-							$SIS_data .= ",'".$arreglo_2['Grasa_relubricacion']."'"; 
-							$SIS_data .= ",'".$arreglo_2['Aceite']."'"; 
-							$SIS_data .= ",'".$arreglo_2['Cantidad']."'"; 
-							$SIS_data .= ",'".$arreglo_2['idUml']."'"; 
-							$SIS_data .= ",'".$arreglo_2['Frecuencia']."'"; 
-							$SIS_data .= ",'".$arreglo_2['idFrecuencia']."'"; 
-							$SIS_data .= ",'".$arreglo_2['idProducto']."'"; 
-							$SIS_data .= ",'".$arreglo_2['Saf']."'"; 
-							$SIS_data .= ",'".$arreglo_2['Numero']."'"; 
-							
+							$SIS_data .= ",'".$arreglo_2['Serie']."'";
+							$SIS_data .= ",'".$arreglo_2['idLicitacion']."'";
+							$SIS_data .= ",'".$arreglo_2['tabla']."'";
+							$SIS_data .= ",'".$arreglo_2['table_value']."'";
+							$SIS_data .= ",'".$arreglo_2['Direccion_img']."'";
+							$SIS_data .= ",'".$arreglo_2['idSubTipo']."'";
+							$SIS_data .= ",'".$arreglo_2['Grasa_inicial']."'";
+							$SIS_data .= ",'".$arreglo_2['Grasa_relubricacion']."'";
+							$SIS_data .= ",'".$arreglo_2['Aceite']."'";
+							$SIS_data .= ",'".$arreglo_2['Cantidad']."'";
+							$SIS_data .= ",'".$arreglo_2['idUml']."'";
+							$SIS_data .= ",'".$arreglo_2['Frecuencia']."'";
+							$SIS_data .= ",'".$arreglo_2['idFrecuencia']."'";
+							$SIS_data .= ",'".$arreglo_2['idProducto']."'";
+							$SIS_data .= ",'".$arreglo_2['Saf']."'";
+							$SIS_data .= ",'".$arreglo_2['Numero']."'";
+
 							$cadena = '';
 							$x = 1;
 							if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
@@ -2174,7 +2155,7 @@ require_once '0_validate_user_1.php';
 							if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
 							if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
 							if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							
+
 							$x = 1;
 							if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
 							if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
@@ -2203,44 +2184,44 @@ require_once '0_validate_user_1.php';
 							if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
-							Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+							$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+							Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
 							$id_lvl[$dis_2] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_2, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-										
+
 							/////////////////////////////////////////////////
 							if(isset($arrLVL[$dis_3])){
 								foreach ($arrLVL[$dis_3] as $arreglo_3) {
 									//Se verifica que sea el mismo sensor
 									if($arreglo_2['idLevel_'.$dis_2]==$arreglo_3['idLevel_'.$dis_2]){
-									
+
 										//Se crea la maquina
-										$SIS_data  = "'".$arreglo_3['idSistema']."'";          
-										$SIS_data .= ",'".$arreglo_3['idMaquina']."'";        
+										$SIS_data  = "'".$arreglo_3['idSistema']."'";
+										$SIS_data .= ",'".$arreglo_3['idMaquina']."'";
 										$SIS_data .= ",'".$arreglo_3['idUtilizable']."'";
 										$SIS_data .= ",'".$arreglo_3['Codigo']."'";
 										$SIS_data .= ",'".$arreglo_3['Nombre']."'";
 										$SIS_data .= ",'".$arreglo_3['Marca']."'";
 										$SIS_data .= ",'".$arreglo_3['Modelo']."'";
 										$SIS_data .= ",'".$arreglo_3['AnoFab']."'";
-										$SIS_data .= ",'".$arreglo_3['Serie']."'"; 
-										$SIS_data .= ",'".$arreglo_3['idLicitacion']."'"; 
-										$SIS_data .= ",'".$arreglo_3['tabla']."'"; 
-										$SIS_data .= ",'".$arreglo_3['table_value']."'"; 
-										$SIS_data .= ",'".$arreglo_3['Direccion_img']."'"; 
-										$SIS_data .= ",'".$arreglo_3['idSubTipo']."'"; 
-										$SIS_data .= ",'".$arreglo_3['Grasa_inicial']."'"; 
-										$SIS_data .= ",'".$arreglo_3['Grasa_relubricacion']."'"; 
-										$SIS_data .= ",'".$arreglo_3['Aceite']."'"; 
-										$SIS_data .= ",'".$arreglo_3['Cantidad']."'"; 
-										$SIS_data .= ",'".$arreglo_3['idUml']."'"; 
-										$SIS_data .= ",'".$arreglo_3['Frecuencia']."'"; 
-										$SIS_data .= ",'".$arreglo_3['idFrecuencia']."'"; 
-										$SIS_data .= ",'".$arreglo_3['idProducto']."'"; 
-										$SIS_data .= ",'".$arreglo_3['Saf']."'"; 
-										$SIS_data .= ",'".$arreglo_3['Numero']."'"; 
-										
+										$SIS_data .= ",'".$arreglo_3['Serie']."'";
+										$SIS_data .= ",'".$arreglo_3['idLicitacion']."'";
+										$SIS_data .= ",'".$arreglo_3['tabla']."'";
+										$SIS_data .= ",'".$arreglo_3['table_value']."'";
+										$SIS_data .= ",'".$arreglo_3['Direccion_img']."'";
+										$SIS_data .= ",'".$arreglo_3['idSubTipo']."'";
+										$SIS_data .= ",'".$arreglo_3['Grasa_inicial']."'";
+										$SIS_data .= ",'".$arreglo_3['Grasa_relubricacion']."'";
+										$SIS_data .= ",'".$arreglo_3['Aceite']."'";
+										$SIS_data .= ",'".$arreglo_3['Cantidad']."'";
+										$SIS_data .= ",'".$arreglo_3['idUml']."'";
+										$SIS_data .= ",'".$arreglo_3['Frecuencia']."'";
+										$SIS_data .= ",'".$arreglo_3['idFrecuencia']."'";
+										$SIS_data .= ",'".$arreglo_3['idProducto']."'";
+										$SIS_data .= ",'".$arreglo_3['Saf']."'";
+										$SIS_data .= ",'".$arreglo_3['Numero']."'";
+
 										$cadena = '';
 										$x = 1;
 										if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
@@ -2295,46 +2276,46 @@ require_once '0_validate_user_1.php';
 										if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
 										if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
 										if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-										
+
 										// inserto los datos de registro en la db
-										$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
-										Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-										Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+										$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+										Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+										Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 										idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
 										$id_lvl[$dis_3] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_3, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-													
+
 										/////////////////////////////////////////////////
 										if(isset($arrLVL[$dis_4])){
 											foreach ($arrLVL[$dis_4] as $arreglo_4) {
 												//Se verifica que sea el mismo sensor
 												if($arreglo_3['idLevel_'.$dis_3]==$arreglo_4['idLevel_'.$dis_3]){
-												
+
 													//Se crea la maquina
-													$SIS_data  = "'".$arreglo_4['idSistema']."'";          
-													$SIS_data .= ",'".$arreglo_4['idMaquina']."'";        
+													$SIS_data  = "'".$arreglo_4['idSistema']."'";
+													$SIS_data .= ",'".$arreglo_4['idMaquina']."'";
 													$SIS_data .= ",'".$arreglo_4['idUtilizable']."'";
 													$SIS_data .= ",'".$arreglo_4['Codigo']."'";
 													$SIS_data .= ",'".$arreglo_4['Nombre']."'";
 													$SIS_data .= ",'".$arreglo_4['Marca']."'";
 													$SIS_data .= ",'".$arreglo_4['Modelo']."'";
 													$SIS_data .= ",'".$arreglo_4['AnoFab']."'";
-													$SIS_data .= ",'".$arreglo_4['Serie']."'"; 
-													$SIS_data .= ",'".$arreglo_4['idLicitacion']."'"; 
-													$SIS_data .= ",'".$arreglo_4['tabla']."'"; 
-													$SIS_data .= ",'".$arreglo_4['table_value']."'"; 
-													$SIS_data .= ",'".$arreglo_4['Direccion_img']."'"; 
-													$SIS_data .= ",'".$arreglo_4['idSubTipo']."'"; 
-													$SIS_data .= ",'".$arreglo_4['Grasa_inicial']."'"; 
-													$SIS_data .= ",'".$arreglo_4['Grasa_relubricacion']."'"; 
-													$SIS_data .= ",'".$arreglo_4['Aceite']."'"; 
-													$SIS_data .= ",'".$arreglo_4['Cantidad']."'"; 
-													$SIS_data .= ",'".$arreglo_4['idUml']."'"; 
-													$SIS_data .= ",'".$arreglo_4['Frecuencia']."'"; 
-													$SIS_data .= ",'".$arreglo_4['idFrecuencia']."'"; 
-													$SIS_data .= ",'".$arreglo_4['idProducto']."'"; 
-													$SIS_data .= ",'".$arreglo_4['Saf']."'"; 
-													$SIS_data .= ",'".$arreglo_4['Numero']."'"; 
-													
+													$SIS_data .= ",'".$arreglo_4['Serie']."'";
+													$SIS_data .= ",'".$arreglo_4['idLicitacion']."'";
+													$SIS_data .= ",'".$arreglo_4['tabla']."'";
+													$SIS_data .= ",'".$arreglo_4['table_value']."'";
+													$SIS_data .= ",'".$arreglo_4['Direccion_img']."'";
+													$SIS_data .= ",'".$arreglo_4['idSubTipo']."'";
+													$SIS_data .= ",'".$arreglo_4['Grasa_inicial']."'";
+													$SIS_data .= ",'".$arreglo_4['Grasa_relubricacion']."'";
+													$SIS_data .= ",'".$arreglo_4['Aceite']."'";
+													$SIS_data .= ",'".$arreglo_4['Cantidad']."'";
+													$SIS_data .= ",'".$arreglo_4['idUml']."'";
+													$SIS_data .= ",'".$arreglo_4['Frecuencia']."'";
+													$SIS_data .= ",'".$arreglo_4['idFrecuencia']."'";
+													$SIS_data .= ",'".$arreglo_4['idProducto']."'";
+													$SIS_data .= ",'".$arreglo_4['Saf']."'";
+													$SIS_data .= ",'".$arreglo_4['Numero']."'";
+
 													$cadena = '';
 													$x = 1;
 													if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
@@ -2362,7 +2343,7 @@ require_once '0_validate_user_1.php';
 													if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
 													if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
 													if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													
+
 													$x = 1;
 													if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
 													if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
@@ -2389,46 +2370,46 @@ require_once '0_validate_user_1.php';
 													if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
 													if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
 													if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-													
+
 													// inserto los datos de registro en la db
-													$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
-													Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+													$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+													Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
 													$id_lvl[$dis_4] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_4, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																
+
 													/////////////////////////////////////////////////
 													if(isset($arrLVL[$dis_5])){
 														foreach ($arrLVL[$dis_5] as $arreglo_5) {
 															//Se verifica que sea el mismo sensor
 															if($arreglo_4['idLevel_'.$dis_4]==$arreglo_5['idLevel_'.$dis_4]){
-															
+
 																//Se crea la maquina
-																$SIS_data  = "'".$arreglo_5['idSistema']."'";          
-																$SIS_data .= ",'".$arreglo_5['idMaquina']."'";        
+																$SIS_data  = "'".$arreglo_5['idSistema']."'";
+																$SIS_data .= ",'".$arreglo_5['idMaquina']."'";
 																$SIS_data .= ",'".$arreglo_5['idUtilizable']."'";
 																$SIS_data .= ",'".$arreglo_5['Codigo']."'";
 																$SIS_data .= ",'".$arreglo_5['Nombre']."'";
 																$SIS_data .= ",'".$arreglo_5['Marca']."'";
 																$SIS_data .= ",'".$arreglo_5['Modelo']."'";
 																$SIS_data .= ",'".$arreglo_5['AnoFab']."'";
-																$SIS_data .= ",'".$arreglo_5['Serie']."'"; 
-																$SIS_data .= ",'".$arreglo_5['idLicitacion']."'"; 
-																$SIS_data .= ",'".$arreglo_5['tabla']."'"; 
-																$SIS_data .= ",'".$arreglo_5['table_value']."'"; 
-																$SIS_data .= ",'".$arreglo_5['Direccion_img']."'"; 
-																$SIS_data .= ",'".$arreglo_5['idSubTipo']."'"; 
-																$SIS_data .= ",'".$arreglo_5['Grasa_inicial']."'"; 
-																$SIS_data .= ",'".$arreglo_5['Grasa_relubricacion']."'"; 
-																$SIS_data .= ",'".$arreglo_5['Aceite']."'"; 
-																$SIS_data .= ",'".$arreglo_5['Cantidad']."'"; 
-																$SIS_data .= ",'".$arreglo_5['idUml']."'"; 
-																$SIS_data .= ",'".$arreglo_5['Frecuencia']."'"; 
-																$SIS_data .= ",'".$arreglo_5['idFrecuencia']."'"; 
-																$SIS_data .= ",'".$arreglo_5['idProducto']."'"; 
-																$SIS_data .= ",'".$arreglo_5['Saf']."'"; 
-																$SIS_data .= ",'".$arreglo_5['Numero']."'"; 
-																
+																$SIS_data .= ",'".$arreglo_5['Serie']."'";
+																$SIS_data .= ",'".$arreglo_5['idLicitacion']."'";
+																$SIS_data .= ",'".$arreglo_5['tabla']."'";
+																$SIS_data .= ",'".$arreglo_5['table_value']."'";
+																$SIS_data .= ",'".$arreglo_5['Direccion_img']."'";
+																$SIS_data .= ",'".$arreglo_5['idSubTipo']."'";
+																$SIS_data .= ",'".$arreglo_5['Grasa_inicial']."'";
+																$SIS_data .= ",'".$arreglo_5['Grasa_relubricacion']."'";
+																$SIS_data .= ",'".$arreglo_5['Aceite']."'";
+																$SIS_data .= ",'".$arreglo_5['Cantidad']."'";
+																$SIS_data .= ",'".$arreglo_5['idUml']."'";
+																$SIS_data .= ",'".$arreglo_5['Frecuencia']."'";
+																$SIS_data .= ",'".$arreglo_5['idFrecuencia']."'";
+																$SIS_data .= ",'".$arreglo_5['idProducto']."'";
+																$SIS_data .= ",'".$arreglo_5['Saf']."'";
+																$SIS_data .= ",'".$arreglo_5['Numero']."'";
+
 																$cadena = '';
 																$x = 1;
 																if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
@@ -2456,7 +2437,7 @@ require_once '0_validate_user_1.php';
 																if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
 																if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
 																if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																
+
 																$x = 1;
 																if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
 																if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
@@ -2483,46 +2464,46 @@ require_once '0_validate_user_1.php';
 																if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
 																if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
 																if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-																
+
 																// inserto los datos de registro en la db
-																$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
-																Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
 																$id_lvl[$dis_5] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_5, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																			
+
 																/////////////////////////////////////////////////
 																if(isset($arrLVL[$dis_6])){
 																	foreach ($arrLVL[$dis_6] as $arreglo_6) {
 																		//Se verifica que sea el mismo sensor
 																		if($arreglo_5['idLevel_'.$dis_5]==$arreglo_6['idLevel_'.$dis_5]){
-																		
+
 																			//Se crea la maquina
-																			$SIS_data  = "'".$arreglo_6['idSistema']."'";          
-																			$SIS_data .= ",'".$arreglo_6['idMaquina']."'";        
+																			$SIS_data  = "'".$arreglo_6['idSistema']."'";
+																			$SIS_data .= ",'".$arreglo_6['idMaquina']."'";
 																			$SIS_data .= ",'".$arreglo_6['idUtilizable']."'";
 																			$SIS_data .= ",'".$arreglo_6['Codigo']."'";
 																			$SIS_data .= ",'".$arreglo_6['Nombre']."'";
 																			$SIS_data .= ",'".$arreglo_6['Marca']."'";
 																			$SIS_data .= ",'".$arreglo_6['Modelo']."'";
 																			$SIS_data .= ",'".$arreglo_6['AnoFab']."'";
-																			$SIS_data .= ",'".$arreglo_6['Serie']."'"; 
-																			$SIS_data .= ",'".$arreglo_6['idLicitacion']."'"; 
-																			$SIS_data .= ",'".$arreglo_6['tabla']."'"; 
-																			$SIS_data .= ",'".$arreglo_6['table_value']."'"; 
-																			$SIS_data .= ",'".$arreglo_6['Direccion_img']."'"; 
-																			$SIS_data .= ",'".$arreglo_6['idSubTipo']."'"; 
-																			$SIS_data .= ",'".$arreglo_6['Grasa_inicial']."'"; 
-																			$SIS_data .= ",'".$arreglo_6['Grasa_relubricacion']."'"; 
-																			$SIS_data .= ",'".$arreglo_6['Aceite']."'"; 
-																			$SIS_data .= ",'".$arreglo_6['Cantidad']."'"; 
-																			$SIS_data .= ",'".$arreglo_6['idUml']."'"; 
-																			$SIS_data .= ",'".$arreglo_6['Frecuencia']."'"; 
-																			$SIS_data .= ",'".$arreglo_6['idFrecuencia']."'"; 
-																			$SIS_data .= ",'".$arreglo_6['idProducto']."'"; 
-																			$SIS_data .= ",'".$arreglo_6['Saf']."'"; 
-																			$SIS_data .= ",'".$arreglo_6['Numero']."'"; 
-																			
+																			$SIS_data .= ",'".$arreglo_6['Serie']."'";
+																			$SIS_data .= ",'".$arreglo_6['idLicitacion']."'";
+																			$SIS_data .= ",'".$arreglo_6['tabla']."'";
+																			$SIS_data .= ",'".$arreglo_6['table_value']."'";
+																			$SIS_data .= ",'".$arreglo_6['Direccion_img']."'";
+																			$SIS_data .= ",'".$arreglo_6['idSubTipo']."'";
+																			$SIS_data .= ",'".$arreglo_6['Grasa_inicial']."'";
+																			$SIS_data .= ",'".$arreglo_6['Grasa_relubricacion']."'";
+																			$SIS_data .= ",'".$arreglo_6['Aceite']."'";
+																			$SIS_data .= ",'".$arreglo_6['Cantidad']."'";
+																			$SIS_data .= ",'".$arreglo_6['idUml']."'";
+																			$SIS_data .= ",'".$arreglo_6['Frecuencia']."'";
+																			$SIS_data .= ",'".$arreglo_6['idFrecuencia']."'";
+																			$SIS_data .= ",'".$arreglo_6['idProducto']."'";
+																			$SIS_data .= ",'".$arreglo_6['Saf']."'";
+																			$SIS_data .= ",'".$arreglo_6['Numero']."'";
+
 																			$cadena = '';
 																			$x = 1;
 																			if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
@@ -2550,7 +2531,7 @@ require_once '0_validate_user_1.php';
 																			if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
 																			if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
 																			if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			
+
 																			$x = 1;
 																			if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
 																			if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
@@ -2577,46 +2558,46 @@ require_once '0_validate_user_1.php';
 																			if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
 																			if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
 																			if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-																			
+
 																			// inserto los datos de registro en la db
-																			$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
-																			Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																			Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																			$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																			Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																			Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																			idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
 																			$id_lvl[$dis_6] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_6, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																						
+
 																			/////////////////////////////////////////////////
 																			if(isset($arrLVL[$dis_7])){
 																				foreach ($arrLVL[$dis_7] as $arreglo_7) {
 																					//Se verifica que sea el mismo sensor
 																					if($arreglo_6['idLevel_'.$dis_6]==$arreglo_7['idLevel_'.$dis_6]){
-																					
+
 																						//Se crea la maquina
-																						$SIS_data  = "'".$arreglo_7['idSistema']."'";          
-																						$SIS_data .= ",'".$arreglo_7['idMaquina']."'";        
+																						$SIS_data  = "'".$arreglo_7['idSistema']."'";
+																						$SIS_data .= ",'".$arreglo_7['idMaquina']."'";
 																						$SIS_data .= ",'".$arreglo_7['idUtilizable']."'";
 																						$SIS_data .= ",'".$arreglo_7['Codigo']."'";
 																						$SIS_data .= ",'".$arreglo_7['Nombre']."'";
 																						$SIS_data .= ",'".$arreglo_7['Marca']."'";
 																						$SIS_data .= ",'".$arreglo_7['Modelo']."'";
 																						$SIS_data .= ",'".$arreglo_7['AnoFab']."'";
-																						$SIS_data .= ",'".$arreglo_7['Serie']."'"; 
-																						$SIS_data .= ",'".$arreglo_7['idLicitacion']."'"; 
-																						$SIS_data .= ",'".$arreglo_7['tabla']."'"; 
-																						$SIS_data .= ",'".$arreglo_7['table_value']."'"; 
-																						$SIS_data .= ",'".$arreglo_7['Direccion_img']."'"; 
-																						$SIS_data .= ",'".$arreglo_7['idSubTipo']."'"; 
-																						$SIS_data .= ",'".$arreglo_7['Grasa_inicial']."'"; 
-																						$SIS_data .= ",'".$arreglo_7['Grasa_relubricacion']."'"; 
-																						$SIS_data .= ",'".$arreglo_7['Aceite']."'"; 
-																						$SIS_data .= ",'".$arreglo_7['Cantidad']."'"; 
-																						$SIS_data .= ",'".$arreglo_7['idUml']."'"; 
-																						$SIS_data .= ",'".$arreglo_7['Frecuencia']."'"; 
-																						$SIS_data .= ",'".$arreglo_7['idFrecuencia']."'"; 
-																						$SIS_data .= ",'".$arreglo_7['idProducto']."'"; 
-																						$SIS_data .= ",'".$arreglo_7['Saf']."'"; 
-																						$SIS_data .= ",'".$arreglo_7['Numero']."'"; 
-																						
+																						$SIS_data .= ",'".$arreglo_7['Serie']."'";
+																						$SIS_data .= ",'".$arreglo_7['idLicitacion']."'";
+																						$SIS_data .= ",'".$arreglo_7['tabla']."'";
+																						$SIS_data .= ",'".$arreglo_7['table_value']."'";
+																						$SIS_data .= ",'".$arreglo_7['Direccion_img']."'";
+																						$SIS_data .= ",'".$arreglo_7['idSubTipo']."'";
+																						$SIS_data .= ",'".$arreglo_7['Grasa_inicial']."'";
+																						$SIS_data .= ",'".$arreglo_7['Grasa_relubricacion']."'";
+																						$SIS_data .= ",'".$arreglo_7['Aceite']."'";
+																						$SIS_data .= ",'".$arreglo_7['Cantidad']."'";
+																						$SIS_data .= ",'".$arreglo_7['idUml']."'";
+																						$SIS_data .= ",'".$arreglo_7['Frecuencia']."'";
+																						$SIS_data .= ",'".$arreglo_7['idFrecuencia']."'";
+																						$SIS_data .= ",'".$arreglo_7['idProducto']."'";
+																						$SIS_data .= ",'".$arreglo_7['Saf']."'";
+																						$SIS_data .= ",'".$arreglo_7['Numero']."'";
+
 																						$cadena = '';
 																						$x = 1;
 																						if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
@@ -2644,7 +2625,7 @@ require_once '0_validate_user_1.php';
 																						if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
 																						if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
 																						if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						
+
 																						$x = 1;
 																						if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
 																						if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
@@ -2671,46 +2652,46 @@ require_once '0_validate_user_1.php';
 																						if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
 																						if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
 																						if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-																						
+
 																						// inserto los datos de registro en la db
-																						$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
-																						Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																						Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																						$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																						Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																						Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																						idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
 																						$id_lvl[$dis_7] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_7, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																									
+
 																						/////////////////////////////////////////////////
 																						if(isset($arrLVL[$dis_8])){
 																							foreach ($arrLVL[$dis_8] as $arreglo_8) {
 																								//Se verifica que sea el mismo sensor
 																								if($arreglo_7['idLevel_'.$dis_7]==$arreglo_8['idLevel_'.$dis_7]){
-																								
+
 																									//Se crea la maquina
-																									$SIS_data  = "'".$arreglo_8['idSistema']."'";          
-																									$SIS_data .= ",'".$arreglo_8['idMaquina']."'";        
+																									$SIS_data  = "'".$arreglo_8['idSistema']."'";
+																									$SIS_data .= ",'".$arreglo_8['idMaquina']."'";
 																									$SIS_data .= ",'".$arreglo_8['idUtilizable']."'";
 																									$SIS_data .= ",'".$arreglo_8['Codigo']."'";
 																									$SIS_data .= ",'".$arreglo_8['Nombre']."'";
 																									$SIS_data .= ",'".$arreglo_8['Marca']."'";
 																									$SIS_data .= ",'".$arreglo_8['Modelo']."'";
 																									$SIS_data .= ",'".$arreglo_8['AnoFab']."'";
-																									$SIS_data .= ",'".$arreglo_8['Serie']."'"; 
-																									$SIS_data .= ",'".$arreglo_8['idLicitacion']."'"; 
-																									$SIS_data .= ",'".$arreglo_8['tabla']."'"; 
-																									$SIS_data .= ",'".$arreglo_8['table_value']."'"; 
-																									$SIS_data .= ",'".$arreglo_8['Direccion_img']."'"; 
-																									$SIS_data .= ",'".$arreglo_8['idSubTipo']."'"; 
-																									$SIS_data .= ",'".$arreglo_8['Grasa_inicial']."'"; 
-																									$SIS_data .= ",'".$arreglo_8['Grasa_relubricacion']."'"; 
-																									$SIS_data .= ",'".$arreglo_8['Aceite']."'"; 
-																									$SIS_data .= ",'".$arreglo_8['Cantidad']."'"; 
-																									$SIS_data .= ",'".$arreglo_8['idUml']."'"; 
-																									$SIS_data .= ",'".$arreglo_8['Frecuencia']."'"; 
-																									$SIS_data .= ",'".$arreglo_8['idFrecuencia']."'"; 
-																									$SIS_data .= ",'".$arreglo_8['idProducto']."'"; 
-																									$SIS_data .= ",'".$arreglo_8['Saf']."'"; 
-																									$SIS_data .= ",'".$arreglo_8['Numero']."'"; 
-																									
+																									$SIS_data .= ",'".$arreglo_8['Serie']."'";
+																									$SIS_data .= ",'".$arreglo_8['idLicitacion']."'";
+																									$SIS_data .= ",'".$arreglo_8['tabla']."'";
+																									$SIS_data .= ",'".$arreglo_8['table_value']."'";
+																									$SIS_data .= ",'".$arreglo_8['Direccion_img']."'";
+																									$SIS_data .= ",'".$arreglo_8['idSubTipo']."'";
+																									$SIS_data .= ",'".$arreglo_8['Grasa_inicial']."'";
+																									$SIS_data .= ",'".$arreglo_8['Grasa_relubricacion']."'";
+																									$SIS_data .= ",'".$arreglo_8['Aceite']."'";
+																									$SIS_data .= ",'".$arreglo_8['Cantidad']."'";
+																									$SIS_data .= ",'".$arreglo_8['idUml']."'";
+																									$SIS_data .= ",'".$arreglo_8['Frecuencia']."'";
+																									$SIS_data .= ",'".$arreglo_8['idFrecuencia']."'";
+																									$SIS_data .= ",'".$arreglo_8['idProducto']."'";
+																									$SIS_data .= ",'".$arreglo_8['Saf']."'";
+																									$SIS_data .= ",'".$arreglo_8['Numero']."'";
+
 																									$cadena = '';
 																									$x = 1;
 																									if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
@@ -2738,7 +2719,7 @@ require_once '0_validate_user_1.php';
 																									if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
 																									if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
 																									if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									
+
 																									$x = 1;
 																									if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
 																									if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
@@ -2765,46 +2746,46 @@ require_once '0_validate_user_1.php';
 																									if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
 																									if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
 																									if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-																									
+
 																									// inserto los datos de registro en la db
-																									$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
-																									Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																									$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																									Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
 																									$id_lvl[$dis_8] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_8, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																												
+
 																									/////////////////////////////////////////////////
 																									if(isset($arrLVL[$dis_9])){
 																										foreach ($arrLVL[$dis_9] as $arreglo_9) {
 																											//Se verifica que sea el mismo sensor
 																											if($arreglo_8['idLevel_'.$dis_8]==$arreglo_9['idLevel_'.$dis_8]){
-																											
+
 																												//Se crea la maquina
-																												$SIS_data  = "'".$arreglo_9['idSistema']."'";          
-																												$SIS_data .= ",'".$arreglo_9['idMaquina']."'";        
+																												$SIS_data  = "'".$arreglo_9['idSistema']."'";
+																												$SIS_data .= ",'".$arreglo_9['idMaquina']."'";
 																												$SIS_data .= ",'".$arreglo_9['idUtilizable']."'";
 																												$SIS_data .= ",'".$arreglo_9['Codigo']."'";
 																												$SIS_data .= ",'".$arreglo_9['Nombre']."'";
 																												$SIS_data .= ",'".$arreglo_9['Marca']."'";
 																												$SIS_data .= ",'".$arreglo_9['Modelo']."'";
 																												$SIS_data .= ",'".$arreglo_9['AnoFab']."'";
-																												$SIS_data .= ",'".$arreglo_9['Serie']."'"; 
-																												$SIS_data .= ",'".$arreglo_9['idLicitacion']."'"; 
-																												$SIS_data .= ",'".$arreglo_9['tabla']."'"; 
-																												$SIS_data .= ",'".$arreglo_9['table_value']."'"; 
-																												$SIS_data .= ",'".$arreglo_9['Direccion_img']."'"; 
-																												$SIS_data .= ",'".$arreglo_9['idSubTipo']."'"; 
-																												$SIS_data .= ",'".$arreglo_9['Grasa_inicial']."'"; 
-																												$SIS_data .= ",'".$arreglo_9['Grasa_relubricacion']."'"; 
-																												$SIS_data .= ",'".$arreglo_9['Aceite']."'"; 
-																												$SIS_data .= ",'".$arreglo_9['Cantidad']."'"; 
-																												$SIS_data .= ",'".$arreglo_9['idUml']."'"; 
-																												$SIS_data .= ",'".$arreglo_9['Frecuencia']."'"; 
-																												$SIS_data .= ",'".$arreglo_9['idFrecuencia']."'"; 
-																												$SIS_data .= ",'".$arreglo_9['idProducto']."'"; 
-																												$SIS_data .= ",'".$arreglo_9['Saf']."'"; 
-																												$SIS_data .= ",'".$arreglo_9['Numero']."'"; 
-																												
+																												$SIS_data .= ",'".$arreglo_9['Serie']."'";
+																												$SIS_data .= ",'".$arreglo_9['idLicitacion']."'";
+																												$SIS_data .= ",'".$arreglo_9['tabla']."'";
+																												$SIS_data .= ",'".$arreglo_9['table_value']."'";
+																												$SIS_data .= ",'".$arreglo_9['Direccion_img']."'";
+																												$SIS_data .= ",'".$arreglo_9['idSubTipo']."'";
+																												$SIS_data .= ",'".$arreglo_9['Grasa_inicial']."'";
+																												$SIS_data .= ",'".$arreglo_9['Grasa_relubricacion']."'";
+																												$SIS_data .= ",'".$arreglo_9['Aceite']."'";
+																												$SIS_data .= ",'".$arreglo_9['Cantidad']."'";
+																												$SIS_data .= ",'".$arreglo_9['idUml']."'";
+																												$SIS_data .= ",'".$arreglo_9['Frecuencia']."'";
+																												$SIS_data .= ",'".$arreglo_9['idFrecuencia']."'";
+																												$SIS_data .= ",'".$arreglo_9['idProducto']."'";
+																												$SIS_data .= ",'".$arreglo_9['Saf']."'";
+																												$SIS_data .= ",'".$arreglo_9['Numero']."'";
+
 																												$cadena = '';
 																												$x = 1;
 																												if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
@@ -2832,7 +2813,7 @@ require_once '0_validate_user_1.php';
 																												if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
 																												if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
 																												if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												
+
 																												$x = 1;
 																												if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
 																												if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
@@ -2859,46 +2840,46 @@ require_once '0_validate_user_1.php';
 																												if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
 																												if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
 																												if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-																												
+
 																												// inserto los datos de registro en la db
-																												$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
-																												Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																												Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																												$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																												Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																												Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																												idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
 																												$id_lvl[$dis_9] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_9, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																															
+
 																												/////////////////////////////////////////////////
 																												if(isset($arrLVL[$dis_10])){
 																													foreach ($arrLVL[$dis_10] as $arreglo_10) {
 																														//Se verifica que sea el mismo sensor
 																														if($arreglo_9['idLevel_'.$dis_9]==$arreglo_10['idLevel_'.$dis_9]){
-																														
+
 																															//Se crea la maquina
-																															$SIS_data  = "'".$arreglo_10['idSistema']."'";          
-																															$SIS_data .= ",'".$arreglo_10['idMaquina']."'";        
+																															$SIS_data  = "'".$arreglo_10['idSistema']."'";
+																															$SIS_data .= ",'".$arreglo_10['idMaquina']."'";
 																															$SIS_data .= ",'".$arreglo_10['idUtilizable']."'";
 																															$SIS_data .= ",'".$arreglo_10['Codigo']."'";
 																															$SIS_data .= ",'".$arreglo_10['Nombre']."'";
 																															$SIS_data .= ",'".$arreglo_10['Marca']."'";
 																															$SIS_data .= ",'".$arreglo_10['Modelo']."'";
 																															$SIS_data .= ",'".$arreglo_10['AnoFab']."'";
-																															$SIS_data .= ",'".$arreglo_10['Serie']."'"; 
-																															$SIS_data .= ",'".$arreglo_10['idLicitacion']."'"; 
-																															$SIS_data .= ",'".$arreglo_10['tabla']."'"; 
-																															$SIS_data .= ",'".$arreglo_10['table_value']."'"; 
-																															$SIS_data .= ",'".$arreglo_10['Direccion_img']."'"; 
-																															$SIS_data .= ",'".$arreglo_10['idSubTipo']."'"; 
-																															$SIS_data .= ",'".$arreglo_10['Grasa_inicial']."'"; 
-																															$SIS_data .= ",'".$arreglo_10['Grasa_relubricacion']."'"; 
-																															$SIS_data .= ",'".$arreglo_10['Aceite']."'"; 
-																															$SIS_data .= ",'".$arreglo_10['Cantidad']."'"; 
-																															$SIS_data .= ",'".$arreglo_10['idUml']."'"; 
-																															$SIS_data .= ",'".$arreglo_10['Frecuencia']."'"; 
-																															$SIS_data .= ",'".$arreglo_10['idFrecuencia']."'"; 
-																															$SIS_data .= ",'".$arreglo_10['idProducto']."'"; 
-																															$SIS_data .= ",'".$arreglo_10['Saf']."'"; 
-																															$SIS_data .= ",'".$arreglo_10['Numero']."'"; 
-																															
+																															$SIS_data .= ",'".$arreglo_10['Serie']."'";
+																															$SIS_data .= ",'".$arreglo_10['idLicitacion']."'";
+																															$SIS_data .= ",'".$arreglo_10['tabla']."'";
+																															$SIS_data .= ",'".$arreglo_10['table_value']."'";
+																															$SIS_data .= ",'".$arreglo_10['Direccion_img']."'";
+																															$SIS_data .= ",'".$arreglo_10['idSubTipo']."'";
+																															$SIS_data .= ",'".$arreglo_10['Grasa_inicial']."'";
+																															$SIS_data .= ",'".$arreglo_10['Grasa_relubricacion']."'";
+																															$SIS_data .= ",'".$arreglo_10['Aceite']."'";
+																															$SIS_data .= ",'".$arreglo_10['Cantidad']."'";
+																															$SIS_data .= ",'".$arreglo_10['idUml']."'";
+																															$SIS_data .= ",'".$arreglo_10['Frecuencia']."'";
+																															$SIS_data .= ",'".$arreglo_10['idFrecuencia']."'";
+																															$SIS_data .= ",'".$arreglo_10['idProducto']."'";
+																															$SIS_data .= ",'".$arreglo_10['Saf']."'";
+																															$SIS_data .= ",'".$arreglo_10['Numero']."'";
+
 																															$cadena = '';
 																															$x = 1;
 																															if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
@@ -2926,7 +2907,7 @@ require_once '0_validate_user_1.php';
 																															if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
 																															if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
 																															if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															
+
 																															$x = 1;
 																															if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
 																															if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
@@ -2953,46 +2934,46 @@ require_once '0_validate_user_1.php';
 																															if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
 																															if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
 																															if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-																															
+
 																															// inserto los datos de registro en la db
-																															$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
-																															Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																															Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																															$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																															Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																															Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																															idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
 																															$id_lvl[$dis_10] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_10, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																																		
+
 																															/////////////////////////////////////////////////
 																															if(isset($arrLVL[$dis_11])){
 																																foreach ($arrLVL[$dis_11] as $arreglo_11) {
 																																	//Se verifica que sea el mismo sensor
 																																	if($arreglo_10['idLevel_'.$dis_10]==$arreglo_11['idLevel_'.$dis_10]){
-																																	
+
 																																		//Se crea la maquina
-																																		$SIS_data  = "'".$arreglo_11['idSistema']."'";          
-																																		$SIS_data .= ",'".$arreglo_11['idMaquina']."'";        
+																																		$SIS_data  = "'".$arreglo_11['idSistema']."'";
+																																		$SIS_data .= ",'".$arreglo_11['idMaquina']."'";
 																																		$SIS_data .= ",'".$arreglo_11['idUtilizable']."'";
 																																		$SIS_data .= ",'".$arreglo_11['Codigo']."'";
 																																		$SIS_data .= ",'".$arreglo_11['Nombre']."'";
 																																		$SIS_data .= ",'".$arreglo_11['Marca']."'";
 																																		$SIS_data .= ",'".$arreglo_11['Modelo']."'";
 																																		$SIS_data .= ",'".$arreglo_11['AnoFab']."'";
-																																		$SIS_data .= ",'".$arreglo_11['Serie']."'"; 
-																																		$SIS_data .= ",'".$arreglo_11['idLicitacion']."'"; 
-																																		$SIS_data .= ",'".$arreglo_11['tabla']."'"; 
-																																		$SIS_data .= ",'".$arreglo_11['table_value']."'"; 
-																																		$SIS_data .= ",'".$arreglo_11['Direccion_img']."'"; 
-																																		$SIS_data .= ",'".$arreglo_11['idSubTipo']."'"; 
-																																		$SIS_data .= ",'".$arreglo_11['Grasa_inicial']."'"; 
-																																		$SIS_data .= ",'".$arreglo_11['Grasa_relubricacion']."'"; 
-																																		$SIS_data .= ",'".$arreglo_11['Aceite']."'"; 
-																																		$SIS_data .= ",'".$arreglo_11['Cantidad']."'"; 
-																																		$SIS_data .= ",'".$arreglo_11['idUml']."'"; 
-																																		$SIS_data .= ",'".$arreglo_11['Frecuencia']."'"; 
-																																		$SIS_data .= ",'".$arreglo_11['idFrecuencia']."'"; 
-																																		$SIS_data .= ",'".$arreglo_11['idProducto']."'"; 
-																																		$SIS_data .= ",'".$arreglo_11['Saf']."'"; 
-																																		$SIS_data .= ",'".$arreglo_11['Numero']."'"; 
-																																		
+																																		$SIS_data .= ",'".$arreglo_11['Serie']."'";
+																																		$SIS_data .= ",'".$arreglo_11['idLicitacion']."'";
+																																		$SIS_data .= ",'".$arreglo_11['tabla']."'";
+																																		$SIS_data .= ",'".$arreglo_11['table_value']."'";
+																																		$SIS_data .= ",'".$arreglo_11['Direccion_img']."'";
+																																		$SIS_data .= ",'".$arreglo_11['idSubTipo']."'";
+																																		$SIS_data .= ",'".$arreglo_11['Grasa_inicial']."'";
+																																		$SIS_data .= ",'".$arreglo_11['Grasa_relubricacion']."'";
+																																		$SIS_data .= ",'".$arreglo_11['Aceite']."'";
+																																		$SIS_data .= ",'".$arreglo_11['Cantidad']."'";
+																																		$SIS_data .= ",'".$arreglo_11['idUml']."'";
+																																		$SIS_data .= ",'".$arreglo_11['Frecuencia']."'";
+																																		$SIS_data .= ",'".$arreglo_11['idFrecuencia']."'";
+																																		$SIS_data .= ",'".$arreglo_11['idProducto']."'";
+																																		$SIS_data .= ",'".$arreglo_11['Saf']."'";
+																																		$SIS_data .= ",'".$arreglo_11['Numero']."'";
+
 																																		$cadena = '';
 																																		$x = 1;
 																																		if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
@@ -3020,7 +3001,7 @@ require_once '0_validate_user_1.php';
 																																		if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
 																																		if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
 																																		if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		
+
 																																		$x = 1;
 																																		if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
 																																		if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
@@ -3047,46 +3028,46 @@ require_once '0_validate_user_1.php';
 																																		if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
 																																		if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
 																																		if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-																																		
+
 																																		// inserto los datos de registro en la db
-																																		$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
-																																		Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																		Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																																		$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																																		Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																																		Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																																		idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
 																																		$id_lvl[$dis_11] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_11, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																																					
+
 																																		/////////////////////////////////////////////////
 																																		if(isset($arrLVL[$dis_12])){
 																																			foreach ($arrLVL[$dis_12] as $arreglo_12) {
 																																				//Se verifica que sea el mismo sensor
 																																				if($arreglo_11['idLevel_'.$dis_11]==$arreglo_12['idLevel_'.$dis_11]){
-																																				
+
 																																					//Se crea la maquina
-																																					$SIS_data  = "'".$arreglo_12['idSistema']."'";          
-																																					$SIS_data .= ",'".$arreglo_12['idMaquina']."'";        
+																																					$SIS_data  = "'".$arreglo_12['idSistema']."'";
+																																					$SIS_data .= ",'".$arreglo_12['idMaquina']."'";
 																																					$SIS_data .= ",'".$arreglo_12['idUtilizable']."'";
 																																					$SIS_data .= ",'".$arreglo_12['Codigo']."'";
 																																					$SIS_data .= ",'".$arreglo_12['Nombre']."'";
 																																					$SIS_data .= ",'".$arreglo_12['Marca']."'";
 																																					$SIS_data .= ",'".$arreglo_12['Modelo']."'";
 																																					$SIS_data .= ",'".$arreglo_12['AnoFab']."'";
-																																					$SIS_data .= ",'".$arreglo_12['Serie']."'"; 
-																																					$SIS_data .= ",'".$arreglo_12['idLicitacion']."'"; 
-																																					$SIS_data .= ",'".$arreglo_12['tabla']."'"; 
-																																					$SIS_data .= ",'".$arreglo_12['table_value']."'"; 
-																																					$SIS_data .= ",'".$arreglo_12['Direccion_img']."'"; 
-																																					$SIS_data .= ",'".$arreglo_12['idSubTipo']."'"; 
-																																					$SIS_data .= ",'".$arreglo_12['Grasa_inicial']."'"; 
-																																					$SIS_data .= ",'".$arreglo_12['Grasa_relubricacion']."'"; 
-																																					$SIS_data .= ",'".$arreglo_12['Aceite']."'"; 
-																																					$SIS_data .= ",'".$arreglo_12['Cantidad']."'"; 
-																																					$SIS_data .= ",'".$arreglo_12['idUml']."'"; 
-																																					$SIS_data .= ",'".$arreglo_12['Frecuencia']."'"; 
-																																					$SIS_data .= ",'".$arreglo_12['idFrecuencia']."'"; 
-																																					$SIS_data .= ",'".$arreglo_12['idProducto']."'"; 
-																																					$SIS_data .= ",'".$arreglo_12['Saf']."'"; 
-																																					$SIS_data .= ",'".$arreglo_12['Numero']."'"; 
-																																					
+																																					$SIS_data .= ",'".$arreglo_12['Serie']."'";
+																																					$SIS_data .= ",'".$arreglo_12['idLicitacion']."'";
+																																					$SIS_data .= ",'".$arreglo_12['tabla']."'";
+																																					$SIS_data .= ",'".$arreglo_12['table_value']."'";
+																																					$SIS_data .= ",'".$arreglo_12['Direccion_img']."'";
+																																					$SIS_data .= ",'".$arreglo_12['idSubTipo']."'";
+																																					$SIS_data .= ",'".$arreglo_12['Grasa_inicial']."'";
+																																					$SIS_data .= ",'".$arreglo_12['Grasa_relubricacion']."'";
+																																					$SIS_data .= ",'".$arreglo_12['Aceite']."'";
+																																					$SIS_data .= ",'".$arreglo_12['Cantidad']."'";
+																																					$SIS_data .= ",'".$arreglo_12['idUml']."'";
+																																					$SIS_data .= ",'".$arreglo_12['Frecuencia']."'";
+																																					$SIS_data .= ",'".$arreglo_12['idFrecuencia']."'";
+																																					$SIS_data .= ",'".$arreglo_12['idProducto']."'";
+																																					$SIS_data .= ",'".$arreglo_12['Saf']."'";
+																																					$SIS_data .= ",'".$arreglo_12['Numero']."'";
+
 																																					$cadena = '';
 																																					$x = 1;
 																																					if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
@@ -3114,7 +3095,7 @@ require_once '0_validate_user_1.php';
 																																					if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
 																																					if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
 																																					if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					
+
 																																					$x = 1;
 																																					if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
 																																					if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
@@ -3141,46 +3122,46 @@ require_once '0_validate_user_1.php';
 																																					if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
 																																					if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
 																																					if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-																																					
+
 																																					// inserto los datos de registro en la db
-																																					$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
-																																					Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																																					$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																																					Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																																					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																																					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
 																																					$id_lvl[$dis_12] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_12, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																																											
+
 																																					/////////////////////////////////////////////////
 																																					if(isset($arrLVL[$dis_13])){
 																																						foreach ($arrLVL[$dis_13] as $arreglo_13) {
 																																							//Se verifica que sea el mismo sensor
 																																							if($arreglo_12['idLevel_'.$dis_12]==$arreglo_13['idLevel_'.$dis_12]){
-																																							
+
 																																								//Se crea la maquina
-																																								$SIS_data  = "'".$arreglo_13['idSistema']."'";          
-																																								$SIS_data .= ",'".$arreglo_13['idMaquina']."'";        
+																																								$SIS_data  = "'".$arreglo_13['idSistema']."'";
+																																								$SIS_data .= ",'".$arreglo_13['idMaquina']."'";
 																																								$SIS_data .= ",'".$arreglo_13['idUtilizable']."'";
 																																								$SIS_data .= ",'".$arreglo_13['Codigo']."'";
 																																								$SIS_data .= ",'".$arreglo_13['Nombre']."'";
 																																								$SIS_data .= ",'".$arreglo_13['Marca']."'";
 																																								$SIS_data .= ",'".$arreglo_13['Modelo']."'";
 																																								$SIS_data .= ",'".$arreglo_13['AnoFab']."'";
-																																								$SIS_data .= ",'".$arreglo_13['Serie']."'"; 
-																																								$SIS_data .= ",'".$arreglo_13['idLicitacion']."'"; 
-																																								$SIS_data .= ",'".$arreglo_13['tabla']."'"; 
-																																								$SIS_data .= ",'".$arreglo_13['table_value']."'"; 
-																																								$SIS_data .= ",'".$arreglo_13['Direccion_img']."'"; 
-																																								$SIS_data .= ",'".$arreglo_13['idSubTipo']."'"; 
-																																								$SIS_data .= ",'".$arreglo_13['Grasa_inicial']."'"; 
-																																								$SIS_data .= ",'".$arreglo_13['Grasa_relubricacion']."'"; 
-																																								$SIS_data .= ",'".$arreglo_13['Aceite']."'"; 
-																																								$SIS_data .= ",'".$arreglo_13['Cantidad']."'"; 
-																																								$SIS_data .= ",'".$arreglo_13['idUml']."'"; 
-																																								$SIS_data .= ",'".$arreglo_13['Frecuencia']."'"; 
-																																								$SIS_data .= ",'".$arreglo_13['idFrecuencia']."'"; 
-																																								$SIS_data .= ",'".$arreglo_13['idProducto']."'"; 
-																																								$SIS_data .= ",'".$arreglo_13['Saf']."'"; 
+																																								$SIS_data .= ",'".$arreglo_13['Serie']."'";
+																																								$SIS_data .= ",'".$arreglo_13['idLicitacion']."'";
+																																								$SIS_data .= ",'".$arreglo_13['tabla']."'";
+																																								$SIS_data .= ",'".$arreglo_13['table_value']."'";
+																																								$SIS_data .= ",'".$arreglo_13['Direccion_img']."'";
+																																								$SIS_data .= ",'".$arreglo_13['idSubTipo']."'";
+																																								$SIS_data .= ",'".$arreglo_13['Grasa_inicial']."'";
+																																								$SIS_data .= ",'".$arreglo_13['Grasa_relubricacion']."'";
+																																								$SIS_data .= ",'".$arreglo_13['Aceite']."'";
+																																								$SIS_data .= ",'".$arreglo_13['Cantidad']."'";
+																																								$SIS_data .= ",'".$arreglo_13['idUml']."'";
+																																								$SIS_data .= ",'".$arreglo_13['Frecuencia']."'";
+																																								$SIS_data .= ",'".$arreglo_13['idFrecuencia']."'";
+																																								$SIS_data .= ",'".$arreglo_13['idProducto']."'";
+																																								$SIS_data .= ",'".$arreglo_13['Saf']."'";
 																																								$SIS_data .= ",'".$arreglo_13['Numero']."'";
-																																								
+
 																																								$cadena = '';
 																																								$x = 1;
 																																								if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
@@ -3208,7 +3189,7 @@ require_once '0_validate_user_1.php';
 																																								if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
 																																								if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
 																																								if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								
+
 																																								$x = 1;
 																																								if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
 																																								if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
@@ -3235,46 +3216,46 @@ require_once '0_validate_user_1.php';
 																																								if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
 																																								if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
 																																								if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-																																								
+
 																																								// inserto los datos de registro en la db
-																																								$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
-																																								Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																								Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																																								$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																																								Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																																								Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																																								idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
 																																								$id_lvl[$dis_13] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_13, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																																											
+
 																																								/////////////////////////////////////////////////
 																																								if(isset($arrLVL[$dis_14])){
 																																									foreach ($arrLVL[$dis_14] as $arreglo_14) {
 																																										//Se verifica que sea el mismo sensor
 																																										if($arreglo_13['idLevel_'.$dis_13]==$arreglo_14['idLevel_'.$dis_13]){
-																																										
+
 																																											//Se crea la maquina
-																																											$SIS_data  = "'".$arreglo_14['idSistema']."'";          
-																																											$SIS_data .= ",'".$arreglo_14['idMaquina']."'";        
+																																											$SIS_data  = "'".$arreglo_14['idSistema']."'";
+																																											$SIS_data .= ",'".$arreglo_14['idMaquina']."'";
 																																											$SIS_data .= ",'".$arreglo_14['idUtilizable']."'";
 																																											$SIS_data .= ",'".$arreglo_14['Codigo']."'";
 																																											$SIS_data .= ",'".$arreglo_14['Nombre']."'";
 																																											$SIS_data .= ",'".$arreglo_14['Marca']."'";
 																																											$SIS_data .= ",'".$arreglo_14['Modelo']."'";
 																																											$SIS_data .= ",'".$arreglo_14['AnoFab']."'";
-																																											$SIS_data .= ",'".$arreglo_14['Serie']."'"; 
-																																											$SIS_data .= ",'".$arreglo_14['idLicitacion']."'"; 
-																																											$SIS_data .= ",'".$arreglo_14['tabla']."'"; 
-																																											$SIS_data .= ",'".$arreglo_14['table_value']."'"; 
-																																											$SIS_data .= ",'".$arreglo_14['Direccion_img']."'"; 
-																																											$SIS_data .= ",'".$arreglo_14['idSubTipo']."'"; 
-																																											$SIS_data .= ",'".$arreglo_14['Grasa_inicial']."'"; 
-																																											$SIS_data .= ",'".$arreglo_14['Grasa_relubricacion']."'"; 
-																																											$SIS_data .= ",'".$arreglo_14['Aceite']."'"; 
-																																											$SIS_data .= ",'".$arreglo_14['Cantidad']."'"; 
-																																											$SIS_data .= ",'".$arreglo_14['idUml']."'"; 
-																																											$SIS_data .= ",'".$arreglo_14['Frecuencia']."'"; 
-																																											$SIS_data .= ",'".$arreglo_14['idFrecuencia']."'"; 
-																																											$SIS_data .= ",'".$arreglo_14['idProducto']."'"; 
-																																											$SIS_data .= ",'".$arreglo_14['Saf']."'"; 
-																																											$SIS_data .= ",'".$arreglo_14['Numero']."'"; 
-																																											
+																																											$SIS_data .= ",'".$arreglo_14['Serie']."'";
+																																											$SIS_data .= ",'".$arreglo_14['idLicitacion']."'";
+																																											$SIS_data .= ",'".$arreglo_14['tabla']."'";
+																																											$SIS_data .= ",'".$arreglo_14['table_value']."'";
+																																											$SIS_data .= ",'".$arreglo_14['Direccion_img']."'";
+																																											$SIS_data .= ",'".$arreglo_14['idSubTipo']."'";
+																																											$SIS_data .= ",'".$arreglo_14['Grasa_inicial']."'";
+																																											$SIS_data .= ",'".$arreglo_14['Grasa_relubricacion']."'";
+																																											$SIS_data .= ",'".$arreglo_14['Aceite']."'";
+																																											$SIS_data .= ",'".$arreglo_14['Cantidad']."'";
+																																											$SIS_data .= ",'".$arreglo_14['idUml']."'";
+																																											$SIS_data .= ",'".$arreglo_14['Frecuencia']."'";
+																																											$SIS_data .= ",'".$arreglo_14['idFrecuencia']."'";
+																																											$SIS_data .= ",'".$arreglo_14['idProducto']."'";
+																																											$SIS_data .= ",'".$arreglo_14['Saf']."'";
+																																											$SIS_data .= ",'".$arreglo_14['Numero']."'";
+
 																																											$cadena = '';
 																																											$x = 1;
 																																											if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
@@ -3302,7 +3283,7 @@ require_once '0_validate_user_1.php';
 																																											if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
 																																											if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
 																																											if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											
+
 																																											$x = 1;
 																																											if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
 																																											if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
@@ -3329,46 +3310,46 @@ require_once '0_validate_user_1.php';
 																																											if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
 																																											if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
 																																											if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-																																											
+
 																																											// inserto los datos de registro en la db
-																																											$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
-																																											Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																											Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																																											$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																																											Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																																											Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																																											idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
 																																											$id_lvl[$dis_14] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_14, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																																											
+
 																																											/////////////////////////////////////////////////
 																																											if(isset($arrLVL[$dis_15])){
 																																												foreach ($arrLVL[$dis_15] as $arreglo_15) {
 																																													//Se verifica que sea el mismo sensor
 																																													if($arreglo_14['idLevel_'.$dis_14]==$arreglo_15['idLevel_'.$dis_14]){
-																																													
+
 																																														//Se crea la maquina
-																																														$SIS_data  = "'".$arreglo_15['idSistema']."'";          
-																																														$SIS_data .= ",'".$arreglo_15['idMaquina']."'";        
+																																														$SIS_data  = "'".$arreglo_15['idSistema']."'";
+																																														$SIS_data .= ",'".$arreglo_15['idMaquina']."'";
 																																														$SIS_data .= ",'".$arreglo_15['idUtilizable']."'";
 																																														$SIS_data .= ",'".$arreglo_15['Codigo']."'";
 																																														$SIS_data .= ",'".$arreglo_15['Nombre']."'";
 																																														$SIS_data .= ",'".$arreglo_15['Marca']."'";
 																																														$SIS_data .= ",'".$arreglo_15['Modelo']."'";
 																																														$SIS_data .= ",'".$arreglo_15['AnoFab']."'";
-																																														$SIS_data .= ",'".$arreglo_15['Serie']."'"; 
-																																														$SIS_data .= ",'".$arreglo_15['idLicitacion']."'"; 
-																																														$SIS_data .= ",'".$arreglo_15['tabla']."'"; 
-																																														$SIS_data .= ",'".$arreglo_15['table_value']."'"; 
-																																														$SIS_data .= ",'".$arreglo_15['Direccion_img']."'"; 
-																																														$SIS_data .= ",'".$arreglo_15['idSubTipo']."'"; 
-																																														$SIS_data .= ",'".$arreglo_15['Grasa_inicial']."'"; 
-																																														$SIS_data .= ",'".$arreglo_15['Grasa_relubricacion']."'"; 
-																																														$SIS_data .= ",'".$arreglo_15['Aceite']."'"; 
-																																														$SIS_data .= ",'".$arreglo_15['Cantidad']."'"; 
-																																														$SIS_data .= ",'".$arreglo_15['idUml']."'"; 
-																																														$SIS_data .= ",'".$arreglo_15['Frecuencia']."'"; 
-																																														$SIS_data .= ",'".$arreglo_15['idFrecuencia']."'"; 
-																																														$SIS_data .= ",'".$arreglo_15['idProducto']."'"; 
-																																														$SIS_data .= ",'".$arreglo_15['Saf']."'"; 
-																																														$SIS_data .= ",'".$arreglo_15['Numero']."'"; 
-																																														
+																																														$SIS_data .= ",'".$arreglo_15['Serie']."'";
+																																														$SIS_data .= ",'".$arreglo_15['idLicitacion']."'";
+																																														$SIS_data .= ",'".$arreglo_15['tabla']."'";
+																																														$SIS_data .= ",'".$arreglo_15['table_value']."'";
+																																														$SIS_data .= ",'".$arreglo_15['Direccion_img']."'";
+																																														$SIS_data .= ",'".$arreglo_15['idSubTipo']."'";
+																																														$SIS_data .= ",'".$arreglo_15['Grasa_inicial']."'";
+																																														$SIS_data .= ",'".$arreglo_15['Grasa_relubricacion']."'";
+																																														$SIS_data .= ",'".$arreglo_15['Aceite']."'";
+																																														$SIS_data .= ",'".$arreglo_15['Cantidad']."'";
+																																														$SIS_data .= ",'".$arreglo_15['idUml']."'";
+																																														$SIS_data .= ",'".$arreglo_15['Frecuencia']."'";
+																																														$SIS_data .= ",'".$arreglo_15['idFrecuencia']."'";
+																																														$SIS_data .= ",'".$arreglo_15['idProducto']."'";
+																																														$SIS_data .= ",'".$arreglo_15['Saf']."'";
+																																														$SIS_data .= ",'".$arreglo_15['Numero']."'";
+
 																																														$cadena = '';
 																																														$x = 1;
 																																														if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
@@ -3396,7 +3377,7 @@ require_once '0_validate_user_1.php';
 																																														if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
 																																														if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
 																																														if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														
+
 																																														$x = 1;
 																																														if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
 																																														if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
@@ -3423,73 +3404,59 @@ require_once '0_validate_user_1.php';
 																																														if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
 																																														if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
 																																														if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-																																														
+
 																																														// inserto los datos de registro en la db
-																																														$SIS_columns = 'idSistema, idMaquina, idUtilizable, 
-																																														Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, 
-																																														Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, 
+																																														$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																																														Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																																														Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
 																																														idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
 																																														$id_lvl[$dis_15] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_15, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																																														
-																																														
+
 																																													}
 																																												}
 																																											}
-																																											
 																																										}
 																																									}
 																																								}
-																																								
 																																							}
 																																						}
 																																					}
-																																					
 																																				}
 																																			}
 																																		}
-																																		
 																																	}
 																																}
 																															}
-																															
 																														}
 																													}
 																												}
-																												
 																											}
 																										}
 																									}
-																									
 																								}
 																							}
 																						}
-																						
 																					}
 																				}
 																			}
-																			
 																		}
 																	}
 																}
-																
 															}
 														}
 													}
-													
 												}
 											}
 										}
-
 									}
 								}
 							}
-									
 						}
 					}
 				}
 			}
 		}
-		
+
 		header( 'Location: '.$location.'&clone_comp=true' );
 		die;
 
@@ -3500,8 +3467,7 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -3537,9 +3503,8 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($rowdata['idMaquina']) && $rowdata['idMaquina']!=''){     $SIS_data  = "'".$rowdata['idMaquina']."'";     }else{$SIS_data  = "''";}
 				if(isset($rowdata['cantPuntos']) && $rowdata['cantPuntos']!=''){   $SIS_data .= ",'".$rowdata['cantPuntos']."'";   }else{$SIS_data .= ",''";}
-				if(isset($rowdata['idEstado']) && $rowdata['idEstado']!=''){$SIS_data .= ",'".$rowdata['idEstado']."'";     }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){                                $SIS_data .= ",'".$Nombre."'";                  }else{$SIS_data .= ",''";}
-				
+				if(isset($rowdata['idEstado']) && $rowdata['idEstado']!=''){       $SIS_data .= ",'".$rowdata['idEstado']."'";     }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                                 $SIS_data .= ",'".$Nombre."'";                  }else{$SIS_data .= ",''";}
 
 				for ($i = 1; $i <= 50; $i++) {
 					if(isset($rowdata['PuntoNombre_'.$i]) && $rowdata['PuntoNombre_'.$i]!=''){                    $SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'";           }else{$SIS_data .= ",''";}
@@ -3587,18 +3552,19 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){ $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
-				if(isset($idEstado) && $idEstado!=''){                    $SIS_data .= ",'".$idEstado."'";               }else{$SIS_data .= ",''";}
+				if(isset($idSistema) && $idSistema!=''){                   $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
+				if(isset($idEstado) && $idEstado!=''){                     $SIS_data .= ",'".$idEstado."'";               }else{$SIS_data .= ",''";}
 				if(isset($Codigo) && $Codigo!=''){                         $SIS_data .= ",'".$Codigo."'";                 }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){                        $SIS_data .= ",'".$Nombre."'";                 }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                         $SIS_data .= ",'".$Nombre."'";                 }else{$SIS_data .= ",''";}
 				if(isset($Modelo) && $Modelo!=''){                         $SIS_data .= ",'".$Modelo."'";                 }else{$SIS_data .= ",''";}
 				if(isset($Serie) && $Serie!=''){                           $SIS_data .= ",'".$Serie."'";                  }else{$SIS_data .= ",''";}
 				if(isset($Fabricante) && $Fabricante!=''){                 $SIS_data .= ",'".$Fabricante."'";             }else{$SIS_data .= ",''";}
 				if(isset($fincorporacion) && $fincorporacion!=''){         $SIS_data .= ",'".$fincorporacion."'";         }else{$SIS_data .= ",''";}
-				if(isset($Descripcion) && $Descripcion!=''){               $SIS_data .= ",'".$Descripcion."'";          }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion!=''){               $SIS_data .= ",'".$Descripcion."'";            }else{$SIS_data .= ",''";}
 				if(isset($idConfig_1) && $idConfig_1!=''){                 $SIS_data .= ",'".$idConfig_1."'";             }else{$SIS_data .= ",''";}
 				if(isset($idConfig_2) && $idConfig_2!=''){                 $SIS_data .= ",'".$idConfig_2."'";             }else{$SIS_data .= ",''";}
 				if(isset($idConfig_3) && $idConfig_3!=''){                 $SIS_data .= ",'".$idConfig_3."'";             }else{$SIS_data .= ",''";}
+				if(isset($idConfig_4) && $idConfig_4!=''){                 $SIS_data .= ",'".$idConfig_4."'";             }else{$SIS_data .= ",''";}
 				if(isset($idUbicacion) && $idUbicacion!=''){               $SIS_data .= ",'".$idUbicacion."'";            }else{$SIS_data .= ",''";}
 				if(isset($idUbicacion_lvl_1) && $idUbicacion_lvl_1!=''){   $SIS_data .= ",'".$idUbicacion_lvl_1."'";      }else{$SIS_data .= ",''";}
 				if(isset($idUbicacion_lvl_2) && $idUbicacion_lvl_2!=''){   $SIS_data .= ",'".$idUbicacion_lvl_2."'";      }else{$SIS_data .= ",''";}
@@ -3609,7 +3575,7 @@ require_once '0_validate_user_1.php';
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema, idEstado, Codigo, Nombre,Modelo, Serie, Fabricante,
-				fincorporacion, Descripcion, idConfig_1, idConfig_2, idConfig_3, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2,
+				fincorporacion, Descripcion, idConfig_1, idConfig_2, idConfig_3, idConfig_4, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2,
 				idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idCliente';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -3636,11 +3602,12 @@ require_once '0_validate_user_1.php';
 			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.$idMaquina.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
-				
 
-				
+				//redirijo
+				header( 'Location: '.$location.'&edited=true' );
+				die;
+
 			}
-
 
 		break;
 /*******************************************************************************************************************/
@@ -3732,4 +3699,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

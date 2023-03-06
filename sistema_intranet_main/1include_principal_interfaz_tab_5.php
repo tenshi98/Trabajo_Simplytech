@@ -1,6 +1,6 @@
 <?php
 /**************************************************************************/
-if($n_permisos['idOpcionesGen_9']=='1' OR $idTipoUsuario==1){?>
+if($n_permisos['idOpcionesGen_9']=='1' OR $idTipoUsuario==1){ ?>
 
 	<div class="tab-pane fade" id="Menu_tab_5">
 		<div class="">

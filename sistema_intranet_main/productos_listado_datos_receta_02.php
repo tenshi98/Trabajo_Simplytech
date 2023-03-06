@@ -98,6 +98,7 @@ $zx1 = "idProducto=0";
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idTipoProducto=1 AND idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -274,13 +275,13 @@ $SIS_where = 'productos_recetas.idProducto = '.$_GET['id'];
 $SIS_order = 'productos_listado.Nombre ASC';
 $arrRecetas = array();
 $arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrRecetas');
-	
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Receta'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&addProd=true'; ?>" class="btn btn-default pull-right margin_width" >Agregar Materia Prima</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&addProd=true'; ?>" class="btn btn-default pull-right margin_width" >Agregar Materia Prima</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -330,10 +331,10 @@ $arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join
 					<?php foreach ($arrRecetas as $receta){ ?>
 						<tr class="odd">
 							<td><?php echo $receta['NombreProd']; ?></td>
-							<td><?php echo cantidades($receta['Cantidad'], 0).' '.$receta['UnidadMedida']; ?></td>	
+							<td><?php echo cantidades($receta['Cantidad'], 0).' '.$receta['UnidadMedida']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$receta['idReceta']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$receta['idReceta']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=3){
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del_receta='.simpleEncode($receta['idReceta'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el producto '.$receta['NombreProd'].'?'; ?>

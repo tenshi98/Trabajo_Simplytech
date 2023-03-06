@@ -156,7 +156,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 				</thead>
 				<tbody>
 					<?php if ($arrCuotas!=false && !empty($arrCuotas) && $arrCuotas!='') { ?>
-						<?php foreach ($arrCuotas as $prod) {?>
+						<?php foreach ($arrCuotas as $prod) { ?>
 							<tr>
 								<td><?php echo fecha_estandar($prod['Fecha']); ?></td>
 								<td><?php echo 'Cuota '.$prod['nCuota'].' de '.$prod['TotalCuotas']; ?></td>
@@ -190,7 +190,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 				<tr>
 					<th colspan="6">Archivos Adjuntos</th>
 				</tr>
-				<?php foreach ($arrArchivo as $producto){?>
+				<?php foreach ($arrArchivo as $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
 						<td width="160">

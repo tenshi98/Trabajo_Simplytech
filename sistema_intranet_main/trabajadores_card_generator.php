@@ -360,6 +360,7 @@ switch ($rowCard['idCardType']) {
 		break;
 
 }
+
 ?>
 
 <div class="row no-print">

@@ -222,7 +222,7 @@ if(isset($_GET['f_programacion_desde'])&&$_GET['f_programacion_desde']!=''&&isse
 if(isset($_GET['f_ejecucion_desde'])&&$_GET['f_ejecucion_desde']!=''&&isset($_GET['f_ejecucion_hasta'])&&$_GET['f_ejecucion_hasta']!=''){
 	$SIS_where.=" AND cross_solicitud_aplicacion_listado.f_ejecucion BETWEEN '".$_GET['f_ejecucion_desde']."' AND '".$_GET['f_ejecucion_hasta']."'";
 }
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idSolicitud', 'cross_solicitud_aplicacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -265,7 +265,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
@@ -385,7 +385,7 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrOTS as $ot) { 
+					<?php foreach ($arrOTS as $ot) {
 						//variable
 						$dias        = 0;
 						$dias_text   = 'Sin Fecha ejecucion';
@@ -429,11 +429,11 @@ $x = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 								}
 								?>
 								<div class="btn-group" style="width: 175px;" >
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&cancel_ejecution='.$ot['idSolicitud']; ?>" title="Cancelar Programacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-arrow-left" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo 'cross_solicitud_aplicacion_editar.php?view='.$ot['idSolicitud']; ?>" title="Editar Solicitud" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo 'cross_solicitud_aplicacion_cerrar_cuartel.php?view='.$ot['idSolicitud']; ?>" title="Cerrar Cuarteles (<?php echo $ot['Cuartel_Abierto'].' Abiertos'; ?>)" class="btn <?php echo $btn_color; ?> btn-sm tooltip"><i class="fa <?php echo $btn_icon; ?>" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&termino='.$ot['idSolicitud']; ?>" title="Cerrar Solicitud" class="btn btn-success btn-sm tooltip"><i class="fa fa-lock faa-vertical animated" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&cancel_ejecution='.$ot['idSolicitud']; ?>" title="Cancelar Programacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-arrow-left" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo 'cross_solicitud_aplicacion_editar.php?view='.$ot['idSolicitud']; ?>" title="Editar Solicitud" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo 'cross_solicitud_aplicacion_cerrar_cuartel.php?view='.$ot['idSolicitud']; ?>" title="Cerrar Cuarteles (<?php echo $ot['Cuartel_Abierto'].' Abiertos'; ?>)" class="btn <?php echo $btn_color; ?> btn-sm tooltip"><i class="fa <?php echo $btn_icon; ?>" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&termino='.$ot['idSolicitud']; ?>" title="Cerrar Solicitud" class="btn btn-success btn-sm tooltip"><i class="fa fa-lock faa-vertical animated" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>

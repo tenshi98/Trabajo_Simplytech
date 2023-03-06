@@ -1412,7 +1412,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['sol_apli_basicos']['horaProg']) OR $_SESSION['sol_apli_basicos']['horaProg']=='' ){                       $error['horaProg']             = 'error/No ha ingresado la hora inicio programada';}
 				if(!isset($_SESSION['sol_apli_basicos']['horaProg_fin']) OR $_SESSION['sol_apli_basicos']['horaProg_fin']=='' ){               $error['horaProg_fin']         = 'error/No ha ingresado la hora termino programada';}
 				if(!isset($_SESSION['sol_apli_basicos']['idPrioridad']) OR $_SESSION['sol_apli_basicos']['idPrioridad']=='' ){                 $error['idPrioridad']          = 'error/No ha seleccionado la prioridad';}
-			
+
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la solicitud';
 			}
@@ -1633,7 +1633,7 @@ require_once '0_validate_user_1.php';
 									if($_SESSION['sol_apli_productos'][$cuartel['valor_id']]){
 										//Se recorren los quimicos a utilizar
 										foreach ($_SESSION['sol_apli_productos'][$cuartel['valor_id']] as $key => $prod){
-											
+
 											//filtros
 											if(isset($ultimo_id) && $ultimo_id!=''){                                $SIS_data  = "'".$ultimo_id."'";                   }else{$SIS_data  = "''";}
 											if(isset($ultimo_cuartel) && $ultimo_cuartel!=''){                      $SIS_data .= ",'".$ultimo_cuartel."'";             }else{$SIS_data .= ",''";}
@@ -1680,7 +1680,7 @@ require_once '0_validate_user_1.php';
 						$SIS_order = 0;
 						$arrCorreos = array();
 						$arrCorreos = db_select_array (false, $SIS_query, 'core_permisos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						//Notificaciones a los correos
 						foreach ($arrCorreos as $correo) {
 							//Envio de correo
@@ -1757,8 +1757,7 @@ require_once '0_validate_user_1.php';
 				}
 				//generacion de errores
 				if($ndata_1 > 0) {$error['ndata_1'] = 'error/Hay '.$ndata_1.' cuarteles con cierre realizado, no puede eliminar la solicitud';}
-				
-				
+
 				//Si no hay errores ejecuto el codigo
 				if(empty($error)){
 
@@ -1789,8 +1788,7 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			
+
 			/*******************************************************************/
 			//si se esta cerrando la solicitud, verificar que todos los cuarteles esten cerrados
 			//variables
@@ -2223,8 +2221,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			if(empty($error)){
-				
-				
+
 				/******************************************/
 				//Obtengo datos
 				$rowdata = db_select_data (false, 'idCategoria, idProducto', 'cross_predios_listado_zonas', '', 'idZona = "'.$idZona.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -2248,7 +2245,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_update_data (false, $SIS_data, 'cross_solicitud_aplicacion_listado_cuarteles', 'idCuarteles = "'.$idCuarteles.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&not_editprod=true' );
 					die;
 
@@ -2601,7 +2598,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_update_data (false, $SIS_data, 'cross_solicitud_aplicacion_listado_tractores', 'idTractores = "'.$idTractores.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&not_edittrac=true' );
 					die;
 
@@ -2795,7 +2792,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_update_data (false, $SIS_data, 'cross_solicitud_aplicacion_listado_productos', 'idProdQuim = "'.$idProdQuim.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location.'&not_editprod=true' );
 					die;
 
@@ -3182,7 +3179,7 @@ require_once '0_validate_user_1.php';
 						$SIS_order = 0;
 						$arrCorreos = array();
 						$arrCorreos = db_select_array (false, $SIS_query, 'core_permisos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
+
 						//Notificaciones a los correos
 						foreach ($arrCorreos as $correo) {
 							//Envio de correo
@@ -3211,4 +3208,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

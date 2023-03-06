@@ -62,7 +62,7 @@ if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) *
 $SIS_where = "seg_vecinal_clientes_listado_ip.idIpUsuario!=0"; 
 //verifico si existen los parametros de fecha
 if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){$SIS_where.=' AND seg_vecinal_clientes_listado_ip.idCliente='.$_GET['idCliente'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'IP_Client', 'seg_vecinal_clientes_listado_ip', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -78,7 +78,7 @@ $SIS_join  = 'LEFT JOIN `seg_vecinal_clientes_listado` relacion ON relacion.idCl
 $SIS_order = 'IP_Client ASC LIMIT '.$comienzo.', '.$cant_reg;
 $arrIpRelacionadas = array();
 $arrIpRelacionadas = db_select_array (false, $SIS_query, 'seg_vecinal_clientes_listado_ip', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrIpRelacionadas');
-	
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

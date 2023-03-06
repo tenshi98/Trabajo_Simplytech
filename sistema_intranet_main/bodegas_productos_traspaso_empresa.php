@@ -158,7 +158,8 @@ array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
-}	
+}
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -442,6 +443,7 @@ $z = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -599,7 +601,7 @@ if($valor_0!=0){
 				//codigo 
 				if (isset($_SESSION['productos_traspasoempresa_productos'])){
 					//recorro el lsiatdo entregado por la base de datos
-					foreach ($_SESSION['productos_traspasoempresa_productos'] as $key => $producto){?>
+					foreach ($_SESSION['productos_traspasoempresa_productos'] as $key => $producto){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="4">
 								<?php echo Cantidades_decimales_justos($producto['Number']).' '.$producto['Unimed'].' de '.$producto['Nombre']; ?>
@@ -767,13 +769,13 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
 	<?php if ($rowlevel['level']>=3){
-		if (isset($_SESSION['productos_traspasoempresa_basicos']['idBodegaOrigen'])&&$_SESSION['productos_traspasoempresa_basicos']['idBodegaOrigen']!=''){?>
+		if (isset($_SESSION['productos_traspasoempresa_basicos']['idBodegaOrigen'])&&$_SESSION['productos_traspasoempresa_basicos']['idBodegaOrigen']!=''){ ?>
 
 		<?php
 		$ubicacion = $location.'&clear_all=true';
@@ -826,8 +828,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
-                                 
+<div class="clearfix"></div>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -874,7 +876,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 						<td><?php echo Fecha_estandar($tipo['Creacion_fecha']); ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

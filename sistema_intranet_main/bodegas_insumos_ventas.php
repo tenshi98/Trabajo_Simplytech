@@ -203,7 +203,7 @@ if(!empty($_GET['editDescuentos'])){  ?>
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['addDescuentos'])){?>
+} elseif(!empty($_GET['addDescuentos'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -853,7 +853,7 @@ $Form_Inputs = new Inputs();
 						<td class="meta-head">Vendedor</td>
 						<td><?php echo $_SESSION['insumos_vent_basicos']['Vendedor']; ?></td>
 					</tr>
-					<?php if(isset($_SESSION['insumos_vent_basicos']['OC_Ventas'])&&$_SESSION['insumos_vent_basicos']['OC_Ventas']!=''){?>
+					<?php if(isset($_SESSION['insumos_vent_basicos']['OC_Ventas'])&&$_SESSION['insumos_vent_basicos']['OC_Ventas']!=''){ ?>
 						<tr>
 							<td class="meta-head">Orden Compra Relacionada</td>
 							<td><?php echo 'OC N°'.$_SESSION['insumos_vent_basicos']['OC_Ventas']?></td>
@@ -881,10 +881,10 @@ $Form_Inputs = new Inputs();
 						<td class="meta-head">Fecha Creacion</td>
 						<td colspan="2"><?php echo Fecha_estandar($_SESSION['insumos_vent_basicos']['Creacion_fecha'])?></td>
 					</tr>
-					<?php if($_SESSION['insumos_vent_basicos']['idDocumentos']==2){?>
+					<?php if($_SESSION['insumos_vent_basicos']['idDocumentos']==2){ ?>
 						<tr>
 							<td class="meta-head">Fecha Vencimiento</td>
-							<?php if($_SESSION['insumos_vent_basicos']['Pago_fecha']!='0000-00-00'){?>
+							<?php if($_SESSION['insumos_vent_basicos']['Pago_fecha']!='0000-00-00'){ ?>
 								<td><?php echo Fecha_estandar($_SESSION['insumos_vent_basicos']['Pago_fecha']); ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
@@ -904,13 +904,13 @@ $Form_Inputs = new Inputs();
 								</td>
 							<?php } ?>
 						</tr>
-						<?php if(isset($_SESSION['insumos_vent_basicos']['fecha_fact_desde'])&&$_SESSION['insumos_vent_basicos']['fecha_fact_desde']!=''&&$_SESSION['insumos_vent_basicos']['fecha_fact_desde']!='0'&&$_SESSION['insumos_vent_basicos']['fecha_fact_desde']!='0000-00-00'){?>
+						<?php if(isset($_SESSION['insumos_vent_basicos']['fecha_fact_desde'])&&$_SESSION['insumos_vent_basicos']['fecha_fact_desde']!=''&&$_SESSION['insumos_vent_basicos']['fecha_fact_desde']!='0'&&$_SESSION['insumos_vent_basicos']['fecha_fact_desde']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Facturacion Desde</td>
 								<td colspan="2"><?php echo Fecha_estandar($_SESSION['insumos_vent_basicos']['fecha_fact_desde'])?></td>
 							</tr>
 						<?php } ?>
-						<?php if(isset($_SESSION['insumos_vent_basicos']['fecha_fact_hasta'])&&$_SESSION['insumos_vent_basicos']['fecha_fact_hasta']!=''&&$_SESSION['insumos_vent_basicos']['fecha_fact_hasta']!='0'&&$_SESSION['insumos_vent_basicos']['fecha_fact_hasta']!='0000-00-00'){?>
+						<?php if(isset($_SESSION['insumos_vent_basicos']['fecha_fact_hasta'])&&$_SESSION['insumos_vent_basicos']['fecha_fact_hasta']!=''&&$_SESSION['insumos_vent_basicos']['fecha_fact_hasta']!='0'&&$_SESSION['insumos_vent_basicos']['fecha_fact_hasta']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Facturacion Hasta</td>
 								<td colspan="2"><?php echo Fecha_estandar($_SESSION['insumos_vent_basicos']['fecha_fact_hasta'])?></td>
@@ -978,7 +978,7 @@ $Form_Inputs = new Inputs();
 					<?php
 					if (isset($_SESSION['insumos_vent_guias'])){
 						//recorro el lsiatdo entregado por la base de datos
-						foreach ($_SESSION['insumos_vent_guias'] as $key => $producto){?>
+						foreach ($_SESSION['insumos_vent_guias'] as $key => $producto){ ?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="4">
 									<?php echo 'Guia N°'.$producto['N_Doc']; ?>
@@ -1018,7 +1018,7 @@ $Form_Inputs = new Inputs();
 					<?php
 					if (isset($_SESSION['insumos_vent_descuentos'])){
 						//recorro el lsiatdo entregado por la base de datos
-						foreach ($_SESSION['insumos_vent_descuentos'] as $key => $producto){?>
+						foreach ($_SESSION['insumos_vent_descuentos'] as $key => $producto){ ?>
 							<tr class="invoice-total" bgcolor="#f1f1f1">
 								<td class="item-name" colspan="4" align="right"><strong><?php echo $producto['Nombre']; ?></strong></td>
 								<td class="item-name" align="right">
@@ -1114,7 +1114,7 @@ $Form_Inputs = new Inputs();
 			if (isset($_SESSION['insumos_vent_archivos'])){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
-				foreach ($_SESSION['insumos_vent_archivos'] as $key => $producto){?>
+				foreach ($_SESSION['insumos_vent_archivos'] as $key => $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
 						<td>
@@ -1145,7 +1145,7 @@ $Form_Inputs = new Inputs();
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
-$z = "bodegas_insumos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
+$z = "bodegas_insumos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $y = "idTipo=3 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 //Verifico el tipo de usuario que esta ingresando
@@ -1310,13 +1310,13 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
 	<?php if ($rowlevel['level']>=3){
-	if (isset($_SESSION['insumos_vent_basicos']['idCliente'])&&$_SESSION['insumos_vent_basicos']['idCliente']!=''){?>
+	if (isset($_SESSION['insumos_vent_basicos']['idCliente'])&&$_SESSION['insumos_vent_basicos']['idCliente']!=''){ ?>
 
 		<?php
 		$ubicacion = $location.'&clear_all=true';
@@ -1374,8 +1374,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
-                                 
+<div class="clearfix"></div>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -1425,7 +1425,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

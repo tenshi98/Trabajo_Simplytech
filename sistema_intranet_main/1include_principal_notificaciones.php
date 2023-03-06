@@ -124,7 +124,7 @@ echo '
 							<td><?php echo $tipo['Estado']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if ($tipo['idEstado']==1){?><a href="<?php echo $location.'&id='.$tipo['idNoti']; ?>" title="Marcar como leido" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($tipo['idEstado']==1){ ?><a href="<?php echo $location.'&id='.$tipo['idNoti']; ?>" title="Marcar como leido" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -159,7 +159,7 @@ echo '
 				</a>
 
 			<?php foreach ($arrCategorias as $cat) { ?>
-				<?php if($cat['usuario']!=''){?>
+				<?php if($cat['usuario']!=''){ ?>
 					<a href="<?php echo $original.'?pagina=1&filtersender='.$cat['idusuario']; ?>" class="list-group-item">
 						<i class="fa fa-inbox" aria-hidden="true"></i>
 						<?php echo $cat['usuario']; ?>

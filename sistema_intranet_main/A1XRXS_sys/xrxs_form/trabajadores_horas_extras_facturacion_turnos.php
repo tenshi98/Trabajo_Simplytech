@@ -82,7 +82,7 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",'".$Creacion_fecha."'";
 					$SIS_data .= ",'".fecha2NSemana($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
-					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'"; 
+					$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'";
 					$SIS_data .= ",'".fecha2NSemana($Creacion_fecha)."'";
 				}else{
 					$SIS_data .= ",''";
@@ -209,4 +209,5 @@ require_once '0_validate_user_1.php';
 
 /*******************************************************************************************************************/
 	}
+
 ?>

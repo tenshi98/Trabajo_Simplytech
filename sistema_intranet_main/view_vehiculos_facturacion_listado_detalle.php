@@ -187,35 +187,35 @@ $rowDatos = db_select_data (false, $SIS_query, 'vehiculos_facturacion_listado_de
 				</thead>
 				<tbody>
 
-					<?php if(isset($rowDatos['Vehiculo_1_Nombre'])&&$rowDatos['Vehiculo_1_Nombre']!=''){?>
+					<?php if(isset($rowDatos['Vehiculo_1_Nombre'])&&$rowDatos['Vehiculo_1_Nombre']!=''){ ?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_1_Nombre'].' Patente '.$rowDatos['Vehiculo_1_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_1_Nombre'].' '.$rowDatos['Hijo_1_ApellidoPat'].' '.$rowDatos['Hijo_1_ApellidoMat']; ?></td>
 							<td align="right"><?php echo Valores($rowDatos['Monto_1'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($rowDatos['Vehiculo_2_Nombre'])&&$rowDatos['Vehiculo_2_Nombre']!=''){?>
+					<?php if(isset($rowDatos['Vehiculo_2_Nombre'])&&$rowDatos['Vehiculo_2_Nombre']!=''){ ?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_2_Nombre'].' Patente '.$rowDatos['Vehiculo_2_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_2_Nombre'].' '.$rowDatos['Hijo_2_ApellidoPat'].' '.$rowDatos['Hijo_2_ApellidoMat']; ?></td>
 							<td align="right"><?php echo Valores($rowDatos['Monto_2'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($rowDatos['Vehiculo_3_Nombre'])&&$rowDatos['Vehiculo_3_Nombre']!=''){?>
+					<?php if(isset($rowDatos['Vehiculo_3_Nombre'])&&$rowDatos['Vehiculo_3_Nombre']!=''){ ?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_3_Nombre'].' Patente '.$rowDatos['Vehiculo_3_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_3_Nombre'].' '.$rowDatos['Hijo_3_ApellidoPat'].' '.$rowDatos['Hijo_3_ApellidoMat']; ?></td>
 							<td align="right"><?php echo Valores($rowDatos['Monto_3'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($rowDatos['Vehiculo_4_Nombre'])&&$rowDatos['Vehiculo_4_Nombre']!=''){?>
+					<?php if(isset($rowDatos['Vehiculo_4_Nombre'])&&$rowDatos['Vehiculo_4_Nombre']!=''){ ?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_4_Nombre'].' Patente '.$rowDatos['Vehiculo_4_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_4_Nombre'].' '.$rowDatos['Hijo_4_ApellidoPat'].' '.$rowDatos['Hijo_4_ApellidoMat']; ?></td>
 							<td align="right"><?php echo Valores($rowDatos['Monto_4'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($rowDatos['Vehiculo_5_Nombre'])&&$rowDatos['Vehiculo_5_Nombre']!=''){?>
+					<?php if(isset($rowDatos['Vehiculo_5_Nombre'])&&$rowDatos['Vehiculo_5_Nombre']!=''){ ?>
 						<tr>
 							<td><?php echo $rowDatos['Vehiculo_5_Nombre'].' Patente '.$rowDatos['Vehiculo_5_Patente']; ?></td>
 							<td><?php echo $rowDatos['Hijo_5_Nombre'].' '.$rowDatos['Hijo_5_ApellidoPat'].' '.$rowDatos['Hijo_5_ApellidoMat']; ?></td>

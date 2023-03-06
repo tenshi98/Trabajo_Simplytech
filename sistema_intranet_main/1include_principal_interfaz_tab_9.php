@@ -126,7 +126,7 @@ $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 																		if($i<$diaSemana || $i>=$last_cell){
 																			echo "<td class='fc-Dia fc-wed fc-widget-content fc-other-Mes fc-future fc-state-none'> </td>";
 																		// mostramos el dia
-																		}else{?>
+																		}else{ ?>
 																			<td class="fc-Dia fc-sun fc-widget-content fc-past fc-first <?php if($Dia==$diaActual){ echo 'fc-state-highlight';} ?>">
 																				<div class="calendar_min">
 																					<div class="fc-Dia-number"><?php echo $Dia; ?></div>

@@ -143,7 +143,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select('Tipo de Evaluacion','idTipoQuiz', $x7, 2, 'idTipoQuiz', 'Nombre', 'quiz_tipo_quiz', 0, '', $dbConn);
 
 				$Form_Inputs->form_tittle(3, 'Header');
-				$Form_Inputs->form_input_text('Texto Cabecera', 'Header_texto', $x8, 1); 
+				$Form_Inputs->form_input_text('Texto Cabecera', 'Header_texto', $x8, 1);
 				$Form_Inputs->form_date('F Inicio','Header_fecha', $x9, 1);
 
 				$Form_Inputs->form_tittle(3, 'Contenido');
@@ -269,7 +269,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		</div>
 	</div>
 </div>
-	 
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
  }elseif(!empty($_GET['addPreg'])){ ?>
 
@@ -298,7 +298,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Categoria','idCategoria', $x1, 2, 'idCategoria', 'Nombre', 'quiz_categorias', 0, '', $dbConn);
-				$Form_Inputs->form_input_text('Pregunta', 'Nombre', $x2, 2); 
+				$Form_Inputs->form_input_text('Pregunta', 'Nombre', $x2, 2);
 				$Form_Inputs->form_select('Tipo de Pregunta','idTipo', $x3, 2, 'idTipo', 'Nombre', 'quiz_tipo', 'idTipo!=2', '', $dbConn);
 
 				$Form_Inputs->form_input_text('Opcion 1', 'Opcion_1', $x4, 1);
@@ -468,7 +468,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Categoria','idCategoria', $x1, 2, 'idCategoria', 'Nombre', 'quiz_categorias', 0, '', $dbConn);
-				$Form_Inputs->form_input_text('Pregunta', 'Nombre', $x2, 2); 
+				$Form_Inputs->form_input_text('Pregunta', 'Nombre', $x2, 2);
 				$Form_Inputs->form_select('Tipo de Pregunta','idTipo', $x3, 2, 'idTipo', 'Nombre', 'quiz_tipo', 'idTipo!=2', '', $dbConn);
 
 				$Form_Inputs->form_input_text('Opcion 1', 'Opcion_1', $x4, 1);
@@ -549,7 +549,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							document.getElementById('div_Opcion_5').style.display = 'none';
 							document.getElementById('div_Opcion_6').style.display = 'none';
 							document.getElementById('div_OpcionCorrecta').style.display = 'none';
-								
+
 						}
 							
 	
@@ -795,7 +795,7 @@ foreach ($arrPreguntas as $preg) {
 							<td class="meta-head">Sistema</td>
 							<td><?php echo $rowdata['sistema']; ?></td>
 						</tr>
-						<tr>	
+						<tr>
 							<td class="meta-head">Estado</td>
 							<td><?php echo $rowdata['Estado']; ?></td>
 						</tr>
@@ -958,7 +958,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_select('Tipo de Evaluacion','idTipoQuiz', $x7, 2, 'idTipoQuiz', 'Nombre', 'quiz_tipo_quiz', 0, '', $dbConn);
 
 				$Form_Inputs->form_tittle(3, 'Header');
-				$Form_Inputs->form_input_text('Texto Cabecera', 'Header_texto', $x8, 1); 
+				$Form_Inputs->form_input_text('Texto Cabecera', 'Header_texto', $x8, 1);
 				$Form_Inputs->form_date('F Inicio','Header_fecha', $x9, 1);
 
 				$Form_Inputs->form_tittle(3, 'Contenido');
@@ -1066,7 +1066,7 @@ $SIS_where = "quiz_listado.idQuiz!=0";
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){  $SIS_where .= " AND quiz_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idQuiz', 'quiz_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -1091,12 +1091,12 @@ $arrUsers = db_select_array (false, $SIS_query, 'quiz_listado', $SIS_join, $SIS_
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cuestionario</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cuestionario</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -1156,8 +1156,8 @@ $arrUsers = db_select_array (false, $SIS_query, 'quiz_listado', $SIS_join, $SIS_
 						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $usuarios['Estado']; ?></label></td>
 						<td>
 							<div class="btn-group widthtd120" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_quiz.php?view='.simpleEncode($usuarios['idQuiz'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id_quiz='.$usuarios['idQuiz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_quiz.php?view='.simpleEncode($usuarios['idQuiz'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id_quiz='.$usuarios['idQuiz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del_quiz='.simpleEncode($usuarios['idQuiz'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el Punto '.$usuarios['Nombre'].'?'; ?>

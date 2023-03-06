@@ -28,7 +28,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 
-//------------------------------------- Licitacion -------------------------------------// 
+//------------------------------------- Licitacion -------------------------------------//
 //formulario para crear
 if (!empty($_POST['submit_Maquina'])){
 	//Llamamos al formulario
@@ -293,8 +293,8 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			$t[$i]  = '';
 
 			//si el dato solicitado tiene valores sobreescribe la variable
-			if(isset($key['LVL_'.$i.'_id'])&&$key['LVL_'.$i.'_id']!=''){              $d[$i]  = $key['LVL_'.$i.'_id'];}  
-			if(isset($key['LVL_'.$i.'_Nombre'])&&$key['LVL_'.$i.'_Nombre']!=''){      $n[$i]  = $key['LVL_'.$i.'_Nombre'];}   
+			if(isset($key['LVL_'.$i.'_id'])&&$key['LVL_'.$i.'_id']!=''){              $d[$i]  = $key['LVL_'.$i.'_id'];}
+			if(isset($key['LVL_'.$i.'_Nombre'])&&$key['LVL_'.$i.'_Nombre']!=''){      $n[$i]  = $key['LVL_'.$i.'_Nombre'];}
 			if(isset($key['LVL_'.$i.'_Codigo'])&&$key['LVL_'.$i.'_Codigo']!=''){      $c[$i]  = $key['LVL_'.$i.'_Codigo'];}
 			if(isset($key['LVL_'.$i.'_idUtilizable'])&&$key['LVL_'.$i.'_idUtilizable']!=''){ $u[$i]  = $key['LVL_'.$i.'_idUtilizable'];}
 			if(isset($key['LVL_'.$i.'_idLicitacion'])&&$key['LVL_'.$i.'_idLicitacion']!=''){ $x[$i]  = $key['LVL_'.$i.'_idLicitacion'];}
@@ -303,7 +303,6 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			if(isset($key['LVL_'.$i.'_imagen'])&&$key['LVL_'.$i.'_imagen']!=''){      $t[$i]  = $key['LVL_'.$i.'_imagen'];}
 
 		}
-		
 
 		if( $d['1']!=''){
 			$array3d[$d['1']]['id']         = $d['1'];
@@ -540,16 +539,8 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Tabla']      = $y['25'];
 			$array3d[$d['1']][$d['2']][$d['3']][$d['4']][$d['5']][$d['6']][$d['7']][$d['8']][$d['9']][$d['10']][$d['11']][$d['12']][$d['13']][$d['14']][$d['15']][$d['16']][$d['17']][$d['18']][$d['19']][$d['20']][$d['21']][$d['22']][$d['23']][$d['24']][$d['25']]['Valor']      = $m['25'];
 		}*/
-		
-		
-		
+
 	}
-
-
-
-
-
-
 
 	function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,$location, $nmax)
 	{
@@ -559,7 +550,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 		}else{
 			echo '<ul style="padding-left: 20px;">';
 		}
-		
+
 		foreach ($array as $key => $value){
 			//Rearmo la ubicacion de acuerdo a la profundidad
 			if (isset($value['id'])){
@@ -583,14 +574,13 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							echo $Trabajo[$value['Licitacion']][$value['Tabla']][$value['Valor']]['Nombre'];
 							echo ')</strong>';
 						}
-					echo '</div>';		
+					echo '</div>';
 
-								
 					echo '<div class="clearfix"></div>';
 				echo '</div>';
 			}
 			if (!empty($value) && is_array($value)){
-				
+
 				echo arrayToUL($value, $TipoMaq, $Trabajo, $lv, $rowlevel,$loc, $nmax);
 			}
 			echo '</li>';
@@ -600,6 +590,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 //fin de la condicion
 }
+
 ?>
 
 
@@ -625,10 +616,14 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 						<li class=""><a href="<?php echo 'unidad_negocio_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_descripcion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-tasks" aria-hidden="true"></i> Descripcion</a></li>
-						<?php if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+						<?php
+						//Uso de componentes
+						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
 							<li class=""><a href="<?php echo 'unidad_negocio_listado_componentes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-cubes" aria-hidden="true"></i> Componentes</a></li>
 						<?php } ?>
-						<?php if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
+						<?php
+						//uso de matriz de analisis
+						if(isset($rowdata['idConfig_2'])&&$rowdata['idConfig_2']==1){ ?>
 							<li class=""><a href="<?php echo 'unidad_negocio_listado_matriz_analisis.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-microchip" aria-hidden="true"></i> Matriz Analisis</a></li>
 						<?php } ?>
 
@@ -711,14 +706,13 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 								?>
 							</tbody>
 						</table>
-						
-						
 
-						
 					</div>
 					<div class="clearfix"></div>
 
-					<?php if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
+					<?php
+						//Uso de componentes
+						if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){ ?>
 						<table id="dataTable" class="table table-bordered table-condensed dataTable">
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<tr>
@@ -733,7 +727,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 										<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 											<div class="modal-dialog">
-												<div class="modal-content">              
+												<div class="modal-content">
 													<div class="modal-body">
 														<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
 														<img src="" class="imagepreview" style="width: 100%;padding: 15px;" >
@@ -745,11 +739,11 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 											$(function() {
 													$('.pop').on('click', function() {
 														$('.imagepreview').attr('src',$(this).attr('src'));
-														$('#imagemodal').modal('show');   
-													});		
+														$('#imagemodal').modal('show');
+													});
 											});
 										</script>
-										
+
 									</td>
 								</tr>
 							</tbody>
@@ -761,11 +755,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 		</div>
 	</div>
-</div>	
-	
-
-
-
+</div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -819,7 +809,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 			</form>
 			<?php widget_validator(); ?>
-                    
+
 		</div>
 	</div>
 </div>
@@ -861,7 +851,7 @@ $SIS_where = "maquinas_listado.idSistema=".$_SESSION['usuario']['basic_data']['i
 if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){  $SIS_where .= " AND maquinas_listado.idCliente=".$_GET['idCliente'];}
 if(isset($_GET['Codigo']) && $_GET['Codigo']!=''){ $SIS_where .= " AND maquinas_listado.Codigo LIKE '%".EstandarizarInput($_GET['Codigo'])."%'";}
 if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){ $SIS_where .= " AND maquinas_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idMaquina', 'maquinas_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -892,12 +882,12 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Maquina</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Maquina</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -915,9 +905,8 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Cliente','idCliente', $x0, 1, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
 				$Form_Inputs->form_input_text('Codigo', 'Codigo', $x1, 1);
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 1); 
-				
-				
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 1);
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 
@@ -931,8 +920,8 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
-                                 
+<div class="clearfix"></div>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -989,9 +978,9 @@ $arrMaquina = db_select_array (false, $SIS_query, 'maquinas_listado', $SIS_join,
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $maq['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 140px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_maquinas.php?view='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&nombre_maquina='.$maq['Nombre'].'&clone_idMaquina='.$maq['idMaquina']; ?>" title="Clonar Maquina" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$maq['idMaquina']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_maquinas.php?view='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&nombre_maquina='.$maq['Nombre'].'&clone_idMaquina='.$maq['idMaquina']; ?>" title="Clonar Maquina" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$maq['idMaquina']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($maq['idMaquina'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el registro '.$maq['Nombre'].'?'; ?>

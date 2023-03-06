@@ -248,9 +248,7 @@ foreach ($arrPermisos as $prod) {
 						}
 					}
 				}
-				
-				
-				
+
 				$Form_Inputs->form_tittle(3, 'Final');
 				$Form_Inputs->form_textarea('Diagnostico','obs_Diagnostico', $x7, 1);
 				$Form_Inputs->form_textarea('Accion','obs_Accion', $x8, 1);
@@ -400,6 +398,7 @@ array_push( $arrPermisos,$row );
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -466,9 +465,7 @@ foreach ($arrPermisos as $prod) {
 					
 					
 				}
-				
-				
-				
+
 				$Form_Inputs->form_tittle(3, 'Final');
 				$Form_Inputs->form_textarea('Diagnostico','obs_Diagnostico', '', 1);
 				$Form_Inputs->form_textarea('Accion','obs_Accion', '', 1);
@@ -489,7 +486,7 @@ foreach ($arrPermisos as $prod) {
 
 					$("#idTipo").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-						
+
 						//si es Interno
 						if(modelSelected1 == 1){
 							document.getElementById('div_idLaboratorio').style.display = 'none';
@@ -500,8 +497,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('div_idLaboratorio').style.display = '';
 						}
 					});
-							
-							
+
 				</script>
 
 				<div class="form-group">
@@ -642,12 +638,12 @@ $arrTipo = db_select_array (false, $SIS_query, 'analisis_listado', $SIS_join, $S
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location.'&pagina='.$_GET['pagina'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Ingresar Nuevo Analisis</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location.'&pagina='.$_GET['pagina'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Ingresar Nuevo Analisis</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -759,8 +755,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'analisis_listado', $SIS_join, $S
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['RazonSocial']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group"style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_analisis.php?view='.simpleEncode($tipo['idAnalisis'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$tipo['idAnalisis']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_analisis.php?view='.simpleEncode($tipo['idAnalisis'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$tipo['idAnalisis']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($tipo['idAnalisis'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el analisis?'; ?>

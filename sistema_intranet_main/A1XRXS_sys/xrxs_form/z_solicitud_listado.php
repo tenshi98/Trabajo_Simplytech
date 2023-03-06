@@ -224,8 +224,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
-				
+
 				// Se traen los datos del producto
 				$rowProducto = db_select_data (false, 'productos_listado.Nombre,productos_listado.idProveedor, sistema_productos_uml.Nombre AS Unimed', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'idProducto='.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -1073,8 +1072,7 @@ require_once '0_validate_user_1.php';
 
 				//Condiciono la variable observaciones
 				if(empty($Observaciones)){ $Observaciones="OC Generada a partir de Solicitudes";}
-				
-				
+
 				//Se guardan los datos basicos del formulario recien llenado
 				if(isset($idSistema)&&$idSistema!=''){            $_SESSION['ocompra_basicos']['idSistema']       = $idSistema;      }else{$_SESSION['ocompra_basicos']['idSistema']       = '';}
 				if(isset($idUsuario)&&$idUsuario!=''){            $_SESSION['ocompra_basicos']['idUsuario']       = $idUsuario;      }else{$_SESSION['ocompra_basicos']['idUsuario']       = '';}
@@ -1270,4 +1268,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

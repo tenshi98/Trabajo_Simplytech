@@ -258,7 +258,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrOTS as $ot) { 
+					<?php foreach ($arrOTS as $ot) {
 						//Litros aplicados
 						$sdata1 = $ot['Telem_Diferencia'];
 						//litros por hectareas
@@ -434,7 +434,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 					$("#idEstado").on("change", function(){ //se ejecuta al cambiar valor del select
 						let idEstado = $(this).val(); //Asignamos el valor seleccionado
-						
+
 						//Solicitado
 						if(idEstado == 1){
 							document.getElementById('div_f_programacion_desde').style.display = 'block';

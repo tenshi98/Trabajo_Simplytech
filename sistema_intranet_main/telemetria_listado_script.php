@@ -137,7 +137,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_script', $SIS_
 				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x4, 2);
 				$Form_Inputs->form_select('Modificado','idModificado', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 
-				if(isset($rowdata['ScriptFile'])&&$rowdata['ScriptFile']!=''){?>
+				if(isset($rowdata['ScriptFile'])&&$rowdata['ScriptFile']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<h3>Archivo</h3>
@@ -292,7 +292,7 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Scripts'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-		<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Script</a><?php } ?>
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Script</a><?php } ?>
 	</div>
 </div>
 <div class="clearfix"></div>
@@ -358,8 +358,8 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 							</td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_telemetria_script.php?view='.simpleEncode($script['idScript'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$script['idScript']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_telemetria_script.php?view='.simpleEncode($script['idScript'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$script['idScript']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($script['idScript'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la observacion del usuario '.$script['nombre_usuario'].'?'; ?>

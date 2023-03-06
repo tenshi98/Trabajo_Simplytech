@@ -154,7 +154,7 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			
 			if(empty($error)){
-		
+
 				//Filtros
 				$SIS_data = "idMatriz='".$idMatriz."'";
 				if(isset($Nombre) && $Nombre!=''){                             $SIS_data .= ",Nombre='".$Nombre."'";}
@@ -185,7 +185,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_update_data (false, $SIS_data, 'cross_quality_calidad_matriz', 'idMatriz = "'.$idMatriz.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
-					
+					//redirijo
 					header( 'Location: '.$location );
 					die;
 
@@ -294,7 +294,6 @@ require_once '0_validate_user_1.php';
 				if(isset($rowdata['idNotaTipo_1']) && $rowdata['idNotaTipo_1']!=''){   $SIS_data .= ",'".$rowdata['idNotaTipo_1']."'";   }else{$SIS_data .= ",''";}
 				if(isset($rowdata['idNotaTipo_2']) && $rowdata['idNotaTipo_2']!=''){   $SIS_data .= ",'".$rowdata['idNotaTipo_2']."'";   }else{$SIS_data .= ",''";}
 				if(isset($rowdata['idNotaTipo_3']) && $rowdata['idNotaTipo_3']!=''){   $SIS_data .= ",'".$rowdata['idNotaTipo_3']."'";   }else{$SIS_data .= ",''";}
-				
 
 				for ($i = 1; $i <= 100; $i++) {
 					if(isset($rowdata['PuntoNombre_'.$i]) && $rowdata['PuntoNombre_'.$i]!=''){                    $SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'";           }else{$SIS_data .= ",''";}
@@ -371,7 +370,6 @@ require_once '0_validate_user_1.php';
 				if(isset($rowdata['idNotaTipo_1']) && $rowdata['idNotaTipo_1']!=''){   $SIS_data .= ",'".$rowdata['idNotaTipo_1']."'";   }else{$SIS_data .= ",''";}
 				if(isset($rowdata['idNotaTipo_2']) && $rowdata['idNotaTipo_2']!=''){   $SIS_data .= ",'".$rowdata['idNotaTipo_2']."'";   }else{$SIS_data .= ",''";}
 				if(isset($rowdata['idNotaTipo_3']) && $rowdata['idNotaTipo_3']!=''){   $SIS_data .= ",'".$rowdata['idNotaTipo_3']."'";   }else{$SIS_data .= ",''";}
-				
 
 				for ($i = 1; $i <= 100; $i++) {
 					if(isset($rowdata['PuntoNombre_'.$i]) && $rowdata['PuntoNombre_'.$i]!=''){                    $SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'";           }else{$SIS_data .= ",''";}
@@ -400,4 +398,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

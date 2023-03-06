@@ -312,7 +312,7 @@ foreach ($arrImpuestos as $impto) {
 }
 					
 //Si el documento esta pagado se muestran los datos relacionados al pago
-if($row_data['MontoPagado']!=0){?>
+if($row_data['MontoPagado']!=0){ ?>
 	<div class="" style="margin-top:10px;">
 		<div class="col-xs-12">
 			<div class="panel panel-success">
@@ -395,7 +395,7 @@ if($row_data['MontoPagado']!=0){?>
 		</div>
 	</div>
 <?php } ?>
-<?php if(isset($row_data['idOcompra'])&&$row_data['idOcompra']!=0){?>
+<?php if(isset($row_data['idOcompra'])&&$row_data['idOcompra']!=0){ ?>
 	<div class="" style="margin-top:10px;">
 		<div class="col-xs-12">
 			<div class="panel panel-success">
@@ -888,7 +888,7 @@ if($row_data['MontoPagado']!=0){?>
 				<tbody>
 					<?php if ($arrProductos!=false && !empty($arrProductos) && $arrProductos!='') { ?>
 						<tr class="active"><td colspan="5"><strong>Productos</strong></td></tr>
-						<?php foreach ($arrProductos as $prod) {?>
+						<?php foreach ($arrProductos as $prod) { ?>
 							<tr>
 								<td><?php echo '<strong>'.$prod['NombreBodega'].'</strong> - '.$prod['Nombre']; ?></td>
 								<?php
@@ -933,7 +933,7 @@ if($row_data['MontoPagado']!=0){?>
 			</table>
 			<table class="table">
 				<tbody>
-					<?php if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){?>
+					<?php if(isset($row_data['ValorNeto'])&&$row_data['ValorNeto']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong>Subtotal</strong></td>
 							<td width="160" align="right"><?php echo Valores($row_data['ValorNeto'], 0); ?></td>
@@ -945,73 +945,73 @@ if($row_data['MontoPagado']!=0){?>
 							<td width="160" align="right"><?php echo Valores($descuentos['vTotal'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['ValorNetoImp'])&&$row_data['ValorNetoImp']!=0){?>
+					<?php if(isset($row_data['ValorNetoImp'])&&$row_data['ValorNetoImp']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong>Neto Imponible</strong></td>
 							<td width="160" align="right"><?php echo Valores($row_data['ValorNetoImp'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_01'])&&$row_data['Impuesto_01']!=0){?>
+					<?php if(isset($row_data['Impuesto_01'])&&$row_data['Impuesto_01']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[0]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_01'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_02'])&&$row_data['Impuesto_02']!=0){?>
+					<?php if(isset($row_data['Impuesto_02'])&&$row_data['Impuesto_02']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[1]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_02'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_03'])&&$row_data['Impuesto_03']!=0){?>
+					<?php if(isset($row_data['Impuesto_03'])&&$row_data['Impuesto_03']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[2]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_03'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_04'])&&$row_data['Impuesto_04']!=0){?>
+					<?php if(isset($row_data['Impuesto_04'])&&$row_data['Impuesto_04']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[3]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_04'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_05'])&&$row_data['Impuesto_05']!=0){?>
+					<?php if(isset($row_data['Impuesto_05'])&&$row_data['Impuesto_05']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[4]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_05'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_06'])&&$row_data['Impuesto_06']!=0){?>
+					<?php if(isset($row_data['Impuesto_06'])&&$row_data['Impuesto_06']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[5]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_06'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_07'])&&$row_data['Impuesto_07']!=0){?>
+					<?php if(isset($row_data['Impuesto_07'])&&$row_data['Impuesto_07']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[6]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_07'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_08'])&&$row_data['Impuesto_08']!=0){?>
+					<?php if(isset($row_data['Impuesto_08'])&&$row_data['Impuesto_08']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[7]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_08'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_09'])&&$row_data['Impuesto_09']!=0){?>
+					<?php if(isset($row_data['Impuesto_09'])&&$row_data['Impuesto_09']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[8]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_09'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['Impuesto_10'])&&$row_data['Impuesto_10']!=0){?>
+					<?php if(isset($row_data['Impuesto_10'])&&$row_data['Impuesto_10']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong><?php echo $impuestos[9]['nimp']; ?></strong></td>
 							<td align="right"><?php echo Valores($row_data['Impuesto_10'], 0); ?></td>
 						</tr>
 					<?php } ?>
-					<?php if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){?>
+					<?php if(isset($row_data['ValorTotal'])&&$row_data['ValorTotal']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td colspan="4" align="right"><strong>Total</strong></td>
 							<td align="right"><?php echo Valores($row_data['ValorTotal'], 0); ?></td>
@@ -1032,7 +1032,7 @@ if($row_data['MontoPagado']!=0){?>
 
 	<?php
 	//Traspaso de Productos a otra Empresa
-	if($row_data['idTipo']==6){?>
+	if($row_data['idTipo']==6){ ?>
 
 		<div class="row firma">
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 fcont"><p>Firma Transportista</p></div>
@@ -1072,7 +1072,7 @@ if($row_data['MontoPagado']!=0){?>
 					<th>Usuario</th>
 					<th>Observacion</th>
 				</tr>
-				<?php foreach ($arrHistorial as $doc){?>
+				<?php foreach ($arrHistorial as $doc){ ?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
@@ -1089,7 +1089,7 @@ if($row_data['MontoPagado']!=0){?>
 				<tr>
 					<th colspan="6">Archivos Adjuntos</th>
 				</tr>
-				<?php foreach ($arrArchivo as $producto){?>
+				<?php foreach ($arrArchivo as $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
 						<td width="160">

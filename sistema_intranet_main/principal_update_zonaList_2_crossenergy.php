@@ -263,7 +263,7 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) {$Count_Fu
 		/*************************************************************/
 		//Alertas
 		if(isset($arrGruas[2])){
-			foreach ( $arrGruas[2] as $categoria=>$grua ) {?>
+			foreach ( $arrGruas[2] as $categoria=>$grua ) { ?>
 			<tr class="odd <?php echo $grua['tr_color']; ?>">
 				<td width="10">
 					<div class="btn-group" style="width: 35px;" >
@@ -290,7 +290,7 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) {$Count_Fu
 		/*************************************************************/
 		//OK
 		if(isset($arrGruas[1])){
-			foreach ( $arrGruas[1] as $categoria=>$grua ) {?>
+			foreach ( $arrGruas[1] as $categoria=>$grua ) { ?>
 			<tr class="odd <?php echo $grua['tr_color']; ?>">
 				<td width="10">
 					<div class="btn-group" style="width: 35px;" >
@@ -317,7 +317,7 @@ if(isset($arrGruas[3])){foreach ( $arrGruas[3] as $categoria=>$grua ) {$Count_Fu
 		/*************************************************************/
 		//Fuera de linea
 		if(isset($arrGruas[3])){
-			foreach ( $arrGruas[3] as $categoria=>$grua ) {?>
+			foreach ( $arrGruas[3] as $categoria=>$grua ) { ?>
 			<tr class="odd <?php echo $grua['tr_color']; ?>">
 				<td width="10">
 					<div class="btn-group" style="width: 35px;" >

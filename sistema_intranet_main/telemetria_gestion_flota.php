@@ -212,7 +212,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 								intro();
 
 								//Se llama a la ruta
-								<?php if(isset($_GET['idRuta'])&&$_GET['idRuta']!=''){?>
+								<?php if(isset($_GET['idRuta'])&&$_GET['idRuta']!=''){ ?>
 									RutasAlternativas();
 								<?php } ?>
 								
@@ -529,10 +529,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
         </div>
 	</div>
 </div>
-
-
-
-
 
 <?php } ?>
 <?php

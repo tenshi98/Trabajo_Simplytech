@@ -83,7 +83,7 @@ foreach ($arrMediciones as $med) {
 
 		//Se obtiene la fecha
 		$Temp_1 .= "'".Fecha_estandar($med['Fecha'])." - ".$med['Hora']."',";
-		
+
 		if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){$arrData[1]['Value'] .= ", ".$med['Temperatura'];    }else{ $arrData[1]['Value'] = $med['Temperatura'];}
 		if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){$arrData[2]['Value'] .= ", ".$med['PuntoRocio'];     }else{ $arrData[2]['Value'] = $med['PuntoRocio'];}
 		if(isset($arrData[3]['Value'])&&$arrData[3]['Value']!=''){$arrData[3]['Value'] .= ", ".$med['PresionAtmos'];   }else{ $arrData[3]['Value'] = $med['PresionAtmos'];}
@@ -180,7 +180,7 @@ document.getElementById("loading").style.display = "none";
 					<?php
 					$unifrio  = 0;
 					$diasAcum = 0;
-					foreach ($arrMed as $key => $med){ 
+					foreach ($arrMed as $key => $med){
 						//verifico helada
 						if(isset($med['Tiempo_Helada'])&&$med['Tiempo_Helada']!=0){$helada = 'Si';}else{$helada = 'No';}
 						if($unifrio==0){
@@ -330,7 +330,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 						<input type="hidden" name="idSistema"     id="idSistema"    value="<?php echo $_SESSION['usuario']['basic_data']['idSistema']; ?>" />
 						<input type="hidden" name="fecha_desde"   id="fecha_desde"  value="<?php echo $_GET['fecha_desde']; ?>" />
 						<input type="hidden" name="fecha_hasta"   id="fecha_hasta"  value="<?php echo $_GET['fecha_hasta']; ?>" />
-						<?php if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){?>
+						<?php if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){ ?>
 							<input type="hidden" name="idTelemetria"   id="idTelemetria"  value="<?php echo $_GET['idTelemetria']; ?>" />
 						<?php } ?>
 
@@ -367,7 +367,7 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 										console.error('oops, something went wrong!', error);
 										alert('No se puede exportar!');
 										document.getElementById("loading").style.display = "none";
-									});		
+									});
 								}
 							, 3000);
 						}

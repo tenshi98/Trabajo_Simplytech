@@ -224,10 +224,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				<input type="hidden" name="idTelemetria"  id="idTelemetria" value="<?php echo $_GET['idTelemetria']; ?>" />
 				<input type="hidden" name="idGrupo"       id="idGrupo"      value="<?php echo $_GET['idGrupo']; ?>" />
 
-				<?php if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){?>       <input type="hidden" name="h_inicio"   id="h_inicio"  value="<?php echo $_GET['h_inicio']; ?>" /><?php } ?>
-				<?php if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){?>     <input type="hidden" name="h_termino"  id="h_termino" value="<?php echo $_GET['h_termino']; ?>" /><?php } ?>
-				<?php if(isset($_GET['RangoMinimo'])&&$_GET['RangoMinimo']!=''){?> <input type="hidden" name="RangoMinimo"   id="RangoMinimo"  value="<?php echo $_GET['RangoMinimo']; ?>" /><?php } ?>
-				<?php if(isset($_GET['RangoMaximo'])&&$_GET['RangoMaximo']!=''){?> <input type="hidden" name="RangoMaximo"  id="RangoMaximo" value="<?php echo $_GET['RangoMaximo']; ?>" /><?php } ?>
+				<?php if(isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''){ ?>       <input type="hidden" name="h_inicio"   id="h_inicio"  value="<?php echo $_GET['h_inicio']; ?>" /><?php } ?>
+				<?php if(isset($_GET['h_termino'])&&$_GET['h_termino']!=''){ ?>     <input type="hidden" name="h_termino"  id="h_termino" value="<?php echo $_GET['h_termino']; ?>" /><?php } ?>
+				<?php if(isset($_GET['RangoMinimo'])&&$_GET['RangoMinimo']!=''){ ?> <input type="hidden" name="RangoMinimo"   id="RangoMinimo"  value="<?php echo $_GET['RangoMinimo']; ?>" /><?php } ?>
+				<?php if(isset($_GET['RangoMaximo'])&&$_GET['RangoMaximo']!=''){ ?> <input type="hidden" name="RangoMaximo"  id="RangoMaximo" value="<?php echo $_GET['RangoMaximo']; ?>" /><?php } ?>
 
 				<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
 

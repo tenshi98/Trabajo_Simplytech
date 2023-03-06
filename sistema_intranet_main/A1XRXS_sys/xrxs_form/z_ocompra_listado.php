@@ -4006,7 +4006,7 @@ require_once '0_validate_user_1.php';
 			$Creacion_fecha   = fecha_actual();
 			$Creacion_hora    = hora_actual();
 			$idUsuario        = $_SESSION['usuario']['basic_data']['idUsuario'];
-				
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -4385,4 +4385,5 @@ require_once '0_validate_user_1.php';
 		
 						
 	}
+
 ?>

@@ -436,6 +436,7 @@ $s_arri_Ventas              = 'true';
 //Se crea la cadena para generar los graficos
 $s_arri_data = 'tipo1';
 if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
+
 ?>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table']});</script>

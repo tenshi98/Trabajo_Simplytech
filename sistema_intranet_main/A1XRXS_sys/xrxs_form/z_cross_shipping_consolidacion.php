@@ -1184,7 +1184,7 @@ require_once '0_validate_user_1.php';
 			$Creacion_fecha   = fecha_actual();
 			$Creacion_hora    = hora_actual();
 			$idUsuario        = $_SESSION['usuario']['basic_data']['idUsuario'];
-				
+
 			/*******************************************************************/
 			//variables
 			$ndata_1 = 0;
@@ -1352,7 +1352,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['ProdMuestra']            = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['ProdMuestra'];
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CTNNombreCompañia']      = $CTNNombreCompañia;                                                                               
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NInforme']               = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['NInforme'];                
-				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha']         = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['Creacion_fecha'];          
+				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Creacion_fecha']         = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['Creacion_fecha'];
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaInicioEmbarque']    = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['FechaInicioEmbarque'];    
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['HoraInicioCarga']        = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['HoraInicioCarga'];         
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['FechaTerminoEmbarque']   = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['FechaTerminoEmbarque'];   
@@ -1360,8 +1360,8 @@ require_once '0_validate_user_1.php';
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPlantaDespacho']       = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['idPlantaDespacho'];        
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCategoria']            = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['idCategoria'];             
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idProducto']             = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['idProducto'];              
-				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CantidadCajas']          = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['CantidadCajas'];          
-				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInstructivo']          = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['idInstructivo'];          
+				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['CantidadCajas']          = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['CantidadCajas'];
+				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInstructivo']          = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['idInstructivo'];
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idNaviera']              = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['idNaviera'];              
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoEmbarque']       = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['idPuertoEmbarque'];        
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idPuertoDestino']        = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['idPuertoDestino'];        
@@ -1370,16 +1370,16 @@ require_once '0_validate_user_1.php';
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idRecibidor']            = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['idRecibidor'];                  
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idEmpresaTransporte']    = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['idEmpresaTransporte'];    
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['ChoferNombreRut']        = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['ChoferNombreRut'];        
-				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCamion']          = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['PatenteCamion'];           
-				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCarro']           = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['PatenteCarro'];           
+				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCamion']          = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['PatenteCamion'];
+				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCarro']           = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['PatenteCarro'];
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCondicion']            = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['idCondicion'];             
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSellado']              = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['idSellado'];              
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TSetPoint']              = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['TSetPoint'];              
-				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TVentilacion']           = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['TVentilacion'];           
+				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TVentilacion']           = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['TVentilacion'];
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TAmbiente']              = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['TAmbiente'];              
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['NumeroSello']            = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['NumeroSello'];             
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idInspector']            = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['idInspector'];            
-				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Observaciones']          = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['Observaciones'];          
+				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['Observaciones']          = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['Observaciones'];
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSistema']              = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['idSistema'];              
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idUsuario']              = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['idUsuario'];              
 				$_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['fecha_auto']             = $_SESSION['cross_shipping_consolidacion_basicos'][$cloneConsolidacion]['fecha_auto'];             
@@ -1821,4 +1821,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

@@ -214,6 +214,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrGrupo,$row );
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -428,6 +429,7 @@ array_push( $arrPermisos,$row );
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idTipo={$prod['idTipo']})";
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -449,8 +451,7 @@ foreach ($arrPermisos as $prod) {
 				if(isset($H_inspeccion)){    $x7  = $H_inspeccion;    }else{$x7  = $_SESSION['cross_quality_reg_insp_muestras'][$_GET['editMuestra']]['H_inspeccion'];}
 				if(isset($cantidad)){        $x8  = $cantidad;        }else{$x8  = $_SESSION['cross_quality_reg_insp_muestras'][$_GET['editMuestra']]['cantidad'];}
 				if(isset($peso)){            $x9  = $peso;            }else{$x9  = $_SESSION['cross_quality_reg_insp_muestras'][$_GET['editMuestra']]['peso'];}
-				
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
@@ -977,7 +978,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){?>
+} elseif(!empty($_GET['view'])){ ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">
@@ -1109,7 +1110,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				<tr id="hiderow"><td colspan="6"></td></tr>
 				<?php /**********************************************************************************/
 				//se verifica que exista una matriz relacionada al producto previamente seleccionado
-				if(isset($_SESSION['cross_quality_reg_insp_basicos']['idMatriz'])&&$_SESSION['cross_quality_reg_insp_basicos']['idMatriz']!=''){?>
+				if(isset($_SESSION['cross_quality_reg_insp_basicos']['idMatriz'])&&$_SESSION['cross_quality_reg_insp_basicos']['idMatriz']!=''){ ?>
 					<tr class="item-row fact_tittle">
 						<td colspan="5">Muestras</td>
 						<td>
@@ -1174,7 +1175,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 			if (isset($_SESSION['cross_quality_reg_insp_archivos'])){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
-				foreach ($_SESSION['cross_quality_reg_insp_archivos'] as $key => $producto){?>
+				foreach ($_SESSION['cross_quality_reg_insp_archivos'] as $key => $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
 						<td>
@@ -1377,7 +1378,7 @@ if(isset($_GET['idUbicacion_lvl_2']) && $_GET['idUbicacion_lvl_2']!=''){  $SIS_w
 if(isset($_GET['idUbicacion_lvl_3']) && $_GET['idUbicacion_lvl_3']!=''){  $SIS_where .= " AND cross_quality_registrar_inspecciones.idUbicacion_lvl_3=".$_GET['idUbicacion_lvl_3'];}
 if(isset($_GET['idUbicacion_lvl_4']) && $_GET['idUbicacion_lvl_4']!=''){  $SIS_where .= " AND cross_quality_registrar_inspecciones.idUbicacion_lvl_4=".$_GET['idUbicacion_lvl_4'];}
 if(isset($_GET['idUbicacion_lvl_5']) && $_GET['idUbicacion_lvl_5']!=''){  $SIS_where .= " AND cross_quality_registrar_inspecciones.idUbicacion_lvl_5=".$_GET['idUbicacion_lvl_5'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idAnalisis', 'cross_quality_registrar_inspecciones', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -1432,6 +1433,7 @@ $arrProductos  = db_select_array (false, 'idProducto', 'core_sistemas_variedades
 
 foreach ($arrCategorias as $prod) {$zx1 .= " OR (idCategoria={$prod['idCategoria']})";}
 foreach ($arrProductos as $prod) { $zx2 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";}
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
@@ -1439,13 +1441,13 @@ foreach ($arrProductos as $prod) { $zx2 .= " OR (idEstado=1 AND idProducto={$pro
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
 	<?php if ($rowlevel['level']>=3){ ?>
-		<?php if (isset($_SESSION['cross_quality_reg_insp_basicos']['idTipo'])&&$_SESSION['cross_quality_reg_insp_basicos']['idTipo']!=''){?>
+		<?php if (isset($_SESSION['cross_quality_reg_insp_basicos']['idTipo'])&&$_SESSION['cross_quality_reg_insp_basicos']['idTipo']!=''){ ?>
 
 			<?php
 			$ubicacion = $location.'&clear_all=true';
@@ -1506,8 +1508,8 @@ foreach ($arrProductos as $prod) { $zx2 .= " OR (idEstado=1 AND idProducto={$pro
         </div>
 	</div>
 </div>
-<div class="clearfix"></div> 
-                                 
+<div class="clearfix"></div>
+
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -1588,8 +1590,8 @@ foreach ($arrProductos as $prod) { $zx2 .= " OR (idEstado=1 AND idProducto={$pro
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_cross_quality_registrar_inspecciones.php?view='.simpleEncode($tipo['idAnalisis'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo 'cross_quality_registrar_inspecciones_edit.php?edit='.$tipo['idAnalisis']; ?>" title="Editar Inspeccion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_cross_quality_registrar_inspecciones.php?view='.simpleEncode($tipo['idAnalisis'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo 'cross_quality_registrar_inspecciones_edit.php?edit='.$tipo['idAnalisis']; ?>" title="Editar Inspeccion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

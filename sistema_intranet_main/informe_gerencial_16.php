@@ -270,7 +270,7 @@ switch ($_GET['idTipoProd']) {
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-				<?php foreach ($arrTipo as $prod) {?>
+				<?php foreach ($arrTipo as $prod) { ?>
 					<tr class="odd">
 						<td>
 							<?php

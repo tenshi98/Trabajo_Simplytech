@@ -134,7 +134,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 $zx1 = "idProducto=0";
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idTipoProducto=1 AND idEstado=1 AND idProducto=".$prod['idProducto'].")";
-}	
+}
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -233,7 +234,8 @@ $zx1 = "idProducto=0";
 //recorro
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idTipoProducto=1 AND idEstado=1 AND idProducto=".$prod['idProducto'].")";
-}	
+}
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -328,7 +330,8 @@ $zx1 = "idProducto=0";
 //recorro
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idTipoProducto=1 AND idEstado=1 AND idProducto={$prod['idProducto']})";
-}	
+}
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -675,11 +678,11 @@ $arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join
 	//Se revisa si existen Productos dentro de la receta
 	if($conteoRecetas==0){ ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-			<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Receta</a><?php } ?>
+			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Receta</a><?php } ?>
 		</div>
-	<?php } elseif($total<1){?>
+	<?php } elseif($total<1){ ?>
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-			<?php if ($rowlevel['level']>=3){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&newProd=true'; ?>" class="btn btn-default pull-right margin_width" >Agregar Materia Prima</a><?php } ?>
+			<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&newProd=true'; ?>" class="btn btn-default pull-right margin_width" >Agregar Materia Prima</a><?php } ?>
 		</div>
 	<?php } ?>
 </div>
@@ -733,7 +736,7 @@ $arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join
 						<td><?php echo Cantidades_decimales_justos($receta['Cantidad']).' '.$receta['UnidadMedida']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$receta['idReceta']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$receta['idReceta']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=3){
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del_receta='.simpleEncode($receta['idReceta'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el producto '.$receta['NombreProd'].'?'; ?>

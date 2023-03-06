@@ -79,7 +79,7 @@ $rowdata = db_select_data (false, $SIS_query, 'soporte_software_listado', $SIS_j
 					</div>
 					<div class="pull-right clearfix" style="width: 70px;">
 						<ul class="footer-icons-group">
-							<?php if(isset($rowdata['SitioWeb'])&&$rowdata['SitioWeb']!=''){?><li><a href="<?php echo $rowdata['SitioWeb']; ?>" title="Ir al Sitio" class="tooltip" style="position: relative;"><i class="fa fa-firefox" aria-hidden="true"></i></a></li><?php } ?>
+							<?php if(isset($rowdata['SitioWeb'])&&$rowdata['SitioWeb']!=''){ ?><li><a href="<?php echo $rowdata['SitioWeb']; ?>" title="Ir al Sitio" class="tooltip" style="position: relative;"><i class="fa fa-firefox" aria-hidden="true"></i></a></li><?php } ?>
 							<li><a href="<?php echo $rowdata['SitioDescarga']; ?>" title="Descargar" class="tooltip" style="position: relative;"><i class="fa fa-cloud-download" aria-hidden="true"></i></a></li>
 						</ul>
 					</div>

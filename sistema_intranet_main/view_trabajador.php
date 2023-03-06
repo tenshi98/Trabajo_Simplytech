@@ -275,7 +275,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 							<strong>Cargo : </strong><?php echo $rowdata['Cargo']; ?><br/>
 
 							<br/><span class="text-danger"><strong>Datos Contrato</strong></span><br/>
-							<?php if(isset($rowdata['Contratista'])&&$rowdata['Contratista']!=''){?><strong>Contratista : </strong><?php echo $rowdata['Contratista']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Contratista'])&&$rowdata['Contratista']!=''){ ?><strong>Contratista : </strong><?php echo $rowdata['Contratista']; ?><br/><?php } ?>
 							<strong>Tipo de Trabajador : </strong><?php echo $rowdata['TipoConTrabajador']; ?><br/>
 							<strong>Tipo de Contrato : </strong><?php echo $rowdata['TipoContrato']; ?><br/>
 							<strong>Tipo de Sueldo : </strong><?php echo $rowdata['TipoContratoTrab']; ?><br/>
@@ -507,10 +507,6 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
         </div>
 	</div>
 </div>
-
-
-
-
 
 <?php if ($arrActivos!=false && !empty($arrActivos) && $arrActivos!=''){ ?>   
 	<?php 

@@ -98,7 +98,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 		//se ejecuta al cargar la página (OBLIGATORIO)
 		$(document).ready(function(){
 			generate();
-		});				
+		});		
 		function loadFile(url,callback){
 			PizZipUtils.getBinaryContent(url,callback);
 		}
@@ -214,10 +214,6 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 			})
 		}
     </script>
-
-
-
-
 
 <?php
 /**********************************************************************************************************************************/

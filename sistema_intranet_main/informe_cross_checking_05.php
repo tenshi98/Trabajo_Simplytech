@@ -153,11 +153,11 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 									<td></td>
 									<td>
 										<div class="btn-group" style="width: 140px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion_detalle.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Detalle Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-keyboard-o" aria-hidden="true"></i></a><?php } ?>
-											<?php if ($ot['idEstado']==3){?>
-												<?php if ($rowlevel['level']>=1){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_cross_checking_02.php?idSolicitud='.$ot['idSolicitud'].'&submit_filter=Filtrar'; ?>" title="Ver Monitor de Dispositivos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-industry" aria-hidden="true"></i></a><?php } ?>
-												<?php if ($rowlevel['level']>=1){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_cross_checking_04.php?idSolicitud='.$ot['idSolicitud'].'&submit_filter=Filtrar'; ?>" title="Ver Trazabilidad de la aplicacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud_aplicacion_detalle.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Detalle Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-keyboard-o" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($ot['idEstado']==3){ ?>
+												<?php if ($rowlevel['level']>=1){ ?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_cross_checking_02.php?idSolicitud='.$ot['idSolicitud'].'&submit_filter=Filtrar'; ?>" title="Ver Monitor de Dispositivos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-industry" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=1){ ?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_cross_checking_04.php?idSolicitud='.$ot['idSolicitud'].'&submit_filter=Filtrar'; ?>" title="Ver Trazabilidad de la aplicacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a><?php } ?>
 											<?php } ?>
 										</div>
 									</td>

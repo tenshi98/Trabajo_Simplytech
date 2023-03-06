@@ -24,8 +24,8 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Inicia variable
-$SIS_where = "telemetria_listado_error_detenciones.idDetencion>0"; 
-$SIS_where.= " AND telemetria_listado_error_detenciones.idSistema=".$_GET['idSistema'];	
+$SIS_where = "telemetria_listado_error_detenciones.idDetencion>0";
+$SIS_where.= " AND telemetria_listado_error_detenciones.idSistema=".$_GET['idSistema'];
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$SIS_where.= " AND telemetria_listado.idTab=1";//CrossChecking

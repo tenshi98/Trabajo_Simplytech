@@ -59,7 +59,7 @@ if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){              
 if(isset($_GET['idFacturacionRelacionada']) && $_GET['idFacturacionRelacionada']!=''){  $SIS_where .= " AND caja_chica_facturacion.idFacturacionRelacionada='".$_GET['idFacturacionRelacionada']."'";}
 if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){                               $SIS_where .= " AND caja_chica_facturacion.idTipo='".$_GET['idTipo']."'";}
 if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){                           $SIS_where .= " AND caja_chica_facturacion.idEstado='".$_GET['idEstado']."'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idFacturacion', 'caja_chica_facturacion', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -200,6 +200,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_cajas_chicas.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">

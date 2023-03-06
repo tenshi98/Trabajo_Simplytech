@@ -233,7 +233,7 @@ foreach ($arrCreativo as $datais) {
 						->setCellValue('L'.$nn, cantidades_excel($sub_1));
 			$nn++;
 			//Suma de variables
-			$Neto_1 = $Neto_1 + $prod['Neto_1']; 
+			$Neto_1 = $Neto_1 + $prod['Neto_1'];
 			$Neto_2 = $Neto_2 + $prod['Neto_2'];
 			$Neto_3 = $Neto_3 + $prod['Neto_3'];
 			$Neto_4 = $Neto_4 + $prod['Neto_4'];

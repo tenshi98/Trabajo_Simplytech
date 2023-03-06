@@ -17,5 +17,6 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
         case 9: include '1include_principal_interfaz_9.php'; break;//Interfaz Administracion Sitios
     }
 }
+
 ?>
 

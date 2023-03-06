@@ -298,13 +298,13 @@ $max = 1000000 ;
 							<input type="submit" class="btn btn-primary fa-input" value="&#xf0c7; Transformar" name="submit_transform">
 						</td>
 					</tr>
-				<?php } else {?>
+				<?php } else { ?>
 					<tr class="item-row fact_tittle">
 						<td colspan="6">Uno o mas de los componentes de la receta esta inactivo o no posee la cantidad necesaria para la transformacion, favor verificar</td>
 					</tr>
 
 				<?php } ?>
-            <?php } else {?>
+            <?php } else { ?>
 				<tr class="item-row fact_tittle">
 					<td colspan="6">Este producto no posee recetas</td>
 				</tr>
@@ -424,12 +424,13 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['modBase'])){
-$z1 = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
+$z1 = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $z2 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z1 .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -551,7 +552,7 @@ $Form_Inputs = new Inputs();
 				<tr class="item-row fact_tittle">
 					<td colspan="5">Productos a Transformar</td>
 					<td>
-						<?php if (isset($_SESSION['productos_transform_productos'])){?>
+						<?php if (isset($_SESSION['productos_transform_productos'])){ ?>
 							<a href="<?php echo $location.'&clear_prod=true' ?>" title="Borrar Producto" class="btn btn-xs btn-danger tooltip" style="position: initial;"><i class="fa fa-trash-o" aria-hidden="true"></i> Borrar Producto</a>
 						<?php }else{ ?>
 							<a href="<?php echo $location.'&trans1=true' ?>" title="Agregar Producto" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Seleccionar Producto</a>
@@ -672,12 +673,13 @@ $Form_Inputs = new Inputs();
 //valido los permisos
 validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //se crea filtro
-$z1 = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
+$z1 = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $z2 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; 
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z1 .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -792,13 +794,13 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
 	<?php if ($rowlevel['level']>=3){
-		if (isset($_SESSION['productos_transform_basicos'])&&$_SESSION['productos_transform_basicos']!=''){?>
+		if (isset($_SESSION['productos_transform_basicos'])&&$_SESSION['productos_transform_basicos']!=''){ ?>
 
 		<?php
 		$ubicacion = $location.'&clear_all=true';
@@ -893,7 +895,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

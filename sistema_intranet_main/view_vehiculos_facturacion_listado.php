@@ -154,7 +154,7 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 				<?php 
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrHijos as $hijo) {
-					if(isset($hijo['Vehiculo_1_Nombre'])&&$hijo['Vehiculo_1_Nombre']!=''){?>
+					if(isset($hijo['Vehiculo_1_Nombre'])&&$hijo['Vehiculo_1_Nombre']!=''){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name"><?php echo $hijo['Vehiculo_1_Nombre'].' Patente '.$hijo['Vehiculo_1_Patente']; ?></td>
 							<td class="item-name"><?php echo $hijo['ApoderadoNombre'].' '.$hijo['ApoderadoApellidoPat'].' '.$hijo['ApoderadoApellidoMat']; ?></td>
@@ -167,7 +167,7 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 							</td>
 						</tr>
 					<?php }
-					if(isset($hijo['Vehiculo_2_Nombre'])&&$hijo['Vehiculo_2_Nombre']!=''){?>
+					if(isset($hijo['Vehiculo_2_Nombre'])&&$hijo['Vehiculo_2_Nombre']!=''){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name"><?php echo $hijo['Vehiculo_2_Nombre'].' Patente '.$hijo['Vehiculo_2_Patente']; ?></td>
 							<td class="item-name"><?php echo $hijo['ApoderadoNombre'].' '.$hijo['ApoderadoApellidoPat'].' '.$hijo['ApoderadoApellidoMat']; ?></td>
@@ -180,7 +180,7 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 							</td>
 						</tr>
 					<?php }
-					if(isset($hijo['Vehiculo_3_Nombre'])&&$hijo['Vehiculo_3_Nombre']!=''){?>
+					if(isset($hijo['Vehiculo_3_Nombre'])&&$hijo['Vehiculo_3_Nombre']!=''){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name"><?php echo $hijo['Vehiculo_3_Nombre'].' Patente '.$hijo['Vehiculo_3_Patente']; ?></td>
 							<td class="item-name"><?php echo $hijo['ApoderadoNombre'].' '.$hijo['ApoderadoApellidoPat'].' '.$hijo['ApoderadoApellidoMat']; ?></td>
@@ -193,7 +193,7 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 							</td>
 						</tr>
 					<?php }
-					if(isset($hijo['Vehiculo_4_Nombre'])&&$hijo['Vehiculo_4_Nombre']!=''){?>
+					if(isset($hijo['Vehiculo_4_Nombre'])&&$hijo['Vehiculo_4_Nombre']!=''){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name"><?php echo $hijo['Vehiculo_4_Nombre'].' Patente '.$hijo['Vehiculo_4_Patente']; ?></td>
 							<td class="item-name"><?php echo $hijo['ApoderadoNombre'].' '.$hijo['ApoderadoApellidoPat'].' '.$hijo['ApoderadoApellidoMat']; ?></td>
@@ -206,7 +206,7 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 							</td>
 						</tr>
 					<?php }
-					if(isset($hijo['Vehiculo_5_Nombre'])&&$hijo['Vehiculo_5_Nombre']!=''){?>
+					if(isset($hijo['Vehiculo_5_Nombre'])&&$hijo['Vehiculo_5_Nombre']!=''){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name"><?php echo $hijo['Vehiculo_5_Nombre'].' Patente '.$hijo['Vehiculo_5_Patente']; ?></td>
 							<td class="item-name"><?php echo $hijo['ApoderadoNombre'].' '.$hijo['ApoderadoApellidoPat'].' '.$hijo['ApoderadoApellidoMat']; ?></td>

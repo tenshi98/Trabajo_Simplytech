@@ -408,7 +408,7 @@ $html .= '
 									</td>
 
 									<td style="vertical-align: top;width:33%;">
-										
+
 									</td>
 
 									<td style="vertical-align: top;width:33%;">
@@ -440,7 +440,7 @@ $html .= '
 									</td>
 
 									<td style="vertical-align: top;width:33%;">
-										
+
 									</td>
 
 									<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
@@ -473,7 +473,7 @@ $html .= '
 									</td>
 
 									<td style="vertical-align: top;width:33%;">
-										
+
 									</td>
 
 									<td style="vertical-align: top;width:33%;">
@@ -543,7 +543,7 @@ $html .= '
 									</td>
 
 									<td style="vertical-align: top;width:33%;">
-										
+
 									</td>
 
 									<td style="vertical-align: top;width:33%;">

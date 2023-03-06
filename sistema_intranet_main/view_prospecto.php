@@ -163,7 +163,7 @@ $arrEtapa = db_select_array (false, $SIS_query, 'prospectos_etapa_fidelizacion',
 								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
 							</p>
 
-							<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){?>
+							<?php if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){ ?>
 								<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Unidades de Negocio</h2>
 								<p class="text-muted word_break">
 									<?php 

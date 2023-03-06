@@ -87,7 +87,7 @@ foreach ($arrTabs as $tab) {
 		//se ejecuta al cargar la página (OBLIGATORIO)
 		$(document).ready(function(){
 			generate();
-		});				
+		});		
 		function loadFile(url,callback){
 			PizZipUtils.getBinaryContent(url,callback);
 		}
@@ -188,10 +188,6 @@ foreach ($arrTabs as $tab) {
 			})
 		}
     </script>
-
-
-
-
 
 <?php
 /**********************************************************************************************************************************/

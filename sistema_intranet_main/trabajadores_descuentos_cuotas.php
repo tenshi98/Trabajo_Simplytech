@@ -219,7 +219,8 @@ if (isset($_SESSION['desc_cuotas_listado'])){
 			$xval_inc++;
 		}
 	}
-}	
+}
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -348,7 +349,7 @@ if (isset($_SESSION['desc_cuotas_listado'])){
 			if (isset($_SESSION['desc_cuotas_archivos'])){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
-				foreach ($_SESSION['desc_cuotas_archivos'] as $key => $producto){?>
+				foreach ($_SESSION['desc_cuotas_archivos'] as $key => $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
 						<td>
@@ -471,7 +472,7 @@ if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){  $SIS_where .
 if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){           $SIS_where .= " AND trabajadores_descuentos_cuotas.idTipo='".$_GET['idTipo']."'";}
 if(isset($_GET['Monto']) && $_GET['Monto']!=''){             $SIS_where .= " AND trabajadores_descuentos_cuotas.N_Doc LIKE '%".EstandarizarInput($_GET['Monto'])."%'";}
 if(isset($_GET['N_Cuotas']) && $_GET['N_Cuotas']!=''){       $SIS_where .= " AND trabajadores_descuentos_cuotas.N_Cuotas='".$_GET['N_Cuotas']."'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idFacturacion', 'trabajadores_descuentos_cuotas', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -503,13 +504,13 @@ $arrTipo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuotas',
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
 	<?php if ($rowlevel['level']>=3){ ?>
-		<?php if (isset($_SESSION['desc_cuotas_basicos']['idTrabajador'])&&$_SESSION['desc_cuotas_basicos']['idTrabajador']!=''){?>
+		<?php if (isset($_SESSION['desc_cuotas_basicos']['idTrabajador'])&&$_SESSION['desc_cuotas_basicos']['idTrabajador']!=''){ ?>
 
 			<?php
 			$ubicacion = $location.'&clear_all=true';
@@ -623,7 +624,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuotas',
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_descuentos_cuotas.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_descuentos_cuotas.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

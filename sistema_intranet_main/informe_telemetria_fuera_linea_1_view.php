@@ -101,7 +101,7 @@ require_once 'core/Web.Header.Views.php';
 						var infowindow_2 = new google.maps.InfoWindow({
 							content: content_2,
 							maxWidth: 350
-						});		   
+						});   
 										
 						// marker options
 						var marker_1 = new google.maps.Marker({

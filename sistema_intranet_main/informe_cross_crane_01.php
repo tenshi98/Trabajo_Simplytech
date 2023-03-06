@@ -149,7 +149,7 @@ $arrEquipos2 = db_select_array (false, $SIS_query, 'telemetria_listado_errores',
 					//filtro por equipo
 					filtrar($arrEquipos2, 'Equipo');
 					//recorro los equipos 
-					foreach($arrEquipos2 as $equipo=>$dias){ 
+					foreach($arrEquipos2 as $equipo=>$dias){
 						//imprimo
 						echo '<tr class="odd">';
 						echo '<td>'.$equipo.'</td>';

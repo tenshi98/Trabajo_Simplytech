@@ -47,7 +47,7 @@ $z4.=" AND bodegas_servicios_facturacion.idDocumentos=3";
 $z1.=" AND bodegas_arriendos_facturacion.idFacturacionRelacionado=0";
 $z2.=" AND bodegas_insumos_facturacion.idFacturacionRelacionado=0";
 $z3.=" AND bodegas_productos_facturacion.idFacturacionRelacionado=0";
-$z4.=" AND bodegas_servicios_facturacion.idFacturacionRelacionado=0";	
+$z4.=" AND bodegas_servicios_facturacion.idFacturacionRelacionado=0";
 //Verifico el tipo de usuario que esta ingresando
 $z1.=" AND bodegas_arriendos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $z2.=" AND bodegas_insumos_facturacion.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];

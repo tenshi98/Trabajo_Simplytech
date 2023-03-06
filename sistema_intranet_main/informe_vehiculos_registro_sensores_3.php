@@ -161,6 +161,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 	}
 
 }
+
 ?>
 
 

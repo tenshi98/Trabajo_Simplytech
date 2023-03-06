@@ -170,7 +170,7 @@ require_once '0_validate_user_1.php';
 						$resultado = db_delete_data (false, 'pagos_boletas_trabajadores', 'idFacturacion = "'.$indice2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						//Si ejecuto correctamente la consulta
 						if($resultado==true){
-							
+
 							//redirijo
 							header( 'Location: '.$location.'&reversa=true' );
 							die;
@@ -190,4 +190,5 @@ require_once '0_validate_user_1.php';
 		break;
 
 	}
+
 ?>

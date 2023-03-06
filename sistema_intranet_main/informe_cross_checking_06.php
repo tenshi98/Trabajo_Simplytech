@@ -318,7 +318,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 					$("#idEstado").on("change", function(){ //se ejecuta al cambiar valor del select
 						let idEstado = $(this).val(); //Asignamos el valor seleccionado
-						
+
 						//Solicitado
 						if(idEstado == 1){
 							document.getElementById('div_f_programacion_desde').style.display = 'block';

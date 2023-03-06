@@ -178,7 +178,7 @@ array_push( $arrEquipos,$row );
 								<?php if ( isset($equipos['contar'])&&$equipos['contar']!='0' ){ ?>    
 									<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&cliente_del='.$equipos['idpermiso']; ?>">OFF</a>
 									<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
-								<?php } else {?>
+								<?php } else { ?>
 									<a title="Quitar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">OFF</a>
 									<a title="Dar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&cliente_add='.$equipos['idCliente']; ?>">ON</a>
 								<?php } ?>

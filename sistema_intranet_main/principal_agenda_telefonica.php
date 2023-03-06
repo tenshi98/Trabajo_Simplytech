@@ -251,7 +251,7 @@ $search='';
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $cont['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if($cont['idUsuario']!=9999){?>
+								<?php if($cont['idUsuario']!=9999){ ?>
 									<a href="<?php echo $location.'&id='.$cont['idAgenda']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php
 									$ubicacion = $location.'&del='.simpleEncode($cont['idAgenda'], fecha_actual());

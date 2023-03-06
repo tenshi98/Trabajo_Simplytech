@@ -87,7 +87,7 @@ foreach ($arrSolicitud as $sol) {
 							<td><?php if(isset($arrProgramadas[$i]['idSolicitud'])&&$arrProgramadas[$i]['idSolicitud']!=''){echo $arrProgramadas[$i]['Fecha'];} ?></td>
 							<td><?php if(isset($arrProgramadas[$i]['idSolicitud'])&&$arrProgramadas[$i]['idSolicitud']!=''){echo $arrProgramadas[$i]['Predio'];} ?></td>
 							<td>
-								<?php if(isset($arrProgramadas[$i]['idSolicitud'])&&$arrProgramadas[$i]['idSolicitud']!=''){?>
+								<?php if(isset($arrProgramadas[$i]['idSolicitud'])&&$arrProgramadas[$i]['idSolicitud']!=''){ ?>
 									<div class="btn-group" style="width: 35px;" >
 										<a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($arrProgramadas[$i]['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										<?php /* ?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'cross_solicitud_aplicacion_editar.php?view='.$arrProgramadas[$i]['idSolicitud']; ?>" title="Editar Solicitud" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
@@ -100,7 +100,7 @@ foreach ($arrSolicitud as $sol) {
 							<td><?php if(isset($arrEnEjecucion[$i]['idSolicitud'])&&$arrEnEjecucion[$i]['idSolicitud']!=''){echo $arrEnEjecucion[$i]['Fecha'];} ?></td>
 							<td><?php if(isset($arrEnEjecucion[$i]['idSolicitud'])&&$arrEnEjecucion[$i]['idSolicitud']!=''){echo $arrEnEjecucion[$i]['Predio'];} ?></td>
 							<td>
-								<?php if(isset($arrEnEjecucion[$i]['idSolicitud'])&&$arrEnEjecucion[$i]['idSolicitud']!=''){?>
+								<?php if(isset($arrEnEjecucion[$i]['idSolicitud'])&&$arrEnEjecucion[$i]['idSolicitud']!=''){ ?>
 									<div class="btn-group" style="width: 35px;" >
 										<a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($arrEnEjecucion[$i]['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										<?php /* ?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'cross_solicitud_aplicacion_editar.php?view='.$arrEnEjecucion[$i]['idSolicitud']; ?>" title="Editar Solicitud" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
@@ -113,7 +113,7 @@ foreach ($arrSolicitud as $sol) {
 							<td><?php if(isset($arrTerminadas[$i]['idSolicitud'])&&$arrTerminadas[$i]['idSolicitud']!=''){echo $arrTerminadas[$i]['Fecha'];} ?></td>
 							<td><?php if(isset($arrTerminadas[$i]['idSolicitud'])&&$arrTerminadas[$i]['idSolicitud']!=''){echo $arrTerminadas[$i]['Predio'];} ?></td>
 							<td>
-								<?php if(isset($arrTerminadas[$i]['idSolicitud'])&&$arrTerminadas[$i]['idSolicitud']!=''){?>
+								<?php if(isset($arrTerminadas[$i]['idSolicitud'])&&$arrTerminadas[$i]['idSolicitud']!=''){ ?>
 									<div class="btn-group" style="width: 35px;" >
 										<a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($arrTerminadas[$i]['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										<?php /* ?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'cross_solicitud_aplicacion_editar.php?view='.$arrTerminadas[$i]['idSolicitud']; ?>" title="Editar Solicitud" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php */ ?>

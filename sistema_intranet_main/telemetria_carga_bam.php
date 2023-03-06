@@ -149,6 +149,7 @@ $z = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSiste
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -246,7 +247,7 @@ if(isset($_GET['FechaVencimiento']) && $_GET['FechaVencimiento']!=''){  $SIS_whe
 if(isset($_GET['idDocPago']) && $_GET['idDocPago']!=''){         $SIS_where .= " AND telemetria_carga_bam.idDocPago=".$_GET['idDocPago'];}
 if(isset($_GET['N_DocPago']) && $_GET['N_DocPago']!=''){         $SIS_where .= " AND telemetria_carga_bam.N_DocPago LIKE '%".EstandarizarInput($_GET['N_DocPago'])."%'";}
 if(isset($_GET['Monto']) && $_GET['Monto']!=''){                 $SIS_where .= " AND telemetria_carga_bam.Monto LIKE '%".EstandarizarInput($_GET['Monto'])."%'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idCarga', 'telemetria_carga_bam', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -274,12 +275,12 @@ $arrCarga = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_joi
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Carga</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Carga</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -389,7 +390,7 @@ $arrCarga = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_joi
 						<td align="right"><?php echo valores($carga['Monto'], 0); ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$carga['idCarga']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$carga['idCarga']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($carga['idCarga'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la carga BAM con fecha '.$carga['FechaCarga'].'?'; ?>

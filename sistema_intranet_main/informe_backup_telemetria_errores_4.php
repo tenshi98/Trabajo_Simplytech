@@ -35,7 +35,7 @@ $cant_reg = 30;
 //resto de variables
 if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) * $cant_reg ;}
 //Inicia variable
-$SIS_where = "backup_telemetria_listado_errores_999.idErrores>0"; 
+$SIS_where = "backup_telemetria_listado_errores_999.idErrores>0";
 $SIS_where.= " AND telemetria_listado.id_Geo='2'";
 $SIS_where.= " AND backup_telemetria_listado_errores_999.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 $search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
@@ -91,6 +91,7 @@ $arrFinalUnimed = array();
 foreach ($arrUnimed as $sen) {
 	$arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
@@ -170,6 +171,7 @@ $z .= " AND telemetria_listado.id_Sensores=1";                                  
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">

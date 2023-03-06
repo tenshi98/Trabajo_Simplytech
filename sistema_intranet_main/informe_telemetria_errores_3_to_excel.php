@@ -24,7 +24,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //Inicia variable
-$SIS_where = "telemetria_listado_errores_999.idErrores>0"; 
+$SIS_where = "telemetria_listado_errores_999.idErrores>0";
 $SIS_where.= " AND telemetria_listado.id_Geo='1'";
 $SIS_where.= " AND telemetria_listado_errores_999.idSistema=".$_GET['idSistema'];
 //verifico si existen los parametros de fecha

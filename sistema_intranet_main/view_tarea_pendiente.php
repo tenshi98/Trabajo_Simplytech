@@ -110,7 +110,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 
 
 /*********************************************************/
-if(isset($rowdata['Cancelador'])&&$rowdata['Cancelador']!=''){?>
+if(isset($rowdata['Cancelador'])&&$rowdata['Cancelador']!=''){ ?>
 
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="bs-callout bs-callout-danger" >
@@ -179,7 +179,7 @@ if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario'][
 							<td class="meta-head">Fecha Creacion</td>
 							<td><?php echo Fecha_estandar($rowdata['f_creacion'])?></td>
 						</tr>
-						<?php if(isset($rowdata['f_termino'])&&$rowdata['f_termino']!='0000-00-00'){?>
+						<?php if(isset($rowdata['f_termino'])&&$rowdata['f_termino']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha Termino</td>
 								<td><?php echo Fecha_estandar($rowdata['f_termino'])?></td>
@@ -221,7 +221,7 @@ if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario'][
 					/**********************************************************************************/
 					if($arrArchivos!=false && !empty($arrArchivos) && $arrArchivos!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Archivos Adjuntos</td></tr>
-						<?php foreach ($arrArchivos as $producto){?>
+						<?php foreach ($arrArchivos as $producto){ ?>
 							<tr class="item-row linea_punteada">
 								<td colspan="5"><?php echo $producto['NombreArchivo']; ?></td>
 								<td width="160">
@@ -252,7 +252,7 @@ if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario'][
 						<th>Usuario</th>
 						<th>Observacion</th>
 					</tr>
-					<?php foreach ($arrHistorial as $doc){?>
+					<?php foreach ($arrHistorial as $doc){ ?>
 						<tr class="">
 							<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 							<td><?php echo $doc['Usuario']; ?></td>

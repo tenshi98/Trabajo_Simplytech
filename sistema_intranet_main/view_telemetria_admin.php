@@ -239,11 +239,11 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 				<li class=""><a href="#mediciones" data-toggle="tab"><i class="fa fa-wifi" aria-hidden="true"></i> Ultimas Mediciones</a></li>
 				<?php } ?>
 
-				<?php if(isset($rowdata['idTrabajador'])&&$rowdata['idTrabajador']!=0){?>
+				<?php if(isset($rowdata['idTrabajador'])&&$rowdata['idTrabajador']!=0){ ?>
 				<li class=""><a href="#trabajador" data-toggle="tab"><i class="fa fa-users" aria-hidden="true"></i> Datos del Trabajador</a></li>
 				<?php } ?>
 
-				<?php if(isset($rowdata['idBodega'])&&$rowdata['idBodega']!=0){?>
+				<?php if(isset($rowdata['idBodega'])&&$rowdata['idBodega']!=0){ ?>
 				<li class=""><a href="#bodega" data-toggle="tab"><i class="fa fa-building-o" aria-hidden="true"></i> Stock Bodega</a></li>
 				<?php } ?>
 
@@ -271,15 +271,15 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos del Equipo</h2>
 						<p class="text-muted">
-							<?php if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){?><strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['IdentificadorEmpresa'])&&$rowdata['IdentificadorEmpresa']!=''){?><strong>Identificador Empresa : </strong><?php echo $rowdata['IdentificadorEmpresa']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_Num_Tel'])&&$rowdata['Sim_Num_Tel']!=''){?><strong>SIM - Numero Telefonico : </strong><?php echo $rowdata['Sim_Num_Tel']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_Num_Serie'])&&$rowdata['Sim_Num_Serie']!=''){?><strong>SIM - Numero Serie : </strong><?php echo $rowdata['Sim_Num_Serie']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_Compania'])&&$rowdata['Sim_Compania']!=''){?><strong>SIM - Compañia : </strong><?php echo $rowdata['Sim_Compania']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_marca'])&&$rowdata['Sim_marca']!=''){?><strong>BAM - Marca : </strong><?php echo $rowdata['Sim_marca']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Sim_modelo'])&&$rowdata['Sim_modelo']!=''){?><strong>BAM - Modelo : </strong><?php echo $rowdata['Sim_modelo']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['IP_Client'])&&$rowdata['IP_Client']!=''){?><strong>IP Cliente : </strong><?php echo $rowdata['IP_Client']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['idTelemetria'])&&$rowdata['idTelemetria']!=''){?><strong>ID Equipo : </strong><?php echo $rowdata['idTelemetria']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){ ?><strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['IdentificadorEmpresa'])&&$rowdata['IdentificadorEmpresa']!=''){ ?><strong>Identificador Empresa : </strong><?php echo $rowdata['IdentificadorEmpresa']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sim_Num_Tel'])&&$rowdata['Sim_Num_Tel']!=''){ ?><strong>SIM - Numero Telefonico : </strong><?php echo $rowdata['Sim_Num_Tel']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sim_Num_Serie'])&&$rowdata['Sim_Num_Serie']!=''){ ?><strong>SIM - Numero Serie : </strong><?php echo $rowdata['Sim_Num_Serie']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sim_Compania'])&&$rowdata['Sim_Compania']!=''){ ?><strong>SIM - Compañia : </strong><?php echo $rowdata['Sim_Compania']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sim_marca'])&&$rowdata['Sim_marca']!=''){ ?><strong>BAM - Marca : </strong><?php echo $rowdata['Sim_marca']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Sim_modelo'])&&$rowdata['Sim_modelo']!=''){ ?><strong>BAM - Modelo : </strong><?php echo $rowdata['Sim_modelo']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['IP_Client'])&&$rowdata['IP_Client']!=''){ ?><strong>IP Cliente : </strong><?php echo $rowdata['IP_Client']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['idTelemetria'])&&$rowdata['idTelemetria']!=''){ ?><strong>ID Equipo : </strong><?php echo $rowdata['idTelemetria']; ?><br/><?php } ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Configuracion</h2>
@@ -298,7 +298,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 							<?php if($rowdata['id_Geo']==1){ ?>
 							<strong>Tiempo Maximo Detencion : </strong><?php echo $rowdata['TiempoDetencion']; ?> Horas<br/>
 							<?php } ?>
-							<?php if(isset($rowdata['Capacidad'])&&$rowdata['Capacidad']!=0){?>
+							<?php if(isset($rowdata['Capacidad'])&&$rowdata['Capacidad']!=0){ ?>
 								<strong>Capacidad : </strong><?php echo Cantidades_decimales_justos($rowdata['Capacidad']); ?><br/>
 							<?php } ?>
 						</p>
@@ -315,8 +315,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 						
 					</div>
 					<div class="clearfix"></div>
-					
-					
+
 				</div>
 			</div>
 
@@ -338,7 +337,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 							</div>
 							
 							
-							<?php if(isset($rowdata['LimiteVelocidad'])&&$rowdata['LimiteVelocidad']!=0){?>
+							<?php if(isset($rowdata['LimiteVelocidad'])&&$rowdata['LimiteVelocidad']!=0){ ?>
 								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 									<thead>
 										<tr role="row">
@@ -402,7 +401,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 				</div>
 			<?php } ?>
 
-			<?php if(isset($rowdata['idTrabajador'])&&$rowdata['idTrabajador']!=0){?>
+			<?php if(isset($rowdata['idTrabajador'])&&$rowdata['idTrabajador']!=0){ ?>
 				<div class="tab-pane fade" id="trabajador">
 					<div class="wmd-panel">
 
@@ -439,7 +438,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 				</div>
 			<?php } ?>
 
-			<?php if(isset($rowdata['idBodega'])&&$rowdata['idBodega']!=0){?>
+			<?php if(isset($rowdata['idBodega'])&&$rowdata['idBodega']!=0){ ?>
 				<div class="tab-pane fade" id="bodega">
 					<div class="wmd-panel">
 						<div class="table-responsive">
@@ -456,7 +455,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
 									<?php foreach ($arrProductos as $productos) {
 										$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];
-										if ($stock_actual!=0&&$productos['NombreProd']!=''){?>
+										if ($stock_actual!=0&&$productos['NombreProd']!=''){ ?>
 											<tr class="odd <?php if ($productos['StockLimite']>$stock_actual){echo 'danger';} ?>">
 												<td><?php echo $productos['tipo_producto']; ?></td>
 												<td><?php echo $productos['NombreProd']; ?></td>

@@ -117,7 +117,7 @@ $Form_Inputs = new Inputs();
 									<tr class="odd">
 										<td>
 											<div class="btn-group" style="width: 70px;" >
-												<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_rrhh_sueldos.php?view='.simpleEncode($tipo['idFactTrab'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_rrhh_sueldos.php?view='.simpleEncode($tipo['idFactTrab'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 												<?php if ($rowlevel['level']>=2){
 													$ubicacion = $location.'&del_liquidacion='.$tipo['idFactTrab'].'&idFacturacion='.$_GET['idFacturacion'];
 													$dialogo   = '¿Realmente deseas eliminar la liquidacion de '.$tipo['TrabajadorNombre'].'?'; ?>
@@ -143,13 +143,13 @@ $Form_Inputs = new Inputs();
 												?>
 										</td>
 										<td align="right">
-											<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=0){?>
+											<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=0){ ?>
 												<a onclick="delpago(<?php echo $tipo['idFactTrab']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php }else{ ?>
 												<a onclick="addpago(<?php echo $tipo['idFactTrab']; ?>, <?php echo $TotalPagar; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 											<?php } ?>
 										</td>
-										
+
 									</tr>
 							<?php 
 								}
@@ -283,14 +283,14 @@ $Form_Inputs = new Inputs();
 						
 					$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-						
+
 					?>
 
 					<div class="form-group">
 						<input type="submit" id="submitCadastroHidden" style="display: none;" name="submit_form">
 						<input type="button" id="submitBtn" data-toggle="modal" data-target="#confirm-submit"  class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf283; Ingresar Pago" name="submit2">
 					</div>
-							  
+
 				</form>
 							
 			</div>
@@ -431,7 +431,7 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 
 										<td>
 											<div class="btn-group" style="width: 35px;" >
-												<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_rrhh_sueldos.php?view='.simpleEncode($tipo['idFactTrab'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_rrhh_sueldos.php?view='.simpleEncode($tipo['idFactTrab'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											</div>
 										</td>
 									</tr>

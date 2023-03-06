@@ -204,7 +204,7 @@ if(isset($_SESSION['pago_proveedor_servicio'])){
 $Form_Inputs = new Inputs();						
 ?>
 
-<?php if(isset($row_data['Proveedor'])&&$row_data['Proveedor']!=''){?>
+<?php if(isset($row_data['Proveedor'])&&$row_data['Proveedor']!=''){ ?>
 	<div class="row inbox"> 
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<h3>
@@ -267,7 +267,7 @@ $Form_Inputs = new Inputs();
 								<tr class="odd">
 									<td>
 										<div class="btn-group" style="width: 70px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											<?php if ($rowlevel['level']>=2){
 												$ubicacion = $location.'&del_insumo_ex='.$tipo['idFacturacion'];
 												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?'; ?>
@@ -295,7 +295,7 @@ $Form_Inputs = new Inputs();
 											?>
 										</td>
 										<td align="right">
-											<?php if(isset($tipo['FacRelacionada'])&&$tipo['FacRelacionada']!=''){?>
+											<?php if(isset($tipo['FacRelacionada'])&&$tipo['FacRelacionada']!=''){ ?>
 												<a onclick="delDoc(1, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['idFacRelacionada']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php }else{ ?>
 												<a onclick="addDoc(1, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
@@ -322,7 +322,7 @@ $Form_Inputs = new Inputs();
 										<td align="right"></td>
 										<td align="right">
 											<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0){ ?>
-												<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){?>
+												<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){ ?>
 													<a onclick="delpago(1, <?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 												<?php }else{ ?>
 													<a onclick="addpago(1, <?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
@@ -345,7 +345,7 @@ $Form_Inputs = new Inputs();
 								<tr class="odd">
 									<td>
 										<div class="btn-group" style="width: 70px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											<?php if ($rowlevel['level']>=2){
 												$ubicacion = $location.'&del_producto_ex='.$tipo['idFacturacion'];
 												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?'; ?>
@@ -373,7 +373,7 @@ $Form_Inputs = new Inputs();
 											?>
 										</td>
 										<td align="right">
-											<?php if(isset($tipo['FacRelacionada'])&&$tipo['FacRelacionada']!=''){?>
+											<?php if(isset($tipo['FacRelacionada'])&&$tipo['FacRelacionada']!=''){ ?>
 												<a onclick="delDoc(2, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['idFacRelacionada']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php }else{ ?>
 												<a onclick="addDoc(2, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
@@ -400,7 +400,7 @@ $Form_Inputs = new Inputs();
 										<td align="right"></td>
 										<td align="right">
 											<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0){ ?>
-												<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){?>
+												<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){ ?>
 													<a onclick="delpago(2, <?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 												<?php }else{ ?>
 													<a onclick="addpago(2, <?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
@@ -423,7 +423,7 @@ $Form_Inputs = new Inputs();
 								<tr class="odd">
 									<td>
 										<div class="btn-group" style="width: 70px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											<?php if ($rowlevel['level']>=2){
 												$ubicacion = $location.'&del_arriendo_ex='.$tipo['idFacturacion'];
 												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?'; ?>
@@ -451,7 +451,7 @@ $Form_Inputs = new Inputs();
 											?>
 										</td>
 										<td align="right">
-											<?php if(isset($tipo['FacRelacionada'])&&$tipo['FacRelacionada']!=''){?>
+											<?php if(isset($tipo['FacRelacionada'])&&$tipo['FacRelacionada']!=''){ ?>
 												<a onclick="delDoc(3, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['idFacRelacionada']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php }else{ ?>
 												<a onclick="addDoc(3, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
@@ -478,7 +478,7 @@ $Form_Inputs = new Inputs();
 										<td align="right"></td>
 										<td align="right">
 											<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0){ ?>
-												<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){?>
+												<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){ ?>
 													<a onclick="delpago(3, <?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 												<?php }else{ ?>
 													<a onclick="addpago(3, <?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
@@ -501,7 +501,7 @@ $Form_Inputs = new Inputs();
 								<tr class="odd">
 									<td>
 										<div class="btn-group" style="width: 70px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											<?php if ($rowlevel['level']>=2){
 												$ubicacion = $location.'&del_servicio_ex='.$tipo['idFacturacion'];
 												$dialogo   = '¿Realmente deseas eliminar la '.$tipo['Documento'].' '.$tipo['N_Doc'].'?'; ?>
@@ -529,7 +529,7 @@ $Form_Inputs = new Inputs();
 											?>
 										</td>
 										<td align="right">
-											<?php if(isset($tipo['FacRelacionada'])&&$tipo['FacRelacionada']!=''){?>
+											<?php if(isset($tipo['FacRelacionada'])&&$tipo['FacRelacionada']!=''){ ?>
 												<a onclick="delDoc(4, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['idFacRelacionada']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php }else{ ?>
 												<a onclick="addDoc(4, <?php echo $tipo['idFacturacion']; ?>, <?php echo $tipo['ValorTotal']; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
@@ -556,7 +556,7 @@ $Form_Inputs = new Inputs();
 										<td align="right"></td>
 										<td align="right">
 											<?php if(isset($NC_Pendientes)&&$NC_Pendientes==0){ ?>
-												<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){?>
+												<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=''){ ?>
 													<a onclick="delpago(4, <?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 												<?php }else{ ?>
 													<a onclick="addpago(4, <?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
@@ -781,7 +781,7 @@ $Form_Inputs = new Inputs();
 					$Form_Inputs->form_date('Fecha de Anulacion','F_Pago', $x1, 2);
 
 					$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
-						
+
 					?>
 
 					<div class="form-group">
@@ -1269,7 +1269,7 @@ array_push( $arrTipo4,$row );
 
 ?>
 
-<?php if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){?>
+<?php if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){ ?>
 	<div class="row inbox"> 
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<h2><strong>Proveedor : </strong><?php echo $rowProveedor['Nombre']; ?></h2>
@@ -1342,7 +1342,7 @@ array_push( $arrTipo4,$row );
 									<?php } ?>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 										</div>
 									</td>
 								</tr>
@@ -1380,7 +1380,7 @@ array_push( $arrTipo4,$row );
 									<?php } ?>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 										</div>
 									</td>
 								</tr>
@@ -1418,7 +1418,7 @@ array_push( $arrTipo4,$row );
 									<?php } ?>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 										</div>
 									</td>
 								</tr>
@@ -1456,7 +1456,7 @@ array_push( $arrTipo4,$row );
 									<?php } ?>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 										</div>
 									</td>
 								</tr>

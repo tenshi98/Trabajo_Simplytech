@@ -53,7 +53,7 @@ require_once '0_validate_user_1.php';
 					header( 'Location: '.$location );
 					die;
 				}
-			
+
 			}
 
 		break;
@@ -192,4 +192,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

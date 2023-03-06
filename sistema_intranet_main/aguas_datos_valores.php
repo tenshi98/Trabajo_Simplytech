@@ -225,10 +225,11 @@ $counter = 0;
 foreach ($arrUML as $uml) {
 	$counter++;
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar">
-	<?php if ($rowlevel['level']>=3&&$counter==0){?><a href="<?php echo $location; ?>?new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Valores Facturacion</a><?php } ?>
+	<?php if ($rowlevel['level']>=3&&$counter==0){ ?><a href="<?php echo $location; ?>?new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Valores Facturacion</a><?php } ?>
 </div>
 <div class="clearfix"></div>
 
@@ -262,7 +263,7 @@ foreach ($arrUML as $uml) {
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $uml['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'?id='.$uml['idDato']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'?id='.$uml['idDato']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'?del='.simpleEncode($uml['idDato'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el dato?'; ?>

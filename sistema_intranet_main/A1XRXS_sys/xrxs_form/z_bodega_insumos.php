@@ -491,8 +491,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['insumos_ing_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -1516,8 +1515,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['insumos_egr_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -2289,8 +2287,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['insumos_traspaso_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspaso_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -2887,8 +2884,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['insumos_traspasoempresa_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspasoempresa_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -3473,8 +3469,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['insumos_traspasomanualempresa_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -3917,8 +3912,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['insumos_ing_manual_basicos']['Proveedor'] = '';
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -4018,8 +4012,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['insumos_ing_manual_basicos']['Proveedor'] = '';
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -4086,8 +4079,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['insumos_ing_manual_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_manual_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -4906,8 +4898,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['insumos_vent_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_vent_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -5957,8 +5948,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['insumos_ing_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_nd_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -6841,8 +6831,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['insumos_ing_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_ing_nc_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -7723,8 +7712,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['insumos_egr_nd_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_nd_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -8606,8 +8594,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['insumos_egr_nc_basicos']['CentroCosto'] .= ' - '.$rowCentro['Nombre'];
 					$_SESSION['insumos_egr_nc_basicos']['idLevel_5']    = $idLevel_5;
 				}
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -9168,4 +9155,5 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

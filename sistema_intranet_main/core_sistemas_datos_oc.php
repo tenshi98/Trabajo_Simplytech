@@ -106,7 +106,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sistema_aprobador_oc', $SIS_join,
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-}elseif(!empty($_GET['new'])){?>
+}elseif(!empty($_GET['new'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">

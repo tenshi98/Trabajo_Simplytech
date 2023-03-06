@@ -222,7 +222,7 @@ if(isset($_GET['nSem']) && $_GET['nSem']!=''){               $SIS_where .= " AND
 if(isset($_GET['idTurnos']) && $_GET['idTurnos']!=''){       $SIS_where .= " AND trabajadores_horas_extras_facturacion_turnos.idTurnos=".$_GET['idTurnos'];}
 if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){     $SIS_where .= " AND trabajadores_horas_extras_facturacion_turnos.idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['idUso']) && $_GET['idUso']!=''){             $SIS_where .= " AND trabajadores_horas_extras_facturacion_turnos.idUso=".$_GET['idUso'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idServicios', 'trabajadores_horas_extras_facturacion_turnos', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -256,12 +256,12 @@ $arrInasHoras = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_f
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Turno</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Turno</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -371,7 +371,7 @@ $arrInasHoras = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_f
 								<?php
 								//mientras no haya sido utilizado se puede modificar y borrar el dato
 								if(isset($plan['idUso'])&&$plan['idUso']==1){ ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id='.$plan['idServicios']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$plan['idServicios']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($plan['idServicios'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el Turno de '.$plan['TrabApellidoPat'].' '.$plan['TrabApellidoMat'].' '.$plan['TrabNombre'].'?'; ?>

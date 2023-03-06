@@ -241,6 +241,7 @@ $z ="idPredio=".$_SESSION['sol_apli_basicos']['idPredio'];
 $z.=" AND idEstado=1 ";	
 if(isset($_SESSION['sol_apli_basicos']['idCategoria'])&&$_SESSION['sol_apli_basicos']['idCategoria']!=''){ $z.=" AND idCategoria=".$_SESSION['sol_apli_basicos']['idCategoria'];}
 if(isset($_SESSION['sol_apli_basicos']['idProducto'])&&$_SESSION['sol_apli_basicos']['idProducto']!=''){   $z.=" AND idProducto=".$_SESSION['sol_apli_basicos']['idProducto'];}
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -316,6 +317,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTipo,$row );
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -415,6 +417,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrTipo,$row );
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -499,6 +502,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$w .= " AND telemetria_listado.idTab=1";//CrossChecking		
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -697,6 +701,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrCuenta2,$row );
 }
+
 ?>
 
 <div class="row">
@@ -1156,8 +1161,7 @@ array_push( $arrCuenta2,$row );
 				if(isset($TempMin)){       $x3 = $TempMin;       }else{$x3 = Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['TempMin']);}
 				if(isset($TempMax)){       $x4 = $TempMax;       }else{$x4 = Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['TempMax']);}
 				if(isset($HumTempMax)){    $x5 = $HumTempMax;    }else{$x5 = Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['HumTempMax']);}
-				
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Parámetros de Aplicación');
@@ -1245,6 +1249,7 @@ array_push( $arrPermisos,$row );
 foreach ($arrPermisos as $prod) {
 	$zx2 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -1270,8 +1275,7 @@ foreach ($arrPermisos as $prod) {
 				if(isset($f_programacion_fin)){   $x10 = $f_programacion_fin;   }else{$x10 = $_SESSION['sol_apli_basicos']['f_programacion_fin'];}
 				if(isset($horaProg_fin)){         $x11 = $horaProg_fin;         }else{$x11 = $_SESSION['sol_apli_basicos']['horaProg_fin'];}
 				if(isset($Observaciones)){        $x12 = $Observaciones;        }else{$x12 = $_SESSION['sol_apli_basicos']['Observaciones'];}
-				
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
@@ -1308,7 +1312,7 @@ foreach ($arrPermisos as $prod) {
 	</div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['view'])){?>
+} elseif(!empty($_GET['view'])){ ?>
 
 <?php echo alert_post_data(4,1,1, $_SESSION['sol_apli_basicos']['Carencias']); ?>
 
@@ -1363,7 +1367,7 @@ foreach ($arrPermisos as $prod) {
 						<td class="meta-head">Estado Fenológico</td>
 						<td><?php echo $_SESSION['sol_apli_basicos']['EstadoFen']; ?></td>
 					</tr>
-					<?php if(isset($_SESSION['sol_apli_basicos']['EspecieVariedad'])&&$_SESSION['sol_apli_basicos']['EspecieVariedad']!=''){?>
+					<?php if(isset($_SESSION['sol_apli_basicos']['EspecieVariedad'])&&$_SESSION['sol_apli_basicos']['EspecieVariedad']!=''){ ?>
 						<tr>
 							<td class="meta-head">Especie - Variedad</td>
 							<td><?php echo $_SESSION['sol_apli_basicos']['EspecieVariedad']; ?></td>
@@ -1414,8 +1418,7 @@ foreach ($arrPermisos as $prod) {
 						<td class="meta-head">Fecha termino requerido</td>
 						<td><?php echo Fecha_estandar($_SESSION['sol_apli_basicos']['f_programacion_fin']).' '.$_SESSION['sol_apli_basicos']['horaProg_fin']?></td>
 					</tr>
-					
-					
+
 				</tbody>
 			</table>
 		</div>
@@ -1432,8 +1435,8 @@ foreach ($arrPermisos as $prod) {
 					<td colspan="6"><strong>Materiales de Seguridad</strong></td>
 					<td colspan="2"><strong>Codigo</strong></td>
 					<td>
-						<?php if(isset($_SESSION['sol_apli_basicos']['Mojamiento'])&&$_SESSION['sol_apli_basicos']['Mojamiento']!=''&&$_SESSION['sol_apli_basicos']['Mojamiento']!=0){?>
-							<?php if(isset($_SESSION['sol_apli_materiales'])&&$_SESSION['sol_apli_materiales']!=''){?>
+						<?php if(isset($_SESSION['sol_apli_basicos']['Mojamiento'])&&$_SESSION['sol_apli_basicos']['Mojamiento']!=''&&$_SESSION['sol_apli_basicos']['Mojamiento']!=0){ ?>
+							<?php if(isset($_SESSION['sol_apli_materiales'])&&$_SESSION['sol_apli_materiales']!=''){ ?>
 								<a href="<?php echo $location.'&addMaterial=true' ?>" title="Agregar Materiales" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Materiales</a>
 							<?php } ?>
 						<?php } ?>
@@ -1470,7 +1473,7 @@ foreach ($arrPermisos as $prod) {
 					<td><strong>Temp Max</strong></td>
 					<td><strong>Hum Temp Max</strong></td>
 					<td>
-						<?php if(isset($_SESSION['sol_apli_basicos']['Mojamiento'])&&$_SESSION['sol_apli_basicos']['Mojamiento']!=''&&$_SESSION['sol_apli_basicos']['Mojamiento']!=0){?>
+						<?php if(isset($_SESSION['sol_apli_basicos']['Mojamiento'])&&$_SESSION['sol_apli_basicos']['Mojamiento']!=''&&$_SESSION['sol_apli_basicos']['Mojamiento']!=0){ ?>
 							<a href="<?php echo $location.'&addCuartel=true' ?>" title="Agregar Trabajos" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Trabajos</a>
 						<?php } ?>
 					</td>
@@ -1530,7 +1533,7 @@ foreach ($arrPermisos as $prod) {
 						/****************************************************************/
 						if($_SESSION['sol_apli_productos'][$cuartel['valor_id']]){
 							//Se recorren los quimicos a utilizar
-							foreach ($_SESSION['sol_apli_productos'][$cuartel['valor_id']] as $key => $prod){?>
+							foreach ($_SESSION['sol_apli_productos'][$cuartel['valor_id']] as $key => $prod){ ?>
 
 								<tr class="item-row linea_punteada">
 									<td class="item-name" colspan="5">
@@ -2101,8 +2104,7 @@ array_push( $arrCuenta2,$row );
 				if(isset($TempMin)){       $x3 = $TempMin;       }else{$x3 = Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['TempMin']);}
 				if(isset($TempMax)){       $x4 = $TempMax;       }else{$x4 = Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['TempMax']);}
 				if(isset($HumTempMax)){    $x5 = $HumTempMax;    }else{$x5 = Cantidades_decimales_justos($_SESSION['sol_apli_basicos']['HumTempMax']);}
-				
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Parámetros de Aplicación');
@@ -2308,7 +2310,7 @@ if(isset($_GET['idProducto']) && $_GET['idProducto']!=''){   $SIS_where .= " AND
 if(isset($_GET['f_programacion']) && $_GET['f_programacion']!=''){  $SIS_where .= " AND cross_solicitud_aplicacion_listado.f_programacion=".$_GET['f_programacion'];}
 if(isset($_GET['horaProg']) && $_GET['horaProg']!=''){       $SIS_where .= " AND cross_solicitud_aplicacion_listado.horaProg=".$_GET['horaProg'];}
 if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){     $SIS_where .= " AND cross_solicitud_aplicacion_listado.idUsuario=".$_GET['idUsuario'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idSolicitud', 'cross_solicitud_aplicacion_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -2338,13 +2340,13 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
 	<?php if ($rowlevel['level']>=3){
-	if (isset($_SESSION['sol_apli_basicos']['idPredio'])&&$_SESSION['sol_apli_basicos']['idPredio']!=''){?>
+	if (isset($_SESSION['sol_apli_basicos']['idPredio'])&&$_SESSION['sol_apli_basicos']['idPredio']!=''){ ?>
 
 		<?php
 		$ubicacion = $location.'&clear_all=true';
@@ -2457,9 +2459,9 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 							<td><?php if(isset($ot['Especie'])&&$ot['Especie']!=''){echo $ot['Especie'].' '.$ot['Variedad'];}else{echo 'Todas las Especies - Variedades';} ?></td>
 							<td>
 								<div class="btn-group" style="width: 140px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&NSolicitud='.$ot['NSolicitud'].'&clone_idSolicitud='.$ot['idSolicitud']; ?>" title="Clonar Solicitud" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'cross_solicitud_aplicacion_editar.php?view='.$ot['idSolicitud']; ?>" title="Editar Solicitud" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_solicitud_aplicacion.php?view='.simpleEncode($ot['idSolicitud'], fecha_actual()); ?>" title="Ver Solicitud" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&NSolicitud='.$ot['NSolicitud'].'&clone_idSolicitud='.$ot['idSolicitud']; ?>" title="Clonar Solicitud" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'cross_solicitud_aplicacion_editar.php?view='.$ot['idSolicitud']; ?>" title="Editar Solicitud" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del_Solicitud='.simpleEncode($ot['idSolicitud'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el registro de la Solicitud  '.n_doc($ot['idSolicitud'], 5).'?'; ?>

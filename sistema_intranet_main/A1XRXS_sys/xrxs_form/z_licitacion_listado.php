@@ -130,7 +130,7 @@ require_once '0_validate_user_1.php';
 			case 'idLevel_23':          if(empty($idLevel[23])){          $error['idLevel_23']            = 'error/No ha ingresado el idLevel_23';}break;
 			case 'idLevel_24':          if(empty($idLevel[24])){          $error['idLevel_24']            = 'error/No ha ingresado el idLevel_24';}break;
 			case 'idLevel_25':          if(empty($idLevel[25])){          $error['idLevel_25']            = 'error/No ha ingresado el idLevel_25';}break;
-	
+
 		}
 	}
 /*******************************************************************************************************************/
@@ -371,8 +371,8 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El dato ya existe';}
 			/*******************************************************************/
-			
-			// si no hay errores ejecuto el Nombre	
+
+			// si no hay errores ejecuto
 			if(empty($error)){
 
 				//filtros
@@ -439,7 +439,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// si no hay errores ejecuto el Nombre	
+			// si no hay errores ejecuto
 			if(empty($error)){
 				/*****************************************************/
 				// Se traen todos los datos de la licitacion
@@ -502,7 +502,7 @@ require_once '0_validate_user_1.php';
 					die;
 
 				}
-			
+
 			}
 
 		break;
@@ -626,9 +626,6 @@ require_once '0_validate_user_1.php';
 
 			}
 
-			
-
-
 		break;
 /*******************************************************************************************************************/
 		case 'createBasicDataContrato':
@@ -697,10 +694,8 @@ require_once '0_validate_user_1.php';
 
 			}
 
-			
-
-
 		break;
 /*******************************************************************************************************************/
 	}
+
 ?>

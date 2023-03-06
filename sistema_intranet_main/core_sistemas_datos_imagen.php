@@ -96,7 +96,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;padding-bottom:40px;">
 
-				<?php if(isset($rowdata['Config_imgLogo'])&&$rowdata['Config_imgLogo']!=''){?>
+				<?php if(isset($rowdata['Config_imgLogo'])&&$rowdata['Config_imgLogo']!=''){ ?>
 
 					<div class="col-xs-12 col-sm-10 col-md-10 col-lg-10 fcenter">
 						<img src="upload/<?php echo $rowdata['Config_imgLogo'] ?>" width="100%" class="img-thumbnail" >

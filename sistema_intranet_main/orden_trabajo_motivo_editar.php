@@ -158,6 +158,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion={$prod['idLicitacion']})";
 	}
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -284,6 +285,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion={$prod['idLicitacion']})";
 	}
 }
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -1172,35 +1174,35 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 			<table id="meta" class="otdata2">
 				<tbody>
 
-					<?php if($rowdata['f_creacion']!='0000-00-00'){?>
+					<?php if($rowdata['f_creacion']!='0000-00-00'){ ?>
 						<tr>
 							<td class="meta-head">Fecha creacion</td>
 							<td><?php if($rowdata['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_creacion']);} ?></td>
 						</tr>
 					<?php } ?>
 
-					<?php if($rowdata['f_programacion']!='0000-00-00'){?>
+					<?php if($rowdata['f_programacion']!='0000-00-00'){ ?>
 						<tr>
 							<td class="meta-head">Fecha programada</td>
 							<td><?php if($rowdata['f_programacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_programacion']);} ?></td>
 						</tr>
 					<?php } ?>
 
-					<?php if($rowdata['f_termino']!='0000-00-00'){?>
+					<?php if($rowdata['f_termino']!='0000-00-00'){ ?>
 						<tr>
 							<td class="meta-head">Fecha termino</td>
 							<td><?php if($rowdata['f_termino']!='0000-00-00'){echo Fecha_estandar($rowdata['f_termino']);} ?></td>
 						</tr>
 					<?php } ?>
 
-					<?php if($rowdata['hora_Inicio']!='00:00:00'){?>
+					<?php if($rowdata['hora_Inicio']!='00:00:00'){ ?>
 						<tr>
 							<td class="meta-head">Hora inicio</td>
 							<td><?php if($rowdata['hora_Inicio']!='00:00:00'){echo $rowdata['hora_Inicio'];} ?></td>
 						</tr>
 					<?php } ?>
 
-					<?php if($rowdata['hora_Termino']!='00:00:00'){?>
+					<?php if($rowdata['hora_Termino']!='00:00:00'){ ?>
 						<tr>
 							<td class="meta-head">Hora termino</td>
 							<td><?php if($rowdata['hora_Termino']!='00:00:00'){echo $rowdata['hora_Termino'];} ?></td>
@@ -1256,7 +1258,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 						</td>
 					</tr>
 					<?php foreach ($arrInsumos as $insumos) {
-						if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){?>
+						if(isset($insumos['Cantidad'])&&$insumos['Cantidad']!=0){ ?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="4"><?php echo $insumos['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
 								<td class="item-name"><?php echo $insumos['Cantidad'].' '.$insumos['UnidadMedida']; ?></td>
@@ -1288,7 +1290,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 						</td>
 					</tr>
 					<?php foreach ($arrProductos as $prod) {
-						if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){?>
+						if(isset($prod['Cantidad'])&&$prod['Cantidad']!=0){ ?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="4"><?php echo $prod['NombreProducto']; if(isset($rowdata['NombreBodega'])&&$rowdata['NombreBodega']!=''){echo ' - '.$prod['NombreBodega'];} ?></td>
 								<td class="item-name"><?php echo $prod['Cantidad'].' '.$prod['UnidadMedida']; ?></td>
@@ -1407,7 +1409,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 							<th>Usuario</th>
 							<th>Observacion</th>
 						</tr>
-						<?php foreach ($arrHistorial as $doc){?>
+						<?php foreach ($arrHistorial as $doc){ ?>
 							<tr class="item-row">
 								<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 								<td><?php echo $doc['Usuario']; ?></td>

@@ -543,7 +543,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 
 				<script>
-					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){?>
+					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){ ?>
 						document.getElementById("div_Nombre").style.display = 'none';
 						document.getElementById("div_Cantidad").style.display = 'none';
 						document.getElementById("div_Nombre_fake").style.display = '';
@@ -656,7 +656,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 
 				<script>
-					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){?>
+					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){ ?>
 						document.getElementById("div_idServicio").style.display = 'none';
 						document.getElementById("div_Cantidad").style.display = 'none';
 						document.getElementById("div_idServicio_fake").style.display = '';
@@ -765,7 +765,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				?>
 
 				<script>
-					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){?>
+					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){ ?>
 						document.getElementById("div_idEquipo").style.display = 'none';
 						document.getElementById("div_Cantidad").style.display = 'none';
 						document.getElementById("div_idEquipo_fake").style.display = '';
@@ -927,7 +927,7 @@ foreach ($arrPermisos as $prod) {
 				?>
 
 				<script>
-					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){?>
+					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){ ?>
 						document.getElementById("div_idProducto").style.display = 'none';
 						document.getElementById("div_Cantidad").style.display = 'none';
 						document.getElementById("div_idProducto_fake").style.display = '';
@@ -1116,7 +1116,7 @@ foreach ($arrPermisos as $prod) {
 				?>
 
 				<script>
-					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){?>
+					<?php if(isset($_GET['soli']) && $_GET['soli']!=''){ ?>
 						document.getElementById("div_idProducto").style.display = 'none';
 						document.getElementById("div_Cantidad").style.display = 'none';
 						document.getElementById("div_idProducto_fake").style.display = '';
@@ -1405,12 +1405,12 @@ $total = 0;
 				<?php
 				if (isset($_SESSION['ocompra_arriendos'])){
 					//recorro el lsiatdo entregado por la base de datos
-					foreach ($_SESSION['ocompra_arriendos'] as $key => $producto){?>
+					foreach ($_SESSION['ocompra_arriendos'] as $key => $producto){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="2"><?php echo $producto['Equipo']; ?></td>
 							<td class="item-name" align="right"><?php echo Cantidades_decimales_justos($producto['Cantidad']).' '.$producto['Frecuencia']; ?></td>
 							<td class="item-name" align="right"><?php echo valores($producto['vUnitario'], 0).' x '.$producto['Frecuencia']; ?></td>
-							<td class="item-name" align="right"><?php echo valores($producto['vTotal'], 0); ?></td>	
+							<td class="item-name" align="right"><?php echo valores($producto['vTotal'], 0); ?></td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
 									<a href="<?php echo $location.'&editArriendo='.$producto['idEquipo']; ?>" title="Editar Arriendo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
@@ -1439,7 +1439,7 @@ $total = 0;
 				<?php
 				if (isset($_SESSION['ocompra_servicios'])){
 					//recorro el lsiatdo entregado por la base de datos
-					foreach ($_SESSION['ocompra_servicios'] as $key => $producto){?>
+					foreach ($_SESSION['ocompra_servicios'] as $key => $producto){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="2"><?php echo $producto['Servicio']; ?></td>
 							<td class="item-name" align="right"><?php echo Cantidades_decimales_justos($producto['Cantidad']).' '.$producto['Frecuencia']; ?></td>
@@ -1473,7 +1473,7 @@ $total = 0;
 				<?php
 				if (isset($_SESSION['ocompra_otros'])){
 					//recorro el lsiatdo entregado por la base de datos
-					foreach ($_SESSION['ocompra_otros'] as $key => $producto){?>
+					foreach ($_SESSION['ocompra_otros'] as $key => $producto){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="2"><?php echo $producto['Nombre']; ?></td>
 							<td class="item-name" align="right"><?php echo Cantidades_decimales_justos($producto['Cantidad']).' '.$producto['Frecuencia']; ?></td>
@@ -1507,7 +1507,7 @@ $total = 0;
 				<?php
 				if (isset($_SESSION['ocompra_boletas'])){
 					//recorro el lsiatdo entregado por la base de datos
-					foreach ($_SESSION['ocompra_boletas'] as $key => $producto){?>
+					foreach ($_SESSION['ocompra_boletas'] as $key => $producto){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="2"><?php echo $producto['trabajador']; ?></td>
 							<td class="item-name"><?php echo $producto['Descripcion']; ?></td>
@@ -1541,7 +1541,7 @@ $total = 0;
 				<?php
 				if (isset($_SESSION['ocompra_boletasEmp'])){
 					//recorro el lsiatdo entregado por la base de datos
-					foreach ($_SESSION['ocompra_boletasEmp'] as $key => $producto){?>
+					foreach ($_SESSION['ocompra_boletasEmp'] as $key => $producto){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="4"><?php echo $producto['Descripcion']; ?></td>
 							<td class="item-name" align="right"><?php echo Valores($producto['Valor'], 0);$total = $total + $producto['Valor']; ?></td>
@@ -1588,7 +1588,7 @@ $total = 0;
 				</tr>
 				<?php 
 				//recorro el lsiatdo entregado por la base de datos
-				foreach ($_SESSION['ocompra_sol_rel'] as $key => $producto){?>
+				foreach ($_SESSION['ocompra_sol_rel'] as $key => $producto){ ?>
 					<tr class="item-row linea_punteada">
 						<td class="item-name"><?php echo $producto['Sistema']; ?></td>
 						<td class="item-name"><?php echo n_doc($producto['idSolicitud'], 5); ?></td>
@@ -1659,7 +1659,7 @@ $total = 0;
 			if (isset($_SESSION['ocompra_archivos'])){
 				//recorro el lsiatdo entregado por la base de datos
 				$numeral = 1;
-				foreach ($_SESSION['ocompra_archivos'] as $key => $producto){?>
+				foreach ($_SESSION['ocompra_archivos'] as $key => $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $numeral.' - '.$producto['Nombre']; ?></td>
 						<td>
@@ -1692,7 +1692,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 
 ?>
-	 
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -1772,7 +1772,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 //Se aplican los filtros
 if(isset($_GET['idProveedor']) && $_GET['idProveedor']!=''){ $SIS_where .= " AND ocompra_listado.idProveedor=".$_GET['idProveedor'];}
 if(isset($_GET['Creacion_fecha']) && $_GET['Creacion_fecha']!=''){  $SIS_where .= " AND ocompra_listado.Creacion_fecha='".$_GET['Creacion_fecha']."'";}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idOcompra', 'ocompra_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -1800,12 +1800,12 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'ocompra_listado', $SIS_jo
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
-	<?php if ($rowlevel['level']>=3){?>
-		<?php if(isset($_SESSION['ocompra_basicos']['idProveedor'])&&$_SESSION['ocompra_basicos']['idProveedor']!=''){?>
+	<?php if ($rowlevel['level']>=3){ ?>
+		<?php if(isset($_SESSION['ocompra_basicos']['idProveedor'])&&$_SESSION['ocompra_basicos']['idProveedor']!=''){ ?>
 			<?php 
 			//Verifico si viene desde una solicitud
 			$extra = '';
@@ -1919,8 +1919,8 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'ocompra_listado', $SIS_jo
 								if(isset($sol['Solicitud'])&&$sol['Solicitud']==1){
 									$extra = '&soli=true';
 								} ?>
-								<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($sol['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2&&isset($sol['idEstado'])&&$sol['idEstado']==3){?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'ocompra_listado_editar.php?view='.$sol['idOcompra'].$extra; ?>" title="Editar Orden" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($sol['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2&&isset($sol['idEstado'])&&$sol['idEstado']==3){ ?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'ocompra_listado_editar.php?view='.$sol['idOcompra'].$extra; ?>" title="Editar Orden" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

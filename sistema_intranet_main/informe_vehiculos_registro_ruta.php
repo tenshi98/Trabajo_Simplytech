@@ -93,7 +93,7 @@ array_push( $arrRutas,$row );
 							
 							var locations = [ 
 								<?php foreach ( $arrRutas as $pos ) { 
-									if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){?>
+									if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){ ?>
 									['<?php echo $pos['idTabla']; ?>', <?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>], 					
 								<?php } 
 								} ?>

@@ -102,7 +102,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								<?php if ( $rowdata['estado']=='Activo' ){ ?>
 									<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idSistema'].'&estado='.simpleEncode(2, fecha_actual()) ; ?>">OFF</a>
 									<a class="btn btn-sm btn-info locked_active" href="#">ON</a>
-								<?php } else {?>
+								<?php } else { ?>
 									<a class="btn btn-sm btn-info locked_active" href="#">OFF</a>
 									<a class="btn btn-sm btn-default unlocked_inactive" href="<?php echo $new_location.'&id='.$rowdata['idSistema'].'&estado='.simpleEncode(1, fecha_actual()) ; ?>">ON</a>
 								<?php } ?>

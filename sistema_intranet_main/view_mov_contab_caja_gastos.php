@@ -139,7 +139,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 				</thead>
 				<tbody>
 					<?php if ($arrDocumentos!=false && !empty($arrDocumentos) && $arrDocumentos!='') {
-						foreach ($arrDocumentos as $prod) {?>
+						foreach ($arrDocumentos as $prod) { ?>
 							<tr>
 								<td><?php echo $prod['Descripcion']; ?></td>
 								<td>
@@ -156,7 +156,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 						<?php } ?>
 					<?php } ?>
 
-					<?php if(isset($row_data['Valor'])&&$row_data['Valor']!=0){?>
+					<?php if(isset($row_data['Valor'])&&$row_data['Valor']!=0){ ?>
 						<tr class="invoice-total" bgcolor="#f1f1f1">
 							<td align="right" colspan="3"><strong>Total</strong></td>
 							<td align="right"><?php echo Valores($row_data['Valor'], 0); ?></td>
@@ -206,7 +206,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 					<th>Usuario</th>
 					<th>Observacion</th>
 				</tr>
-				<?php foreach ($arrHistorial as $doc){?>
+				<?php foreach ($arrHistorial as $doc){ ?>
 					<tr class="item-row">
 						<td><?php echo fecha_estandar($doc['Creacion_fecha']); ?></td>
 						<td><?php echo $doc['Usuario']; ?></td>
@@ -223,7 +223,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 				<tr>
 					<th colspan="6">Archivos Adjuntos</th>
 				</tr>
-				<?php foreach ($arrArchivo as $producto){?>
+				<?php foreach ($arrArchivo as $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
 						<td width="160">

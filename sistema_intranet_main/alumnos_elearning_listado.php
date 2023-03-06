@@ -127,6 +127,7 @@ if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Elearning Modificado c
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Elearning borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
+
 ?>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['editCuestionario'])){
@@ -591,7 +592,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 
 						<?php
 						//filtrar($arrContenidos, 'Unidad_Numero');
-						foreach($arrContenidos as $categoria=>$permisos){?>
+						foreach($arrContenidos as $categoria=>$permisos){ ?>
 							<tr class="odd" >
 								<td style="background-color:#DDD"><strong>Unidad <?php echo $categoria; ?></strong> - <?php echo $permisos[0]['Unidad_Nombre'].' ('.$permisos[0]['Unidad_Duracion'].' dias de duracion)'; ?></td>
 								<td style="background-color:#DDD" width="10" >
@@ -605,7 +606,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 								</td>
 							</tr>
 							<?php foreach ($permisos as $preg) {
-								if(isset($preg['Contenido_Nombre'])&&$preg['Contenido_Nombre']!=''){?>
+								if(isset($preg['Contenido_Nombre'])&&$preg['Contenido_Nombre']!=''){ ?>
 									<tr class="item-row linea_punteada">
 										<td class="item-name">
 											<span style="word-wrap: break-word;white-space: initial;"><?php echo $preg['Contenido_Nombre']; ?></span>
@@ -808,12 +809,12 @@ $arrCurso = db_select_array (false, $SIS_query, 'alumnos_elearning_listado', $SI
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default"><?php echo $bread_order; ?></li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Elearning</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Elearning</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -886,8 +887,8 @@ $arrCurso = db_select_array (false, $SIS_query, 'alumnos_elearning_listado', $SI
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $curso['sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_elearning.php?view='.simpleEncode($curso['idElearning'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){?><a href="<?php echo $location.'&id_curso='.$curso['idElearning']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_elearning.php?view='.simpleEncode($curso['idElearning'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id_curso='.$curso['idElearning']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del_curso='.simpleEncode($curso['idElearning'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el elearning '.$curso['Nombre'].'?'; ?>

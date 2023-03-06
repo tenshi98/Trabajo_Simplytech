@@ -26,7 +26,7 @@ require_once 'core/Web.Header.Views.php';
 
 
 
-<?php if(isset($_GET['return'])&&$_GET['return']!=''){?>
+<?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>
 	<div class="clearfix"></div>
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">
 		<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>

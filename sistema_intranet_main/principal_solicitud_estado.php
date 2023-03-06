@@ -182,7 +182,7 @@ $arrTracxCuartel = db_select_array (false, $SIS_query, 'cross_solicitud_aplicaci
 							<td><strong><?php echo Cantidades($LitrosAplicados,1); ?></strong></td>
 							<td><strong><?php if($s_count!=0){echo Cantidades($MojamientoReal/$s_count,1);}else{echo '0';} ?></strong></td>
 							<td><strong><?php if($MojamientoReal!=0){echo porcentaje($MojamientoReal/$Mojamiento);}else{ echo '0 %';} ?></td>
-							<td></td>	
+							<td></td>
 							<td></td>
 						</tr>         
 					</tbody>

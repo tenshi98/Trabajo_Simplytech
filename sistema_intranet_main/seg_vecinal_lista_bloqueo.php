@@ -175,13 +175,13 @@ if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) *
 //Creo la variable con la ubicacion
 /**********************************************************/
 //Variable de busqueda
-$SIS_where = "idBloqueo!=0";	
+$SIS_where = "idBloqueo!=0";
 /**********************************************************/
 //Se aplican los filtros
 if(isset($_GET['Fecha']) && $_GET['Fecha']!=''){   $SIS_where .= " AND Fecha=".$_GET['Fecha'];}
 if(isset($_GET['Hora']) && $_GET['Hora']!=''){     $SIS_where .= " AND Hora=".$_GET['Hora'];}
 if(isset($_GET['IP_Client']) && $_GET['IP_Client']!=''){  $SIS_where .= " AND IP_Client=".$_GET['IP_Client'];}
-				
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idBloqueo', 'sistema_seguridad_bloqueo_ip', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -201,12 +201,12 @@ $arrBloqueo = db_select_array (false, $SIS_query, 'sistema_seguridad_bloqueo_ip'
 	<ul class="btn-group btn-breadcrumb pull-left">
 		<li class="btn btn-default tooltip" role="button" data-toggle="collapse" href="#collapseForm" aria-expanded="false" aria-controls="collapseForm" title="Presionar para desplegar Formulario de Busqueda" style="font-size: 14px;"><i class="fa fa-search faa-vertical animated" aria-hidden="true"></i></li>
 		<li class="btn btn-default">Fecha Descendente</li>
-		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){?>
+		<?php if(isset($_GET['filtro_form'])&&$_GET['filtro_form']!=''){ ?>
 			<li class="btn btn-danger"><a href="<?php echo $original.'?pagina=1'; ?>" style="color:#fff;"><i class="fa fa-trash-o" aria-hidden="true"></i> Limpiar</a></li>
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Bloqueos</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Bloqueos</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>

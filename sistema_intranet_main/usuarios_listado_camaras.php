@@ -298,7 +298,7 @@ $arrCamaras = db_select_array (false, $SIS_query, 'seguridad_camaras_listado', $
 									<?php if ( $cajas['contar']=='1' ){ ?>    
 										<a title="Quitar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&camara_del='.$cajas['idpermiso']; ?>">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">ON</a>
-									<?php } else {?>
+									<?php } else { ?>
 										<a title="Quitar Permiso" class="btn btn-sm btn-info locked_active tooltip" href="#">OFF</a>
 										<a title="Dar Permiso" class="btn btn-sm btn-default unlocked_inactive tooltip" href="<?php echo $new_location.'&id='.$_GET['id'].'&camara_add='.$cajas['idCamara']; ?>">ON</a>
 									<?php } ?>

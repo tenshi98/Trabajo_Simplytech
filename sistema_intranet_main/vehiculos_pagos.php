@@ -118,7 +118,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 						
 					
 			</li>
-			<?php if($rowFacturacion['montoPago']!=0){?>
+			<?php if($rowFacturacion['montoPago']!=0){ ?>
 				<li class="list-group-item">
 
 					<div class="pull-left">Pagado</div>
@@ -285,7 +285,7 @@ array_push( $arrFacturaciones,$row );
 	</div>
 </div>
 
-<?php if(isset($rowFacturacion['MontoTotal'])&&$rowFacturacion['MontoTotal']!=''){?>
+<?php if(isset($rowFacturacion['MontoTotal'])&&$rowFacturacion['MontoTotal']!=''){ ?>
 	
 	
 	
@@ -316,7 +316,7 @@ array_push( $arrFacturaciones,$row );
 								<td align="right"><?php echo  Valores($fac['MontoTotal'], 0); ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<?php if ($rowlevel['level']>=1){?><a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.simpleEncode($fac['idFacturacionDetalle'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.simpleEncode($fac['idFacturacionDetalle'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									</div>
 								</td>
 							</tr>
@@ -353,7 +353,7 @@ array_push( $arrFacturaciones,$row );
 						
 					
 				</li>
-				<?php if($rowFacturacion['montoPago']!=0){?>
+				<?php if($rowFacturacion['montoPago']!=0){ ?>
 					<li class="list-group-item">
 
 						<div class="pull-left">Pagado</div>
@@ -383,9 +383,9 @@ array_push( $arrFacturaciones,$row );
 <?php }  ?>
 
 <div class="clearfix"></div>
-<?php if ($rowlevel['level']>=3){?>
+<?php if ($rowlevel['level']>=3){ ?>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >
-		<?php if($rowFacturacion['MontoTotal']!=0){?>
+		<?php if($rowFacturacion['MontoTotal']!=0){ ?>
 		<a href="<?php echo $location.'&idApoderado='.$_GET['idApoderado'].'&pagar=true'; ?>"  class="btn btn-primary pull-right margin_form_btn"><i class="fa fa-usd" aria-hidden="true"></i> Pagar</a>
 		<?php } ?>
 		<a href="<?php echo $location; ?>"  class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -426,7 +426,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 
 			</form>
 			<?php widget_validator(); ?>
-                    
+
 		</div>
 	</div>
 </div>	

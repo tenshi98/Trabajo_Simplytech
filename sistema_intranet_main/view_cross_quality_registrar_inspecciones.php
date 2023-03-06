@@ -102,7 +102,7 @@ $SIS_where = 'Nombre!=""';
 $SIS_order = 'Nombre ASC';
 $arrUnidadMedida = array();
 $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_uml', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnidadMedida');
-	
+
 ?>	
 		
 <section class="invoice">
@@ -503,7 +503,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 				<tr>
 					<th colspan="6">Archivos Adjuntos</th>
 				</tr>
-				<?php foreach ($arrArchivos as $producto){?>
+				<?php foreach ($arrArchivos as $producto){ ?>
 					<tr class="item-row">
 						<td colspan="5"><?php echo $producto['Nombre']; ?></td>
 						<td width="160">

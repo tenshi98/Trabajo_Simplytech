@@ -337,7 +337,7 @@ array_push( $arrHistorial,$row );
 							}
 							if($arrProd[$cuartel['idCuarteles']]){
 								//Se recorren los quimicos a utilizar
-								foreach ($arrProd[$cuartel['idCuarteles']] as $prod){?>
+								foreach ($arrProd[$cuartel['idCuarteles']] as $prod){ ?>
 
 									<tr class="item-row linea_punteada">
 										<td class="item-name" colspan="3">

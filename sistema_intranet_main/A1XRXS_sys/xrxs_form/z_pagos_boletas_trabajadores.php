@@ -76,7 +76,7 @@ require_once '0_validate_user_1.php';
 			
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				if(!isset($N_DocPago) OR $N_DocPago == ''){
 					$N_DocPago = time();//clave unica
 				}
@@ -182,4 +182,5 @@ require_once '0_validate_user_1.php';
 	
 	
 	}
+
 ?>

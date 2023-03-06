@@ -35,7 +35,7 @@ if(isset($_GET['fNacimiento'])&&$_GET['fNacimiento']!=''){  $z.=" AND proveedor_
 if(isset($_GET['idCiudad'])&&$_GET['idCiudad']!=''){ $z.=" AND proveedor_listado.idCiudad=".$_GET['idCiudad'];                $search.= '&idCiudad='.$_GET['idCiudad'];}
 if(isset($_GET['idComuna'])&&$_GET['idComuna']!=''){ $z.=" AND proveedor_listado.idComuna=".$_GET['idComuna'];                $search.= '&idComuna='.$_GET['idComuna'];}
 if(isset($_GET['Direccion'])&&$_GET['Direccion']!=''){      $z.=" AND proveedor_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";  $search.= '&Direccion='.$_GET['Direccion'];}
-				
+
 /**********************************************************************/             
 // Se trae un listado con todos los elementos
 $arrProveedores = array();
@@ -130,7 +130,7 @@ array_push( $arrProveedores,$row );
 						<th>Forma de Pago</th>			
 					</tr>
 				</thead>
-							  
+
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrProveedores as $cli) { ?>
 						<tr class="odd">
@@ -171,8 +171,8 @@ array_push( $arrProveedores,$row );
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} else {?>
-	 
+} else { ?>
+
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
