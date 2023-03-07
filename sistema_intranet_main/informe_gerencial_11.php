@@ -532,7 +532,7 @@ array_push( $arrInsumos2,$row );
 					  
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 						<?php
-						foreach ($arrOT as $consumos) { 
+						foreach ($arrOT as $consumos) {
 							$cantidad = 0;
 							if(isset($consumos['Grasa_inicial'])&&$consumos['Grasa_inicial']!=0){          $cantidad = $consumos['Grasa_inicial'];}
 							if(isset($consumos['Grasa_relubricacion'])&&$consumos['Grasa_relubricacion']!=0){ $cantidad = $consumos['Grasa_relubricacion'];}
@@ -565,7 +565,7 @@ array_push( $arrInsumos2,$row );
 				  function drawChart4() {
 					var data = google.visualization.arrayToDataTable([
 					  ['Ordenes', 'Valor']
-					  <?php foreach ($arrOT as $consumos) {  
+					  <?php foreach ($arrOT as $consumos) {
 							$cantidad = 0;
 							if(isset($consumos['Grasa_inicial'])&&$consumos['Grasa_inicial']!=0){          $cantidad = $consumos['Grasa_inicial'];}
 							if(isset($consumos['Grasa_relubricacion'])&&$consumos['Grasa_relubricacion']!=0){ $cantidad = $consumos['Grasa_relubricacion'];}
@@ -619,7 +619,7 @@ array_push( $arrInsumos2,$row );
 							filtrar($arrOT2, 'idUbicacion'); 
 							foreach($arrOT2 as $ordenes=>$consumo){ 
 								echo '<tr class="odd" ><td colspan="5"  style="background-color:#DDD">Area : '.$consumo[0]['Area'].'</td></tr>';
-								foreach ($consumo as $consumos) { 
+								foreach ($consumo as $consumos) {
 									$cantidad = 0;
 									if(isset($consumos['Grasa_inicial'])&&$consumos['Grasa_inicial']!=0){          $cantidad = $consumos['Grasa_inicial'];}
 									if(isset($consumos['Grasa_relubricacion'])&&$consumos['Grasa_relubricacion']!=0){ $cantidad = $consumos['Grasa_relubricacion'];}

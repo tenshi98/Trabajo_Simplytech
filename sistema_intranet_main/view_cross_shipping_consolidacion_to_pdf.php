@@ -321,7 +321,7 @@ $html .= '
 										$html .= '
 									</tbody>
 								</table>
-							</td>'; 
+							</td>';
 							} 
 							
 								
@@ -357,7 +357,7 @@ $html .= '
 						
 					
 						filtrar($arrArchivos, 'Tipo');
-						foreach($arrArchivos as $categoria=>$archivos){ 
+						foreach($arrArchivos as $categoria=>$archivos){
 							$html .= '<tr><td colspan="8"  style="background-color:#DDD"><strong>'.$categoria.'</strong></td></tr>';
 							$html .= '<tr>';
 

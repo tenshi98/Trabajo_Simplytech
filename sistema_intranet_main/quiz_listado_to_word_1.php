@@ -93,7 +93,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPreguntas,$row );
-}	
+}
 
 /**********************************************************/
 //Tipo Puntuacion
@@ -123,7 +123,7 @@ if(isset($rowdata['idLimiteTiempo'])&&$rowdata['idLimiteTiempo']==1){
 }else{
 	$Limite = 'Sin Limite de Tiempo';
 }
-					
+
 /**********************************************************/
 //Contenido de la evaluacion
 $Contenido = '';

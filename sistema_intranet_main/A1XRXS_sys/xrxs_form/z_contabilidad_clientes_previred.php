@@ -30,8 +30,7 @@ require_once '0_validate_user_1.php';
 
 	if (!empty($_POST['idEstadoOld']))           $idEstadoOld           = $_POST['idEstadoOld'];
 	if (!empty($_POST['idOpciones']))            $idOpciones            = $_POST['idOpciones'];
-	
-	
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -62,7 +61,7 @@ require_once '0_validate_user_1.php';
 			case 'idOpciones':            if(empty($idOpciones)){          $error['idOpciones']          = 'error/No ha seleccionado el envio de correos';}break;
 
 		}
-	}	
+	}
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -93,7 +92,7 @@ require_once '0_validate_user_1.php';
 				//se comprueba si existen correos
 				if(!isset($clientes['ClienteEmail']) OR $clientes['ClienteEmail']=''){
 					$ndata_1++;
-					$error[$ndata_1] = 'error/El Cliente '.$clientes['ClienteNombre'].' no tiene su correo configurado';		
+					$error[$ndata_1] = 'error/El Cliente '.$clientes['ClienteNombre'].' no tiene su correo configurado';
 				}
 			}
 
@@ -108,13 +107,13 @@ require_once '0_validate_user_1.php';
 				foreach ($arrClientes as $clientes){
 					//Se guardan los datos basicos
 					if(isset($clientes['idCliente']) && $clientes['idCliente']!=''){  $SIS_data  = "'".$clientes['idCliente']."'";   }else{$SIS_data  = "''";}
-					if(isset($idSistema) && $idSistema!=''){        $SIS_data .= ",'".$idSistema."'";              }else{$SIS_data .= ",''";}
-					if(isset($idUsuario) && $idUsuario!=''){                         $SIS_data .= ",'".$idUsuario."'";              }else{$SIS_data .= ",''";}
-					if(isset($idTipo) && $idTipo!=''){                               $SIS_data .= ",'".$idTipo."'";                 }else{$SIS_data .= ",''";}
+					if(isset($idSistema) && $idSistema!=''){                          $SIS_data .= ",'".$idSistema."'";              }else{$SIS_data .= ",''";}
+					if(isset($idUsuario) && $idUsuario!=''){                          $SIS_data .= ",'".$idUsuario."'";              }else{$SIS_data .= ",''";}
+					if(isset($idTipo) && $idTipo!=''){                                $SIS_data .= ",'".$idTipo."'";                 }else{$SIS_data .= ",''";}
 					if(isset($fecha_auto) && $fecha_auto!=''){                        $SIS_data .= ",'".$fecha_auto."'";             }else{$SIS_data .= ",''";}
-					if(isset($idEstado) && $idEstado!=''){                           $SIS_data .= ",'".$idEstado."'";               }else{$SIS_data .= ",''";}
-					if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
-						$SIS_data .= ",'".$Creacion_fecha."'";  
+					if(isset($idEstado) && $idEstado!=''){                            $SIS_data .= ",'".$idEstado."'";               }else{$SIS_data .= ",''";}
+					if(isset($Creacion_fecha) && $Creacion_fecha!=''){
+						$SIS_data .= ",'".$Creacion_fecha."'";
 						$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
 						$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'";
 					}else{
@@ -142,17 +141,17 @@ require_once '0_validate_user_1.php';
 								';
 
 								//Envio de correo
-								$rmail = tareas_envio_correo($clientes['SistemaEmail'], $clientes['SistemaNombre'], 
-															 $clientes['ClienteEmail'], $clientes['ClienteNombre'], 
-															 '', '', 
-															 'Recordatorio Pago Previred', 
-															 $xbody,'', 
-															 '', 
-															 1, 
-															 $clientes['Gmail_Usuario'], 
+								$rmail = tareas_envio_correo($clientes['SistemaEmail'], $clientes['SistemaNombre'],
+															 $clientes['ClienteEmail'], $clientes['ClienteNombre'],
+															 '', '',
+															 'Recordatorio Pago Previred',
+															 $xbody,'',
+															 '',
+															 1,
+															 $clientes['Gmail_Usuario'],
 															 $clientes['Gmail_Password']);
 								//se guarda el log
-								log_response(1, $rmail, $clientes['ClienteEmail'].' (Asunto:Recordatorio Pago Previred)');								 
+								log_response(1, $rmail, $clientes['ClienteEmail'].' (Asunto:Recordatorio Pago Previred)');
 							}
 						}
 					}
@@ -161,8 +160,7 @@ require_once '0_validate_user_1.php';
 				//redirijo
 				header( 'Location: '.$location.'&created=true' );
 				die;
-				
-			
+
 			}
 
 		break;
@@ -179,10 +177,10 @@ require_once '0_validate_user_1.php';
 				$SIS_data = "idContabPrevired='".$idContabPrevired."'";
 				if(isset($idCliente) && $idCliente!=''){          $SIS_data .= ",idCliente='".$idCliente."'";}
 				if(isset($idSistema) && $idSistema!=''){          $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($idTipo) && $idTipo!=''){               $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($idUsuario) && $idUsuario!=''){          $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idTipo) && $idTipo!=''){                $SIS_data .= ",idTipo='".$idTipo."'";}
 				if(isset($fecha_auto) && $fecha_auto!=''){        $SIS_data .= ",fecha_auto='".$fecha_auto."'";}
-				if(isset($idEstado) && $idEstado!=''){           $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idEstado) && $idEstado!=''){            $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
@@ -192,8 +190,8 @@ require_once '0_validate_user_1.php';
 				//Verifico el cambio de estado
 				if(isset($idEstadoOld)&&$idEstadoOld!=$idEstado&&$idEstado!=1){
 					if(isset($idUsuarioCierre) && $idUsuarioCierre!=''){        $SIS_data .= ",idUsuarioCierre='".$idUsuarioCierre."'";}
-					if(isset($Cierre_fecha) && $Cierre_fecha!=''){  
-						$SIS_data .= ",Cierre_fecha='".$Cierre_fecha."'";  
+					if(isset($Cierre_fecha) && $Cierre_fecha!=''){
+						$SIS_data .= ",Cierre_fecha='".$Cierre_fecha."'";
 						$SIS_data .= ",Cierre_mes='".fecha2NMes($Cierre_fecha)."'";
 						$SIS_data .= ",Cierre_ano='".fecha2Ano($Cierre_fecha)."'";
 					//si no se ingresa la fecha se crea de forma automatica

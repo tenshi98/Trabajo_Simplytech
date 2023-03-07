@@ -75,8 +75,8 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idSistema) && $idSistema!=''){    $SIS_data  = "'".$idSistema."'";   }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre!=''){         $SIS_data .= ",'".$Nombre."'";     }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){     $SIS_data .= ",'".$idEstado."'";   }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){          $SIS_data .= ",'".$Nombre."'";     }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){      $SIS_data .= ",'".$idEstado."'";   }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema, Nombre,idEstado';
@@ -113,8 +113,8 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idZona='".$idZona."'";
 				if(isset($idSistema) && $idSistema!=''){    $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($Nombre) && $Nombre!=''){         $SIS_data .= ",Nombre='".$Nombre."'";}
-				if(isset($idEstado) && $idEstado!=''){     $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($Nombre) && $Nombre!=''){          $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idEstado) && $idEstado!=''){      $SIS_data .= ",idEstado='".$idEstado."'";}
 
 				/*******************************************************/
 				//se actualizan los datos

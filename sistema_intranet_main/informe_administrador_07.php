@@ -273,7 +273,7 @@ foreach ($arrGrupos as $sen) {
 							/*************************************************************/
 							//Listado de fuera de linea actuales							
 							foreach ($arrTelemetria as $tel) {
-								
+
 								$diaInicio   = $tel['LastUpdateFecha'];
 								$diaTermino  = fecha_actual();
 								$tiempo1     = $tel['LastUpdateHora'];

@@ -38,13 +38,13 @@ require_once '0_validate_user_1.php';
 			case 'Nombre':          if(empty($Nombre)){         $error['Nombre']         = 'error/No ha ingresado el nombre';}break;
 			case 'Enlace':          if(empty($Enlace)){         $error['Enlace']         = 'error/No ha ingresado la Enlace';}break;
 			case 'PalabrasClave':   if(empty($PalabrasClave)){  $error['PalabrasClave']  = 'error/No ha ingresado las palabras clave';}break;
-				
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){              $Nombre        = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){               $Nombre        = EstandarizarInput($Nombre);}
 	if(isset($Enlace) && $Enlace!=''){               $Enlace        = EstandarizarInput($Enlace);}
 	if(isset($PalabrasClave) && $PalabrasClave!=''){ $PalabrasClave = EstandarizarInput($PalabrasClave);}
 
@@ -82,8 +82,8 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idSitio) && $idSitio!=''){                 $SIS_data  = "'".$idSitio."'";             }else{$SIS_data  = "''";}
-				if(isset($idEstado) && $idEstado!=''){              $SIS_data .= ",'".$idEstado."'";           }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){                  $SIS_data .= ",'".$Nombre."'";             }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";           }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",'".$Nombre."'";             }else{$SIS_data .= ",''";}
 				if(isset($Enlace) && $Enlace!=''){                   $SIS_data .= ",'".$Enlace."'";             }else{$SIS_data .= ",''";}
 				if(isset($PalabrasClave) && $PalabrasClave!=''){     $SIS_data .= ",'".$PalabrasClave."'";      }else{$SIS_data .= ",''";}
 
@@ -122,11 +122,11 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idLinks='".$idLinks."'";
 				if(isset($idSitio) && $idSitio!=''){              $SIS_data .= ",idSitio='".$idSitio."'";}
-				if(isset($idEstado) && $idEstado!=''){           $SIS_data .= ",idEstado='".$idEstado."'";}
-				if(isset($Nombre) && $Nombre!=''){               $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idEstado) && $idEstado!=''){            $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($Nombre) && $Nombre!=''){                $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Enlace) && $Enlace!=''){                $SIS_data .= ",Enlace='".$Enlace."'";}
 				if(isset($PalabrasClave) && $PalabrasClave!=''){  $SIS_data .= ",PalabrasClave='".$PalabrasClave."'";}
-					
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'sitios_listado_links', 'idLinks = "'.$idLinks.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -186,11 +186,9 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
 
-		
 /*******************************************************************************************************************/
 	}
 

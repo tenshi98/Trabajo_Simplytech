@@ -79,7 +79,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){               $Nombre        = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){                $Nombre        = EstandarizarInput($Nombre);}
 	if(isset($ApellidoPat) && $ApellidoPat!=''){      $ApellidoPat   = EstandarizarInput($ApellidoPat);}
 	if(isset($ApellidoMat) && $ApellidoMat!=''){      $ApellidoMat   = EstandarizarInput($ApellidoMat);}
 	if(isset($Direccion) && $Direccion!=''){          $Direccion     = EstandarizarInput($Direccion);}
@@ -132,9 +132,9 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){$SIS_data  = "'".$idSistema."'";                }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema!=''){                  $SIS_data  = "'".$idSistema."'";                }else{$SIS_data  = "''";}
 				if(isset($idEstado) && $idEstado!=''){                    $SIS_data .= ",'".$idEstado."'";                }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){                       $SIS_data .= ",'".$Nombre."'";                  }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                        $SIS_data .= ",'".$Nombre."'";                  }else{$SIS_data .= ",''";}
 				if(isset($ApellidoPat) && $ApellidoPat!=''){              $SIS_data .= ",'".$ApellidoPat."'";             }else{$SIS_data .= ",''";}
 				if(isset($ApellidoMat) && $ApellidoMat!=''){              $SIS_data .= ",'".$ApellidoMat."'";             }else{$SIS_data .= ",''";}
 				if(isset($idSexo) && $idSexo!=''){                        $SIS_data .= ",'".$idSexo."'";                  }else{$SIS_data .= ",''";}
@@ -192,9 +192,9 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idPostulante='".$idPostulante."'";
-				if(isset($idSistema) && $idSistema!=''){$SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idSistema) && $idSistema!=''){                  $SIS_data .= ",idSistema='".$idSistema."'";}
 				if(isset($idEstado) && $idEstado!=''){                    $SIS_data .= ",idEstado='".$idEstado."'";}
-				if(isset($Nombre) && $Nombre!=''){                       $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                        $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($ApellidoPat) && $ApellidoPat!=''){              $SIS_data .= ",ApellidoPat='".$ApellidoPat."'";}
 				if(isset($ApellidoMat) && $ApellidoMat!=''){              $SIS_data .= ",ApellidoMat='".$ApellidoMat."'";}
 				if(isset($idSexo) && $idSexo!=''){                        $SIS_data .= ",idSexo='".$idSexo."'";}
@@ -390,7 +390,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "File_Curriculum=''" ;
+			$SIS_data = "File_Curriculum=''";
 			$resultado = db_update_data (false, $SIS_data, 'postulantes_listado', 'idPostulante = "'.$_GET['del_File_Curriculum'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -573,9 +573,9 @@ require_once '0_validate_user_1.php';
 											//si existe nombre
 											if(isset($Post_Nombre)&&$Post_Nombre!=''){
 												//verifico si existen los datos
-												if(isset($Post_Sexo)&&isset($arrSexoMod[$Post_Sexo]['ID'])){        $ID_Sexo    = $arrSexoMod[$Post_Sexo]['ID'];}   
-												if(isset($Post_Ciudad)&&isset($arrCiudadMod[$Post_Ciudad]['ID'])){  $ID_Ciudad  = $arrCiudadMod[$Post_Ciudad]['ID'];}  
-												if(isset($Post_Comuna)&&isset($arrComunaMod[$Post_Comuna]['ID'])){  $ID_Comuna  = $arrComunaMod[$Post_Comuna]['ID'];} 
+												if(isset($Post_Sexo)&&isset($arrSexoMod[$Post_Sexo]['ID'])){        $ID_Sexo    = $arrSexoMod[$Post_Sexo]['ID'];}
+												if(isset($Post_Ciudad)&&isset($arrCiudadMod[$Post_Ciudad]['ID'])){  $ID_Ciudad  = $arrCiudadMod[$Post_Ciudad]['ID'];}
+												if(isset($Post_Comuna)&&isset($arrComunaMod[$Post_Comuna]['ID'])){  $ID_Comuna  = $arrComunaMod[$Post_Comuna]['ID'];}
 
 												/****************************************************/
 												//filtros

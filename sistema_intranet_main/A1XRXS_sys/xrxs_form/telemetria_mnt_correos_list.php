@@ -80,7 +80,7 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($idCorreosCat) && $idCorreosCat!=''){   $SIS_data  = "'".$idCorreosCat."'";   }else{$SIS_data  = "''";}
 				if(isset($idSistema) && $idSistema!=''){         $SIS_data .= ",'".$idSistema."'";     }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){        $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
 				if(isset($TimeStamp) && $TimeStamp!=''){         $SIS_data .= ",'".$TimeStamp."'";     }else{$SIS_data .= ",''";}
 				if(isset($Chat_id) && $Chat_id!=''){             $SIS_data .= ",'".$Chat_id."'";       }else{$SIS_data .= ",''";}
 
@@ -130,7 +130,7 @@ require_once '0_validate_user_1.php';
 				$SIS_data = "idCorreos='".$idCorreos."'";
 				if(isset($idCorreosCat) && $idCorreosCat!=''){    $SIS_data .= ",idCorreosCat='".$idCorreosCat."'";}
 				if(isset($idSistema) && $idSistema!=''){          $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idUsuario) && $idUsuario!=''){          $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($TimeStamp) && $TimeStamp!=''){          $SIS_data .= ",TimeStamp='".$TimeStamp."'";}
 				if(isset($Chat_id) && $Chat_id!=''){              $SIS_data .= ",Chat_id='".$Chat_id."'";}
 
@@ -234,7 +234,7 @@ require_once '0_validate_user_1.php';
 				}
 
 				//Filtros
-				if(isset($Fecha_noMolestar) && $Fecha_noMolestar != ''&&isset($Hora_noMolestar) && $Hora_noMolestar!=''){          
+				if(isset($Fecha_noMolestar) && $Fecha_noMolestar != ''&&isset($Hora_noMolestar) && $Hora_noMolestar!=''){
 					$SIS_data = "TimeStamp='".$Fecha_noMolestar." ".$Hora_noMolestar."'";
 				}
 

@@ -323,7 +323,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_idProveedor').style.display = 'none';
 								document.getElementById('div_idCliente').style.display = 'none';
 							}
-							
+
 						});
 					});
 						

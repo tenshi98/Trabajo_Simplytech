@@ -14,9 +14,9 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if (!empty($_POST['idSitio']))                   $idSitio                    = $_POST['idSitio'];
-	if (!empty($_POST['idSistema']))                 $idSistema                  = $_POST['idSistema'];
-	if (!empty($_POST['idEstado']))                  $idEstado                   = $_POST['idEstado'];
+	if (!empty($_POST['idSitio']))                    $idSitio                    = $_POST['idSitio'];
+	if (!empty($_POST['idSistema']))                  $idSistema                  = $_POST['idSistema'];
+	if (!empty($_POST['idEstado']))                   $idEstado                   = $_POST['idEstado'];
 	if ( isset($_POST['Nombre']))                     $Nombre                     = $_POST['Nombre'];
 	if ( isset($_POST['Domain']))                     $Domain                     = $_POST['Domain'];
 	if ( isset($_POST['Whatsapp_number_1']))          $Whatsapp_number_1          = $_POST['Whatsapp_number_1'];
@@ -134,13 +134,13 @@ require_once '0_validate_user_1.php';
 			case 'Nosotros_Subtitulo':       if(empty($Nosotros_Subtitulo)){         $error['Nosotros_Subtitulo']         = 'error/No ha ingresado el subtitulo de nosotros';}break;
 			case 'Nosotros_Texto':           if(empty($Nosotros_Texto)){             $error['Nosotros_Texto']             = 'error/No ha ingresado el texto de nosotros';}break;
 			case 'Nosotros_Link':            if(empty($Nosotros_Link)){              $error['Nosotros_Link']              = 'error/No ha ingresado el enlace de nosotros';}break;
-				
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){                                 $Nombre                 = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){                                  $Nombre                 = EstandarizarInput($Nombre);}
 	if(isset($Domain) && $Domain!=''){                                  $Domain                 = EstandarizarInput($Domain);}
 	if(isset($Whatsapp_number_1) && $Whatsapp_number_1!=''){            $Whatsapp_number_1      = EstandarizarInput($Whatsapp_number_1);}
 	if(isset($Whatsapp_number_2) && $Whatsapp_number_2!=''){            $Whatsapp_number_2      = EstandarizarInput($Whatsapp_number_2);}
@@ -222,9 +222,9 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){                $SIS_data  = "'".$idSistema."'";                       }else{$SIS_data  = "''";}
-				if(isset($idEstado) && $idEstado!=''){                                   $SIS_data .= ",'".$idEstado."'";                       }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){                                       $SIS_data .= ",'".$Nombre."'";                         }else{$SIS_data .= ",''";}
+				if(isset($idSistema) && $idSistema!=''){                                  $SIS_data  = "'".$idSistema."'";                       }else{$SIS_data  = "''";}
+				if(isset($idEstado) && $idEstado!=''){                                    $SIS_data .= ",'".$idEstado."'";                       }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                                        $SIS_data .= ",'".$Nombre."'";                         }else{$SIS_data .= ",''";}
 				if(isset($Domain) && $Domain!=''){                                        $SIS_data .= ",'".$Domain."'";                         }else{$SIS_data .= ",''";}
 				if(isset($Whatsapp_number_1) && $Whatsapp_number_1!=''){                  $SIS_data .= ",'".$Whatsapp_number_1."'";              }else{$SIS_data .= ",''";}
 				if(isset($Whatsapp_number_2) && $Whatsapp_number_2!=''){                  $SIS_data .= ",'".$Whatsapp_number_2."'";              }else{$SIS_data .= ",''";}
@@ -319,8 +319,8 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idSitio='".$idSitio."'";
-				if(isset($idSistema) && $idSistema!=''){   $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idEstado) && $idEstado!=''){    $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idSistema) && $idSistema!=''){     $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idEstado) && $idEstado!=''){       $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($Nombre)){                          $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Domain)){                          $SIS_data .= ",Domain='".$Domain."'";}
 				if(isset($Whatsapp_number_1)){               $SIS_data .= ",Whatsapp_number_1='".$Whatsapp_number_1."'";}
@@ -372,7 +372,7 @@ require_once '0_validate_user_1.php';
 				if(isset($Nosotros_Subtitulo)){              $SIS_data .= ",Nosotros_Subtitulo='".$Nosotros_Subtitulo."'";}
 				if(isset($Nosotros_Texto)){                  $SIS_data .= ",Nosotros_Texto='".$Nosotros_Texto."'";}
 				if(isset($Nosotros_Link)){                   $SIS_data .= ",Nosotros_Link='".$Nosotros_Link."'";}
-					
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'sitios_listado', 'idSitio = "'.$idSitio.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -432,11 +432,9 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
 
-		
 /*******************************************************************************************************************/
 	}
 

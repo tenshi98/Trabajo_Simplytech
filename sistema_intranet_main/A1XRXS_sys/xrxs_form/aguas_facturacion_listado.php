@@ -483,7 +483,7 @@ require_once '0_validate_user_1.php';
 					}
 
 					if(isset($MedicionActual[$cliente['idCliente']]['Consumo'])&&$MedicionActual[$cliente['idCliente']]['Consumo']!=0){
-						$ConsumoMesActual = (valores_truncados($MedicionActual[$cliente['idCliente']]['Consumo'])- valores_truncados($MedicionAnterior[$cliente['idCliente']]['Consumo'])) + $rem_cantidad;  
+						$ConsumoMesActual = (valores_truncados($MedicionActual[$cliente['idCliente']]['Consumo'])- valores_truncados($MedicionAnterior[$cliente['idCliente']]['Consumo'])) + $rem_cantidad;
 					}else{
 						$ConsumoMesActual = 0;
 					}
@@ -859,7 +859,7 @@ require_once '0_validate_user_1.php';
 					if(isset($MedicionActual[$cliente['idCliente']]['TipoFacturacion'])){       $_SESSION['Facturacion_clientes'][$cliente['idCliente']]['AguasInfClaveFacturacion']        = $MedicionActual[$cliente['idCliente']]['TipoFacturacion'];                   }else{$_SESSION['Facturacion_clientes'][$cliente['idCliente']]['AguasInfClaveFacturacion']    = '';}
 					if(isset($MedicionActual[$cliente['idCliente']]['TipoLectura'])){           $_SESSION['Facturacion_clientes'][$cliente['idCliente']]['AguasInfClaveLectura']            = $MedicionActual[$cliente['idCliente']]['TipoLectura'];                       }else{$_SESSION['Facturacion_clientes'][$cliente['idCliente']]['AguasInfClaveLectura']        = '';}
 					if(isset($NumeroMedidor)){                                                  $_SESSION['Facturacion_clientes'][$cliente['idCliente']]['AguasInfNumeroMedidor']           = $NumeroMedidor;                                                              }else{$_SESSION['Facturacion_clientes'][$cliente['idCliente']]['AguasInfNumeroMedidor']       = '';}
-					if(isset($Fecha)){                                                $_SESSION['Facturacion_clientes'][$cliente['idCliente']]['AguasInfFechaEmision']            = $Fecha;                                                                      }else{$_SESSION['Facturacion_clientes'][$cliente['idCliente']]['AguasInfFechaEmision']        = '';}
+					if(isset($Fecha)){                                                          $_SESSION['Facturacion_clientes'][$cliente['idCliente']]['AguasInfFechaEmision']            = $Fecha;                                                                      }else{$_SESSION['Facturacion_clientes'][$cliente['idCliente']]['AguasInfFechaEmision']        = '';}
 					if(isset($cliente['PagoFecha'])){                                           $_SESSION['Facturacion_clientes'][$cliente['idCliente']]['AguasInfUltimoPagoFecha']         = $cliente['PagoFecha'];                                                       }else{$_SESSION['Facturacion_clientes'][$cliente['idCliente']]['AguasInfUltimoPagoFecha']     = '';}
 					if(isset($cliente['PagoMonto'])){                                           $_SESSION['Facturacion_clientes'][$cliente['idCliente']]['AguasInfUltimoPagoMonto']         = $cliente['PagoMonto'];                                                       }else{$_SESSION['Facturacion_clientes'][$cliente['idCliente']]['AguasInfUltimoPagoMonto']     = '';}
 					if(isset($Ano)&&isset($idMes)){                                             $_SESSION['Facturacion_clientes'][$cliente['idCliente']]['AguasInfMovimientosHasta']        = $Ano.'-'.numero_mes($idMes).'-09';                                           }else{$_SESSION['Facturacion_clientes'][$cliente['idCliente']]['AguasInfMovimientosHasta']    = '';}
@@ -1204,7 +1204,7 @@ require_once '0_validate_user_1.php';
 			if($errorn==0){
 
 				//se actualizan los datos
-				$SIS_data = "idFacturacion`='0'" ;
+				$SIS_data = "idFacturacion`='0'";
 				$resultado = db_update_data (false, $SIS_data, 'aguas_mediciones_datos_detalle', 'idFacturacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//borro los datos

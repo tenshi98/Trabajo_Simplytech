@@ -47,7 +47,7 @@ require_once '0_validate_user_1.php';
 			case 'idTipo':           if(empty($idTipo)){            $error['idTipo']           = 'error/No ha seleccionado el tipo';}break;
 			case 'FechaEjecucion':   if(empty($FechaEjecucion)){    $error['FechaEjecucion']   = 'error/No ha ingresado la Fecha de Ejecucion';}break;
 			case 'Fecha':            if(empty($Fecha)){             $error['Fecha']            = 'error/No ha ingresado la Fecha';}break;
-			case 'Dia':              if(empty($Dia)){               $error['Dia']              = 'error/No ha ingresado el Dia';}break;	
+			case 'Dia':              if(empty($Dia)){               $error['Dia']              = 'error/No ha ingresado el Dia';}break;
 			case 'idMes':            if(empty($idMes)){             $error['idMes']            = 'error/No ha ingresado el mes';}break;
 			case 'Ano':              if(empty($Ano)){               $error['Ano']              = 'error/No ha ingresado el año';}break;
 			case 'Observacion':      if(empty($Observacion)){       $error['Observacion']      = 'error/No ha ingresado la observacion';}break;
@@ -405,7 +405,7 @@ require_once '0_validate_user_1.php';
 						$SIS_data .= ",idMes='".fecha2NMes($Fecha)."'";
 						$SIS_data .= ",Ano='".fecha2Ano($Fecha)."'";
 					}
-					if(isset($Observacion) && $Observacion!=''){   $SIS_data .= ",Observacion='".$Observacion."'";}
+					if(isset($Observacion) && $Observacion!=''){     $SIS_data .= ",Observacion='".$Observacion."'";}
 					if(isset($ValorEvento) && $ValorEvento!= ''){    $SIS_data .= ",ValorEvento='".$ValorEvento."'";}
 					if(isset($NSello) && $NSello!= ''){              $SIS_data .= ",NSello='".$NSello."'";}
 

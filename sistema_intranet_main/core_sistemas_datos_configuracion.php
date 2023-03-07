@@ -223,7 +223,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								document.getElementById('idOpcionesGen_6').value = "0";
 							}
 						});
-						
+
 						/*******************************************/
 						//se ejecuta al cambiar valor del select		
 						$("#idOpcionesGen_7").on("change", function(){
@@ -286,7 +286,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 								document.getElementById('idOpcionesGen_10').selectedIndex = 1;
 							}
 						});
-						
+
 						/*******************************************/
 						//se ejecuta al cambiar valor del select		
 						$("#idOpcionesGen_4").on("change", function(){

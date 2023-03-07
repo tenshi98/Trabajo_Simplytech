@@ -196,7 +196,6 @@ array_push( $arrPuntos,$row );
 
 									document.getElementById("Latitud_fake").value = event.latLng.lat();
 									document.getElementById("Longitud_fake").value = event.latLng.lng();
-									
 
 								});
 								
@@ -368,7 +367,7 @@ array_push( $arrPuntos,$row );
 							var marker;
 							var geocoder = new google.maps.Geocoder();
 							var myLatlng = new google.maps.LatLng(-33.4372, -70.6506);
-								
+
 							/* ************************************************************************** */
 							function initialize() {
 								
@@ -396,12 +395,11 @@ array_push( $arrPuntos,$row );
 
 									document.getElementById("Latitud_fake").value = event.latLng.lat();
 									document.getElementById("Longitud_fake").value = event.latLng.lng();
-									
 
 								});
 								
 								dibuja_zona();
-								
+
 							}
 							/* ************************************************************************** */
 							function dibuja_zona() {

@@ -14,7 +14,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if (!empty($_POST['idPuertoDestino']))     $idPuertoDestino     = $_POST['idPuertoDestino'];
+	if (!empty($_POST['idPuertoDestino']))      $idPuertoDestino      = $_POST['idPuertoDestino'];
 	if (!empty($_POST['Nombre']))               $Nombre               = $_POST['Nombre'];
 	if (!empty($_POST['Codigo']))               $Codigo               = $_POST['Codigo'];
 
@@ -29,7 +29,7 @@ require_once '0_validate_user_1.php';
 	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
 		switch ($INT_valor) {
-			case 'idPuertoDestino':   if(empty($idPuertoDestino)){    $error['idPuertoDestino']     = 'error/No ha ingresado el id';}break;
+			case 'idPuertoDestino':    if(empty($idPuertoDestino)){     $error['idPuertoDestino']      = 'error/No ha ingresado el id';}break;
 			case 'Nombre':             if(empty($Nombre)){              $error['Nombre']               = 'error/No ha ingresado el nombre';}break;
 			case 'Codigo':             if(empty($Codigo)){              $error['Codigo']               = 'error/No ha ingresado el Codigo';}break;
 
@@ -38,7 +38,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){$Nombre = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){ $Nombre = EstandarizarInput($Nombre);}
 	if(isset($Codigo) && $Codigo!=''){ $Codigo = EstandarizarInput($Codigo);}
 
 /*******************************************************************************************************************/
@@ -73,7 +73,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($Nombre) && $Nombre!=''){ $SIS_data  = "'".$Nombre."'";  }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){  $SIS_data  = "'".$Nombre."'";  }else{$SIS_data  = "''";}
 				if(isset($Codigo) && $Codigo!=''){  $SIS_data .= ",'".$Codigo."'"; }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
@@ -111,9 +111,9 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idPuertoDestino='".$idPuertoDestino."'";
-				if(isset($Nombre) && $Nombre!=''){ $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){  $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Codigo) && $Codigo!=''){  $SIS_data .= ",Codigo='".$Codigo."'";}
-					
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'cross_shipping_puerto_destino', 'idPuertoDestino = "'.$idPuertoDestino.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

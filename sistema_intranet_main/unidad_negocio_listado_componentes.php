@@ -327,9 +327,7 @@ foreach ($arrPermisos as $prod) {
 				if(isset($idUml)){                $x18 = $idUml;                  }else{$x18 = $rowdata['idUml'];}
 				if(isset($Frecuencia)){           $x19 = $Frecuencia;             }else{$x19 = $rowdata['Frecuencia'];}
 				if(isset($idFrecuencia)){         $x20 = $idFrecuencia;           }else{$x20 = $rowdata['idFrecuencia'];}
-				
-				
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -354,9 +352,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_text('Unidad de Medida','idUml', $x18, 1);
 				$Form_Inputs->form_input_text('Frecuencia', 'Frecuencia', $x19, 1);
 				$Form_Inputs->form_select('Medida Frecuencia','idFrecuencia', $x20, 1, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
-				
-				
-				
+
 				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
@@ -392,7 +388,7 @@ foreach ($arrPermisos as $prod) {
 					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
 					';
 				}
-				
+
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
 					';
@@ -961,9 +957,7 @@ foreach ($arrPermisos as $prod) {
 				if(isset($idUml)){                $x18 = $idUml;                  }else{$x18 = '';}
 				if(isset($Frecuencia)){           $x19 = $Frecuencia;             }else{$x19 = '';}
 				if(isset($idFrecuencia)){         $x20 = $idFrecuencia;           }else{$x20 = '';}
-				
-				
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -1026,7 +1020,7 @@ foreach ($arrPermisos as $prod) {
 					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
 					';
 				}
-				
+
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
 					';

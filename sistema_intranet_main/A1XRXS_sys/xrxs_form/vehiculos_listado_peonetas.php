@@ -46,7 +46,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){          $Nombre      = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){           $Nombre      = EstandarizarInput($Nombre);}
 	if(isset($ApellidoPat) && $ApellidoPat!=''){ $ApellidoPat = EstandarizarInput($ApellidoPat);}
 	if(isset($ApellidoMat) && $ApellidoMat!=''){ $ApellidoMat = EstandarizarInput($ApellidoMat);}
 
@@ -90,11 +90,11 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idVehiculo) && $idVehiculo!=''){    $SIS_data  = "'".$idVehiculo."'";    }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
 				if(isset($ApellidoPat) && $ApellidoPat!=''){  $SIS_data .= ",'".$ApellidoPat."'";  }else{$SIS_data .= ",''";}
 				if(isset($ApellidoMat) && $ApellidoMat!=''){  $SIS_data .= ",'".$ApellidoMat."'";  }else{$SIS_data .= ",''";}
 				if(isset($Rut) && $Rut!=''){                  $SIS_data .= ",'".$Rut."'";          }else{$SIS_data .= ",''";}
-				if(isset($Fecha) && $Fecha!=''){ $SIS_data .= ",'".$Fecha."'";       }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha!=''){              $SIS_data .= ",'".$Fecha."'";        }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idVehiculo, Nombre,ApellidoPat, ApellidoMat, Rut, Fecha';
@@ -138,11 +138,11 @@ require_once '0_validate_user_1.php';
 				//filtros
 				$SIS_data = "idPeoneta='".$idPeoneta."'";
 				if(isset($idVehiculo) && $idVehiculo!=''){     $SIS_data .= ",idVehiculo='".$idVehiculo."'";}
-				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){             $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($ApellidoPat) && $ApellidoPat!=''){   $SIS_data .= ",ApellidoPat='".$ApellidoPat."'";}
 				if(isset($ApellidoMat) && $ApellidoMat!=''){   $SIS_data .= ",ApellidoMat='".$ApellidoMat."'";}
 				if(isset($Rut) && $Rut!=''){                   $SIS_data .= ",Rut='".$Rut."'";}
-				if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+				if(isset($Fecha) && $Fecha!=''){               $SIS_data .= ",Fecha='".$Fecha."'";}
 
 				/*******************************************************/
 				//se actualizan los datos
@@ -206,7 +206,6 @@ require_once '0_validate_user_1.php';
 
 		break;
 
-					
 /*******************************************************************************************************************/
 	}
 

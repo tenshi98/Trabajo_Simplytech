@@ -46,7 +46,7 @@ $s_folder = DB_SITE_MAIN.'/ClientFiles/_data/'.$X_Puntero;
 //si no existe la carpeta, la creo
 if (!file_exists($s_folder)){
 	try {
-		$oldmask = umask(000);//it will set the new umask and returns the old one 
+		$oldmask = umask(000);//it will set the new umask and returns the old one
 		mkdir($s_folder, 0777);
 		umask($oldmask);//reset the old umask
 		//muestro la carpeta

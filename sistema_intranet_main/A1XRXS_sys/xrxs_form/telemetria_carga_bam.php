@@ -69,9 +69,9 @@ require_once '0_validate_user_1.php';
 				$Dia     = fecha2NDiaSemana($FechaVencimiento);
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){ $SIS_data  = "'".$idSistema."'";           }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema!=''){                   $SIS_data  = "'".$idSistema."'";           }else{$SIS_data  = "''";}
 				if(isset($idTelemetria) && $idTelemetria!=''){             $SIS_data .= ",'".$idTelemetria."'";       }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){                  $SIS_data .= ",'".$idUsuario."'";          }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){                   $SIS_data .= ",'".$idUsuario."'";          }else{$SIS_data .= ",''";}
 				if(isset($FechaCarga) && $FechaCarga!=''){                 $SIS_data .= ",'".$FechaCarga."'";         }else{$SIS_data .= ",''";}
 				if(isset($FechaVencimiento) && $FechaVencimiento!=''){     $SIS_data .= ",'".$FechaVencimiento."'";   }else{$SIS_data .= ",''";}
 				if(isset($Ano) && $Ano!=''){                               $SIS_data .= ",'".$Ano."'";                }else{$SIS_data .= ",''";}
@@ -111,9 +111,9 @@ require_once '0_validate_user_1.php';
 
 				//Filtros
 				$SIS_data = "idCarga='".$idCarga."'";
-				if(isset($idSistema) && $idSistema!=''){ $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idSistema) && $idSistema!=''){                   $SIS_data .= ",idSistema='".$idSistema."'";}
 				if(isset($idTelemetria) && $idTelemetria!=''){             $SIS_data .= ",idTelemetria='".$idTelemetria."'";}
-				if(isset($idUsuario) && $idUsuario!=''){                  $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idUsuario) && $idUsuario!=''){                   $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($FechaCarga) && $FechaCarga!=''){                 $SIS_data .= ",FechaCarga='".$FechaCarga."'";}
 				if(isset($FechaVencimiento) && $FechaVencimiento!=''){     $SIS_data .= ",FechaVencimiento='".$FechaVencimiento."'";}
 				if(isset($Ano) && $Ano!=''){                               $SIS_data .= ",Ano='".$Ano."'";}

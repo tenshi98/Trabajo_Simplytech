@@ -181,7 +181,7 @@ foreach ($arrSistemas as $sistema) {
 			if(isset($mes_prod[$sistema['idSistema']][$xaño][$xmes]['tipo7'])){ $grafico_prod[$sistema['idSistema']][$xcontador]['tipo7'] = $mes_prod[$sistema['idSistema']][$xaño][$xmes]['tipo7'];}else{$grafico_prod[$sistema['idSistema']][$xcontador]['tipo7'] = 0;};
 			if(isset($mes_prod[$sistema['idSistema']][$xaño][$xmes]['tipo8'])){ $grafico_prod[$sistema['idSistema']][$xcontador]['tipo8'] = $mes_prod[$sistema['idSistema']][$xaño][$xmes]['tipo8'];}else{$grafico_prod[$sistema['idSistema']][$xcontador]['tipo8'] = 0;};
 			if(isset($mes_prod[$sistema['idSistema']][$xaño][$xmes]['tipo9'])){ $grafico_prod[$sistema['idSistema']][$xcontador]['tipo9'] = $mes_prod[$sistema['idSistema']][$xaño][$xmes]['tipo9'];}else{$grafico_prod[$sistema['idSistema']][$xcontador]['tipo9'] = 0;};
-				
+
 		}
 		$xmes = $xmes-1;
 	}
@@ -329,7 +329,7 @@ foreach ($arrSistemas as $sistema) {
 			if(isset($mes_ins[$sistema['idSistema']][$xaño][$xmes]['tipo7'])){ $grafico_ins[$sistema['idSistema']][$xcontador]['tipo7'] = $mes_ins[$sistema['idSistema']][$xaño][$xmes]['tipo7'];}else{$grafico_ins[$sistema['idSistema']][$xcontador]['tipo7'] = 0;};
 			if(isset($mes_ins[$sistema['idSistema']][$xaño][$xmes]['tipo8'])){ $grafico_ins[$sistema['idSistema']][$xcontador]['tipo8'] = $mes_ins[$sistema['idSistema']][$xaño][$xmes]['tipo8'];}else{$grafico_ins[$sistema['idSistema']][$xcontador]['tipo8'] = 0;};
 			if(isset($mes_ins[$sistema['idSistema']][$xaño][$xmes]['tipo9'])){ $grafico_ins[$sistema['idSistema']][$xcontador]['tipo9'] = $mes_ins[$sistema['idSistema']][$xaño][$xmes]['tipo9'];}else{$grafico_ins[$sistema['idSistema']][$xcontador]['tipo9'] = 0;};
-				
+
 		}
 		$xmes = $xmes-1;
 	}
@@ -425,7 +425,7 @@ foreach ($arrSistemas as $sistema) {
 
 			if(isset($mes_arrie[$sistema['idSistema']][$xaño][$xmes]['tipo1'])){ $grafico_arrie[$sistema['idSistema']][$xcontador]['tipo1'] = $mes_arrie[$sistema['idSistema']][$xaño][$xmes]['tipo1'];}else{$grafico_arrie[$sistema['idSistema']][$xcontador]['tipo1'] = 0;};
 			if(isset($mes_arrie[$sistema['idSistema']][$xaño][$xmes]['tipo2'])){ $grafico_arrie[$sistema['idSistema']][$xcontador]['tipo2'] = $mes_arrie[$sistema['idSistema']][$xaño][$xmes]['tipo2'];}else{$grafico_arrie[$sistema['idSistema']][$xcontador]['tipo2'] = 0;};
-				
+
 		}
 		$xmes = $xmes-1;
 	}
@@ -1696,7 +1696,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 					
 				</div>
 			<?php
-			$sis_count++;	
+			$sis_count++;
 			} ?>
 			
         </div>

@@ -462,7 +462,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 
 				if(isset($OTRealizadas[$value['lvl']][$value['id']]['Cuenta'])&&$OTRealizadas[$value['lvl']][$value['id']]['Cuenta']!=0){
 					echo '<td align="right">'.$OTRealizadas[$value['lvl']][$value['id']]['Cuenta'].'</td>';
-					if($value['Valor']!=0){  
+					if($value['Valor']!=0){
 						//Se hacen calculos
 						$total = $value['Valor']*$OTRealizadas[$value['lvl']][$value['id']]['Cuenta'];
 						$porcentaje = ($total*100)/$value['ValorTotal'];
@@ -475,7 +475,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 						echo '<td></td>';
 						echo '<td></td>';
 					}
-				
+
 				}else{
 					echo '<td></td>';
 					echo '<td></td>';
@@ -484,7 +484,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 				}
 				
 			echo '</tr>';
-		
+
 			/*
 			$array3d[$d['1']]['lvl']          = 1;
 		$array3d[$d['1']]['id']           = $d['1'];

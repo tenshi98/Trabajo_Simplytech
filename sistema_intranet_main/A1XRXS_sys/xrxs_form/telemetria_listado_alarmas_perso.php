@@ -92,8 +92,8 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idTelemetria) && $idTelemetria!=''){          $SIS_data  = "'".$idTelemetria."'";      }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre!=''){                     $SIS_data .= ",'".$Nombre."'";           }else{$SIS_data .= ",''";}
-				if(isset($idTipo) && $idTipo!=''){                     $SIS_data .= ",'".$idTipo."'";           }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                      $SIS_data .= ",'".$Nombre."'";           }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){                      $SIS_data .= ",'".$idTipo."'";           }else{$SIS_data .= ",''";}
 				if(isset($idTipoAlerta) && $idTipoAlerta!=''){          $SIS_data .= ",'".$idTipoAlerta."'";     }else{$SIS_data .= ",''";}
 				if(isset($idUniMed) && $idUniMed!=''){                  $SIS_data .= ",'".$idUniMed."'";         }else{$SIS_data .= ",''";}
 				if(isset($valor_error) && $valor_error!=''){            $SIS_data .= ",'".$valor_error."'";      }else{$SIS_data .= ",''";}
@@ -102,7 +102,7 @@ require_once '0_validate_user_1.php';
 				if(isset($Rango_fin) && $Rango_fin!=''){                $SIS_data .= ",'".$Rango_fin."'";        }else{$SIS_data .= ",''";}
 				if(isset($NErroresMax) && $NErroresMax!=''){            $SIS_data .= ",'".$NErroresMax."'";      }else{$SIS_data .= ",''";}
 				if(isset($NErroresActual) && $NErroresActual!=''){      $SIS_data .= ",'".$NErroresActual."'";   }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){                 $SIS_data .= ",'".$idEstado."'";         }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                  $SIS_data .= ",'".$idEstado."'";         }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idTelemetria, Nombre,idTipo, idTipoAlerta, idUniMed, valor_error, valor_diferencia, Rango_ini, Rango_fin, NErroresMax, NErroresActual, idEstado';
@@ -139,8 +139,8 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idAlarma='".$idAlarma."'";
 				if(isset($idTelemetria) && $idTelemetria!=''){            $SIS_data .= ",idTelemetria='".$idTelemetria."'";}
-				if(isset($Nombre) && $Nombre!=''){                       $SIS_data .= ",Nombre='".$Nombre."'";}
-				if(isset($idTipo) && $idTipo!=''){                       $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($Nombre) && $Nombre!=''){                        $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idTipo) && $idTipo!=''){                        $SIS_data .= ",idTipo='".$idTipo."'";}
 				if(isset($idTipoAlerta) && $idTipoAlerta!=''){            $SIS_data .= ",idTipoAlerta='".$idTipoAlerta."'";}
 				if(isset($idUniMed) && $idUniMed!=''){                    $SIS_data .= ",idUniMed='".$idUniMed."'";}
 				if(isset($valor_error) && $valor_error!=''){              $SIS_data .= ",valor_error='".$valor_error."'";}
@@ -149,7 +149,7 @@ require_once '0_validate_user_1.php';
 				if(isset($Rango_fin) && $Rango_fin!=''){                  $SIS_data .= ",Rango_fin='".$Rango_fin."'";}
 				if(isset($NErroresMax) && $NErroresMax!=''){              $SIS_data .= ",NErroresMax='".$NErroresMax."'";         }else{$SIS_data .= ",NErroresMax='0'";}
 				if(isset($NErroresActual) && $NErroresActual!=''){        $SIS_data .= ",NErroresActual='".$NErroresActual."'";   }else{$SIS_data .= ",NErroresActual='0'";}
-				if(isset($idEstado) && $idEstado!=''){                   $SIS_data .= ",idEstado='".$idEstado."'";   }
+				if(isset($idEstado) && $idEstado!=''){                    $SIS_data .= ",idEstado='".$idEstado."'";   }
 
 				/*******************************************************/
 				//se actualizan los datos
@@ -211,8 +211,7 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
 
 /*******************************************************************************************************************/
@@ -230,7 +229,7 @@ require_once '0_validate_user_1.php';
 			$Fecha         = fecha_actual();
 			$Hora          = hora_actual();
 			$TimeStamp     = fecha_actual().' '.hora_actual();
-					
+
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 
@@ -280,7 +279,7 @@ require_once '0_validate_user_1.php';
 			$Fecha         = fecha_actual();
 			$Hora          = hora_actual();
 			$TimeStamp     = fecha_actual().' '.hora_actual();
-					
+
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 

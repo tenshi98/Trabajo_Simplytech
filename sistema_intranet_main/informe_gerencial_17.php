@@ -126,7 +126,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.cs
 								if($in_eq_alertas>0){    
 									$danger = 'Alerta';
 									$eq_ok  = ' Con Alertas';
-								}elseif($in_eq_fueralinea>0){ 
+								}elseif($in_eq_fueralinea>0){
 									$danger = 'Peligro';
 									$eq_ok  = ' Fuera de Linea';
 								}else{

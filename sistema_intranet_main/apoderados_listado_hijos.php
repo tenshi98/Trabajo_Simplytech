@@ -113,7 +113,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($idSexo)){              $x5  = $idSexo;               }else{$x5  = $rowdata['idSexo'];}
 				if(isset($FNacimiento)){         $x6  = $FNacimiento;          }else{$x6  = $rowdata['FNacimiento'];}
 				if(isset($idColegio)){           $x7  = $idColegio;            }else{$x7  = $rowdata['idColegio'];}
-						
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Plan','idPlan', $x1, 2, 'idPlan', 'Nombre', 'sistema_planes', 0, '', $dbConn);
@@ -174,7 +174,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				if(isset($idSexo)){              $x5  = $idSexo;               }else{$x5  = '';}
 				if(isset($FNacimiento)){         $x6  = $FNacimiento;          }else{$x6  = '';}
 				if(isset($idColegio)){           $x7  = $idColegio;            }else{$x7  = '';}
-						
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Plan','idPlan', $x1, 2, 'idPlan', 'Nombre', 'sistema_planes', 0, '', $dbConn);

@@ -50,7 +50,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){          $Nombre      = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){           $Nombre      = EstandarizarInput($Nombre);}
 	if(isset($Usuario) && $Usuario!=''){         $Usuario     = EstandarizarInput($Usuario);}
 	if(isset($Password) && $Password!=''){       $Password    = EstandarizarInput($Password);}
 	if(isset($email) && $email!=''){             $email       = EstandarizarInput($email);}
@@ -100,7 +100,7 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idApoderado) && $idApoderado!=''){    $SIS_data  = "'".$idApoderado."'";   }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre!=''){             $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){              $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
 				if(isset($Usuario) && $Usuario!=''){            $SIS_data .= ",'".$Usuario."'";      }else{$SIS_data .= ",''";}
 				if(isset($Password) && $Password!=''){          $SIS_data .= ",'".$Password."'";     }else{$SIS_data .= ",''";}
 				if(isset($email) && $email!=''){                $SIS_data .= ",'".$email."'";        }else{$SIS_data .= ",''";}
@@ -145,7 +145,7 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idSubcuenta='".$idSubcuenta."'";
 				if(isset($idApoderado) && $idApoderado!=''){  $SIS_data .= ",idApoderado='".$idApoderado."'";}
-				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Usuario) && $Usuario!=''){          $SIS_data .= ",Usuario='".$Usuario."'";}
 				if(isset($Password) && $Password!=''){        $SIS_data .= ",Password='".$Password."'";}
 				if(isset($email) && $email!=''){              $SIS_data .= ",email='".$email."'";}

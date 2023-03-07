@@ -323,7 +323,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 												//$totalPlantas = $ot['CuartelCantPlantas'];
 												//$faltante     = ($totalPlantas - $aplicadas)/$ot['CuartelDistanciaPlant'];
 												$faltante     = ((($ot['CuartelDistanciaPlant']*$ot['CuartelCantPlantas']) - ($ot['GeoDistance']*1000))/$ot['CuartelDistanciaPlant']);
-												
+
 											}else{
 												$faltante = 0;
 											}

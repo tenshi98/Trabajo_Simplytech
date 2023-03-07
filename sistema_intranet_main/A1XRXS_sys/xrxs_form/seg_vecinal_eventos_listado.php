@@ -20,12 +20,12 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idTipo']))                  $idTipo                = $_POST['idTipo'];
 	if (!empty($_POST['idCiudad']))                $idCiudad              = $_POST['idCiudad'];
 	if (!empty($_POST['idComuna']))                $idComuna              = $_POST['idComuna'];
-	if (!empty($_POST['Direccion']))               $Direccion 	        = $_POST['Direccion'];
-	if (!empty($_POST['GeoLatitud']))              $GeoLatitud 	        = $_POST['GeoLatitud'];
-	if (!empty($_POST['GeoLongitud']))             $GeoLongitud 	        = $_POST['GeoLongitud'];
-	if (!empty($_POST['Fecha']))                   $Fecha 	            = $_POST['Fecha'];
-	if (!empty($_POST['Hora']))                    $Hora 	                = $_POST['Hora'];
-	if (!empty($_POST['DescripcionTipo']))         $DescripcionTipo 	    = $_POST['DescripcionTipo'];
+	if (!empty($_POST['Direccion']))               $Direccion 	          = $_POST['Direccion'];
+	if (!empty($_POST['GeoLatitud']))              $GeoLatitud 	          = $_POST['GeoLatitud'];
+	if (!empty($_POST['GeoLongitud']))             $GeoLongitud 	      = $_POST['GeoLongitud'];
+	if (!empty($_POST['Fecha']))                   $Fecha 	              = $_POST['Fecha'];
+	if (!empty($_POST['Hora']))                    $Hora 	              = $_POST['Hora'];
+	if (!empty($_POST['DescripcionTipo']))         $DescripcionTipo 	  = $_POST['DescripcionTipo'];
 	if (!empty($_POST['DescripcionSituacion']))    $DescripcionSituacion  = $_POST['DescripcionSituacion'];
 	if (!empty($_POST['idValidado']))              $idValidado            = $_POST['idValidado'];
 
@@ -48,7 +48,7 @@ require_once '0_validate_user_1.php';
 			case 'idComuna':              if(empty($idComuna)){               $error['idComuna']               = 'error/No ha seleccionado la comuna';}break;
 			case 'Direccion':             if(empty($Direccion)){              $error['Direccion']              = 'error/No ha ingresado el Direccion';}break;
 			case 'GeoLatitud':            if(empty($GeoLatitud)){             $error['GeoLatitud']             = 'error/No ha ingresado la latitud';}break;
-			case 'GeoLongitud':           if(empty($GeoLongitud)){            $error['GeoLongitud']            = 'error/No ha ingresado la longitud';}break;	
+			case 'GeoLongitud':           if(empty($GeoLongitud)){            $error['GeoLongitud']            = 'error/No ha ingresado la longitud';}break;
 			case 'Fecha':                 if(empty($Fecha)){                  $error['Fecha']                  = 'error/No ha ingresado la fecha del evento';}break;
 			case 'Hora':                  if(empty($Hora)){                   $error['Hora']                   = 'error/No ha ingresado la hora del evento';}break;
 			case 'DescripcionTipo':       if(empty($DescripcionTipo)){        $error['DescripcionTipo']        = 'error/No ha ingresado la descripcion del tipo de evento';}break;
@@ -86,9 +86,9 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idEvento='".$idEvento."'";
-				if(isset($idSistema) && $idSistema!=''){      $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idSistema) && $idSistema!=''){                        $SIS_data .= ",idSistema='".$idSistema."'";}
 				if(isset($idCliente) && $idCliente!=''){                        $SIS_data .= ",idCliente='".$idCliente."'";}
-				if(isset($idTipo) && $idTipo!=''){                             $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($idTipo) && $idTipo!=''){                              $SIS_data .= ",idTipo='".$idTipo."'";}
 				if(isset($idCiudad) && $idCiudad!=''){                          $SIS_data .= ",idCiudad='".$idCiudad."'";}
 				if(isset($idComuna) && $idComuna!=''){                          $SIS_data .= ",idComuna='".$idComuna."'";}
 				if(isset($Direccion) && $Direccion!=''){                        $SIS_data .= ",Direccion='".$Direccion."'";}
@@ -115,8 +115,7 @@ require_once '0_validate_user_1.php';
 					//se redirige
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-					
+
 				}
 
 			}

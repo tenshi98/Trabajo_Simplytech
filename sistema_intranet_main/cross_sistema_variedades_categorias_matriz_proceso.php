@@ -254,7 +254,7 @@ array_push( $arrProductos,$row );
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all" id="TableFiltered">
 					<?php
-					filtrar($arrProductos, 'Proceso');  
+					filtrar($arrProductos, 'Proceso');
 					foreach($arrProductos as $Proceso=>$listproc){
 						echo '<tr class="odd" ><td colspan="3"  style="background-color:#DDD"><strong>'.$Proceso.'</strong></td></tr>';
 						foreach ($listproc as $subprocesos) { ?>

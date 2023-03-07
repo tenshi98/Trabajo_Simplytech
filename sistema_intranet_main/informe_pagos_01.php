@@ -131,7 +131,7 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 						foreach ($arrTipo1 as $tipo) {
 						//Sumo
 						$Total_ValorTotal  = $Total_ValorTotal + $tipo['ValorTotal'];
-						$Total_MontoPagado = $Total_MontoPagado + $tipo['MontoPagado'];	
+						$Total_MontoPagado = $Total_MontoPagado + $tipo['MontoPagado'];
 						$Sub_ValorTotal    = $Sub_ValorTotal + $tipo['ValorTotal'];
 						$Sub_MontoPagado   = $Sub_MontoPagado + $tipo['MontoPagado'];	
 						?>
@@ -167,7 +167,7 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 						foreach ($arrTipo2 as $tipo) {
 						//Sumo
 						$Total_ValorTotal  = $Total_ValorTotal + $tipo['ValorTotal'];
-						$Total_MontoPagado = $Total_MontoPagado + $tipo['MontoPagado'];	
+						$Total_MontoPagado = $Total_MontoPagado + $tipo['MontoPagado'];
 						$Sub_ValorTotal    = $Sub_ValorTotal + $tipo['ValorTotal'];
 						$Sub_MontoPagado   = $Sub_MontoPagado + $tipo['MontoPagado'];	
 						?>
@@ -203,7 +203,7 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 						foreach ($arrTipo3 as $tipo) {
 						//Sumo
 						$Total_ValorTotal  = $Total_ValorTotal + $tipo['ValorTotal'];
-						$Total_MontoPagado = $Total_MontoPagado + $tipo['MontoPagado'];	
+						$Total_MontoPagado = $Total_MontoPagado + $tipo['MontoPagado'];
 						$Sub_ValorTotal    = $Sub_ValorTotal + $tipo['ValorTotal'];
 						$Sub_MontoPagado   = $Sub_MontoPagado + $tipo['MontoPagado'];	
 						?>
@@ -239,7 +239,7 @@ $arrTipo4 = db_select_array (false, $table_4.'.idFacturacion,'.$table_4.'.Creaci
 						foreach ($arrTipo4 as $tipo) {
 						//Sumo
 						$Total_ValorTotal  = $Total_ValorTotal + $tipo['ValorTotal'];
-						$Total_MontoPagado = $Total_MontoPagado + $tipo['MontoPagado'];	
+						$Total_MontoPagado = $Total_MontoPagado + $tipo['MontoPagado'];
 						$Sub_ValorTotal    = $Sub_ValorTotal + $tipo['ValorTotal'];
 						$Sub_MontoPagado   = $Sub_MontoPagado + $tipo['MontoPagado'];	
 						?>

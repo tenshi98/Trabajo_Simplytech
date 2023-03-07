@@ -56,7 +56,6 @@ echo widget_Ficha_2('box-orange', '', 25, 4, 'Cantidad Clientes', '', '', '', ''
 echo widget_Ficha_2('box-blue', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2);
 echo '<div class="clearfix"></div>';
 
-					
 //widget_Ficha_3($bg_color, $icon, $number, $titulo, $enlace, $texto_enlace, $new_tab, $iframe)						
 echo widget_Ficha_3('btn-primary', 'fa-user', 25, 'Clientes', 'www.google.cl?pagina=1', 'Administrar', 1, 1);
 echo widget_Ficha_3('bg-green', 'fa-user', 25, 'Clientes', 'www.google.cl?pagina=1', 'Administrar', 1, 1);

@@ -216,7 +216,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 									</tr>
 								</thead>
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
-									<?php for ($i = 1; $i <= $rowdata['cantSensores']; $i++) { 
+									<?php for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 										//solo sensores activos
 										if(isset($rowMed['SensoresActivo_'.$i])&&$rowMed['SensoresActivo_'.$i]==1){ ?>
 											<tr class="odd">

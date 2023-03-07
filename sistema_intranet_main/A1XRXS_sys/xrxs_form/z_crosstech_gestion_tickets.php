@@ -90,13 +90,13 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){           $SIS_data  = "'".$idSistema."'";                }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema!=''){                             $SIS_data  = "'".$idSistema."'";                }else{$SIS_data  = "''";}
 				if(isset($idCliente) && $idCliente!=''){                             $SIS_data .= ",'".$idCliente."'";               }else{$SIS_data .= ",''";}
 				if(isset($idTipoTicket) && $idTipoTicket!=''){                       $SIS_data .= ",'".$idTipoTicket."'";            }else{$SIS_data .= ",''";}
 				if(isset($Titulo) && $Titulo!=''){                                   $SIS_data .= ",'".$Titulo."'";                  }else{$SIS_data .= ",''";}
-				if(isset($Descripcion) && $Descripcion!=''){                         $SIS_data .= ",'".$Descripcion."'";           }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){                              $SIS_data .= ",'".$idEstado."'";                }else{$SIS_data .= ",''";}
-				if(isset($idPrioridad) && $idPrioridad!=''){                        $SIS_data .= ",'".$idPrioridad."'";             }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion!=''){                         $SIS_data .= ",'".$Descripcion."'";             }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                               $SIS_data .= ",'".$idEstado."'";                }else{$SIS_data .= ",''";}
+				if(isset($idPrioridad) && $idPrioridad!=''){                         $SIS_data .= ",'".$idPrioridad."'";             }else{$SIS_data .= ",''";}
 				if(isset($FechaCreacion) && $FechaCreacion!=''){                     $SIS_data .= ",'".$FechaCreacion."'";           }else{$SIS_data .= ",''";}
 				if(isset($FechaCierre) && $FechaCierre!=''){                         $SIS_data .= ",'".$FechaCierre."'";             }else{$SIS_data .= ",''";}
 				if(isset($idUsuarioAsignado) && $idUsuarioAsignado!=''){             $SIS_data .= ",'".$idUsuarioAsignado."'";       }else{$SIS_data .= ",''";}
@@ -106,8 +106,8 @@ require_once '0_validate_user_1.php';
 				if(isset($DescripcionCancelacion) && $DescripcionCancelacion!=''){   $SIS_data .= ",'".$DescripcionCancelacion."'";  }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idSistema, idCliente, 
-				idTipoTicket, Titulo, Descripcion, idEstado, idPrioridad, FechaCreacion, 
+				$SIS_columns = 'idSistema, idCliente,
+				idTipoTicket, Titulo, Descripcion, idEstado, idPrioridad, FechaCreacion,
 				FechaCierre, idUsuarioAsignado, idArea, DescripcionCierre, FechaCancelacion,
 				DescripcionCancelacion';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'crosstech_gestion_tickets', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -116,7 +116,7 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					//solo se envian los tickets
 					if(isset($idTipoTicket) && $idTipoTicket == 1){
-						
+
 						/*********************************************************************/
 						//receptores
 						$SIS_query = 'crosstech_gestion_tickets_area_correos.idUsuario,
@@ -131,8 +131,8 @@ require_once '0_validate_user_1.php';
 						//datos empresa
 						$SIS_query = '
 						core_sistemas.Nombre AS EmpresaNombre,
-						core_sistemas.email_principal AS EmpresaEmail, 
-						core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, 
+						core_sistemas.email_principal AS EmpresaEmail,
+						core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario,
 						core_sistemas.Config_Gmail_Password AS Gmail_Password';
 						$SIS_where = 'core_sistemas.idSistema ='.$idSistema;
 						$rowEmpresa = db_select_data (false, $SIS_query, 'core_sistemas','', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -145,7 +145,7 @@ require_once '0_validate_user_1.php';
 
 						//Cliente
 						$rowCliente = db_select_data (false, 'Nombre,RazonSocial,email', 'clientes_listado', '', 'idCliente='.$idCliente, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 						/*********************************************************************/
 						//Se crea el cuerpodel correo al cliente
 						$BodyMail_Cliente  = '<div style="background-color: #D9D9D9; padding: 10px;">';
@@ -166,7 +166,7 @@ require_once '0_validate_user_1.php';
 						$BodyMail_Cliente .= '<p style="text-align: left;font-size: 14px;">Este correo se ha enviado automáticamente, no responder.</p>';
 						$BodyMail_Cliente .= '</div>';
 
-						//Se crea el cuerpodel correo al usuario			
+						//Se crea el cuerpo del correo al usuario
 						$BodyMail_Usuario  = '<div style="background-color: #D9D9D9; padding: 10px;">';
 						$BodyMail_Usuario .= '<img src="http://clientes.crosstech.cl/img/login_logo.png" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
 						$BodyMail_Usuario .= '<h3 style="text-align: center;font-size: 30px;">';
@@ -190,31 +190,31 @@ require_once '0_validate_user_1.php';
 						$Notificacion  .= ' Nuevo Ticket N°'.n_doc($ultimo_id, 8).' de '.$rowCliente['Nombre'].' generado';
 						$Creacion_fecha = fecha_actual();
 						$Estado         = '1';
-						
+
 						/*********************************************************************/
 						//Se envia mensaje al cliente
 						if(isset($rowEmpresa['EmpresaEmail'])&&$rowEmpresa['EmpresaEmail']!=''&&isset($rowCliente['email'])&&$rowCliente['email']!=''){
-							$rmail = tareas_envio_correo($rowEmpresa['EmpresaEmail'], $rowEmpresa['EmpresaNombre'], 
-														$rowCliente['email'], $rowCliente['Nombre'], 
-														'', '', 
+							$rmail = tareas_envio_correo($rowEmpresa['EmpresaEmail'], $rowEmpresa['EmpresaNombre'],
+														$rowCliente['email'], $rowCliente['Nombre'],
+														'', '',
 														'Confirmación de emisión de ticket N°'.n_doc($ultimo_id, 8),
-														$BodyMail_Cliente,'', 
-														'', 
-														1, 
-														$rowEmpresa['Gmail_Usuario'], 
+														$BodyMail_Cliente,'',
+														'',
+														1,
+														$rowEmpresa['Gmail_Usuario'],
 														$rowEmpresa['Gmail_Password']);
 							//se guarda el log
-							log_response(1, $rmail, $rowCliente['email'].' (Asunto:Confirmación de emisión de ticket N°'.n_doc($ultimo_id, 8).')');							
-								
+							log_response(1, $rmail, $rowCliente['email'].' (Asunto:Confirmación de emisión de ticket N°'.n_doc($ultimo_id, 8).')');
+
 						}
 
 						/*********************************************************************/
 						//Se envia mensaje a los usuarios relacionados al area
 						if ($arrUsuario!=false && !empty($arrUsuario) && $arrUsuario!='') {
 							foreach($arrUsuario as $usuario) {
-								
+
 								/***********************************************/
-								if(isset($idSistema) && $idSistema!=''){       $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
+								if(isset($idSistema) && $idSistema!=''){                         $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
 								if(isset($usuario['idUsuario']) && $usuario['idUsuario']!=''){   $SIS_data .= ",'".$usuario['idUsuario']."'";   }else{$SIS_data .= ",''";}
 								if(isset($Notificacion) && $Notificacion!=''){                   $SIS_data .= ",'".$Notificacion."'";           }else{$SIS_data .= ",''";}
 								if(isset($Creacion_fecha) && $Creacion_fecha!=''){               $SIS_data .= ",'".$Creacion_fecha."'";         }else{$SIS_data .= ",''";}
@@ -228,17 +228,17 @@ require_once '0_validate_user_1.php';
 								/***********************************************/
 								//Se verifica que existan datos
 								if(isset($rowEmpresa['EmpresaEmail'])&&$rowEmpresa['EmpresaEmail']!=''&&isset($usuario['UsuarioEmail'])&&$usuario['UsuarioEmail']!=''){
-									$rmail = tareas_envio_correo($rowEmpresa['EmpresaEmail'], $rowEmpresa['EmpresaNombre'], 
-																$usuario['UsuarioEmail'], $usuario['UsuarioNombre'], 
-																'', '', 
+									$rmail = tareas_envio_correo($rowEmpresa['EmpresaEmail'], $rowEmpresa['EmpresaNombre'],
+																$usuario['UsuarioEmail'], $usuario['UsuarioNombre'],
+																'', '',
 																'Nuevo Ticket N°'.n_doc($ultimo_id, 8).' de '.$rowCliente['Nombre'].' generado',
-																$BodyMail_Usuario,'', 
-																'', 
-																1, 
-																$rowEmpresa['Gmail_Usuario'], 
+																$BodyMail_Usuario,'',
+																'',
+																1,
+																$rowEmpresa['Gmail_Usuario'],
 																$rowEmpresa['Gmail_Password']);
 									//se guarda el log
-									log_response(1, $rmail, $usuario['UsuarioEmail'].' (Asunto:Nuevo Ticket N°'.n_doc($ultimo_id, 8).' de '.$rowCliente['Nombre'].' generado)');								
+									log_response(1, $rmail, $usuario['UsuarioEmail'].' (Asunto:Nuevo Ticket N°'.n_doc($ultimo_id, 8).' de '.$rowCliente['Nombre'].' generado)');
 								}
 							}
 						}
@@ -262,13 +262,13 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idTicket='".$idTicket."'";
-				if(isset($idSistema) && $idSistema!=''){           $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idSistema) && $idSistema!=''){                             $SIS_data .= ",idSistema='".$idSistema."'";}
 				if(isset($idCliente) && $idCliente!=''){                             $SIS_data .= ",idCliente='".$idCliente."'";}
 				if(isset($idTipoTicket) && $idTipoTicket!=''){                       $SIS_data .= ",idTipoTicket='".$idTipoTicket."'";}
 				if(isset($Titulo) && $Titulo!=''){                                   $SIS_data .= ",Titulo='".$Titulo."'";}
 				if(isset($Descripcion) && $Descripcion!=''){                         $SIS_data .= ",Descripcion='".$Descripcion."'";}
-				if(isset($idEstado) && $idEstado!=''){                              $SIS_data .= ",idEstado='".$idEstado."'";}
-				if(isset($idPrioridad) && $idPrioridad!=''){                        $SIS_data .= ",idPrioridad='".$idPrioridad."'";}
+				if(isset($idEstado) && $idEstado!=''){                               $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idPrioridad) && $idPrioridad!=''){                         $SIS_data .= ",idPrioridad='".$idPrioridad."'";}
 				if(isset($FechaCreacion) && $FechaCreacion!=''){                     $SIS_data .= ",FechaCreacion='".$FechaCreacion."'";}
 				if(isset($FechaCierre) && $FechaCierre!=''){                         $SIS_data .= ",FechaCierre='".$FechaCierre."'";}
 				if(isset($idUsuarioAsignado) && $idUsuarioAsignado!=''){             $SIS_data .= ",idUsuarioAsignado='".$idUsuarioAsignado."'";}
@@ -286,24 +286,24 @@ require_once '0_validate_user_1.php';
 					/*********************************************************************/
 					//Ticket
 					$SIS_query = '
-					crosstech_gestion_tickets.idTipoTicket, 
-					crosstech_gestion_tickets.idArea, 
-					crosstech_gestion_tickets.idSistema, 
-					crosstech_gestion_tickets.idEstado, 
-					crosstech_gestion_tickets.idCliente, 
-					crosstech_gestion_tickets.FechaCreacion, 
-					crosstech_gestion_tickets.Titulo, 
-					crosstech_gestion_tickets.FechaCierre, 
-					crosstech_gestion_tickets.DescripcionCierre, 
-					crosstech_gestion_tickets.FechaCancelacion, 
+					crosstech_gestion_tickets.idTipoTicket,
+					crosstech_gestion_tickets.idArea,
+					crosstech_gestion_tickets.idSistema,
+					crosstech_gestion_tickets.idEstado,
+					crosstech_gestion_tickets.idCliente,
+					crosstech_gestion_tickets.FechaCreacion,
+					crosstech_gestion_tickets.Titulo,
+					crosstech_gestion_tickets.FechaCierre,
+					crosstech_gestion_tickets.DescripcionCierre,
+					crosstech_gestion_tickets.FechaCancelacion,
 					crosstech_gestion_tickets.DescripcionCancelacion,
 					core_ot_prioridad.Nombre AS Prioridad,
 					crosstech_gestion_tickets_area.Nombre AS Area,
 					clientes_listado.Nombre AS ClienteNombre,
 					clientes_listado.email AS ClienteEmail,
 					core_sistemas.Nombre AS EmpresaNombre,
-					core_sistemas.email_principal AS EmpresaEmail, 
-					core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, 
+					core_sistemas.email_principal AS EmpresaEmail,
+					core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario,
 					core_sistemas.Config_Gmail_Password AS Gmail_Password
 					';
 					$SIS_join  = '
@@ -313,7 +313,7 @@ require_once '0_validate_user_1.php';
 					LEFT JOIN `core_sistemas`                  ON core_sistemas.idSistema               = crosstech_gestion_tickets.idSistema';
 					$SIS_where = 'crosstech_gestion_tickets.idTicket='.$idTicket;
 					$rowTicket = db_select_data (false, $SIS_query, 'crosstech_gestion_tickets', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					/****************************************/
 					//variables
 					$idTipoTicket             = $rowTicket['idTipoTicket'];
@@ -338,7 +338,7 @@ require_once '0_validate_user_1.php';
 
 					//solo se envian los tickets
 					if(isset($idTipoTicket) && $idTipoTicket == 1){
-						
+
 						/****************************************/
 						//receptores
 						$SIS_query = 'crosstech_gestion_tickets_area_correos.idUsuario,
@@ -350,12 +350,12 @@ require_once '0_validate_user_1.php';
 						$arrUsuario = array();
 						$arrUsuario = db_select_array (false, $SIS_query, 'crosstech_gestion_tickets_area_correos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
-						//datos	
+						//datos
 						switch ($idEstado) {
-							case 1: $Mensaje = 'Ticket N°'.n_doc($idTicket, 8).' Modificado'; $Detalles = '';                  $fMod = fecha_actual();     break;//Abierto
+							case 1: $Mensaje = 'Ticket N°'.n_doc($idTicket, 8).' Modificado'; $Detalles = '';                       $fMod = fecha_actual();     break;//Abierto
 							case 2: $Mensaje = 'Ticket N°'.n_doc($idTicket, 8).' Cerrado';    $Detalles = $DescripcionCierre;       $fMod = $FechaCierre;       break;//Ejecutado
 							case 3: $Mensaje = 'Ticket N°'.n_doc($idTicket, 8).' Cancelado';  $Detalles = $DescripcionCancelacion;  $fMod = $FechaCancelacion;  break;//Cancelado
-						
+
 						}
 
 						/*********************************************************************/
@@ -385,8 +385,7 @@ require_once '0_validate_user_1.php';
 						$Notificacion .= ' '.$Mensaje;
 						$Creacion_fecha = fecha_actual();
 						$Estado         = '1';
-								
-							
+
 						/*********************************************************************/
 						//Se envia mensaje al cliente
 						if(isset($EmpresaEmail)&&$EmpresaEmail!=''&&isset($ClienteEmail)&&$ClienteEmail!=''){
@@ -397,25 +396,25 @@ require_once '0_validate_user_1.php';
 							//envio del correo
 							$rmail = tareas_envio_correo($EmpresaEmail, $EmpresaNombre,
 														$ClienteEmail, $ClienteNombre,
-														'', '', 
-														$Mensaje, 
-														$BodyMail,'', 
-														'', 
-														1, 
-														$Gmail_Usuario, 
+														'', '',
+														$Mensaje,
+														$BodyMail,'',
+														'',
+														1,
+														$Gmail_Usuario,
 														$Gmail_Password);
 							//se guarda el log
-							log_response(1, $rmail, $ClienteEmail.' (Asunto:'.$Mensaje.')');							
-								
+							log_response(1, $rmail, $ClienteEmail.' (Asunto:'.$Mensaje.')');
+
 						}
 
 						/*********************************************************************/
 						//Se envia mensaje a los usuarios relacionados al area
 						if ($arrUsuario!=false && !empty($arrUsuario) && $arrUsuario!='') {
 							foreach($arrUsuario as $usuario) {
-								
+
 								/***********************************************/
-								if(isset($idSistema) && $idSistema!=''){       $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
+								if(isset($idSistema) && $idSistema!=''){                         $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
 								if(isset($usuario['idUsuario']) && $usuario['idUsuario']!=''){   $SIS_data .= ",'".$usuario['idUsuario']."'";   }else{$SIS_data .= ",''";}
 								if(isset($Notificacion) && $Notificacion!=''){                   $SIS_data .= ",'".$Notificacion."'";           }else{$SIS_data .= ",''";}
 								if(isset($Creacion_fecha) && $Creacion_fecha!=''){               $SIS_data .= ",'".$Creacion_fecha."'";         }else{$SIS_data .= ",''";}
@@ -435,22 +434,19 @@ require_once '0_validate_user_1.php';
 									$BodyMail .= $BodyMail_bottom;
 									//envio del correo
 									$rmail = tareas_envio_correo($EmpresaEmail, $EmpresaNombre,
-																$usuario['UsuarioEmail'], $usuario['UsuarioNombre'], 
-																'', '', 
-																$Mensaje, 
-																$BodyMail,'', 
-																'', 
-																1, 
-																$Gmail_Usuario, 
+																$usuario['UsuarioEmail'], $usuario['UsuarioNombre'],
+																'', '',
+																$Mensaje,
+																$BodyMail,'',
+																'',
+																1,
+																$Gmail_Usuario,
 																$Gmail_Password);
 									//se guarda el log
-									log_response(1, $rmail, $usuario['UsuarioEmail'].' (Asunto:'.$Mensaje.')');							
+									log_response(1, $rmail, $usuario['UsuarioEmail'].' (Asunto:'.$Mensaje.')');
 								}
 							}
 						}
-						
-						
-						
 					}
 
 					//se redirecciona

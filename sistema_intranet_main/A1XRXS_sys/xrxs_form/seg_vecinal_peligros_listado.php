@@ -20,13 +20,13 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idTipo']))           $idTipo           = $_POST['idTipo'];
 	if (!empty($_POST['idCiudad']))         $idCiudad         = $_POST['idCiudad'];
 	if (!empty($_POST['idComuna']))         $idComuna         = $_POST['idComuna'];
-	if (!empty($_POST['Direccion']))        $Direccion 	    = $_POST['Direccion'];
-	if (!empty($_POST['GeoLatitud']))       $GeoLatitud 	    = $_POST['GeoLatitud'];
-	if (!empty($_POST['GeoLongitud']))      $GeoLongitud 	    = $_POST['GeoLongitud'];
-	if (!empty($_POST['Fecha']))            $Fecha 	        = $_POST['Fecha'];
-	if (!empty($_POST['Hora']))             $Hora 	        = $_POST['Hora'];
-	if (!empty($_POST['Descripcion']))      $Descripcion 	    = $_POST['Descripcion'];
-	if (!empty($_POST['idEstado']))         $idEstado 	    = $_POST['idEstado'];
+	if (!empty($_POST['Direccion']))        $Direccion 	      = $_POST['Direccion'];
+	if (!empty($_POST['GeoLatitud']))       $GeoLatitud 	  = $_POST['GeoLatitud'];
+	if (!empty($_POST['GeoLongitud']))      $GeoLongitud 	  = $_POST['GeoLongitud'];
+	if (!empty($_POST['Fecha']))            $Fecha 	          = $_POST['Fecha'];
+	if (!empty($_POST['Hora']))             $Hora 	          = $_POST['Hora'];
+	if (!empty($_POST['Descripcion']))      $Descripcion 	  = $_POST['Descripcion'];
+	if (!empty($_POST['idEstado']))         $idEstado 	      = $_POST['idEstado'];
 	if (!empty($_POST['idValidado']))       $idValidado       = $_POST['idValidado'];
 
 /*******************************************************************************************************************/
@@ -48,7 +48,7 @@ require_once '0_validate_user_1.php';
 			case 'idComuna':       if(empty($idComuna)){           $error['idComuna']         = 'error/No ha seleccionado la comuna';}break;
 			case 'Direccion':      if(empty($Direccion)){          $error['Direccion']        = 'error/No ha ingresado el Direccion';}break;
 			case 'GeoLatitud':     if(empty($GeoLatitud)){         $error['GeoLatitud']       = 'error/No ha ingresado la latitud';}break;
-			case 'GeoLongitud':    if(empty($GeoLongitud)){        $error['GeoLongitud']      = 'error/No ha ingresado la longitud';}break;	
+			case 'GeoLongitud':    if(empty($GeoLongitud)){        $error['GeoLongitud']      = 'error/No ha ingresado la longitud';}break;
 			case 'Fecha':          if(empty($Fecha)){              $error['Fecha']            = 'error/No ha ingresado la fecha de la zona de peligro';}break;
 			case 'Hora':           if(empty($Hora)){               $error['Hora']             = 'error/No ha ingresado la hora de la zona de peligro';}break;
 			case 'Descripcion':    if(empty($Descripcion)){        $error['Descripcion']      = 'error/No ha ingresado la descripcion';}break;
@@ -86,7 +86,7 @@ require_once '0_validate_user_1.php';
 				$SIS_data = "idPeligro='".$idPeligro."'";
 				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
 				if(isset($idCliente) && $idCliente!=''){       $SIS_data .= ",idCliente='".$idCliente."'";}
-				if(isset($idTipo) && $idTipo!=''){            $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($idTipo) && $idTipo!=''){             $SIS_data .= ",idTipo='".$idTipo."'";}
 				if(isset($idCiudad) && $idCiudad!=''){         $SIS_data .= ",idCiudad='".$idCiudad."'";}
 				if(isset($idComuna) && $idComuna!=''){         $SIS_data .= ",idComuna='".$idComuna."'";}
 				if(isset($Direccion) && $Direccion!=''){       $SIS_data .= ",Direccion='".$Direccion."'";}
@@ -101,7 +101,7 @@ require_once '0_validate_user_1.php';
 				}
 				if(isset($Hora) && $Hora!=''){                 $SIS_data .= ",Hora='".$Hora."'";}
 				if(isset($Descripcion) && $Descripcion!=''){   $SIS_data .= ",Descripcion='".$Descripcion."'";}
-				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idEstado) && $idEstado!=''){         $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idValidado) && $idValidado!=''){     $SIS_data .= ",idValidado='".$idValidado."'";}
 
 				/*******************************************************/
@@ -113,8 +113,7 @@ require_once '0_validate_user_1.php';
 					//se redirige
 					header( 'Location: '.$location.'&edited=true' );
 					die;
-					
-					
+
 				}
 
 			}

@@ -60,7 +60,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	if(isset($Asunto) && $Asunto!=''){       $Asunto    = EstandarizarInput($Asunto);}
 	if(isset($Cuerpo) && $Cuerpo!=''){       $Cuerpo    = EstandarizarInput($Cuerpo);}
-	if(isset($Nombre) && $Nombre!=''){      $Nombre    = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){       $Nombre    = EstandarizarInput($Nombre);}
 	if(isset($Direccion) && $Direccion!=''){ $Direccion = EstandarizarInput($Direccion);}
 
 /*******************************************************************************************************************/
@@ -90,7 +90,7 @@ require_once '0_validate_user_1.php';
 				/***************************************************************/
 				//Selecciono a quienes les envio el correo
 				$w = "usuarios_listado.idEstado = 1 AND usuarios_listado.email!= ''";
-				if(isset($idTipoUsuario) && $idTipoUsuario!=''){  $w .= " AND usuarios_listado.idTipoUsuario = '".$idTipoUsuario."'";}
+				if(isset($idTipoUsuario) && $idTipoUsuario!=''){    $w .= " AND usuarios_listado.idTipoUsuario = '".$idTipoUsuario."'";}
 				if(isset($Nombre) && $Nombre != '')  {              $w .= " AND usuarios_listado.Nombre LIKE '%".$Nombre."%' ";}
 				if(isset($idCiudad) && $idCiudad != '')  {          $w .= " AND usuarios_listado.idCiudad = '".$idCiudad."'";}
 				if(isset($idComuna) && $idComuna != '')  {          $w .= " AND usuarios_listado.idComuna = '".$idComuna."'";}
@@ -107,8 +107,8 @@ require_once '0_validate_user_1.php';
 				//guardo registro del correo
 				//filtros
 				if(isset($idSistema) && $idSistema!=''){   $SIS_data  = "'".$idSistema."'";   }else{$SIS_data  = "''";}
-				if(isset($idUsuario) && $idUsuario!=''){  $SIS_data .= ",'".$idUsuario."'";  }else{$SIS_data .= ",''";}
-				if(isset($Fecha) && $Fecha!=''){        $SIS_data .= ",'".$Fecha."'";     }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){   $SIS_data .= ",'".$idUsuario."'";  }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha!=''){           $SIS_data .= ",'".$Fecha."'";      }else{$SIS_data .= ",''";}
 				if(isset($Asunto) && $Asunto!=''){         $SIS_data .= ",'".$Asunto."'";     }else{$SIS_data .= ",''";}
 				if(isset($Cuerpo) && $Cuerpo!=''){         $SIS_data .= ",'".$Cuerpo."'";     }else{$SIS_data .= ",''";}
 
@@ -129,7 +129,7 @@ require_once '0_validate_user_1.php';
 
 						//solo si existe el logo
 						if (file_exists($file_logo)){
-							//Se crea el cuerpo del correo	
+							//Se crea el cuerpo del correo
 							$BodyMail_1  = '<div style="background-color: #D9D9D9; padding: 10px;">';
 							$BodyMail_1 .= '<img src="'.$login_logo.'" style="width: 30%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
 							$BodyMail_1 .= '<h3 style="text-align: center;font-size: 30px;">';
@@ -139,12 +139,12 @@ require_once '0_validate_user_1.php';
 							$BodyMail_2 .= '</p>';
 							$BodyMail_2 .= '<a href="'.DB_SITE_MAIN.'/principal.php" style="display:block;width:100%;text-align: center;font-size: 20px;text-decoration: none;color: #004AAD;"><strong>Ver Mas &#8594;</strong></a>';
 							$BodyMail_2 .= '</div>';
-							//se crea el cuerpo del correo	
+							//Se crea el cuerpo del correo
 							$BodyMail  = $BodyMail_1;
 							$BodyMail .= '¡Hola <strong>'.$noti['Nombre'].'</strong>!<br/>';
 							$BodyMail .= $BodyMail_2;
 						}else{
-							//Se crea el cuerpo del correo	
+							//Se crea el cuerpo del correo
 							$BodyMail_1  = '<div style="background-color: #D9D9D9; padding: 10px;">';
 							$BodyMail_1 .= '<h3 style="text-align: center;font-size: 30px;">';
 							$BodyMail_2  = '</h3>';
@@ -153,7 +153,7 @@ require_once '0_validate_user_1.php';
 							$BodyMail_2 .= '</p>';
 							$BodyMail_2 .= '<a href="'.DB_SITE_MAIN.'/principal.php" style="display:block;width:100%;text-align: center;font-size: 20px;text-decoration: none;color: #004AAD;"><strong>Ver Mas &#8594;</strong></a>';
 							$BodyMail_2 .= '</div>';
-							//se crea el cuerpo del correo	
+							//Se crea el cuerpo del correo
 							$BodyMail  = $BodyMail_1;
 							$BodyMail .= '¡Hola <strong>'.$noti['Nombre'].'</strong>!<br/>';
 							$BodyMail .= $BodyMail_2;
@@ -164,25 +164,25 @@ require_once '0_validate_user_1.php';
 					}else{
 						$BodyMail  = $Cuerpo;
 					}
-											
+
 					/***************************************************************/
 					//recorro a los usuarios
 					foreach ($arrNotificaciones as $noti) {
 						//envio de correo
 						try {
-							//se envia correo	
-							$rmail = tareas_envio_correo($rowusr['email_principal'], 'Crosstech', 
-														 $noti['email'], $noti['Nombre'], 
-														 '', '', 
-														 $Asunto, 
-														 $BodyMail,'', 
-														 '', 
-														 1, 
-														 $rowusr['Gmail_Usuario'], 
+							//se envia correo
+							$rmail = tareas_envio_correo($rowusr['email_principal'], 'Crosstech',
+														 $noti['email'], $noti['Nombre'],
+														 '', '',
+														 $Asunto,
+														 $BodyMail,'',
+														 '',
+														 1,
+														 $rowusr['Gmail_Usuario'],
 														 $rowusr['Gmail_Password']);
 							//se guarda el log
 							log_response(1, $rmail, $noti['email'].' (Asunto:'.$Asunto.')');
-																 
+
 							/******************************************/
 							//guardo registro de a quien se lo envie
 							if(isset($ultimo_id) && $ultimo_id!=''){                   $SIS_data  = "'".$ultimo_id."'";              }else{$SIS_data  = "''";}

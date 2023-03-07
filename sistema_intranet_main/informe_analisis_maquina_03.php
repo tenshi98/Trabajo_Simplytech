@@ -361,7 +361,7 @@ array_push( $arrGrupo,$row );
 															//variables alerta roja
 															$alert_lvl = 'color-red-dark'; //roja
 														}
-													
+
 													/***************************************************************/
 													}elseif($res['Analisis_PuntoMedAceptable_'.$i]<$res['Analisis_PuntoMedCondenatorio_'.$i]){
 														//alerta amarilla

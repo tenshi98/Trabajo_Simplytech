@@ -217,7 +217,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 				if(isset($Fecha)){       $x6 = $Fecha;       }else{$x6  = '';}
 				if(isset($Hora)){        $x7 = $Hora;        }else{$x7  = '';}
 				if(isset($idValidado)){  $x8 = $idValidado;  }else{$x8  = '';}
-						
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Vecino','idCliente', $x1, 1, 'idCliente', 'Nombre', 'seg_vecinal_clientes_listado', $z, '', $dbConn);

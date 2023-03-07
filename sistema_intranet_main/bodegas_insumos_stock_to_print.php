@@ -72,7 +72,7 @@ $my_html ='
 						</thead>
 						<tbody>';
 
-							foreach ($arrProductos as $productos) { 
+							foreach ($arrProductos as $productos) {
 							$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];
 							$my_html .='<tr>
 											<td>'.$productos['NombreProd'].'</td>

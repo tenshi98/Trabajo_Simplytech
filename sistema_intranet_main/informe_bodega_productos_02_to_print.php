@@ -73,7 +73,7 @@ $my_html ='
 						</thead>
 						<tbody>';
 
-							foreach ($arrProductos as $productos) { 
+							foreach ($arrProductos as $productos) {
 							$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];
 							if ($productos['StockLimite']>$stock_actual){
 								$my_html .='<tr>

@@ -1364,7 +1364,7 @@ if(isset($Ano)&&$Ano!=''){
 	$location .="&Creacion_ano=".$Ano;
 	$search .="&Creacion_ano=".$Ano;
 }
-					
+
 /*************************************************************************************************/
 //Bodega de Arriendos
 $arrTemporal_1 = array();

@@ -69,7 +69,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){                $Nombre         = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){                 $Nombre         = EstandarizarInput($Nombre);}
 	if(isset($Observaciones) && $Observaciones!=''){   $Observaciones  = EstandarizarInput($Observaciones);}
 	if(isset($ConsumoMedidor) && $ConsumoMedidor!=''){ $ConsumoMedidor = EstandarizarInput($ConsumoMedidor);}
 	if(isset($Consumo) && $Consumo!=''){               $Consumo        = EstandarizarInput($Consumo);}
@@ -332,11 +332,11 @@ require_once '0_validate_user_1.php';
 												if(isset($ID_MIU) && $ID_MIU!=''){                   $SIS_data .= ",'".$ID_MIU."'";           }else{$SIS_data .= ",''";}
 												if(isset($ID_Contador) && $ID_Contador!=''){         $SIS_data .= ",'".$ID_Contador."'";      }else{$SIS_data .= ",''";}
 												if(isset($ID_Consumo) && $ID_Consumo!=''){           $SIS_data .= ",'".$ID_Consumo."'";       }else{$SIS_data .= ",''";}
-												$SIS_data .= ",'1'" ;
-												$SIS_data .= ",'0'" ;
+												$SIS_data .= ",'1'";
+												$SIS_data .= ",'0'";
 												$SIS_data .=",'".fecha_actual()."'";
-												$SIS_data .= ",'1'" ;
-												$SIS_data .= ",'1'" ;
+												$SIS_data .= ",'1'";
+												$SIS_data .= ",'1'";
 
 												// inserto los datos de registro en la db
 												$SIS_columns = 'idSistema, idUsuario, idDatos, Fecha,
@@ -417,11 +417,11 @@ require_once '0_validate_user_1.php';
 															if(isset($ID_MIU) && $ID_MIU!=''){                   $SIS_data .= ",'".$ID_MIU."'";           }else{$SIS_data .= ",''";}
 															if(isset($ID_Contador) && $ID_Contador!=''){         $SIS_data .= ",'".$ID_Contador."'";      }else{$SIS_data .= ",''";}
 															if(isset($ID_Consumo) && $ID_Consumo!=''){           $SIS_data .= ",'".$ID_Consumo."'";       }else{$SIS_data .= ",''";}
-															$SIS_data .= ",'1'" ;
-															$SIS_data .= ",'0'" ;
+															$SIS_data .= ",'1'";
+															$SIS_data .= ",'0'";
 															$SIS_data .= ",'".fecha_actual()."'";
-															$SIS_data .= ",'1'" ;
-															$SIS_data .= ",'1'" ;
+															$SIS_data .= ",'1'";
+															$SIS_data .= ",'1'";
 
 															// inserto los datos de registro en la db
 															$SIS_columns = 'idSistema, idUsuario, idDatos, Fecha,

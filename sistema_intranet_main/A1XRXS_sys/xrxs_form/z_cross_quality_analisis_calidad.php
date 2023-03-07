@@ -44,13 +44,13 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['Resolucion_1']))      $Resolucion_1         = $_POST['Resolucion_1'];
 	if (!empty($_POST['Resolucion_2']))      $Resolucion_2         = $_POST['Resolucion_2'];
 	if (!empty($_POST['Resolucion_3']))      $Resolucion_3         = $_POST['Resolucion_3'];
-	
+
 	for ($i = 1; $i <= 100; $i++) {
 		if (!empty($_POST['Medida_'.$i]))         $Medida[$i]          = $_POST['Medida_'.$i];
 	}
-	
+
 	if (!empty($_POST['oldidProducto']))         $oldidProducto         = $_POST['oldidProducto'];
-				
+
 	if (!empty($_POST['idMuestras']))          $idMuestras           = $_POST['idMuestras'];
 	if (!empty($_POST['idArchivo']))           $idArchivo            = $_POST['idArchivo'];
 	if (!empty($_POST['idMaquinas']))          $idMaquinas           = $_POST['idMaquinas'];
@@ -271,8 +271,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['cross_quality_ana_cali_basicos']['UbicacionLVL_5'] = '';
 				}
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 
@@ -430,9 +429,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['cross_quality_ana_cali_basicos']['UbicacionLVL_5'] = '';
 				}
-				
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -665,9 +662,7 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			
-			
+
 			if(empty($error)){
 
 				// consulto los datos
@@ -705,7 +700,7 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
+
 			unset($_SESSION['cross_quality_ana_cali_muestras'][$_GET['del_muestra']]);
 
 			//redirijo
@@ -742,8 +737,7 @@ require_once '0_validate_user_1.php';
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al ingreso de datos';
 			}
-			
-				
+
 			/******************************************/
 			//Se verifican trabajadores
 			if (isset($_SESSION['cross_quality_ana_cali_trabajadores'])){
@@ -794,34 +788,34 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['cross_quality_ana_cali_basicos']['idTipo']) && $_SESSION['cross_quality_ana_cali_basicos']['idTipo']!=''){                   $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cross_quality_ana_cali_basicos']['Temporada']) && $_SESSION['cross_quality_ana_cali_basicos']['Temporada']!=''){             $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['Temporada']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cross_quality_ana_cali_basicos']['idCategoria']) && $_SESSION['cross_quality_ana_cali_basicos']['idCategoria']!=''){         $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idCategoria']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cross_quality_ana_cali_basicos']['idProducto']) && $_SESSION['cross_quality_ana_cali_basicos']['idProducto']!=''){           $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idProducto']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']!=''){         $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_quality_ana_cali_basicos']['idTipo']) && $_SESSION['cross_quality_ana_cali_basicos']['idTipo']!=''){                          $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_quality_ana_cali_basicos']['Temporada']) && $_SESSION['cross_quality_ana_cali_basicos']['Temporada']!=''){                    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['Temporada']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_quality_ana_cali_basicos']['idCategoria']) && $_SESSION['cross_quality_ana_cali_basicos']['idCategoria']!=''){                $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idCategoria']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_quality_ana_cali_basicos']['idProducto']) && $_SESSION['cross_quality_ana_cali_basicos']['idProducto']!=''){                  $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idProducto']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']!=''){                $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_1']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_1']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_1']."'";  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_2']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_2']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_2']."'";  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_3']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_3']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_3']."'";  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_4']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_4']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_4']."'";  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_5']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_5']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_5']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cross_quality_ana_cali_basicos']['Observaciones']) && $_SESSION['cross_quality_ana_cali_basicos']['Observaciones']!=''){     $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['Observaciones']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cross_quality_ana_cali_basicos']['Observaciones']) && $_SESSION['cross_quality_ana_cali_basicos']['Observaciones']!=''){            $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['Observaciones']."'";      }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idSistema, idUsuario, fecha_auto, 
+				$SIS_columns = 'idSistema, idUsuario, fecha_auto,
 				Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo, Temporada, idCategoria,
-				idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3, 
+				idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, idUbicacion_lvl_3,
 				idUbicacion_lvl_4, idUbicacion_lvl_5, Observaciones';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_quality_analisis_calidad', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					/*********************************************************************/
-					//Se guardan los datos de los trabajadores	
+					//Se guardan los datos de los trabajadores
 					if(isset($_SESSION['cross_quality_ana_cali_trabajadores'])){
 						foreach ($_SESSION['cross_quality_ana_cali_trabajadores'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                         $SIS_data  = "'".$ultimo_id."'";                                                  }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                  $SIS_data  = "'".$ultimo_id."'";                                                  }else{$SIS_data  = "''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idSistema']) && $_SESSION['cross_quality_ana_cali_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idSistema']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUsuario']) && $_SESSION['cross_quality_ana_cali_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUsuario']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']) && $_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']."'";  }else{$SIS_data .= ",''";}
@@ -836,22 +830,22 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idTipo']) && $_SESSION['cross_quality_ana_cali_basicos']['idTipo']!=''){                   $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_ana_cali_basicos']['Temporada']) && $_SESSION['cross_quality_ana_cali_basicos']['Temporada']!=''){             $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['Temporada']."'";          }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idCategoria']) && $_SESSION['cross_quality_ana_cali_basicos']['idCategoria']!=''){         $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idCategoria']."'";        }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idProducto']) && $_SESSION['cross_quality_ana_cali_basicos']['idProducto']!=''){           $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idProducto']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']!=''){         $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idTipo']) && $_SESSION['cross_quality_ana_cali_basicos']['idTipo']!=''){                          $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cross_quality_ana_cali_basicos']['Temporada']) && $_SESSION['cross_quality_ana_cali_basicos']['Temporada']!=''){                    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['Temporada']."'";          }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idCategoria']) && $_SESSION['cross_quality_ana_cali_basicos']['idCategoria']!=''){                $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idCategoria']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idProducto']) && $_SESSION['cross_quality_ana_cali_basicos']['idProducto']!=''){                  $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idProducto']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']!=''){                $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']."'";        }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_1']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_1']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_1']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_2']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_2']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_2']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_3']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_3']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_3']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_4']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_4']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_4']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_5']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_5']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_5']."'";  }else{$SIS_data .= ",''";}
-							if(isset($producto['idTrabajador']) && $producto['idTrabajador']!=''){                                                                           $SIS_data .= ",'".$producto['idTrabajador']."'";                                         }else{$SIS_data .= ",''";}
+							if(isset($producto['idTrabajador']) && $producto['idTrabajador']!=''){                                                                                  $SIS_data .= ",'".$producto['idTrabajador']."'";                                         }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idAnalisis, idSistema, 
-							idUsuario, fecha_auto,Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo, 
-							Temporada, idCategoria,idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, 
+							$SIS_columns = 'idAnalisis, idSistema,
+							idUsuario, fecha_auto,Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo,
+							Temporada, idCategoria,idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2,
 							idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idTrabajador';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_quality_analisis_calidad_trabajador', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -859,12 +853,12 @@ require_once '0_validate_user_1.php';
 					}
 
 					/*********************************************************************/
-					//Se guardan los datos de las maquinas	
+					//Se guardan los datos de las maquinas
 					if(isset($_SESSION['cross_quality_ana_cali_maquinas'])){
 						foreach ($_SESSION['cross_quality_ana_cali_maquinas'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                         $SIS_data  = "'".$ultimo_id."'";                                                  }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                  $SIS_data  = "'".$ultimo_id."'";                                                  }else{$SIS_data  = "''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idSistema']) && $_SESSION['cross_quality_ana_cali_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idSistema']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUsuario']) && $_SESSION['cross_quality_ana_cali_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUsuario']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']) && $_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']."'";  }else{$SIS_data .= ",''";}
@@ -879,22 +873,22 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idTipo']) && $_SESSION['cross_quality_ana_cali_basicos']['idTipo']!=''){                   $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_ana_cali_basicos']['Temporada']) && $_SESSION['cross_quality_ana_cali_basicos']['Temporada']!=''){             $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['Temporada']."'";          }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idCategoria']) && $_SESSION['cross_quality_ana_cali_basicos']['idCategoria']!=''){         $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idCategoria']."'";        }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idProducto']) && $_SESSION['cross_quality_ana_cali_basicos']['idProducto']!=''){           $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idProducto']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']!=''){         $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idTipo']) && $_SESSION['cross_quality_ana_cali_basicos']['idTipo']!=''){                          $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cross_quality_ana_cali_basicos']['Temporada']) && $_SESSION['cross_quality_ana_cali_basicos']['Temporada']!=''){                    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['Temporada']."'";          }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idCategoria']) && $_SESSION['cross_quality_ana_cali_basicos']['idCategoria']!=''){                $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idCategoria']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idProducto']) && $_SESSION['cross_quality_ana_cali_basicos']['idProducto']!=''){                  $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idProducto']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']!=''){                $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']."'";        }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_1']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_1']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_1']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_2']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_2']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_2']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_3']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_3']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_3']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_4']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_4']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_4']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_5']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_5']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_5']."'";  }else{$SIS_data .= ",''";}
-							if(isset($producto['idMaquina']) && $producto['idMaquina']!=''){                                                                                 $SIS_data .= ",'".$producto['idMaquina']."'";                                            }else{$SIS_data .= ",''";}
+							if(isset($producto['idMaquina']) && $producto['idMaquina']!=''){                                                                                        $SIS_data .= ",'".$producto['idMaquina']."'";                                            }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idAnalisis, idSistema, 
-							idUsuario, fecha_auto,Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo, 
-							Temporada, idCategoria,idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, 
+							$SIS_columns = 'idAnalisis, idSistema,
+							idUsuario, fecha_auto,Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo,
+							Temporada, idCategoria,idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2,
 							idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, idMaquina';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_quality_analisis_calidad_maquina', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -902,25 +896,25 @@ require_once '0_validate_user_1.php';
 					}
 
 					/*********************************************************************/
-					//Se guardan los datos de las muestras	
+					//Se guardan los datos de las muestras
 					if(isset($_SESSION['cross_quality_ana_cali_muestras'])){
 						foreach ($_SESSION['cross_quality_ana_cali_muestras'] as $key => $producto){
 
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                     $SIS_data  = "'".$ultimo_id."'";                      }else{$SIS_data  = "''";}
-							if(isset($producto['idProductor']) && $producto['idProductor']!=''){  $SIS_data .= ",'".$producto['idProductor']."'";       }else{$SIS_data .= ",''";}
+							if(isset($producto['idProductor']) && $producto['idProductor']!=''){         $SIS_data .= ",'".$producto['idProductor']."'";       }else{$SIS_data .= ",''";}
 							if(isset($producto['n_folio_pallet']) && $producto['n_folio_pallet']!=''){   $SIS_data .= ",'".$producto['n_folio_pallet']."'";    }else{$SIS_data .= ",''";}
-							if(isset($producto['idTipo']) && $producto['idTipo']!=''){            $SIS_data .= ",'".$producto['idTipo']."'";            }else{$SIS_data .= ",''";}
-							if(isset($producto['lote']) && $producto['lote']!=''){                $SIS_data .= ",'".$producto['lote']."'";              }else{$SIS_data .= ",''";}
-							if(isset($producto['f_embalaje']) && $producto['f_embalaje']!=''){    $SIS_data .= ",'".$producto['f_embalaje']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['f_cosecha']) && $producto['f_cosecha']!=''){      $SIS_data .= ",'".$producto['f_cosecha']."'";         }else{$SIS_data .= ",''";}
-							if(isset($producto['H_inspeccion']) && $producto['H_inspeccion']!=''){$SIS_data .= ",'".$producto['H_inspeccion']."'";      }else{$SIS_data .= ",''";}
-							if(isset($producto['cantidad']) && $producto['cantidad']!=''){        $SIS_data .= ",'".$producto['cantidad']."'";          }else{$SIS_data .= ",''";}
-							if(isset($producto['peso']) && $producto['peso']!=''){                $SIS_data .= ",'".$producto['peso']."'";              }else{$SIS_data .= ",''";}
-							if(isset($producto['Resolucion_1']) && $producto['Resolucion_1']!=''){$SIS_data .= ",'".$producto['Resolucion_1']."'";      }else{$SIS_data .= ",''";}
-							if(isset($producto['Resolucion_2']) && $producto['Resolucion_2']!=''){$SIS_data .= ",'".$producto['Resolucion_2']."'";      }else{$SIS_data .= ",''";}
-							if(isset($producto['Resolucion_3']) && $producto['Resolucion_3']!=''){$SIS_data .= ",'".$producto['Resolucion_3']."'";      }else{$SIS_data .= ",''";}
-							
+							if(isset($producto['idTipo']) && $producto['idTipo']!=''){                   $SIS_data .= ",'".$producto['idTipo']."'";            }else{$SIS_data .= ",''";}
+							if(isset($producto['lote']) && $producto['lote']!=''){                       $SIS_data .= ",'".$producto['lote']."'";              }else{$SIS_data .= ",''";}
+							if(isset($producto['f_embalaje']) && $producto['f_embalaje']!=''){           $SIS_data .= ",'".$producto['f_embalaje']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['f_cosecha']) && $producto['f_cosecha']!=''){             $SIS_data .= ",'".$producto['f_cosecha']."'";         }else{$SIS_data .= ",''";}
+							if(isset($producto['H_inspeccion']) && $producto['H_inspeccion']!=''){       $SIS_data .= ",'".$producto['H_inspeccion']."'";      }else{$SIS_data .= ",''";}
+							if(isset($producto['cantidad']) && $producto['cantidad']!=''){               $SIS_data .= ",'".$producto['cantidad']."'";          }else{$SIS_data .= ",''";}
+							if(isset($producto['peso']) && $producto['peso']!=''){                       $SIS_data .= ",'".$producto['peso']."'";              }else{$SIS_data .= ",''";}
+							if(isset($producto['Resolucion_1']) && $producto['Resolucion_1']!=''){       $SIS_data .= ",'".$producto['Resolucion_1']."'";      }else{$SIS_data .= ",''";}
+							if(isset($producto['Resolucion_2']) && $producto['Resolucion_2']!=''){       $SIS_data .= ",'".$producto['Resolucion_2']."'";      }else{$SIS_data .= ",''";}
+							if(isset($producto['Resolucion_3']) && $producto['Resolucion_3']!=''){       $SIS_data .= ",'".$producto['Resolucion_3']."'";      }else{$SIS_data .= ",''";}
+
 							$zz='';
 							for ($i = 1; $i <= 100; $i++) {
 								if(isset($producto['Medida_'.$i])&&$producto['Medida_'.$i]!= ''){   $SIS_data .= ",'".$producto['Medida_'.$i]."'";   }else{$SIS_data .= ",''";}
@@ -939,7 +933,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['cross_quality_ana_cali_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                         $SIS_data  = "'".$ultimo_id."'";                                                  }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                  $SIS_data  = "'".$ultimo_id."'";                                                  }else{$SIS_data  = "''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idSistema']) && $_SESSION['cross_quality_ana_cali_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idSistema']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUsuario']) && $_SESSION['cross_quality_ana_cali_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUsuario']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']) && $_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']."'";  }else{$SIS_data .= ",''";}
@@ -954,22 +948,22 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idTipo']) && $_SESSION['cross_quality_ana_cali_basicos']['idTipo']!=''){                   $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_ana_cali_basicos']['Temporada']) && $_SESSION['cross_quality_ana_cali_basicos']['Temporada']!=''){             $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['Temporada']."'";          }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idCategoria']) && $_SESSION['cross_quality_ana_cali_basicos']['idCategoria']!=''){         $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idCategoria']."'";        }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idProducto']) && $_SESSION['cross_quality_ana_cali_basicos']['idProducto']!=''){           $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idProducto']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']!=''){         $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idTipo']) && $_SESSION['cross_quality_ana_cali_basicos']['idTipo']!=''){                          $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cross_quality_ana_cali_basicos']['Temporada']) && $_SESSION['cross_quality_ana_cali_basicos']['Temporada']!=''){                    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['Temporada']."'";          }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idCategoria']) && $_SESSION['cross_quality_ana_cali_basicos']['idCategoria']!=''){                $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idCategoria']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idProducto']) && $_SESSION['cross_quality_ana_cali_basicos']['idProducto']!=''){                  $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idProducto']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']!=''){                $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion']."'";        }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_1']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_1']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_1']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_2']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_2']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_2']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_3']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_3']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_3']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_4']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_4']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_4']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_5']) && $_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_5']!=''){    $SIS_data .= ",'".$_SESSION['cross_quality_ana_cali_basicos']['idUbicacion_lvl_5']."'";  }else{$SIS_data .= ",''";}
-							if(isset($producto['Nombre']) && $producto['Nombre']!=''){                                                                                       $SIS_data .= ",'".$producto['Nombre']."'";                                               }else{$SIS_data .= ",''";}
+							if(isset($producto['Nombre']) && $producto['Nombre']!=''){                                                                                              $SIS_data .= ",'".$producto['Nombre']."'";                                               }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idAnalisis, idSistema, 
-							idUsuario, fecha_auto,Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo, 
-							Temporada, idCategoria,idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2, 
+							$SIS_columns = 'idAnalisis, idSistema,
+							idUsuario, fecha_auto,Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idTipo,
+							Temporada, idCategoria,idProducto, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2,
 							idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5, Nombre';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_quality_analisis_calidad_archivo', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -984,9 +978,7 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['cross_quality_ana_cali_trabajadores']);
 					unset($_SESSION['cross_quality_ana_cali_archivos']);
 					unset($_SESSION['cross_quality_ana_cali_temporal']);
-					
-					
-					
+
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
@@ -1143,8 +1135,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'addTrab_edit':
-			
-		
+
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
@@ -1367,8 +1358,7 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-			
+
 			if(empty($error)){
 
 				//Se verifica
@@ -1415,13 +1405,13 @@ require_once '0_validate_user_1.php';
 								//Se mueve el archivo a la carpeta previamente configurada
 								$move_result = @move_uploaded_file($_FILES["exFile"]["tmp_name"], $ruta);
 								if ($move_result){
-									
+
 									if(isset($idAnalisis) && $idAnalisis!=''){          $SIS_data  = "'".$idAnalisis."'";   }else{$SIS_data  = "''";}
 									if(isset($idSistema) && $idSistema!=''){            $SIS_data .= ",'".$idSistema."'";   }else{$SIS_data .= ",''";}
 									if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",'".$idUsuario."'";   }else{$SIS_data .= ",''";}
 									if(isset($fecha_auto) && $fecha_auto!=''){          $SIS_data .= ",'".$fecha_auto."'";  }else{$SIS_data .= ",''";}
-									if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
-										$SIS_data .= ",'".$Creacion_fecha."'";  
+									if(isset($Creacion_fecha) && $Creacion_fecha!=''){
+										$SIS_data .= ",'".$Creacion_fecha."'";
 										$SIS_data .= ",'".fecha2NSemana($Creacion_fecha)."'";
 										$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
 										$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'";
@@ -1533,8 +1523,7 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
 /*******************************************************************************************************************/
 		case 'new_muestra_edit':
@@ -1559,7 +1548,7 @@ require_once '0_validate_user_1.php';
 				if(isset($Resolucion_1) && $Resolucion_1!=''){      $SIS_data .= ",'".$Resolucion_1."'";      }else{$SIS_data .= ",''";}
 				if(isset($Resolucion_2) && $Resolucion_2!=''){      $SIS_data .= ",'".$Resolucion_2."'";      }else{$SIS_data .= ",''";}
 				if(isset($Resolucion_3) && $Resolucion_3!=''){      $SIS_data .= ",'".$Resolucion_3."'";      }else{$SIS_data .= ",''";}
-						
+
 				$zz='';
 				for ($i = 1; $i <= 100; $i++) {
 					if(isset($Medida[$i])&&$Medida[$i]!= ''){   $SIS_data .= ",'".$Medida[$i]."'";   }else{$SIS_data .= ",''";}
@@ -1603,7 +1592,7 @@ require_once '0_validate_user_1.php';
 				if(isset($Resolucion_1) && $Resolucion_1!=''){      $SIS_data .= ",Resolucion_1='".$Resolucion_1."'";}
 				if(isset($Resolucion_2) && $Resolucion_2!=''){      $SIS_data .= ",Resolucion_2='".$Resolucion_2."'";}
 				if(isset($Resolucion_3) && $Resolucion_3!=''){      $SIS_data .= ",Resolucion_3='".$Resolucion_3."'";}
-				
+
 				for ($i = 1; $i <= 100; $i++) {
 					if(isset($Medida[$i])&&$Medida[$i]!= ''){   $SIS_data .= ",Medida_".$i."='".$Medida[$i]."'";   }
 				}
@@ -1696,8 +1685,7 @@ require_once '0_validate_user_1.php';
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al ingreso de datos';
 			}
-			
-				
+
 			/******************************************/
 			//Se verifican trabajadores
 			if (isset($_SESSION['cross_quality_ana_cali_trabajadores'])){
@@ -1770,7 +1758,7 @@ require_once '0_validate_user_1.php';
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					/*********************************************************************/
-					//Se guardan los datos de los trabajadores	
+					//Se guardan los datos de los trabajadores
 					if(isset($_SESSION['cross_quality_ana_cali_trabajadores'])){
 						foreach ($_SESSION['cross_quality_ana_cali_trabajadores'] as $key => $producto){
 
@@ -1813,7 +1801,7 @@ require_once '0_validate_user_1.php';
 					}
 
 					/*********************************************************************/
-					//Se guardan los datos de las maquinas	
+					//Se guardan los datos de las maquinas
 					if(isset($_SESSION['cross_quality_ana_cali_maquinas'])){
 						foreach ($_SESSION['cross_quality_ana_cali_maquinas'] as $key => $producto){
 
@@ -1855,7 +1843,7 @@ require_once '0_validate_user_1.php';
 					}
 
 					/*********************************************************************/
-					//Se guardan los datos de las muestras	
+					//Se guardan los datos de las muestras
 					if(isset($_SESSION['cross_quality_ana_cali_muestras'])){
 						foreach ($_SESSION['cross_quality_ana_cali_muestras'] as $key => $producto){
 
@@ -1870,7 +1858,7 @@ require_once '0_validate_user_1.php';
 							if(isset($producto['H_inspeccion']) && $producto['H_inspeccion']!=''){$SIS_data .= ",'".$producto['H_inspeccion']."'";      }else{$SIS_data .= ",''";}
 							if(isset($producto['cantidad']) && $producto['cantidad']!=''){        $SIS_data .= ",'".$producto['cantidad']."'";          }else{$SIS_data .= ",''";}
 							if(isset($producto['peso']) && $producto['peso']!=''){                $SIS_data .= ",'".$producto['peso']."'";              }else{$SIS_data .= ",''";}
-							
+
 							$zz='';
 							for ($i = 1; $i <= 100; $i++) {
 								if(isset($producto['Medida_'.$i])&&$producto['Medida_'.$i]!= ''){   $SIS_data .= ",'".$producto['Medida_'.$i]."'";   }else{$SIS_data .= ",''";}
@@ -1934,9 +1922,7 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['cross_quality_ana_cali_trabajadores']);
 					unset($_SESSION['cross_quality_ana_cali_archivos']);
 					unset($_SESSION['cross_quality_ana_cali_temporal']);
-					
-					
-					
+
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}

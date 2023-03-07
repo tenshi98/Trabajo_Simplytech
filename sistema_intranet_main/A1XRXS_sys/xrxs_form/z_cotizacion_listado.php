@@ -96,9 +96,9 @@ require_once '0_validate_user_1.php';
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
 	if(isset($Observaciones) && $Observaciones!=''){ $Observaciones = EstandarizarInput($Observaciones);}
-	if(isset($Nombre) && $Nombre!=''){              $Nombre        = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){               $Nombre        = EstandarizarInput($Nombre);}
 	if(isset($Observacion) && $Observacion!=''){     $Observacion   = EstandarizarInput($Observacion);}
-		
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/
@@ -174,7 +174,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['cotizacion_basicos']['Usuario'] = '';
 				}
 				/********************************************************************************/
-				if(isset($idCliente) && $idCliente!=''){ 
+				if(isset($idCliente) && $idCliente!=''){
 					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente ='.$idCliente, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -189,8 +189,7 @@ require_once '0_validate_user_1.php';
 				//se guarda dato
 				$_SESSION['cotizacion_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
 				$_SESSION['cotizacion_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 
@@ -211,8 +210,7 @@ require_once '0_validate_user_1.php';
 			unset($_SESSION['cotizacion_servicios']);
 			unset($_SESSION['cotizacion_temporal']);
 			unset($_SESSION['cotizacion_impuestos']);
-				
-			
+
 			//Recorro los archivos subidos y los borro antes de eliminar la variable de sesion
 			if (isset($_SESSION['cotizacion_archivos'])){
 				foreach ($_SESSION['cotizacion_archivos'] as $key => $producto){
@@ -266,7 +264,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['cotizacion_basicos']['Usuario'] = '';
 				}
 				/********************************************************************************/
-				if(isset($idCliente) && $idCliente!=''){ 
+				if(isset($idCliente) && $idCliente!=''){
 					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente ='.$idCliente, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -281,8 +279,7 @@ require_once '0_validate_user_1.php';
 				//se guarda dato
 				$_SESSION['cotizacion_impuestos'][1]['Nombre']     = $rowImpuesto['Nombre'];
 				$_SESSION['cotizacion_impuestos'][1]['Porcentaje'] = $rowImpuesto['Porcentaje'];
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -708,7 +705,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				$_SESSION['cotizacion_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
 
 				header( 'Location: '.$location.'&view=true' );
@@ -747,7 +744,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['cotizacion_basicos']['idUsuario']) OR $_SESSION['cotizacion_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
 				if(!isset($_SESSION['cotizacion_basicos']['Creacion_fecha']) OR $_SESSION['cotizacion_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
 				if(!isset($_SESSION['cotizacion_basicos']['Observaciones']) OR $_SESSION['cotizacion_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
-				if(!isset($_SESSION['cotizacion_basicos']['idCliente']) OR $_SESSION['cotizacion_basicos']['idCliente']=='' ){       $error['idCliente']      = 'error/No ha seleccionado un proveedor';}
+				if(!isset($_SESSION['cotizacion_basicos']['idCliente']) OR $_SESSION['cotizacion_basicos']['idCliente']=='' ){           $error['idCliente']        = 'error/No ha seleccionado un proveedor';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la Cotizacion';
 			}
@@ -815,24 +812,24 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['cotizacion_basicos']['Observaciones']) && $_SESSION['cotizacion_basicos']['Observaciones']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Observaciones']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cotizacion_basicos']['fecha_auto']) && $_SESSION['cotizacion_basicos']['fecha_auto']!=''){ $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['fecha_auto']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cotizacion_basicos']['vtotal_neto'])&&$_SESSION['cotizacion_basicos']['vtotal_neto']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['vtotal_neto']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cotizacion_basicos']['vtotal_total'])&&$_SESSION['cotizacion_basicos']['vtotal_total']!=''){$SIS_data .= ",'".$_SESSION['cotizacion_basicos']['vtotal_total']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][1]['valor'])&&$_SESSION['cotizacion_impuestos'][1]['valor']!=''){    $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][1]['valor']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][2]['valor'])&&$_SESSION['cotizacion_impuestos'][2]['valor']!=''){    $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][2]['valor']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][3]['valor'])&&$_SESSION['cotizacion_impuestos'][3]['valor']!=''){    $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][3]['valor']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][4]['valor'])&&$_SESSION['cotizacion_impuestos'][4]['valor']!=''){    $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][4]['valor']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][5]['valor'])&&$_SESSION['cotizacion_impuestos'][5]['valor']!=''){    $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][5]['valor']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][6]['valor'])&&$_SESSION['cotizacion_impuestos'][6]['valor']!=''){    $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][6]['valor']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][7]['valor'])&&$_SESSION['cotizacion_impuestos'][7]['valor']!=''){    $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][7]['valor']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][8]['valor'])&&$_SESSION['cotizacion_impuestos'][8]['valor']!=''){    $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][8]['valor']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][9]['valor'])&&$_SESSION['cotizacion_impuestos'][9]['valor']!=''){    $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][9]['valor']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['cotizacion_impuestos'][10]['valor'])&&$_SESSION['cotizacion_impuestos'][10]['valor']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][10]['valor']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_basicos']['Observaciones']) && $_SESSION['cotizacion_basicos']['Observaciones']!=''){  $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['Observaciones']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_basicos']['fecha_auto']) && $_SESSION['cotizacion_basicos']['fecha_auto']!=''){        $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['fecha_auto']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_basicos']['vtotal_neto'])&&$_SESSION['cotizacion_basicos']['vtotal_neto']!=''){        $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['vtotal_neto']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_basicos']['vtotal_total'])&&$_SESSION['cotizacion_basicos']['vtotal_total']!=''){      $SIS_data .= ",'".$_SESSION['cotizacion_basicos']['vtotal_total']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][1]['valor'])&&$_SESSION['cotizacion_impuestos'][1]['valor']!=''){          $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][1]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][2]['valor'])&&$_SESSION['cotizacion_impuestos'][2]['valor']!=''){          $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][2]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][3]['valor'])&&$_SESSION['cotizacion_impuestos'][3]['valor']!=''){          $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][3]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][4]['valor'])&&$_SESSION['cotizacion_impuestos'][4]['valor']!=''){          $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][4]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][5]['valor'])&&$_SESSION['cotizacion_impuestos'][5]['valor']!=''){          $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][5]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][6]['valor'])&&$_SESSION['cotizacion_impuestos'][6]['valor']!=''){          $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][6]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][7]['valor'])&&$_SESSION['cotizacion_impuestos'][7]['valor']!=''){          $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][7]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][8]['valor'])&&$_SESSION['cotizacion_impuestos'][8]['valor']!=''){          $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][8]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][9]['valor'])&&$_SESSION['cotizacion_impuestos'][9]['valor']!=''){          $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][9]['valor']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['cotizacion_impuestos'][10]['valor'])&&$_SESSION['cotizacion_impuestos'][10]['valor']!=''){        $SIS_data .= ",'".$_SESSION['cotizacion_impuestos'][10]['valor']."'";     }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema,idUsuario, idCliente, Creacion_fecha, Creacion_mes,
-				Creacion_ano, Observaciones, fecha_auto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03, Impuesto_04, 
+				Creacion_ano, Observaciones, fecha_auto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03, Impuesto_04,
 				Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cotizacion_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -858,9 +855,9 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($producto['idProducto']) && $producto['idProducto']!=''){   $SIS_data .= ",'".$producto['idProducto']."'";   }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){$SIS_data .= ",'".$producto['Cantidad']."'";     }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){       $SIS_data .= ",'".$producto['Cantidad']."'";     }else{$SIS_data .= ",''";}
 							if(isset($producto['vUnitario']) && $producto['vUnitario']!=''){     $SIS_data .= ",'".$producto['vUnitario']."'";    }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal']!=''){    $SIS_data .= ",'".$producto['vTotal']."'";       }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){           $SIS_data .= ",'".$producto['vTotal']."'";       }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idCotizacion, idSistema, idUsuario, idCliente,Creacion_fecha,
@@ -889,9 +886,9 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($producto['idProducto']) && $producto['idProducto']!=''){   $SIS_data .= ",'".$producto['idProducto']."'";   }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){$SIS_data .= ",'".$producto['Cantidad']."'";     }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){       $SIS_data .= ",'".$producto['Cantidad']."'";     }else{$SIS_data .= ",''";}
 							if(isset($producto['vUnitario']) && $producto['vUnitario']!=''){     $SIS_data .= ",'".$producto['vUnitario']."'";    }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal']!=''){    $SIS_data .= ",'".$producto['vTotal']."'";       }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){           $SIS_data .= ",'".$producto['vTotal']."'";       }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idCotizacion, idSistema, idUsuario, idCliente,Creacion_fecha,
@@ -919,11 +916,11 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['idEquipo']) && $producto['idEquipo']!=''){    $SIS_data .= ",'".$producto['idEquipo']."'";      }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){    $SIS_data .= ",'".$producto['Cantidad']."'";      }else{$SIS_data .= ",''";}
+							if(isset($producto['idEquipo']) && $producto['idEquipo']!=''){           $SIS_data .= ",'".$producto['idEquipo']."'";      }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){           $SIS_data .= ",'".$producto['Cantidad']."'";      }else{$SIS_data .= ",''";}
 							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia']!=''){   $SIS_data .= ",'".$producto['idFrecuencia']."'";  }else{$SIS_data .= ",''";}
-							if(isset($producto['vUnitario']) && $producto['vUnitario']!=''){  $SIS_data .= ",'".$producto['vUnitario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal']!=''){        $SIS_data .= ",'".$producto['vTotal']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['vUnitario']) && $producto['vUnitario']!=''){         $SIS_data .= ",'".$producto['vUnitario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){               $SIS_data .= ",'".$producto['vTotal']."'";        }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idCotizacion, idSistema, idUsuario, idCliente,Creacion_fecha,
@@ -951,11 +948,11 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['idServicio']) && $producto['idServicio']!=''){$SIS_data .= ",'".$producto['idServicio']."'";    }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){    $SIS_data .= ",'".$producto['Cantidad']."'";      }else{$SIS_data .= ",''";}
+							if(isset($producto['idServicio']) && $producto['idServicio']!=''){       $SIS_data .= ",'".$producto['idServicio']."'";    }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){           $SIS_data .= ",'".$producto['Cantidad']."'";      }else{$SIS_data .= ",''";}
 							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia']!=''){   $SIS_data .= ",'".$producto['idFrecuencia']."'";  }else{$SIS_data .= ",''";}
-							if(isset($producto['vUnitario']) && $producto['vUnitario']!=''){  $SIS_data .= ",'".$producto['vUnitario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal']!=''){        $SIS_data .= ",'".$producto['vTotal']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['vUnitario']) && $producto['vUnitario']!=''){         $SIS_data .= ",'".$producto['vUnitario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){               $SIS_data .= ",'".$producto['vTotal']."'";        }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idCotizacion, idSistema, idUsuario, idCliente,Creacion_fecha,
@@ -1002,8 +999,7 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['cotizacion_servicios']);
 					unset($_SESSION['cotizacion_temporal']);
 					unset($_SESSION['cotizacion_archivos']);
-					
-				
+
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
@@ -1012,7 +1008,7 @@ require_once '0_validate_user_1.php';
 
 		break;
 /*******************************************************************************************************************/
-	
+
 	}
 
 ?>

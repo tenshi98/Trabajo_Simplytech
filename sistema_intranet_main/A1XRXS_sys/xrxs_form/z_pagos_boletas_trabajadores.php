@@ -49,7 +49,7 @@ require_once '0_validate_user_1.php';
 
 		}
 	}
-					
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -72,8 +72,7 @@ require_once '0_validate_user_1.php';
 		break;
 /*******************************************************************************************************************/
 		case 'pago_general':
-			
-			
+
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 
@@ -88,20 +87,20 @@ require_once '0_validate_user_1.php';
 				//recorro todos los existentes y les doy pago
 				if(isset($_SESSION['pagos_boletas_trabajadores'])){
 					foreach ($_SESSION['pagos_boletas_trabajadores'] as $key => $tipo){
-						
+
 						$idFacturacion  = $tipo['idFacturacion'];
 						$ValorTotal     = $tipo['ValorReal'];
 						$MontoPagado    = $tipo['ValorReal']+$tipo['MontoPagado'];
 						$MontoCancelado = $tipo['ValorTotal']-$tipo['MontoPagado'];
 						$idSistema      = $tipo['idSistema'];
 						$idTrabajador   = $tipo['idTrabajador'];
-								
+
 						//Filtros
 						$SIS_data = "idFacturacion='".$idFacturacion."'";
 						if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuarioPago='".$idUsuario."'";}
-						if(isset($idDocPago) && $idDocPago!=''){       $SIS_data .= ",idDocPago='".$idDocPago."'";}
-						if(isset($N_DocPago) && $N_DocPago!=''){       $SIS_data .= ",N_DocPago='".$N_DocPago."'";}
-						if(isset($F_Pago) && $F_Pago!=''){  
+						if(isset($idDocPago) && $idDocPago!=''){      $SIS_data .= ",idDocPago='".$idDocPago."'";}
+						if(isset($N_DocPago) && $N_DocPago!=''){      $SIS_data .= ",N_DocPago='".$N_DocPago."'";}
+						if(isset($F_Pago) && $F_Pago!=''){
 							$SIS_data .= ",F_Pago='".$F_Pago."'";
 							$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'";
 							$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'";
@@ -114,16 +113,15 @@ require_once '0_validate_user_1.php';
 						}
 						if(isset($ValorTotal) &&$ValorTotal!= ''){   $SIS_data .= ",MontoPagado='".$MontoPagado."'";}
 						if($ValorTotal==$MontoCancelado){
-							$SIS_data .= ",idEstado='2'" ;
+							$SIS_data .= ",idEstado='2'";
 						}else{
-							$SIS_data .= ",idEstado='1'" ;
+							$SIS_data .= ",idEstado='1'";
 						}
 
 						/*******************************************************/
 						//se actualizan los datos
 						$resultado = db_update_data (false, $SIS_data, 'boleta_honorarios_facturacion', 'idFacturacion = "'.$idFacturacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
-								
+
 						/*********************************************************************/
 						//Se guarda en historial la accion
 						if(isset($tipo['idFacturacion']) && $tipo['idFacturacion']!=''){    $SIS_data  = "'".$tipo['idFacturacion']."'";  }else{$SIS_data  = "''";}
@@ -131,17 +129,17 @@ require_once '0_validate_user_1.php';
 						$SIS_data .= ",'1'";                                                                             //Creacion Satisfactoria
 						$SIS_data .= ",'Pago del documento con el documento ".$rowDoc['Nombre']." N° ".$N_DocPago."'";   //Observacion
 						$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";                           //idUsuario
-						
+
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'boleta_honorarios_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 						/**************************************************************************************/
 						//Agrego el pago al historial de pagos
 						if(isset($idFacturacion) && $idFacturacion!=''){  $SIS_data  = "'".$idFacturacion."'";   }else{ $SIS_data  = "''"; }
 						if(isset($idDocPago) && $idDocPago!=''){          $SIS_data .= ",'".$idDocPago."'";      }else{ $SIS_data .= ",''"; }
 						if(isset($N_DocPago) && $N_DocPago!=''){          $SIS_data .= ",'".$N_DocPago."'";      }else{ $SIS_data .= ",''"; }
-						if(isset($F_Pago) && $F_Pago!=''){  
+						if(isset($F_Pago) && $F_Pago!=''){
 							$SIS_data .= ",'".$F_Pago."'";
 							$SIS_data .= ",'".fecha2NdiaMes($F_Pago)."'";
 							$SIS_data .= ",'".fecha2NSemana($F_Pago)."'";
@@ -156,9 +154,9 @@ require_once '0_validate_user_1.php';
 						}
 						if(isset($ValorTotal) && $ValorTotal!=''){           $SIS_data .= ",'".$ValorTotal."'";      }else{ $SIS_data .= ",''"; }
 						if(isset($MontoCancelado) && $MontoCancelado!=''){   $SIS_data .= ",'".$MontoCancelado."'";  }else{ $SIS_data .= ",''"; }
-						if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",'".$idUsuario."'";       }else{ $SIS_data .= ",''"; }
+						if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";       }else{ $SIS_data .= ",''"; }
 						if(isset($idSistema) && $idSistema!=''){             $SIS_data .= ",'".$idSistema."'";       }else{ $SIS_data .= ",''"; }
-						if(isset($idTrabajador) && $idTrabajador!=''){      $SIS_data .= ",'".$idTrabajador."'";    }else{ $SIS_data .= ",''"; }
+						if(isset($idTrabajador) && $idTrabajador!=''){       $SIS_data .= ",'".$idTrabajador."'";    }else{ $SIS_data .= ",''"; }
 
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idFacturacion, idDocPago, N_DocPago, F_Pago, F_Pago_dia, F_Pago_Semana, F_Pago_mes, F_Pago_ano, MontoPagado, montoPactado, idUsuario, idSistema, idTrabajador';
@@ -166,9 +164,7 @@ require_once '0_validate_user_1.php';
 
 					}
 				}
-				
-				
-				
+
 				////////////////////////////////////////////////////////////////////////////////////////////
 				//elimino los datos
 				unset($_SESSION['pagos_boletas_trabajadores']);
@@ -179,8 +175,7 @@ require_once '0_validate_user_1.php';
 			}
 
 		break;
-	
-	
+
 	}
 
 ?>

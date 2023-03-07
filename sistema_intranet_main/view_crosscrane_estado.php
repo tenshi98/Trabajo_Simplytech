@@ -249,7 +249,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				/*****************************************/
 				//recorro
 				for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-					
+
 					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_amperaje']){
 						//suma totales
 						$alimentacion_total     = $alimentacion_total + $rowResult['Sensor_amperaje_'.$i.'_Prom'];
@@ -259,7 +259,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						//busco el valor maximo
 						if($rowResult['Sensor_amperaje_'.$i.'_Prom']>$alimentacion_max){$alimentacion_max = $rowResult['Sensor_amperaje_'.$i.'_Prom'];}
 					}
-					
+
 					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_elevacion']){
 						//suma totales
 						$elevacion_total     = $elevacion_total + $rowResult['Sensor_elevacion_'.$i.'_Prom'];
@@ -269,7 +269,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						//busco el valor maximo
 						if($rowResult['Sensor_elevacion_'.$i.'_Prom']>$elevacion_max){$elevacion_max = $rowResult['Sensor_elevacion_'.$i.'_Prom'];}
 					}
-					
+
 					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_giro']){
 						//suma totales
 						$giro_total     = $giro_total + $rowResult['Sensor_giro_'.$i.'_Prom'];
@@ -279,7 +279,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						//busco el valor maximo
 						if($rowResult['Sensor_giro_'.$i.'_Prom']>$giro_max){$giro_max = $rowResult['Sensor_giro_'.$i.'_Prom'];}
 					}
-					
+
 					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_carro']){
 						//suma totales
 						$carro_total     = $carro_total + $rowResult['Sensor_carro_'.$i.'_Prom'];
@@ -289,7 +289,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						//busco el valor maximo
 						if($rowResult['Sensor_carro_'.$i.'_Prom']>$carro_max){$carro_max = $rowResult['Sensor_carro_'.$i.'_Prom'];}
 					}
-					
+
 					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_voltaje']){
 						//promedio
 						$voltaje_prom_total = $voltaje_prom_total + $rowResult['Sensor_voltaje_'.$i.'_Prom'];
@@ -579,13 +579,13 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						var options_gauge_2  = "";
 						var options_gauge_3  = "";
 						var options_gauge_4  = "";
-								
+
 						//carga de los graficos
 						//google.charts.setOnLoadCallback(Chart_correccion_1);
 						google.charts.setOnLoadCallback(Chart_correccion_2);
 						google.charts.setOnLoadCallback(Chart_correccion_3);
 						google.charts.setOnLoadCallback(Chart_correccion_4);
-								
+
 						/* ************************************************************************** */
 						/*function Chart_correccion_1() {
 							var data_correccion_rows_1 = <?php echo $margen_alimentacion; ?>;
@@ -968,7 +968,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 													
 									//muestro la infowindow al inicio
 									infowindow.open(map,marker);
-									
 
 								}
 								/* ************************************************************************** */

@@ -91,7 +91,7 @@ require_once '0_validate_user_1.php';
 
 				//se verifica si la imagen existe
 				if (!empty($_FILES['File_Licencia']['name'])){
-						
+
 					if ($_FILES["File_Licencia"]["error"] > 0){
 						$error['File_Licencia'] = 'error/'.uploadPHPError($_FILES["File_Licencia"]["error"]);
 					} else {
@@ -99,7 +99,7 @@ require_once '0_validate_user_1.php';
 						$permitidos = array("application/msword",
 											"application/vnd.ms-word",
 											"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-													
+
 											"application/pdf",
 											"application/octet-stream",
 											"application/x-real",
@@ -117,7 +117,7 @@ require_once '0_validate_user_1.php';
 						$limite_kb = 10000;
 						//Sufijo
 						$sufijo = 'licencia_'.$idTrabajador.'_'.genera_password_unica().'_';
-									  
+
 						if (in_array($_FILES['File_Licencia']['type'], $permitidos) && $_FILES['File_Licencia']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
 							$ruta = "upload/".$sufijo.$_FILES['File_Licencia']['name'];
@@ -129,8 +129,8 @@ require_once '0_validate_user_1.php';
 
 									//filtros
 									if(isset($idSistema) && $idSistema!=''){            $SIS_data  = "'".$idSistema."'";       }else{$SIS_data  = "''";}
-									if(isset($idTrabajador) && $idTrabajador!=''){     $SIS_data .= ",'".$idTrabajador."'";   }else{$SIS_data .= ",''";}
-									if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",'".$idUsuario."'";      }else{$SIS_data .= ",''";}
+									if(isset($idTrabajador) && $idTrabajador!=''){      $SIS_data .= ",'".$idTrabajador."'";   }else{$SIS_data .= ",''";}
+									if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",'".$idUsuario."'";      }else{$SIS_data .= ",''";}
 									if(isset($Fecha_ingreso) && $Fecha_ingreso!=''){    $SIS_data .= ",'".$Fecha_ingreso."'";  }else{$SIS_data .= ",''";}
 									if(isset($Fecha_inicio) && $Fecha_inicio!=''){      $SIS_data .= ",'".$Fecha_inicio."'";   }else{$SIS_data .= ",''";}
 									if(isset($Fecha_termino) && $Fecha_termino!=''){    $SIS_data .= ",'".$Fecha_termino."'";  }else{$SIS_data .= ",''";}
@@ -149,7 +149,7 @@ require_once '0_validate_user_1.php';
 										header( 'Location: '.$location.'&created=true' );
 										die;
 									}
-													
+
 								}else {
 									$error['File_Licencia']     = 'error/Ocurrio un error al mover el archivo';
 								}
@@ -164,8 +164,8 @@ require_once '0_validate_user_1.php';
 
 					//filtros
 					if(isset($idSistema) && $idSistema!=''){            $SIS_data  = "'".$idSistema."'";       }else{$SIS_data  = "''";}
-					if(isset($idTrabajador) && $idTrabajador!=''){     $SIS_data .= ",'".$idTrabajador."'";   }else{$SIS_data .= ",''";}
-					if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",'".$idUsuario."'";      }else{$SIS_data .= ",''";}
+					if(isset($idTrabajador) && $idTrabajador!=''){      $SIS_data .= ",'".$idTrabajador."'";   }else{$SIS_data .= ",''";}
+					if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",'".$idUsuario."'";      }else{$SIS_data .= ",''";}
 					if(isset($Fecha_ingreso) && $Fecha_ingreso!=''){    $SIS_data .= ",'".$Fecha_ingreso."'";  }else{$SIS_data .= ",''";}
 					if(isset($Fecha_inicio) && $Fecha_inicio!=''){      $SIS_data .= ",'".$Fecha_inicio."'";   }else{$SIS_data .= ",''";}
 					if(isset($Fecha_termino) && $Fecha_termino!=''){    $SIS_data .= ",'".$Fecha_termino."'";  }else{$SIS_data .= ",''";}
@@ -214,7 +214,7 @@ require_once '0_validate_user_1.php';
 
 				//se verifica si la imagen existe
 				if (!empty($_FILES['File_Licencia']['name'])){
-						
+
 					if ($_FILES["File_Licencia"]["error"] > 0){
 						$error['File_Licencia'] = 'error/'.uploadPHPError($_FILES["File_Licencia"]["error"]);
 					} else {
@@ -222,7 +222,7 @@ require_once '0_validate_user_1.php';
 						$permitidos = array("application/msword",
 											"application/vnd.ms-word",
 											"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-													
+
 											"application/pdf",
 											"application/octet-stream",
 											"application/x-real",
@@ -240,7 +240,7 @@ require_once '0_validate_user_1.php';
 						$limite_kb = 10000;
 						//Sufijo
 						$sufijo = 'licencia_'.$idTrabajador.'_'.genera_password_unica().'_';
-									  
+
 						if (in_array($_FILES['File_Licencia']['type'], $permitidos) && $_FILES['File_Licencia']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
 							$ruta = "upload/".$sufijo.$_FILES['File_Licencia']['name'];
@@ -253,8 +253,8 @@ require_once '0_validate_user_1.php';
 									//Filtros
 									$SIS_data = "idLicencia='".$idLicencia."'";
 									if(isset($idSistema) && $idSistema!=''){            $SIS_data .= ",idSistema='".$idSistema."'";}
-									if(isset($idTrabajador) && $idTrabajador!=''){     $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
-									if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",idUsuario='".$idUsuario."'";}
+									if(isset($idTrabajador) && $idTrabajador!=''){      $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
+									if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",idUsuario='".$idUsuario."'";}
 									if(isset($Fecha_ingreso) && $Fecha_ingreso!=''){    $SIS_data .= ",Fecha_ingreso='".$Fecha_ingreso."'";}
 									if(isset($Fecha_inicio) && $Fecha_inicio!=''){      $SIS_data .= ",Fecha_inicio='".$Fecha_inicio."'";}
 									if(isset($Fecha_termino) && $Fecha_termino!=''){    $SIS_data .= ",Fecha_termino='".$Fecha_termino."'";}
@@ -268,7 +268,7 @@ require_once '0_validate_user_1.php';
 									$resultado = db_update_data (false, $SIS_data, 'trabajadores_licencias', 'idLicencia = "'.$idLicencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									//Si ejecuto correctamente la consulta
 									if($resultado==true){
-										
+
 										header( 'Location: '.$location.'&edited=true' );
 										die;
 
@@ -288,8 +288,8 @@ require_once '0_validate_user_1.php';
 					//Filtros
 					$SIS_data = "idLicencia='".$idLicencia."'";
 					if(isset($idSistema) && $idSistema!=''){            $SIS_data .= ",idSistema='".$idSistema."'";}
-					if(isset($idTrabajador) && $idTrabajador!=''){     $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
-					if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",idUsuario='".$idUsuario."'";}
+					if(isset($idTrabajador) && $idTrabajador!=''){      $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
+					if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",idUsuario='".$idUsuario."'";}
 					if(isset($Fecha_ingreso) && $Fecha_ingreso!=''){    $SIS_data .= ",Fecha_ingreso='".$Fecha_ingreso."'";}
 					if(isset($Fecha_inicio) && $Fecha_inicio!=''){      $SIS_data .= ",Fecha_inicio='".$Fecha_inicio."'";}
 					if(isset($Fecha_termino) && $Fecha_termino!=''){    $SIS_data .= ",Fecha_termino='".$Fecha_termino."'";}
@@ -302,7 +302,7 @@ require_once '0_validate_user_1.php';
 					$resultado = db_update_data (false, $SIS_data, 'trabajadores_licencias', 'idLicencia = "'.$idLicencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
 					if($resultado==true){
-						
+
 						header( 'Location: '.$location.'&edited=true' );
 						die;
 
@@ -388,7 +388,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "File_Licencia=''" ;
+			$SIS_data = "File_Licencia=''";
 			$resultado = db_update_data (false, $SIS_data, 'trabajadores_licencias', 'idLicencia = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){

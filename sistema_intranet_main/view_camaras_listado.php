@@ -114,7 +114,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seguridad_camaras_listado', $SIS_
 							if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){        $direccion .= ', '.$rowdata["Comuna"];}
 							//se despliega mensaje en caso de no existir direccion
 							if($direccion!=''){
-								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); 
+								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
 							}else{
 								$Alert_Text  = 'No tiene una direccion definida';
 								alert_post_data(4,2,2, $Alert_Text);

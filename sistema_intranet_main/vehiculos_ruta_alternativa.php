@@ -399,7 +399,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']; ?>
 					<script>
 						document.getElementById('div_Fecha').style.display = 'none';
 						document.getElementById('div_idDia').style.display = 'none';
-						
+
 						$("#idTipo").on("change", function(){ //se ejecuta al cambiar valor del select
 							let modelSelected = $(this).val(); //Asignamos el valor seleccionado
 					

@@ -136,7 +136,7 @@ foreach ($arrPermisos as $prod) {
 					<?php
 					//Imprimo las variables
 					foreach ($arrTipo as $tipo) {
-						echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+						echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 					}
 					?>
 					document.getElementById("idProductoRel").onchange = function() {myFunction()};
@@ -223,7 +223,7 @@ foreach ($arrPermisos as $prod) {
 					<?php
 					//Imprimo las variables
 					foreach ($arrTipo as $tipo) {
-						echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+						echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 					}
 					?>
 					document.getElementById("idProductoRel").onchange = function() {myFunction()};

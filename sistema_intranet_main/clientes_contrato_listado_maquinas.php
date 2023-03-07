@@ -978,9 +978,7 @@ foreach ($arrPermisos as $prod) {
 				if(isset($idUml)){                $x18 = $idUml;                  }else{$x18 = $rowdata['idUml'];}
 				if(isset($Frecuencia)){           $x19 = $Frecuencia;             }else{$x19 = $rowdata['Frecuencia'];}
 				if(isset($idFrecuencia)){         $x20 = $idFrecuencia;           }else{$x20 = $rowdata['idFrecuencia'];}
-				
-				
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -1046,7 +1044,7 @@ foreach ($arrPermisos as $prod) {
 					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
 					';
 				}
-				
+
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
 					';
@@ -1225,7 +1223,7 @@ foreach ($arrPermisos as $prod) {
 					/**********************************************************************/
 
 					$("#idUtilizable").on("change", function(){
-						let TipoComp = $(this).val(); 
+						let TipoComp = $(this).val();
 						//si es No Usable
 						if(TipoComp == 1){
 							document.getElementById('div_Modelo').style.display = 'none';
@@ -1510,9 +1508,7 @@ foreach ($arrPermisos as $prod) {
 				if(isset($idUml)){                $x18 = $idUml;                  }else{$x18 = '';}
 				if(isset($Frecuencia)){           $x19 = $Frecuencia;             }else{$x19 = '';}
 				if(isset($idFrecuencia)){         $x20 = $idFrecuencia;           }else{$x20 = '';}
-				
-				
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -1574,7 +1570,7 @@ foreach ($arrPermisos as $prod) {
 					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
 					';
 				}
-				
+
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
 					';

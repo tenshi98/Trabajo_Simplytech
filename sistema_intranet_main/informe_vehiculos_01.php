@@ -201,7 +201,7 @@ array_push( $arrVehiculos,$row );
 						
 						$pas_valor  = $trab['PasajerosValor'] * $n_meses;
 						$pas_sueldo = $trab['SueldoLiquido'] * $n_meses;
-						
+
 						$total_prog = $total_prog + $pas_valor;
 
 						?>
@@ -285,7 +285,7 @@ array_push( $arrVehiculos,$row );
 				if(isset($idMes)){     $x2  = $idMes;     }else{$x2  = '';}
 				if(isset($fInicio)){   $x3  = $fInicio;   }else{$x3  = '';}
 				if(isset($fTermino)){  $x4  = $fTermino;  }else{$x4  = '';}
-						
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Generar Informe por Mes');

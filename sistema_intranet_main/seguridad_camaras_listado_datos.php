@@ -131,7 +131,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 						document.getElementById('div_Config_IP').style.display = 'none';
 						document.getElementById('div_Config_Puerto').style.display = 'none';
 						document.getElementById('div_Config_Web').style.display = 'none';
-						
+
 						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 									
 							let idSubconfiguracion= $("#idSubconfiguracion").val();
@@ -188,10 +188,10 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 								document.getElementById('Config_IP').value = "";
 								document.getElementById('Config_Puerto').value = "";
 								document.getElementById('Config_Web').value = "";
-								
+
 							}
 						});
-						
+
 						$("#idPais").on("change", function(){
 							
 							let idPais_sel= $("#idPais").val();
@@ -252,9 +252,9 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 								document.getElementById('Config_IP').value = "";
 								document.getElementById('Config_Puerto').value = "";
 								document.getElementById('Config_Web').value = "";
-								
+
 							}
-							
+
 						});
 					
 					</script>

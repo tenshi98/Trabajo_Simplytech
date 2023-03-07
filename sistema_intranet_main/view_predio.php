@@ -190,7 +190,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 								$Longitud_z_prom = 0;
 								$zcounter        = 0;
 								$zcounter2        = 0;
-									
+
 								//Se filtra por zona
 								filtrar($arrZonas, 'idZona');
 								//se recorre
@@ -294,7 +294,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 						  
 								geocoder.geocode( { address: '<?php echo $Ubicacion ?>'}, function(results, status) {
 									if (status == google.maps.GeocoderStatus.OK) {
-										
+
 										// marker position
 										myLatlng = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
 								

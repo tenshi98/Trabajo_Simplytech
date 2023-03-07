@@ -48,7 +48,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){       $Nombre     = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){        $Nombre     = EstandarizarInput($Nombre);}
 	if(isset($Direccion) && $Direccion!=''){  $Direccion  = EstandarizarInput($Direccion);}
 
 /*******************************************************************************************************************/

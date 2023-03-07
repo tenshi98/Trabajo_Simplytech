@@ -71,7 +71,7 @@ require_once '0_validate_user_1.php';
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
 	//ejecuto segun la funcion
-	switch ($form_trabajo) {	
+	switch ($form_trabajo) {
 /*******************************************************************************************************************/
 		case 'insert_matriz':
 
@@ -93,9 +93,9 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){       $SIS_data  = "'".$idSistema."'";      }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema!=''){      $SIS_data  = "'".$idSistema."'";      }else{$SIS_data  = "''";}
 				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
-				if(isset($cantPuntos) && $cantPuntos!=''){     $SIS_data .= ",'".$cantPuntos."'";    }else{$SIS_data .= ",''";}
+				if(isset($cantPuntos) && $cantPuntos!=''){    $SIS_data .= ",'".$cantPuntos."'";    }else{$SIS_data .= ",''";}
 				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",'".$idEstado."'";      }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
@@ -121,15 +121,15 @@ require_once '0_validate_user_1.php';
 
 				//Filtros
 				$SIS_data = "idMatriz='".$idMatriz."'";
-				if(isset($idSistema) && $idSistema!=''){      $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idEstado) && $idEstado!=''){                         $SIS_data .= ",idEstado='".$idEstado."'";}
-				if(isset($Nombre) && $Nombre!=''){                             $SIS_data .= ",Nombre='".$Nombre."'";}
-				if(isset($cantPuntos) && $cantPuntos!=''){                      $SIS_data .= ",cantPuntos='".$cantPuntos."'";}
+				if(isset($idSistema) && $idSistema!=''){             $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($cantPuntos) && $cantPuntos!=''){           $SIS_data .= ",cantPuntos='".$cantPuntos."'";}
 
-				if(isset($PuntoNombre) && $PuntoNombre!=''){                    $SIS_data .= ",PuntoNombre_".$mod."='".$PuntoNombre."'";}
-				if(isset($SensoresTipo) && $SensoresTipo!=''){                  $SIS_data .= ",SensoresTipo_".$mod."='".$SensoresTipo."'";}
-				if(isset($SensoresValor) && $SensoresValor!=''){                $SIS_data .= ",SensoresValor_".$mod."='".$SensoresValor."'";}
-				if(isset($SensoresNumero) && $SensoresNumero!=''){              $SIS_data .= ",SensoresNumero_".$mod."='".$SensoresNumero."'";}
+				if(isset($PuntoNombre) && $PuntoNombre!=''){         $SIS_data .= ",PuntoNombre_".$mod."='".$PuntoNombre."'";}
+				if(isset($SensoresTipo) && $SensoresTipo!=''){       $SIS_data .= ",SensoresTipo_".$mod."='".$SensoresTipo."'";}
+				if(isset($SensoresValor) && $SensoresValor!=''){     $SIS_data .= ",SensoresValor_".$mod."='".$SensoresValor."'";}
+				if(isset($SensoresNumero) && $SensoresNumero!=''){   $SIS_data .= ",SensoresNumero_".$mod."='".$SensoresNumero."'";}
 
 				/*******************************************************/
 				//se actualizan los datos
@@ -192,7 +192,6 @@ require_once '0_validate_user_1.php';
 
 		break;
 
-		
 /*******************************************************************************************************************/
 		case 'clone_Matriz':
 
@@ -230,9 +229,9 @@ require_once '0_validate_user_1.php';
 				/*******************************************************************/
 				//filtros
 				if(isset($rowdata['idSistema']) && $rowdata['idSistema']!=''){     $SIS_data  = "'".$rowdata['idSistema']."'";     }else{$SIS_data  = "''";}
-				if(isset($rowdata['idEstado']) && $rowdata['idEstado']!=''){$SIS_data .= ",'".$rowdata['idEstado']."'";     }else{$SIS_data .= ",''";}
+				if(isset($rowdata['idEstado']) && $rowdata['idEstado']!=''){       $SIS_data .= ",'".$rowdata['idEstado']."'";     }else{$SIS_data .= ",''";}
 				if(isset($rowdata['cantPuntos']) && $rowdata['cantPuntos']!=''){   $SIS_data .= ",'".$rowdata['cantPuntos']."'";   }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){                                $SIS_data .= ",'".$Nombre."'";                  }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                                 $SIS_data .= ",'".$Nombre."'";                  }else{$SIS_data .= ",''";}
 
 				for ($i = 1; $i <= 72; $i++) {
 					if(isset($rowdata['PuntoNombre_'.$i]) && $rowdata['PuntoNombre_'.$i]!=''){        $SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'";     }else{$SIS_data .= ",''";}

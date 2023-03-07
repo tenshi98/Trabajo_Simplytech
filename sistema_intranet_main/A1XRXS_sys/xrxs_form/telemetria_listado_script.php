@@ -108,8 +108,8 @@ require_once '0_validate_user_1.php';
 				$subColumn = '';
 				//filtros
 				if(isset($idTelemetria) && $idTelemetria!=''){       $SIS_data  = "'".$idTelemetria."'";      }else{$SIS_data  = "''";}
-				if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
-				if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",'".$Fecha."'";           }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha!=''){                     $SIS_data .= ",'".$Fecha."'";            }else{$SIS_data .= ",''";}
 				if(isset($Version) && $Version!=''){                 $SIS_data .= ",'".$Version."'";          }else{$SIS_data .= ",''";}
 				if(isset($Observacion) && $Observacion!=''){         $SIS_data .= ",'".$Observacion."'";      }else{$SIS_data .= ",''";}
 				if(isset($idDispositivo) && $idDispositivo!=''){     $SIS_data .= ",'".$idDispositivo."'";    }else{$SIS_data .= ",''";}
@@ -126,11 +126,10 @@ require_once '0_validate_user_1.php';
 
 				//recorro los sensores para guardar los sensores
 				if(isset($cantSensores) && $cantSensores!=''){for ($i = 1; $i <= $cantSensores; $i++) {$SIS_data .= ",'".$SensoresTipo[$i]."'";$subColumn .= ',SensoresTipo_'.$i;}}
-				
-	
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idTelemetria, idUsuario, Fecha, Version, Observacion, idDispositivo,
-				idShield, idFormaEnvio, idTab, id_Geo, id_Sensores, cantSensores, idAPNListado, 
+				idShield, idFormaEnvio, idTab, id_Geo, id_Sensores, cantSensores, idAPNListado,
 				idPuertoSerial, pinMode, idModificado'.$subColumn;
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_script', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -174,8 +173,8 @@ require_once '0_validate_user_1.php';
 									//Filtros
 									$SIS_data = "idScript='".$idScript."'";
 									if(isset($idTelemetria) && $idTelemetria!=''){       $SIS_data .= ",idTelemetria='".$idTelemetria."'";}
-									if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",idUsuario='".$idUsuario."'";}
-									if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+									if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",idUsuario='".$idUsuario."'";}
+									if(isset($Fecha) && $Fecha!=''){                     $SIS_data .= ",Fecha='".$Fecha."'";}
 									if(isset($Version) && $Version!=''){                 $SIS_data .= ",Version='".$Version."'";}
 									if(isset($Observacion) && $Observacion!=''){         $SIS_data .= ",Observacion='".$Observacion."'";}
 									if(isset($idAPNListado) && $idAPNListado!=''){       $SIS_data .= ",idAPNListado='".$idAPNListado."'";}
@@ -190,14 +189,13 @@ require_once '0_validate_user_1.php';
 
 									//Si ejecuto correctamente la consulta
 									if($resultado==true){
-										
+
 										//redirijo
 										header( 'Location: '.$location.'&edited=true' );
 										die;
 
 									}
-									
-							
+
 								}else {
 									$error['ScriptFile']     = 'error/Ocurrio un error al mover el archivo';
 								}
@@ -215,8 +213,8 @@ require_once '0_validate_user_1.php';
 					//Filtros
 					$SIS_data = "idScript='".$idScript."'";
 					if(isset($idTelemetria) && $idTelemetria!=''){       $SIS_data .= ",idTelemetria='".$idTelemetria."'";}
-					if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",idUsuario='".$idUsuario."'";}
-					if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+					if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",idUsuario='".$idUsuario."'";}
+					if(isset($Fecha) && $Fecha!=''){                     $SIS_data .= ",Fecha='".$Fecha."'";}
 					if(isset($Version) && $Version!=''){                 $SIS_data .= ",Version='".$Version."'";}
 					if(isset($Observacion) && $Observacion!=''){         $SIS_data .= ",Observacion='".$Observacion."'";}
 					if(isset($idAPNListado) && $idAPNListado!=''){       $SIS_data .= ",idAPNListado='".$idAPNListado."'";}
@@ -236,10 +234,6 @@ require_once '0_validate_user_1.php';
 
 					}
 				}
-				
-				
-				
-				
 			}
 
 		break;
@@ -302,11 +296,11 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "ScriptFile=''" ;
+			$SIS_data = "ScriptFile=''";
 			$resultado = db_update_data (false, $SIS_data, 'telemetria_listado_script', 'idScript = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
-								
+
 				//se elimina el archivo
 				if(isset($rowdata['ScriptFile'])&&$rowdata['ScriptFile']!=''){
 					try {

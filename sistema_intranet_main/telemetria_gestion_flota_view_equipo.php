@@ -244,7 +244,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 								</thead>
 
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
-									<?php foreach ($arrAlertas as $error) { 
+									<?php foreach ($arrAlertas as $error) {
 										//Guardo la unidad de medida
 										$unimed = ' '.$arrFinalUnimed[$error['SensoresUniMed_'.$error['Sensor']]]; ?>
 										<tr>

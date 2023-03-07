@@ -52,7 +52,7 @@ if (isset($_GET['idTipo']) && $_GET['idTipo']!=''){      $z .= " AND orden_traba
 if(isset($_GET['f_programacion_inicio'])&&$_GET['f_programacion_inicio']!=''&&isset($_GET['f_programacion_termino'])&&$_GET['f_programacion_termino']!=''){
 	$z.=" AND orden_trabajo_listado.f_programacion BETWEEN '".$_GET['f_programacion_inicio']."' AND '".$_GET['f_programacion_termino']."'";
 }
-					
+
 // Se trae un listado con todos los elementos
 $arrOTS = array();
 $query = "SELECT 

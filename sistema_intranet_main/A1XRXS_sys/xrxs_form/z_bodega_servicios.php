@@ -53,7 +53,7 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['fecha_fact_desde']))  $fecha_fact_desde    = $_POST['fecha_fact_desde'];
 	if (!empty($_POST['fecha_fact_hasta']))  $fecha_fact_hasta    = $_POST['fecha_fact_hasta'];
 	if (!empty($_POST['idUsoIVA']))          $idUsoIVA            = $_POST['idUsoIVA'];
-						
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -115,7 +115,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	if(isset($Observaciones) && $Observaciones!=''){ $Observaciones = EstandarizarInput($Observaciones);}
 	if(isset($Nombre) && $Nombre!=''){              $Nombre        = EstandarizarInput($Nombre);}
-		
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/
@@ -224,7 +224,7 @@ require_once '0_validate_user_1.php';
 				}
 
 				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos!=''){ 
+				if(isset($idDocumentos) && $idDocumentos!=''){
 					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -242,7 +242,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idProveedor) && $idProveedor!=''){ 
+				if(isset($idProveedor) && $idProveedor!=''){
 					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -356,7 +356,7 @@ require_once '0_validate_user_1.php';
 				}
 
 				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos!=''){ 
+				if(isset($idDocumentos) && $idDocumentos!=''){
 					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -374,7 +374,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idProveedor) && $idProveedor!=''){ 
+				if(isset($idProveedor) && $idProveedor!=''){
 					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -401,7 +401,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_ing_basicos']['CentroCosto']   = 'Sin Centro de Costo Asignado';
 
 				/****************************************************/
-				if(isset($idCentroCosto) && $idCentroCosto!=''){ 
+				if(isset($idCentroCosto) && $idCentroCosto!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -409,7 +409,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_basicos']['idCentroCosto'] = $idCentroCosto;
 				}
 				/****************************************************/
-				if(isset($idLevel_1) && $idLevel_1!=''){ 
+				if(isset($idLevel_1) && $idLevel_1!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -417,7 +417,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_basicos']['idLevel_1']    = $idLevel_1;
 				}
 				/****************************************************/
-				if(isset($idLevel_2) && $idLevel_2!=''){ 
+				if(isset($idLevel_2) && $idLevel_2!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -425,7 +425,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_basicos']['idLevel_2']    = $idLevel_2;
 				}
 				/****************************************************/
-				if(isset($idLevel_3) && $idLevel_3!=''){ 
+				if(isset($idLevel_3) && $idLevel_3!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -433,7 +433,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_basicos']['idLevel_3']    = $idLevel_3;
 				}
 				/****************************************************/
-				if(isset($idLevel_4) && $idLevel_4!=''){ 
+				if(isset($idLevel_4) && $idLevel_4!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -441,7 +441,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_basicos']['idLevel_4']    = $idLevel_4;
 				}
 				/****************************************************/
-				if(isset($idLevel_5) && $idLevel_5!=''){ 
+				if(isset($idLevel_5) && $idLevel_5!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -472,9 +472,9 @@ require_once '0_validate_user_1.php';
 			if(empty($valor)){  $error['valor']  = 'error/No ha ingresado una fecha de vencimiento';}
 
 			if(empty($error)){
-				
+
 				$_SESSION['servicios_ing_basicos']['Pago_fecha'] = $valor;
-			
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -487,9 +487,9 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			if(empty($error)){
-				
+
 				$_SESSION['servicios_ing_basicos']['Pago_fecha'] = '0000-00-00';
-			
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -523,8 +523,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_ing_productos'][$idServicio]['idFrecuencia']  = $idFrecuencia;
 				$_SESSION['servicios_ing_productos'][$idServicio]['Servicio']      = $rowServicio['Nombre'];
 				$_SESSION['servicios_ing_productos'][$idServicio]['Frecuencia']    = $rowFrecuencia['Nombre'];
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -571,8 +570,8 @@ require_once '0_validate_user_1.php';
 				}
 
 				//Borro el producto
-				unset($_SESSION['servicios_ing_productos'][$oldItemID]); 
-			
+				unset($_SESSION['servicios_ing_productos'][$oldItemID]);
+
 				//creo el producto
 				$_SESSION['servicios_ing_productos'][$idServicio]['idServicio']       = $idServicio;
 				$_SESSION['servicios_ing_productos'][$idServicio]['Cantidad_ing']     = $Cantidad_ing;
@@ -658,7 +657,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				$_SESSION['servicios_ing_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
 
 				header( 'Location: '.$location.'&view=true' );
@@ -805,7 +804,7 @@ require_once '0_validate_user_1.php';
 			}
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				$_SESSION['servicios_ing_descuentos'][$idInterno]['idDescuento']  = $idInterno;
 				$_SESSION['servicios_ing_descuentos'][$idInterno]['Nombre']       = $Nombre;
 				$_SESSION['servicios_ing_descuentos'][$idInterno]['vTotal']       = $vTotal;
@@ -979,7 +978,7 @@ require_once '0_validate_user_1.php';
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 			//Se guardan los datos basicos
 				if(isset($_SESSION['servicios_ing_basicos']['idSistema']) && $_SESSION['servicios_ing_basicos']['idSistema']!=''){     $SIS_data  = "'".$_SESSION['servicios_ing_basicos']['idSistema']."'";      }else{$SIS_data  = "''";}
 				if(isset($_SESSION['servicios_ing_basicos']['idUsuario']) && $_SESSION['servicios_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -1050,7 +1049,7 @@ require_once '0_validate_user_1.php';
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					/*********************************************************************/
-					//Se guardan los datos de los trabajadores	
+					//Se guardan los datos de los trabajadores
 					if(isset($_SESSION['servicios_ing_productos'])){
 						foreach ($_SESSION['servicios_ing_productos'] as $key => $producto){
 
@@ -1094,8 +1093,7 @@ require_once '0_validate_user_1.php';
 							/*******************************************************/
 							//se actualizan los datos
 							$resultado = db_update_data (false, $SIS_data, 'servicios_listado', 'idServicio = "'.$producto['idServicio'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
-							
+
 							/*******************************************************************/
 							//Actualizo lo entregado de la solicitud de la OC si esta existe
 							if(isset($_SESSION['servicios_ing_basicos']['idOcompra'])&&$_SESSION['servicios_ing_basicos']['idOcompra']){
@@ -1106,7 +1104,7 @@ require_once '0_validate_user_1.php';
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_servicios', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 							}
 						}
 					}
@@ -1190,19 +1188,19 @@ require_once '0_validate_user_1.php';
 					/*********************************************************************/
 					//Se guarda en historial la accion
 					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['servicios_ing_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_basicos']['Creacion_fecha']!=''){  
-						$SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['Creacion_fecha']."'";  
+					if(isset($_SESSION['servicios_ing_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_basicos']['Creacion_fecha']!=''){
+						$SIS_data .= ",'".$_SESSION['servicios_ing_basicos']['Creacion_fecha']."'";
 					}else{
 						$SIS_data .= ",''";
 					}
 					$SIS_data .= ",'1'";                                                    //Creacion Satisfactoria
 					$SIS_data .= ",'Creacion del documento'";                               //Observacion
 					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-					
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_servicios_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos
 					unset($_SESSION['servicios_ing_basicos']);
@@ -1321,7 +1319,7 @@ require_once '0_validate_user_1.php';
 				}
 
 				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos!=''){ 
+				if(isset($idDocumentos) && $idDocumentos!=''){
 					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1339,7 +1337,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idCliente) && $idCliente!=''){ 
+				if(isset($idCliente) && $idCliente!=''){
 					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1451,7 +1449,7 @@ require_once '0_validate_user_1.php';
 				}
 
 				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos!=''){ 
+				if(isset($idDocumentos) && $idDocumentos!=''){
 					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1469,7 +1467,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idCliente) && $idCliente!=''){ 
+				if(isset($idCliente) && $idCliente!=''){
 					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1486,8 +1484,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['servicios_egr_basicos']['Vendedor'] = '';
 				}
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 
@@ -1507,7 +1504,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_egr_basicos']['CentroCosto']   = 'Sin Centro de Costo Asignado';
 
 				/****************************************************/
-				if(isset($idCentroCosto) && $idCentroCosto!=''){ 
+				if(isset($idCentroCosto) && $idCentroCosto!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1515,7 +1512,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_basicos']['idCentroCosto'] = $idCentroCosto;
 				}
 				/****************************************************/
-				if(isset($idLevel_1) && $idLevel_1!=''){ 
+				if(isset($idLevel_1) && $idLevel_1!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1523,7 +1520,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_basicos']['idLevel_1']    = $idLevel_1;
 				}
 				/****************************************************/
-				if(isset($idLevel_2) && $idLevel_2!=''){ 
+				if(isset($idLevel_2) && $idLevel_2!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1531,7 +1528,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_basicos']['idLevel_2']    = $idLevel_2;
 				}
 				/****************************************************/
-				if(isset($idLevel_3) && $idLevel_3!=''){ 
+				if(isset($idLevel_3) && $idLevel_3!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1539,7 +1536,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_basicos']['idLevel_3']    = $idLevel_3;
 				}
 				/****************************************************/
-				if(isset($idLevel_4) && $idLevel_4!=''){ 
+				if(isset($idLevel_4) && $idLevel_4!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1547,7 +1544,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_basicos']['idLevel_4']    = $idLevel_4;
 				}
 				/****************************************************/
-				if(isset($idLevel_5) && $idLevel_5!=''){ 
+				if(isset($idLevel_5) && $idLevel_5!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1614,7 +1611,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				$_SESSION['servicios_egr_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
 
 				header( 'Location: '.$location.'&view=true' );
@@ -1653,9 +1650,9 @@ require_once '0_validate_user_1.php';
 			if(empty($valor)){  $error['valor']  = 'error/No ha ingresado una fecha de vencimiento';}
 
 			if(empty($error)){
-				
+
 				$_SESSION['servicios_egr_basicos']['Pago_fecha'] = $valor;
-			
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -1668,9 +1665,9 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			if(empty($error)){
-				
+
 				$_SESSION['servicios_egr_basicos']['Pago_fecha'] = '0000-00-00';
-			
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -1704,8 +1701,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_egr_productos'][$idServicio]['idFrecuencia']  = $idFrecuencia;
 				$_SESSION['servicios_egr_productos'][$idServicio]['Servicio']      = $rowServicio['Nombre'];
 				$_SESSION['servicios_egr_productos'][$idServicio]['Frecuencia']    = $rowFrecuencia['Nombre'];
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -1733,8 +1729,8 @@ require_once '0_validate_user_1.php';
 				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia = "'.$idFrecuencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Borro el producto
-				unset($_SESSION['servicios_egr_productos'][$oldItemID]); 
-			
+				unset($_SESSION['servicios_egr_productos'][$oldItemID]);
+
 				//creo el producto
 				$_SESSION['servicios_egr_productos'][$idServicio]['idServicio']    = $idServicio;
 				$_SESSION['servicios_egr_productos'][$idServicio]['Cantidad_eg']   = $Cantidad_eg;
@@ -1887,7 +1883,7 @@ require_once '0_validate_user_1.php';
 			}
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				$_SESSION['servicios_egr_descuentos'][$idInterno]['idDescuento']  = $idInterno;
 				$_SESSION['servicios_egr_descuentos'][$idInterno]['Nombre']       = $Nombre;
 				$_SESSION['servicios_egr_descuentos'][$idInterno]['vTotal']       = $vTotal;
@@ -1932,7 +1928,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$n_data1 = 0;
 			$n_data2 = 0;
-					
+
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['servicios_egr_basicos'])){
@@ -1958,7 +1954,7 @@ require_once '0_validate_user_1.php';
 						$error['Pago_fecha']  = 'error/No ha seleccionado un impuesto para la factura';
 					}
 				}
-					
+
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al documento';
 			}
@@ -2183,19 +2179,19 @@ require_once '0_validate_user_1.php';
 					/*********************************************************************/
 					//Se guarda en historial la accion
 					if(isset($ultimo_id) && $ultimo_id!=''){           $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['servicios_egr_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_basicos']['Creacion_fecha']!=''){  
-						$SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['Creacion_fecha']."'";  
+					if(isset($_SESSION['servicios_egr_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_basicos']['Creacion_fecha']!=''){
+						$SIS_data .= ",'".$_SESSION['servicios_egr_basicos']['Creacion_fecha']."'";
 					}else{
 						$SIS_data .= ",''";
 					}
 					$SIS_data .= ",'1'";                                                    //Creacion Satisfactoria
 					$SIS_data .= ",'Creacion del documento'";                               //Observacion
 					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-					
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_servicios_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos
 					unset($_SESSION['servicios_egr_basicos']);
@@ -2289,7 +2285,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_ing_nd_basicos']['idLevel_3']     = 0;
 				$_SESSION['servicios_ing_nd_basicos']['idLevel_4']     = 0;
 				$_SESSION['servicios_ing_nd_basicos']['idLevel_5']     = 0;
-								
+
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
@@ -2302,7 +2298,7 @@ require_once '0_validate_user_1.php';
 				}
 
 				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos!=''){ 
+				if(isset($idDocumentos) && $idDocumentos!=''){
 					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -2320,7 +2316,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_nd_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idProveedor) && $idProveedor!=''){ 
+				if(isset($idProveedor) && $idProveedor!=''){
 					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -2328,8 +2324,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['servicios_ing_nd_basicos']['Proveedor'] = '';
 				}
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 
@@ -2421,7 +2416,7 @@ require_once '0_validate_user_1.php';
 				}
 
 				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos!=''){ 
+				if(isset($idDocumentos) && $idDocumentos!=''){
 					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -2439,7 +2434,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_nd_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idProveedor) && $idProveedor!=''){ 
+				if(isset($idProveedor) && $idProveedor!=''){
 					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -2447,8 +2442,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['servicios_ing_nd_basicos']['Proveedor'] = '';
 				}
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -2467,7 +2461,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_ing_nd_basicos']['CentroCosto']   = 'Sin Centro de Costo Asignado';
 
 				/****************************************************/
-				if(isset($idCentroCosto) && $idCentroCosto!=''){ 
+				if(isset($idCentroCosto) && $idCentroCosto!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -2475,7 +2469,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_nd_basicos']['idCentroCosto'] = $idCentroCosto;
 				}
 				/****************************************************/
-				if(isset($idLevel_1) && $idLevel_1!=''){ 
+				if(isset($idLevel_1) && $idLevel_1!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -2483,7 +2477,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_nd_basicos']['idLevel_1']    = $idLevel_1;
 				}
 				/****************************************************/
-				if(isset($idLevel_2) && $idLevel_2!=''){ 
+				if(isset($idLevel_2) && $idLevel_2!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -2491,7 +2485,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_nd_basicos']['idLevel_2']    = $idLevel_2;
 				}
 				/****************************************************/
-				if(isset($idLevel_3) && $idLevel_3!=''){ 
+				if(isset($idLevel_3) && $idLevel_3!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -2499,7 +2493,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_nd_basicos']['idLevel_3']    = $idLevel_3;
 				}
 				/****************************************************/
-				if(isset($idLevel_4) && $idLevel_4!=''){ 
+				if(isset($idLevel_4) && $idLevel_4!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -2507,7 +2501,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_nd_basicos']['idLevel_4']    = $idLevel_4;
 				}
 				/****************************************************/
-				if(isset($idLevel_5) && $idLevel_5!=''){ 
+				if(isset($idLevel_5) && $idLevel_5!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -2549,8 +2543,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_ing_nd_productos'][$idServicio]['idFrecuencia']  = $idFrecuencia;
 				$_SESSION['servicios_ing_nd_productos'][$idServicio]['Servicio']      = $rowServicio['Nombre'];
 				$_SESSION['servicios_ing_nd_productos'][$idServicio]['Frecuencia']    = $rowFrecuencia['Nombre'];
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -2579,8 +2572,8 @@ require_once '0_validate_user_1.php';
 
 				/*************************************************/
 				//Borro el producto
-				unset($_SESSION['servicios_ing_nd_productos'][$oldItemID]); 
-			
+				unset($_SESSION['servicios_ing_nd_productos'][$oldItemID]);
+
 				//creo el producto
 				$_SESSION['servicios_ing_nd_productos'][$idServicio]['idServicio']       = $idServicio;
 				$_SESSION['servicios_ing_nd_productos'][$idServicio]['Cantidad_ing']     = $Cantidad_ing;
@@ -2589,8 +2582,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_ing_nd_productos'][$idServicio]['idFrecuencia']     = $idFrecuencia;
 				$_SESSION['servicios_ing_nd_productos'][$idServicio]['Servicio']         = $rowServicio['Nombre'];
 				$_SESSION['servicios_ing_nd_productos'][$idServicio]['Frecuencia']       = $rowFrecuencia['Nombre'];
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -2627,7 +2619,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				$_SESSION['servicios_ing_nd_otros'][$idInterno]['idOtros']  = $idInterno;
 				$_SESSION['servicios_ing_nd_otros'][$idInterno]['Nombre']   = $Nombre;
 				$_SESSION['servicios_ing_nd_otros'][$idInterno]['vTotal']   = $vTotal;
@@ -2682,7 +2674,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				$_SESSION['servicios_ing_nd_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
 
 				header( 'Location: '.$location.'&view=true' );
@@ -2870,7 +2862,7 @@ require_once '0_validate_user_1.php';
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 			//Se guardan los datos basicos
 				if(isset($_SESSION['servicios_ing_nd_basicos']['idSistema']) && $_SESSION['servicios_ing_nd_basicos']['idSistema']!=''){     $SIS_data  = "'".$_SESSION['servicios_ing_nd_basicos']['idSistema']."'";      }else{$SIS_data  = "''";}
 				if(isset($_SESSION['servicios_ing_nd_basicos']['idUsuario']) && $_SESSION['servicios_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -2937,7 +2929,7 @@ require_once '0_validate_user_1.php';
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					/*********************************************************************/
-					//Se guardan los datos de los trabajadores	
+					//Se guardan los datos de los trabajadores
 					if(isset($_SESSION['servicios_ing_nd_productos'])){
 						foreach ($_SESSION['servicios_ing_nd_productos'] as $key => $producto){
 
@@ -3034,19 +3026,19 @@ require_once '0_validate_user_1.php';
 					/*********************************************************************/
 					//Se guarda en historial la accion
 					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']!=''){  
-						$SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']."'";  
+					if(isset($_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']!=''){
+						$SIS_data .= ",'".$_SESSION['servicios_ing_nd_basicos']['Creacion_fecha']."'";
 					}else{
 						$SIS_data .= ",''";
 					}
 					$SIS_data .= ",'1'";                                                   //Creacion Satisfactoria
 					$SIS_data .= ",'Creacion del documento'";                              //Observacion
 					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'"; //idUsuario
-					
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_servicios_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos
 					unset($_SESSION['servicios_ing_nd_basicos']);
@@ -3138,7 +3130,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_ing_nc_basicos']['idLevel_3']     = 0;
 				$_SESSION['servicios_ing_nc_basicos']['idLevel_4']     = 0;
 				$_SESSION['servicios_ing_nc_basicos']['idLevel_5']     = 0;
-								
+
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
@@ -3151,7 +3143,7 @@ require_once '0_validate_user_1.php';
 				}
 
 				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos!=''){ 
+				if(isset($idDocumentos) && $idDocumentos!=''){
 					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -3169,7 +3161,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_nc_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idProveedor) && $idProveedor!=''){ 
+				if(isset($idProveedor) && $idProveedor!=''){
 					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -3177,8 +3169,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['servicios_ing_nc_basicos']['Proveedor'] = '';
 				}
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 
@@ -3258,7 +3249,7 @@ require_once '0_validate_user_1.php';
 				}
 
 				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos!=''){ 
+				if(isset($idDocumentos) && $idDocumentos!=''){
 					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -3276,7 +3267,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_nc_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idProveedor) && $idProveedor!=''){ 
+				if(isset($idProveedor) && $idProveedor!=''){
 					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = "'.$idProveedor.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -3284,8 +3275,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['servicios_ing_nc_basicos']['Proveedor'] = '';
 				}
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 
@@ -3305,7 +3295,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_ing_nc_basicos']['CentroCosto']   = 'Sin Centro de Costo Asignado';
 
 				/****************************************************/
-				if(isset($idCentroCosto) && $idCentroCosto!=''){ 
+				if(isset($idCentroCosto) && $idCentroCosto!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -3313,7 +3303,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_nc_basicos']['idCentroCosto'] = $idCentroCosto;
 				}
 				/****************************************************/
-				if(isset($idLevel_1) && $idLevel_1!=''){ 
+				if(isset($idLevel_1) && $idLevel_1!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -3321,7 +3311,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_nc_basicos']['idLevel_1']    = $idLevel_1;
 				}
 				/****************************************************/
-				if(isset($idLevel_2) && $idLevel_2!=''){ 
+				if(isset($idLevel_2) && $idLevel_2!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -3329,7 +3319,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_nc_basicos']['idLevel_2']    = $idLevel_2;
 				}
 				/****************************************************/
-				if(isset($idLevel_3) && $idLevel_3!=''){ 
+				if(isset($idLevel_3) && $idLevel_3!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -3337,7 +3327,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_nc_basicos']['idLevel_3']    = $idLevel_3;
 				}
 				/****************************************************/
-				if(isset($idLevel_4) && $idLevel_4!=''){ 
+				if(isset($idLevel_4) && $idLevel_4!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -3345,7 +3335,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_ing_nc_basicos']['idLevel_4']    = $idLevel_4;
 				}
 				/****************************************************/
-				if(isset($idLevel_5) && $idLevel_5!=''){ 
+				if(isset($idLevel_5) && $idLevel_5!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -3387,8 +3377,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_ing_nc_productos'][$idServicio]['idFrecuencia']  = $idFrecuencia;
 				$_SESSION['servicios_ing_nc_productos'][$idServicio]['Servicio']      = $rowServicio['Nombre'];
 				$_SESSION['servicios_ing_nc_productos'][$idServicio]['Frecuencia']    = $rowFrecuencia['Nombre'];
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -3416,8 +3405,8 @@ require_once '0_validate_user_1.php';
 				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia = "'.$idFrecuencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Borro el producto
-				unset($_SESSION['servicios_ing_nc_productos'][$oldItemID]); 
-			
+				unset($_SESSION['servicios_ing_nc_productos'][$oldItemID]);
+
 				//creo el producto
 				$_SESSION['servicios_ing_nc_productos'][$idServicio]['idServicio']    = $idServicio;
 				$_SESSION['servicios_ing_nc_productos'][$idServicio]['Cantidad_eg']   = $Cantidad_eg;
@@ -3464,7 +3453,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				$_SESSION['servicios_ing_nc_otros'][$idInterno]['idOtros']  = $idInterno;
 				$_SESSION['servicios_ing_nc_otros'][$idInterno]['Nombre']   = $Nombre;
 				$_SESSION['servicios_ing_nc_otros'][$idInterno]['vTotal']   = $vTotal;
@@ -3519,7 +3508,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				$_SESSION['servicios_ing_nc_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
 
 				header( 'Location: '.$location.'&view=true' );
@@ -3662,7 +3651,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$n_data1 = 0;
 			$n_data2 = 0;
-					
+
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['servicios_ing_nc_basicos'])){
@@ -3858,19 +3847,19 @@ require_once '0_validate_user_1.php';
 					/*********************************************************************/
 					//Se guarda en historial la accion
 					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']!=''){  
-						$SIS_data .= ",'".$_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']."'";  
+					if(isset($_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']!=''){
+						$SIS_data .= ",'".$_SESSION['servicios_ing_nc_basicos']['Creacion_fecha']."'";
 					}else{
 						$SIS_data .= ",''";
 					}
 					$SIS_data .= ",'1'";                                                    //Creacion Satisfactoria
 					$SIS_data .= ",'Creacion del documento'";                               //Observacion
 					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-					
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_servicios_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos
 					unset($_SESSION['servicios_ing_nc_basicos']);
@@ -3879,7 +3868,7 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['servicios_ing_nc_impuestos']);
 					unset($_SESSION['servicios_ing_nc_archivos']);
 					unset($_SESSION['servicios_ing_nc_otros']);
-				
+
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
@@ -3962,7 +3951,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_egr_nd_basicos']['idLevel_3']     = 0;
 				$_SESSION['servicios_egr_nd_basicos']['idLevel_4']     = 0;
 				$_SESSION['servicios_egr_nd_basicos']['idLevel_5']     = 0;
-								
+
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
@@ -3975,7 +3964,7 @@ require_once '0_validate_user_1.php';
 				}
 
 				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos!=''){ 
+				if(isset($idDocumentos) && $idDocumentos!=''){
 					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -3993,7 +3982,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_nd_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idCliente) && $idCliente!=''){ 
+				if(isset($idCliente) && $idCliente!=''){
 					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -4093,7 +4082,7 @@ require_once '0_validate_user_1.php';
 				}
 
 				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos!=''){ 
+				if(isset($idDocumentos) && $idDocumentos!=''){
 					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -4111,7 +4100,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_nd_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idCliente) && $idCliente!=''){ 
+				if(isset($idCliente) && $idCliente!=''){
 					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -4119,8 +4108,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['servicios_egr_nd_basicos']['Cliente'] = '';
 				}
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -4139,7 +4127,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_egr_nd_basicos']['CentroCosto']   = 'Sin Centro de Costo Asignado';
 
 				/****************************************************/
-				if(isset($idCentroCosto) && $idCentroCosto!=''){ 
+				if(isset($idCentroCosto) && $idCentroCosto!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -4147,7 +4135,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_nd_basicos']['idCentroCosto'] = $idCentroCosto;
 				}
 				/****************************************************/
-				if(isset($idLevel_1) && $idLevel_1!=''){ 
+				if(isset($idLevel_1) && $idLevel_1!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -4155,7 +4143,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_nd_basicos']['idLevel_1']    = $idLevel_1;
 				}
 				/****************************************************/
-				if(isset($idLevel_2) && $idLevel_2!=''){ 
+				if(isset($idLevel_2) && $idLevel_2!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -4163,7 +4151,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_nd_basicos']['idLevel_2']    = $idLevel_2;
 				}
 				/****************************************************/
-				if(isset($idLevel_3) && $idLevel_3!=''){ 
+				if(isset($idLevel_3) && $idLevel_3!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -4171,7 +4159,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_nd_basicos']['idLevel_3']    = $idLevel_3;
 				}
 				/****************************************************/
-				if(isset($idLevel_4) && $idLevel_4!=''){ 
+				if(isset($idLevel_4) && $idLevel_4!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -4179,7 +4167,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_nd_basicos']['idLevel_4']    = $idLevel_4;
 				}
 				/****************************************************/
-				if(isset($idLevel_5) && $idLevel_5!=''){ 
+				if(isset($idLevel_5) && $idLevel_5!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -4206,7 +4194,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-	
+
 				// Se traen los datos del producto
 				$rowServicio = db_select_data (false, 'Nombre', 'servicios_listado', '', 'idServicio='.$idServicio, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -4221,8 +4209,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_egr_nd_productos'][$idServicio]['idFrecuencia']  = $idFrecuencia;
 				$_SESSION['servicios_egr_nd_productos'][$idServicio]['Servicio']      = $rowServicio['Nombre'];
 				$_SESSION['servicios_egr_nd_productos'][$idServicio]['Frecuencia']    = $rowFrecuencia['Nombre'];
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -4250,8 +4237,8 @@ require_once '0_validate_user_1.php';
 				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia = "'.$idFrecuencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Borro el producto
-				unset($_SESSION['servicios_egr_nd_productos'][$oldItemID]); 
-			
+				unset($_SESSION['servicios_egr_nd_productos'][$oldItemID]);
+
 				//creo el producto
 				$_SESSION['servicios_egr_nd_productos'][$idServicio]['idServicio']       = $idServicio;
 				$_SESSION['servicios_egr_nd_productos'][$idServicio]['Cantidad_eg']      = $Cantidad_eg;
@@ -4260,8 +4247,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_egr_nd_productos'][$idServicio]['idFrecuencia']     = $idFrecuencia;
 				$_SESSION['servicios_egr_nd_productos'][$idServicio]['Servicio']         = $rowServicio['Nombre'];
 				$_SESSION['servicios_egr_nd_productos'][$idServicio]['Frecuencia']       = $rowFrecuencia['Nombre'];
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -4298,7 +4284,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				$_SESSION['servicios_egr_nd_otros'][$idInterno]['idOtros']  = $idInterno;
 				$_SESSION['servicios_egr_nd_otros'][$idInterno]['Nombre']   = $Nombre;
 				$_SESSION['servicios_egr_nd_otros'][$idInterno]['vTotal']   = $vTotal;
@@ -4353,7 +4339,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				$_SESSION['servicios_egr_nd_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
 
 				header( 'Location: '.$location.'&view=true' );
@@ -4541,7 +4527,7 @@ require_once '0_validate_user_1.php';
 			/*********************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 			//Se guardan los datos basicos
 				if(isset($_SESSION['servicios_egr_nd_basicos']['idSistema']) && $_SESSION['servicios_egr_nd_basicos']['idSistema']!=''){     $SIS_data  = "'".$_SESSION['servicios_egr_nd_basicos']['idSistema']."'";       }else{$SIS_data  = "''";}
 				if(isset($_SESSION['servicios_egr_nd_basicos']['idUsuario']) && $_SESSION['servicios_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['idUsuario']."'";      }else{$SIS_data .= ",''";}
@@ -4608,7 +4594,7 @@ require_once '0_validate_user_1.php';
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					/*********************************************************************/
-					//Se guardan los datos de los trabajadores	
+					//Se guardan los datos de los trabajadores
 					if(isset($_SESSION['servicios_egr_nd_productos'])){
 						foreach ($_SESSION['servicios_egr_nd_productos'] as $key => $producto){
 
@@ -4705,19 +4691,19 @@ require_once '0_validate_user_1.php';
 					/*********************************************************************/
 					//Se guarda en historial la accion
 					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']!=''){  
-						$SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']."'";  
+					if(isset($_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']!=''){
+						$SIS_data .= ",'".$_SESSION['servicios_egr_nd_basicos']['Creacion_fecha']."'";
 					}else{
 						$SIS_data .= ",''";
 					}
 					$SIS_data .= ",'1'";                                                   //Creacion Satisfactoria
 					$SIS_data .= ",'Creacion del documento'";                              //Observacion
 					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'"; //idUsuario
-					
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_servicios_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos
 					unset($_SESSION['servicios_egr_nd_basicos']);
@@ -4809,7 +4795,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_egr_nc_basicos']['idLevel_3']     = 0;
 				$_SESSION['servicios_egr_nc_basicos']['idLevel_4']     = 0;
 				$_SESSION['servicios_egr_nc_basicos']['idLevel_5']     = 0;
-								
+
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
 					/****************************************************/
@@ -4822,7 +4808,7 @@ require_once '0_validate_user_1.php';
 				}
 
 				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos!=''){ 
+				if(isset($idDocumentos) && $idDocumentos!=''){
 					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -4840,7 +4826,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_nc_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idCliente) && $idCliente!=''){ 
+				if(isset($idCliente) && $idCliente!=''){
 					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -4929,7 +4915,7 @@ require_once '0_validate_user_1.php';
 				}
 
 				/********************************************************************************/
-				if(isset($idDocumentos) && $idDocumentos!=''){ 
+				if(isset($idDocumentos) && $idDocumentos!=''){
 					// consulto los datos
 					$rowDocumento = db_select_data (false, 'Nombre', 'core_documentos_mercantiles', '', 'idDocumentos = "'.$idDocumentos.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -4947,7 +4933,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_nc_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idCliente) && $idCliente!=''){ 
+				if(isset($idCliente) && $idCliente!=''){
 					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -4975,7 +4961,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_egr_nc_basicos']['CentroCosto']   = 'Sin Centro de Costo Asignado';
 
 				/****************************************************/
-				if(isset($idCentroCosto) && $idCentroCosto!=''){ 
+				if(isset($idCentroCosto) && $idCentroCosto!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado', '', 'idCentroCosto = "'.$idCentroCosto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -4983,7 +4969,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_nc_basicos']['idCentroCosto'] = $idCentroCosto;
 				}
 				/****************************************************/
-				if(isset($idLevel_1) && $idLevel_1!=''){ 
+				if(isset($idLevel_1) && $idLevel_1!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_1', '', 'idLevel_1 = "'.$idLevel_1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -4991,7 +4977,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_nc_basicos']['idLevel_1']    = $idLevel_1;
 				}
 				/****************************************************/
-				if(isset($idLevel_2) && $idLevel_2!=''){ 
+				if(isset($idLevel_2) && $idLevel_2!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_2', '', 'idLevel_2 = "'.$idLevel_2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -4999,7 +4985,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_nc_basicos']['idLevel_2']    = $idLevel_2;
 				}
 				/****************************************************/
-				if(isset($idLevel_3) && $idLevel_3!=''){ 
+				if(isset($idLevel_3) && $idLevel_3!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_3', '', 'idLevel_3 = "'.$idLevel_3.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -5007,7 +4993,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_nc_basicos']['idLevel_3']    = $idLevel_3;
 				}
 				/****************************************************/
-				if(isset($idLevel_4) && $idLevel_4!=''){ 
+				if(isset($idLevel_4) && $idLevel_4!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_4', '', 'idLevel_4 = "'.$idLevel_4.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -5015,7 +5001,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['servicios_egr_nc_basicos']['idLevel_4']    = $idLevel_4;
 				}
 				/****************************************************/
-				if(isset($idLevel_5) && $idLevel_5!=''){ 
+				if(isset($idLevel_5) && $idLevel_5!=''){
 					// consulto los datos
 					$rowCentro = db_select_data (false, 'Nombre', 'centrocosto_listado_level_5', '', 'idLevel_5 = "'.$idLevel_5.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -5057,8 +5043,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['servicios_egr_nc_productos'][$idServicio]['idFrecuencia']  = $idFrecuencia;
 				$_SESSION['servicios_egr_nc_productos'][$idServicio]['Servicio']      = $rowServicio['Nombre'];
 				$_SESSION['servicios_egr_nc_productos'][$idServicio]['Frecuencia']    = $rowFrecuencia['Nombre'];
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -5086,8 +5071,8 @@ require_once '0_validate_user_1.php';
 				$rowFrecuencia = db_select_data (false, 'Nombre', 'core_tiempo_frecuencia', '', 'idFrecuencia = "'.$idFrecuencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Borro el producto
-				unset($_SESSION['servicios_egr_nc_productos'][$oldItemID]); 
-			
+				unset($_SESSION['servicios_egr_nc_productos'][$oldItemID]);
+
 				//creo el producto
 				$_SESSION['servicios_egr_nc_productos'][$idServicio]['idServicio']    = $idServicio;
 				$_SESSION['servicios_egr_nc_productos'][$idServicio]['Cantidad_ing']  = $Cantidad_ing;
@@ -5134,7 +5119,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				$_SESSION['servicios_egr_nc_otros'][$idInterno]['idOtros']  = $idInterno;
 				$_SESSION['servicios_egr_nc_otros'][$idInterno]['Nombre']   = $Nombre;
 				$_SESSION['servicios_egr_nc_otros'][$idInterno]['vTotal']   = $vTotal;
@@ -5189,7 +5174,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				$_SESSION['servicios_egr_nc_impuestos'][$idImpuesto]['idImpuesto'] = $idImpuesto;
 
 				header( 'Location: '.$location.'&view=true' );
@@ -5332,7 +5317,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$n_data1 = 0;
 			$n_data2 = 0;
-					
+
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['servicios_egr_nc_basicos'])){
@@ -5528,19 +5513,19 @@ require_once '0_validate_user_1.php';
 					/*********************************************************************/
 					//Se guarda en historial la accion
 					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']!=''){  
-						$SIS_data .= ",'".$_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']."'";  
+					if(isset($_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']!=''){
+						$SIS_data .= ",'".$_SESSION['servicios_egr_nc_basicos']['Creacion_fecha']."'";
 					}else{
 						$SIS_data .= ",''";
 					}
 					$SIS_data .= ",'1'";                                                    //Creacion Satisfactoria
 					$SIS_data .= ",'Creacion del documento'";                               //Observacion
 					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-					
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_servicios_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos
 					unset($_SESSION['servicios_egr_nc_basicos']);
@@ -5549,7 +5534,7 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['servicios_egr_nc_impuestos']);
 					unset($_SESSION['servicios_egr_nc_archivos']);
 					unset($_SESSION['servicios_egr_nc_otros']);
-				
+
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}

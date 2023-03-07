@@ -435,7 +435,7 @@ foreach ($arrPermisos as $prod) {
 
 					//si hay items se muestra todo
 					if($x_con!=0){
-						
+
 						$Form_Inputs->form_tittle(3, $grupo['Nombre']);
 						
 						for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) {

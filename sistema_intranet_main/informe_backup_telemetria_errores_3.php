@@ -122,7 +122,7 @@ foreach ($arrUnimed as $sen) {
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrErrores as $error) {  
+					<?php foreach ($arrErrores as $error) {
 						//Guardo la unidad de medida
 						$unimed = ' '.$arrFinalUnimed[$error['SensoresUniMed_'.$error['Sensor']]];
 						?>

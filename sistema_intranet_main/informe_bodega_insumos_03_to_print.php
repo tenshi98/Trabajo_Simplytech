@@ -73,10 +73,10 @@ $my_html ='
 						</thead>
 						<tbody>';
 
-							foreach ($arrProductos as $productos) { 
+							foreach ($arrProductos as $productos) {
 							$stock_actual = $productos['stock_entrada'] - $productos['stock_salida'];
 							if ($productos['StockLimite']>$stock_actual){$delta = 'destaca';}else{$delta = '';}
-							
+
 							$my_html .='<tr class="'.$delta.'">
 											<td>'.$productos['NombreProd'].'</td>
 											<td width="160">'.Cantidades_decimales_justos($productos['StockLimite']).' '.$productos['UnidadMedida'].'</td>

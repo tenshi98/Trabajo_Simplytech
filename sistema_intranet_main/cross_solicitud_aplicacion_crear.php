@@ -261,7 +261,7 @@ if(isset($_SESSION['sol_apli_basicos']['idProducto'])&&$_SESSION['sol_apli_basic
 				if(isset($VelViento)){      $x4  = $VelViento;     }else{$x4  = Cantidades_decimales_justos($_SESSION['sol_apli_cuarteles'][$_GET['cuartel_id']]['VelViento']);}
 				if(isset($TempMin)){        $x5  = $TempMin;       }else{$x5  = Cantidades_decimales_justos($_SESSION['sol_apli_cuarteles'][$_GET['cuartel_id']]['TempMin']);}
 				if(isset($TempMax)){        $x6  = $TempMax;       }else{$x6  = Cantidades_decimales_justos($_SESSION['sol_apli_cuarteles'][$_GET['cuartel_id']]['TempMax']);}*/
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Identificación cuartel');
@@ -274,7 +274,7 @@ if(isset($_SESSION['sol_apli_basicos']['idProducto'])&&$_SESSION['sol_apli_basic
 				$Form_Inputs->form_input_number_spinner('Velocidad Viento Km/hr','VelViento', $x4, 0, 500, '0.001', 3, 2);
 				$Form_Inputs->form_input_number_spinner('Temperatura minima','TempMin', $x5, -20, 500, '0.01', 2, 2);
 				$Form_Inputs->form_input_number_spinner('Temperatura maxima','TempMax', $x6, -20, 500, '0.01', 2, 2);*/
-				
+
 				$Form_Inputs->form_input_hidden('idInterno', $_GET['cuartel_id'], 2);
 
 				?>
@@ -352,7 +352,7 @@ array_push( $arrTipo,$row );
 					<?php
 					foreach ($arrTipo as $tipo) {
 						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
-						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 					}
 					?>
 					//verifico el cambio
@@ -451,7 +451,7 @@ array_push( $arrTipo,$row );
 					<?php
 					foreach ($arrTipo as $tipo) {
 						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
-						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 					}
 					?>
 					

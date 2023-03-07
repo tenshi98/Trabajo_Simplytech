@@ -42,13 +42,13 @@ require_once '0_validate_user_1.php';
 			case 'Link':          if(empty($Link)){         $error['Link']         = 'error/No ha ingresado el enlace';}break;
 			case 'idNewTab':      if(empty($idNewTab)){     $error['idNewTab']     = 'error/No ha seleccionado la opcion de nuevo tab';}break;
 			case 'idPopup':       if(empty($idPopup)){      $error['idPopup']      = 'error/No ha seleccionado la opcion de popup';}break;
-				
+
 		}
 	}
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){$Nombre = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){ $Nombre = EstandarizarInput($Nombre);}
 	if(isset($Link) && $Link!=''){     $Link   = EstandarizarInput($Link);}
 
 /*******************************************************************************************************************/
@@ -89,9 +89,9 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idSitio) && $idSitio!=''){          $SIS_data  = "'".$idSitio."'";        }else{$SIS_data  = "''";}
-				if(isset($idEstado) && $idEstado!=''){       $SIS_data .= ",'".$idEstado."'";      }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",'".$idEstado."'";      }else{$SIS_data .= ",''";}
 				if(isset($idPosicion) && $idPosicion!=''){    $SIS_data .= ",'".$idPosicion."'";    }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
 				if(isset($Link) && $Link!=''){                $SIS_data .= ",'".$Link."'";          }else{$SIS_data .= ",''";}
 				if(isset($idNewTab) && $idNewTab!=''){        $SIS_data .= ",'".$idNewTab."'";      }else{$SIS_data .= ",''";}
 				if(isset($idPopup) && $idPopup!=''){          $SIS_data .= ",'".$idPopup."'";       }else{$SIS_data .= ",''";}
@@ -136,13 +136,13 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idMenu='".$idMenu."'";
 				if(isset($idSitio) && $idSitio!=''){          $SIS_data .= ",idSitio='".$idSitio."'";}
-				if(isset($idEstado) && $idEstado!=''){       $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idPosicion) && $idPosicion!=''){    $SIS_data .= ",idPosicion='".$idPosicion."'";}
-				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Link) && $Link!=''){                $SIS_data .= ",Link='".$Link."'";}
 				if(isset($idNewTab) && $idNewTab!=''){        $SIS_data .= ",idNewTab='".$idNewTab."'";}
 				if(isset($idPopup) && $idPopup!=''){          $SIS_data .= ",idPopup='".$idPopup."'";}
-					
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'sitios_listado_menu', 'idMenu = "'.$idMenu.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -202,11 +202,9 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
 
-		
 /*******************************************************************************************************************/
 	}
 

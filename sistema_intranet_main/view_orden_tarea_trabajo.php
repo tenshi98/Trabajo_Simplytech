@@ -360,7 +360,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 					/**********************************************************************************/
 					if($arrTarea!=false && !empty($arrTarea) && $arrTarea!='') { ?>
 						<tr class="item-row fact_tittle"><td colspan="6">Trabajos <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'Programados';}else{echo 'Ejecutados';} ?></td></tr>
-						<?php foreach ($arrTarea as $tarea) {  
+						<?php foreach ($arrTarea as $tarea) {
 							$s_tarea = $tarea['LicitacionLVL_1'];
 							if(isset($tarea['LicitacionLVL_2'])&&$tarea['LicitacionLVL_2']!=''){$s_tarea .= ' - '.$tarea['LicitacionLVL_2'];}
 							if(isset($tarea['LicitacionLVL_3'])&&$tarea['LicitacionLVL_3']!=''){$s_tarea .= ' - '.$tarea['LicitacionLVL_3'];}
@@ -398,7 +398,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 								</td>
 							</tr>
 
-							<?php if($arrArchivos!=false && !empty($arrArchivos) && $arrArchivos!=''){ 
+							<?php if($arrArchivos!=false && !empty($arrArchivos) && $arrArchivos!=''){
 								$zxcv = 0;
 								foreach ($arrArchivos as $key => $arch) {
 									if(isset($arch['idTrabajoOT'])&&$arch['idTrabajoOT']==$tarea['idTrabajoOT']){

@@ -77,10 +77,10 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idSistema) && $idSistema!=''){           $SIS_data  = "'".$idSistema."'";       }else{$SIS_data  = "''";}
-				if(isset($idUsuario) && $idUsuario!=''){          $SIS_data .= ",'".$idUsuario."'";      }else{$SIS_data .= ",''";}
-				if(isset($Fecha) && $Fecha!=''){ $SIS_data .= ",'".$Fecha."'";         }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",'".$idUsuario."'";      }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha!=''){                   $SIS_data .= ",'".$Fecha."'";          }else{$SIS_data .= ",''";}
 				if(isset($Hora) && $Hora!=''){                     $SIS_data .= ",'".$Hora."'";           }else{$SIS_data .= ",''";}
-				if(isset($idTipo) && $idTipo!=''){                $SIS_data .= ",'".$idTipo."'";         }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){                 $SIS_data .= ",'".$idTipo."'";         }else{$SIS_data .= ",''";}
 				if(isset($De) && $De!=''){                         $SIS_data .= ",'".$De."'";             }else{$SIS_data .= ",''";}
 				if(isset($Para) && $Para!=''){                     $SIS_data .= ",'".$Para."'";           }else{$SIS_data .= ",''";}
 				if(isset($Observaciones) && $Observaciones!=''){   $SIS_data .= ",'".$Observaciones."'";  }else{$SIS_data .= ",''";}
@@ -110,10 +110,10 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idRecepcion='".$idRecepcion."'";
 				if(isset($idSistema) && $idSistema!=''){          $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+				if(isset($idUsuario) && $idUsuario!=''){          $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($Fecha) && $Fecha!=''){                  $SIS_data .= ",Fecha='".$Fecha."'";}
 				if(isset($Hora) && $Hora!=''){                    $SIS_data .= ",Hora='".$Hora."'";}
-				if(isset($idTipo) && $idTipo!=''){               $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($idTipo) && $idTipo!=''){                $SIS_data .= ",idTipo='".$idTipo."'";}
 				if(isset($De) && $De!=''){                        $SIS_data .= ",De='".$De."'";}
 				if(isset($Para) && $Para!=''){                    $SIS_data .= ",Para='".$Para."'";}
 				if(isset($Observaciones) && $Observaciones!=''){  $SIS_data .= ",Observaciones='".$Observaciones."'";}

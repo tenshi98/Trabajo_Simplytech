@@ -66,7 +66,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idTrabajador) && $idTrabajador!=''){       $SIS_data  = "'".$idTrabajador."'";     }else{$SIS_data  = "''";}
+				if(isset($idTrabajador) && $idTrabajador!=''){        $SIS_data  = "'".$idTrabajador."'";     }else{$SIS_data  = "''";}
 				if(isset($idDescuentoFijo) && $idDescuentoFijo!=''){  $SIS_data .= ",'".$idDescuentoFijo."'"; }else{$SIS_data .= ",''";}
 				if(isset($idAFP) && $idAFP!=''){                      $SIS_data .= ",'".$idAFP."'";           }else{$SIS_data .= ",''";}
 				if(isset($Monto) && $Monto!=''){                      $SIS_data .= ",'".$Monto."'";           }else{$SIS_data .= ",''";}
@@ -107,7 +107,7 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				$SIS_data = "idDescuento='".$idDescuento."'";
-				if(isset($idTrabajador) && $idTrabajador!=''){       $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
+				if(isset($idTrabajador) && $idTrabajador!=''){        $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
 				if(isset($idDescuentoFijo) && $idDescuentoFijo!=''){  $SIS_data .= ",idDescuentoFijo='".$idDescuentoFijo."'";}
 				if(isset($idAFP) && $idAFP!=''){                      $SIS_data .= ",idAFP='".$idAFP."'";}
 				if(isset($Monto) && $Monto!=''){                      $SIS_data .= ",Monto='".$Monto."'";}

@@ -44,7 +44,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){           $Nombre      = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){            $Nombre      = EstandarizarInput($Nombre);}
 	if(isset($Codigo) && $Codigo!=''){            $Codigo      = EstandarizarInput($Codigo);}
 	if(isset($Descripcion) && $Descripcion!=''){  $Descripcion = EstandarizarInput($Descripcion);}
 
@@ -81,9 +81,9 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($Nombre) && $Nombre!=''){           $SIS_data  = "'".$Nombre."'";         }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){            $SIS_data  = "'".$Nombre."'";         }else{$SIS_data  = "''";}
 				if(isset($Codigo) && $Codigo!=''){            $SIS_data .= ",'".$Codigo."'";        }else{$SIS_data .= ",''";}
-				if(isset($Descripcion) && $Descripcion!=''){  $SIS_data .= ",'".$Descripcion."'"; }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion!=''){  $SIS_data .= ",'".$Descripcion."'";   }else{$SIS_data .= ",''";}
 				if(isset($Peso) && $Peso!=''){                $SIS_data .= ",'".$Peso."'";          }else{$SIS_data .= ",''";}
 				if(isset($idSistema) && $idSistema!=''){      $SIS_data .= ",'".$idSistema."'";     }else{$SIS_data .= ",''";}
 
@@ -121,7 +121,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idTipo='".$idTipo."'";
-				if(isset($Nombre) && $Nombre!=''){          $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Codigo) && $Codigo!=''){           $SIS_data .= ",Codigo='".$Codigo."'";}
 				if(isset($Descripcion) && $Descripcion!=''){ $SIS_data .= ",Descripcion='".$Descripcion."'";}
 				if(isset($Peso) && $Peso!=''){               $SIS_data .= ",Peso='".$Peso."'";}

@@ -69,7 +69,7 @@
 			if(isset($rowDatos['DetConsProrateo'])&&$rowDatos['DetConsProrateo']!=''&&$rowDatos['DetConsProrateo']!=0){
 				$ndecim = 2;
 			}else{
-				$ndecim = 0;	
+				$ndecim = 0;
 			}
 			?>
 

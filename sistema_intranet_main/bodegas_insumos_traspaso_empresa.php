@@ -811,9 +811,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 								 $dbConn, 'form1');
 					 
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x7, 1);
-				
-				
-				
+
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
 

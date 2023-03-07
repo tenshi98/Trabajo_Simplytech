@@ -75,7 +75,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){          $Nombre      = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){           $Nombre      = EstandarizarInput($Nombre);}
 	if(isset($Resumen) && $Resumen!=''){         $Resumen     = EstandarizarInput($Resumen);}
 	if(isset($Unidades) && $Unidades!=''){       $Unidades    = EstandarizarInput($Unidades);}
 	if(isset($Objetivos) && $Objetivos!=''){     $Objetivos   = EstandarizarInput($Objetivos);}
@@ -123,8 +123,8 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idSistema) && $idSistema!=''){  $SIS_data  = "'".$idSistema."'";    }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre!=''){       $SIS_data .= ",'".$Nombre."'";      }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){   $SIS_data .= ",'".$idEstado."'";    }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){        $SIS_data .= ",'".$Nombre."'";      }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){    $SIS_data .= ",'".$idEstado."'";    }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema, Nombre,idEstado';
@@ -139,7 +139,7 @@ require_once '0_validate_user_1.php';
 						//Se crean las variables a guardar
 						$SIS_data  = "'".$ultimo_id."'";
 						$SIS_data .= ",'".$i."'";
-						$SIS_data .= ",''" ;
+						$SIS_data .= ",''";
 
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idElearning, N_Unidad, Nombre';
@@ -180,14 +180,14 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idElearning='".$idElearning."'";
 				if(isset($idSistema) && $idSistema!=''){     $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($Nombre) && $Nombre!=''){          $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Resumen) && $Resumen!=''){         $SIS_data .= ",Resumen='".$Resumen."'";}
 				if(isset($Imagen) && $Imagen!=''){           $SIS_data .= ",Imagen='".$Imagen."'";}
 				if(isset($LastUpdate) && $LastUpdate!=''){   $SIS_data .= ",LastUpdate='".$LastUpdate."'";}
 				if(isset($Objetivos) && $Objetivos!=''){     $SIS_data .= ",Objetivos='".$Objetivos."'";}
 				if(isset($Requisitos) && $Requisitos!=''){   $SIS_data .= ",Requisitos='".$Requisitos."'";}
 				if(isset($Descripcion) && $Descripcion!=''){ $SIS_data .= ",Descripcion='".$Descripcion."'";}
-				if(isset($idEstado) && $idEstado!=''){      $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idEstado) && $idEstado!=''){       $SIS_data .= ",idEstado='".$idEstado."'";}
 
 				/*******************************************************/
 				//se actualizan los datos
@@ -299,7 +299,7 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($idElearning) && $idElearning!=''){   $SIS_data  = "'".$idElearning."'";   }else{$SIS_data  = "''";}
 				if(isset($N_Unidad) && $N_Unidad!=''){         $SIS_data .= ",'".$N_Unidad."'";     }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){             $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
 				if(isset($Duracion) && $Duracion!=''){         $SIS_data .= ",'".$Duracion."'";     }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
@@ -340,7 +340,7 @@ require_once '0_validate_user_1.php';
 				$SIS_data = "idUnidad='".$idUnidad."'";
 				if(isset($idElearning) && $idElearning!=''){ $SIS_data .= ",idElearning='".$idElearning."'";}
 				if(isset($N_Unidad) && $N_Unidad!=''){       $SIS_data .= ",N_Unidad='".$N_Unidad."'";}
-				if(isset($Nombre) && $Nombre!=''){          $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Duracion) && $Duracion!=''){       $SIS_data .= ",Duracion='".$Duracion."'";}
 
 				/*******************************************************/
@@ -450,7 +450,7 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($idUnidad) && $idUnidad!=''){        $SIS_data  = "'".$idUnidad."'";      }else{$SIS_data  = "''";}
 				if(isset($idElearning) && $idElearning!=''){  $SIS_data .= ",'".$idElearning."'";  }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
 				if(isset($Contenido) && $Contenido!=''){      $SIS_data .= ",'".$Contenido."'";    }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
@@ -490,7 +490,7 @@ require_once '0_validate_user_1.php';
 				$SIS_data = "idContenido='".$idContenido."'";
 				if(isset($idUnidad) && $idUnidad!=''){        $SIS_data .= ",idUnidad='".$idUnidad."'";}
 				if(isset($idElearning) && $idElearning!=''){  $SIS_data .= ",idElearning='".$idElearning."'";}
-				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Contenido) && $Contenido!=''){      $SIS_data .= ",Contenido='".$Contenido."'";}
 
 				/*******************************************************/

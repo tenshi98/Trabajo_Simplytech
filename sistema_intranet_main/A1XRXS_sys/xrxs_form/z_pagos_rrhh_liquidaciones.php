@@ -87,14 +87,14 @@ require_once '0_validate_user_1.php';
 						$montoPactado  = valores_enteros($tipo['TotalAPagar']);
 						$ValorPagado   = valores_enteros($tipo['ValorPagado']);
 						$MontoPagado   = valores_enteros($tipo['ValorPagado']+$tipo['MontoPagado']);
-						
+
 						/*********************************************************************/
 						//se actualizala liquidacion
 						$SIS_data = "idFactTrab='".$idFactTrab."'";
-						if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuarioPago='".$idUsuario."'";}
+						if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuarioPago='".$idUsuario."'";}
 						if(isset($idDocPago) && $idDocPago!=''){       $SIS_data .= ",idDocPago='".$idDocPago."'";}
 						if(isset($N_DocPago) && $N_DocPago!=''){       $SIS_data .= ",N_DocPago='".$N_DocPago."'";}
-						if(isset($F_Pago) && $F_Pago!=''){  
+						if(isset($F_Pago) && $F_Pago!=''){
 							$SIS_data .= ",F_Pago='".$F_Pago."'";
 							$SIS_data .= ",F_Pago_dia='".fecha2NdiaMes($F_Pago)."'";
 							$SIS_data .= ",F_Pago_mes='".fecha2NMes($F_Pago)."'";
@@ -108,19 +108,19 @@ require_once '0_validate_user_1.php';
 						if(isset($MontoPagado) &&$MontoPagado!= ''){   $SIS_data .= ",MontoPagado='".$MontoPagado."'";}
 						//verifico el cierre
 						if($montoPactado<=$MontoPagado){
-							$SIS_data .= ",idEstado='2'" ;//cerrado
+							$SIS_data .= ",idEstado='2'";//cerrado
 						}else{
-							$SIS_data .= ",idEstado='1'" ;//abierto
+							$SIS_data .= ",idEstado='1'";//abierto
 						}
 						/*******************************************************/
 						//se actualizan los datos
 						$resultado = db_update_data (false, $SIS_data, 'rrhh_sueldos_facturacion_trabajadores', 'idFactTrab = "'.$idFactTrab.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 						/*********************************************************************/
 						//se inserta el pago
 						if(isset($idDocPago) && $idDocPago!=''){   $SIS_data  = "'".$idDocPago."'";   }else{ $SIS_data  = "''"; }
 						if(isset($N_DocPago) && $N_DocPago!=''){   $SIS_data .= ",'".$N_DocPago."'";  }else{ $SIS_data .= ",''"; }
-						if(isset($F_Pago) && $F_Pago!=''){  
+						if(isset($F_Pago) && $F_Pago!=''){
 							$SIS_data .= ",'".$F_Pago."'";
 							$SIS_data .= ",'".fecha2NdiaMes($F_Pago)."'";
 							$SIS_data .= ",'".fecha2NSemana($F_Pago)."'";
@@ -135,14 +135,14 @@ require_once '0_validate_user_1.php';
 						}
 						if(isset($ValorPagado) && $ValorPagado!=''){       $SIS_data .= ",'".$ValorPagado."'";    }else{ $SIS_data .= ",''"; }
 						if(isset($montoPactado) && $montoPactado!=''){     $SIS_data .= ",'".$montoPactado."'";   }else{ $SIS_data .= ",''"; }
-						if(isset($idUsuario) && $idUsuario!=''){          $SIS_data .= ",'".$idUsuario."'";      }else{ $SIS_data .= ",''"; }
+						if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",'".$idUsuario."'";      }else{ $SIS_data .= ",''"; }
 						if(isset($idSistema) && $idSistema!=''){           $SIS_data .= ",'".$idSistema."'";      }else{ $SIS_data .= ",''"; }
 						if(isset($idFactTrab) && $idFactTrab!=''){         $SIS_data .= ",'".$idFactTrab."'";     }else{ $SIS_data .= ",''"; }
 
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idDocPago,N_DocPago,F_Pago, F_Pago_dia,F_Pago_Semana,F_Pago_mes,F_Pago_ano,MontoPagado,montoPactado, idUsuario,idSistema,idFactTrab';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_rrhh_liquidaciones', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 					}
 				}
 
@@ -156,8 +156,7 @@ require_once '0_validate_user_1.php';
 			}
 
 		break;
-	
-	
+
 	}
 
 ?>

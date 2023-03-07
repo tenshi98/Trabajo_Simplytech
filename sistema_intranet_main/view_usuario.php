@@ -291,7 +291,7 @@ $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', 
 							}
 							echo '</ul></li>';
 							echo '</ul>';
-						
+
 						/***************************************************************/
 						if($arrTelemetria!=false && !empty($arrTelemetria) && $arrTelemetria!=''){
 							echo '<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Permisos a Equipos Telemetria</h2>';

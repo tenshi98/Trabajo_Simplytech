@@ -133,8 +133,7 @@ $Ubicacion = str_replace("'", '', $Ubicacion);
 	
 $Ubicacion = str_replace("Av.", 'Avenida', $Ubicacion);
 $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
-	
-	
+
 //Se traen las rutas
 $query = "SELECT Latitud, Longitud
 FROM `cross_predios_listado_zonas_ubicaciones`
@@ -230,7 +229,6 @@ array_push( $arrPuntos,$row );
 
 									document.getElementById("Latitud_fake").value = event.latLng.lat();
 									document.getElementById("Longitud_fake").value = event.latLng.lng();
-									
 
 								});
 								
@@ -291,7 +289,7 @@ array_push( $arrPuntos,$row );
 						  
 								geocoder.geocode( { address: '<?php echo $Ubicacion ?>'}, function(results, status) {
 									if (status == google.maps.GeocoderStatus.OK) {
-										
+
 										// marker position
 										myLatlng = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
 								
@@ -478,7 +476,7 @@ array_push( $arrZonas,$row );
 							var marker;
 							var geocoder = new google.maps.Geocoder();
 							var myLatlng = new google.maps.LatLng(-33.4372, -70.6506);
-								
+
 							/* ************************************************************************** */
 							function initialize() {
 								
@@ -506,12 +504,11 @@ array_push( $arrZonas,$row );
 
 									document.getElementById("Latitud_fake").value = event.latLng.lat();
 									document.getElementById("Longitud_fake").value = event.latLng.lng();
-									
 
 								});
 								
 								dibuja_zona();
-								
+
 							}
 							/* ************************************************************************** */
 							function dibuja_zona() {
@@ -523,7 +520,7 @@ array_push( $arrZonas,$row );
 								$Longitud_z      = 0;
 								$Latitud_z_prom  = 0;
 								$Longitud_z_prom = 0;
-								$zcounter        = 0; 
+								$zcounter        = 0;
 								//Se filtra por zona
 								filtrar($arrZonas, 'idZona');
 								//se recorre
@@ -615,7 +612,7 @@ array_push( $arrZonas,$row );
 								
 								geocoder.geocode( { address: '<?php echo $Ubicacion ?>'}, function(results, status) {
 									if (status == google.maps.GeocoderStatus.OK) {
-										
+
 										// marker position
 										myLatlng = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
 								

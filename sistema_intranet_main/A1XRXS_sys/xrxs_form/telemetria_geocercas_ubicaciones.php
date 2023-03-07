@@ -143,9 +143,6 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-				
-			
 
 		break;
 

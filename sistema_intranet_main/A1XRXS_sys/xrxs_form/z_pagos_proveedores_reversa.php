@@ -118,22 +118,22 @@ require_once '0_validate_user_1.php';
 				if(!isset($indice2) OR $indice2==''){
 					$error['idDocPago'] = 'error/No ha seleccionado un numero de documento';
 				}
-					
+
 				/*******************************************************************/
 				//Si no hay errores ejecuto el codigo
 				if(empty($error)){
-					
+
 					$NDocsubmit_filter1  = '';
 					$NDocsubmit_filter1 .= ' AND pagos_facturas_proveedores.idDocPago='.$indice1;
 					$NDocsubmit_filter1 .= ' AND pagos_facturas_proveedores.N_DocPago='.$indice2;
 
 					//Variable con el total del documento pagado
 					$Valor_Doc = 0;
-							
+
 					//consulto todos los documentos relacionados al proveedor
 					$SIS_query = '
-					pagos_facturas_proveedores.idPago, 
-					pagos_facturas_proveedores.idTipo, 
+					pagos_facturas_proveedores.idPago,
+					pagos_facturas_proveedores.idTipo,
 					pagos_facturas_proveedores.idFacturacion,
 					pagos_facturas_proveedores.idFacturacion AS idddd,
 					pagos_facturas_proveedores.MontoPagado,
@@ -147,21 +147,21 @@ require_once '0_validate_user_1.php';
 					LEFT JOIN `bodegas_productos_facturacion`  ON bodegas_productos_facturacion.idFacturacion    = pagos_facturas_proveedores.idFacturacion
 					LEFT JOIN `bodegas_servicios_facturacion`  ON bodegas_servicios_facturacion.idFacturacion    = pagos_facturas_proveedores.idFacturacion';
 					$SIS_where = '(bodegas_arriendos_facturacion.idTipo=1 '.$NDocsubmit_filter1.')
-					OR (bodegas_insumos_facturacion.idTipo=1 '.$NDocsubmit_filter1.')		
+					OR (bodegas_insumos_facturacion.idTipo=1 '.$NDocsubmit_filter1.')
 					OR (bodegas_productos_facturacion.idTipo=1 '.$NDocsubmit_filter1.')
 					OR (bodegas_servicios_facturacion.idTipo=1 '.$NDocsubmit_filter1.')
 					OR (bodegas_arriendos_facturacion.idTipo=10 '.$NDocsubmit_filter1.')
-					OR (bodegas_insumos_facturacion.idTipo=10 '.$NDocsubmit_filter1.')		
+					OR (bodegas_insumos_facturacion.idTipo=10 '.$NDocsubmit_filter1.')
 					OR (bodegas_productos_facturacion.idTipo=10 '.$NDocsubmit_filter1.')
 					OR (bodegas_servicios_facturacion.idTipo=10 '.$NDocsubmit_filter1.')';
 					$SIS_order = 'pagos_facturas_proveedores.idPago ASC';
 					$arrReversa = array();
 					$arrReversa = db_select_array (false, $SIS_query, 'pagos_facturas_proveedores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					/**********************************************************************/
 					if ($arrReversa!=false && !empty($arrReversa) && $arrReversa!='') {
 						foreach ($arrReversa as $tipo){
-							
+
 							switch ($tipo['idTipo']) {
 								/**********************************************************************/
 								//Factura Insumos
@@ -172,15 +172,15 @@ require_once '0_validate_user_1.php';
 									$Valor_Doc   = $Valor_Doc + $tipo['MontoPagado'];
 
 									//Actualizo el pago
-									$SIS_data  = "idUsuarioPago=''" ;
-									$SIS_data .= ",idDocPago=''" ;
-									$SIS_data .= ",N_DocPago=''" ;
-									$SIS_data .= ",F_Pago=''" ;
-									$SIS_data .= ",F_Pago_dia=''" ;
-									$SIS_data .= ",F_Pago_mes=''" ;
-									$SIS_data .= ",F_Pago_ano=''" ;
+									$SIS_data  = "idUsuarioPago=''";
+									$SIS_data .= ",idDocPago=''";
+									$SIS_data .= ",N_DocPago=''";
+									$SIS_data .= ",F_Pago=''";
+									$SIS_data .= ",F_Pago_dia=''";
+									$SIS_data .= ",F_Pago_mes=''";
+									$SIS_data .= ",F_Pago_ano=''";
 									$SIS_data .= ",MontoPagado='".$nuevoMonto."'";
-									$SIS_data .= ",idEstado='1'" ;
+									$SIS_data .= ",idEstado='1'";
 
 									/*******************************************************/
 									//se actualizan los datos
@@ -189,11 +189,11 @@ require_once '0_validate_user_1.php';
 									/*********************************************************************/
 									//Se guarda en historial la accion
 									if(isset($tipo['idFacturacion']) && $tipo['idFacturacion']!=''){    $SIS_data  = "'".$tipo['idFacturacion']."'";  }else{$SIS_data  = "''";}
-									$SIS_data .= ",'".fecha_actual()."'";         
+									$SIS_data .= ",'".fecha_actual()."'";
 									$SIS_data .= ",'1'";                                                    //Creacion Satisfactoria
 									$SIS_data .= ",'Se realiza reversa del pago'";                          //Observacion
 									$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -204,34 +204,33 @@ require_once '0_validate_user_1.php';
 
 									/**********************************************************************/
 									//Actualizo las notas de credito
-									$SIS_data  = "idFacturacionRelacionado=''" ;
-									$SIS_data .= ",idEstado='1'" ;
+									$SIS_data  = "idFacturacionRelacionado=''";
+									$SIS_data .= ",idEstado='1'";
 
 									/*******************************************************/
 									//se actualizan los datos
 									$resultado = db_update_data (false, $SIS_data, 'bodegas_insumos_facturacion', 'idFacturacionRelacionado = "'.$tipo['idFacturacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
-									
+
 									break;
 								/**********************************************************************/
 								//Factura Productos
 								case 2:
-									
+
 									//calculo el nuevo saldo
 									$nuevoMonto  = $tipo['MontoTotal_2'] - $tipo['MontoPagado'];
 									//sumo al total de la reversa
 									$Valor_Doc   = $Valor_Doc + $tipo['MontoPagado'];
 
 									//Actualizo el pago
-									$SIS_data  = "idUsuarioPago=''" ;
-									$SIS_data .= ",idDocPago=''" ;
-									$SIS_data .= ",N_DocPago=''" ;
-									$SIS_data .= ",F_Pago=''" ;
-									$SIS_data .= ",F_Pago_dia=''" ;
-									$SIS_data .= ",F_Pago_mes=''" ;
-									$SIS_data .= ",F_Pago_ano=''" ;
+									$SIS_data  = "idUsuarioPago=''";
+									$SIS_data .= ",idDocPago=''";
+									$SIS_data .= ",N_DocPago=''";
+									$SIS_data .= ",F_Pago=''";
+									$SIS_data .= ",F_Pago_dia=''";
+									$SIS_data .= ",F_Pago_mes=''";
+									$SIS_data .= ",F_Pago_ano=''";
 									$SIS_data .= ",MontoPagado='".$nuevoMonto."'";
-									$SIS_data .= ",idEstado='1'" ;
+									$SIS_data .= ",idEstado='1'";
 
 									/*******************************************************/
 									//se actualizan los datos
@@ -240,11 +239,11 @@ require_once '0_validate_user_1.php';
 									/*********************************************************************/
 									//Se guarda en historial la accion
 									if(isset($tipo['idFacturacion']) && $tipo['idFacturacion']!=''){    $SIS_data  = "'".$tipo['idFacturacion']."'";  }else{$SIS_data  = "''";}
-									$SIS_data .= ",'".fecha_actual()."'";         
+									$SIS_data .= ",'".fecha_actual()."'";
 									$SIS_data .= ",'1'";                                                    //Creacion Satisfactoria
 									$SIS_data .= ",'Se realiza reversa del pago'";                          //Observacion
 									$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -255,34 +254,33 @@ require_once '0_validate_user_1.php';
 
 									/**********************************************************************/
 									//Actualizo las notas de credito
-									$SIS_data  = "idFacturacionRelacionado=''" ;
-									$SIS_data .= ",idEstado='1'" ;
+									$SIS_data  = "idFacturacionRelacionado=''";
+									$SIS_data .= ",idEstado='1'";
 
 									/*******************************************************/
 									//se actualizan los datos
 									$resultado = db_update_data (false, $SIS_data, 'bodegas_productos_facturacion', 'idFacturacionRelacionado = "'.$tipo['idFacturacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
-												
+
 									break;
 								/**********************************************************************/
 								//Factura Servicios
 								case 3:
-									
+
 									//calculo el nuevo saldo
 									$nuevoMonto  = $tipo['MontoTotal_3'] - $tipo['MontoPagado'];
 									//sumo al total de la reversa
 									$Valor_Doc   = $Valor_Doc + $tipo['MontoPagado'];
 
 									//Actualizo el pago
-									$SIS_data  = "idUsuarioPago=''" ;
-									$SIS_data .= ",idDocPago=''" ;
-									$SIS_data .= ",N_DocPago=''" ;
-									$SIS_data .= ",F_Pago=''" ;
-									$SIS_data .= ",F_Pago_dia=''" ;
-									$SIS_data .= ",F_Pago_mes=''" ;
-									$SIS_data .= ",F_Pago_ano=''" ;
+									$SIS_data  = "idUsuarioPago=''";
+									$SIS_data .= ",idDocPago=''";
+									$SIS_data .= ",N_DocPago=''";
+									$SIS_data .= ",F_Pago=''";
+									$SIS_data .= ",F_Pago_dia=''";
+									$SIS_data .= ",F_Pago_mes=''";
+									$SIS_data .= ",F_Pago_ano=''";
 									$SIS_data .= ",MontoPagado='".$nuevoMonto."'";
-									$SIS_data .= ",idEstado='1'" ;
+									$SIS_data .= ",idEstado='1'";
 
 									/*******************************************************/
 									//se actualizan los datos
@@ -291,11 +289,11 @@ require_once '0_validate_user_1.php';
 									/*********************************************************************/
 									//Se guarda en historial la accion
 									if(isset($tipo['idFacturacion']) && $tipo['idFacturacion']!=''){    $SIS_data  = "'".$tipo['idFacturacion']."'";  }else{$SIS_data  = "''";}
-									$SIS_data .= ",'".fecha_actual()."'";         
+									$SIS_data .= ",'".fecha_actual()."'";
 									$SIS_data .= ",'1'";                                                    //Creacion Satisfactoria
 									$SIS_data .= ",'Se realiza reversa del pago'";                          //Observacion
 									$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_servicios_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -306,34 +304,33 @@ require_once '0_validate_user_1.php';
 
 									/**********************************************************************/
 									//Actualizo las notas de credito
-									$SIS_data  = "idFacturacionRelacionado=''" ;
-									$SIS_data .= ",idEstado='1'" ;
+									$SIS_data  = "idFacturacionRelacionado=''";
+									$SIS_data .= ",idEstado='1'";
 
 									/*******************************************************/
 									//se actualizan los datos
 									$resultado = db_update_data (false, $SIS_data, 'bodegas_servicios_facturacion', 'idFacturacionRelacionado = "'.$tipo['idFacturacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
-											
+
 									break;
 								/**********************************************************************/
 								//Factura Arriendos
 								case 4:
-									
+
 									//calculo el nuevo saldo
 									$nuevoMonto  = $tipo['MontoTotal_4'] - $tipo['MontoPagado'];
 									//sumo al total de la reversa
 									$Valor_Doc   = $Valor_Doc + $tipo['MontoPagado'];
 
 									//Actualizo el pago
-									$SIS_data  = "idUsuarioPago=''" ;
-									$SIS_data .= ",idDocPago=''" ;
-									$SIS_data .= ",N_DocPago=''" ;
-									$SIS_data .= ",F_Pago=''" ;
-									$SIS_data .= ",F_Pago_dia=''" ;
-									$SIS_data .= ",F_Pago_mes=''" ;
-									$SIS_data .= ",F_Pago_ano=''" ;
+									$SIS_data  = "idUsuarioPago=''";
+									$SIS_data .= ",idDocPago=''";
+									$SIS_data .= ",N_DocPago=''";
+									$SIS_data .= ",F_Pago=''";
+									$SIS_data .= ",F_Pago_dia=''";
+									$SIS_data .= ",F_Pago_mes=''";
+									$SIS_data .= ",F_Pago_ano=''";
 									$SIS_data .= ",MontoPagado='".$nuevoMonto."'";
-									$SIS_data .= ",idEstado='1'" ;
+									$SIS_data .= ",idEstado='1'";
 
 									/*******************************************************/
 									//se actualizan los datos
@@ -342,11 +339,11 @@ require_once '0_validate_user_1.php';
 									/*********************************************************************/
 									//Se guarda en historial la accion
 									if(isset($tipo['idFacturacion']) && $tipo['idFacturacion']!=''){    $SIS_data  = "'".$tipo['idFacturacion']."'";  }else{$SIS_data  = "''";}
-									$SIS_data .= ",'".fecha_actual()."'";         
+									$SIS_data .= ",'".fecha_actual()."'";
 									$SIS_data .= ",'1'";                                                    //Creacion Satisfactoria
 									$SIS_data .= ",'Se realiza reversa del pago'";                          //Observacion
 									$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_arriendos_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -357,32 +354,30 @@ require_once '0_validate_user_1.php';
 
 									/**********************************************************************/
 									//Actualizo las notas de credito
-									$SIS_data  = "idFacturacionRelacionado=''" ;
-									$SIS_data .= ",idEstado='1'" ;
+									$SIS_data  = "idFacturacionRelacionado=''";
+									$SIS_data .= ",idEstado='1'";
 
 									/*******************************************************/
 									//se actualizan los datos
 									$resultado = db_update_data (false, $SIS_data, 'bodegas_arriendos_facturacion', 'idFacturacionRelacionado = "'.$tipo['idFacturacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
-										
+
 									break;
 							}
-										
+
 							/**********************************************************************/
-							
-				
+
 						}
 					}
 					/**********************************************************************/
 					//Inserto el registro de la reversa
 					$SIS_data  = "'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
 					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idSistema']."'";  //idSistema
-					$SIS_data .= ",'".fecha_actual()."'";                                //Fecha        
-					$SIS_data .= ",'".hora_actual()."'";                                   //Hora       
+					$SIS_data .= ",'".fecha_actual()."'";                                //Fecha
+					$SIS_data .= ",'".hora_actual()."'";                                   //Hora
 					$SIS_data .= ",'".$indice1."'";                                        //idDocPago
 					$SIS_data .= ",'".$indice2."'";                                        //N_DocPago
 					$SIS_data .= ",'".$Valor_Doc."'";                                      //Monto
-					
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idUsuario, idSistema, Fecha, Hora, idDocPago, N_DocPago, Monto';
 					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_facturas_proveedores_reversa', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -398,13 +393,9 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
-			
-		
+
 		break;
 
-	
 	}
 
 ?>

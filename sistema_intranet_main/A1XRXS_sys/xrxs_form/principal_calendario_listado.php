@@ -19,13 +19,13 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['Ano']))            $Ano             = $_POST['Ano'];
 	if (!empty($_POST['Mes']))            $Mes             = $_POST['Mes'];
 	if (!empty($_POST['Dia']))            $Dia             = $_POST['Dia'];
-	if (!empty($_POST['N_Semana']))       $N_Semana 	     = $_POST['N_Semana'];
-	if (!empty($_POST['Fecha']))          $Fecha 	         = $_POST['Fecha'];
-	if (!empty($_POST['Titulo']))         $Titulo 	     = $_POST['Titulo'];
-	if (!empty($_POST['Cuerpo']))         $Cuerpo 	     = $_POST['Cuerpo'];
-	if (!empty($_POST['idUsuario']))      $idUsuario 	     = $_POST['idUsuario'];
-	if (!empty($_POST['idUsuario9999']))  $idUsuario9999 	 = $_POST['idUsuario9999'];
-	if (!empty($_POST['idOpciones']))     $idOpciones 	 = $_POST['idOpciones'];
+	if (!empty($_POST['N_Semana']))       $N_Semana 	   = $_POST['N_Semana'];
+	if (!empty($_POST['Fecha']))          $Fecha 	       = $_POST['Fecha'];
+	if (!empty($_POST['Titulo']))         $Titulo 	       = $_POST['Titulo'];
+	if (!empty($_POST['Cuerpo']))         $Cuerpo 	       = $_POST['Cuerpo'];
+	if (!empty($_POST['idUsuario']))      $idUsuario 	   = $_POST['idUsuario'];
+	if (!empty($_POST['idUsuario9999']))  $idUsuario9999   = $_POST['idUsuario9999'];
+	if (!empty($_POST['idOpciones']))     $idOpciones 	   = $_POST['idOpciones'];
 
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -44,7 +44,7 @@ require_once '0_validate_user_1.php';
 			case 'Mes':           if(empty($Mes)){            $error['Mes']            = 'error/No ha ingresado el mes';}break;
 			case 'Dia':           if(empty($Dia)){            $error['Dia']            = 'error/No ha ingresado el Dia';}break;
 			case 'N_Semana':      if(empty($N_Semana)){       $error['N_Semana']       = 'error/No ha ingresado el Numero de Semana';}break;
-			case 'Fecha':         if(empty($Fecha)){          $error['Fecha']          = 'error/No ha ingresado la Fecha';}break;	
+			case 'Fecha':         if(empty($Fecha)){          $error['Fecha']          = 'error/No ha ingresado la Fecha';}break;
 			case 'Titulo':        if(empty($Titulo)){         $error['Titulo']         = 'error/No ha ingresado el titulo';}break;
 			case 'Cuerpo':        if(empty($Cuerpo)){         $error['Cuerpo']         = 'error/No ha ingresado el cuerpo del evento';}break;
 			case 'idUsuario':     if(empty($idUsuario)){      $error['idUsuario']      = 'error/No ha ingresado el usuario';}break;
@@ -85,8 +85,7 @@ require_once '0_validate_user_1.php';
 			}else{
 				$error['Fecha']       = 'error/No ha ingresado la fecha';
 			}
-		
-		
+
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 
@@ -96,7 +95,7 @@ require_once '0_validate_user_1.php';
 				if(isset($Mes) && $Mes!=''){                 $SIS_data .= ",'".$Mes."'";        }else{$SIS_data .= ",''";}
 				if(isset($Dia) && $Dia!=''){                 $SIS_data .= ",'".$Dia."'";        }else{$SIS_data .= ",''";}
 				if(isset($N_Semana) && $N_Semana!=''){       $SIS_data .= ",'".$N_Semana."'";   }else{$SIS_data .= ",''";}
-				if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",'".$Fecha."'";     }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha!=''){             $SIS_data .= ",'".$Fecha."'";      }else{$SIS_data .= ",''";}
 				if(isset($Titulo) && $Titulo!=''){           $SIS_data .= ",'".$Titulo."'";     }else{$SIS_data .= ",''";}
 				if(isset($Cuerpo) && $Cuerpo!=''){           $SIS_data .= ",'".$Cuerpo."'";     }else{$SIS_data .= ",''";}
 				if(isset($idOpciones) && $idOpciones!=''){   $SIS_data .= ",'".$idOpciones."'"; }else{$SIS_data .= ",''";}
@@ -147,7 +146,7 @@ require_once '0_validate_user_1.php';
 				if(isset($Mes) && $Mes!=''){                 $SIS_data .= ",Mes='".$Mes."'";}
 				if(isset($Dia) && $Dia!=''){                 $SIS_data .= ",Dia='".$Dia."'";}
 				if(isset($N_Semana) && $N_Semana!=''){       $SIS_data .= ",N_Semana='".$N_Semana."'";}
-				if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+				if(isset($Fecha) && $Fecha!=''){             $SIS_data .= ",Fecha='".$Fecha."'";}
 				if(isset($Titulo) && $Titulo!=''){           $SIS_data .= ",Titulo='".$Titulo."'";}
 				if(isset($Cuerpo) && $Cuerpo!=''){           $SIS_data .= ",Cuerpo='".$Cuerpo."'";}
 				if(isset($idOpciones) && $idOpciones!=''){   $SIS_data .= ",idOpciones='".$idOpciones."'";}
@@ -219,8 +218,7 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
 /*******************************************************************************************************************/
 	}

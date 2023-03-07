@@ -139,7 +139,7 @@ $html .= '
 							$html .= '</tr>';
 						}
 					}
-					
+
 					if(isset($row_data['Valor'])&&$row_data['Valor']!=0){
 						$html .= '
 						<tr class="invoice-total" bgcolor="#f1f1f1">
@@ -147,7 +147,7 @@ $html .= '
 							<td align="right" style="vertical-align: top;">'.Valores($row_data['Valor'], 0).'</td>
 						</tr>';
 					}
-						
+
 				$html .= '
 					</tbody>
 				</table>

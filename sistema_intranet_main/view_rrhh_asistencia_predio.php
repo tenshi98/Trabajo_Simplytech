@@ -268,7 +268,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 								$Longitud_z_prom = 0;
 								$zcounter        = 0;
 								$zcounter2       = 0;
-									
+
 								//Se filtra por zona
 								filtrar($arrZonas, 'idZona');
 								//se recorre

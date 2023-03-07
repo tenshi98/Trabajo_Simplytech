@@ -137,7 +137,7 @@ $arrHistorial = db_select_array (false, 'clientes_listado_historial_contratos.Cr
 					if(isset($idTab_13)){                      $x14 .= ','.$idTab_13;                    }else{$x14 .= ','.$rowdata['idTab_13'];}
 					if(isset($idTab_14)){                      $x14 .= ','.$idTab_14;                    }else{$x14 .= ','.$rowdata['idTab_14'];}
 					if(isset($idTab_15)){                      $x14 .= ','.$idTab_15;                    }else{$x14 .= ','.$rowdata['idTab_15'];}
-					
+
 					if(isset($Contrato_Obs)){                  $x15  = $Contrato_Obs;                    }else{$x15  = $rowdata['Contrato_Obs'];}
 
 					//se dibujan los inputs

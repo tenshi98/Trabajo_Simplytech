@@ -96,7 +96,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){               $SIS_data  = "'".$idSistema."'";                      }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema!=''){                                 $SIS_data  = "'".$idSistema."'";                      }else{$SIS_data  = "''";}
 				if(isset($AFP_idCentroCosto) && $AFP_idCentroCosto!=''){                 $SIS_data .= ",'".$AFP_idCentroCosto."'";             }else{$SIS_data .= ",''";}
 				if(isset($AFP_idLevel_1) && $AFP_idLevel_1!=''){                         $SIS_data .= ",'".$AFP_idLevel_1."'";                 }else{$SIS_data .= ",''";}
 				if(isset($AFP_idLevel_2) && $AFP_idLevel_2!=''){                         $SIS_data .= ",'".$AFP_idLevel_2."'";                 }else{$SIS_data .= ",''";}
@@ -153,7 +153,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idMantenedor='".$idMantenedor."'";
-				if(isset($idSistema) && $idSistema!=''){                 $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idSistema) && $idSistema!=''){                                   $SIS_data .= ",idSistema='".$idSistema."'";}
 				if(isset($AFP_idCentroCosto) && $AFP_idCentroCosto!=''){                   $SIS_data .= ",AFP_idCentroCosto='".$AFP_idCentroCosto."'";}
 				if(isset($AFP_idLevel_1) && $AFP_idLevel_1!=''){                           $SIS_data .= ",AFP_idLevel_1='".$AFP_idLevel_1."'";}
 				if(isset($AFP_idLevel_2) && $AFP_idLevel_2!=''){                           $SIS_data .= ",AFP_idLevel_2='".$AFP_idLevel_2."'";}

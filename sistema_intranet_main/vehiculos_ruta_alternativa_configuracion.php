@@ -562,7 +562,7 @@ array_push( $arrRutasAlt,$row );
 									tmp=new google.maps.LatLng(locations2[i][1], locations2[i][2]);
 									route2.push(tmp);
 								}
-								
+
 								if (typeof locations2 != 'undefined') {
 									if(route2){
 										marker.setPosition(new google.maps.LatLng(locations2[locations2.length - 1][1], locations2[locations2.length - 1][2]));

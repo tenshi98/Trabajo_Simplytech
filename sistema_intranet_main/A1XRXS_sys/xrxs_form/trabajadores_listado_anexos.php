@@ -87,7 +87,7 @@ require_once '0_validate_user_1.php';
 							//Inserto el registro de las mantenciones
 							//filtros
 							$SIS_data = "'".$sufijo.$_FILES['Documento']['name']."'";
-							if(isset($idTrabajador) && $idTrabajador!=''){   $SIS_data .= ",'".$idTrabajador."'";   }else{$SIS_data .= ",''";}
+							if(isset($idTrabajador) && $idTrabajador!=''){    $SIS_data .= ",'".$idTrabajador."'";   }else{$SIS_data .= ",''";}
 							if(isset($Fecha_ingreso) && $Fecha_ingreso!=''){  $SIS_data .= ",'".$Fecha_ingreso."'";  }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db

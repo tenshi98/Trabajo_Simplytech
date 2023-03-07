@@ -70,7 +70,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 						$extra_data  = '';
 						$extra_data .= '&f_inicio='.fecha_actual();
 						$extra_data .= '&f_termino='.fecha_actual();
-						
+
 						foreach ($arrEquipo as $data) { 
 									
 							//dependiendo del tipo de datos que quiero mostrar ajusto los datos
@@ -174,7 +174,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 									}
 									
 									break;
-									
+
 								//En caso de que este detenido	
 								case 5:
 									if($data['NDetenciones']!=0){
@@ -193,8 +193,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 									}
 									break;
 							}
-							
-							
+
 						} ?>
 					</tbody>
 				</table>

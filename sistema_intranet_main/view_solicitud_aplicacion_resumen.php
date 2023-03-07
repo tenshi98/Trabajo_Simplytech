@@ -218,7 +218,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 						$Longitud_z_prom = 0;
 						$zcounter        = 0;
 						$zcounter2        = 0;
-									
+
 						//Se filtra por zona
 						filtrar($arrZonas, 'idZona');
 						//se recorre
@@ -254,7 +254,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 							}
 									
 							if(isset($Longitud_x)&&$Longitud_x!=''){
-								echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
+								echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}';
 							}
 									
 							echo '];';
@@ -309,7 +309,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 										
 							if(isset($Latitud_z_prom)&&$Latitud_z_prom!=0&&isset($Longitud_z_prom)&&$Longitud_z_prom!=0){
 									echo 'myLatlng = new google.maps.LatLng('.$Latitud_z_prom.', '.$Longitud_z_prom.');
-											map.setCenter(myLatlng);'; 
+											map.setCenter(myLatlng);';
 							}else{
 								echo 'codeAddress();';
 							}

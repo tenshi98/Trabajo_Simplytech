@@ -100,7 +100,7 @@ require_once '0_validate_user_1.php';
 							//filtros
 							$SIS_data = "'".$sufijo.$_FILES['NombreArchivo']['name']."'";
 							if(isset($idLicitacion) && $idLicitacion!=''){    $SIS_data .= ",'".$idLicitacion."'";  }else{$SIS_data .= ",''";}
-							if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
+							if(isset($idUsuario) && $idUsuario!=''){          $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
 							if(isset($Fecha_ingreso) && $Fecha_ingreso!=''){  $SIS_data .= ",'".$Fecha_ingreso."'"; }else{$SIS_data .= ",''";}
 							if(isset($Detalle) && $Detalle!=''){              $SIS_data .= ",'".$Detalle."'";       }else{$SIS_data .= ",''";}
 

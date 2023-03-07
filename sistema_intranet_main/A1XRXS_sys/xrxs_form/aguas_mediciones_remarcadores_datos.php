@@ -89,7 +89,7 @@ require_once '0_validate_user_1.php';
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
 	if(isset($Ano) && $Ano!=''){                       $Ano            = EstandarizarInput($Ano);}
-	if(isset($Nombre) && $Nombre!=''){                $Nombre         = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){                 $Nombre         = EstandarizarInput($Nombre);}
 	if(isset($Observaciones) && $Observaciones!=''){   $Observaciones  = EstandarizarInput($Observaciones);}
 	if(isset($ConsumoMedidor) && $ConsumoMedidor!=''){ $ConsumoMedidor = EstandarizarInput($ConsumoMedidor);}
 	if(isset($Consumo) && $Consumo!=''){               $Consumo        = EstandarizarInput($Consumo);}
@@ -517,11 +517,11 @@ require_once '0_validate_user_1.php';
 							$SIS_data .= ",''";                       //TipoMIU
 							$SIS_data .= ",''";                       //MIU
 							$SIS_data .= ",''";                       //Contador
-							$SIS_data .= ",'1'" ;                     //idFacturado
-							$SIS_data .= ",'0'" ;                     //idFacturacion
+							$SIS_data .= ",'1'";                     //idFacturado
+							$SIS_data .= ",'0'";                     //idFacturacion
 							$SIS_data .= ",'".fecha_actual()."'";     //fCreacion
-							$SIS_data .= ",'1'" ;                     //idTipoFacturacion
-							$SIS_data .= ",'1'" ;                     //idTipoLectura
+							$SIS_data .= ",'1'";                     //idTipoFacturacion
+							$SIS_data .= ",'1'";                     //idTipoLectura
 							$SIS_data .= ",'".$idTipoMedicion."'";   //idTipoMedicion
 							$SIS_data .= ",'".$idMarcadores."'";     //idMarcadoresUsado
 							$SIS_data .= ",'".$Consumo."'";          //ConsumoMedidor

@@ -94,10 +94,10 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){         $SIS_data  = "'".$idSistema."'";      }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre!=''){              $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){          $SIS_data .= ",'".$idEstado."'";      }else{$SIS_data .= ",''";}
-				if(isset($idCliente) && $idCliente!=''){         $SIS_data .= ",'".$idCliente."'";     }else{$SIS_data .= ",''";}
+				if(isset($idSistema) && $idSistema!=''){     $SIS_data  = "'".$idSistema."'";      }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){       $SIS_data .= ",'".$idEstado."'";      }else{$SIS_data .= ",''";}
+				if(isset($idCliente) && $idCliente!=''){     $SIS_data .= ",'".$idCliente."'";     }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema, Nombre,idEstado, idCliente';
@@ -133,10 +133,10 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){         $SIS_data  = "'".$idSistema."'";      }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre!=''){              $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){          $SIS_data .= ",'".$idEstado."'";      }else{$SIS_data .= ",''";}
-				if(isset($idCliente) && $idCliente!=''){         $SIS_data .= ",'".$idCliente."'";     }else{$SIS_data .= ",''";}
+				if(isset($idSistema) && $idSistema!=''){     $SIS_data  = "'".$idSistema."'";      }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){       $SIS_data .= ",'".$idEstado."'";      }else{$SIS_data .= ",''";}
+				if(isset($idCliente) && $idCliente!=''){     $SIS_data .= ",'".$idCliente."'";     }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema, Nombre,idEstado, idCliente';
@@ -173,10 +173,10 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idUbicacion='".$idUbicacion."'";
-				if(isset($idSistema) && $idSistema!=''){          $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($Nombre) && $Nombre!=''){               $SIS_data .= ",Nombre='".$Nombre."'";}
-				if(isset($idEstado) && $idEstado!=''){           $SIS_data .= ",idEstado='".$idEstado."'";}
-				if(isset($idCliente) && $idCliente!=''){          $SIS_data .= ",idCliente='".$idCliente."'";}
+				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($Nombre) && $Nombre!=''){             $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idEstado) && $idEstado!=''){         $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idCliente) && $idCliente!=''){       $SIS_data .= ",idCliente='".$idCliente."'";}
 
 				/*******************************************************/
 				//se actualizan los datos
@@ -188,8 +188,7 @@ require_once '0_validate_user_1.php';
 					die;
 
 				}
-	
-				
+
 			}
 
 		break;
@@ -270,7 +269,7 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($idSistema) && $idSistema!=''){       $SIS_data  = "'".$idSistema."'";       }else{$SIS_data  = "''";}
 				if(isset($idUbicacion) && $idUbicacion!=''){   $SIS_data .= ",'".$idUbicacion."'";    }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",'".$Nombre."'";         }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){             $SIS_data .= ",'".$Nombre."'";         }else{$SIS_data .= ",''";}
 				if(isset($idCliente) && $idCliente!=''){       $SIS_data .= ",'".$idCliente."'";      }else{$SIS_data .= ",''";}
 
 				$xbla = '';
@@ -308,7 +307,7 @@ require_once '0_validate_user_1.php';
 				$SIS_data = "idLevel_".$lvl."='".$idLevel[$lvl]."'";
 				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
 				if(isset($idUbicacion) && $idUbicacion!=''){   $SIS_data .= ",idUbicacion='".$idUbicacion."'";}
-				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){             $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($idCliente) && $idCliente!=''){       $SIS_data .= ",idCliente='".$idCliente."'";}
 
 				/*******************************************************/

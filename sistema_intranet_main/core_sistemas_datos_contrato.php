@@ -90,7 +90,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 					if(isset($Contrato_Numero)){    $x2 = $Contrato_Numero;     }else{$x2 = $rowdata['Contrato_Numero'];}
 					if(isset($Contrato_Fecha)){     $x3 = $Contrato_Fecha;      }else{$x3 = $rowdata['Contrato_Fecha'];}
 					if(isset($Contrato_Duracion)){  $x4 = $Contrato_Duracion;   }else{$x4 = $rowdata['Contrato_Duracion'];}
-				
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_text('Nombre Contrato', 'Contrato_Nombre', $x1, 1);

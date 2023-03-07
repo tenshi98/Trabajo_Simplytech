@@ -132,7 +132,7 @@ if(isset($_GET['f_programacion_inicio'])&&$_GET['f_programacion_inicio']!=''&&is
 if(isset($_GET['f_termino_inicio'])&&$_GET['f_termino_inicio']!=''&&isset($_GET['f_termino_termino'])&&$_GET['f_termino_termino']!=''){
 	$z.=" AND orden_trabajo_tareas_listado.f_programacion BETWEEN '".$_GET['f_termino_inicio']."' AND '".$_GET['f_termino_termino']."'";
 }
-					
+
 // Se trae un listado con todos los elementos
 $arrOTS = array();
 $query = "SELECT 

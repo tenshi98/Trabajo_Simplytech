@@ -14,10 +14,10 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if (!empty($_POST['idItem']))            $idItem              = $_POST['idItem'];
-	if (!empty($_POST['idTelemetria']))      $idTelemetria        = $_POST['idTelemetria'];
-	if (!empty($_POST['idAlarma']))          $idAlarma            = $_POST['idAlarma'];
-	if (!empty($_POST['Sensor_N']))          $Sensor_N            = $_POST['Sensor_N'];
+	if (!empty($_POST['idItem']))             $idItem              = $_POST['idItem'];
+	if (!empty($_POST['idTelemetria']))       $idTelemetria        = $_POST['idTelemetria'];
+	if (!empty($_POST['idAlarma']))           $idAlarma            = $_POST['idAlarma'];
+	if (!empty($_POST['Sensor_N']))           $Sensor_N            = $_POST['Sensor_N'];
 	if ( isset($_POST['Rango_ini']))          $Rango_ini           = $_POST['Rango_ini'];
 	if ( isset($_POST['Rango_fin']))          $Rango_fin           = $_POST['Rango_fin'];
 	if ( isset($_POST['valor_especifico']))   $valor_especifico    = $_POST['valor_especifico'];

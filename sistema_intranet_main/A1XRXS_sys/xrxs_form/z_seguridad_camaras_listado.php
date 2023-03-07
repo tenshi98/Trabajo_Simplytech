@@ -68,7 +68,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){                  $Nombre          = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){                   $Nombre          = EstandarizarInput($Nombre);}
 	if(isset($Direccion) && $Direccion!=''){             $Direccion       = EstandarizarInput($Direccion);}
 	if(isset($Config_usuario) && $Config_usuario!=''){   $Config_usuario  = EstandarizarInput($Config_usuario);}
 	if(isset($Config_Password) && $Config_Password!=''){ $Config_Password = EstandarizarInput($Config_Password);}
@@ -114,9 +114,9 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){  $SIS_data  = "'".$idSistema."'";            }else{$SIS_data  = "''";}
-				if(isset($idEstado) && $idEstado!=''){                     $SIS_data .= ",'".$idEstado."'";            }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){                         $SIS_data .= ",'".$Nombre."'";              }else{$SIS_data .= ",''";}
+				if(isset($idSistema) && $idSistema!=''){                    $SIS_data  = "'".$idSistema."'";            }else{$SIS_data  = "''";}
+				if(isset($idEstado) && $idEstado!=''){                      $SIS_data .= ",'".$idEstado."'";            }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                          $SIS_data .= ",'".$Nombre."'";              }else{$SIS_data .= ",''";}
 				if(isset($idPais) && $idPais!=''){                          $SIS_data .= ",'".$idPais."'";              }else{$SIS_data .= ",''";}
 				if(isset($idCiudad) && $idCiudad!=''){                      $SIS_data .= ",'".$idCiudad."'";            }else{$SIS_data .= ",''";}
 				if(isset($idComuna) && $idComuna!=''){                      $SIS_data .= ",'".$idComuna."'";            }else{$SIS_data .= ",''";}
@@ -144,7 +144,7 @@ require_once '0_validate_user_1.php';
 
 						//filtros
 						if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";   }else{$SIS_data  = "''";}
-						$SIS_data .= ",'1'" ;
+						$SIS_data .= ",'1'";
 						$SIS_data .= ",'Camara ".$i."'";
 
 						// inserto los datos de registro en la db
@@ -181,9 +181,9 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idCamara='".$idCamara."'";
-				if(isset($idSistema) && $idSistema!=''){    $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idEstado) && $idEstado!=''){                       $SIS_data .= ",idEstado='".$idEstado."'";}
-				if(isset($Nombre) && $Nombre!=''){                           $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idSistema) && $idSistema!=''){                      $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idEstado) && $idEstado!=''){                        $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($Nombre) && $Nombre!=''){                            $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($idPais) && $idPais!=''){                            $SIS_data .= ",idPais='".$idPais."'";}
 				if(isset($idCiudad) && $idCiudad!=''){                        $SIS_data .= ",idCiudad='".$idCiudad."'";}
 				if(isset($idComuna) && $idComuna!=''){                        $SIS_data .= ",idComuna='".$idComuna."'";}
@@ -302,8 +302,8 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idCamara) && $idCamara!=''){                $SIS_data  = "'".$idCamara."'";             }else{$SIS_data  = "''";}
-				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";            }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",'".$Nombre."'";              }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                $SIS_data .= ",'".$idEstado."'";            }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                    $SIS_data .= ",'".$Nombre."'";              }else{$SIS_data .= ",''";}
 				if(isset($idTipoCamara) && $idTipoCamara!=''){        $SIS_data .= ",'".$idTipoCamara."'";        }else{$SIS_data .= ",''";}
 				if(isset($Config_usuario) && $Config_usuario!=''){    $SIS_data .= ",'".$Config_usuario."'";      }else{$SIS_data .= ",''";}
 				if(isset($Config_Password) && $Config_Password!=''){  $SIS_data .= ",'".$Config_Password."'";     }else{$SIS_data .= ",''";}
@@ -347,8 +347,8 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idCanal='".$idCanal."'";
 				if(isset($idCamara) && $idCamara!=''){                $SIS_data .= ",idCamara='".$idCamara."'";}
-				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",idEstado='".$idEstado."'";}
-				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idEstado) && $idEstado!=''){                $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($Nombre) && $Nombre!=''){                    $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($idTipoCamara) && $idTipoCamara!=''){        $SIS_data .= ",idTipoCamara='".$idTipoCamara."'";}
 				if(isset($Config_usuario) && $Config_usuario!=''){    $SIS_data .= ",Config_usuario='".$Config_usuario."'";}
 				if(isset($Config_Password) && $Config_Password!=''){  $SIS_data .= ",Config_Password='".$Config_Password."'";}

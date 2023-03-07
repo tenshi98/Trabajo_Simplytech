@@ -38,7 +38,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){$Nombre = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){ $Nombre = EstandarizarInput($Nombre);}
 	if(isset($Codigo) && $Codigo!=''){ $Codigo = EstandarizarInput($Codigo);}
 
 /*******************************************************************************************************************/
@@ -73,7 +73,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($Nombre) && $Nombre!=''){ $SIS_data  = "'".$Nombre."'";  }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){  $SIS_data  = "'".$Nombre."'";  }else{$SIS_data  = "''";}
 				if(isset($Codigo) && $Codigo!=''){  $SIS_data .= ",'".$Codigo."'"; }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
@@ -111,9 +111,9 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idMercado='".$idMercado."'";
-				if(isset($Nombre) && $Nombre!=''){ $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){  $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Codigo) && $Codigo!=''){  $SIS_data .= ",Codigo='".$Codigo."'";}
-					
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'cross_shipping_mercado', 'idMercado = "'.$idMercado.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);

@@ -310,7 +310,7 @@ foreach ($arrImpuestos as $impto) {
 	$impuestos[$nn]['nimp'] = $impto['Nombre'].' ('.Cantidades_decimales_justos($impto['Porcentaje']).'%)';
 	$nn++;
 }
-					
+
 //Si el documento esta pagado se muestran los datos relacionados al pago
 if($row_data['MontoPagado']!=0){ ?>
 	<div class="" style="margin-top:10px;">

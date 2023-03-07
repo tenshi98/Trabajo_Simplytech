@@ -14,30 +14,30 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if (!empty($_POST['idQuiz']))            $idQuiz              = $_POST['idQuiz'];
-	if (!empty($_POST['idSistema']))         $idSistema           = $_POST['idSistema'];
-	if ( isset($_POST['Nombre']))             $Nombre 	            = $_POST['Nombre'];
-	if (!empty($_POST['Header_texto']))      $Header_texto        = $_POST['Header_texto'];
-	if (!empty($_POST['Header_fecha']))      $Header_fecha        = $_POST['Header_fecha'];
-	if (!empty($_POST['Footer_texto']))      $Footer_texto        = $_POST['Footer_texto'];
+	if (!empty($_POST['idQuiz']))             $idQuiz              = $_POST['idQuiz'];
+	if (!empty($_POST['idSistema']))          $idSistema           = $_POST['idSistema'];
+	if ( isset($_POST['Nombre']))             $Nombre 	           = $_POST['Nombre'];
+	if (!empty($_POST['Header_texto']))       $Header_texto        = $_POST['Header_texto'];
+	if (!empty($_POST['Header_fecha']))       $Header_fecha        = $_POST['Header_fecha'];
+	if (!empty($_POST['Footer_texto']))       $Footer_texto        = $_POST['Footer_texto'];
 	if ( isset($_POST['Texto_Inicio']))       $Texto_Inicio        = $_POST['Texto_Inicio'];
-	if (!empty($_POST['idEstado']))          $idEstado            = $_POST['idEstado'];
-	if (!empty($_POST['idEscala']))          $idEscala            = $_POST['idEscala'];
-	if (!empty($_POST['Porcentaje_apro']))   $Porcentaje_apro     = $_POST['Porcentaje_apro'];
-	if (!empty($_POST['idTipoEvaluacion']))  $idTipoEvaluacion    = $_POST['idTipoEvaluacion'];
-	if (!empty($_POST['idTipoQuiz']))        $idTipoQuiz          = $_POST['idTipoQuiz'];
+	if (!empty($_POST['idEstado']))           $idEstado            = $_POST['idEstado'];
+	if (!empty($_POST['idEscala']))           $idEscala            = $_POST['idEscala'];
+	if (!empty($_POST['Porcentaje_apro']))    $Porcentaje_apro     = $_POST['Porcentaje_apro'];
+	if (!empty($_POST['idTipoEvaluacion']))   $idTipoEvaluacion    = $_POST['idTipoEvaluacion'];
+	if (!empty($_POST['idTipoQuiz']))         $idTipoQuiz          = $_POST['idTipoQuiz'];
 
-	if (!empty($_POST['idPregunta']))        $idPregunta          = $_POST['idPregunta'];
-	if (!empty($_POST['idTipo']))            $idTipo 	            = $_POST['idTipo'];
-	if ( isset($_POST['Opcion_1']))           $Opcion_1 	        = $_POST['Opcion_1'];
-	if ( isset($_POST['Opcion_2']))           $Opcion_2 	        = $_POST['Opcion_2'];
-	if ( isset($_POST['Opcion_3']))           $Opcion_3 	        = $_POST['Opcion_3'];
-	if ( isset($_POST['Opcion_4']))           $Opcion_4 	        = $_POST['Opcion_4'];
-	if ( isset($_POST['Opcion_5']))           $Opcion_5 	        = $_POST['Opcion_5'];
-	if ( isset($_POST['Opcion_6']))           $Opcion_6 	        = $_POST['Opcion_6'];
+	if (!empty($_POST['idPregunta']))         $idPregunta          = $_POST['idPregunta'];
+	if (!empty($_POST['idTipo']))             $idTipo 	           = $_POST['idTipo'];
+	if ( isset($_POST['Opcion_1']))           $Opcion_1 	       = $_POST['Opcion_1'];
+	if ( isset($_POST['Opcion_2']))           $Opcion_2 	       = $_POST['Opcion_2'];
+	if ( isset($_POST['Opcion_3']))           $Opcion_3 	       = $_POST['Opcion_3'];
+	if ( isset($_POST['Opcion_4']))           $Opcion_4 	       = $_POST['Opcion_4'];
+	if ( isset($_POST['Opcion_5']))           $Opcion_5 	       = $_POST['Opcion_5'];
+	if ( isset($_POST['Opcion_6']))           $Opcion_6 	       = $_POST['Opcion_6'];
 	if ( isset($_POST['OpcionCorrecta']))     $OpcionCorrecta      = $_POST['OpcionCorrecta'];
-	if (!empty($_POST['idCategoria']))       $idCategoria         = $_POST['idCategoria'];
-						
+	if (!empty($_POST['idCategoria']))        $idCategoria         = $_POST['idCategoria'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -78,7 +78,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){            $Nombre       = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){             $Nombre       = EstandarizarInput($Nombre);}
 	if(isset($Header_texto) && $Header_texto!=''){ $Header_texto = EstandarizarInput($Header_texto);}
 	if(isset($Footer_texto) && $Footer_texto!=''){ $Footer_texto = EstandarizarInput($Footer_texto);}
 	if(isset($Texto_Inicio) && $Texto_Inicio!=''){ $Texto_Inicio = EstandarizarInput($Texto_Inicio);}
@@ -120,12 +120,12 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idSistema) && $idSistema!=''){               $SIS_data  = "'".$idSistema."'";          }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre!=''){                    $SIS_data .= ",'".$Nombre."'";            }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                     $SIS_data .= ",'".$Nombre."'";            }else{$SIS_data .= ",''";}
 				if(isset($Header_texto) && $Header_texto!=''){         $SIS_data .= ",'".$Header_texto."'";      }else{$SIS_data .= ",''";}
 				if(isset($Header_fecha) && $Header_fecha!=''){         $SIS_data .= ",'".$Header_fecha."'";      }else{$SIS_data .= ",''";}
 				if(isset($Footer_texto) && $Footer_texto!=''){         $SIS_data .= ",'".$Footer_texto."'";      }else{$SIS_data .= ",''";}
 				if(isset($Texto_Inicio) && $Texto_Inicio!=''){         $SIS_data .= ",'".$Texto_Inicio."'";      }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){                $SIS_data .= ",'".$idEstado."'";          }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                 $SIS_data .= ",'".$idEstado."'";          }else{$SIS_data .= ",''";}
 				if(isset($idEscala) && $idEscala!=''){                 $SIS_data .= ",'".$idEscala."'";          }else{$SIS_data .= ",''";}
 				if(isset($Porcentaje_apro) && $Porcentaje_apro!=''){   $SIS_data .= ",'".$Porcentaje_apro."'";   }else{$SIS_data .= ",''";}
 				if(isset($idTipoEvaluacion) && $idTipoEvaluacion!=''){ $SIS_data .= ",'".$idTipoEvaluacion."'";  }else{$SIS_data .= ",''";}
@@ -155,12 +155,12 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idQuiz='".$idQuiz."'";
 				if(isset($idSistema) && $idSistema!=''){               $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($Nombre) && $Nombre!=''){                    $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                     $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Header_texto) && $Header_texto!=''){         $SIS_data .= ",Header_texto='".$Header_texto."'";}
 				if(isset($Header_fecha) && $Header_fecha!=''){         $SIS_data .= ",Header_fecha='".$Header_fecha."'";}
 				if(isset($Footer_texto) && $Footer_texto!=''){         $SIS_data .= ",Footer_texto='".$Footer_texto."'";}
 				if(isset($Texto_Inicio) && $Texto_Inicio!=''){         $SIS_data .= ",Texto_Inicio='".$Texto_Inicio."'";}
-				if(isset($idEstado) && $idEstado!=''){                $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idEstado) && $idEstado!=''){                 $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idEscala) && $idEscala!=''){                 $SIS_data .= ",idEscala='".$idEscala."'";}
 				if(isset($Porcentaje_apro) && $Porcentaje_apro!=''){   $SIS_data .= ",Porcentaje_apro='".$Porcentaje_apro."'";}
 				if(isset($idTipoEvaluacion) && $idTipoEvaluacion!=''){ $SIS_data .= ",idTipoEvaluacion='".$idTipoEvaluacion."'";}
@@ -239,8 +239,8 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idQuiz) && $idQuiz!=''){                      $SIS_data  = "'".$idQuiz."'";               }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre!=''){                     $SIS_data .= ",'".$Nombre."'";              }else{$SIS_data .= ",''";}
-				if(isset($idTipo) && $idTipo!=''){                     $SIS_data .= ",'".$idTipo."'";              }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                      $SIS_data .= ",'".$Nombre."'";              }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){                      $SIS_data .= ",'".$idTipo."'";              }else{$SIS_data .= ",''";}
 				if(isset($Opcion_1) && $Opcion_1!=''){                  $SIS_data .= ",'".$Opcion_1."'";            }else{$SIS_data .= ",''";}
 				if(isset($Opcion_2) && $Opcion_2!=''){                  $SIS_data .= ",'".$Opcion_2."'";            }else{$SIS_data .= ",''";}
 				if(isset($Opcion_3) && $Opcion_3!=''){                  $SIS_data .= ",'".$Opcion_3."'";            }else{$SIS_data .= ",''";}
@@ -273,9 +273,9 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idPregunta='".$idPregunta."'";
-				if(isset($idQuiz) && $idQuiz!=''){                    $SIS_data .= ",idQuiz='".$idQuiz."'";                }else{$SIS_data .= ",idQuiz='".$idQuiz."'";}
-				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",Nombre='".$Nombre."'";                  }else{$SIS_data .= ",Nombre='".$Nombre."'";}
-				if(isset($idTipo) && $idTipo!=''){                   $SIS_data .= ",idTipo='".$idTipo."'";                  }else{$SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($idQuiz) && $idQuiz!=''){                    $SIS_data .= ",idQuiz='".$idQuiz."'";                  }else{$SIS_data .= ",idQuiz='".$idQuiz."'";}
+				if(isset($Nombre) && $Nombre!=''){                    $SIS_data .= ",Nombre='".$Nombre."'";                  }else{$SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idTipo) && $idTipo!=''){                    $SIS_data .= ",idTipo='".$idTipo."'";                  }else{$SIS_data .= ",idTipo='".$idTipo."'";}
 				if(isset($Opcion_1) && $Opcion_1!=''){                $SIS_data .= ",Opcion_1='".$Opcion_1."'";              }else{$SIS_data .= ",Opcion_1='".$Opcion_1."'";}
 				if(isset($Opcion_2) && $Opcion_2!=''){                $SIS_data .= ",Opcion_2='".$Opcion_2."'";              }else{$SIS_data .= ",Opcion_2='".$Opcion_2."'";}
 				if(isset($Opcion_3) && $Opcion_3!=''){                $SIS_data .= ",Opcion_3='".$Opcion_3."'";              }else{$SIS_data .= ",Opcion_3='".$Opcion_3."'";}
@@ -283,7 +283,7 @@ require_once '0_validate_user_1.php';
 				if(isset($Opcion_5) && $Opcion_5!=''){                $SIS_data .= ",Opcion_5='".$Opcion_5."'";              }else{$SIS_data .= ",Opcion_5='".$Opcion_5."'";}
 				if(isset($Opcion_6) && $Opcion_6!=''){                $SIS_data .= ",Opcion_6='".$Opcion_6."'";              }else{$SIS_data .= ",Opcion_6='".$Opcion_6."'";}
 				if(isset($OpcionCorrecta) && $OpcionCorrecta!=''){    $SIS_data .= ",OpcionCorrecta='".$OpcionCorrecta."'";  }else{$SIS_data .= ",OpcionCorrecta='".$OpcionCorrecta."'";}
-				if(isset($idCategoria) && $idCategoria!=''){          $SIS_data .= ",idCategoria='".$idCategoria."'";  }else{$SIS_data .= ",OpcionCorrecta='".$OpcionCorrecta."'";}
+				if(isset($idCategoria) && $idCategoria!=''){          $SIS_data .= ",idCategoria='".$idCategoria."'";        }else{$SIS_data .= ",OpcionCorrecta='".$OpcionCorrecta."'";}
 
 				/*******************************************************/
 				//se actualizan los datos

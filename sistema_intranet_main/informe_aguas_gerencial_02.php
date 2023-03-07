@@ -130,7 +130,7 @@ array_push( $arrFacturacion,$row );
 
 					$rev = 0;
 					//Se recorre la tabla
-					foreach ($arrFacturacion as $fact) {  
+					foreach ($arrFacturacion as $fact) {
 						$OtrosCargos = $fact['OtrosCargos1'] + $fact['OtrosCargos2'] + $fact['OtrosCargos3'] + $fact['OtrosCargos4'] + $fact['OtrosCargos5'];
 						//
 						$rev = $rev + ($fact['DetalleTotalVenta']-$fact['PagoReal']); ?>

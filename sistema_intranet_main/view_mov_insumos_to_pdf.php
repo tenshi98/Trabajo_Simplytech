@@ -652,7 +652,7 @@ $html .= '
 									
 									break;
 							}
-						
+
 						$html .= '</tr>
 					</tbody>
 				</table>

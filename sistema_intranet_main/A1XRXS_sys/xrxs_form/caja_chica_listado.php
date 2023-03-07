@@ -48,7 +48,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){                   $Nombre          = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){                    $Nombre          = EstandarizarInput($Nombre);}
 	if(isset($Descripcion) && $Descripcion!=''){          $Descripcion     = EstandarizarInput($Descripcion);}
 	if(isset($FichaTecnica) && $FichaTecnica!=''){        $FichaTecnica    = EstandarizarInput($FichaTecnica);}
 	if(isset($MontoActual) && $MontoActual!=''){          $MontoActual     = EstandarizarInput($MontoActual);}
@@ -325,7 +325,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "Direccion_img=''" ;
+			$SIS_data = "Direccion_img=''";
 			$resultado = db_update_data (false, $SIS_data, 'caja_chica_listado', 'idCajaChica = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -361,7 +361,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "FichaTecnica=''" ;
+			$SIS_data = "FichaTecnica=''";
 			$resultado = db_update_data (false, $SIS_data, 'caja_chica_listado', 'idCajaChica = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){

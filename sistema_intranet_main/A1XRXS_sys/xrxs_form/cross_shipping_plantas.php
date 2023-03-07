@@ -31,7 +31,7 @@ require_once '0_validate_user_1.php';
 		//veo si existe el dato solicitado y genero el error
 		switch ($INT_valor) {
 			case 'idPlantaDespacho':   if(empty($idPlantaDespacho)){    $error['idPlantaDespacho']     = 'error/No ha ingresado el id';}break;
-			case 'idSistema':       if(empty($idSistema)){        $error['idSistema']         = 'error/No ha seleccionado el sistema';}break;
+			case 'idSistema':          if(empty($idSistema)){           $error['idSistema']            = 'error/No ha seleccionado el sistema';}break;
 			case 'Nombre':             if(empty($Nombre)){              $error['Nombre']               = 'error/No ha ingresado el nombre';}break;
 			case 'Codigo':             if(empty($Codigo)){              $error['Codigo']               = 'error/No ha ingresado el Codigo';}break;
 
@@ -40,7 +40,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){$Nombre = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){ $Nombre = EstandarizarInput($Nombre);}
 	if(isset($Codigo) && $Codigo!=''){ $Codigo = EstandarizarInput($Codigo);}
 
 /*******************************************************************************************************************/

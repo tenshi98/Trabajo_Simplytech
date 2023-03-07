@@ -63,11 +63,11 @@ require_once 'core/Web.Header.Views.php';
 							mapTypeId: google.maps.MapTypeId.ROADMAP
 						}
 						var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-								
+
 						// marker position
 						var factory_1 = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud_Last'] ?>, <?php echo $rowdata['GeoLongitud_Last'] ?>);
 						var factory_2 = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
-								
+
 						// InfoWindow content
 						var content_1 = '<div id="iw-container">' +
 										'<div class="iw-title">Desconexion</div>' +
@@ -187,7 +187,7 @@ require_once 'core/Web.Header.Views.php';
 						//muestro la infowindow al inicio
 						infowindow_1.open(map,marker_1);
 						infowindow_2.open(map,marker_2);
-								
+
 						//centralizo el mapa en base al ultimo dato obtenido
 						map.panTo(marker_1.getPosition());
 								

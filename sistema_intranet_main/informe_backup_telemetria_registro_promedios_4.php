@@ -209,7 +209,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 										}elseif(isset($_GET['idDetalle'])&&$_GET['idDetalle']==2){
 											$arrData[$i][1]['Name'] = "'Promedio'";
 										}
-										
+
 										//si el grupo seleccionado es el mismo de la base
 										if($rutas['SensoresGrupo_'.$i]==$_GET['idGrupo']){
 											/**************************************/
@@ -219,7 +219,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 											$arrData[$i]['Unimed']       = $Unimed[$rutas['SensoresUniMed_'.$i]];
 											//Obtengo el nombre del sensor
 											$arrData[$i]['SensorNombre'] = $rutas['SensorNombre_'.$i];
-											
+
 											//Verifico la existencia de datos
 											if(isset($rutas['MedMin_'.$i])&&$rutas['MedMin_'.$i]!=0&&$rutas['MedMin_'.$i]!=''&&isset($rutas['MedMax_'.$i])&&$rutas['MedMax_'.$i]!=0&&$rutas['MedMax_'.$i]!=''){
 												//si se pidieron detalles

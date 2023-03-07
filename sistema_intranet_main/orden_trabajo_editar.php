@@ -390,7 +390,7 @@ foreach ($arrPermisos as $prod) {
 					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
 					';
 				}
-				
+
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
 					';
@@ -781,17 +781,17 @@ foreach ($arrPermisos as $prod) {
 				switch ($rowdata['idSubTipo']) {
 					case 1: //Grasa
 						$Form_Inputs->form_input_number('Grasa inicial','Grasa_inicial', $x3, 2);
-						$Form_Inputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x4, 2);	
+						$Form_Inputs->form_input_number('Grasa relubricacion','Grasa_relubricacion', $x4, 2);
 					break;
-							
+
 					case 2: //Aceite
 						$Form_Inputs->form_input_number('Cantidad de Aceite','Aceite', $x5, 2);
 					break;
-							
+
 					case 3: //Normal
 						$Form_Inputs->form_input_number('Cantidad a consumir','Cantidad', $x6, 2);
 					break;
-							
+
 					case 4: //Otro
 						$Form_Inputs->form_input_disabled('Unidad de Medida','idUml_fake',  $x7);   
 					break;
@@ -836,7 +836,7 @@ foreach ($arrPermisos as $prod) {
 					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
 					';
 				}
-				
+
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
 					';
@@ -1410,8 +1410,7 @@ foreach ($arrPermisos as $prod) {
 
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 				$Form_Inputs->form_input_hidden('idInsumos', $_GET['edit_ins'], 2);
-				
-					
+
 				//Imprimo las variables
 				$arrTipo = array();
 				$query = "SELECT 

@@ -41,7 +41,7 @@ require_once '0_validate_user_1.php';
 	foreach ($INT_piezas as $INT_valor) {
 		//veo si existe el dato solicitado y genero el error
 		switch ($INT_valor) {
-			case 'idCentroCosto':         if(empty($idCentroCosto)){          $error['idCentroCosto']           = 'error/No ha seleccionado la licitacion';}break;
+			case 'idCentroCosto':       if(empty($idCentroCosto)){        $error['idCentroCosto']         = 'error/No ha seleccionado la licitacion';}break;
 			case 'idSistema':           if(empty($idSistema)){            $error['idSistema']             = 'error/No ha seleccionado el sistema';}break;
 			case 'Nombre':              if(empty($Nombre)){               $error['Nombre']                = 'error/No ha ingresado el nombre';}break;
 			case 'idEstado':            if(empty($idEstado)){             $error['idEstado']              = 'error/No ha seleccionado el estado';}break;
@@ -92,7 +92,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){         $SIS_data  = "'".$idSistema."'";      }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema!=''){        $SIS_data  = "'".$idSistema."'";      }else{$SIS_data  = "''";}
 				if(isset($Nombre) && $Nombre!=''){              $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
 				if(isset($idEstado) && $idEstado!=''){          $SIS_data .= ",'".$idEstado."'";      }else{$SIS_data .= ",''";}
 
@@ -131,7 +131,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){         $SIS_data  = "'".$idSistema."'";      }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema!=''){        $SIS_data  = "'".$idSistema."'";      }else{$SIS_data  = "''";}
 				if(isset($Nombre) && $Nombre!=''){              $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
 				if(isset($idEstado) && $idEstado!=''){          $SIS_data .= ",'".$idEstado."'";      }else{$SIS_data .= ",''";}
 
@@ -171,7 +171,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idCentroCosto='".$idCentroCosto."'";
-				if(isset($idSistema) && $idSistema!=''){          $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idSistema) && $idSistema!=''){         $SIS_data .= ",idSistema='".$idSistema."'";}
 				if(isset($Nombre) && $Nombre!=''){               $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($idEstado) && $idEstado!=''){           $SIS_data .= ",idEstado='".$idEstado."'";}
 
@@ -185,8 +185,7 @@ require_once '0_validate_user_1.php';
 					die;
 
 				}
-	
-				
+
 			}
 
 		break;
@@ -264,8 +263,8 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){           $SIS_data  = "'".$idSistema."'";       }else{$SIS_data  = "''";}
-				if(isset($idCentroCosto) && $idCentroCosto!=''){   $SIS_data .= ",'".$idCentroCosto."'";  }else{$SIS_data .= ",''";}
+				if(isset($idSistema) && $idSistema!=''){          $SIS_data  = "'".$idSistema."'";       }else{$SIS_data  = "''";}
+				if(isset($idCentroCosto) && $idCentroCosto!=''){  $SIS_data .= ",'".$idCentroCosto."'";  }else{$SIS_data .= ",''";}
 				if(isset($Nombre) && $Nombre!=''){                $SIS_data .= ",'".$Nombre."'";         }else{$SIS_data .= ",''";}
 
 				$xbla = '';
@@ -302,9 +301,9 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idLevel_".$lvl."='".$idLevel[$lvl]."'";
-				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idSistema) && $idSistema!=''){           $SIS_data .= ",idSistema='".$idSistema."'";}
 				if(isset($idCentroCosto) && $idCentroCosto!=''){   $SIS_data .= ",idCentroCosto='".$idCentroCosto."'";}
-				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                 $SIS_data .= ",Nombre='".$Nombre."'";}
 
 				/*******************************************************/
 				//se actualizan los datos

@@ -270,7 +270,7 @@ $html .= '
 								$xn_col=1;
 							}
 						}
-						
+
 						$html .= '</tr>';
 
 					$html .= '

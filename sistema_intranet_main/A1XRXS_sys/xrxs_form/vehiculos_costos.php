@@ -72,8 +72,8 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idTipo) && $idTipo!=''){           $SIS_data  = "'".$idTipo."'";        }else{$SIS_data  = "''";}
-				if(isset($idUsuario) && $idUsuario!=''){     $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){            $SIS_data  = "'".$idTipo."'";        }else{$SIS_data  = "''";}
+				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
 				if(isset($idVehiculo) && $idVehiculo!=''){    $SIS_data .= ",'".$idVehiculo."'";   }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
@@ -110,8 +110,8 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idCosto='".$idCosto."'";
-				if(isset($idTipo) && $idTipo!=''){                   $SIS_data .= ",idTipo='".$idTipo."'";}
-				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idTipo) && $idTipo!=''){                    $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($idVehiculo) && $idVehiculo!=''){            $SIS_data .= ",idVehiculo='".$idVehiculo."'";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){    $SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";}
 				if(isset($Creacion_mes) && $Creacion_mes!=''){        $SIS_data .= ",Creacion_mes='".$Creacion_mes."'";}
@@ -178,9 +178,6 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-						
-			
 
 		break;
 

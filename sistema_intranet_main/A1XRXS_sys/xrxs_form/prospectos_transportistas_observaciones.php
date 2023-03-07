@@ -65,8 +65,8 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idProspecto) && $idProspecto!=''){ $SIS_data  = "'".$idProspecto."'";    }else{$SIS_data  = "''";}
-				if(isset($idUsuario) && $idUsuario!=''){    $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
-				if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",'".$Fecha."'";        }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){     $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha!=''){             $SIS_data .= ",'".$Fecha."'";         }else{$SIS_data .= ",''";}
 				if(isset($Observacion) && $Observacion!=''){ $SIS_data .= ",'".$Observacion."'";   }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
@@ -93,8 +93,8 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idObservacion='".$idObservacion."'";
 				if(isset($idProspecto) && $idProspecto!=''){   $SIS_data .= ",idProspecto='".$idProspecto."'";}
-				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+				if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($Fecha) && $Fecha!=''){               $SIS_data .= ",Fecha='".$Fecha."'";}
 				if(isset($Observacion) && $Observacion!=''){   $SIS_data .= ",Observacion='".$Observacion."'";}
 
 				/*******************************************************/
@@ -156,8 +156,7 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
 
 /*******************************************************************************************************************/

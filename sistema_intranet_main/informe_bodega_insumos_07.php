@@ -384,19 +384,19 @@ foreach ($arrBodega as $bod) {
 								$SubTotal_11  = 0;
 								$SubTotal_12  = 0;
 								
-								foreach ($arrCategoria as $cat) { 
+								foreach ($arrCategoria as $cat) {
 									$SubTotalGen = 0;
-									$SubTotalGen = $SubTotalGen + $graficoMain[1][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $graficoMain[2][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $graficoMain[3][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $graficoMain[4][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $graficoMain[5][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $graficoMain[6][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $graficoMain[7][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $graficoMain[8][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $graficoMain[9][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $graficoMain[10][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $graficoMain[11][$cat['idCategoria']];  
+									$SubTotalGen = $SubTotalGen + $graficoMain[1][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $graficoMain[2][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $graficoMain[3][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $graficoMain[4][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $graficoMain[5][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $graficoMain[6][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $graficoMain[7][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $graficoMain[8][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $graficoMain[9][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $graficoMain[10][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $graficoMain[11][$cat['idCategoria']];
 									$SubTotalGen = $SubTotalGen + $graficoMain[12][$cat['idCategoria']];  
 									
 									
@@ -542,19 +542,19 @@ foreach ($arrBodega as $bod) {
 								$SubTotal_10  = 0;
 								$SubTotal_11  = 0;
 								$SubTotal_12  = 0;
-								foreach ($arrCategoria as $cat) { 
+								foreach ($arrCategoria as $cat) {
 									$SubTotalGen = 0;
-									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][1][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][2][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][3][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][4][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][5][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][6][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][7][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][8][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][9][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][10][$cat['idCategoria']];  
-									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][11][$cat['idCategoria']];  
+									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][1][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][2][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][3][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][4][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][5][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][6][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][7][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][8][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][9][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][10][$cat['idCategoria']];
+									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][11][$cat['idCategoria']];
 									$SubTotalGen = $SubTotalGen + $grafico[$datos[0]['BodegaID']][12][$cat['idCategoria']];  
 									
 									

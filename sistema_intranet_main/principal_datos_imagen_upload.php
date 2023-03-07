@@ -40,7 +40,7 @@ if(isset($_POST["image"])){
 			$resultado = mysqli_query ($dbConn, $query);
 			//Si ejecuto correctamente la consulta
 			if($resultado){
-								
+
 				//Seteo la variable de sesion si existe
 				if(isset($_SESSION['usuario']['basic_data']['Direccion_img'])){
 					$_SESSION['usuario']['basic_data']['Direccion_img'] = $imageName;

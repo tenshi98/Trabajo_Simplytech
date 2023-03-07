@@ -577,7 +577,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 
 				if(isset($OTRealizadas[$value['lvl']][$value['id']]['Cuenta'])&&$OTRealizadas[$value['lvl']][$value['id']]['Cuenta']!=0){
 					echo '<td align="right">'.$OTRealizadas[$value['lvl']][$value['id']]['Cuenta'].'</td>';
-					if($value['Valor']!=0){  
+					if($value['Valor']!=0){
 						//Se hacen calculos
 						$total = $value['Valor']*$OTRealizadas[$value['lvl']][$value['id']]['Cuenta'];
 						$porcentaje = ($total*100)/$value['ValorTotal'];
@@ -590,7 +590,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 						echo '<td></td>';
 						echo '<td></td>';
 					}
-				
+
 				}else{
 					echo '<td></td>';
 					echo '<td></td>';
@@ -687,7 +687,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 
 					//porcentaje cumplimiento
 					if($value['ValorTotal']!=0){
-						
+
 						$porcentaje = 0;
 						if(isset($suma_real)&&$suma_real!=0){
 							$porcentaje = ($total*100)/$value['ValorTotal'];
@@ -840,7 +840,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 												echo '<td align="center" style="background-color: #ccc;">'.numero_a_mes($z_mes).'<br/>'.$z_ano.'</td>';
 											}
 										}
-										
+
 										//sumo 1 al interruptor
 										$interruptor_mes++;
 									}
@@ -867,7 +867,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 												echo '<td align="center" style="background-color: #ccc;"></td>';
 											}
 										}
-										
+
 										//sumo 1 al interruptor
 										$interruptor_mes++;
 									}
@@ -942,7 +942,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 														}
 													}
 												}
-												
+
 												//sumo 1 al interruptor
 												$interruptor_mes++;
 											}
@@ -1012,7 +1012,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 														}
 													}
 												}
-												
+
 												//sumo 1 al interruptor
 												$interruptor_mes++;
 											}
@@ -1082,7 +1082,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 														}
 													}
 												}
-												
+
 												//sumo 1 al interruptor
 												$interruptor_mes++;
 											}
@@ -1181,7 +1181,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 														}
 													}
 												}
-												
+
 												//sumo 1 al interruptor
 												$interruptor_mes++;
 											}
@@ -1251,7 +1251,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 														}
 													}
 												}
-												
+
 												//sumo 1 al interruptor
 												$interruptor_mes++;
 											}
@@ -1347,7 +1347,7 @@ function arrayFlujo(array $array, array $FlujoMensual, array $UML, $nmax, $ano_m
 														}
 													}
 												}
-												
+
 												//sumo 1 al interruptor
 												$interruptor_mes++;
 											}

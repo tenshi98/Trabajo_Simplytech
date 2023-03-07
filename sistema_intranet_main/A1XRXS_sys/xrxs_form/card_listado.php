@@ -80,7 +80,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idCardImage) && $idCardImage!=''){   $SIS_data  = "'".$idCardImage."'";   }else{$SIS_data  = "''";}
 				if(isset($idCardType) && $idCardType!=''){     $SIS_data .= ",'".$idCardType."'";   }else{$SIS_data .= ",''";}
 				if(isset($idPosition) && $idPosition!=''){     $SIS_data .= ",'".$idPosition."'";   }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){             $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idCardImage,idCardType,idPosition,Nombre';
@@ -122,7 +122,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idCardImage) && $idCardImage!=''){  $SIS_data .= ",idCardImage='".$idCardImage."'";}
 				if(isset($idCardType) && $idCardType!=''){    $SIS_data .= ",idCardType='".$idCardType."'";}
 				if(isset($idPosition) && $idPosition!=''){    $SIS_data .= ",idPosition='".$idPosition."'";}
-				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",Nombre='".$Nombre."'";}
 
 				/*******************************************************/
 				//se actualizan los datos
@@ -266,7 +266,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "Direccion_img=''" ;
+			$SIS_data = "Direccion_img=''";
 			$resultado = db_update_data (false, $SIS_data, 'card_listado', 'idCard = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){

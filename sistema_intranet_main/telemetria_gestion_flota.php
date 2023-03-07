@@ -192,7 +192,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 									[ <?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>], 					
 								<?php } ?>
 								];
-							
+
 							/* ************************************************************************** */
 							function initialize() {
 								
@@ -352,7 +352,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 									tmp.markerFamilyName=opt.name;
 									tmp.markerFamilyPos=markers[opt.name].length-1;
 								}
-								
+
 								if (opt.events) {
 									for (var a in opt.events) {
 										google.maps.event.addListener(tmp,a,opt.events[a].bind(tmp));
@@ -435,7 +435,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 								}.bind(tmp);
 								
 								return tmp;
-								
+
 							}
 
 							/* ************************************************************************** */

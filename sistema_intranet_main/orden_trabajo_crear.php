@@ -283,7 +283,7 @@ foreach ($arrPermisos as $prod) {
 					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
 					';
 				}
-				
+
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
 					';
@@ -1050,7 +1050,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 					if (isset($_SESSION['ot_trabajos'])){
 						foreach ($_SESSION['ot_trabajos'] as $key => $x_tabla){
 							foreach ($x_tabla as $x_id_tabla) {
-								foreach ($x_id_tabla as $x_idInterno) { 
+								foreach ($x_id_tabla as $x_idInterno) {
 									$ubicacion  = $location.'&view=true';
 									$ubicacion .= '&idInterno='.$x_idInterno['valor_id'];
 									$ubicacion .= '&id_tabla='.$x_idInterno['id_tabla'];      
@@ -1060,7 +1060,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 									echo '
 									<tr class="item-row linea_punteada">
 										<td class="item-name" colspan="2">'.$x_idInterno['Codigo'].' - '.$x_idInterno['Nombre'].'</td>';
-										
+
 									//Se muestra el trabajo	
 									if(isset($x_idInterno['Item_Nombre'])&&$x_idInterno['Item_Nombre']!=''){
 										echo '<td colspan="2">'.$x_idInterno['Item_Trabajo'].': '.$x_idInterno['Item_Codigo'].' - '.$x_idInterno['Item_Nombre'].'</td>';

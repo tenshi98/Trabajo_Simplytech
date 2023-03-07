@@ -194,7 +194,7 @@ $arrProductos = array();
 $arrProductos = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
 /*****************************************/
-//Se trae un listado con los materiales	
+//Se trae un listado con los materiales
 $SIS_query = '
 cross_checking_materiales_seguridad.Nombre,
 cross_checking_materiales_seguridad.Codigo';
@@ -347,7 +347,7 @@ $html .= '
 							$TotLitrosApliXhect    = $TotLitrosApliXhect + $LitrosApliXhect;
 							
 							if($LitrosApliXhect!=0){$ndatax1 = porcentaje($LitrosApliXhect/$cuartel['Mojamiento']);}else{ $ndatax1 = '0 %';}
-							
+
 							$html .= '<tr>';
 								$html .= '<td>'.$cuartel['EspecieNombre'].' - '.$cuartel['VariedadNombre'].'</td>';
 								$html .= '<td>'.$cuartel['NSolicitud'].'</td>';
@@ -368,11 +368,11 @@ $html .= '
 								$html .= '</td>';
 								 
 								 
-							$html .= '</tr>';  
+							$html .= '</tr>';
 						}
 
 						if($TotLitrosApliXhect!=0){$ndatax1 = porcentaje($TotLitrosApliXhect/$TotalMojamiento);}else{ $ndatax1 = '0 %';}
-						
+
 						$html .= '<tr>';
 							$html .= '<td><strong>Totales</strong></td>';
 							$html .= '<td></td>';
@@ -499,7 +499,7 @@ $html .= '
 						foreach ($arrProductos as $prod) {
 							$PromedioCapacidad = $Capacidad/$NTract;
 							if($PromedioCapacidad!=0){$s_valor = Cantidades(($row_data['Mojamiento']*$TotalCuartelHectareas)/$PromedioCapacidad, 2);}else{$s_valor = 0;}
-							
+
 							$html .= '<tr>';
 							if($nmb==0){$html .= '<td rowspan="'.$NProd.'">'.Cantidades_decimales_justos($Capacidad).'</td>';}
 							if($nmb==0){$html .= '<td rowspan="'.$NProd.'">'.Cantidades_decimales_justos($PromedioCapacidad).'</td>';}

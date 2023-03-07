@@ -14,13 +14,13 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if (!empty($_POST['idSistema']))                        $idSistema                         = $_POST['idSistema'];
-	if (!empty($_POST['Nombre']))                           $Nombre                            = $_POST['Nombre'];
+	if (!empty($_POST['idSistema']))                         $idSistema                         = $_POST['idSistema'];
+	if (!empty($_POST['Nombre']))                            $Nombre                            = $_POST['Nombre'];
 	if ( isset($_POST['email_principal']))                   $email_principal                   = $_POST['email_principal'];
-	if (!empty($_POST['Rut']))                              $Rut                               = $_POST['Rut'];
+	if (!empty($_POST['Rut']))                               $Rut                               = $_POST['Rut'];
 	if ( isset($_POST['idCiudad']))                          $idCiudad                          = $_POST['idCiudad'];
 	if ( isset($_POST['idComuna']))                          $idComuna                          = $_POST['idComuna'];
-	if (!empty($_POST['Direccion']))                        $Direccion                         = $_POST['Direccion'];
+	if (!empty($_POST['Direccion']))                         $Direccion                         = $_POST['Direccion'];
 	if ( isset($_POST['CajaChica']))                         $CajaChica                         = $_POST['CajaChica'];
 	if ( isset($_POST['Contacto_Nombre']))                   $Contacto_Nombre                   = $_POST['Contacto_Nombre'];
 	if ( isset($_POST['Contacto_Fono1']))                    $Contacto_Fono1                    = $_POST['Contacto_Fono1'];
@@ -29,61 +29,61 @@ require_once '0_validate_user_1.php';
 	if ( isset($_POST['Contacto_Email']))                    $Contacto_Email                    = $_POST['Contacto_Email'];
 	if ( isset($_POST['Contacto_Web']))                      $Contacto_Web                      = $_POST['Contacto_Web'];
 	if ( isset($_POST['Contrato_Nombre']))                   $Contrato_Nombre                   = $_POST['Contrato_Nombre'];
-	if (!empty($_POST['Contrato_Numero']))                  $Contrato_Numero                   = $_POST['Contrato_Numero'];
-	if (!empty($_POST['Contrato_Fecha']))                   $Contrato_Fecha                    = $_POST['Contrato_Fecha'];
-	if (!empty($_POST['Contrato_Duracion']))                $Contrato_Duracion                 = $_POST['Contrato_Duracion'];
+	if (!empty($_POST['Contrato_Numero']))                   $Contrato_Numero                   = $_POST['Contrato_Numero'];
+	if (!empty($_POST['Contrato_Fecha']))                    $Contrato_Fecha                    = $_POST['Contrato_Fecha'];
+	if (!empty($_POST['Contrato_Duracion']))                 $Contrato_Duracion                 = $_POST['Contrato_Duracion'];
 	if ( isset($_POST['Config_IDGoogle']))                   $Config_IDGoogle                   = $_POST['Config_IDGoogle'];
 	if ( isset($_POST['Config_Google_apiKey']))              $Config_Google_apiKey              = $_POST['Config_Google_apiKey'];
 	if ( isset($_POST['Config_FCM_apiKey']))                 $Config_FCM_apiKey                 = $_POST['Config_FCM_apiKey'];
 	if ( isset($_POST['Config_FCM_Main_apiKey']))            $Config_FCM_Main_apiKey            = $_POST['Config_FCM_Main_apiKey'];
-	if (!empty($_POST['Config_imgLogo']))                   $Config_imgLogo                    = $_POST['Config_imgLogo'];
-	if (!empty($_POST['Config_idTheme']))                   $Config_idTheme                    = $_POST['Config_idTheme'];
+	if (!empty($_POST['Config_imgLogo']))                    $Config_imgLogo                    = $_POST['Config_imgLogo'];
+	if (!empty($_POST['Config_idTheme']))                    $Config_idTheme                    = $_POST['Config_idTheme'];
 	if ( isset($_POST['Config_CorreoRespaldo']))             $Config_CorreoRespaldo             = $_POST['Config_CorreoRespaldo'];
 	if ( isset($_POST['Config_Gmail_Usuario']))              $Config_Gmail_Usuario              = $_POST['Config_Gmail_Usuario'];
 	if ( isset($_POST['Config_Gmail_Password']))             $Config_Gmail_Password             = $_POST['Config_Gmail_Password'];
 	if ( isset($_POST['Config_WhatsappToken']))              $Config_WhatsappToken              = $_POST['Config_WhatsappToken'];
 	if ( isset($_POST['Config_WhatsappInstanceId']))         $Config_WhatsappInstanceId         = $_POST['Config_WhatsappInstanceId'];
-	if (!empty($_POST['idOpcionesGen_1']))                  $idOpcionesGen_1                   = $_POST['idOpcionesGen_1'];
-	if (!empty($_POST['idOpcionesGen_2']))                  $idOpcionesGen_2                   = $_POST['idOpcionesGen_2'];
-	if (!empty($_POST['idOpcionesGen_3']))                  $idOpcionesGen_3                   = $_POST['idOpcionesGen_3'];
-	if (!empty($_POST['idOpcionesGen_4']))                  $idOpcionesGen_4                   = $_POST['idOpcionesGen_4'];
-	if (!empty($_POST['idOpcionesGen_5']))                  $idOpcionesGen_5                   = $_POST['idOpcionesGen_5'];
+	if (!empty($_POST['idOpcionesGen_1']))                   $idOpcionesGen_1                   = $_POST['idOpcionesGen_1'];
+	if (!empty($_POST['idOpcionesGen_2']))                   $idOpcionesGen_2                   = $_POST['idOpcionesGen_2'];
+	if (!empty($_POST['idOpcionesGen_3']))                   $idOpcionesGen_3                   = $_POST['idOpcionesGen_3'];
+	if (!empty($_POST['idOpcionesGen_4']))                   $idOpcionesGen_4                   = $_POST['idOpcionesGen_4'];
+	if (!empty($_POST['idOpcionesGen_5']))                   $idOpcionesGen_5                   = $_POST['idOpcionesGen_5'];
 	if ( isset($_POST['idOpcionesGen_6']))                   $idOpcionesGen_6                   = $_POST['idOpcionesGen_6'];
-	if (!empty($_POST['idOpcionesGen_7']))                  $idOpcionesGen_7                   = $_POST['idOpcionesGen_7'];
-	if (!empty($_POST['idOpcionesGen_8']))                  $idOpcionesGen_8                   = $_POST['idOpcionesGen_8'];
-	if (!empty($_POST['idOpcionesGen_9']))                  $idOpcionesGen_9                   = $_POST['idOpcionesGen_9'];
-	if (!empty($_POST['idOpcionesGen_10']))                 $idOpcionesGen_10                  = $_POST['idOpcionesGen_10'];
-	if (!empty($_POST['idOpcionesGen_11']))                 $idOpcionesGen_11                  = $_POST['idOpcionesGen_11'];
-	if (!empty($_POST['idOpcionesGen_12']))                 $idOpcionesGen_12                  = $_POST['idOpcionesGen_12'];
-	if (!empty($_POST['idOpcionesGen_13']))                 $idOpcionesGen_13                  = $_POST['idOpcionesGen_13'];
-	if (!empty($_POST['idOpcionesGen_14']))                 $idOpcionesGen_14                  = $_POST['idOpcionesGen_14'];
-	if (!empty($_POST['idOpcionesGen_15']))                 $idOpcionesGen_15                  = $_POST['idOpcionesGen_15'];
-	if (!empty($_POST['idOpcionesGen_16']))                 $idOpcionesGen_16                  = $_POST['idOpcionesGen_16'];
-	if (!empty($_POST['idOpcionesGen_17']))                 $idOpcionesGen_17                  = $_POST['idOpcionesGen_17'];
-	if (!empty($_POST['idOpcionesGen_18']))                 $idOpcionesGen_18                  = $_POST['idOpcionesGen_18'];
-	if (!empty($_POST['idOpcionesGen_19']))                 $idOpcionesGen_19                  = $_POST['idOpcionesGen_19'];
-	if (!empty($_POST['idOpcionesGen_20']))                 $idOpcionesGen_20                  = $_POST['idOpcionesGen_20'];
-	if (!empty($_POST['OT_idBodegaProd']))                  $OT_idBodegaProd                   = $_POST['OT_idBodegaProd'];
-	if (!empty($_POST['OT_idBodegaIns']))                   $OT_idBodegaIns                    = $_POST['OT_idBodegaIns'];
-	if (!empty($_POST['Rubro']))                            $Rubro                             = $_POST['Rubro'];
-	if (!empty($_POST['idOpcionesTel']))                    $idOpcionesTel                     = $_POST['idOpcionesTel'];
-	if (!empty($_POST['idConfigRam']))                      $idConfigRam                       = $_POST['idConfigRam'];
-	if (!empty($_POST['idConfigTime']))                     $idConfigTime                      = $_POST['idConfigTime'];
-	if (!empty($_POST['idEstado']))                         $idEstado                          = $_POST['idEstado'];
-	if (!empty($_POST['CrossTech_DiasTempMin']))            $CrossTech_DiasTempMin             = $_POST['CrossTech_DiasTempMin'];
-	if (!empty($_POST['CrossTech_TempMin']))                $CrossTech_TempMin                 = $_POST['CrossTech_TempMin'];
-	if (!empty($_POST['CrossTech_TempMax']))                $CrossTech_TempMax                 = $_POST['CrossTech_TempMax'];
-	if (!empty($_POST['CrossTech_FechaDiasTempMin']))       $CrossTech_FechaDiasTempMin        = $_POST['CrossTech_FechaDiasTempMin'];
-	if (!empty($_POST['CrossTech_FechaTempMin']))           $CrossTech_FechaTempMin            = $_POST['CrossTech_FechaTempMin'];
-	if (!empty($_POST['CrossTech_FechaTempMax']))           $CrossTech_FechaTempMax            = $_POST['CrossTech_FechaTempMax'];
-	if (!empty($_POST['CrossTech_FechaUnidadFrio']))        $CrossTech_FechaUnidadFrio         = $_POST['CrossTech_FechaUnidadFrio'];
-	if (!empty($_POST['CrossTech_HoraPrevRev']))            $CrossTech_HoraPrevRev             = $_POST['CrossTech_HoraPrevRev'];
-	if (!empty($_POST['CrossTech_HoraPrevision']))          $CrossTech_HoraPrevision           = $_POST['CrossTech_HoraPrevision'];
-	if (!empty($_POST['CrossTech_HoraPrevCuenta']))         $CrossTech_HoraPrevCuenta          = $_POST['CrossTech_HoraPrevCuenta'];
-	if (!empty($_POST['CrossTech_HeladaTemp']))             $CrossTech_HeladaTemp              = $_POST['CrossTech_HeladaTemp'];
-	if (!empty($_POST['CrossTech_HeladaMailHoraIni']))      $CrossTech_HeladaMailHoraIni       = $_POST['CrossTech_HeladaMailHoraIni'];
-	if (!empty($_POST['CrossTech_HeladaMailHoraTerm']))     $CrossTech_HeladaMailHoraTerm      = $_POST['CrossTech_HeladaMailHoraTerm'];
-	if (!empty($_POST['Social_idUso']))                     $Social_idUso                      = $_POST['Social_idUso'];
+	if (!empty($_POST['idOpcionesGen_7']))                   $idOpcionesGen_7                   = $_POST['idOpcionesGen_7'];
+	if (!empty($_POST['idOpcionesGen_8']))                   $idOpcionesGen_8                   = $_POST['idOpcionesGen_8'];
+	if (!empty($_POST['idOpcionesGen_9']))                   $idOpcionesGen_9                   = $_POST['idOpcionesGen_9'];
+	if (!empty($_POST['idOpcionesGen_10']))                  $idOpcionesGen_10                  = $_POST['idOpcionesGen_10'];
+	if (!empty($_POST['idOpcionesGen_11']))                  $idOpcionesGen_11                  = $_POST['idOpcionesGen_11'];
+	if (!empty($_POST['idOpcionesGen_12']))                  $idOpcionesGen_12                  = $_POST['idOpcionesGen_12'];
+	if (!empty($_POST['idOpcionesGen_13']))                  $idOpcionesGen_13                  = $_POST['idOpcionesGen_13'];
+	if (!empty($_POST['idOpcionesGen_14']))                  $idOpcionesGen_14                  = $_POST['idOpcionesGen_14'];
+	if (!empty($_POST['idOpcionesGen_15']))                  $idOpcionesGen_15                  = $_POST['idOpcionesGen_15'];
+	if (!empty($_POST['idOpcionesGen_16']))                  $idOpcionesGen_16                  = $_POST['idOpcionesGen_16'];
+	if (!empty($_POST['idOpcionesGen_17']))                  $idOpcionesGen_17                  = $_POST['idOpcionesGen_17'];
+	if (!empty($_POST['idOpcionesGen_18']))                  $idOpcionesGen_18                  = $_POST['idOpcionesGen_18'];
+	if (!empty($_POST['idOpcionesGen_19']))                  $idOpcionesGen_19                  = $_POST['idOpcionesGen_19'];
+	if (!empty($_POST['idOpcionesGen_20']))                  $idOpcionesGen_20                  = $_POST['idOpcionesGen_20'];
+	if (!empty($_POST['OT_idBodegaProd']))                   $OT_idBodegaProd                   = $_POST['OT_idBodegaProd'];
+	if (!empty($_POST['OT_idBodegaIns']))                    $OT_idBodegaIns                    = $_POST['OT_idBodegaIns'];
+	if (!empty($_POST['Rubro']))                             $Rubro                             = $_POST['Rubro'];
+	if (!empty($_POST['idOpcionesTel']))                     $idOpcionesTel                     = $_POST['idOpcionesTel'];
+	if (!empty($_POST['idConfigRam']))                       $idConfigRam                       = $_POST['idConfigRam'];
+	if (!empty($_POST['idConfigTime']))                      $idConfigTime                      = $_POST['idConfigTime'];
+	if (!empty($_POST['idEstado']))                          $idEstado                          = $_POST['idEstado'];
+	if (!empty($_POST['CrossTech_DiasTempMin']))             $CrossTech_DiasTempMin             = $_POST['CrossTech_DiasTempMin'];
+	if (!empty($_POST['CrossTech_TempMin']))                 $CrossTech_TempMin                 = $_POST['CrossTech_TempMin'];
+	if (!empty($_POST['CrossTech_TempMax']))                 $CrossTech_TempMax                 = $_POST['CrossTech_TempMax'];
+	if (!empty($_POST['CrossTech_FechaDiasTempMin']))        $CrossTech_FechaDiasTempMin        = $_POST['CrossTech_FechaDiasTempMin'];
+	if (!empty($_POST['CrossTech_FechaTempMin']))            $CrossTech_FechaTempMin            = $_POST['CrossTech_FechaTempMin'];
+	if (!empty($_POST['CrossTech_FechaTempMax']))            $CrossTech_FechaTempMax            = $_POST['CrossTech_FechaTempMax'];
+	if (!empty($_POST['CrossTech_FechaUnidadFrio']))         $CrossTech_FechaUnidadFrio         = $_POST['CrossTech_FechaUnidadFrio'];
+	if (!empty($_POST['CrossTech_HoraPrevRev']))             $CrossTech_HoraPrevRev             = $_POST['CrossTech_HoraPrevRev'];
+	if (!empty($_POST['CrossTech_HoraPrevision']))           $CrossTech_HoraPrevision           = $_POST['CrossTech_HoraPrevision'];
+	if (!empty($_POST['CrossTech_HoraPrevCuenta']))          $CrossTech_HoraPrevCuenta          = $_POST['CrossTech_HoraPrevCuenta'];
+	if (!empty($_POST['CrossTech_HeladaTemp']))              $CrossTech_HeladaTemp              = $_POST['CrossTech_HeladaTemp'];
+	if (!empty($_POST['CrossTech_HeladaMailHoraIni']))       $CrossTech_HeladaMailHoraIni       = $_POST['CrossTech_HeladaMailHoraIni'];
+	if (!empty($_POST['CrossTech_HeladaMailHoraTerm']))      $CrossTech_HeladaMailHoraTerm      = $_POST['CrossTech_HeladaMailHoraTerm'];
+	if (!empty($_POST['Social_idUso']))                      $Social_idUso                      = $_POST['Social_idUso'];
 	if ( isset($_POST['Social_facebook']))                   $Social_facebook                   = $_POST['Social_facebook'];
 	if ( isset($_POST['Social_twitter']))                    $Social_twitter                    = $_POST['Social_twitter'];
 	if ( isset($_POST['Social_instagram']))                  $Social_instagram                  = $_POST['Social_instagram'];
@@ -98,14 +98,14 @@ require_once '0_validate_user_1.php';
 	if ( isset($_POST['RepresentanteNombre']))               $RepresentanteNombre               = $_POST['RepresentanteNombre'];
 	if ( isset($_POST['RepresentanteRut']))                  $RepresentanteRut                  = $_POST['RepresentanteRut'];
 
-	if (!empty($_POST['CrossTech_FechaDiasTempMinOld']))    $CrossTech_FechaDiasTempMinOld     = $_POST['CrossTech_FechaDiasTempMinOld'];
-	if (!empty($_POST['CrossTech_FechaTempMinOld']))        $CrossTech_FechaTempMinOld         = $_POST['CrossTech_FechaTempMinOld'];
-	if (!empty($_POST['CrossTech_FechaTempMaxOld']))        $CrossTech_FechaTempMaxOld         = $_POST['CrossTech_FechaTempMaxOld'];
-	if (!empty($_POST['CrossTech_FechaUnidadFrioOld']))     $CrossTech_FechaUnidadFrioOld      = $_POST['CrossTech_FechaUnidadFrioOld'];
-	if (!empty($_POST['CrossEnergy_PeriodoInicioOld']))     $CrossEnergy_PeriodoInicioOld      = $_POST['CrossEnergy_PeriodoInicioOld'];
-	if (!empty($_POST['CrossEnergy_PeriodoTerminoOld']))    $CrossEnergy_PeriodoTerminoOld     = $_POST['CrossEnergy_PeriodoTerminoOld'];
-	if (!empty($_POST['CrossEnergy_HorarioInicioOld']))     $CrossEnergy_HorarioInicioOld      = $_POST['CrossEnergy_HorarioInicioOld'];
-	if (!empty($_POST['CrossEnergy_HorarioTerminoOld']))    $CrossEnergy_HorarioTerminoOld     = $_POST['CrossEnergy_HorarioTerminoOld'];
+	if (!empty($_POST['CrossTech_FechaDiasTempMinOld']))     $CrossTech_FechaDiasTempMinOld     = $_POST['CrossTech_FechaDiasTempMinOld'];
+	if (!empty($_POST['CrossTech_FechaTempMinOld']))         $CrossTech_FechaTempMinOld         = $_POST['CrossTech_FechaTempMinOld'];
+	if (!empty($_POST['CrossTech_FechaTempMaxOld']))         $CrossTech_FechaTempMaxOld         = $_POST['CrossTech_FechaTempMaxOld'];
+	if (!empty($_POST['CrossTech_FechaUnidadFrioOld']))      $CrossTech_FechaUnidadFrioOld      = $_POST['CrossTech_FechaUnidadFrioOld'];
+	if (!empty($_POST['CrossEnergy_PeriodoInicioOld']))      $CrossEnergy_PeriodoInicioOld      = $_POST['CrossEnergy_PeriodoInicioOld'];
+	if (!empty($_POST['CrossEnergy_PeriodoTerminoOld']))     $CrossEnergy_PeriodoTerminoOld     = $_POST['CrossEnergy_PeriodoTerminoOld'];
+	if (!empty($_POST['CrossEnergy_HorarioInicioOld']))      $CrossEnergy_HorarioInicioOld      = $_POST['CrossEnergy_HorarioInicioOld'];
+	if (!empty($_POST['CrossEnergy_HorarioTerminoOld']))     $CrossEnergy_HorarioTerminoOld     = $_POST['CrossEnergy_HorarioTerminoOld'];
 
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -216,7 +216,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){                                       $Nombre                    = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){                                        $Nombre                    = EstandarizarInput($Nombre);}
 	if(isset($email_principal) && $email_principal!=''){                      $email_principal           = EstandarizarInput($email_principal);}
 	if(isset($Direccion) && $Direccion!=''){                                  $Direccion                 = EstandarizarInput($Direccion);}
 	if(isset($Contacto_Nombre) && $Contacto_Nombre!=''){                      $Contacto_Nombre           = EstandarizarInput($Contacto_Nombre);}
@@ -249,8 +249,8 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($email_principal)&&$email_principal!=''&&!validarEmail($email_principal)){ $error['email_principal']   = 'error/El Email de sistema ingresado no es valido';}
-	if(isset($Contacto_Fono1)&&$Contacto_Fono1!=''&&!validarNumero($Contacto_Fono1)){  $error['Fono1']	            = 'error/Ingrese un numero telefonico valido';}
-	if(isset($Contacto_Fono2)&&$Contacto_Fono2!=''&&!validarNumero($Contacto_Fono2)){  $error['Fono2']	            = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Contacto_Fono1)&&$Contacto_Fono1!=''&&!validarNumero($Contacto_Fono1)){   $error['Fono1']	            = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Contacto_Fono2)&&$Contacto_Fono2!=''&&!validarNumero($Contacto_Fono2)){   $error['Fono2']	            = 'error/Ingrese un numero telefonico valido';}
 	if(isset($Rut)&&$Rut!=''&&!validarRut($Rut)){                                       $error['Rut']               = 'error/El Rut ingresado no es valido';}
 	if(isset($Contacto_Email)&&$email_principal!=''&&!validarEmail($Contacto_Email)){   $error['Contacto_Email']    = 'error/El Email de contacto ingresado no es valido';}
 
@@ -285,7 +285,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($Nombre) && $Nombre!=''){                                              $SIS_data  = "'".$Nombre."'";                              }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){                                               $SIS_data  = "'".$Nombre."'";                              }else{$SIS_data  = "''";}
 				if(isset($email_principal) && $email_principal!=''){                             $SIS_data .= ",'".$email_principal."'";                    }else{$SIS_data .= ",''";}
 				if(isset($Rut) && $Rut!=''){                                                     $SIS_data .= ",'".$Rut."'";                                }else{$SIS_data .= ",''";}
 				if(isset($idCiudad) && $idCiudad!=''){                                           $SIS_data .= ",'".$idCiudad."'";                           }else{$SIS_data .= ",''";}
@@ -339,7 +339,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idOpcionesTel) && $idOpcionesTel!=''){                                 $SIS_data .= ",'".$idOpcionesTel."'";                      }else{$SIS_data .= ",''";}
 				if(isset($idConfigRam) && $idConfigRam!=''){                                     $SIS_data .= ",'".$idConfigRam."'";                        }else{$SIS_data .= ",''";}
 				if(isset($idConfigTime) && $idConfigTime!=''){                                   $SIS_data .= ",'".$idConfigTime."'";                       }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){                                          $SIS_data .= ",'".$idEstado."'";                           }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                                           $SIS_data .= ",'".$idEstado."'";                           }else{$SIS_data .= ",''";}
 				if(isset($CrossTech_DiasTempMin) && $CrossTech_DiasTempMin!=''){                 $SIS_data .= ",'".$CrossTech_DiasTempMin."'";              }else{$SIS_data .= ",''";}
 				if(isset($CrossTech_TempMin) && $CrossTech_TempMin!=''){                         $SIS_data .= ",'".$CrossTech_TempMin."'";                  }else{$SIS_data .= ",''";}
 				if(isset($CrossTech_TempMax) && $CrossTech_TempMax!=''){                         $SIS_data .= ",'".$CrossTech_TempMax."'";                  }else{$SIS_data .= ",''";}
@@ -370,14 +370,14 @@ require_once '0_validate_user_1.php';
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'Nombre,email_principal, Rut, idCiudad,idComuna, Direccion,
-				CajaChica, Contacto_Nombre,Contacto_Fono1, Contacto_Fono2, Contacto_Fax, Contacto_Email, Contacto_Web, 
+				CajaChica, Contacto_Nombre,Contacto_Fono1, Contacto_Fono2, Contacto_Fax, Contacto_Email, Contacto_Web,
 				Contrato_Nombre,Contrato_Numero, Contrato_Fecha, Contrato_Duracion, Config_IDGoogle,Config_Google_apiKey,
-				Config_FCM_apiKey, Config_FCM_Main_apiKey, Config_imgLogo, Config_idTheme, Config_CorreoRespaldo, 
-				Config_Gmail_Usuario, Config_Gmail_Password, Config_WhatsappToken, Config_WhatsappInstanceId, 
-				idOpcionesGen_1, idOpcionesGen_2, idOpcionesGen_3, idOpcionesGen_4, idOpcionesGen_5, idOpcionesGen_6, 
-				idOpcionesGen_7, idOpcionesGen_8, idOpcionesGen_9, idOpcionesGen_10, idOpcionesGen_11, idOpcionesGen_12, 
-				idOpcionesGen_13, idOpcionesGen_14, idOpcionesGen_15, idOpcionesGen_16, idOpcionesGen_17, 
-				idOpcionesGen_18, idOpcionesGen_19, idOpcionesGen_20, OT_idBodegaProd, OT_idBodegaIns, Rubro, idOpcionesTel, 
+				Config_FCM_apiKey, Config_FCM_Main_apiKey, Config_imgLogo, Config_idTheme, Config_CorreoRespaldo,
+				Config_Gmail_Usuario, Config_Gmail_Password, Config_WhatsappToken, Config_WhatsappInstanceId,
+				idOpcionesGen_1, idOpcionesGen_2, idOpcionesGen_3, idOpcionesGen_4, idOpcionesGen_5, idOpcionesGen_6,
+				idOpcionesGen_7, idOpcionesGen_8, idOpcionesGen_9, idOpcionesGen_10, idOpcionesGen_11, idOpcionesGen_12,
+				idOpcionesGen_13, idOpcionesGen_14, idOpcionesGen_15, idOpcionesGen_16, idOpcionesGen_17,
+				idOpcionesGen_18, idOpcionesGen_19, idOpcionesGen_20, OT_idBodegaProd, OT_idBodegaIns, Rubro, idOpcionesTel,
 				idConfigRam, idConfigTime, idEstado, CrossTech_DiasTempMin, CrossTech_TempMin, CrossTech_TempMax,
 				CrossTech_FechaDiasTempMin, CrossTech_FechaTempMin, CrossTech_FechaTempMax, CrossTech_FechaUnidadFrio,
 				CrossTech_HoraPrevRev, CrossTech_HoraPrevision, CrossTech_HoraPrevCuenta, CrossTech_HeladaTemp,
@@ -423,7 +423,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idSistema='".$idSistema."'";
-				if(isset($Nombre) && $Nombre!=''){                                              $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                                               $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($email_principal) && $email_principal!=''){                             $SIS_data .= ",email_principal='".$email_principal."'";}
 				if(isset($Rut) && $Rut!=''){                                                     $SIS_data .= ",Rut='".$Rut."'";}
 				if(isset($idCiudad) && $idCiudad!=''){                                           $SIS_data .= ",idCiudad='".$idCiudad."'";}
@@ -477,7 +477,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idOpcionesTel) && $idOpcionesTel!=''){                                 $SIS_data .= ",idOpcionesTel='".$idOpcionesTel."'";}
 				if(isset($idConfigRam) && $idConfigRam!=''){                                     $SIS_data .= ",idConfigRam='".$idConfigRam."'";}
 				if(isset($idConfigTime) && $idConfigTime!=''){                                   $SIS_data .= ",idConfigTime='".$idConfigTime."'";}
-				if(isset($idEstado) && $idEstado!=''){                                          $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idEstado) && $idEstado!=''){                                           $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($CrossTech_DiasTempMin) && $CrossTech_DiasTempMin!=''){                 $SIS_data .= ",CrossTech_DiasTempMin='".$CrossTech_DiasTempMin."'";}
 				if(isset($CrossTech_TempMin) && $CrossTech_TempMin!=''){                         $SIS_data .= ",CrossTech_TempMin='".$CrossTech_TempMin."'";}
 				if(isset($CrossTech_TempMax) && $CrossTech_TempMax!=''){                         $SIS_data .= ",CrossTech_TempMax='".$CrossTech_TempMax."'";}
@@ -492,13 +492,13 @@ require_once '0_validate_user_1.php';
 				if(isset($CrossTech_HeladaMailHoraIni) && $CrossTech_HeladaMailHoraIni!=''){     $SIS_data .= ",CrossTech_HeladaMailHoraIni='".$CrossTech_HeladaMailHoraIni."'";}
 				if(isset($CrossTech_HeladaMailHoraTerm) && $CrossTech_HeladaMailHoraTerm!=''){   $SIS_data .= ",CrossTech_HeladaMailHoraTerm='".$CrossTech_HeladaMailHoraTerm."'";}
 				if(isset($Social_idUso) && $Social_idUso!=''){                                   $SIS_data .= ",Social_idUso='".$Social_idUso."'";}
-				if(isset($Social_facebook) ){                                                      $SIS_data .= ",Social_facebook='".$Social_facebook."'";}
-				if(isset($Social_twitter) ){                                                       $SIS_data .= ",Social_twitter='".$Social_twitter."'";}
-				if(isset($Social_instagram) ){                                                     $SIS_data .= ",Social_instagram='".$Social_instagram."'";}
-				if(isset($Social_linkedin) ){                                                      $SIS_data .= ",Social_linkedin='".$Social_linkedin."'";}
-				if(isset($Social_rss) ){                                                           $SIS_data .= ",Social_rss='".$Social_rss."'";}
-				if(isset($Social_youtube) ){                                                       $SIS_data .= ",Social_youtube='".$Social_youtube."'";}
-				if(isset($Social_tumblr) ){                                                        $SIS_data .= ",Social_tumblr='".$Social_tumblr."'";}
+				if(isset($Social_facebook) ){                                                    $SIS_data .= ",Social_facebook='".$Social_facebook."'";}
+				if(isset($Social_twitter) ){                                                     $SIS_data .= ",Social_twitter='".$Social_twitter."'";}
+				if(isset($Social_instagram) ){                                                   $SIS_data .= ",Social_instagram='".$Social_instagram."'";}
+				if(isset($Social_linkedin) ){                                                    $SIS_data .= ",Social_linkedin='".$Social_linkedin."'";}
+				if(isset($Social_rss) ){                                                         $SIS_data .= ",Social_rss='".$Social_rss."'";}
+				if(isset($Social_youtube) ){                                                     $SIS_data .= ",Social_youtube='".$Social_youtube."'";}
+				if(isset($Social_tumblr) ){                                                      $SIS_data .= ",Social_tumblr='".$Social_tumblr."'";}
 				if(isset($CrossEnergy_PeriodoInicio) && $CrossEnergy_PeriodoInicio!=''){         $SIS_data .= ",CrossEnergy_PeriodoInicio='".$CrossEnergy_PeriodoInicio."'";}
 				if(isset($CrossEnergy_PeriodoTermino) && $CrossEnergy_PeriodoTermino!=''){       $SIS_data .= ",CrossEnergy_PeriodoTermino='".$CrossEnergy_PeriodoTermino."'";}
 				if(isset($CrossEnergy_HorarioInicio) && $CrossEnergy_HorarioInicio!=''){         $SIS_data .= ",CrossEnergy_HorarioInicio='".$CrossEnergy_HorarioInicio."'";}
@@ -723,7 +723,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "Config_imgLogo=''" ;
+			$SIS_data = "Config_imgLogo=''";
 			$resultado = db_update_data (false, $SIS_data, 'core_sistemas','idSistema = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -1175,19 +1175,19 @@ require_once '0_validate_user_1.php';
 						if(isset($CrossTech_TempMax) && $CrossTech_TempMax!=''){             $SIS_data .= ",CrossTech_TempMax='".$CrossTech_TempMax."'";}
 						if(isset($CrossTech_FechaDiasTempMin) && $CrossTech_FechaDiasTempMin != ''&&isset($CrossTech_FechaDiasTempMinOld) && $CrossTech_FechaDiasTempMinOld != ''&&$CrossTech_FechaDiasTempMin != $CrossTech_FechaDiasTempMinOld ){
 							$SIS_data .= ",CrossTech_FechaDiasTempMin='".$CrossTech_FechaDiasTempMin."'";
-							$SIS_data .= ",Dias_acumulado='0'" ;
+							$SIS_data .= ",Dias_acumulado='0'";
 						}
 						if(isset($CrossTech_FechaTempMin) && $CrossTech_FechaTempMin != ''&&isset($CrossTech_FechaTempMinOld) && $CrossTech_FechaTempMinOld != ''&&$CrossTech_FechaTempMin != $CrossTech_FechaTempMinOld ){
 							$SIS_data .= ",CrossTech_FechaTempMin='".$CrossTech_FechaTempMin."'";
-							$SIS_data .= ",HorasBajoGrados='0'" ;
+							$SIS_data .= ",HorasBajoGrados='0'";
 						}
 						if(isset($CrossTech_FechaTempMax) && $CrossTech_FechaTempMax != ''&&isset($CrossTech_FechaTempMaxOld) && $CrossTech_FechaTempMaxOld != ''&&$CrossTech_FechaTempMax != $CrossTech_FechaTempMaxOld){
 							$SIS_data .= ",CrossTech_FechaTempMax='".$CrossTech_FechaTempMax."'";
-							$SIS_data .= ",HorasSobreGrados='0'" ;
+							$SIS_data .= ",HorasSobreGrados='0'";
 						}
 						if(isset($CrossTech_FechaUnidadFrio) && $CrossTech_FechaUnidadFrio != ''&&isset($CrossTech_FechaUnidadFrioOld) && $CrossTech_FechaUnidadFrioOld != ''&&$CrossTech_FechaUnidadFrio != $CrossTech_FechaUnidadFrioOld){
 							$SIS_data .= ",CrossTech_FechaUnidadFrio='".$CrossTech_FechaUnidadFrio."'";
-							$SIS_data .= ",UnidadesFrio='0'" ;
+							$SIS_data .= ",UnidadesFrio='0'";
 						}
 
 						/*******************************************************/
@@ -1220,7 +1220,7 @@ require_once '0_validate_user_1.php';
 
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idSistema, Fecha, Hora, TimeStamp,
-						CrossTech_DiasTempMin, CrossTech_TempMin, CrossTech_TempMax, CrossTech_FechaDiasTempMin, 
+						CrossTech_DiasTempMin, CrossTech_TempMin, CrossTech_TempMax, CrossTech_FechaDiasTempMin,
 						CrossTech_FechaTempMin, CrossTech_FechaTempMax, CrossTech_FechaUnidadFrio';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_aux', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 

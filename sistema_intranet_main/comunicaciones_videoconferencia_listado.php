@@ -384,7 +384,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php 
-					filtrar($arrVideoConferencia, 'idVideoConferencia');  
+					filtrar($arrVideoConferencia, 'idVideoConferencia');
 					foreach($arrVideoConferencia as $VideoConferencia=>$Conferencia){
 						//si esta activa la conferencia
 						if(isset($Conferencia[0]['idEstado'])&&$Conferencia[0]['idEstado']==1){

@@ -75,7 +75,6 @@ $counter  = 0;
 $Temp_1   = '';
 $arrData  = array();
 
-			
 //recorro los datos
 foreach ($arrMediciones as $med) {
 	//verifico que exista fecha

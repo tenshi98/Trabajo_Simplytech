@@ -89,8 +89,8 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){  $SIS_data  = "'".$idSistema."'";          }else{$SIS_data  = "''";}
-				if(isset($idUsuario) && $idUsuario!=''){                   $SIS_data .= ",'".$idUsuario."'";         }else{$SIS_data .= ",''";}
+				if(isset($idSistema) && $idSistema!=''){                    $SIS_data  = "'".$idSistema."'";          }else{$SIS_data  = "''";}
+				if(isset($idUsuario) && $idUsuario!=''){                    $SIS_data .= ",'".$idUsuario."'";         }else{$SIS_data .= ",''";}
 				if(isset($idOT) && $idOT!=''){                              $SIS_data .= ",'".$idOT."'";              }else{$SIS_data .= ",''";}
 				if(isset($idUsuarioQueja) && $idUsuarioQueja!=''){          $SIS_data .= ",'".$idUsuarioQueja."'";    }else{$SIS_data .= ",''";}
 				if(isset($idTrabajadorQueja) && $idTrabajadorQueja!=''){    $SIS_data .= ",'".$idTrabajadorQueja."'"; }else{$SIS_data .= ",''";}
@@ -136,7 +136,7 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idQueja='".$idQueja."'";
 				if(isset($idSistema) && $idSistema!=''){                 $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idUsuario) && $idUsuario!=''){                $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idUsuario) && $idUsuario!=''){                 $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($idOT) && $idOT!=''){                           $SIS_data .= ",idOT='".$idOT."'";}
 				if(isset($idUsuarioQueja) && $idUsuarioQueja!=''){       $SIS_data .= ",idUsuarioQueja='".$idUsuarioQueja."'";}
 				if(isset($idTrabajadorQueja) && $idTrabajadorQueja!=''){ $SIS_data .= ",idTrabajadorQueja='".$idTrabajadorQueja."'";}

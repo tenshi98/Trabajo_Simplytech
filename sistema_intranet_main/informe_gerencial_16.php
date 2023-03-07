@@ -442,9 +442,9 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('div_idProveedor').style.display = 'none';
 								document.getElementById('div_idCliente').style.display = 'none';
 							}
-							
+
 						});
-						
+
 						$("#idTipoProd").on("change", function(){ //se ejecuta al cambiar valor del select
 							tipo_val= $("#idTipoProd").val();//Asignamos el valor seleccionado
 								
@@ -504,7 +504,7 @@ foreach ($arrPermisos as $prod) {
 								document.getElementById('idProducto').required = 'false';
 								document.getElementById('idServicio').required = 'false';
 							}
-							
+
 						});
 					});
 						

@@ -240,7 +240,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 //Si se ingresaron la utilizacion de los sensores
 	if(isset($id_Sensores)&&$id_Sensores==1&&isset($cantSensores)&&$cantSensores==0){  $error['cantSensores'] = 'error/No ha ingresado la cantidad de sensores a utilizar';}	
-	if(isset($FTP_Carpeta)&&strpos($FTP_Carpeta, " ")){                                $error['FTP_Carpeta']  = 'error/El nombre de la carpeta FTP contiene espacios';}	
+	if(isset($FTP_Carpeta)&&strpos($FTP_Carpeta, " ")){                                $error['FTP_Carpeta']  = 'error/El nombre de la carpeta FTP contiene espacios';}
 
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
@@ -582,8 +582,8 @@ require_once '0_validate_user_1.php';
 
 					if(isset($SensoresFechaUso[$i]) && $SensoresFechaUso[$i] != ''&&$SensoresFechaUso[$i]!=$SensoresFechaUso_Fake){
 						$SIS_data .= ",SensoresFechaUso_".$i."='".$SensoresFechaUso[$i]."'";
-						$SIS_data .= ",SensoresAccionMedC_".$i."=''" ;
-						$SIS_data .= ",SensoresAccionMedT_".$i."=''" ;
+						$SIS_data .= ",SensoresAccionMedC_".$i."=''";
+						$SIS_data .= ",SensoresAccionMedT_".$i."=''";
 					}
 				}
 
@@ -795,7 +795,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "Direccion_img=''" ;
+			$SIS_data = "Direccion_img=''";
 			$resultado = db_update_data (false, $SIS_data, 'telemetria_listado', 'idTelemetria = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -973,29 +973,29 @@ require_once '0_validate_user_1.php';
 				if(isset($rowdata['CrossCrane_grupo_motor_bajada']) && $rowdata['CrossCrane_grupo_motor_bajada']!=''){  $SIS_data .= ",'".$rowdata['CrossCrane_grupo_motor_bajada']."'";   }else{$SIS_data .= ",''";}
 
 				//datos en bruto
-				$SIS_data .= ",'0'" ;        //GeoErrores
-				$SIS_data .= ",'0'" ;        //LastUpdateFecha
-				$SIS_data .= ",'0'" ;        //LastUpdateHora
-				$SIS_data .= ",''" ;         //Sim_Num_Tel
-				$SIS_data .= ",''" ;         //Sim_Num_Serie
-				$SIS_data .= ",''" ;         //Sim_marca
-				$SIS_data .= ",''" ;         //Sim_modelo
-				$SIS_data .= ",''" ;         //Sim_Compania
-				$SIS_data .= ",''" ;         //IdentificadorEmpresa
-				$SIS_data .= ",'0'" ;        //NErrores
-				$SIS_data .= ",'0'" ;        //NAlertas
-				$SIS_data .= ",'2'" ;        //idUsoFTP
-				$SIS_data .= ",''" ;         //FTP_Carpeta
-				$SIS_data .= ",'1'" ;        //idBackup SI
-				$SIS_data .= ",'200000'" ;   //NregBackup 200000
-				$SIS_data .= ",'2'" ;        //idUbicacion
-				$SIS_data .= ",''" ;         //Estado
-				$SIS_data .= ",'2'" ;        //idAlertaTemprana
-				$SIS_data .= ",'00:15:00'" ; //AlertaTemprCritica
-				$SIS_data .= ",'01:00:00'" ; //AlertaTemprNormal
-				$SIS_data .= ",'2'" ;        //idGenerador
-				$SIS_data .= ",'0'" ;        //NDetenciones
-				$SIS_data .= ",'1'" ;        //idEstadoEncendido
+				$SIS_data .= ",'0'";        //GeoErrores
+				$SIS_data .= ",'0'";        //LastUpdateFecha
+				$SIS_data .= ",'0'";        //LastUpdateHora
+				$SIS_data .= ",''";         //Sim_Num_Tel
+				$SIS_data .= ",''";         //Sim_Num_Serie
+				$SIS_data .= ",''";         //Sim_marca
+				$SIS_data .= ",''";         //Sim_modelo
+				$SIS_data .= ",''";         //Sim_Compania
+				$SIS_data .= ",''";         //IdentificadorEmpresa
+				$SIS_data .= ",'0'";        //NErrores
+				$SIS_data .= ",'0'";        //NAlertas
+				$SIS_data .= ",'2'";        //idUsoFTP
+				$SIS_data .= ",''";         //FTP_Carpeta
+				$SIS_data .= ",'1'";        //idBackup SI
+				$SIS_data .= ",'200000'";   //NregBackup 200000
+				$SIS_data .= ",'2'";        //idUbicacion
+				$SIS_data .= ",''";         //Estado
+				$SIS_data .= ",'2'";        //idAlertaTemprana
+				$SIS_data .= ",'00:15:00'"; //AlertaTemprCritica
+				$SIS_data .= ",'01:00:00'"; //AlertaTemprNormal
+				$SIS_data .= ",'2'";        //idGenerador
+				$SIS_data .= ",'0'";        //NDetenciones
+				$SIS_data .= ",'1'";        //idEstadoEncendido
 
 				//bucle
 				$qry = '';
@@ -1105,7 +1105,7 @@ require_once '0_validate_user_1.php';
 							$SIS_data .= ",'".$lvl_1['Rango_ini']."'";
 							$SIS_data .= ",'".$lvl_1['Rango_fin']."'";
 							$SIS_data .= ",'".$lvl_1['NErroresMax']."'";
-							$SIS_data .= ",'0'" ;
+							$SIS_data .= ",'0'";
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idTelemetria,Nombre,idTipo,idTipoAlerta,idUniMed,valor_error,valor_diferencia,Rango_ini,Rango_fin,
@@ -1347,8 +1347,8 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$idTelemetria = $_GET['id'];
-				$SIS_data  = "SensorActivacionID=''" ;
-				$SIS_data .= ",SensorActivacionValor=''" ;
+				$SIS_data  = "SensorActivacionID=''";
+				$SIS_data .= ",SensorActivacionValor=''";
 
 				/*******************************************************/
 				//se actualizan los datos

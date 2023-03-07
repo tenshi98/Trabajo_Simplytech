@@ -64,7 +64,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	if(isset($Titulo) && $Titulo!=''){             $Titulo       = EstandarizarInput($Titulo);}
 	if(isset($Notificacion) && $Notificacion!=''){ $Notificacion = EstandarizarInput($Notificacion);}
-	if(isset($Nombre) && $Nombre!=''){            $Nombre       = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){             $Nombre       = EstandarizarInput($Nombre);}
 	if(isset($Direccion) && $Direccion!=''){       $Direccion    = EstandarizarInput($Direccion);}
 
 /*******************************************************************************************************************/
@@ -98,7 +98,7 @@ require_once '0_validate_user_1.php';
 					//redirijo
 					header( 'Location: '.$location.'&aprobar_uno=true' );
 					die;
-				
+
 				}
 
 			}
@@ -122,10 +122,9 @@ require_once '0_validate_user_1.php';
 					//redirijo
 					header( 'Location: '.$location.'&aprobar_todos=true' );
 					die;
-				
+
 				}
-					
-				
+
 			}
 
 		break;
@@ -140,10 +139,10 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idSistema) && $idSistema!=''){         $SIS_data  = "'".$idSistema."'";          }else{$SIS_data  = "''";}
-				if(isset($idUsuario) && $idUsuario!=''){        $SIS_data .= ",'".$idUsuario."'";         }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",'".$idUsuario."'";         }else{$SIS_data .= ",''";}
 				if(isset($Titulo) && $Titulo!=''){               $SIS_data .= ",'".$Titulo."'";            }else{$SIS_data .= ",''";}
 				if(isset($Notificacion) && $Notificacion!=''){   $SIS_data .= ",'".$Notificacion."'";      }else{$SIS_data .= ",''";}
-				if(isset($Fecha) && $Fecha!=''){  $SIS_data .= ",'".$Fecha."'";            }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha!=''){                 $SIS_data .= ",'".$Fecha."'";             }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema,idUsuario,Titulo,Notificacion,Fecha';
@@ -163,12 +162,12 @@ require_once '0_validate_user_1.php';
 
 					//Inserto el mensaje de entrega de materiales
 					foreach($arrUsuarios as $users) {
-						if(isset($idSistema) && $idSistema!=''){   $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
+						if(isset($idSistema) && $idSistema!=''){                     $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
 						if(isset($users['idUsuario']) && $users['idUsuario']!=''){   $SIS_data .= ",'".$users['idUsuario']."'";     }else{$SIS_data .= ",''";}
 						if(isset($Notificacion) && $Notificacion!=''){               $SIS_data .= ",'".$Notificacion."'";           }else{$SIS_data .= ",''";}
-						if(isset($Fecha) && $Fecha!=''){        $SIS_data .= ",'".$Fecha."'";                 }else{$SIS_data .= ",''";}
+						if(isset($Fecha) && $Fecha!=''){                             $SIS_data .= ",'".$Fecha."'";                  }else{$SIS_data .= ",''";}
 						if(isset($Estado) && $Estado!=''){                           $SIS_data .= ",'".$Estado."'";                 }else{$SIS_data .= ",''";}
-						if(isset($ultimo_id) && $ultimo_id!=''){                     $SIS_data .= ",'".$ultimo_id."'";       }else{$SIS_data .= ",''";}
+						if(isset($ultimo_id) && $ultimo_id!=''){                     $SIS_data .= ",'".$ultimo_id."'";              }else{$SIS_data .= ",''";}
 						$SIS_data .= ",'".hora_actual()."'";
 
 						// inserto los datos de registro en la db
@@ -195,10 +194,10 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idSistema) && $idSistema!=''){         $SIS_data  = "'".$idSistema."'";          }else{$SIS_data  = "''";}
-				if(isset($idUsuario) && $idUsuario!=''){        $SIS_data .= ",'".$idUsuario."'";         }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",'".$idUsuario."'";         }else{$SIS_data .= ",''";}
 				if(isset($Titulo) && $Titulo!=''){               $SIS_data .= ",'".$Titulo."'";            }else{$SIS_data .= ",''";}
 				if(isset($Notificacion) && $Notificacion!=''){   $SIS_data .= ",'".$Notificacion."'";      }else{$SIS_data .= ",''";}
-				if(isset($Fecha) && $Fecha!=''){  $SIS_data .= ",'".$Fecha."'";            }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha!=''){                 $SIS_data .= ",'".$Fecha."'";             }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema,idUsuario,Titulo,Notificacion,Fecha';
@@ -214,9 +213,9 @@ require_once '0_validate_user_1.php';
 					if(isset($idSistema) && $idSistema!=''){            $SIS_data  = "'".$idSistema."'";          }else{$SIS_data  = "''";}
 					if(isset($idUsrReceptor) && $idUsrReceptor!=''){    $SIS_data .= ",'".$idUsrReceptor."'";     }else{$SIS_data .= ",''";}
 					if(isset($Notificacion) && $Notificacion!=''){      $SIS_data .= ",'".$Notificacion."'";      }else{$SIS_data .= ",''";}
-					if(isset($Fecha) && $Fecha!=''){  $SIS_data .= ",'".$Fecha."'";            }else{$SIS_data .= ",''";}
+					if(isset($Fecha) && $Fecha!=''){                    $SIS_data .= ",'".$Fecha."'";             }else{$SIS_data .= ",''";}
 					if(isset($Estado) && $Estado!=''){                  $SIS_data .= ",'".$Estado."'";            }else{$SIS_data .= ",''";}
-					if(isset($ultimo_id) && $ultimo_id!=''){            $SIS_data .= ",'".$ultimo_id."'";  }else{$SIS_data .= ",''";}
+					if(isset($ultimo_id) && $ultimo_id!=''){            $SIS_data .= ",'".$ultimo_id."'";         }else{$SIS_data .= ",''";}
 					$SIS_data .= ",'".hora_actual()."'";
 
 					// inserto los datos de registro en la db
@@ -238,14 +237,14 @@ require_once '0_validate_user_1.php';
 
 			$z = '&filtro=true';
 			if(isset($idTipoUsuario)&&$idTipoUsuario!='') {    $z .= '&idTipoUsuario='.$idTipoUsuario;}
-			if(isset($Nombre)&&$Nombre!='') {                  $z .= '&Nombre='.$Nombre;} 
-			if(isset($rango_a)&&$rango_a!='') {                $z .= '&rango_a='.$rango_a;}  
+			if(isset($Nombre)&&$Nombre!='') {                  $z .= '&Nombre='.$Nombre;}
+			if(isset($rango_a)&&$rango_a!='') {                $z .= '&rango_a='.$rango_a;}
             if(isset($rango_b)&&$rango_b!='') {                $z .= '&rango_b='.$rango_b;}
 			if(isset($idCiudad)&&$idCiudad!='') {              $z .= '&idCiudad='.$idCiudad; }
-			if(isset($idComuna)&&$idComuna!='') {              $z .= '&idComuna='.$idComuna; } 
-			if(isset($Direccion)&&$Direccion!='') {            $z .= '&Direccion='.$Direccion;} 
-			if(isset($idSistema)&&$idSistema!='') {            $z .= '&idSistema='.$idSistema;}  
-						
+			if(isset($idComuna)&&$idComuna!='') {              $z .= '&idComuna='.$idComuna; }
+			if(isset($Direccion)&&$Direccion!='') {            $z .= '&Direccion='.$Direccion;}
+			if(isset($idSistema)&&$idSistema!='') {            $z .= '&idSistema='.$idSistema;}
+
 			header( 'Location: '.$location.$z );
 			die;
 
@@ -261,10 +260,10 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idSistema) && $idSistema!=''){         $SIS_data  = "'".$idSistema."'";          }else{$SIS_data  = "''";}
-				if(isset($idUsuario) && $idUsuario!=''){        $SIS_data .= ",'".$idUsuario."'";         }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",'".$idUsuario."'";         }else{$SIS_data .= ",''";}
 				if(isset($Titulo) && $Titulo!=''){               $SIS_data .= ",'".$Titulo."'";            }else{$SIS_data .= ",''";}
 				if(isset($Notificacion) && $Notificacion!=''){   $SIS_data .= ",'".$Notificacion."'";      }else{$SIS_data .= ",''";}
-				if(isset($Fecha) && $Fecha!=''){  $SIS_data .= ",'".$Fecha."'";            }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha!=''){                 $SIS_data .= ",'".$Fecha."'";             }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema,idUsuario,Titulo,Notificacion,Fecha';
@@ -279,10 +278,10 @@ require_once '0_validate_user_1.php';
 
 					//busco a todos los usuarios del sistema
 					$z = 'usuarios_listado.idEstado = 1';
-					if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario']!=''){  $z .= " AND usuarios_listado.idTipoUsuario = '".$_GET['idTipoUsuario']."'";}
-					if(isset($_GET['Nombre']) && $_GET['Nombre'] != '')  {              $z .= " AND usuarios_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre']."%' ";}
-					if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != '')  {          $w .= " AND usuarios_listado.idCiudad = '".$_GET['idCiudad']."'";}
-					if(isset($_GET['idComuna']) && $_GET['idComuna'] != '')  {          $w .= " AND usuarios_listado.idComuna = '".$_GET['idComuna']."'";}
+					if(isset($_GET['idTipoUsuario']) && $_GET['idTipoUsuario']!=''){    $z .= " AND usuarios_listado.idTipoUsuario = '".$_GET['idTipoUsuario']."'";}
+					if(isset($_GET['Nombre']) && $_GET['Nombre'] != '')  {              $z .= " AND usuarios_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+					if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != '')  {          $z .= " AND usuarios_listado.idCiudad = '".$_GET['idCiudad']."'";}
+					if(isset($_GET['idComuna']) && $_GET['idComuna'] != '')  {          $z .= " AND usuarios_listado.idComuna = '".$_GET['idComuna']."'";}
 					if(isset($_GET['Direccion']) && $_GET['Direccion'] != '')  {        $z .= " AND usuarios_listado.Direccion LIKE '%".EstandarizarInput($_GET['Direccion'])."%'";}
 					if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {        $z .= " AND usuarios_sistemas.idSistema = '".$_GET['idSistema']."'";}
 					if(isset($_GET['rango_a']) && $_GET['rango_a'] != ''&&isset($_GET['rango_b']) && $_GET['rango_b']!=''){
@@ -294,12 +293,12 @@ require_once '0_validate_user_1.php';
 
 					//Inserto el mensaje de entrega de materiales
 					foreach($arrPermiso as $permiso) {
-						if(isset($idSistema) && $idSistema!=''){       $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
+						if(isset($idSistema) && $idSistema!=''){                         $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
 						if(isset($permiso['idUsuario']) && $permiso['idUsuario']!=''){   $SIS_data .= ",'".$permiso['idUsuario']."'";   }else{$SIS_data .= ",''";}
 						if(isset($Notificacion) && $Notificacion!=''){                   $SIS_data .= ",'".$Notificacion."'";           }else{$SIS_data .= ",''";}
-						if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",'".$Fecha."'";                 }else{$SIS_data .= ",''";}
+						if(isset($Fecha) && $Fecha!=''){                                 $SIS_data .= ",'".$Fecha."'";                  }else{$SIS_data .= ",''";}
 						if(isset($Estado) && $Estado!=''){                               $SIS_data .= ",'".$Estado."'";                 }else{$SIS_data .= ",''";}
-						if(isset($ultimo_id) && $ultimo_id!=''){                         $SIS_data .= ",'".$ultimo_id."'";       }else{$SIS_data .= ",''";}
+						if(isset($ultimo_id) && $ultimo_id!=''){                         $SIS_data .= ",'".$ultimo_id."'";              }else{$SIS_data .= ",''";}
 						$SIS_data .= ",'".hora_actual()."'";
 
 						// inserto los datos de registro en la db

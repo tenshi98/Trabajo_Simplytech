@@ -281,7 +281,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 								$arrColumnas[$prod['porcentaje_dia']]['idPorcentaje']  = $prod['porcentaje_dia'];
 								$arrColumnas[$prod['porcentaje_dia']]['Nombre']        = $prod['porcentaje_nombre'];
 							}
-							
+
 						}
 					}
 				}
@@ -304,7 +304,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				echo '<td style="text-align: center;" width="10">Total Horas</td>';
 				echo '<td><a href="'.$location.'&addHora=true" title="Agregar Horas Extras" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Horas Extras</a></td>';
 				echo '</tr>';
-					
+
 				/***************************************************/
 				//
 				$total_general_horas = 0;

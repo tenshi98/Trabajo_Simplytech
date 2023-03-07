@@ -324,11 +324,11 @@ require_once '0_validate_user_1.php';
 				//Verifico si el cliente no es el mismo que el anterior
 				if(isset($FakeidCliente)&&isset($idCliente)&&$FakeidCliente!=0&&$idCliente!=0&&$FakeidCliente!=$idCliente){
 					//reseteo la ubicacion
-					$SIS_data .= ",idUbicacion_lvl_1=''" ;
-					$SIS_data .= ",idUbicacion_lvl_2=''" ;
-					$SIS_data .= ",idUbicacion_lvl_3=''" ;
-					$SIS_data .= ",idUbicacion_lvl_4=''" ;
-					$SIS_data .= ",idUbicacion_lvl_5=''" ;
+					$SIS_data .= ",idUbicacion_lvl_1=''";
+					$SIS_data .= ",idUbicacion_lvl_2=''";
+					$SIS_data .= ",idUbicacion_lvl_3=''";
+					$SIS_data .= ",idUbicacion_lvl_4=''";
+					$SIS_data .= ",idUbicacion_lvl_5=''";
 				}
 
 				/*******************************************************/
@@ -663,7 +663,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "Direccion_img=''" ;
+			$SIS_data = "Direccion_img=''";
 			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -699,7 +699,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "FichaTecnica=''" ;
+			$SIS_data = "FichaTecnica=''";
 			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -735,7 +735,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "HDS=''" ;
+			$SIS_data = "HDS=''";
 			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -1165,7 +1165,7 @@ require_once '0_validate_user_1.php';
 
 				//Se crea la maquina
 				$SIS_data  = "'".$rowdata['idSistema']."'";
-				$SIS_data .= ",'2'" ;                        //inactivo hasta editar
+				$SIS_data .= ",'2'";                        //inactivo hasta editar
 				$SIS_data .= ",'".$rowdata['Codigo']."'";
 				$SIS_data .= ",'".$Nombre."'";
 				$SIS_data .= ",'".$rowdata['Modelo']."'";
@@ -2040,7 +2040,7 @@ require_once '0_validate_user_1.php';
 				$SIS_data .= ",'".$arreglo_1['idMaquina']."'";
 				$SIS_data .= ",'".$arreglo_1['idUtilizable']."'";
 				$SIS_data .= ",'".$arreglo_1['Codigo']."'";
-				$SIS_data .= ",'".$arreglo_1['Nombre']." (Nuevo)'" ;
+				$SIS_data .= ",'".$arreglo_1['Nombre']." (Nuevo)'";
 				$SIS_data .= ",'".$arreglo_1['Marca']."'";
 				$SIS_data .= ",'".$arreglo_1['Modelo']."'";
 				$SIS_data .= ",'".$arreglo_1['AnoFab']."'";
@@ -3673,7 +3673,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "Direccion_img=''" ;
+			$SIS_data = "Direccion_img=''";
 			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado_level_'.$_GET['lvl'], 'idLevel_'.$_GET['lvl'].' = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){

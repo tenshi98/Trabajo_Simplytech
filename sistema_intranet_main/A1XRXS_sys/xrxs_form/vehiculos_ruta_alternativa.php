@@ -85,12 +85,12 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($idRuta) && $idRuta!=''){              $SIS_data  = "'".$idRuta."'";         }else{$SIS_data  = "''";}
 				if(isset($idSistema) && $idSistema!=''){        $SIS_data .= ",'".$idSistema."'";     }else{$SIS_data .= ",''";}
-				if(isset($idTipo) && $idTipo!=''){             $SIS_data .= ",'".$idTipo."'";        }else{$SIS_data .= ",''";}
-				if(isset($Fecha) && $Fecha!=''){ $SIS_data .= ",'".$Fecha."'";        }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){              $SIS_data .= ",'".$idTipo."'";        }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha!=''){                $SIS_data .= ",'".$Fecha."'";         }else{$SIS_data .= ",''";}
 				if(isset($idDia) && $idDia!=''){                $SIS_data .= ",'".$idDia."'";         }else{$SIS_data .= ",''";}
 				if(isset($HoraInicio) && $HoraInicio!=''){      $SIS_data .= ",'".$HoraInicio."'";    }else{$SIS_data .= ",''";}
 				if(isset($HoraTermino) && $HoraTermino!=''){    $SIS_data .= ",'".$HoraTermino."'";   }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){             $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){              $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idRuta, idSistema, idTipo, Fecha, idDia, HoraInicio, HoraTermino, Nombre';
@@ -128,12 +128,12 @@ require_once '0_validate_user_1.php';
 				$SIS_data = "idRutaAlt='".$idRutaAlt."'";
 				if(isset($idRuta) && $idRuta!=''){              $SIS_data .= ",idRuta='".$idRuta."'";}
 				if(isset($idSistema) && $idSistema!=''){        $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idTipo) && $idTipo!=''){             $SIS_data .= ",idTipo='".$idTipo."'";}
-				if(isset($Fecha) && $Fecha!=''){ $SIS_data .= ",Fecha='".$Fecha."'";}
+				if(isset($idTipo) && $idTipo!=''){              $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($Fecha) && $Fecha!=''){                $SIS_data .= ",Fecha='".$Fecha."'";}
 				if(isset($idDia) && $idDia!=''){                $SIS_data .= ",idDia='".$idDia."'";}
 				if(isset($HoraInicio) && $HoraInicio!=''){      $SIS_data .= ",HoraInicio='".$HoraInicio."'";}
 				if(isset($HoraTermino) && $HoraTermino!=''){    $SIS_data .= ",HoraTermino='".$HoraTermino."'";}
-				if(isset($Nombre) && $Nombre!=''){             $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){              $SIS_data .= ",Nombre='".$Nombre."'";}
 
 				/*******************************************************/
 				//se actualizan los datos

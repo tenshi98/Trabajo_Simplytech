@@ -252,7 +252,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 
 						//Ubicacion de los distintos dispositivos
 						var locations = [<?php echo $marker_loc; ?>];
-								
+
 						//marcadores
 						setMarkers(map_1, locations);
 			
@@ -273,7 +273,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 						$Longitud_z_prom  = 0;
 						$zcounter         = 0;
 						$zcounter2        = 0;
-									
+
 						//Se filtra por zona
 						filtrar($arrZonas, 'idZona');
 						//se recorre
@@ -308,7 +308,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 							}
 									
 							if(isset($Longitud_x)&&$Longitud_x!=''){
-								echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
+								echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}';
 							}
 									
 							echo '];';
@@ -378,7 +378,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 							if(isset($Latitud_z_prom)&&$Latitud_z_prom!=0&&isset($Longitud_z_prom)&&$Longitud_z_prom!=0){
 									echo 'myLatlng = new google.maps.LatLng('.$Latitud_z_prom.', '.$Longitud_z_prom.');';
 									echo 'map_1.setCenter(myLatlng);'; 
-									echo 'map_2.setCenter(myLatlng);'; 
+									echo 'map_2.setCenter(myLatlng);';
 							}
 						}
 						?>
@@ -401,7 +401,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 							//guardo las ultimas ubicaciones
 							last_latitude   = locations[i][0];
 							last_longitude  = locations[i][1];
-				
+
 							//ubicacion mapa		
 							latlngset = new google.maps.LatLng(latitude, longitude);
 
@@ -460,9 +460,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 						clearMarkers();
 						markersCam = [];
 					}
-					
-					
-					
+
 					/* ************************************************************************** */
 					google.maps.event.addDomListener(window, "load", initialize());
 					

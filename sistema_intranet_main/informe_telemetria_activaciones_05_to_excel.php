@@ -191,7 +191,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				if(isset($con['FueraHorario'])&&$con['FueraHorario']!=0){
 					$FueraHorario++;
 				}
-				
+
 			/*****************************************************************/
 			//Si cambia de dia
 			}elseif($fecha!=''&&$fecha!=$con['EquipoFecha']){ 
@@ -278,7 +278,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				if(isset($con['FueraHorario'])&&$con['FueraHorario']!=0){
 					$FueraHorario++;
 				}
-						
+
 			}
 									
 			$l_ejti = $con['EquipoJornada_inicio'];

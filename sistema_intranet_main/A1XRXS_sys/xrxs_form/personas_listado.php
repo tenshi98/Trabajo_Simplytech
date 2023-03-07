@@ -58,7 +58,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){                       $Nombre            = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){                        $Nombre            = EstandarizarInput($Nombre);}
 	if(isset($ApellidoPaterno) && $ApellidoPaterno!=''){      $ApellidoPaterno   = EstandarizarInput($ApellidoPaterno);}
 	if(isset($ApellidoMaterno) && $ApellidoMaterno!=''){      $ApellidoMaterno   = EstandarizarInput($ApellidoMaterno);}
 	if(isset($Direccion) && $Direccion!=''){                  $Direccion         = EstandarizarInput($Direccion);}
@@ -105,7 +105,7 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($idSistema) && $idSistema!=''){              $SIS_data  = "'".$idSistema."'";          }else{$SIS_data  = "''";}
 				if(isset($Rut) && $Rut!=''){                          $SIS_data .= ",'".$Rut."'";               }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",'".$Nombre."'";            }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                    $SIS_data .= ",'".$Nombre."'";            }else{$SIS_data .= ",''";}
 				if(isset($ApellidoPaterno) && $ApellidoPaterno!=''){  $SIS_data .= ",'".$ApellidoPaterno."'";   }else{$SIS_data .= ",''";}
 				if(isset($ApellidoMaterno) && $ApellidoMaterno!=''){  $SIS_data .= ",'".$ApellidoMaterno."'";   }else{$SIS_data .= ",''";}
 				if(isset($fNacimiento) && $fNacimiento!=''){          $SIS_data .= ",'".$fNacimiento."'";       }else{$SIS_data .= ",''";}
@@ -117,8 +117,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idAFP) && $idAFP!=''){                      $SIS_data .= ",'".$idAFP."'";             }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idSistema, Rut, Nombre,ApellidoPaterno, ApellidoMaterno,fNacimiento,idSexo, 
-				idCiudad, idComuna, Direccion, Sueldo, idAFP';
+				$SIS_columns = 'idSistema, Rut, Nombre,ApellidoPaterno, ApellidoMaterno,fNacimiento,idSexo, idCiudad, idComuna, Direccion, Sueldo, idAFP';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'personas_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Si ejecuto correctamente la consulta
@@ -157,9 +156,9 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idPersona='".$idPersona."'";
-				if(isset($idSistema) && $idSistema!=''){$SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idSistema) && $idSistema!=''){                  $SIS_data .= ",idSistema='".$idSistema."'";}
 				if(isset($Rut) && $Rut!=''){                              $SIS_data .= ",Rut='".$Rut."'";}
-				if(isset($Nombre) && $Nombre!=''){                       $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                        $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($ApellidoPaterno) && $ApellidoPaterno!=''){      $SIS_data .= ",ApellidoPaterno='".$ApellidoPaterno."'";}
 				if(isset($ApellidoMaterno) && $ApellidoMaterno!=''){      $SIS_data .= ",ApellidoMaterno='".$ApellidoMaterno."'";}
 				if(isset($fNacimiento) && $fNacimiento!=''){              $SIS_data .= ",fNacimiento='".$fNacimiento."'";}

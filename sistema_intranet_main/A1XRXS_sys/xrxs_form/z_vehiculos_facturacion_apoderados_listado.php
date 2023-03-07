@@ -107,7 +107,7 @@ require_once '0_validate_user_1.php';
 				unset($_SESSION['vehiculos_apoderados_detalle']);
 
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($Fecha)){$_SESSION['vehiculos_apoderados_basicos']['Fecha']         = $Fecha;           }else{$_SESSION['vehiculos_apoderados_basicos']['Fecha']         = '';}
+				if(isset($Fecha)){          $_SESSION['vehiculos_apoderados_basicos']['Fecha']         = $Fecha;           }else{$_SESSION['vehiculos_apoderados_basicos']['Fecha']         = '';}
 				if(isset($Observaciones)){  $_SESSION['vehiculos_apoderados_basicos']['Observaciones'] = $Observaciones;   }else{$_SESSION['vehiculos_apoderados_basicos']['Observaciones'] = 'Sin Observaciones';}
 				if(isset($idSistema)){      $_SESSION['vehiculos_apoderados_basicos']['idSistema']     = $idSistema;       }else{$_SESSION['vehiculos_apoderados_basicos']['idSistema']     = '';}
 				if(isset($idUsuario)){      $_SESSION['vehiculos_apoderados_basicos']['idUsuario']     = $idUsuario;       }else{$_SESSION['vehiculos_apoderados_basicos']['idUsuario']     = '';}
@@ -123,7 +123,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['vehiculos_apoderados_basicos']['Usuario'] = '';
 				}
 				/********************************************************************************/
-				if(isset($idSistema) && $idSistema!=''){ 
+				if(isset($idSistema) && $idSistema!=''){
 					// consulto los datos
 					$rowSistema = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -169,18 +169,16 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/La facturacion ya existe en el sistema';}
 			/*******************************************************************/
-			
-			
+			//si no hay errores
 			if(empty($error)){
 
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($Fecha)){$_SESSION['vehiculos_apoderados_basicos']['Fecha']         = $Fecha;           }else{$_SESSION['vehiculos_apoderados_basicos']['Fecha']         = '';}
+				if(isset($Fecha)){          $_SESSION['vehiculos_apoderados_basicos']['Fecha']         = $Fecha;           }else{$_SESSION['vehiculos_apoderados_basicos']['Fecha']         = '';}
 				if(isset($Observaciones)){  $_SESSION['vehiculos_apoderados_basicos']['Observaciones'] = $Observaciones;   }else{$_SESSION['vehiculos_apoderados_basicos']['Observaciones'] = 'Sin Observaciones';}
 				if(isset($idSistema)){      $_SESSION['vehiculos_apoderados_basicos']['idSistema']     = $idSistema;       }else{$_SESSION['vehiculos_apoderados_basicos']['idSistema']     = '';}
 				if(isset($idUsuario)){      $_SESSION['vehiculos_apoderados_basicos']['idUsuario']     = $idUsuario;       }else{$_SESSION['vehiculos_apoderados_basicos']['idUsuario']     = '';}
 				if(isset($fCreacion)){      $_SESSION['vehiculos_apoderados_basicos']['fCreacion']     = $fCreacion;       }else{$_SESSION['vehiculos_apoderados_basicos']['fCreacion']     = '';}
-				
-				
+
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario!=''){
 					// consulto los datos
@@ -191,7 +189,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['vehiculos_apoderados_basicos']['Usuario'] = '';
 				}
 				/********************************************************************************/
-				if(isset($idSistema) && $idSistema!=''){ 
+				if(isset($idSistema) && $idSistema!=''){
 					// consulto los datos
 					$rowSistema = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -226,7 +224,7 @@ require_once '0_validate_user_1.php';
 				$SIS_query = '
 				apoderados_listado.idApoderado,
 				apoderados_listado.Nombre AS ApoderadoNombre,
-				apoderados_listado.ApellidoPat AS ApoderadoApellidoPat, 
+				apoderados_listado.ApellidoPat AS ApoderadoApellidoPat,
 				apoderados_listado.ApellidoMat AS ApoderadoApellidoMat,
 				apoderados_listado.idPlan,
 				sistema_planes_transporte.Nombre AS PlanNombre,
@@ -265,8 +263,7 @@ require_once '0_validate_user_1.php';
 			//redirijo a la vista
 			header( 'Location: '.$location.'&view=true' );
 			die;
-			
-		
+
 		break;
 /*******************************************************************************************************************/
 		case 'facturar':
@@ -298,8 +295,6 @@ require_once '0_validate_user_1.php';
 			if(isset($n_data1)&&$n_data1==0){
 				$error['trabajos'] = 'error/No se han asignado apoderados';
 			}
-			
-				
 
 			// se ejecuta codigo en caso de no haber errores
 			if(empty($error)){
@@ -352,10 +347,10 @@ require_once '0_validate_user_1.php';
 							}
 							if(isset($SIS_fCreacion) && $SIS_fCreacion!=''){              $SIS_data .= ",'".$SIS_fCreacion."'";        }else{$SIS_data .= ",''";}
 							if(isset($apo['idApoderado']) && $apo['idApoderado']!=''){    $SIS_data .= ",'".$apo['idApoderado']."'";   }else{$SIS_data .= ",''";}
-							if(isset($apo['idPlan']) && $apo['idPlan']!=''){       $SIS_data .= ",'".$apo['idPlan']."'";        }else{$SIS_data .= ",''";}
+							if(isset($apo['idPlan']) && $apo['idPlan']!=''){              $SIS_data .= ",'".$apo['idPlan']."'";        }else{$SIS_data .= ",''";}
 							if(isset($apo['MontoPactado']) && $apo['MontoPactado']!=''){  $SIS_data .= ",'".$apo['MontoPactado']."'";  }else{$SIS_data .= ",''";}
 							$SIS_data .= ",'1'";//Estado No Pagado
-						
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idSistema, idUsuario, Fecha, idMes, Ano, fCreacion,
 							idApoderado, idPlan, MontoPactado, idEstadoPago';
@@ -364,8 +359,7 @@ require_once '0_validate_user_1.php';
 						}
 					}
 				}
-			
-					
+
 				//Borro todas las sesiones
 				unset($_SESSION['vehiculos_apoderados_basicos']);
 				unset($_SESSION['vehiculos_apoderados_detalle']);
@@ -389,11 +383,11 @@ require_once '0_validate_user_1.php';
 				//Se Guarda el dato con el pago realizado
 				if(isset($idTipoPago) && $idTipoPago!=''){                      $SIS_data  = "'".$idTipoPago."'";             }else{$SIS_data  = "''";}
 				if(isset($nDocPago) && $nDocPago!=''){                          $SIS_data .= ",'".$nDocPago."'";              }else{$SIS_data .= ",''";}
-				if(isset($Pagofecha) && $Pagofecha!=''){                        
+				if(isset($Pagofecha) && $Pagofecha!=''){
 					$SIS_data .= ",'".$Pagofecha."'";
 					$SIS_data .= ",'".fecha2NdiaMes($Pagofecha)."'";
 					$SIS_data .= ",'".fecha2NMes($Pagofecha)."'";
-					$SIS_data .= ",'".fecha2Ano($Pagofecha)."'";             
+					$SIS_data .= ",'".fecha2Ano($Pagofecha)."'";
 				}else{
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
@@ -414,10 +408,10 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/****************************************************************************************************/
 					//actualizo el pago actual
-					$SIS_data = "idEstadoPago='2'" ;
+					$SIS_data = "idEstadoPago='2'";
 					if(isset($idTipoPago) && $idTipoPago!=''){        $SIS_data .= ",idDocPago='".$idTipoPago."'";}
 					if(isset($nDocPago) && $nDocPago!=''){            $SIS_data .= ",nDocPago='".$nDocPago."'";}
-					if(isset($Pagofecha) && $Pagofecha!=''){          
+					if(isset($Pagofecha) && $Pagofecha!=''){
 						$SIS_data .= ",Pagofecha='".$Pagofecha."'";
 						$SIS_data .= ",PagoDia='".fecha2NdiaMes($Pagofecha)."'";
 						$SIS_data .= ",PagoidMes='".fecha2NMes($Pagofecha)."'";
@@ -429,10 +423,10 @@ require_once '0_validate_user_1.php';
 
 					//se actualizan los datos
 					$resultado = db_update_data (false, $SIS_data, 'vehiculos_facturacion_apoderados_listado_detalle', 'idFacturacionDetalle = "'.$idFacturacionDetalle.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 					/****************************************************************************************************/
 					//actualizo todos los pagos y los dejo con pagos en 0
-					$SIS_data = "idEstadoPago='3'" ;
+					$SIS_data = "idEstadoPago='3'";
 					if(isset($idUsuarioPago) && $idUsuarioPago!=''){  $SIS_data .= ",idUsuarioPago='".$idUsuarioPago."'";}
 					if(isset($ultimo_id) && $ultimo_id!=''){          $SIS_data .= ",idPago='".$ultimo_id."'";}
 
@@ -449,8 +443,6 @@ require_once '0_validate_user_1.php';
 				}
 			}
 
-	
-				
 		break;
 
 /*******************************************************************************************************************/

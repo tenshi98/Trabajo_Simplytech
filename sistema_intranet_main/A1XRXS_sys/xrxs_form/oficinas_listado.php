@@ -44,7 +44,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){      $Nombre    = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){       $Nombre    = EstandarizarInput($Nombre);}
 	if(isset($Ubicacion) && $Ubicacion!=''){ $Ubicacion = EstandarizarInput($Ubicacion);}
 	if(isset($Capacidad) && $Capacidad!=''){ $Capacidad = EstandarizarInput($Capacidad);}
 
@@ -82,8 +82,8 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idSistema) && $idSistema!=''){    $SIS_data  = "'".$idSistema."'";     }else{$SIS_data  = "''";}
-				if(isset($idEstado) && $idEstado!=''){     $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){         $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){      $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){          $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
 				if(isset($Ubicacion) && $Ubicacion!=''){    $SIS_data .= ",'".$Ubicacion."'";    }else{$SIS_data .= ",''";}
 				if(isset($Capacidad) && $Capacidad!=''){    $SIS_data .= ",'".$Capacidad."'";    }else{$SIS_data .= ",''";}
 
@@ -122,8 +122,8 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idOficina='".$idOficina."'";
 				if(isset($idSistema) && $idSistema!=''){     $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idEstado) && $idEstado!=''){      $SIS_data .= ",idEstado='".$idEstado."'";}
-				if(isset($Nombre) && $Nombre!=''){          $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idEstado) && $idEstado!=''){       $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Ubicacion) && $Ubicacion!=''){     $SIS_data .= ",Ubicacion='".$Ubicacion."'";}
 				if(isset($Capacidad) && $Capacidad!=''){     $SIS_data .= ",Capacidad='".$Capacidad."'";}
 

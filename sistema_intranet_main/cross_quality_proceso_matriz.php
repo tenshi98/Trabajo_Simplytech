@@ -531,7 +531,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 						let Sensores_tipo_1= $("#idNotaTipo_1").val();
 						let Sensores_tipo_2= $("#idNotaTipo_2").val();
 						let Sensores_tipo_3= $("#idNotaTipo_3").val();
-						
+
 						/******************************************************************/
 						//si la opcion esta activa
 						if(Sensores_val_1 == 1){
@@ -668,7 +668,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 							document.getElementById('idNotaTipo_3').selectedIndex = 0;
 						}
 					});
-					
+
 					/******************************************************************/
 					$("#idNotaTipo_1").on("change", function(){ //se ejecuta al cambiar valor del select
 						let Sensores_tipo_1 = $(this).val(); //Asignamos el valor seleccionado

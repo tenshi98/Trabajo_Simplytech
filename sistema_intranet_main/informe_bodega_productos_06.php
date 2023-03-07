@@ -183,7 +183,7 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 						<?php
 						//Variables
 						$Total = 0;
-						foreach ($arrCategoria as $cat) { 
+						foreach ($arrCategoria as $cat) {
 							$SubTotal = 0;
 							?>
 							<tr class="odd">
@@ -389,7 +389,7 @@ foreach ($arrBodegas as $bod) {
 							<?php
 							//Variables
 							$Total = 0;
-							foreach ($arrCategoria as $cat) { 
+							foreach ($arrCategoria as $cat) {
 								$SubTotal = 0;
 								?>
 								<tr class="odd">

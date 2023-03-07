@@ -63,7 +63,7 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idChat) && $idChat!=''){         $SIS_data  = "'".$idChat."'";        }else{$SIS_data  = "''";}
-				if(isset($idUsuario) && $idUsuario!=''){  $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){   $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idChat, idUsuario';
@@ -102,7 +102,7 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idUsers='".$idUsers."'";
 				if(isset($idChat) && $idChat!=''){           $SIS_data .= ",idChat='".$idChat."'";}
-				if(isset($idUsuario) && $idUsuario!=''){    $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idUsuario) && $idUsuario!=''){     $SIS_data .= ",idUsuario='".$idUsuario."'";}
 
 				/*******************************************************/
 				//se actualizan los datos

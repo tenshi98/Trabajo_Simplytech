@@ -102,7 +102,7 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 						mapTypeId: 'satellite'
 					};
 					map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-							
+
 					/* Data points defined as a mixture of WeightedLocation and LatLng objects */
 					var heatMapData = [
 						<?php
@@ -137,7 +137,7 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 							}
 							//se cierra la figura
 							if(isset($Longitud_x)&&$Longitud_x!=''){
-								echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
+								echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}';
 							}
 							?>
 						];

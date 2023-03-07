@@ -53,7 +53,7 @@ if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){
 if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){
 	$filter .= ' AND pagos_boletas_clientes.idCliente='.$_GET['idCliente'];
 }
-		
+
 //consulto todos los documentos relacionados al Trabajador
 $arrBoletas = array();
 $query = "SELECT 

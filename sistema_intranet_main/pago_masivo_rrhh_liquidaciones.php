@@ -264,7 +264,7 @@ $Form_Inputs = new Inputs();
 					if(isset($idDocPago)){         $x1  = $idDocPago;          }else{$x1  = '';}
 					if(isset($N_DocPago)){         $x2  = $N_DocPago;          }else{$x2  = '';}
 					if(isset($F_Pago)){            $x3  = $F_Pago;             }else{$x3  = '';}
-				
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select('Documento de Pago','idDocPago', $x1, 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
@@ -410,7 +410,7 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<?php 
 							if ($arrTrabajador!=false && !empty($arrTrabajador) && $arrTrabajador!='') {
-								foreach ($arrTrabajador as $tipo){ 
+								foreach ($arrTrabajador as $tipo){
 									$TotalPagar = $tipo['TotalAPagar'] - $tipo['MontoPagado'];
 									?>
 									<tr class="odd">

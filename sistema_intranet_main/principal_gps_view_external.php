@@ -195,7 +195,7 @@ require_once 'core/Web.Header.Views.php';
 									}
 									
 									break;
-									
+
 								//En caso de que este detenido	
 								case 5:
 									if($data['NDetenciones']!=0){

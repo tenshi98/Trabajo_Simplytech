@@ -80,7 +80,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						<?php
 						//Se arma la consulta
 						$aa = '';
-						for ($i = 1; $i <= $rowdata['cantSensores']; $i++) { 
+						for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 							$aa .= ',SensoresNombre_'.$i;
 							$aa .= ',SensoresUso_'.$i;
 							$aa .= ',SensoresFechaUso_'.$i;

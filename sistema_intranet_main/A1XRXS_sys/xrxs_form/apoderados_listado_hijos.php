@@ -50,7 +50,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){          $Nombre      = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){           $Nombre      = EstandarizarInput($Nombre);}
 	if(isset($ApellidoPat) && $ApellidoPat!=''){ $ApellidoPat = EstandarizarInput($ApellidoPat);}
 	if(isset($ApellidoMat) && $ApellidoMat!=''){ $ApellidoMat = EstandarizarInput($ApellidoMat);}
 
@@ -174,7 +174,7 @@ require_once '0_validate_user_1.php';
 
 									//filtros
 									if(isset($idApoderado) && $idApoderado!=''){    $SIS_data  = "'".$idApoderado."'";    }else{$SIS_data  = "''";}
-									if(isset($Nombre) && $Nombre!=''){             $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
+									if(isset($Nombre) && $Nombre!=''){              $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
 									if(isset($ApellidoPat) && $ApellidoPat!=''){    $SIS_data .= ",'".$ApellidoPat."'";   }else{$SIS_data .= ",''";}
 									if(isset($ApellidoMat) && $ApellidoMat!=''){    $SIS_data .= ",'".$ApellidoMat."'";   }else{$SIS_data .= ",''";}
 									if(isset($idSexo) && $idSexo!=''){              $SIS_data .= ",'".$idSexo."'";        }else{$SIS_data .= ",''";}
@@ -210,7 +210,7 @@ require_once '0_validate_user_1.php';
 
 					//filtros
 					if(isset($idApoderado) && $idApoderado!=''){    $SIS_data  = "'".$idApoderado."'";    }else{$SIS_data  = "''";}
-					if(isset($Nombre) && $Nombre!=''){             $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
+					if(isset($Nombre) && $Nombre!=''){              $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
 					if(isset($ApellidoPat) && $ApellidoPat!=''){    $SIS_data .= ",'".$ApellidoPat."'";   }else{$SIS_data .= ",''";}
 					if(isset($ApellidoMat) && $ApellidoMat!=''){    $SIS_data .= ",'".$ApellidoMat."'";   }else{$SIS_data .= ",''";}
 					if(isset($idSexo) && $idSexo!=''){              $SIS_data .= ",'".$idSexo."'";        }else{$SIS_data .= ",''";}
@@ -343,7 +343,7 @@ require_once '0_validate_user_1.php';
 									//Filtros
 									$SIS_data = "idHijos='".$idHijos."'";
 									if(isset($idApoderado) && $idApoderado!=''){      $SIS_data .= ",idApoderado='".$idApoderado."'";}
-									if(isset($Nombre) && $Nombre!=''){               $SIS_data .= ",Nombre='".$Nombre."'";}
+									if(isset($Nombre) && $Nombre!=''){                $SIS_data .= ",Nombre='".$Nombre."'";}
 									if(isset($ApellidoPat) && $ApellidoPat!=''){      $SIS_data .= ",ApellidoPat='".$ApellidoPat."'";}
 									if(isset($ApellidoMat) && $ApellidoMat!=''){      $SIS_data .= ",ApellidoMat='".$ApellidoMat."'";}
 									if(isset($idSexo) && $idSexo!=''){                $SIS_data .= ",idSexo='".$idSexo."'";}
@@ -378,7 +378,7 @@ require_once '0_validate_user_1.php';
 					//Filtros
 					$SIS_data = "idHijos='".$idHijos."'";
 					if(isset($idApoderado) && $idApoderado!=''){      $SIS_data .= ",idApoderado='".$idApoderado."'";}
-					if(isset($Nombre) && $Nombre!=''){               $SIS_data .= ",Nombre='".$Nombre."'";}
+					if(isset($Nombre) && $Nombre!=''){                $SIS_data .= ",Nombre='".$Nombre."'";}
 					if(isset($ApellidoPat) && $ApellidoPat!=''){      $SIS_data .= ",ApellidoPat='".$ApellidoPat."'";}
 					if(isset($ApellidoMat) && $ApellidoMat!=''){      $SIS_data .= ",ApellidoMat='".$ApellidoMat."'";}
 					if(isset($idSexo) && $idSexo!=''){                $SIS_data .= ",idSexo='".$idSexo."'";}
@@ -474,7 +474,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "Direccion_img=''" ;
+			$SIS_data = "Direccion_img=''";
 			$resultado = db_update_data (false, $SIS_data, 'apoderados_listado_hijos', 'idHijos = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){

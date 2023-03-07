@@ -14,11 +14,11 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if (!empty($_POST['idAFP']))                    $idAFP                     = $_POST['idAFP'];
-	if (!empty($_POST['Nombre']))                   $Nombre                    = $_POST['Nombre'];
+	if (!empty($_POST['idAFP']))                     $idAFP                     = $_POST['idAFP'];
+	if (!empty($_POST['Nombre']))                    $Nombre                    = $_POST['Nombre'];
 	if ( isset($_POST['PorcentajeDependiente']))     $PorcentajeDependiente     = $_POST['PorcentajeDependiente'];
 	if ( isset($_POST['PorcentajeIndependiente']))   $PorcentajeIndependiente   = $_POST['PorcentajeIndependiente'];
-	if (!empty($_POST['idEstado']))                 $idEstado                  = $_POST['idEstado'];
+	if (!empty($_POST['idEstado']))                  $idEstado                  = $_POST['idEstado'];
 
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -75,10 +75,10 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($Nombre) && $Nombre!=''){                                   $SIS_data  = "'".$Nombre."'";                    }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){                                    $SIS_data  = "'".$Nombre."'";                    }else{$SIS_data  = "''";}
 				if(isset($PorcentajeDependiente) && $PorcentajeDependiente!=''){      $SIS_data .= ",'".$PorcentajeDependiente."'";    }else{$SIS_data .= ",''";}
 				if(isset($PorcentajeIndependiente) && $PorcentajeIndependiente!=''){  $SIS_data .= ",'".$PorcentajeIndependiente."'";  }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){                               $SIS_data .= ",'".$idEstado."'";                 }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                                $SIS_data .= ",'".$idEstado."'";                 }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'Nombre,PorcentajeDependiente, PorcentajeIndependiente, idEstado';
@@ -114,10 +114,10 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idAFP='".$idAFP."'";
-				if(isset($Nombre) && $Nombre!=''){                                   $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                                    $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($PorcentajeDependiente) && $PorcentajeDependiente!=''){      $SIS_data .= ",PorcentajeDependiente='".$PorcentajeDependiente."'";}
 				if(isset($PorcentajeIndependiente) && $PorcentajeIndependiente!=''){  $SIS_data .= ",PorcentajeIndependiente='".$PorcentajeIndependiente."'";}
-				if(isset($idEstado) && $idEstado!=''){                               $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idEstado) && $idEstado!=''){                                $SIS_data .= ",idEstado='".$idEstado."'";}
 
 				/*******************************************************/
 				//se actualizan los datos

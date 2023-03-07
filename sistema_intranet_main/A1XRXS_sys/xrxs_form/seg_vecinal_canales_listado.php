@@ -42,7 +42,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){        $Nombre     = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){         $Nombre     = EstandarizarInput($Nombre);}
 	if(isset($Direccion) && $Direccion!=''){   $Direccion  = EstandarizarInput($Direccion);}
 	if(isset($Channel_ID) && $Channel_ID!=''){ $Channel_ID = EstandarizarInput($Channel_ID);}
 
@@ -86,7 +86,7 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idCategoria) && $idCategoria!=''){  $SIS_data  = "'".$idCategoria."'";   }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
 				if(isset($Direccion) && $Direccion!=''){      $SIS_data .= ",'".$Direccion."'";    }else{$SIS_data .= ",''";}
 				if(isset($Channel_ID) && $Channel_ID!=''){    $SIS_data .= ",'".$Channel_ID."'";   }else{$SIS_data .= ",''";}
 
@@ -126,7 +126,7 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idCanal='".$idCanal."'";
 				if(isset($idCategoria) && $idCategoria!=''){  $SIS_data .= ",idCategoria='".$idCategoria."'";}
-				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Direccion) && $Direccion!=''){      $SIS_data .= ",Direccion='".$Direccion."'";}
 				if(isset($Channel_ID) && $Channel_ID!=''){    $SIS_data .= ",Channel_ID='".$Channel_ID."'";}
 

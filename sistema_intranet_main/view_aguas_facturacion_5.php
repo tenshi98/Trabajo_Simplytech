@@ -48,7 +48,7 @@
 			<?php
 			//Se trae el saldo anterior si es que este existe
 			if($rowDatos['ClienteEstado']=='Sin Problemas'){
-				echo 'VENCIMIENTO: '.Fecha_estandar($rowDatos['ClienteFechaVencimiento']);	
+				echo 'VENCIMIENTO: '.Fecha_estandar($rowDatos['ClienteFechaVencimiento']);
 			}else{
 				echo $rowDatos['ClienteEstado'];
 			}

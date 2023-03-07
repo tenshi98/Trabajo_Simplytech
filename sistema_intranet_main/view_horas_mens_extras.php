@@ -193,7 +193,7 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 				}
 				echo '<td style="text-align: center;" width="120">Total Horas</td>';
 				echo '</tr>';
-					
+
 				/***************************************************/
 				if ($arrHorasExtras!=false && !empty($arrHorasExtras) && $arrHorasExtras!=''){
 					//recorro las horas

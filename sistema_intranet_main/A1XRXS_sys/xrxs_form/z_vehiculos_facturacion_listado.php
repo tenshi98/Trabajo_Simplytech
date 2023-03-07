@@ -107,11 +107,11 @@ require_once '0_validate_user_1.php';
 				unset($_SESSION['vehiculos_hijos']);
 
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($Fecha)){$_SESSION['vehiculos_basicos']['Fecha'] = $Fecha;                   }else{$_SESSION['vehiculos_basicos']['Fecha'] = '';}
+				if(isset($Fecha)){          $_SESSION['vehiculos_basicos']['Fecha']         = $Fecha;           }else{$_SESSION['vehiculos_basicos']['Fecha']         = '';}
 				if(isset($Observaciones)){  $_SESSION['vehiculos_basicos']['Observaciones'] = $Observaciones;   }else{$_SESSION['vehiculos_basicos']['Observaciones'] = 'Sin Observaciones';}
-				if(isset($idSistema)){      $_SESSION['vehiculos_basicos']['idSistema'] = $idSistema;           }else{$_SESSION['vehiculos_basicos']['idSistema'] = '';}
-				if(isset($idUsuario)){      $_SESSION['vehiculos_basicos']['idUsuario'] = $idUsuario;           }else{$_SESSION['vehiculos_basicos']['idUsuario'] = '';}
-				if(isset($fCreacion)){      $_SESSION['vehiculos_basicos']['fCreacion'] = $fCreacion;           }else{$_SESSION['vehiculos_basicos']['fCreacion'] = '';}
+				if(isset($idSistema)){      $_SESSION['vehiculos_basicos']['idSistema']     = $idSistema;       }else{$_SESSION['vehiculos_basicos']['idSistema']     = '';}
+				if(isset($idUsuario)){      $_SESSION['vehiculos_basicos']['idUsuario']    = $idUsuario;        }else{$_SESSION['vehiculos_basicos']['idUsuario']     = '';}
+				if(isset($fCreacion)){      $_SESSION['vehiculos_basicos']['fCreacion']     = $fCreacion;       }else{$_SESSION['vehiculos_basicos']['fCreacion']     = '';}
 
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario!=''){
@@ -123,7 +123,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['vehiculos_basicos']['Usuario'] = '';
 				}
 				/********************************************************************************/
-				if(isset($idSistema) && $idSistema!=''){ 
+				if(isset($idSistema) && $idSistema!=''){
 					// consulto los datos
 					$rowSistema = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -169,16 +169,15 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/La facturacion ya existe en el sistema';}
 			/*******************************************************************/
-			
-			
+			//si no hay errores
 			if(empty($error)){
 
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($Fecha)){$_SESSION['vehiculos_basicos']['Fecha'] = $Fecha;                   }else{$_SESSION['vehiculos_basicos']['Fecha'] = '';}
+				if(isset($Fecha)){          $_SESSION['vehiculos_basicos']['Fecha']         = $Fecha;           }else{$_SESSION['vehiculos_basicos']['Fecha']         = '';}
 				if(isset($Observaciones)){  $_SESSION['vehiculos_basicos']['Observaciones'] = $Observaciones;   }else{$_SESSION['vehiculos_basicos']['Observaciones'] = 'Sin Observaciones';}
-				if(isset($idSistema)){      $_SESSION['vehiculos_basicos']['idSistema'] = $idSistema;           }else{$_SESSION['vehiculos_basicos']['idSistema'] = '';}
-				if(isset($idUsuario)){      $_SESSION['vehiculos_basicos']['idUsuario'] = $idUsuario;           }else{$_SESSION['vehiculos_basicos']['idUsuario'] = '';}
-				if(isset($fCreacion)){      $_SESSION['vehiculos_basicos']['fCreacion'] = $fCreacion;           }else{$_SESSION['vehiculos_basicos']['fCreacion'] = '';}
+				if(isset($idSistema)){      $_SESSION['vehiculos_basicos']['idSistema']     = $idSistema;       }else{$_SESSION['vehiculos_basicos']['idSistema']     = '';}
+				if(isset($idUsuario)){      $_SESSION['vehiculos_basicos']['idUsuario']     = $idUsuario;       }else{$_SESSION['vehiculos_basicos']['idUsuario']     = '';}
+				if(isset($fCreacion)){      $_SESSION['vehiculos_basicos']['fCreacion']     = $fCreacion;       }else{$_SESSION['vehiculos_basicos']['fCreacion']     = '';}
 
 				/********************************************************************************/
 				if(isset($idUsuario) && $idUsuario!=''){
@@ -190,7 +189,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['vehiculos_basicos']['Usuario'] = '';
 				}
 				/********************************************************************************/
-				if(isset($idSistema) && $idSistema!=''){ 
+				if(isset($idSistema) && $idSistema!=''){
 					// consulto los datos
 					$rowSistema = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -273,8 +272,7 @@ require_once '0_validate_user_1.php';
 			//redirijo a la vista
 			header( 'Location: '.$location.'&view=true' );
 			die;
-			
-		
+
 		break;
 /*******************************************************************************************************************/
 		case 'facturar':
@@ -292,7 +290,6 @@ require_once '0_validate_user_1.php';
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la facturacion';
 			}
-			
 
 			// se ejecuta codigo en caso de no haber errores
 			if(empty($error)){
@@ -310,8 +307,7 @@ require_once '0_validate_user_1.php';
 					$SIS_Fecha_Mes_anterior  = 12;
 					$SIS_Fecha_Ano           = $SIS_Fecha_Ano - 1;
 				}
-			
-				
+
 				//traigo todos los apoderados con hijos
 				$SIS_query = '
 				apoderados_listado_hijos.idHijos,
@@ -353,9 +349,8 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/************************************************************************************************************************/
 					//Se insertan los detalles
-					filtrar($arrHijos, 'idApoderado');  
-					foreach($arrHijos as $categoria=>$Hijos){ 
-						
+					filtrar($arrHijos, 'idApoderado');
+					foreach($arrHijos as $categoria=>$Hijos){
 						//variables vacias
 						$arrCargas = array();
 						$nnx = 1;
@@ -364,26 +359,24 @@ require_once '0_validate_user_1.php';
 						$Adelanto = 0;
 						$Total = 0;
 						//Recorro los hijos del apoderado
-						foreach ($Hijos as $hijo) { 
+						foreach ($Hijos as $hijo) {
 							$arrCargas[$nnx]['idHijos']      = $hijo['idHijos'];
 							$arrCargas[$nnx]['idVehiculo']   = $hijo['idVehiculo'];
 							$arrCargas[$nnx]['Valor']        = $hijo['Valor'];
-							$dataEx                        = $Adelanto + $hijo['AnteriorPagado'] - $hijo['AnteriorPactado'];
+							$dataEx                          = $Adelanto + $hijo['AnteriorPagado'] - $hijo['AnteriorPactado'];
 							$Subtotal                        = $Subtotal + $hijo['Valor'];
-							$nnx++;	
-							
+							$nnx++;
+
 							if($dataEx < 0){
 								$Atraso = $dataEx*-1;
 							}else{
 								$Adelanto = $dataEx;
 							}
-						
-						
-							//echo $Atraso.' - '.$Adelanto.'<br/><br/>';
+
 						}
 
 						//Si adelanto es negativo reseteo a 0
-						
+
 						//Se calculan los totales
 						$Total = $Subtotal + $Atraso - $Adelanto;
 
@@ -391,8 +384,8 @@ require_once '0_validate_user_1.php';
 						if(isset($ultimo_id) && $ultimo_id!=''){            $SIS_data  = "'".$ultimo_id."'";        }else{$SIS_data  = "''";}
 						if(isset($SIS_idSistema) && $SIS_idSistema!=''){    $SIS_data .= ",'".$SIS_idSistema."'";   }else{$SIS_data .= ",''";}
 						if(isset($SIS_idUsuario) && $SIS_idUsuario!=''){    $SIS_data .= ",'".$SIS_idUsuario."'";   }else{$SIS_data .= ",''";}
-						if(isset($SIS_Fecha) && $SIS_Fecha!= ''){  
-							$SIS_data .= ",'".$SIS_Fecha."'";  
+						if(isset($SIS_Fecha) && $SIS_Fecha!= ''){
+							$SIS_data .= ",'".$SIS_Fecha."'";
 							$SIS_data .= ",'".fecha2NMes($SIS_Fecha)."'";
 							$SIS_data .= ",'".fecha2Ano($SIS_Fecha)."'";
 						}else{
@@ -402,52 +395,46 @@ require_once '0_validate_user_1.php';
 						}
 						if(isset($SIS_fCreacion) && $SIS_fCreacion!=''){                               $SIS_data .= ",'".$SIS_fCreacion."'";                 }else{$SIS_data .= ",''";}
 						if(isset($categoria) && $categoria!=''){                                       $SIS_data .= ",'".$categoria."'";                     }else{$SIS_data .= ",''";}
-						if(isset($arrCargas[1]['idHijos']) && $arrCargas[1]['idHijos']!=''){    $SIS_data .= ",'".$arrCargas[1]['idHijos']."'";       }else{$SIS_data .= ",''";}
-						if(isset($arrCargas[2]['idHijos']) && $arrCargas[2]['idHijos']!=''){    $SIS_data .= ",'".$arrCargas[2]['idHijos']."'";       }else{$SIS_data .= ",''";}
-						if(isset($arrCargas[3]['idHijos']) && $arrCargas[3]['idHijos']!=''){    $SIS_data .= ",'".$arrCargas[3]['idHijos']."'";       }else{$SIS_data .= ",''";}
-						if(isset($arrCargas[4]['idHijos']) && $arrCargas[4]['idHijos']!=''){    $SIS_data .= ",'".$arrCargas[4]['idHijos']."'";       }else{$SIS_data .= ",''";}
-						if(isset($arrCargas[5]['idHijos']) && $arrCargas[5]['idHijos']!=''){    $SIS_data .= ",'".$arrCargas[5]['idHijos']."'";       }else{$SIS_data .= ",''";}
+						if(isset($arrCargas[1]['idHijos']) && $arrCargas[1]['idHijos']!=''){           $SIS_data .= ",'".$arrCargas[1]['idHijos']."'";       }else{$SIS_data .= ",''";}
+						if(isset($arrCargas[2]['idHijos']) && $arrCargas[2]['idHijos']!=''){           $SIS_data .= ",'".$arrCargas[2]['idHijos']."'";       }else{$SIS_data .= ",''";}
+						if(isset($arrCargas[3]['idHijos']) && $arrCargas[3]['idHijos']!=''){           $SIS_data .= ",'".$arrCargas[3]['idHijos']."'";       }else{$SIS_data .= ",''";}
+						if(isset($arrCargas[4]['idHijos']) && $arrCargas[4]['idHijos']!=''){           $SIS_data .= ",'".$arrCargas[4]['idHijos']."'";       }else{$SIS_data .= ",''";}
+						if(isset($arrCargas[5]['idHijos']) && $arrCargas[5]['idHijos']!=''){           $SIS_data .= ",'".$arrCargas[5]['idHijos']."'";       }else{$SIS_data .= ",''";}
 						if(isset($arrCargas[1]['idVehiculo']) && $arrCargas[1]['idVehiculo']!=''){     $SIS_data .= ",'".$arrCargas[1]['idVehiculo']."'";    }else{$SIS_data .= ",''";}
 						if(isset($arrCargas[2]['idVehiculo']) && $arrCargas[2]['idVehiculo']!=''){     $SIS_data .= ",'".$arrCargas[2]['idVehiculo']."'";    }else{$SIS_data .= ",''";}
 						if(isset($arrCargas[3]['idVehiculo']) && $arrCargas[3]['idVehiculo']!=''){     $SIS_data .= ",'".$arrCargas[3]['idVehiculo']."'";    }else{$SIS_data .= ",''";}
 						if(isset($arrCargas[4]['idVehiculo']) && $arrCargas[4]['idVehiculo']!=''){     $SIS_data .= ",'".$arrCargas[4]['idVehiculo']."'";    }else{$SIS_data .= ",''";}
 						if(isset($arrCargas[5]['idVehiculo']) && $arrCargas[5]['idVehiculo']!=''){     $SIS_data .= ",'".$arrCargas[5]['idVehiculo']."'";    }else{$SIS_data .= ",''";}
-						if(isset($arrCargas[1]['Valor']) && $arrCargas[1]['Valor']!=''){        $SIS_data .= ",'".$arrCargas[1]['Valor']."'";         }else{$SIS_data .= ",''";}
-						if(isset($arrCargas[2]['Valor']) && $arrCargas[2]['Valor']!=''){        $SIS_data .= ",'".$arrCargas[2]['Valor']."'";         }else{$SIS_data .= ",''";}
-						if(isset($arrCargas[3]['Valor']) && $arrCargas[3]['Valor']!=''){        $SIS_data .= ",'".$arrCargas[3]['Valor']."'";         }else{$SIS_data .= ",''";}
-						if(isset($arrCargas[4]['Valor']) && $arrCargas[4]['Valor']!=''){        $SIS_data .= ",'".$arrCargas[4]['Valor']."'";         }else{$SIS_data .= ",''";}
-						if(isset($arrCargas[5]['Valor']) && $arrCargas[5]['Valor']!=''){        $SIS_data .= ",'".$arrCargas[5]['Valor']."'";         }else{$SIS_data .= ",''";}
+						if(isset($arrCargas[1]['Valor']) && $arrCargas[1]['Valor']!=''){               $SIS_data .= ",'".$arrCargas[1]['Valor']."'";         }else{$SIS_data .= ",''";}
+						if(isset($arrCargas[2]['Valor']) && $arrCargas[2]['Valor']!=''){               $SIS_data .= ",'".$arrCargas[2]['Valor']."'";         }else{$SIS_data .= ",''";}
+						if(isset($arrCargas[3]['Valor']) && $arrCargas[3]['Valor']!=''){               $SIS_data .= ",'".$arrCargas[3]['Valor']."'";         }else{$SIS_data .= ",''";}
+						if(isset($arrCargas[4]['Valor']) && $arrCargas[4]['Valor']!=''){               $SIS_data .= ",'".$arrCargas[4]['Valor']."'";         }else{$SIS_data .= ",''";}
+						if(isset($arrCargas[5]['Valor']) && $arrCargas[5]['Valor']!=''){               $SIS_data .= ",'".$arrCargas[5]['Valor']."'";         }else{$SIS_data .= ",''";}
 						if(isset($Subtotal) && $Subtotal!=''){                                         $SIS_data .= ",'".$Subtotal."'";                      }else{$SIS_data .= ",''";}
 						if(isset($Atraso) && $Atraso!=''){                                             $SIS_data .= ",'".$Atraso."'";                        }else{$SIS_data .= ",''";}
 						if(isset($Adelanto) && $Adelanto!=''){                                         $SIS_data .= ",'".$Adelanto."'";                      }else{$SIS_data .= ",''";}
 						if(isset($Total) && $Total!=''){                                               $SIS_data .= ",'".$Total."'";                         }else{$SIS_data .= ",''";}
-						$SIS_data .= ",'1'" ;
+						$SIS_data .= ",'1'";
 
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idFacturacion, idSistema, idUsuario, Fecha, idMes, Ano, fCreacion,
-						idApoderado, idHijos_1, idHijos_2, idHijos_3, idHijos_4, idHijos_5, idVehiculo_1, 
-						idVehiculo_2, idVehiculo_3, idVehiculo_4, idVehiculo_5, Monto_1, Monto_2, Monto_3, 
+						idApoderado, idHijos_1, idHijos_2, idHijos_3, idHijos_4, idHijos_5, idVehiculo_1,
+						idVehiculo_2, idVehiculo_3, idVehiculo_4, idVehiculo_5, Monto_1, Monto_2, Monto_3,
 						Monto_4, Monto_5, MontoSubTotal, MontoAtraso, MontoAdelanto, MontoTotal, idEstado';
 						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'vehiculos_facturacion_listado_detalle', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					}
-			
-					
+
 					//Borro todas las sesiones
 					unset($_SESSION['vehiculos_basicos']);
 					unset($_SESSION['vehiculos_hijos']);
-				
+
 					//redirijo a la vista
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
-				
-				
-				
-				
 			}
-			
-			
+
 		break;
 /*******************************************************************************************************************/
 		case 'pago':
@@ -462,11 +449,11 @@ require_once '0_validate_user_1.php';
 				//Se Guarda el datyo con el pago realizado
 				if(isset($idTipoPago) && $idTipoPago!=''){                      $SIS_data  = "'".$idTipoPago."'";             }else{$SIS_data  = "''";}
 				if(isset($nDocPago) && $nDocPago!=''){                          $SIS_data .= ",'".$nDocPago."'";              }else{$SIS_data .= ",''";}
-				if(isset($Pagofecha) && $Pagofecha!=''){                        
+				if(isset($Pagofecha) && $Pagofecha!=''){
 					$SIS_data .= ",'".$Pagofecha."'";
 					$SIS_data .= ",'".fecha2NdiaMes($Pagofecha)."'";
 					$SIS_data .= ",'".fecha2NMes($Pagofecha)."'";
-					$SIS_data .= ",'".fecha2Ano($Pagofecha)."'";             
+					$SIS_data .= ",'".fecha2Ano($Pagofecha)."'";
 				}else{
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
@@ -488,7 +475,7 @@ require_once '0_validate_user_1.php';
 					/****************************************************************************************************/
 					//Se revisa si ya hay un pago anterior en el mismo id
 					$rowdataold = db_select_data (false, 'montoPago', 'vehiculos_facturacion_listado_detalle', '', 'idFacturacionDetalle = '.$idFacturacionDetalle, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 					//actualizo el estado de la ultima facturacion
 					$SIS_data = "idFacturacionDetalle = '".$idFacturacionDetalle."' ";
 					//verifico que el saldo haya alcanzado para pagar
@@ -498,14 +485,14 @@ require_once '0_validate_user_1.php';
 						$SIS_data .= ",idEstado='2'";
 						/*******************************************************/
 						//se actualizan los datos
-						$SIS_data = "idEstado='2'" ;
+						$SIS_data = "idEstado='2'";
 						$resultado = db_update_data (false, $SIS_data, 'vehiculos_facturacion_listado_detalle', 'idApoderado = "'.$idApoderado.'" AND idEstado="1"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					}
-					
+
 					if(isset($idTipoPago) && $idTipoPago!=''){        $SIS_data .= ",idTipoPago='".$idTipoPago."'";}
 					if(isset($nDocPago) && $nDocPago!=''){            $SIS_data .= ",nDocPago='".$nDocPago."'";}
-					if(isset($Pagofecha) && $Pagofecha!=''){          
+					if(isset($Pagofecha) && $Pagofecha!=''){
 						$SIS_data .= ",Pagofecha='".$Pagofecha."'";
 						$SIS_data .= ",PagoDia='".fecha2NdiaMes($Pagofecha)."'";
 						$SIS_data .= ",PagoidMes='".fecha2NMes($Pagofecha)."'";
@@ -513,11 +500,11 @@ require_once '0_validate_user_1.php';
 					}
 					//se verifica si se tiene algun pago anterior, si es asi se suman los montos
 					if(isset($montoPago) && $montoPago!=''){
-						if(isset($rowdataold['montoPago']) && $rowdataold['montoPago']!=''){ 
+						if(isset($rowdataold['montoPago']) && $rowdataold['montoPago']!=''){
 							$nuevoMonto = $rowdataold['montoPago'] + $montoPago;
 						}else{
 							$nuevoMonto = $montoPago;
-						}    
+						}
 						$SIS_data .= ",montoPago='".$nuevoMonto."'";
 					}
 					if(isset($idUsuarioPago) && $idUsuarioPago!=''){  $SIS_data .= ",idUsuarioPago='".$idUsuarioPago."'";}
@@ -535,8 +522,6 @@ require_once '0_validate_user_1.php';
 				}
 			}
 
-	
-				
 		break;
 
 /*******************************************************************************************************************/

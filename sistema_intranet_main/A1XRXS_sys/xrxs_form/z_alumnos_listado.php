@@ -19,14 +19,14 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idEstado']))              $idEstado                = $_POST['idEstado'];
 	if (!empty($_POST['idCurso']))               $idCurso                 = $_POST['idCurso'];
 	if (!empty($_POST['email']))                 $email                   = $_POST['email'];
-	if (!empty($_POST['Nombre']))                $Nombre 	                = $_POST['Nombre'];
-	if (!empty($_POST['ApellidoPat']))           $ApellidoPat 	        = $_POST['ApellidoPat'];
-	if (!empty($_POST['ApellidoMat']))           $ApellidoMat 	        = $_POST['ApellidoMat'];
-	if (!empty($_POST['Rut']))                   $Rut 	                = $_POST['Rut'];
-	if (!empty($_POST['fNacimiento']))           $fNacimiento 	        = $_POST['fNacimiento'];
-	if (!empty($_POST['Direccion']))             $Direccion 	            = $_POST['Direccion'];
-	if (!empty($_POST['Fono1']))                 $Fono1 	                = $_POST['Fono1'];
-	if (!empty($_POST['Fono2']))                 $Fono2 	                = $_POST['Fono2'];
+	if (!empty($_POST['Nombre']))                $Nombre 	              = $_POST['Nombre'];
+	if (!empty($_POST['ApellidoPat']))           $ApellidoPat 	          = $_POST['ApellidoPat'];
+	if (!empty($_POST['ApellidoMat']))           $ApellidoMat 	          = $_POST['ApellidoMat'];
+	if (!empty($_POST['Rut']))                   $Rut 	                  = $_POST['Rut'];
+	if (!empty($_POST['fNacimiento']))           $fNacimiento 	          = $_POST['fNacimiento'];
+	if (!empty($_POST['Direccion']))             $Direccion 	          = $_POST['Direccion'];
+	if (!empty($_POST['Fono1']))                 $Fono1 	              = $_POST['Fono1'];
+	if (!empty($_POST['Fono2']))                 $Fono2 	              = $_POST['Fono2'];
 	if (!empty($_POST['idCiudad']))              $idCiudad                = $_POST['idCiudad'];
 	if (!empty($_POST['idComuna']))              $idComuna                = $_POST['idComuna'];
 	if (!empty($_POST['Fax']))                   $Fax                     = $_POST['Fax'];
@@ -55,7 +55,7 @@ require_once '0_validate_user_1.php';
 			case 'Nombre':                 if(empty($Nombre)){                 $error['Nombre']                  = 'error/No ha ingresado el Nombre';}break;
 			case 'ApellidoPat':            if(empty($ApellidoPat)){            $error['ApellidoPat']             = 'error/No ha ingresado el Apellido Paterno';}break;
 			case 'ApellidoMat':            if(empty($ApellidoMat)){            $error['ApellidoMat']             = 'error/No ha ingresado el Apellido Materno';}break;
-			case 'Rut':                    if(empty($Rut)){                    $error['Rut']                     = 'error/No ha ingresado el Rut';}break;	
+			case 'Rut':                    if(empty($Rut)){                    $error['Rut']                     = 'error/No ha ingresado el Rut';}break;
 			case 'fNacimiento':            if(empty($fNacimiento)){            $error['fNacimiento']             = 'error/No ha ingresado la fecha de nacimiento';}break;
 			case 'Direccion':              if(empty($Direccion)){              $error['Direccion']               = 'error/No ha ingresado la direccion';}break;
 			case 'Fono1':                  if(empty($Fono1)){                  $error['Fono1']                   = 'error/No ha ingresado el telefono';}break;
@@ -75,7 +75,7 @@ require_once '0_validate_user_1.php';
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
 	if(isset($email) && $email!=''){                                 $email                 = EstandarizarInput($email);}
-	if(isset($Nombre) && $Nombre!=''){                              $Nombre                = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){                               $Nombre                = EstandarizarInput($Nombre);}
 	if(isset($ApellidoPat) && $ApellidoPat!=''){                     $ApellidoPat           = EstandarizarInput($ApellidoPat);}
 	if(isset($ApellidoMat) && $ApellidoMat!=''){                     $ApellidoMat           = EstandarizarInput($ApellidoMat);}
 	if(isset($Direccion) && $Direccion!=''){                         $Direccion             = EstandarizarInput($Direccion);}
@@ -89,18 +89,18 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($email)&&!validarEmail($email)){                                 $error['email']                = 'error/El Email ingresado no es valido';}
-	if(isset($Fono1)&&!validarNumero($Fono1)){                               $error['Fono1']                = 'error/Ingrese un numero telefonico valido';}
-	if(isset($Fono2)&&!validarNumero($Fono2)){                               $error['Fono2']                = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Fono1)&&!validarNumero($Fono1)){                                $error['Fono1']                = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Fono2)&&!validarNumero($Fono2)){                                $error['Fono2']                = 'error/Ingrese un numero telefonico valido';}
 	if(isset($Rut)&&!validarRut($Rut)){                                       $error['Rut']                  = 'error/El Rut ingresado no es valido';}
 	if(isset($PersonaContacto_email)&&!validarEmail($PersonaContacto_email)){ $error['email']                = 'error/El Email ingresado no es valido';}
-	if(isset($PersonaContacto_Fono)&&!validarNumero($PersonaContacto_Fono)){ $error['PersonaContacto_Fono'] = 'error/Ingrese un numero telefonico valido';}
+	if(isset($PersonaContacto_Fono)&&!validarNumero($PersonaContacto_Fono)){  $error['PersonaContacto_Fono'] = 'error/Ingrese un numero telefonico valido';}
 	if(isset($password)&&isset($repassword)){
 		if ( $password <> $repassword )                  $error['password']  = 'error/Las contraseñas ingresadas no coinciden';
 	}
 	if(isset($password)){
 		if (strpos($password, " ")){                     $error['Password1'] = 'error/La contraseña contiene espacios vacios';}
 	}
-	
+
 	if(isset($email)&&contar_palabras_censuradas($email)!=0){                                  $error['email']                 = 'error/Edita email, contiene palabras no permitidas';}
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                                $error['Nombre']                = 'error/Edita Nombre,contiene palabras no permitidas';}
 	if(isset($ApellidoPat)&&contar_palabras_censuradas($ApellidoPat)!=0){                      $error['ApellidoPat']           = 'error/Edita Apellido Pat, contiene palabras no permitidas';}
@@ -147,11 +147,11 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){         $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
-				if(isset($idEstado) && $idEstado!=''){                            $SIS_data .= ",'".$idEstado."'";               }else{$SIS_data .= ",''";}
+				if(isset($idSistema) && $idSistema!=''){                           $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
+				if(isset($idEstado) && $idEstado!=''){                             $SIS_data .= ",'".$idEstado."'";               }else{$SIS_data .= ",''";}
 				if(isset($idCurso) && $idCurso!=''){                               $SIS_data .= ",'".$idCurso."'";                }else{$SIS_data .= ",''";}
 				if(isset($email) && $email!=''){                                   $SIS_data .= ",'".$email."'";                  }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){                                $SIS_data .= ",'".$Nombre."'";                 }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                                 $SIS_data .= ",'".$Nombre."'";                 }else{$SIS_data .= ",''";}
 				if(isset($ApellidoPat) && $ApellidoPat!=''){                       $SIS_data .= ",'".$ApellidoPat."'";            }else{$SIS_data .= ",''";}
 				if(isset($ApellidoMat) && $ApellidoMat!=''){                       $SIS_data .= ",'".$ApellidoMat."'";            }else{$SIS_data .= ",''";}
 				if(isset($Rut) && $Rut!=''){                                       $SIS_data .= ",'".$Rut."'";                    }else{$SIS_data .= ",''";}
@@ -169,8 +169,8 @@ require_once '0_validate_user_1.php';
 				if(isset($password) && $password!=''){                             $SIS_data .= ",'".md5($password)."'";          }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idSistema, idEstado, idCurso, email, Nombre,ApellidoPat, ApellidoMat, Rut, 
-				fNacimiento, Direccion, Fono1, Fono2, idCiudad, idComuna, Fax, PersonaContacto, 
+				$SIS_columns = 'idSistema, idEstado, idCurso, email, Nombre,ApellidoPat, ApellidoMat, Rut,
+				fNacimiento, Direccion, Fono1, Fono2, idCiudad, idComuna, Fax, PersonaContacto,
 				PersonaContacto_Fono, PersonaContacto_email, Web, password';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'alumnos_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -214,18 +214,18 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idAlumno='".$idAlumno."'";
-				if(isset($idSistema) && $idSistema!=''){         $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idEstado) && $idEstado!=''){                            $SIS_data .= ",idEstado='".$idEstado."'";}
-				if(isset($idCurso) && $idCurso!=''){                               $SIS_data .= ",idCurso='".$idCurso."'";}
-				if(isset($email) && $email!=''){                                   $SIS_data .= ",email='".$email."'";}
-				if(isset($Nombre) && $Nombre!=''){                                $SIS_data .= ",Nombre='".$Nombre."'";}
-				if(isset($ApellidoPat) && $ApellidoPat!=''){                       $SIS_data .= ",ApellidoPat='".$ApellidoPat."'";}
-				if(isset($ApellidoMat) && $ApellidoMat!=''){                       $SIS_data .= ",ApellidoMat='".$ApellidoMat."'";}
-				if(isset($Rut) && $Rut!=''){                                       $SIS_data .= ",Rut='".$Rut."'";}
-				if(isset($fNacimiento) && $fNacimiento!=''){                       $SIS_data .= ",fNacimiento='".$fNacimiento."'";}
-				if(isset($Direccion) && $Direccion!=''){                           $SIS_data .= ",Direccion='".$Direccion."'";}
-				if(isset($Fono1) && $Fono1!=''){                                   $SIS_data .= ",Fono1='".$Fono1."'";}
-				if(isset($Fono2) && $Fono2!=''){                                   $SIS_data .= ",Fono2='".$Fono2."'";}
+				if(isset($idSistema) && $idSistema!=''){                             $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idEstado) && $idEstado!=''){                               $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idCurso) && $idCurso!=''){                                 $SIS_data .= ",idCurso='".$idCurso."'";}
+				if(isset($email) && $email!=''){                                     $SIS_data .= ",email='".$email."'";}
+				if(isset($Nombre) && $Nombre!=''){                                   $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($ApellidoPat) && $ApellidoPat!=''){                         $SIS_data .= ",ApellidoPat='".$ApellidoPat."'";}
+				if(isset($ApellidoMat) && $ApellidoMat!=''){                         $SIS_data .= ",ApellidoMat='".$ApellidoMat."'";}
+				if(isset($Rut) && $Rut!=''){                                         $SIS_data .= ",Rut='".$Rut."'";}
+				if(isset($fNacimiento) && $fNacimiento!=''){                         $SIS_data .= ",fNacimiento='".$fNacimiento."'";}
+				if(isset($Direccion) && $Direccion!=''){                             $SIS_data .= ",Direccion='".$Direccion."'";}
+				if(isset($Fono1) && $Fono1!=''){                                     $SIS_data .= ",Fono1='".$Fono1."'";}
+				if(isset($Fono2) && $Fono2!=''){                                     $SIS_data .= ",Fono2='".$Fono2."'";}
 				if(isset($idCiudad) && $idCiudad!= ''){                              $SIS_data .= ",idCiudad='".$idCiudad."'";}
 				if(isset($idComuna) && $idComuna!= ''){                              $SIS_data .= ",idComuna='".$idComuna."'";}
 				if(isset($Fax) && $Fax!= ''){                                        $SIS_data .= ",Fax='".$Fax."'";}
@@ -446,7 +446,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "Direccion_img=''" ;
+			$SIS_data = "Direccion_img=''";
 			$resultado = db_update_data (false, $SIS_data, 'alumnos_listado', 'idAlumno = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -469,8 +469,6 @@ require_once '0_validate_user_1.php';
 				die;
 
 			}
-				
-			
 
 		break;
 /*******************************************************************************************************************/

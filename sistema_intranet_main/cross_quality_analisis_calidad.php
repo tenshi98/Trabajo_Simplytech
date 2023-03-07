@@ -823,9 +823,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 							                 'Nivel 5', 'idUbicacion_lvl_5',  $x11,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 							                 $dbConn, 'form1');
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x12, 1);
-				
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 

@@ -319,7 +319,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 						foreach($arrTractores as $trac) {	
 							if ($arrTractoresData!=false && !empty($arrTractoresData) && $arrTractoresData!='') {
 								$sum_LitrosAplicados    = 0;
-								foreach ($arrTractoresData as $tractda) { 
+								foreach ($arrTractoresData as $tractda) {
 									if(isset($trac['idTelemetria'])&&isset($tractda['idTelemetria'])&&$trac['idTelemetria']==$tractda['idTelemetria']){
 										$sum_LitrosAplicados    = $sum_LitrosAplicados + $tractda['LitrosAplicados'];				
 									}
@@ -502,7 +502,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								//dibujo
 								chart_litros = new google.visualization.ColumnChart(document.getElementById("chart_litros_aplicados"));
 								chart_litros.draw(data_litros, options_litros);
-								
+
 							}
 							/********************************************************************/
 							//Caudales
@@ -571,7 +571,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							/********************************************************************/
 							//Correccion
 							function draw_mojamiento(data1, data2) {
-								
+
 								//datos
 								data_mojamiento = google.visualization.arrayToDataTable([
 									["Label", "Valor"],
@@ -667,7 +667,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 											};*/
 											map_1 = new google.maps.Map(document.getElementById("map_canvas_x1"), myOptions1);
 											//map_2 = new google.maps.Map(document.getElementById("map_canvas_x2"), myOptions2);
-											
+
 											//Se dibujan los puntos en base a los niveles de riego
 											/* Data points defined as a mixture of WeightedLocation and LatLng objects */
 											/*var heatMapData = [<?php echo $rec_x; ?>];*/

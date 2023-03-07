@@ -193,7 +193,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 
 						let Sensores_val= $("#idUtilizable").val();
-								
+
 						//si es SI
 						if(Sensores_val == 1){
 							document.getElementById('div_idFrecuencia').style.display = 'none';
@@ -202,7 +202,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							document.getElementById('div_idTrabajo').style.display = 'none';
 							document.getElementById('div_Valor').style.display = 'none';
 							document.getElementById('div_ValorTotal').style.display = 'none';
-									
+
 						//si es NO
 						} else if(Sensores_val == 2){
 							document.getElementById('div_idFrecuencia').style.display = '';
@@ -934,7 +934,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 									
 						let TipoLicitacion_val= $("#idTipoLicitacion").val();
-									
+
 						//si es A suma Alzada
 						if(TipoLicitacion_val == 1){
 							document.getElementById('div_ValorMensual').style.display = '';
@@ -1047,7 +1047,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							document.getElementById('div_ValorMensual').style.display = '';
 							document.getElementById('div_Presupuesto').style.display = 'none';
 							document.getElementById('Presupuesto').value = "0";
-									
+
 						//si es Por Itemizado
 						} else if(modelSelected1 == 2){
 							document.getElementById('div_ValorMensual').style.display = 'none';

@@ -251,7 +251,7 @@ switch ($_GET['type']) {
 						$Form_Inputs->form_input_disabled('Cantidad Solicitada','Cantidad_fake', $x2);
 						$Form_Inputs->form_input_number('Cantidad Recibida', 'cant_ingresada', $x3, 2);
 
-						$Form_Inputs->form_input_hidden('CantComp', $x2, 2);	
+						$Form_Inputs->form_input_hidden('CantComp', $x2, 2);
 					break;
 					/********************************************************/
 					case 5:
@@ -287,8 +287,7 @@ switch ($_GET['type']) {
 					
 				    break;
 				}
-				
-				
+
 				$Form_Inputs->form_input_hidden('type', $_GET['type'], 2);
 				$Form_Inputs->form_input_hidden('idExistencia', $_GET['id'], 2); 
 				?>

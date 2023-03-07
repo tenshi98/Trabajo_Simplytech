@@ -192,7 +192,7 @@ $arrProductos = array();
 $arrProductos = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
 
 /*****************************************/
-//Se trae un listado con los materiales	
+//Se trae un listado con los materiales
 $SIS_query = '
 cross_checking_materiales_seguridad.Nombre,
 cross_checking_materiales_seguridad.Codigo';

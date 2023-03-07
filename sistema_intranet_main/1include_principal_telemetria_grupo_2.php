@@ -93,7 +93,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacio
 
 							//Si es temperatura
 							if($Temperatura_N!=0){
-								$New_Temperatura     = $Temperatura/$Temperatura_N; 
+								$New_Temperatura     = $Temperatura/$Temperatura_N;
 							}else{
 								$New_Temperatura     = 0;
 							}

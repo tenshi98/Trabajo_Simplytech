@@ -12,7 +12,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Se traspasan los datos a variables                                       */
 /*******************************************************************************************************************/
-	
+
 	//Variables
 	$Medidas  = array();
 	for ($i = 1; $i <= 50; $i++) {
@@ -65,8 +65,7 @@ require_once '0_validate_user_1.php';
 			/*for ($i = 1; $i <= 50; $i++) {
 				case 'Medida_'.$i: if(empty($Medidas[$i])){  $error['Medida_'.$i] = 'error/No ha ingresado la medida '.$i;}break;
 			}*/
-			
-			
+
 		}
 	}
 /*******************************************************************************************************************/
@@ -112,7 +111,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idMaquina) && $idMaquina!=''){                $SIS_data  = "'".$idMaquina."'";            }else{$SIS_data  = "''";}
 				if(isset($idMatriz) && $idMatriz!=''){                  $SIS_data .= ",'".$idMatriz."'";            }else{$SIS_data .= ",''";}
 				if(isset($idSistema) && $idSistema!=''){                $SIS_data .= ",'".$idSistema."'";           }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){                 $SIS_data .= ",'".$idEstado."'";            }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                  $SIS_data .= ",'".$idEstado."'";            }else{$SIS_data .= ",''";}
 				if(isset($idOT) && $idOT!=''){                          $SIS_data .= ",'".$idOT."'";                }else{$SIS_data .= ",''";}
 				if(isset($f_muestreo) && $f_muestreo!=''){              $SIS_data .= ",'".$f_muestreo."'";          }else{$SIS_data .= ",''";}
 				if(isset($f_recibida) && $f_recibida!=''){              $SIS_data .= ",'".$f_recibida."'";          }else{$SIS_data .= ",''";}
@@ -120,7 +119,7 @@ require_once '0_validate_user_1.php';
 				if(isset($n_muestra) && $n_muestra!=''){                $SIS_data .= ",'".$n_muestra."'";           }else{$SIS_data .= ",''";}
 				if(isset($obs_Diagnostico) && $obs_Diagnostico!=''){    $SIS_data .= ",'".$obs_Diagnostico."'";     }else{$SIS_data .= ",'Sin Observaciones'";}
 				if(isset($obs_Accion) && $obs_Accion!=''){              $SIS_data .= ",'".$obs_Accion."'";          }else{$SIS_data .= ",'Sin Observaciones'";}
-				if(isset($idTipo) && $idTipo!=''){                     $SIS_data .= ",'".$idTipo."'";              }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){                      $SIS_data .= ",'".$idTipo."'";              }else{$SIS_data .= ",''";}
 				if(isset($idLaboratorio) && $idLaboratorio!=''){        $SIS_data .= ",'".$idLaboratorio."'";       }else{$SIS_data .= ",''";}
 
 				$zz = '';
@@ -150,11 +149,11 @@ require_once '0_validate_user_1.php';
 						/**************************************/
 						// Se traen todos los datos de la maquina
 						$rowdata = db_select_data (false, 'idMaquina, cantPuntos '.$qry, 'maquinas_listado_matriz', '', 'idMatriz = "'.$idMatriz.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 						/**************************************/
 						//se realiza la verificacion
 						for ($i = 1; $i <= 50; $i++) {
-							
+
 							/***************************************************************/
 							//verifico cual es mayor para proceder a la verificacion
 							if($rowdata['PuntoMedAceptable_'.$i]>$rowdata['PuntoMedCondenatorio_'.$i]){
@@ -168,8 +167,8 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$alert_lvl."'";
 									$SIS_data .= ",'".$i."'";
 									$SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'";
-									if(isset($f_reporte) && $f_reporte!= ''){  
-										$SIS_data .= ",'".$f_reporte."'";  
+									if(isset($f_reporte) && $f_reporte!= ''){
+										$SIS_data .= ",'".$f_reporte."'";
 										$SIS_data .= ",'".fecha2NdiaMes($f_reporte)."'";
 										$SIS_data .= ",'".fecha2NSemana($f_reporte)."'";
 										$SIS_data .= ",'".fecha2NMes($f_reporte)."'";
@@ -187,8 +186,8 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'";
 
 									// inserto los datos de registro en la db
-									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia, 
-									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta, 
+									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia,
+									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta,
 									medCondenatorio';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'analisis_listado_alertas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -203,8 +202,8 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$alert_lvl."'";
 									$SIS_data .= ",'".$i."'";
 									$SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'";
-									if(isset($f_reporte) && $f_reporte!= ''){  
-										$SIS_data .= ",'".$f_reporte."'";  
+									if(isset($f_reporte) && $f_reporte!= ''){
+										$SIS_data .= ",'".$f_reporte."'";
 										$SIS_data .= ",'".fecha2NdiaMes($f_reporte)."'";
 										$SIS_data .= ",'".fecha2NSemana($f_reporte)."'";
 										$SIS_data .= ",'".fecha2NMes($f_reporte)."'";
@@ -222,8 +221,8 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'";
 
 									// inserto los datos de registro en la db
-									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia, 
-									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta, 
+									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia,
+									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta,
 									medCondenatorio';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'analisis_listado_alertas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -238,8 +237,8 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$alert_lvl."'";
 									$SIS_data .= ",'".$i."'";
 									$SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'";
-									if(isset($f_reporte) && $f_reporte!= ''){  
-										$SIS_data .= ",'".$f_reporte."'";  
+									if(isset($f_reporte) && $f_reporte!= ''){
+										$SIS_data .= ",'".$f_reporte."'";
 										$SIS_data .= ",'".fecha2NdiaMes($f_reporte)."'";
 										$SIS_data .= ",'".fecha2NSemana($f_reporte)."'";
 										$SIS_data .= ",'".fecha2NMes($f_reporte)."'";
@@ -257,17 +256,16 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'";
 
 									// inserto los datos de registro en la db
-									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia, 
-									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta, 
+									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia,
+									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta,
 									medCondenatorio';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'analisis_listado_alertas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 								}
-							
-								
+
 							/***************************************************************/
 							}elseif($rowdata['PuntoMedAceptable_'.$i]<$rowdata['PuntoMedCondenatorio_'.$i]){
-								
+
 								//alerta amarilla
 								if(isset($Medidas[$i])&&$Medidas[$i]!=''&&$Medidas[$i]<$rowdata['PuntoMedAlerta_'.$i]&&$Medidas[$i]>=$rowdata['PuntoMedAceptable_'.$i]){
 									//variables alerta amarilla
@@ -278,8 +276,8 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$alert_lvl."'";
 									$SIS_data .= ",'".$i."'";
 									$SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'";
-									if(isset($f_reporte) && $f_reporte!= ''){  
-										$SIS_data .= ",'".$f_reporte."'";  
+									if(isset($f_reporte) && $f_reporte!= ''){
+										$SIS_data .= ",'".$f_reporte."'";
 										$SIS_data .= ",'".fecha2NdiaMes($f_reporte)."'";
 										$SIS_data .= ",'".fecha2NSemana($f_reporte)."'";
 										$SIS_data .= ",'".fecha2NMes($f_reporte)."'";
@@ -297,8 +295,8 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'";
 
 									// inserto los datos de registro en la db
-									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia, 
-									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta, 
+									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia,
+									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta,
 									medCondenatorio';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'analisis_listado_alertas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -313,8 +311,8 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$alert_lvl."'";
 									$SIS_data .= ",'".$i."'";
 									$SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'";
-									if(isset($f_reporte) && $f_reporte!= ''){  
-										$SIS_data .= ",'".$f_reporte."'";  
+									if(isset($f_reporte) && $f_reporte!= ''){
+										$SIS_data .= ",'".$f_reporte."'";
 										$SIS_data .= ",'".fecha2NdiaMes($f_reporte)."'";
 										$SIS_data .= ",'".fecha2NSemana($f_reporte)."'";
 										$SIS_data .= ",'".fecha2NMes($f_reporte)."'";
@@ -332,8 +330,8 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'";
 
 									// inserto los datos de registro en la db
-									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia, 
-									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta, 
+									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia,
+									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta,
 									medCondenatorio';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'analisis_listado_alertas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -348,8 +346,8 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$alert_lvl."'";
 									$SIS_data .= ",'".$i."'";
 									$SIS_data .= ",'".$rowdata['PuntoNombre_'.$i]."'";
-									if(isset($f_reporte) && $f_reporte!= ''){  
-										$SIS_data .= ",'".$f_reporte."'";  
+									if(isset($f_reporte) && $f_reporte!= ''){
+										$SIS_data .= ",'".$f_reporte."'";
 										$SIS_data .= ",'".fecha2NdiaMes($f_reporte)."'";
 										$SIS_data .= ",'".fecha2NSemana($f_reporte)."'";
 										$SIS_data .= ",'".fecha2NMes($f_reporte)."'";
@@ -367,8 +365,8 @@ require_once '0_validate_user_1.php';
 									$SIS_data .= ",'".$rowdata['PuntoMedCondenatorio_'.$i]."'";
 
 									// inserto los datos de registro en la db
-									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia, 
-									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta, 
+									$SIS_columns = 'idAnalisis,nivel,idPunto,Nombrepunto, Creacion_fecha, Creacion_dia,
+									Creacion_Semana, Creacion_mes, Creacion_ano,valor, medAceptable,medAlerta,
 									medCondenatorio';
 									$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'analisis_listado_alertas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -376,8 +374,7 @@ require_once '0_validate_user_1.php';
 							}
 						}
 					}
-				
-						
+
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
@@ -397,7 +394,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idMaquina) && $idMaquina!=''){               $SIS_data .= ",idMaquina='".$idMaquina."'";}
 				if(isset($idMatriz) && $idMatriz!=''){                 $SIS_data .= ",idMatriz='".$idMatriz."'";}
 				if(isset($idSistema) && $idSistema!=''){               $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idEstado) && $idEstado!=''){                $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idEstado) && $idEstado!=''){                 $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idOT) && $idOT!=''){                         $SIS_data .= ",idOT='".$idOT."'";}
 				if(isset($f_muestreo) && $f_muestreo!=''){             $SIS_data .= ",f_muestreo='".$f_muestreo."'";}
 				if(isset($f_recibida) && $f_recibida!=''){             $SIS_data .= ",f_recibida='".$f_recibida."'";}
@@ -405,9 +402,9 @@ require_once '0_validate_user_1.php';
 				if(isset($n_muestra) && $n_muestra!=''){               $SIS_data .= ",n_muestra='".$n_muestra."'";}
 				if(isset($obs_Diagnostico) && $obs_Diagnostico!=''){   $SIS_data .= ",obs_Diagnostico='".$obs_Diagnostico."'";}
 				if(isset($obs_Accion) && $obs_Accion!=''){             $SIS_data .= ",obs_Accion='".$obs_Accion."'";}
-				if(isset($idTipo) && $idTipo!=''){                    $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($idTipo) && $idTipo!=''){                     $SIS_data .= ",idTipo='".$idTipo."'";}
 				if(isset($idLaboratorio) && $idLaboratorio!=''){       $SIS_data .= ",idLaboratorio='".$idLaboratorio."'";}
-				
+
 				for ($i = 1; $i <= 50; $i++) {
 					if(isset($Medidas[$i]) && $Medidas[$i]!=''){    $SIS_data .= ",Medida_".$i."='".$Medidas[$i]."'";}
 				}
@@ -471,8 +468,7 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
 
 /*******************************************************************************************************************/

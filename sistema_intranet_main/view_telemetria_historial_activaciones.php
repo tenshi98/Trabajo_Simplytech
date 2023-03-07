@@ -101,7 +101,7 @@ foreach ($arrConsulta as $con) {
 								$valor_amp = $sen['Valor'];
 							}
 							if($con['Sensor_'.$i]>=$valor_amp){
-								
+
 								//cuento los sensores dentro del grupo
 								$rev_count++;
 								//Valor Inicio
@@ -119,7 +119,7 @@ foreach ($arrConsulta as $con) {
 								$arrTable['termino']['EquipoFecha']      = $con['EquipoFecha'];
 								$arrTable['termino']['EquipoHora']       = $con['EquipoHora'];
 								$arrTable['termino']['EquipoNombre']     = $con['EquipoNombre'];
-								
+
 							}
 						}
 					}

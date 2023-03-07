@@ -94,22 +94,22 @@ require_once '0_validate_user_1.php';
 											"application/msexcel",
 											"application/vnd.ms-excel",
 											"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-													
+
 											"application/mspowerpoint",
 											"application/vnd.ms-powerpoint",
 											"application/vnd.openxmlformats-officedocument.presentationml.presentation",
-													
+
 											"application/pdf",
 											"application/octet-stream",
 											"application/x-real",
 											"application/vnd.adobe.xfdf",
 											"application/vnd.fdf",
 											"binary/octet-stream",
-													
+
 											"text/plain",
 											"text/richtext",
 											"application/rtf",
-												
+
 											"application/x-zip-compressed",
 											"application/zip",
 											"multipart/x-zip",
@@ -125,7 +125,7 @@ require_once '0_validate_user_1.php';
 						$limite_kb = 10000;
 						//Sufijo
 						$sufijo = 'prospecto_'.$idProspecto.'_';
-							  
+
 						if (in_array($_FILES['Archivo']['type'], $permitidos) && $_FILES['Archivo']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
 							$ruta = "upload/".$sufijo.$_FILES['Archivo']['name'];
@@ -137,9 +137,9 @@ require_once '0_validate_user_1.php';
 
 									//filtros
 									if(isset($idProspecto) && $idProspecto!=''){ $SIS_data  = "'".$idProspecto."'";    }else{$SIS_data  = "''";}
-									if(isset($idUsuario) && $idUsuario!=''){    $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
+									if(isset($idUsuario) && $idUsuario!=''){     $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
 									if(isset($idEtapa) && $idEtapa!=''){         $SIS_data .= ",'".$idEtapa."'";       }else{$SIS_data .= ",''";}
-									if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",'".$Fecha."'";        }else{$SIS_data .= ",''";}
+									if(isset($Fecha) && $Fecha!=''){             $SIS_data .= ",'".$Fecha."'";         }else{$SIS_data .= ",''";}
 									if(isset($Observacion) && $Observacion!=''){ $SIS_data .= ",'".$Observacion."'";   }else{$SIS_data .= ",''";}
 									$SIS_data .= ",'".$sufijo.$_FILES['Archivo']['name']."'";
 
@@ -155,7 +155,7 @@ require_once '0_validate_user_1.php';
 										if(isset($FModificacion) && $FModificacion!= ''){  $SIS_data .= ",FModificacion='".$FModificacion."'";}
 										if(isset($HModificacion) && $HModificacion!= ''){  $SIS_data .= ",HModificacion='".$HModificacion."'";}
 										if(isset($idUsuarioMod) && $idUsuarioMod!= ''){    $SIS_data .= ",idUsuarioMod='".$idUsuarioMod."'";}
-										
+
 										/*******************************************************/
 										//se actualizan los datos
 										$resultado2 = db_update_data (false, $SIS_data, 'prospectos_listado', 'idProspecto = "'.$idProspecto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -183,9 +183,9 @@ require_once '0_validate_user_1.php';
 
 					//filtros
 					if(isset($idProspecto) && $idProspecto!=''){ $SIS_data  = "'".$idProspecto."'";    }else{$SIS_data  = "''";}
-					if(isset($idUsuario) && $idUsuario!=''){    $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
+					if(isset($idUsuario) && $idUsuario!=''){     $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
 					if(isset($idEtapa) && $idEtapa!=''){         $SIS_data .= ",'".$idEtapa."'";       }else{$SIS_data .= ",''";}
-					if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",'".$Fecha."'";        }else{$SIS_data .= ",''";}
+					if(isset($Fecha) && $Fecha!=''){             $SIS_data .= ",'".$Fecha."'";         }else{$SIS_data .= ",''";}
 					if(isset($Observacion) && $Observacion!=''){ $SIS_data .= ",'".$Observacion."'";   }else{$SIS_data .= ",''";}
 
 					// inserto los datos de registro en la db
@@ -247,22 +247,22 @@ require_once '0_validate_user_1.php';
 											"application/msexcel",
 											"application/vnd.ms-excel",
 											"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-													
+
 											"application/mspowerpoint",
 											"application/vnd.ms-powerpoint",
 											"application/vnd.openxmlformats-officedocument.presentationml.presentation",
-													
+
 											"application/pdf",
 											"application/octet-stream",
 											"application/x-real",
 											"application/vnd.adobe.xfdf",
 											"application/vnd.fdf",
 											"binary/octet-stream",
-													
+
 											"text/plain",
 											"text/richtext",
 											"application/rtf",
-												
+
 											"application/x-zip-compressed",
 											"application/zip",
 											"multipart/x-zip",
@@ -278,7 +278,7 @@ require_once '0_validate_user_1.php';
 						$limite_kb = 10000;
 						//Sufijo
 						$sufijo = 'prospecto_'.$idProspecto.'_';
-							  
+
 						if (in_array($_FILES['Archivo']['type'], $permitidos) && $_FILES['Archivo']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
 							$ruta = "upload/".$sufijo.$_FILES['Archivo']['name'];
@@ -291,9 +291,9 @@ require_once '0_validate_user_1.php';
 									//Filtros
 									$SIS_data = "idEtapaFide='".$idEtapaFide."'";
 									if(isset($idProspecto) && $idProspecto!=''){   $SIS_data .= ",idProspecto='".$idProspecto."'";}
-									if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
+									if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuario='".$idUsuario."'";}
 									if(isset($idEtapa) && $idEtapa!=''){           $SIS_data .= ",idEtapa='".$idEtapa."'";}
-									if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+									if(isset($Fecha) && $Fecha!=''){               $SIS_data .= ",Fecha='".$Fecha."'";}
 									if(isset($Observacion) && $Observacion!=''){   $SIS_data .= ",Observacion='".$Observacion."'";}
 									$SIS_data .= ",Archivo='".$sufijo.$_FILES['Archivo']['name']."'";
 
@@ -302,14 +302,14 @@ require_once '0_validate_user_1.php';
 									$resultado = db_update_data (false, $SIS_data, 'prospectos_etapa_fidelizacion', 'idEtapaFide = "'.$idEtapaFide.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									//Si ejecuto correctamente la consulta
 									if($resultado==true){
-										
+
 										//Actualizo los datos
 										$SIS_data = "idProspecto='".$idProspecto."'";
 										if(isset($idEtapa) && $idEtapa!= ''){              $SIS_data .= ",idEtapa='".$idEtapa."'";}
 										if(isset($FModificacion) && $FModificacion!= ''){  $SIS_data .= ",FModificacion='".$FModificacion."'";}
 										if(isset($HModificacion) && $HModificacion!= ''){  $SIS_data .= ",HModificacion='".$HModificacion."'";}
 										if(isset($idUsuarioMod) && $idUsuarioMod!= ''){    $SIS_data .= ",idUsuarioMod='".$idUsuarioMod."'";}
-										
+
 										/*******************************************************/
 										//se actualizan los datos
 										$resultado2 = db_update_data (false, $SIS_data, 'prospectos_listado', 'idProspecto = "'.$idProspecto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -336,9 +336,9 @@ require_once '0_validate_user_1.php';
 					//Filtros
 					$SIS_data = "idEtapaFide='".$idEtapaFide."'";
 					if(isset($idProspecto) && $idProspecto!=''){   $SIS_data .= ",idProspecto='".$idProspecto."'";}
-					if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
+					if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuario='".$idUsuario."'";}
 					if(isset($idEtapa) && $idEtapa!=''){           $SIS_data .= ",idEtapa='".$idEtapa."'";}
-					if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+					if(isset($Fecha) && $Fecha!=''){               $SIS_data .= ",Fecha='".$Fecha."'";}
 					if(isset($Observacion) && $Observacion!=''){   $SIS_data .= ",Observacion='".$Observacion."'";}
 
 					/*******************************************************/
@@ -400,9 +400,7 @@ require_once '0_validate_user_1.php';
 				header( 'Location: '.$location.'&edit='.$_GET['del_archivo'].'&del_arch=true' );
 				die;
 			}
-					
-			
-			
+
 		break;
 /*******************************************************************************************************************/
 	}

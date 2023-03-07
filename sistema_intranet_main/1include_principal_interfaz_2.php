@@ -432,7 +432,7 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SI
 										$_SESSION['usuario']['basic_data']['idSistema'],
 										$_SESSION['usuario']['basic_data']['idTipoUsuario'],
 										$_SESSION['usuario']['basic_data']['idUsuario'], $dbConn);
-				
+
 		}
 	echo '</div>';
 	/*****************************************************************************************************************/

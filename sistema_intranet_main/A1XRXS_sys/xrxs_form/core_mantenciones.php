@@ -65,10 +65,10 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($Fecha) && $Fecha!=''){ $SIS_data  = "'".$Fecha."'";        }else{$SIS_data  = "''";}
+				if(isset($Fecha) && $Fecha!=''){              $SIS_data  = "'".$Fecha."'";        }else{$SIS_data  = "''";}
 				if(isset($Hora_ini) && $Hora_ini!=''){        $SIS_data .= ",'".$Hora_ini."'";    }else{$SIS_data .= ",''";}
 				if(isset($Hora_fin) && $Hora_fin!=''){        $SIS_data .= ",'".$Hora_fin."'";    }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){     $SIS_data .= ",'".$idUsuario."'";   }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",'".$idUsuario."'";   }else{$SIS_data .= ",''";}
 				if(isset($Descripcion) && $Descripcion!=''){  $SIS_data .= ",'".$Descripcion."'"; }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
@@ -95,10 +95,10 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idMantencion='".$idMantencion."'";
-				if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+				if(isset($Fecha) && $Fecha!=''){               $SIS_data .= ",Fecha='".$Fecha."'";}
 				if(isset($Hora_ini) && $Hora_ini!=''){         $SIS_data .= ",Hora_ini='".$Hora_ini."'";}
 				if(isset($Hora_fin) && $Hora_fin!=''){         $SIS_data .= ",Hora_fin='".$Hora_fin."'";}
-				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($Descripcion) && $Descripcion!=''){   $SIS_data .= ",Descripcion='".$Descripcion."'";}
 
 				/*******************************************************/

@@ -115,8 +115,8 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idAgenda='".$idAgenda."'";
 				if(isset($idSistema) && $idSistema!=''){   $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idUsuario) && $idUsuario!=''){  $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($Nombre) && $Nombre!=''){        $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idUsuario) && $idUsuario!=''){   $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($Nombre) && $Nombre!=''){         $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Fono) && $Fono!=''){             $SIS_data .= ",Fono='".$Fono."'";}
 
 				/*******************************************************/

@@ -145,7 +145,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('div_ValorMensual').style.display = '';
 								document.getElementById('div_Presupuesto').style.display = 'none';
 								document.getElementById('Presupuesto').value = "0";
-										
+
 							//si es Por Itemizado
 							} else if(TipoLicitacion_val == 2){
 								document.getElementById('div_ValorMensual').style.display = 'none';
@@ -153,7 +153,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('ValorMensual').value = "0";
 
 							}
-											
+
 						});
 
 						$("#idTipoLicitacion").on("change", function(){ //se ejecuta al cambiar valor del select
@@ -164,7 +164,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('div_ValorMensual').style.display = '';
 								document.getElementById('div_Presupuesto').style.display = 'none';
 								document.getElementById('Presupuesto').value = "0";
-										
+
 							//si es Por Itemizado
 							} else if(modelSelected1 == 2){
 								document.getElementById('div_ValorMensual').style.display = 'none';

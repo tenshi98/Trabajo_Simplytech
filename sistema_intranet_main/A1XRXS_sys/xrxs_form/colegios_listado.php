@@ -18,10 +18,10 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idSistema']))             $idSistema               = $_POST['idSistema'];
 	if (!empty($_POST['idEstado']))              $idEstado                = $_POST['idEstado'];
 	if (!empty($_POST['email']))                 $email                   = $_POST['email'];
-	if (!empty($_POST['Nombre']))                $Nombre 	                = $_POST['Nombre'];
-	if (!empty($_POST['Direccion']))             $Direccion 	            = $_POST['Direccion'];
-	if (!empty($_POST['Fono1']))                 $Fono1 	                = $_POST['Fono1'];
-	if (!empty($_POST['Fono2']))                 $Fono2 	                = $_POST['Fono2'];
+	if (!empty($_POST['Nombre']))                $Nombre 	              = $_POST['Nombre'];
+	if (!empty($_POST['Direccion']))             $Direccion 	          = $_POST['Direccion'];
+	if (!empty($_POST['Fono1']))                 $Fono1 	              = $_POST['Fono1'];
+	if (!empty($_POST['Fono2']))                 $Fono2 	              = $_POST['Fono2'];
 	if (!empty($_POST['idCiudad']))              $idCiudad                = $_POST['idCiudad'];
 	if (!empty($_POST['idComuna']))              $idComuna                = $_POST['idComuna'];
 	if (!empty($_POST['Fax']))                   $Fax                     = $_POST['Fax'];
@@ -59,7 +59,7 @@ require_once '0_validate_user_1.php';
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
 	if(isset($email) && $email!=''){          $email      = EstandarizarInput($email);}
-	if(isset($Nombre) && $Nombre!=''){       $Nombre     = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){        $Nombre     = EstandarizarInput($Nombre);}
 	if(isset($Direccion) && $Direccion!=''){  $Direccion  = EstandarizarInput($Direccion);}
 
 /*******************************************************************************************************************/
@@ -74,8 +74,8 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($email)&&!validarEmail($email)){   $error['email']   = 'error/El Email ingresado no es valido';}
-	if(isset($Fono1)&&!validarNumero($Fono1)){ $error['Fono1']   = 'error/Ingrese un numero telefonico valido';}
-	if(isset($Fono2)&&!validarNumero($Fono2)){ $error['Fono2']   = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Fono1)&&!validarNumero($Fono1)){  $error['Fono1']   = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Fono2)&&!validarNumero($Fono2)){  $error['Fono2']   = 'error/Ingrese un numero telefonico valido';}
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */

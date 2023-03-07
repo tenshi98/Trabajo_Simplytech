@@ -109,7 +109,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php 
-					filtrar($arrAsistencias, 'idTrabajador');  
+					filtrar($arrAsistencias, 'idTrabajador');
 					foreach($arrAsistencias as $categoria=>$permisos){ ?>
 						<tr class="odd">
 							<td colspan="7"><?php echo $permisos[0]['TrabajadorNombre'].' '.$permisos[0]['TrabajadorApellidoPat'].' '.$permisos[0]['TrabajadorApellidoMat'].' ('.$permisos[0]['TrabajadorRut'].')'; ?></td>

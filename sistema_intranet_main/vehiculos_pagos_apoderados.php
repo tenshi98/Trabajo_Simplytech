@@ -131,7 +131,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 					if(isset($Pagofecha)){    $x1  = $Pagofecha;     }else{$x1  = '';}
 					if(isset($idTipoPago)){   $x2  = $idTipoPago;    }else{$x2  = '';}
 					if(isset($nDocPago)){     $x3  = $nDocPago;      }else{$x3  = '';}
-						
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_date('Fecha Pago','Pagofecha', $x1, 2);

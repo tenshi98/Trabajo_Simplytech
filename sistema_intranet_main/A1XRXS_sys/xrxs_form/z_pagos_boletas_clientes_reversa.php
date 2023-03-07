@@ -30,7 +30,7 @@ require_once '0_validate_user_1.php';
 			case 'idTrabajador':    if(empty($idTrabajador)){     $error['idTrabajador']    = 'error/No ha ingresado el id';}break;
 		}
 	}
-					
+
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
 /*******************************************************************************************************************/
@@ -98,11 +98,11 @@ require_once '0_validate_user_1.php';
 				if(!isset($indice2) OR $indice2==''){
 					$error['idFacturacion'] = 'error/No ha seleccionado el documento';
 				}
-					
+
 				/*******************************************************************/
 				//Si no hay errores ejecuto el codigo
 				if(empty($error)){
-					
+
 					/**********************************************************************/
 					//selecciono el monto desde el registro de pago
 					$rowPago = db_select_data (false, 'pagos_boletas_clientes.MontoPagado,sistema_documentos_pago.Nombre AS Documento,pagos_boletas_clientes.N_DocPago', 'pagos_boletas_clientes', 'LEFT JOIN sistema_documentos_pago ON sistema_documentos_pago.idDocPago = pagos_boletas_clientes.idDocPago', 'pagos_boletas_clientes.idPago = "'.$indice1.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -122,13 +122,12 @@ require_once '0_validate_user_1.php';
 						$SIS_data .= ",F_Pago_mes='".$rowBoleta['F_Pago_mes']."'";
 						$SIS_data .= ",F_Pago_ano='".$rowBoleta['F_Pago_ano']."'";
 						$SIS_data .= ",MontoPagado='".$nuevoMonto."'";
-						$SIS_data .= ",idEstado='1'" ;
-						
+						$SIS_data .= ",idEstado='1'";
+
 						/*******************************************************/
 						//se actualizan los datos
 						$resultado = db_update_data (false, $SIS_data, 'boleta_honorarios_facturacion', 'idFacturacion = "'.$indice2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
-						
+
 					//si es pago completo
 					}elseif($rowBoleta['MontoPagado']==$rowPago['MontoPagado']){
 						//se actualizacon los datos del pago anterior
@@ -140,8 +139,8 @@ require_once '0_validate_user_1.php';
 						$SIS_data .= ",F_Pago_mes=''";
 						$SIS_data .= ",F_Pago_ano=''";
 						$SIS_data .= ",MontoPagado=''";
-						$SIS_data .= ",idEstado='1'" ;
-						
+						$SIS_data .= ",idEstado='1'";
+
 						/*******************************************************/
 						//se actualizan los datos
 						$resultado = db_update_data (false, $SIS_data, 'boleta_honorarios_facturacion', 'idFacturacion = "'.$indice2.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -150,14 +149,14 @@ require_once '0_validate_user_1.php';
 
 					/**********************************************************************/
 					//se guarda dato en el historial, indicando documento eliminado y su numero
-					if(isset($indice2) && $indice2!=''){    
-						
-						$SIS_data  = "'".$indice2."'";  
-						$SIS_data .= ",'".fecha_actual()."'";         
+					if(isset($indice2) && $indice2!=''){
+
+						$SIS_data  = "'".$indice2."'";
+						$SIS_data .= ",'".fecha_actual()."'";
 						$SIS_data .= ",'1'";                                                                                                   //Creacion Satisfactoria
 						$SIS_data .= ",'Se realiza reversa del pago del documento ".$rowPago['Documento']." N° ".$rowPago['N_DocPago']."'";    //Observacion
 						$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";                                                 //idUsuario
-						
+
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'boleta_honorarios_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -183,10 +182,7 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
-			
-		
+
 		break;
 
 	}

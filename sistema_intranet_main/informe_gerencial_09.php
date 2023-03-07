@@ -419,7 +419,7 @@ foreach ($arrTemporal_7 as $temp) {
 								  chart.draw(data, options);
 								  var table_3 = new google.visualization.Table(document.getElementById('table_div_3'));
 								  table_3.draw(data, {showRowNumber: true, width: '100%', height: '100%'});
-									
+
 							}
 						</script>
 						<div id="chart_div_3" style="height: 500px; width: 100%;"></div>

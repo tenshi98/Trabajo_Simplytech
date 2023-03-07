@@ -84,7 +84,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){          $Nombre         = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){           $Nombre         = EstandarizarInput($Nombre);}
 	if(isset($ApellidoPat) && $ApellidoPat!=''){ $ApellidoPat    = EstandarizarInput($ApellidoPat);}
 	if(isset($ApellidoMat) && $ApellidoMat!=''){ $ApellidoMat    = EstandarizarInput($ApellidoMat);}
 	if(isset($Direccion) && $Direccion!=''){     $Direccion      = EstandarizarInput($Direccion);}
@@ -477,7 +477,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "Direccion_img=''" ;
+			$SIS_data = "Direccion_img=''";
 			$resultado = db_update_data (false, $SIS_data, 'apoderados_listado', 'idApoderado = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -582,7 +582,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "File_Contrato=''" ;
+			$SIS_data = "File_Contrato=''";
 			$resultado = db_update_data (false, $SIS_data, 'apoderados_listado', 'idApoderado = "'.$_GET['del_File_Contrato'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){

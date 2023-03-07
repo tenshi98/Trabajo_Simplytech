@@ -46,7 +46,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){          $Nombre      = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){           $Nombre      = EstandarizarInput($Nombre);}
 	if(isset($Cargo) && $Cargo!=''){             $Cargo       = EstandarizarInput($Cargo);}
 	if(isset($Descripcion) && $Descripcion!=''){ $Descripcion = EstandarizarInput($Descripcion);}
 
@@ -75,9 +75,9 @@ require_once '0_validate_user_1.php';
 				if(isset($idPostulante) && $idPostulante!=''){        $SIS_data  = "'".$idPostulante."'";      }else{$SIS_data  = "''";}
 				if(isset($AnoInicio) && $AnoInicio!=''){              $SIS_data .= ",'".$AnoInicio."'";        }else{$SIS_data .= ",''";}
 				if(isset($AnoTermino) && $AnoTermino!=''){            $SIS_data .= ",'".$AnoTermino."'";       }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",'".$Nombre."'";           }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                    $SIS_data .= ",'".$Nombre."'";           }else{$SIS_data .= ",''";}
 				if(isset($Cargo) && $Cargo!=''){                      $SIS_data .= ",'".$Cargo."'";            }else{$SIS_data .= ",''";}
-				if(isset($Descripcion) && $Descripcion!=''){          $SIS_data .= ",'".$Descripcion."'";    }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion!=''){          $SIS_data .= ",'".$Descripcion."'";      }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idPostulante, AnoInicio, AnoTermino, Nombre,Cargo,Descripcion';
@@ -105,7 +105,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idPostulante) && $idPostulante!=''){        $SIS_data .= ",idPostulante='".$idPostulante."'";}
 				if(isset($AnoInicio) && $AnoInicio!=''){              $SIS_data .= ",AnoInicio='".$AnoInicio."'";}
 				if(isset($AnoTermino) && $AnoTermino!=''){            $SIS_data .= ",AnoTermino='".$AnoTermino."'";}
-				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                    $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Cargo) && $Cargo!=''){                      $SIS_data .= ",Cargo='".$Cargo."'";}
 				if(isset($Descripcion) && $Descripcion!=''){          $SIS_data .= ",Descripcion='".$Descripcion."'";}
 
@@ -170,8 +170,7 @@ require_once '0_validate_user_1.php';
 			}
 
 		break;
-		
-		
+
 /*******************************************************************************************************************/
 	}
 

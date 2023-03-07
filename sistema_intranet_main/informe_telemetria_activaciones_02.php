@@ -88,7 +88,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php 
-					filtrar($arrConsulta, 'EquipoFecha');  
+					filtrar($arrConsulta, 'EquipoFecha');
 					foreach($arrConsulta as $categoria=>$permisos){ ?>
 						<tr class="odd">
 							<td colspan="3"><?php echo fecha_estandar($categoria); ?></td>

@@ -155,7 +155,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 						$marker_loc .= ", 1";
 					}*/
 				$marker_loc .= "], ";
-						
+
 				//$arrMedTractores[$trac['idTelemetria']]['heatMapData']  .= "{location: new google.maps.LatLng(".$med['GeoLatitud'].", ".$med['GeoLongitud']."), weight: ".$pres."},";
 				//$arrMedTractores[$trac['idTelemetria']]['MarkerData']  .= $marker_loc;
 				//Guardo los datos temporales
@@ -336,7 +336,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 						foreach($arrTractores as $trac) {
 							if ($arrTractoresData!=false && !empty($arrTractoresData) && $arrTractoresData!='') {
 								$sum_LitrosAplicados    = 0;
-								foreach ($arrTractoresData as $tractda) { 
+								foreach ($arrTractoresData as $tractda) {
 									if(isset($trac['idTelemetria'])&&isset($tractda['idTelemetria'])&&$trac['idTelemetria']==$tractda['idTelemetria']){
 										$sum_LitrosAplicados    = $sum_LitrosAplicados + $tractda['LitrosAplicados'];				
 									}
@@ -408,8 +408,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							google.charts.setOnLoadCallback(Chart_correccion);
 							//google.charts.setOnLoadCallback(Chart_aplicadas);
 							google.charts.setOnLoadCallback(Chart_mojamiento);
-							
-							
+
 							/* ************************************************************************** */
 							//Graficos	al cargar datos
 							function Chart_velocidades() {';
@@ -519,7 +518,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								//dibujo
 								chart_litros = new google.visualization.ColumnChart(document.getElementById("chart_litros_aplicados"));
 								chart_litros.draw(data_litros, options_litros);
-								
+
 							}
 							/********************************************************************/
 							//Caudales
@@ -587,7 +586,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							/********************************************************************/
 							//Correccion
 							function draw_mojamiento(data1, data2) {
-								
+
 								//datos
 								data_mojamiento = google.visualization.arrayToDataTable([
 									["Label", "Valor"],
@@ -671,7 +670,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 											filtrar($arrZonas, 'idZona');
 											//se recorre
 											foreach ($arrZonas as $todaszonas=>$zonas) {
-												
+
 												$Latitud_z_2       = 0;
 												$Longitud_z_2      = 0;
 												$Latitud_z_prom_2  = 0;
@@ -793,7 +792,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 													//posicion anterior y actual
 													var pos1 = new google.maps.LatLng(in_lat, in_long);
 													var pos2 = new google.maps.LatLng(locations[i][0], locations[i][1]);
-													
+
 													//verifico que este regando
 													if(locations[i][2]!=0 || locations[i][3]!=0){
 														color = color_1;
@@ -809,7 +808,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 														strokeWeight: 5
 													});
 												}
-												
+
 												//guardo la posicion actual
 												in_lat  = locations[i][0];
 												in_long = locations[i][1];
@@ -1321,7 +1320,7 @@ if($ndata_1==0) {
 				if(isset($f_termino_hasta)){        $x13 = $f_termino_hasta;        }else{$x13 = '';}
 				if(isset($idUsuario)){              $x14 = $idUsuario;              }else{$x14 = '';}
 				if(isset($idEstado)){               $x15 = $idEstado;               }else{$x15 = '';}*/
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_number('N° Solicitud','NSolicitud', $x1, 2);
@@ -1341,7 +1340,7 @@ if($ndata_1==0) {
 				$Form_Inputs->form_date('Fecha Terminada Hasta','f_termino_hasta', $x13, 1);
 				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x14, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				$Form_Inputs->form_select('Estado','idEstado', $x15, 1, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);*/
-				
+
 				$Form_Inputs->form_input_hidden('idEstado', 3, 2);
 
 				?>

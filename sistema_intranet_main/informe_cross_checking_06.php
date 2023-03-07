@@ -179,7 +179,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 										//se verifica plantas faltantes
 										if(isset($temp['GeoDistance'])&&$temp['GeoDistance']!=0&&isset($temp['CuartelDistanciaPlant'])&&$temp['CuartelDistanciaPlant']!=''&&$temp['CuartelDistanciaPlant']!=0){
 											$aplicadas = (($temp['GeoDistance']*1000)/$temp['CuartelDistanciaPlant']);
-											
+
 											/*echo 'GeoDistance:'.$temp['GeoDistance'].'<br/>';
 											echo 'CuartelDistanciaPlant:'.$temp['CuartelDistanciaPlant'].'<br/>';
 											echo $temp['GeoDistance'].'*1000='.($temp['GeoDistance']*1000).'<br/>';

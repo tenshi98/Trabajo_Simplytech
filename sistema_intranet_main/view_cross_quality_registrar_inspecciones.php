@@ -205,7 +205,7 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 								case 11:
 									echo '<strong>'.$rowdata['PuntoNombre_'.$i].': </strong>'.$rowMuestras['Medida_'.$i].'<br/>';
 									break;
-									
+
 							}
 						}
 					}

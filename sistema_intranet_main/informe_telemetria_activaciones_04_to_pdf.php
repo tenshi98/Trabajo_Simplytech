@@ -126,7 +126,7 @@ $html .= '
 				}
 			}
 			if($exd>0){
-				
+
 				$html .='
 					<tr>
 						<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.fecha_estandar($med['FechaConsultada']).'</td>';

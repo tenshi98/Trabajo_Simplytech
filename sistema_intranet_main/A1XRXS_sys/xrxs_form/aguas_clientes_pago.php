@@ -207,19 +207,19 @@ require_once '0_validate_user_1.php';
 					//se actualizael estado del cliente dependiendo del no pago
 					/*$SIS_data = "idCliente='".$idCliente."'";
 					switch ($fact_impagas) {
-						case 0:   $SIS_data .= ",idEstadoPago='1'" ; break;
-						case 1:   $SIS_data .= ",idEstadoPago='2'" ; break;
-						case 2:   $SIS_data .= ",idEstadoPago='3'" ; break;
-						case 3:   $SIS_data .= ",idEstadoPago='3'" ; break;
-						case 4:   $SIS_data .= ",idEstadoPago='3'" ; break;
-						case 5:   $SIS_data .= ",idEstadoPago='3'" ; break;
-						case 6:   $SIS_data .= ",idEstadoPago='3'" ; break;
-						case 7:   $SIS_data .= ",idEstadoPago='3'" ; break;
-						case 8:   $SIS_data .= ",idEstadoPago='3'" ; break;
-						case 9:   $SIS_data .= ",idEstadoPago='3'" ; break;
-						case 10:  $SIS_data .= ",idEstadoPago='3'" ; break;
-						case 11:  $SIS_data .= ",idEstadoPago='3'" ; break;
-						case 12:  $SIS_data .= ",idEstadoPago='3'" ; break;
+						case 0:   $SIS_data .= ",idEstadoPago='1'"; break;
+						case 1:   $SIS_data .= ",idEstadoPago='2'"; break;
+						case 2:   $SIS_data .= ",idEstadoPago='3'"; break;
+						case 3:   $SIS_data .= ",idEstadoPago='3'"; break;
+						case 4:   $SIS_data .= ",idEstadoPago='3'"; break;
+						case 5:   $SIS_data .= ",idEstadoPago='3'"; break;
+						case 6:   $SIS_data .= ",idEstadoPago='3'"; break;
+						case 7:   $SIS_data .= ",idEstadoPago='3'"; break;
+						case 8:   $SIS_data .= ",idEstadoPago='3'"; break;
+						case 9:   $SIS_data .= ",idEstadoPago='3'"; break;
+						case 10:  $SIS_data .= ",idEstadoPago='3'"; break;
+						case 11:  $SIS_data .= ",idEstadoPago='3'"; break;
+						case 12:  $SIS_data .= ",idEstadoPago='3'"; break;
 					}
 					//se actualizan los datos
 					$resultado = db_update_data (false, $SIS_data, 'clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -227,7 +227,7 @@ require_once '0_validate_user_1.php';
 					//se actualizael estado del cliente en caso de que el pago actual cubra la facturacion actual
 					if($ultimo_pago<=$montoPago){
 						//se actualizan los datos
-						$SIS_data = "idEstadoPago='1'" ;
+						$SIS_data = "idEstadoPago='1'";
 						$resultado = db_update_data (false, $SIS_data, 'clientes_listado', 'idCliente = "'.$idCliente.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					}*/
 

@@ -132,7 +132,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 
 					<script>
 						document.getElementById('div_idTipoReceta').style.display = 'none';
-						
+
 						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
 							
 							let tipo_val= $("#idTipoProducto").val();
@@ -147,7 +147,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 	
 							} else {
 								document.getElementById('div_idTipoReceta').style.display = 'none';
-									
+
 							}
 						
 						

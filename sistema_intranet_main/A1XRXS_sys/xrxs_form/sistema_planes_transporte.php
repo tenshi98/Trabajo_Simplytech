@@ -75,7 +75,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($Nombre) && $Nombre!=''){               $SIS_data  = "'".$Nombre."'";          }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){                $SIS_data  = "'".$Nombre."'";          }else{$SIS_data  = "''";}
 				if(isset($Valor_Mensual) && $Valor_Mensual!=''){  $SIS_data .= ",'".$Valor_Mensual."'";  }else{$SIS_data .= ",''";}
 				if(isset($Valor_Anual) && $Valor_Anual!=''){      $SIS_data .= ",'".$Valor_Anual."'";    }else{$SIS_data .= ",''";}
 				if(isset($N_Hijos) && $N_Hijos!=''){              $SIS_data .= ",'".$N_Hijos."'";        }else{$SIS_data .= ",''";}
@@ -115,7 +115,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idPlan='".$idPlan."'";
-				if(isset($Nombre) && $Nombre!=''){               $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Valor_Mensual) && $Valor_Mensual!=''){  $SIS_data .= ",Valor_Mensual='".$Valor_Mensual."'";}
 				if(isset($Valor_Anual) && $Valor_Anual!=''){      $SIS_data .= ",Valor_Anual='".$Valor_Anual."'";}
 				if(isset($N_Hijos) && $N_Hijos!=''){              $SIS_data .= ",N_Hijos='".$N_Hijos."'";}

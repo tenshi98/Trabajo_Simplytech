@@ -81,8 +81,8 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idCurso) && $idCurso!=''){          $SIS_data  = "'".$idCurso."'";       }else{$SIS_data  = "''";}
-				if(isset($idUsuario) && $idUsuario!=''){     $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",'".$Nombre."'";       }else{$SIS_data .= ",''";}
 				if(isset($HoraInicio) && $HoraInicio!=''){    $SIS_data .= ",'".$HoraInicio."'";   }else{$SIS_data .= ",''";}
 				if(isset($HoraTermino) && $HoraTermino!=''){  $SIS_data .= ",'".$HoraTermino."'";  }else{$SIS_data .= ",''";}
 				if(isset($idDia_1) && $idDia_1!=''){          $SIS_data .= ",'".$idDia_1."'";      }else{$SIS_data .= ",''";}
@@ -94,8 +94,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idDia_7) && $idDia_7!=''){          $SIS_data .= ",'".$idDia_7."'";      }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idCurso, idUsuario, Nombre,HoraInicio, 
-				HoraTermino, idDia_1, idDia_2, idDia_3, idDia_4, idDia_5, idDia_6, idDia_7';
+				$SIS_columns = 'idCurso, idUsuario, Nombre,HoraInicio, HoraTermino, idDia_1, idDia_2, idDia_3, idDia_4, idDia_5, idDia_6, idDia_7';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'cursos_listado_videoconferencia', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Si ejecuto correctamente la consulta
@@ -119,8 +118,8 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idVideoConferencia='".$idVideoConferencia."'";
 				if(isset($idCurso) && $idCurso!=''){          $SIS_data .= ",idCurso='".$idCurso."'";}
-				if(isset($idUsuario) && $idUsuario!=''){     $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($Nombre) && $Nombre!=''){           $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($HoraInicio) && $HoraInicio!=''){    $SIS_data .= ",HoraInicio='".$HoraInicio."'";}
 				if(isset($HoraTermino) && $HoraTermino!=''){  $SIS_data .= ",HoraTermino='".$HoraTermino."'";}
 				if(isset($idDia_1) && $idDia_1!=''){          $SIS_data .= ",idDia_1='".$idDia_1."'";}

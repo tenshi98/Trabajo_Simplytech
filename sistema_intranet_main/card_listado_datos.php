@@ -82,7 +82,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 					if(isset($idCardType)){   $x2  = $idCardType;   }else{$x2  = $rowdata['idCardType'];}
 					if(isset($idPosition)){   $x3  = $idPosition;   }else{$x3  = $rowdata['idPosition'];}
 					if(isset($idCardImage)){  $x4  = $idCardImage;  }else{$x4  = $rowdata['idCardImage'];}
-						
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);

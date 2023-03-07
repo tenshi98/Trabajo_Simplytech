@@ -118,7 +118,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 									$gr_tittle = 'Grafico Caudal / Homogeneidad de '.$rowEquipo['NombreEquipo'];
 									$gr_unimed = 'Litros * Minutos';
-									echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Hora', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
+									echo GraphLinear_1('graphLinear_1', $gr_tittle, 'Hora', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0);
 									/*******************************************************************************/
 									//las fechas
 									$Graphics_xData      ='var xData = [['.$Temp_1.'],];';
@@ -139,7 +139,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 									$gr_tittle = 'Grafico Nivel Estanque de '.$rowEquipo['NombreEquipo'];
 									$gr_unimed = '% de llenado';
-									echo GraphLinear_1('graphLinear_2', $gr_tittle, 'Hora', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
+									echo GraphLinear_1('graphLinear_2', $gr_tittle, 'Hora', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0);
 									/*******************************************************************************/
 									//las fechas
 									$Graphics_xData      ='var xData = [['.$Temp_1.'],];';

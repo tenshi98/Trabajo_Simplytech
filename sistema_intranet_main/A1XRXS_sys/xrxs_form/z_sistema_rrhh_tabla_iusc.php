@@ -14,8 +14,8 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if (!empty($_POST['idTablaImpuesto']))  $idTablaImpuesto   = $_POST['idTablaImpuesto'];
-	if (!empty($_POST['Tramo']))            $Tramo             = $_POST['Tramo'];
+	if (!empty($_POST['idTablaImpuesto']))   $idTablaImpuesto   = $_POST['idTablaImpuesto'];
+	if (!empty($_POST['Tramo']))             $Tramo             = $_POST['Tramo'];
 	if ( isset($_POST['UTM_Desde']))         $UTM_Desde         = $_POST['UTM_Desde'];
 	if ( isset($_POST['UTM_Hasta']))         $UTM_Hasta         = $_POST['UTM_Hasta'];
 	if ( isset($_POST['Tasa']))              $Tasa              = $_POST['Tasa'];
@@ -96,8 +96,7 @@ require_once '0_validate_user_1.php';
 			}
 
 		break;
-						
-		
+
 /*******************************************************************************************************************/
 	}
 

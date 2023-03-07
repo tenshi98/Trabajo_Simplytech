@@ -781,7 +781,7 @@ array_push( $arrFlashpoint,$row );
 								break;
 								//Dispersancia
 								case 3:
-									
+
 									//Suma de 1
 									$x_count++;
 								break;
@@ -791,15 +791,12 @@ array_push( $arrFlashpoint,$row );
 									$x_count++;
 								break;
 							}
-							
+
 						}
 					}
 				
 				
 				}
-				
-				
-				
 			}
 				
 			

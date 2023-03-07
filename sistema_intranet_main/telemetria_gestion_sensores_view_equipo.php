@@ -163,7 +163,7 @@ foreach ($arrUnimed as $sen) {
 										</tr>
 									</thead>
 									<tbody role="alert" aria-live="polite" aria-relevant="all">
-										<?php for ($i = 1; $i <= $rowdata['cantSensores']; $i++) { 
+										<?php for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 											//solo sensores activos
 											if(isset($rowMed['SensoresActivo_'.$i])&&$rowMed['SensoresActivo_'.$i]==1){ 
 												$unimed = ' '.$arrFinalUnimed[$rowMed['SensoresUniMed_'.$i]];
@@ -265,7 +265,7 @@ foreach ($arrUnimed as $sen) {
 								</thead>
 
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
-									<?php foreach ($arrAlertas as $error) { 
+									<?php foreach ($arrAlertas as $error) {
 										//Guardo la unidad de medida
 										$unimed = ' '.$arrFinalUnimed[$error['SensoresUniMed_'.$error['Sensor']]]; ?>
 										<tr>

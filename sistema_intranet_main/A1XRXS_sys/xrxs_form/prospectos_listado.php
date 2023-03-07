@@ -20,13 +20,13 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idTipo']))                  $idTipo                    = $_POST['idTipo'];
 	if (!empty($_POST['idRubro']))                 $idRubro                   = $_POST['idRubro'];
 	if (!empty($_POST['email']))                   $email                     = $_POST['email'];
-	if (!empty($_POST['Nombre']))                  $Nombre 	                = $_POST['Nombre'];
-	if (!empty($_POST['RazonSocial']))             $RazonSocial 	            = $_POST['RazonSocial'];
-	if (!empty($_POST['Rut']))                     $Rut 	                    = $_POST['Rut'];
-	if (!empty($_POST['fNacimiento']))             $fNacimiento 	            = $_POST['fNacimiento'];
-	if (!empty($_POST['Direccion']))               $Direccion 	            = $_POST['Direccion'];
-	if (!empty($_POST['Fono1']))                   $Fono1 	                = $_POST['Fono1'];
-	if (!empty($_POST['Fono2']))                   $Fono2 	                = $_POST['Fono2'];
+	if (!empty($_POST['Nombre']))                  $Nombre 	                  = $_POST['Nombre'];
+	if (!empty($_POST['RazonSocial']))             $RazonSocial 	          = $_POST['RazonSocial'];
+	if (!empty($_POST['Rut']))                     $Rut 	                  = $_POST['Rut'];
+	if (!empty($_POST['fNacimiento']))             $fNacimiento 	          = $_POST['fNacimiento'];
+	if (!empty($_POST['Direccion']))               $Direccion 	              = $_POST['Direccion'];
+	if (!empty($_POST['Fono1']))                   $Fono1 	                  = $_POST['Fono1'];
+	if (!empty($_POST['Fono2']))                   $Fono2 	                  = $_POST['Fono2'];
 	if (!empty($_POST['idCiudad']))                $idCiudad                  = $_POST['idCiudad'];
 	if (!empty($_POST['idComuna']))                $idComuna                  = $_POST['idComuna'];
 	if (!empty($_POST['Fax']))                     $Fax                       = $_POST['Fax'];
@@ -86,7 +86,7 @@ require_once '0_validate_user_1.php';
 			case 'email':                    if(empty($email)){                    $error['email']                     = 'error/No ha ingresado el email';}break;
 			case 'Nombre':                   if(empty($Nombre)){                   $error['Nombre']                    = 'error/No ha ingresado el Nombre de Fantasia';}break;
 			case 'RazonSocial':              if(empty($RazonSocial)){              $error['RazonSocial']               = 'error/No ha ingresado la Razon Social';}break;
-			case 'Rut':                      if(empty($Rut)){                      $error['Rut']                       = 'error/No ha ingresado el Rut';}break;	
+			case 'Rut':                      if(empty($Rut)){                      $error['Rut']                       = 'error/No ha ingresado el Rut';}break;
 			case 'fNacimiento':              if(empty($fNacimiento)){              $error['fNacimiento']               = 'error/No ha ingresado la fecha de nacimiento';}break;
 			case 'Direccion':                if(empty($Direccion)){                $error['Direccion']                 = 'error/No ha ingresado la direccion';}break;
 			case 'Fono1':                    if(empty($Fono1)){                    $error['Fono1']                     = 'error/No ha ingresado el telefono';}break;
@@ -122,8 +122,7 @@ require_once '0_validate_user_1.php';
 			case 'idTab_13':                 if(empty($idTab_13)){                 $error['idTab_13']                  = 'error/No ha seleccionado la unidad de negocio 13';}break;
 			case 'idTab_14':                 if(empty($idTab_14)){                 $error['idTab_14']                  = 'error/No ha seleccionado la unidad de negocio 14';}break;
 			case 'idTab_15':                 if(empty($idTab_15)){                 $error['idTab_15']                  = 'error/No ha seleccionado la unidad de negocio 15';}break;
-			
-	
+
 			case 'Contrato_Nombre':          if(empty($Contrato_Nombre)){          $error['Contrato_Nombre']           = 'error/No ha ingresado el nombre del contrato';}break;
 			case 'Contrato_Numero':          if(empty($Contrato_Numero)){          $error['Contrato_Numero']           = 'error/No ha ingresado el numero o codigo del contrato';}break;
 			case 'Contrato_Fecha_Ini':       if(empty($Contrato_Fecha_Ini)){       $error['Contrato_Fecha_Ini']        = 'error/No ha ingresado la fecha de inicio del contrato';}break;
@@ -138,7 +137,7 @@ require_once '0_validate_user_1.php';
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
 	if(isset($email) && $email!=''){                                 $email                 = EstandarizarInput($email);}
-	if(isset($Nombre) && $Nombre!=''){                              $Nombre                = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){                               $Nombre                = EstandarizarInput($Nombre);}
 	if(isset($RazonSocial) && $RazonSocial!=''){                     $RazonSocial           = EstandarizarInput($RazonSocial);}
 	if(isset($Direccion) && $Direccion!=''){                         $Direccion             = EstandarizarInput($Direccion);}
 	if(isset($PersonaContacto) && $PersonaContacto!=''){             $PersonaContacto       = EstandarizarInput($PersonaContacto);}
@@ -171,11 +170,11 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($email)&&!validarEmail($email)){                                 $error['email']                  = 'error/El Email ingresado no es valido';}
-	if(isset($Fono1)&&!validarNumero($Fono1)){                               $error['Fono1']                  = 'error/Ingrese un numero telefonico valido';}
-	if(isset($Fono2)&&!validarNumero($Fono2)){                               $error['Fono2']                  = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Fono1)&&!validarNumero($Fono1)){                                $error['Fono1']                  = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Fono2)&&!validarNumero($Fono2)){                                $error['Fono2']                  = 'error/Ingrese un numero telefonico valido';}
 	if(isset($Rut)&&!validarRut($Rut)){                                       $error['Rut']                    = 'error/El Rut ingresado no es valido';}
 	if(isset($PersonaContacto_email)&&!validarEmail($PersonaContacto_email)){ $error['email']                  = 'error/El Email ingresado no es valido';}
-	if(isset($PersonaContacto_Fono)&&!validarNumero($PersonaContacto_Fono)){ $error['PersonaContacto_Fono']   = 'error/Ingrese un numero telefonico valido';}
+	if(isset($PersonaContacto_Fono)&&!validarNumero($PersonaContacto_Fono)){  $error['PersonaContacto_Fono']   = 'error/Ingrese un numero telefonico valido';}
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -213,12 +212,12 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){         $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
-				if(isset($idEstado) && $idEstado!=''){                            $SIS_data .= ",'".$idEstado."'";               }else{$SIS_data .= ",''";}
-				if(isset($idTipo) && $idTipo!=''){                                $SIS_data .= ",'".$idTipo."'";                 }else{$SIS_data .= ",''";}
+				if(isset($idSistema) && $idSistema!=''){                           $SIS_data  = "'".$idSistema."'";               }else{$SIS_data  = "''";}
+				if(isset($idEstado) && $idEstado!=''){                             $SIS_data .= ",'".$idEstado."'";               }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){                                 $SIS_data .= ",'".$idTipo."'";                 }else{$SIS_data .= ",''";}
 				if(isset($idRubro) && $idRubro!=''){                               $SIS_data .= ",'".$idRubro."'";                }else{$SIS_data .= ",''";}
 				if(isset($email) && $email!=''){                                   $SIS_data .= ",'".$email."'";                  }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){                                $SIS_data .= ",'".$Nombre."'";                 }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                                 $SIS_data .= ",'".$Nombre."'";                 }else{$SIS_data .= ",''";}
 				if(isset($RazonSocial) && $RazonSocial!=''){                       $SIS_data .= ",'".$RazonSocial."'";            }else{$SIS_data .= ",''";}
 				if(isset($Rut) && $Rut!=''){                                       $SIS_data .= ",'".$Rut."'";                    }else{$SIS_data .= ",''";}
 				if(isset($fNacimiento) && $fNacimiento!=''){                       $SIS_data .= ",'".$fNacimiento."'";            }else{$SIS_data .= ",''";}
@@ -235,7 +234,7 @@ require_once '0_validate_user_1.php';
 				if(isset($Web) && $Web!=''){                                       $SIS_data .= ",'".$Web."'";                    }else{$SIS_data .= ",''";}
 				if(isset($Giro) && $Giro!=''){                                     $SIS_data .= ",'".$Giro."'";                   }else{$SIS_data .= ",''";}
 				if(isset($F_Ingreso) && $F_Ingreso!=''){                           $SIS_data .= ",'".$F_Ingreso."'";              }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){                          $SIS_data .= ",'".$idUsuario."'";              }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){                           $SIS_data .= ",'".$idUsuario."'";              }else{$SIS_data .= ",''";}
 				if(isset($idEstadoFidelizacion) && $idEstadoFidelizacion!=''){     $SIS_data .= ",'".$idEstadoFidelizacion."'";   }else{$SIS_data .= ",''";}
 				if(isset($idEtapa) && $idEtapa!=''){                               $SIS_data .= ",'".$idEtapa."'";                }else{$SIS_data .= ",''";}
 				if(isset($FModificacion) && $FModificacion!=''){                   $SIS_data .= ",'".$FModificacion."'";          }else{$SIS_data .= ",''";}
@@ -260,9 +259,9 @@ require_once '0_validate_user_1.php';
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema, idEstado, idTipo, idRubro, email, Nombre,
 				RazonSocial, Rut, fNacimiento, Direccion, Fono1, Fono2, idCiudad, idComuna, Fax, PersonaContacto,
-				PersonaContacto_Fono, PersonaContacto_email, PersonaContacto_Cargo, Web, Giro, F_Ingreso, idUsuario, 
-				idEstadoFidelizacion, idEtapa, FModificacion, HModificacion, idUsuarioMod, idTab_1, idTab_2, idTab_3, 
-				idTab_4, idTab_5, idTab_6, idTab_7, idTab_8, idTab_9, idTab_10, idTab_11, idTab_12, idTab_13, 
+				PersonaContacto_Fono, PersonaContacto_email, PersonaContacto_Cargo, Web, Giro, F_Ingreso, idUsuario,
+				idEstadoFidelizacion, idEtapa, FModificacion, HModificacion, idUsuarioMod, idTab_1, idTab_2, idTab_3,
+				idTab_4, idTab_5, idTab_6, idTab_7, idTab_8, idTab_9, idTab_10, idTab_11, idTab_12, idTab_13,
 				idTab_14, idTab_15';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'prospectos_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -306,18 +305,18 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idProspecto='".$idProspecto."'";
-				if(isset($idSistema) && $idSistema!=''){         $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idEstado) && $idEstado!=''){                            $SIS_data .= ",idEstado='".$idEstado."'";}
-				if(isset($idTipo) && $idTipo!=''){                                $SIS_data .= ",idTipo='".$idTipo."'";}
-				if(isset($idRubro) && $idRubro!=''){                               $SIS_data .= ",idRubro='".$idRubro."'";}
-				if(isset($email) && $email!=''){                                   $SIS_data .= ",email='".$email."'";}
-				if(isset($Nombre) && $Nombre!=''){                                $SIS_data .= ",Nombre='".$Nombre."'";}
-				if(isset($RazonSocial) && $RazonSocial!=''){                       $SIS_data .= ",RazonSocial='".$RazonSocial."'";}
-				if(isset($Rut) && $Rut!=''){                                       $SIS_data .= ",Rut='".$Rut."'";}
-				if(isset($fNacimiento) && $fNacimiento!=''){                       $SIS_data .= ",fNacimiento='".$fNacimiento."'";}
-				if(isset($Direccion) && $Direccion!=''){                           $SIS_data .= ",Direccion='".$Direccion."'";}
-				if(isset($Fono1) && $Fono1!=''){                                   $SIS_data .= ",Fono1='".$Fono1."'";}
-				if(isset($Fono2) && $Fono2!=''){                                   $SIS_data .= ",Fono2='".$Fono2."'";}
+				if(isset($idSistema) && $idSistema!=''){                             $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idEstado) && $idEstado!=''){                               $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idTipo) && $idTipo!=''){                                   $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($idRubro) && $idRubro!=''){                                 $SIS_data .= ",idRubro='".$idRubro."'";}
+				if(isset($email) && $email!=''){                                     $SIS_data .= ",email='".$email."'";}
+				if(isset($Nombre) && $Nombre!=''){                                   $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($RazonSocial) && $RazonSocial!=''){                         $SIS_data .= ",RazonSocial='".$RazonSocial."'";}
+				if(isset($Rut) && $Rut!=''){                                         $SIS_data .= ",Rut='".$Rut."'";}
+				if(isset($fNacimiento) && $fNacimiento!=''){                         $SIS_data .= ",fNacimiento='".$fNacimiento."'";}
+				if(isset($Direccion) && $Direccion!=''){                             $SIS_data .= ",Direccion='".$Direccion."'";}
+				if(isset($Fono1) && $Fono1!=''){                                     $SIS_data .= ",Fono1='".$Fono1."'";}
+				if(isset($Fono2) && $Fono2!=''){                                     $SIS_data .= ",Fono2='".$Fono2."'";}
 				if(isset($idCiudad) && $idCiudad!= ''){                              $SIS_data .= ",idCiudad='".$idCiudad."'";}
 				if(isset($idComuna) && $idComuna!= ''){                              $SIS_data .= ",idComuna='".$idComuna."'";}
 				if(isset($Fax) && $Fax!= ''){                                        $SIS_data .= ",Fax='".$Fax."'";}
@@ -449,7 +448,7 @@ require_once '0_validate_user_1.php';
 			//Obtengo  los datos
 			$squery = 'idEtapa';
 			$rowEtapa = db_select_data (false, $squery, 'prospectos_etapa', '', 'idEtapa!=0 ORDER BY Nombre DESC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-			
+
 			$squery = 'idSistema,idTipo,idRubro,email,Nombre,RazonSocial,Rut,fNacimiento,Direccion,Fono1,Fono2,idCiudad,idComuna,Fax,PersonaContacto,PersonaContacto_Fono,PersonaContacto_email,PersonaContacto_Cargo,Web,Giro,idTab_1,idTab_2,idTab_3,idTab_4,idTab_5,idTab_6,idTab_7,idTab_8,idTab_9,idTab_10,idTab_11,idTab_12,idTab_13,idTab_14,idTab_15';
 			$rowProspecto = db_select_data (false, $squery, 'prospectos_listado', '', 'idProspecto='.$idProspecto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -475,15 +474,15 @@ require_once '0_validate_user_1.php';
 					/*******************************************************/
 					//Actualizo el prospecto
 					$SIS_data  = "idProspecto='".$idProspecto."'";
-					$SIS_data .= ",idEstado='2'" ;                         //Se desactiva prospecto
+					$SIS_data .= ",idEstado='2'";                         //Se desactiva prospecto
 					$SIS_data .= ",idEtapa='".$rowEtapa['idEtapa']."'";   //se cambia a etapa de cierre
 					$SIS_data .= ",FModificacion='".$FModificacion."'";   //se cambia la fecha de modificacion
 					$SIS_data .= ",HModificacion='".$HModificacion."'";   //se cambia la hora de modificacion
 					$SIS_data .= ",idUsuarioMod='".$idUsuarioMod."'";     //se cambia el usuario de modificacion
-					
+
 					//se actualizan los datos
 					$resultado = db_update_data (false, $SIS_data, 'prospectos_listado', 'idProspecto = "'.$idProspecto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 					/*******************************************************/
 					//verifico si existe el cliente
 					/*******************************************/
@@ -496,19 +495,19 @@ require_once '0_validate_user_1.php';
 					//se actualizaal cliente
 					if($ndata_1!=0){
 						//Filtros
-						
+
 						$SIS_data = "idCliente='".$rowCliente['idCliente']."'";
-						if(isset($rowProspecto['idSistema']) && $rowProspecto['idSistema']!=''){                        $SIS_data .= ",idSistema='".$rowProspecto['idSistema']."'";}
-						if(isset($rowProspecto['idTipo']) && $rowProspecto['idTipo']!=''){                              $SIS_data .= ",idTipo='".$rowProspecto['idTipo']."'";}
-						if(isset($rowProspecto['idRubro']) && $rowProspecto['idRubro']!=''){                            $SIS_data .= ",idRubro='".$rowProspecto['idRubro']."'";}
-						if(isset($rowProspecto['email']) && $rowProspecto['email']!=''){                                $SIS_data .= ",email='".$rowProspecto['email']."'";}
-						if(isset($rowProspecto['Nombre']) && $rowProspecto['Nombre']!=''){                              $SIS_data .= ",Nombre='".$rowProspecto['Nombre']."'";}
-						if(isset($rowProspecto['RazonSocial']) && $rowProspecto['RazonSocial']!=''){                    $SIS_data .= ",RazonSocial='".$rowProspecto['RazonSocial']."'";}
-						if(isset($rowProspecto['Rut']) && $rowProspecto['Rut']!=''){                                    $SIS_data .= ",Rut='".$rowProspecto['Rut']."'";}
-						if(isset($fNacimiento) && $fNacimiento!=''){                                                           $SIS_data .= ",fNacimiento='".$fNacimiento."'";}
-						if(isset($rowProspecto['Direccion']) && $rowProspecto['Direccion']!=''){                        $SIS_data .= ",Direccion='".$rowProspecto['Direccion']."'";}
-						if(isset($rowProspecto['Fono1']) && $rowProspecto['Fono1']!=''){                                $SIS_data .= ",Fono1='".$rowProspecto['Fono1']."'";}
-						if(isset($rowProspecto['Fono2']) && $rowProspecto['Fono2']!=''){                                $SIS_data .= ",Fono2='".$rowProspecto['Fono2']."'";}
+						if(isset($rowProspecto['idSistema']) && $rowProspecto['idSistema']!=''){                                 $SIS_data .= ",idSistema='".$rowProspecto['idSistema']."'";}
+						if(isset($rowProspecto['idTipo']) && $rowProspecto['idTipo']!=''){                                       $SIS_data .= ",idTipo='".$rowProspecto['idTipo']."'";}
+						if(isset($rowProspecto['idRubro']) && $rowProspecto['idRubro']!=''){                                     $SIS_data .= ",idRubro='".$rowProspecto['idRubro']."'";}
+						if(isset($rowProspecto['email']) && $rowProspecto['email']!=''){                                         $SIS_data .= ",email='".$rowProspecto['email']."'";}
+						if(isset($rowProspecto['Nombre']) && $rowProspecto['Nombre']!=''){                                       $SIS_data .= ",Nombre='".$rowProspecto['Nombre']."'";}
+						if(isset($rowProspecto['RazonSocial']) && $rowProspecto['RazonSocial']!=''){                             $SIS_data .= ",RazonSocial='".$rowProspecto['RazonSocial']."'";}
+						if(isset($rowProspecto['Rut']) && $rowProspecto['Rut']!=''){                                             $SIS_data .= ",Rut='".$rowProspecto['Rut']."'";}
+						if(isset($fNacimiento) && $fNacimiento!=''){                                                             $SIS_data .= ",fNacimiento='".$fNacimiento."'";}
+						if(isset($rowProspecto['Direccion']) && $rowProspecto['Direccion']!=''){                                 $SIS_data .= ",Direccion='".$rowProspecto['Direccion']."'";}
+						if(isset($rowProspecto['Fono1']) && $rowProspecto['Fono1']!=''){                                         $SIS_data .= ",Fono1='".$rowProspecto['Fono1']."'";}
+						if(isset($rowProspecto['Fono2']) && $rowProspecto['Fono2']!=''){                                         $SIS_data .= ",Fono2='".$rowProspecto['Fono2']."'";}
 						if(isset($rowProspecto['idCiudad']) && $rowProspecto['idCiudad']!= ''){                                  $SIS_data .= ",idCiudad='".$rowProspecto['idCiudad']."'";}
 						if(isset($rowProspecto['idComuna']) && $rowProspecto['idComuna']!= ''){                                  $SIS_data .= ",idComuna='".$rowProspecto['idComuna']."'";}
 						if(isset($rowProspecto['Fax']) && $rowProspecto['Fax']!= ''){                                            $SIS_data .= ",Fax='".$rowProspecto['Fax']."'";}
@@ -543,7 +542,7 @@ require_once '0_validate_user_1.php';
 						if(isset($Contrato_Obs) && $Contrato_Obs!= ''){                                                          $SIS_data .= ",Contrato_Obs='".$Contrato_Obs."'";}
 						$SIS_data .= ",idEstado='".$idEstado."'";
 						$SIS_data .= ",password='".md5($password)."'";
-						
+
 						/*******************************************************/
 						//se actualizan los datos
 						$resultado = db_update_data (false, $SIS_data, 'clientes_listado', 'idCliente = "'.$rowCliente['idCliente'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -562,7 +561,7 @@ require_once '0_validate_user_1.php';
 									//si no existe la carpeta
 									if (!file_exists($ruta)){
 										try {
-											$oldmask = umask(000);//it will set the new umask and returns the old one 
+											$oldmask = umask(000);//it will set the new umask and returns the old one
 											mkdir($ruta, 0777);
 											umask($oldmask);//reset the old umask
 											//redirijo
@@ -580,39 +579,39 @@ require_once '0_validate_user_1.php';
 								}else{
 									$error['ndata_1'] = 'error/El cliente debe tener un rut valido ingresado para poder crear la carpeta';
 								}
-								
+
 							}else{
 								//redirijo
 								header( 'Location: '.$location.'&edited=true' );
 								die;
 							}
-							
+
 						}
 					/*******************************************/
 					//se crea uno nuevo	
 					}else{
 
 						//filtros
-						if(isset($rowProspecto['idSistema']) && $rowProspecto['idSistema']!=''){                      $SIS_data  = "'".$rowProspecto['idSistema']."'";                 }else{$SIS_data  = "''";}
-						if(isset($rowProspecto['idTipo']) && $rowProspecto['idTipo']!=''){                            $SIS_data .= ",'".$rowProspecto['idTipo']."'";                   }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['idRubro']) && $rowProspecto['idRubro']!=''){                          $SIS_data .= ",'".$rowProspecto['idRubro']."'";                  }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['email']) && $rowProspecto['email']!=''){                              $SIS_data .= ",'".$rowProspecto['email']."'";                    }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['Nombre']) && $rowProspecto['Nombre']!=''){                            $SIS_data .= ",'".$rowProspecto['Nombre']."'";                   }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['RazonSocial']) && $rowProspecto['RazonSocial']!=''){                  $SIS_data .= ",'".$rowProspecto['RazonSocial']."'";              }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['Rut']) && $rowProspecto['Rut']!=''){                                  $SIS_data .= ",'".$rowProspecto['Rut']."'";                      }else{$SIS_data .= ",''";}
-						if(isset($fNacimiento) && $fNacimiento!=''){                                                         $SIS_data .= ",'".$fNacimiento."'";                              }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['Direccion']) && $rowProspecto['Direccion']!=''){                      $SIS_data .= ",'".$rowProspecto['Direccion']."'";                }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['Fono1']) && $rowProspecto['Fono1']!=''){                              $SIS_data .= ",'".$rowProspecto['Fono1']."'";                    }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['Fono2']) && $rowProspecto['Fono2']!=''){                              $SIS_data .= ",'".$rowProspecto['Fono2']."'";                    }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['idCiudad']) && $rowProspecto['idCiudad']!=''){                        $SIS_data .= ",'".$rowProspecto['idCiudad']."'";                 }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['idComuna']) && $rowProspecto['idComuna']!=''){                        $SIS_data .= ",'".$rowProspecto['idComuna']."'";                 }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['Fax']) && $rowProspecto['Fax']!=''){                                  $SIS_data .= ",'".$rowProspecto['Fax']."'";                      }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['PersonaContacto']) && $rowProspecto['PersonaContacto']!=''){          $SIS_data .= ",'".$rowProspecto['PersonaContacto']."'";          }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['PersonaContacto_Fono']) && $rowProspecto['PersonaContacto_Fono']!=''){$SIS_data .= ",'".$rowProspecto['PersonaContacto_Fono']."'";     }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['PersonaContacto_email']) && $rowProspecto['PersonaContacto_email']!=''){     $SIS_data .= ",'".$rowProspecto['PersonaContacto_email']."'";    }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['PersonaContacto_Cargo']) && $rowProspecto['PersonaContacto_Cargo']!=''){     $SIS_data .= ",'".$rowProspecto['PersonaContacto_Cargo']."'";    }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['Web']) && $rowProspecto['Web']!=''){                                  $SIS_data .= ",'".$rowProspecto['Web']."'";                      }else{$SIS_data .= ",''";}
-						if(isset($rowProspecto['Giro']) && $rowProspecto['Giro']!=''){                                $SIS_data .= ",'".$rowProspecto['Giro']."'";                     }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['idSistema']) && $rowProspecto['idSistema']!=''){                               $SIS_data  = "'".$rowProspecto['idSistema']."'";                 }else{$SIS_data  = "''";}
+						if(isset($rowProspecto['idTipo']) && $rowProspecto['idTipo']!=''){                                     $SIS_data .= ",'".$rowProspecto['idTipo']."'";                   }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['idRubro']) && $rowProspecto['idRubro']!=''){                                   $SIS_data .= ",'".$rowProspecto['idRubro']."'";                  }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['email']) && $rowProspecto['email']!=''){                                       $SIS_data .= ",'".$rowProspecto['email']."'";                    }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['Nombre']) && $rowProspecto['Nombre']!=''){                                     $SIS_data .= ",'".$rowProspecto['Nombre']."'";                   }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['RazonSocial']) && $rowProspecto['RazonSocial']!=''){                           $SIS_data .= ",'".$rowProspecto['RazonSocial']."'";              }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['Rut']) && $rowProspecto['Rut']!=''){                                           $SIS_data .= ",'".$rowProspecto['Rut']."'";                      }else{$SIS_data .= ",''";}
+						if(isset($fNacimiento) && $fNacimiento!=''){                                                           $SIS_data .= ",'".$fNacimiento."'";                              }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['Direccion']) && $rowProspecto['Direccion']!=''){                               $SIS_data .= ",'".$rowProspecto['Direccion']."'";                }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['Fono1']) && $rowProspecto['Fono1']!=''){                                       $SIS_data .= ",'".$rowProspecto['Fono1']."'";                    }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['Fono2']) && $rowProspecto['Fono2']!=''){                                       $SIS_data .= ",'".$rowProspecto['Fono2']."'";                    }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['idCiudad']) && $rowProspecto['idCiudad']!=''){                                 $SIS_data .= ",'".$rowProspecto['idCiudad']."'";                 }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['idComuna']) && $rowProspecto['idComuna']!=''){                                 $SIS_data .= ",'".$rowProspecto['idComuna']."'";                 }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['Fax']) && $rowProspecto['Fax']!=''){                                           $SIS_data .= ",'".$rowProspecto['Fax']."'";                      }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['PersonaContacto']) && $rowProspecto['PersonaContacto']!=''){                   $SIS_data .= ",'".$rowProspecto['PersonaContacto']."'";          }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['PersonaContacto_Fono']) && $rowProspecto['PersonaContacto_Fono']!=''){         $SIS_data .= ",'".$rowProspecto['PersonaContacto_Fono']."'";     }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['PersonaContacto_email']) && $rowProspecto['PersonaContacto_email']!=''){       $SIS_data .= ",'".$rowProspecto['PersonaContacto_email']."'";    }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['PersonaContacto_Cargo']) && $rowProspecto['PersonaContacto_Cargo']!=''){       $SIS_data .= ",'".$rowProspecto['PersonaContacto_Cargo']."'";    }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['Web']) && $rowProspecto['Web']!=''){                                           $SIS_data .= ",'".$rowProspecto['Web']."'";                      }else{$SIS_data .= ",''";}
+						if(isset($rowProspecto['Giro']) && $rowProspecto['Giro']!=''){                                         $SIS_data .= ",'".$rowProspecto['Giro']."'";                     }else{$SIS_data .= ",''";}
 						if(isset($rowProspecto['idTab_1']) && $rowProspecto['idTab_1']!= ''){                                  $SIS_data .= ",'".$rowProspecto['idTab_1']."'";                  }else{$SIS_data .= ",''";}
 						if(isset($rowProspecto['idTab_2']) && $rowProspecto['idTab_2']!= ''){                                  $SIS_data .= ",'".$rowProspecto['idTab_2']."'";                  }else{$SIS_data .= ",''";}
 						if(isset($rowProspecto['idTab_3']) && $rowProspecto['idTab_3']!= ''){                                  $SIS_data .= ",'".$rowProspecto['idTab_3']."'";                  }else{$SIS_data .= ",''";}
@@ -628,13 +627,13 @@ require_once '0_validate_user_1.php';
 						if(isset($rowProspecto['idTab_13']) && $rowProspecto['idTab_13']!= ''){                                $SIS_data .= ",'".$rowProspecto['idTab_13']."'";                 }else{$SIS_data .= ",''";}
 						if(isset($rowProspecto['idTab_14']) && $rowProspecto['idTab_14']!= ''){                                $SIS_data .= ",'".$rowProspecto['idTab_14']."'";                 }else{$SIS_data .= ",''";}
 						if(isset($rowProspecto['idTab_15']) && $rowProspecto['idTab_15']!= ''){                                $SIS_data .= ",'".$rowProspecto['idTab_15']."'";                 }else{$SIS_data .= ",''";}
-						if(isset($Contrato_Nombre) && $Contrato_Nombre!=''){                                                 $SIS_data .= ",'".$Contrato_Nombre."'";                          }else{$SIS_data .= ",''";}
-						if(isset($Contrato_Numero) && $Contrato_Numero!=''){                                                 $SIS_data .= ",'".$Contrato_Numero."'";                          }else{$SIS_data .= ",''";}
-						if(isset($Contrato_Fecha_Ini) && $Contrato_Fecha_Ini!=''){                                           $SIS_data .= ",'".$Contrato_Fecha_Ini."'";                       }else{$SIS_data .= ",''";}
-						if(isset($Contrato_Fecha_Term) && $Contrato_Fecha_Term!=''){                                         $SIS_data .= ",'".$Contrato_Fecha_Term."'";                      }else{$SIS_data .= ",''";}
-						if(isset($Contrato_Valor_Mensual) && $Contrato_Valor_Mensual!=''){                                   $SIS_data .= ",'".$Contrato_Valor_Mensual."'";                   }else{$SIS_data .= ",''";}
-						if(isset($Contrato_Valor_Anual) && $Contrato_Valor_Anual!=''){                                       $SIS_data .= ",'".$Contrato_Valor_Anual."'";                     }else{$SIS_data .= ",''";}
-						if(isset($Contrato_Obs) && $Contrato_Obs!=''){                                                       $SIS_data .= ",'".$Contrato_Obs."'";                             }else{$SIS_data .= ",''";}
+						if(isset($Contrato_Nombre) && $Contrato_Nombre!=''){                                                   $SIS_data .= ",'".$Contrato_Nombre."'";                          }else{$SIS_data .= ",''";}
+						if(isset($Contrato_Numero) && $Contrato_Numero!=''){                                                   $SIS_data .= ",'".$Contrato_Numero."'";                          }else{$SIS_data .= ",''";}
+						if(isset($Contrato_Fecha_Ini) && $Contrato_Fecha_Ini!=''){                                             $SIS_data .= ",'".$Contrato_Fecha_Ini."'";                       }else{$SIS_data .= ",''";}
+						if(isset($Contrato_Fecha_Term) && $Contrato_Fecha_Term!=''){                                           $SIS_data .= ",'".$Contrato_Fecha_Term."'";                      }else{$SIS_data .= ",''";}
+						if(isset($Contrato_Valor_Mensual) && $Contrato_Valor_Mensual!=''){                                     $SIS_data .= ",'".$Contrato_Valor_Mensual."'";                   }else{$SIS_data .= ",''";}
+						if(isset($Contrato_Valor_Anual) && $Contrato_Valor_Anual!=''){                                         $SIS_data .= ",'".$Contrato_Valor_Anual."'";                     }else{$SIS_data .= ",''";}
+						if(isset($Contrato_Obs) && $Contrato_Obs!=''){                                                         $SIS_data .= ",'".$Contrato_Obs."'";                             }else{$SIS_data .= ",''";}
 						$SIS_data .= ",'".$idEstado."'";
 						$SIS_data .= ",'".md5($password)."'";
 
@@ -642,8 +641,8 @@ require_once '0_validate_user_1.php';
 						$SIS_columns = 'idSistema,idTipo,idRubro,email,Nombre,RazonSocial,
 						Rut,fNacimiento,Direccion,Fono1,Fono2,idCiudad,idComuna,Fax,PersonaContacto,PersonaContacto_Fono,
 						PersonaContacto_email,PersonaContacto_Cargo,Web,Giro,idTab_1,idTab_2,idTab_3,idTab_4,idTab_5,
-						idTab_6,idTab_7, idTab_8, idTab_9, idTab_10, idTab_11, idTab_12, idTab_13, idTab_14, idTab_15, 
-						Contrato_Nombre,Contrato_Numero, Contrato_Fecha_Ini, Contrato_Fecha_Term, Contrato_Valor_Mensual, 
+						idTab_6,idTab_7, idTab_8, idTab_9, idTab_10, idTab_11, idTab_12, idTab_13, idTab_14, idTab_15,
+						Contrato_Nombre,Contrato_Numero, Contrato_Fecha_Ini, Contrato_Fecha_Term, Contrato_Valor_Mensual,
 						Contrato_Valor_Anual, Contrato_Obs,idEstado,password';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'clientes_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -654,7 +653,7 @@ require_once '0_validate_user_1.php';
 							if(isset($rowProspecto['Rut'])&&$rowProspecto['Rut']!=''){
 								//Se crea la carpeta del cliente
 								if(isset($new_folder)&&$new_folder!=''&&$new_folder==1){
-									
+
 									$Rut = $rowProspecto['Rut'];
 									$Rut = str_replace(' ', '', $Rut);//elimino espacios
 									$Rut = str_replace('-', '', $Rut);//elimino los guiones
@@ -663,7 +662,7 @@ require_once '0_validate_user_1.php';
 									//si no existe la carpeta
 									if (!file_exists($ruta)){
 										try {
-											$oldmask = umask(000);//it will set the new umask and returns the old one 
+											$oldmask = umask(000);//it will set the new umask and returns the old one
 											mkdir($ruta, 0777);
 											umask($oldmask);//reset the old umask
 											//redirijo
@@ -683,7 +682,7 @@ require_once '0_validate_user_1.php';
 									header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 									die;
 								}
-							//si no hay rut	
+							//si no hay rut
 							}else{
 								//no se crean las carpetas y se redirige
 								header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
@@ -692,7 +691,7 @@ require_once '0_validate_user_1.php';
 					}
 
 					/*******************************************************/
-					
+
 				}
 			}
 

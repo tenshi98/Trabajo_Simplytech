@@ -165,7 +165,6 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('AT1', 'SII_NDoc')
             ->setCellValue('AU1', 'ID');
 
-					
 //variables
 $nn             = 2;
 $TotalFacturado = 0;

@@ -112,7 +112,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){           $SIS_data  = "'".$idSistema."'";                    }else{$SIS_data  = "''";}
+				if(isset($idSistema) && $idSistema!=''){                             $SIS_data  = "'".$idSistema."'";                    }else{$SIS_data  = "''";}
 				if(isset($Porcentaje_PPM) && $Porcentaje_PPM!=''){                   $SIS_data .= ",'".$Porcentaje_PPM."'";              }else{$SIS_data .= ",''";}
 				if(isset($IVA_idCentroCosto) && $IVA_idCentroCosto!=''){             $SIS_data .= ",'".$IVA_idCentroCosto."'";           }else{$SIS_data .= ",''";}
 				if(isset($IVA_idLevel_1) && $IVA_idLevel_1!=''){                     $SIS_data .= ",'".$IVA_idLevel_1."'";               }else{$SIS_data .= ",''";}
@@ -180,7 +180,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idMantenedor='".$idMantenedor."'";
-				if(isset($idSistema) && $idSistema!=''){             $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idSistema) && $idSistema!=''){                               $SIS_data .= ",idSistema='".$idSistema."'";}
 				if(isset($Porcentaje_PPM) && $Porcentaje_PPM!=''){                     $SIS_data .= ",Porcentaje_PPM='".$Porcentaje_PPM."'";}
 				if(isset($IVA_idCentroCosto) && $IVA_idCentroCosto!=''){               $SIS_data .= ",IVA_idCentroCosto='".$IVA_idCentroCosto."'";}
 				if(isset($IVA_idLevel_1) && $IVA_idLevel_1!=''){                       $SIS_data .= ",IVA_idLevel_1='".$IVA_idLevel_1."'";}

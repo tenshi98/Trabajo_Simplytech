@@ -197,7 +197,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x1, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x1, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
-				
+
 				}
 				$Form_Inputs->form_date('Fecha Mantencion Inicio','Fecha_ini', $x2, 1);
 				$Form_Inputs->form_date('Fecha Mantencion Termino','Fecha_ter', $x3, 1);

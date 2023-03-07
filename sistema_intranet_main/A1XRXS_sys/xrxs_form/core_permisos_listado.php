@@ -25,8 +25,8 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['Level_Limit']))        $Level_Limit        = $_POST['Level_Limit'];
 	if (!empty($_POST['fake_id_pmcat']))      $fake_id_pmcat      = $_POST['fake_id_pmcat'];
 	if (!empty($_POST['fake_Nombre']))        $fake_Nombre        = $_POST['fake_Nombre'];
-	if ( isset($_POST['Habilita']))            $Habilita           = $_POST['Habilita'];
-	if ( isset($_POST['Principal']))           $Principal          = $_POST['Principal'];
+	if ( isset($_POST['Habilita']))           $Habilita           = $_POST['Habilita'];
+	if ( isset($_POST['Principal']))          $Principal          = $_POST['Principal'];
 
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -48,8 +48,8 @@ require_once '0_validate_user_1.php';
 			case 'Version':           if(empty($Version)){           $error['Version']            = 'error/No ha ingresado la version';}break;
 			case 'Descripcion':       if(empty($Descripcion)){       $error['Descripcion']        = 'error/No ha ingresado una descripcion';}break;
 			case 'Level_Limit':       if(empty($Level_Limit)){       $error['Level_Limit']        = 'error/No ha seleccionado el limite del nivel de permiso';}break;
-			case 'Habilita':          if(!isset($Habilita)){          $error['Habilita']           = 'error/No ha ingresado los tabs que habilita';}break;
-			case 'Principal':         if(!isset($Principal)){         $error['Principal']          = 'error/No ha ingresado los tabs que habilita en principal';}break;
+			case 'Habilita':          if(!isset($Habilita)){         $error['Habilita']           = 'error/No ha ingresado los tabs que habilita';}break;
+			case 'Principal':         if(!isset($Principal)){        $error['Principal']          = 'error/No ha ingresado los tabs que habilita en principal';}break;
 
 		}
 	}
@@ -58,7 +58,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	if(isset($Direccionweb) && $Direccionweb!=''){   $Direccionweb  = EstandarizarInput($Direccionweb);}
 	if(isset($Direccionbase) && $Direccionbase!=''){ $Direccionbase = EstandarizarInput($Direccionbase);}
-	if(isset($Nombre) && $Nombre!=''){              $Nombre        = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){               $Nombre        = EstandarizarInput($Nombre);}
 	if(isset($visualizacion) && $visualizacion!=''){ $visualizacion = EstandarizarInput($visualizacion);}
 	if(isset($Version) && $Version!=''){             $Version       = EstandarizarInput($Version);}
 	if(isset($Descripcion) && $Descripcion!=''){     $Descripcion   = EstandarizarInput($Descripcion);}
@@ -105,10 +105,10 @@ require_once '0_validate_user_1.php';
 				if(isset($id_pmcat) && $id_pmcat!=''){             $SIS_data  = "'".$id_pmcat."'";         }else{$SIS_data  = "''";}
 				if(isset($Direccionweb) && $Direccionweb!=''){     $SIS_data .= ",'".$Direccionweb."'";    }else{$SIS_data .= ",''";}
 				if(isset($Direccionbase) && $Direccionbase!=''){   $SIS_data .= ",'".$Direccionbase."'";   }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){                $SIS_data .= ",'".$Nombre."'";          }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                 $SIS_data .= ",'".$Nombre."'";          }else{$SIS_data .= ",''";}
 				if(isset($visualizacion) && $visualizacion!=''){   $SIS_data .= ",'".$visualizacion."'";   }else{$SIS_data .= ",''";}
 				if(isset($Version) && $Version!=''){               $SIS_data .= ",'".$Version."'";         }else{$SIS_data .= ",''";}
-				if(isset($Descripcion) && $Descripcion!=''){       $SIS_data .= ",'".$Descripcion."'";   }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion!=''){       $SIS_data .= ",'".$Descripcion."'";     }else{$SIS_data .= ",''";}
 				if(isset($Level_Limit) && $Level_Limit!=''){       $SIS_data .= ",'".$Level_Limit."'";     }else{$SIS_data .= ",''";}
 				if(isset($Habilita) && $Habilita!=''){             $SIS_data .= ",'".$Habilita."'";        }else{$SIS_data .= ",''";}
 				if(isset($Principal) && $Principal!=''){           $SIS_data .= ",'".$Principal."'";       }else{$SIS_data .= ",''";}
@@ -173,7 +173,7 @@ require_once '0_validate_user_1.php';
 				if(isset($id_pmcat) && $id_pmcat!=''){            $SIS_data .= ",id_pmcat='".$id_pmcat."'";}
 				if(isset($Direccionweb) && $Direccionweb!=''){    $SIS_data .= ",Direccionweb='".$Direccionweb."'";}
 				if(isset($Direccionbase) && $Direccionbase!=''){  $SIS_data .= ",Direccionbase='".$Direccionbase."'";}
-				if(isset($Nombre) && $Nombre!=''){               $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($visualizacion) && $visualizacion!=''){  $SIS_data .= ",visualizacion='".$visualizacion."'";}
 				if(isset($Version) && $Version!=''){              $SIS_data .= ",Version='".$Version."'";}
 				if(isset($Descripcion) && $Descripcion!=''){      $SIS_data .= ",Descripcion='".$Descripcion."'";}

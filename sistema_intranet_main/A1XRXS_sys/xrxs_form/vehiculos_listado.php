@@ -140,7 +140,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){      $Nombre     = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){       $Nombre     = EstandarizarInput($Nombre);}
 	if(isset($Marca) && $Marca!=''){         $Marca      = EstandarizarInput($Marca);}
 	if(isset($Modelo) && $Modelo!=''){       $Modelo     = EstandarizarInput($Modelo);}
 	if(isset($Num_serie) && $Num_serie!=''){ $Num_serie  = EstandarizarInput($Num_serie);}
@@ -199,11 +199,11 @@ require_once '0_validate_user_1.php';
 				$Password = genera_password(6,'alfanumerico');
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){                          $SIS_data  = "'".$idSistema."'";                        }else{$SIS_data  ="''";}
-				if(isset($idEstado) && $idEstado!=''){                                             $SIS_data .= ",'".$idEstado."'";                        }else{$SIS_data .=",''";}
-				if(isset($idTipo) && $idTipo!=''){                                                 $SIS_data .= ",'".$idTipo."'";                          }else{$SIS_data .=",''";}
+				if(isset($idSistema) && $idSistema!=''){                                            $SIS_data  = "'".$idSistema."'";                        }else{$SIS_data  ="''";}
+				if(isset($idEstado) && $idEstado!=''){                                              $SIS_data .= ",'".$idEstado."'";                        }else{$SIS_data .=",''";}
+				if(isset($idTipo) && $idTipo!=''){                                                  $SIS_data .= ",'".$idTipo."'";                          }else{$SIS_data .=",''";}
 				if(isset($idZona) && $idZona!=''){                                                  $SIS_data .= ",'".$idZona."'";                          }else{$SIS_data .=",''";}
-				if(isset($Nombre) && $Nombre!=''){                                                 $SIS_data .= ",'".$Nombre."'";                          }else{$SIS_data .=",''";}
+				if(isset($Nombre) && $Nombre!=''){                                                  $SIS_data .= ",'".$Nombre."'";                          }else{$SIS_data .=",''";}
 				if(isset($Marca) && $Marca!=''){                                                    $SIS_data .= ",'".$Marca."'";                           }else{$SIS_data .=",''";}
 				if(isset($Modelo) && $Modelo!=''){                                                  $SIS_data .= ",'".$Modelo."'";                          }else{$SIS_data .=",''";}
 				if(isset($Num_serie) && $Num_serie!=''){                                            $SIS_data .= ",'".$Num_serie."'";                       }else{$SIS_data .=",''";}
@@ -220,9 +220,9 @@ require_once '0_validate_user_1.php';
 				if(isset($idOpciones_9) && $idOpciones_9!=''){                                      $SIS_data .= ",'".$idOpciones_9."'";                    }else{$SIS_data .=",''";}
 				if(isset($idOpciones_10) && $idOpciones_10!=''){                                    $SIS_data .= ",'".$idOpciones_10."'";                   }else{$SIS_data .=",''";}
 				if(isset($idTelemetria) && $idTelemetria!=''){                                      $SIS_data .= ",'".$idTelemetria."'";                    }else{$SIS_data .=",''";}
-				if(isset($idBodega) && $idBodega!=''){                                             $SIS_data .= ",'".$idBodega."'";                        }else{$SIS_data .=",''";}
+				if(isset($idBodega) && $idBodega!=''){                                              $SIS_data .= ",'".$idBodega."'";                        }else{$SIS_data .=",''";}
 				if(isset($idRuta) && $idRuta!=''){                                                  $SIS_data .= ",'".$idRuta."'";                          }else{$SIS_data .=",''";}
-				if(isset($idTrabajador) && $idTrabajador!=''){                                     $SIS_data .= ",'".$idTrabajador."'";                    }else{$SIS_data .=",''";}
+				if(isset($idTrabajador) && $idTrabajador!=''){                                      $SIS_data .= ",'".$idTrabajador."'";                    }else{$SIS_data .=",''";}
 				if(isset($Password) && $Password!=''){                                              $SIS_data .= ",'".$Password."'";                        }else{$SIS_data .=",''";}
 				if(isset($dispositivo) && $dispositivo!=''){                                        $SIS_data .= ",'".$dispositivo."'";                     }else{$SIS_data .=",''";}
 				if(isset($IMEI) && $IMEI!=''){                                                      $SIS_data .= ",'".$IMEI."'";                            }else{$SIS_data .=",''";}
@@ -251,9 +251,9 @@ require_once '0_validate_user_1.php';
 				$SIS_columns = 'idSistema, idEstado, idTipo, idZona, Nombre,Marca, Modelo, Num_serie,
 				AnoFab, Patente, idOpciones_1, idOpciones_2, idOpciones_3, idOpciones_4, idOpciones_5,idOpciones_6, idOpciones_7,
 				idOpciones_8, idOpciones_9, idOpciones_10, idTelemetria, idBodega, idRuta, idTrabajador,Password,
-				dispositivo, IMEI, GSM, GeoLatitud, GeoLongitud,Capacidad, MCubicos, idTipoCarga, doc_fecha_mantencion, 
-				doc_fecha_padron, doc_fecha_permiso_circulacion, doc_fecha_resolucion_sanitaria, doc_fecha_revision_tecnica, 
-				doc_fecha_seguro_carga, doc_fecha_soap,doc_fecha_cert_trans_personas,idTransporte, idProceso, Motivo, 
+				dispositivo, IMEI, GSM, GeoLatitud, GeoLongitud,Capacidad, MCubicos, idTipoCarga, doc_fecha_mantencion,
+				doc_fecha_padron, doc_fecha_permiso_circulacion, doc_fecha_resolucion_sanitaria, doc_fecha_revision_tecnica,
+				doc_fecha_seguro_carga, doc_fecha_soap,doc_fecha_cert_trans_personas,idTransporte, idProceso, Motivo,
 				LimiteVelocidad, CapacidadPersonas, AlertLimiteVelocidad';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'vehiculos_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -283,7 +283,7 @@ require_once '0_validate_user_1.php';
 					  PRIMARY KEY (`idTabla`)
 					) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=latin1 COMMENT='Dinamica';";
 					$result = mysqli_query($dbConn, $query);
-				
+
 					//Si ejecuto correctamente la consulta
 					if($result){
 						//redirijo
@@ -341,11 +341,11 @@ require_once '0_validate_user_1.php';
 
 				//Filtros
 				$SIS_data = "idVehiculo='".$idVehiculo."'";
-				if(isset($idSistema) && $idSistema!=''){                          $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idEstado) && $idEstado!=''){                                             $SIS_data .= ",idEstado='".$idEstado."'";}
-				if(isset($idTipo) && $idTipo!=''){                                                 $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($idSistema) && $idSistema!=''){                                            $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idEstado) && $idEstado!=''){                                              $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idTipo) && $idTipo!=''){                                                  $SIS_data .= ",idTipo='".$idTipo."'";}
 				if(isset($idZona) && $idZona!=''){                                                  $SIS_data .= ",idZona='".$idZona."'";}
-				if(isset($Nombre) && $Nombre!=''){                                                 $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                                                  $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Marca) && $Marca!=''){                                                    $SIS_data .= ",Marca='".$Marca."'";}
 				if(isset($Modelo) && $Modelo!=''){                                                  $SIS_data .= ",Modelo='".$Modelo."'";}
 				if(isset($Num_serie) && $Num_serie!=''){                                            $SIS_data .= ",Num_serie='".$Num_serie."'";}
@@ -362,9 +362,9 @@ require_once '0_validate_user_1.php';
 				if(isset($idOpciones_9) && $idOpciones_9!=''){                                      $SIS_data .= ",idOpciones_9='".$idOpciones_9."'";}
 				if(isset($idOpciones_10) && $idOpciones_10!=''){                                    $SIS_data .= ",idOpciones_10='".$idOpciones_10."'";}
 				if(isset($idTelemetria) && $idTelemetria!=''){                                      $SIS_data .= ",idTelemetria='".$idTelemetria."'";}
-				if(isset($idBodega) && $idBodega!=''){                                             $SIS_data .= ",idBodega='".$idBodega."'";}
+				if(isset($idBodega) && $idBodega!=''){                                              $SIS_data .= ",idBodega='".$idBodega."'";}
 				if(isset($idRuta) && $idRuta!=''){                                                  $SIS_data .= ",idRuta='".$idRuta."'";}
-				if(isset($idTrabajador) && $idTrabajador!=''){                                     $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
+				if(isset($idTrabajador) && $idTrabajador!=''){                                      $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
 				if(isset($Password) && $Password!=''){                                              $SIS_data .= ",Password='".$Password."'";}
 				if(isset($dispositivo) && $dispositivo!=''){                                        $SIS_data .= ",dispositivo='".$dispositivo."'";}
 				if(isset($IMEI) && $IMEI!=''){                                                      $SIS_data .= ",IMEI='".$IMEI."'";}
@@ -560,9 +560,6 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-				
-			
 
 		break;
 /*******************************************************************************************************************/
@@ -603,7 +600,7 @@ require_once '0_validate_user_1.php';
 				$limite_kb = 1000;
 				//Sufijo
 				$sufijo = 'vehiculo_img_'.$idVehiculo.'_';
-							  
+
 				if (in_array($_FILES['Direccion_img']['type'], $permitidos) && $_FILES['Direccion_img']['size'] <= $limite_kb * 1024){
 					//Se especifica carpeta de destino
 					$ruta = "upload/".$sufijo.$_FILES['Direccion_img']['name'];
@@ -676,7 +673,7 @@ require_once '0_validate_user_1.php';
 							}
 							//se eliminan las imagenes de la memoria
 							imagedestroy($imgBase);
-				
+
 							//Filtro para idSistema
 							$SIS_data = "Direccion_img='".$sufijo.$_FILES['Direccion_img']['name']."'";
 
@@ -690,7 +687,7 @@ require_once '0_validate_user_1.php';
 								die;
 
 							}
-										
+
 						} else {
 							$error['Direccion_img']     = 'error/Ocurrio un error al mover el archivo';
 						}
@@ -715,7 +712,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "Direccion_img=''" ;
+			$SIS_data = "Direccion_img=''";
 			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -774,7 +771,7 @@ require_once '0_validate_user_1.php';
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 				//Filtros
-				$SIS_data = "idVehiculo='0'" ;
+				$SIS_data = "idVehiculo='0'";
 
 				/*******************************************************/
 				//se actualizan los datos
@@ -917,7 +914,7 @@ require_once '0_validate_user_1.php';
 				if(isset($rowVehiculo['doc_mantencion'])&&isset($rowMantencion['doc_mantencion'])&&$rowVehiculo['doc_mantencion']==$rowMantencion['doc_mantencion']){
 					/*******************************************************/
 					//se actualizan los datos
-					$SIS_data = "doc_mantencion='', doc_fecha_mantencion=''" ;
+					$SIS_data = "doc_mantencion='', doc_fecha_mantencion=''";
 					$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$idVehiculo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 
@@ -1032,7 +1029,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "doc_padron='', doc_fecha_padron=''" ;
+			$SIS_data = "doc_padron='', doc_fecha_padron=''";
 			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_padron'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -1055,9 +1052,6 @@ require_once '0_validate_user_1.php';
 				die;
 
 			}
-			
-				
-			
 
 		break;
 /*******************************************************************************************************************/
@@ -1117,7 +1111,6 @@ require_once '0_validate_user_1.php';
 								die;
 
 							}
-					
 						} else {
 							$error['doc_permiso_circulacion']     = 'error/Ocurrio un error al mover el archivo';
 						}
@@ -1142,7 +1135,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "doc_permiso_circulacion='', doc_fecha_permiso_circulacion=''" ;
+			$SIS_data = "doc_permiso_circulacion='', doc_fecha_permiso_circulacion=''";
 			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_permiso_circulacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -1248,7 +1241,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "doc_resolucion_sanitaria='', doc_fecha_resolucion_sanitaria=''" ;
+			$SIS_data = "doc_resolucion_sanitaria='', doc_fecha_resolucion_sanitaria=''";
 			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_resolucion_sanitaria'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -1338,11 +1331,10 @@ require_once '0_validate_user_1.php';
 					}
 				} else {
 					$error['doc_revision_tecnica']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
-				
+
 				}
 			}
 
-		
 		break;
 /*******************************************************************************************************************/
 		//Cambia el nivel del permiso
@@ -1356,7 +1348,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "doc_revision_tecnica='', doc_fecha_revision_tecnica=''" ;
+			$SIS_data = "doc_revision_tecnica='', doc_fecha_revision_tecnica=''";
 			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_revision_tecnica'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -1379,9 +1371,6 @@ require_once '0_validate_user_1.php';
 				die;
 
 			}
-			
-				
-			
 
 		break;
 /*******************************************************************************************************************/
@@ -1465,7 +1454,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "doc_seguro_carga='', doc_fecha_seguro_carga=''" ;
+			$SIS_data = "doc_seguro_carga='', doc_fecha_seguro_carga=''";
 			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_seguro_carga'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -1547,7 +1536,6 @@ require_once '0_validate_user_1.php';
 								die;
 
 							}
-					
 						} else {
 							$error['doc_soap']     = 'error/Ocurrio un error al mover el archivo';
 						}
@@ -1572,7 +1560,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "doc_soap='', doc_fecha_soap=''" ;
+			$SIS_data = "doc_soap='', doc_fecha_soap=''";
 			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_soap'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -1654,7 +1642,6 @@ require_once '0_validate_user_1.php';
 								die;
 
 							}
-					
 						} else {
 							$error['doc_cert_trans_personas']     = 'error/Ocurrio un error al mover el archivo';
 						}
@@ -1679,7 +1666,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "doc_cert_trans_personas='', doc_fecha_cert_trans_personas=''" ;
+			$SIS_data = "doc_cert_trans_personas='', doc_fecha_cert_trans_personas=''";
 			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_cert_trans_personas'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -1956,7 +1943,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "doc_ficha_tecnica=''" ;
+			$SIS_data = "doc_ficha_tecnica=''";
 			$resultado = db_update_data (false, $SIS_data, 'vehiculos_listado', 'idVehiculo = "'.$_GET['del_doc_ficha'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){

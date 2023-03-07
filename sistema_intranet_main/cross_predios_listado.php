@@ -120,7 +120,6 @@ LEFT JOIN `core_ubicacion_ciudad`   ON core_ubicacion_ciudad.idCiudad   = cross_
 LEFT JOIN `core_ubicacion_comunas`  ON core_ubicacion_comunas.idComuna  = cross_predios_listado.idComuna';
 $SIS_where = 'cross_predios_listado.idPredio ='.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'cross_predios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
-	
 
 //Se traen las zonas
 $SIS_query = '
@@ -275,7 +274,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 								filtrar($arrZonas, 'idZona');
 								//se recorre
 								foreach ($arrZonas as $todaszonas=>$zonas) {
-									
+
 									$Latitud_z_2       = 0;
 									$Longitud_z_2      = 0;
 									$Latitud_z_prom_2  = 0;
@@ -386,7 +385,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 						  
 								geocoder.geocode( { address: '<?php echo $Ubicacion ?>'}, function(results, status) {
 									if (status == google.maps.GeocoderStatus.OK) {
-										
+
 										// marker position
 										myLatlng = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
 								

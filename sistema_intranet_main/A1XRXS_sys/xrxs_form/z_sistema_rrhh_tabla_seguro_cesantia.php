@@ -14,8 +14,8 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if (!empty($_POST['idTablaSeguro']))  $idTablaSeguro     = $_POST['idTablaSeguro'];
-	if (!empty($_POST['idTipoContrato'])) $idTipoContrato    = $_POST['idTipoContrato'];
+	if (!empty($_POST['idTablaSeguro']))   $idTablaSeguro     = $_POST['idTablaSeguro'];
+	if (!empty($_POST['idTipoContrato']))  $idTipoContrato    = $_POST['idTipoContrato'];
 	if ( isset($_POST['Porc_Empleador']))  $Porc_Empleador    = $_POST['Porc_Empleador'];
 	if ( isset($_POST['Porc_Trabajador'])) $Porc_Trabajador   = $_POST['Porc_Trabajador'];
 
@@ -81,8 +81,7 @@ require_once '0_validate_user_1.php';
 			}
 
 		break;
-						
-		
+
 /*******************************************************************************************************************/
 	}
 

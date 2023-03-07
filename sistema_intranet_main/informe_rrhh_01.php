@@ -74,7 +74,7 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php 
 						if ($arrTrabajador!=false && !empty($arrTrabajador) && $arrTrabajador!='') {
-							foreach ($arrTrabajador as $tipo){ 
+							foreach ($arrTrabajador as $tipo){
 								$TotalPagar = $tipo['TotalAPagar'] - $tipo['MontoPagado'];
 								?>
 								<tr class="odd">

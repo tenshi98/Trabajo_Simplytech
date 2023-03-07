@@ -520,9 +520,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select('Bodega Productos','idBodegaProd', $x9, 2, 'idBodega', 'Nombre', 'bodegas_productos_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select('Bodega Insumos','idBodegaIns', $x10, 2, 'idBodega', 'Nombre', 'bodegas_insumos_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select('Utilizar Itemizado','idOpcionItem', $x11, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
@@ -542,7 +540,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							document.getElementById('div_ValorMensual').style.display = '';
 							document.getElementById('div_Presupuesto').style.display = 'none';
 							document.getElementById('Presupuesto').value = "0";
-									
+
 						//si es Por Itemizado
 						} else if(modelSelected1 == 2){
 							document.getElementById('div_ValorMensual').style.display = 'none';

@@ -94,7 +94,7 @@ $subquery .= ',GeoVelocidad';
 for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
 	$subquery .= ',Sensor_'.$i;
 }
-					
+
 /*****************************************/
 //se consulta
 $SIS_query = 'idTabla'.$subquery;
@@ -409,7 +409,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 							}
 							//se cierra la figura
 							if(isset($Longitud_x)&&$Longitud_x!=''){
-								echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
+								echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}';
 							}
 							?>
 						];

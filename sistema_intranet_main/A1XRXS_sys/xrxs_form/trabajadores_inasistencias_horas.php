@@ -89,8 +89,8 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idSistema) && $idSistema!=''){            $SIS_data  = "'".$idSistema."'";       }else{$SIS_data  = "''";}
-				if(isset($idTrabajador) && $idTrabajador!=''){     $SIS_data .= ",'".$idTrabajador."'";   }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",'".$idUsuario."'";      }else{$SIS_data .= ",''";}
+				if(isset($idTrabajador) && $idTrabajador!=''){      $SIS_data .= ",'".$idTrabajador."'";   }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",'".$idUsuario."'";      }else{$SIS_data .= ",''";}
 				if(isset($Fecha_ingreso) && $Fecha_ingreso!=''){    $SIS_data .= ",'".$Fecha_ingreso."'";  }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
@@ -148,8 +148,8 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idInasistenciaHora='".$idInasistenciaHora."'";
 				if(isset($idSistema) && $idSistema!=''){            $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idTrabajador) && $idTrabajador!=''){     $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
-				if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idTrabajador) && $idTrabajador!=''){      $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
+				if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($Fecha_ingreso) && $Fecha_ingreso!=''){    $SIS_data .= ",Fecha_ingreso='".$Fecha_ingreso."'";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";

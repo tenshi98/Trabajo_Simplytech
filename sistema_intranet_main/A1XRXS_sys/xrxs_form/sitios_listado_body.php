@@ -14,9 +14,9 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if (!empty($_POST['idBody']))         $idBody         = $_POST['idBody'];
-	if (!empty($_POST['idSitio']))        $idSitio        = $_POST['idSitio'];
-	if (!empty($_POST['idTipo']))         $idTipo         = $_POST['idTipo'];
+	if (!empty($_POST['idBody']))          $idBody         = $_POST['idBody'];
+	if (!empty($_POST['idSitio']))         $idSitio        = $_POST['idSitio'];
+	if (!empty($_POST['idTipo']))          $idTipo         = $_POST['idTipo'];
 	if ( isset($_POST['Icono']))           $Icono          = $_POST['Icono'];
 	if ( isset($_POST['IconoStyle']))      $IconoStyle     = $_POST['IconoStyle'];
 	if ( isset($_POST['Titulo']))          $Titulo         = $_POST['Titulo'];
@@ -26,10 +26,10 @@ require_once '0_validate_user_1.php';
 	if ( isset($_POST['LinkNombre']))      $LinkNombre     = $_POST['LinkNombre'];
 	if ( isset($_POST['LinkStyle']))       $LinkStyle      = $_POST['LinkStyle'];
 	if ( isset($_POST['LinkURL']))         $LinkURL        = $_POST['LinkURL'];
-	if (!empty($_POST['idNewTab']))       $idNewTab       = $_POST['idNewTab'];
-	if (!empty($_POST['idPopup']))        $idPopup        = $_POST['idPopup'];
-	if (!empty($_POST['idEstado']))       $idEstado       = $_POST['idEstado'];
-	if (!empty($_POST['idPosicion']))     $idPosicion     = $_POST['idPosicion'];
+	if (!empty($_POST['idNewTab']))        $idNewTab       = $_POST['idNewTab'];
+	if (!empty($_POST['idPopup']))         $idPopup        = $_POST['idPopup'];
+	if (!empty($_POST['idEstado']))        $idEstado       = $_POST['idEstado'];
+	if (!empty($_POST['idPosicion']))      $idPosicion     = $_POST['idPosicion'];
 	if ( isset($_POST['Imagen']))          $Imagen         = $_POST['Imagen'];
 
 /*******************************************************************************************************************/
@@ -60,7 +60,7 @@ require_once '0_validate_user_1.php';
 			case 'idEstado':       if(empty($idEstado)){      $error['idEstado']      = 'error/No ha seleccionado el estado';}break;
 			case 'idPosicion':     if(empty($idPosicion)){    $error['idPosicion']    = 'error/No ha seleccionado la posicion';}break;
 			case 'Imagen':         if(empty($Imagen)){        $error['Imagen']        = 'error/No ha ingresado la imagen de fondo';}break;
-				
+
 		}
 	}
 /*******************************************************************************************************************/
@@ -116,7 +116,7 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idSitio) && $idSitio!=''){          $SIS_data  = "'".$idSitio."'";          }else{$SIS_data  = "''";}
-				if(isset($idTipo) && $idTipo!=''){           $SIS_data .= ",'".$idTipo."'";          }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){            $SIS_data .= ",'".$idTipo."'";          }else{$SIS_data .= ",''";}
 				if(isset($Icono) && $Icono!=''){              $SIS_data .= ",'".$Icono."'";           }else{$SIS_data .= ",''";}
 				if(isset($IconoStyle) && $IconoStyle!=''){    $SIS_data .= ",'".$IconoStyle."'";      }else{$SIS_data .= ",''";}
 				if(isset($Titulo) && $Titulo!=''){            $SIS_data .= ",'".$Titulo."'";          }else{$SIS_data .= ",''";}
@@ -128,7 +128,7 @@ require_once '0_validate_user_1.php';
 				if(isset($LinkURL) && $LinkURL!=''){          $SIS_data .= ",'".$LinkURL."'";         }else{$SIS_data .= ",''";}
 				if(isset($idNewTab) && $idNewTab!=''){        $SIS_data .= ",'".$idNewTab."'";        }else{$SIS_data .= ",''";}
 				if(isset($idPopup) && $idPopup!=''){          $SIS_data .= ",'".$idPopup."'";         }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){       $SIS_data .= ",'".$idEstado."'";        }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",'".$idEstado."'";        }else{$SIS_data .= ",''";}
 				if(isset($idPosicion) && $idPosicion!=''){    $SIS_data .= ",'".$idPosicion."'";      }else{$SIS_data .= ",''";}
 				if(isset($Imagen) && $Imagen!=''){            $SIS_data .= ",'".$Imagen."'";          }else{$SIS_data .= ",''";}
 
@@ -168,8 +168,8 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idBody='".$idBody."'";
-				if(isset($idSitio) && $idSitio!=''){   $SIS_data .= ",idSitio='".$idSitio."'";}
-				if(isset($idTipo) && $idTipo!=''){    $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($idSitio) && $idSitio!=''){     $SIS_data .= ",idSitio='".$idSitio."'";}
+				if(isset($idTipo) && $idTipo!=''){       $SIS_data .= ",idTipo='".$idTipo."'";}
 				if(isset($Icono)){                       $SIS_data .= ",Icono='".$Icono."'";}
 				if(isset($IconoStyle)){                  $SIS_data .= ",IconoStyle='".$IconoStyle."'";}
 				if(isset($Titulo)){                      $SIS_data .= ",Titulo='".$Titulo."'";}
@@ -184,7 +184,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idEstado)){                    $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idPosicion)){                  $SIS_data .= ",idPosicion='".$idPosicion."'";}
 				if(isset($Imagen)){                      $SIS_data .= ",Imagen='".$Imagen."'";}
-					
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'sitios_listado_body', 'idBody = "'.$idBody.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -244,11 +244,9 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
 
-		
 /*******************************************************************************************************************/
 	}
 

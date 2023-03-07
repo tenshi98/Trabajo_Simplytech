@@ -48,7 +48,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){          $Nombre      = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){           $Nombre      = EstandarizarInput($Nombre);}
 	if(isset($ApellidoPat) && $ApellidoPat!=''){ $ApellidoPat = EstandarizarInput($ApellidoPat);}
 	if(isset($ApellidoMat) && $ApellidoMat!=''){ $ApellidoMat = EstandarizarInput($ApellidoMat);}
 
@@ -85,13 +85,13 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idTrabajador) && $idTrabajador!=''){ $SIS_data  = "'".$idTrabajador."'";   }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre!=''){             $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
+				if(isset($idTrabajador) && $idTrabajador!=''){  $SIS_data  = "'".$idTrabajador."'";   }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){              $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
 				if(isset($ApellidoPat) && $ApellidoPat!=''){    $SIS_data .= ",'".$ApellidoPat."'";   }else{$SIS_data .= ",''";}
 				if(isset($ApellidoMat) && $ApellidoMat!=''){    $SIS_data .= ",'".$ApellidoMat."'";   }else{$SIS_data .= ",''";}
 				if(isset($idSexo) && $idSexo!=''){              $SIS_data .= ",'".$idSexo."'";        }else{$SIS_data .= ",''";}
 				if(isset($FNacimiento) && $FNacimiento!=''){    $SIS_data .= ",'".$FNacimiento."'";   }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){         $SIS_data .= ",'".$idEstado."'";      }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){          $SIS_data .= ",'".$idEstado."'";      }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idTrabajador, Nombre,ApellidoPat, ApellidoMat, idSexo, FNacimiento, idEstado';
@@ -129,13 +129,13 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				$SIS_data = "idCarga='".$idCarga."'";
-				if(isset($idTrabajador) && $idTrabajador!=''){   $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
-				if(isset($Nombre) && $Nombre!=''){               $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idTrabajador) && $idTrabajador!=''){    $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
+				if(isset($Nombre) && $Nombre!=''){                $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($ApellidoPat) && $ApellidoPat!=''){      $SIS_data .= ",ApellidoPat='".$ApellidoPat."'";}
 				if(isset($ApellidoMat) && $ApellidoMat!=''){      $SIS_data .= ",ApellidoMat='".$ApellidoMat."'";}
 				if(isset($idSexo) && $idSexo!=''){                $SIS_data .= ",idSexo='".$idSexo."'";}
 				if(isset($FNacimiento) && $FNacimiento!=''){      $SIS_data .= ",FNacimiento='".$FNacimiento."'";}
-				if(isset($idEstado) && $idEstado!=''){           $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idEstado) && $idEstado!=''){            $SIS_data .= ",idEstado='".$idEstado."'";}
 
 				/*******************************************************/
 				//se actualizan los datos

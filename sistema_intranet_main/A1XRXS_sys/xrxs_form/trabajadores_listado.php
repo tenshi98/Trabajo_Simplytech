@@ -153,7 +153,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){                  $Nombre          = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){                   $Nombre          = EstandarizarInput($Nombre);}
 	if(isset($ApellidoPat) && $ApellidoPat!=''){         $ApellidoPat     = EstandarizarInput($ApellidoPat);}
 	if(isset($ApellidoMat) && $ApellidoMat!=''){         $ApellidoMat     = EstandarizarInput($ApellidoMat);}
 	if(isset($Cargo) && $Cargo!=''){                     $Cargo           = EstandarizarInput($Cargo);}
@@ -215,12 +215,12 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idSistema) && $idSistema!=''){                    $SIS_data  = "'".$idSistema."'";                     }else{$SIS_data  = "''";}
-				if(isset($idEstado) && $idEstado!=''){                                       $SIS_data .= ",'".$idEstado."'";                     }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){                                           $SIS_data .= ",'".$Nombre."'";                       }else{$SIS_data .= ",''";}
+				if(isset($idSistema) && $idSistema!=''){                                      $SIS_data  = "'".$idSistema."'";                     }else{$SIS_data  = "''";}
+				if(isset($idEstado) && $idEstado!=''){                                        $SIS_data .= ",'".$idEstado."'";                     }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                                            $SIS_data .= ",'".$Nombre."'";                       }else{$SIS_data .= ",''";}
 				if(isset($ApellidoPat) && $ApellidoPat!=''){                                  $SIS_data .= ",'".$ApellidoPat."'";                  }else{$SIS_data .= ",''";}
 				if(isset($ApellidoMat) && $ApellidoMat!=''){                                  $SIS_data .= ",'".$ApellidoMat."'";                  }else{$SIS_data .= ",''";}
-				if(isset($idTipo) && $idTipo!=''){                                           $SIS_data .= ",'".$idTipo."'";                       }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){                                            $SIS_data .= ",'".$idTipo."'";                       }else{$SIS_data .= ",''";}
 				if(isset($Cargo) && $Cargo!=''){                                              $SIS_data .= ",'".$Cargo."'";                        }else{$SIS_data .= ",''";}
 				if(isset($Fono) && $Fono!=''){                                                $SIS_data .= ",'".$Fono."'";                         }else{$SIS_data .= ",''";}
 				if(isset($Rut) && $Rut!=''){                                                  $SIS_data .= ",'".$Rut."'";                          }else{$SIS_data .= ",''";}
@@ -273,8 +273,8 @@ require_once '0_validate_user_1.php';
 				if(isset($UbicacionTrabajo) && $UbicacionTrabajo!=''){                        $SIS_data .= ",'".$UbicacionTrabajo."'";             }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idSistema, idEstado, Nombre,ApellidoPat, 
-				ApellidoMat, idTipo, Cargo, Fono, Rut, N_Documento, idCiudad, idComuna, Direccion, Observaciones, 
+				$SIS_columns = 'idSistema, idEstado, Nombre,ApellidoPat,
+				ApellidoMat, idTipo, Cargo, Fono, Rut, N_Documento, idCiudad, idComuna, Direccion, Observaciones,
 				idLicitacion, FechaContrato, F_Inicio_Contrato, F_Termino_Contrato, idAFP, idSalud, idTipoContrato,
 				idTipoLicencia,CA_Licencia,LicenciaFechaControl,LicenciaFechaControlUltimo,ContactoPersona,
 				ContactoFono, idSexo, FNacimiento, idEstadoCivil, SueldoLiquido, SueldoDia, SueldoHora,email,
@@ -319,12 +319,12 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idTrabajador='".$idTrabajador."'";
-				if(isset($idSistema) && $idSistema!=''){                    $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idEstado) && $idEstado!=''){                                       $SIS_data .= ",idEstado='".$idEstado."'";}
-				if(isset($Nombre) && $Nombre!=''){                                           $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idSistema) && $idSistema!=''){                                      $SIS_data .= ",idSistema='".$idSistema."'";}
+				if(isset($idEstado) && $idEstado!=''){                                        $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($Nombre) && $Nombre!=''){                                            $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($ApellidoPat) && $ApellidoPat!=''){                                  $SIS_data .= ",ApellidoPat='".$ApellidoPat."'";}
 				if(isset($ApellidoMat) && $ApellidoMat!=''){                                  $SIS_data .= ",ApellidoMat='".$ApellidoMat."'";}
-				if(isset($idTipo) && $idTipo!=''){                                           $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($idTipo) && $idTipo!=''){                                            $SIS_data .= ",idTipo='".$idTipo."'";}
 				if(isset($Cargo) && $Cargo!=''){                                              $SIS_data .= ",Cargo='".$Cargo."'";}
 				if(isset($Fono) && $Fono!=''){                                                $SIS_data .= ",Fono='".$Fono."'";}
 				if(isset($Rut) && $Rut!=''){                                                  $SIS_data .= ",Rut='".$Rut."'";}
@@ -375,7 +375,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idTipoCuenta) && $idTipoCuenta!=''){                                $SIS_data .= ",idTipoCuenta='".$idTipoCuenta."'";}
 				if(isset($N_Cuenta) && $N_Cuenta!=''){                                        $SIS_data .= ",N_Cuenta='".$N_Cuenta."'";}
 				if(isset($UbicacionTrabajo) && $UbicacionTrabajo!=''){                        $SIS_data .= ",UbicacionTrabajo='".$UbicacionTrabajo."'";}
-					
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -523,8 +523,7 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
 /*******************************************************************************************************************/
 		//Cambio el estado de activo a inactivo
@@ -564,7 +563,7 @@ require_once '0_validate_user_1.php';
 				$limite_kb = 1000;
 				//Sufijo
 				$sufijo = 'trab_img_'.$idTrabajador.'_';
-							  
+
 				if (in_array($_FILES['Direccion_img']['type'], $permitidos) && $_FILES['Direccion_img']['size'] <= $limite_kb * 1024){
 					//Se especifica carpeta de destino
 					$ruta = "upload/".$sufijo.$_FILES['Direccion_img']['name'];
@@ -651,7 +650,7 @@ require_once '0_validate_user_1.php';
 								die;
 
 							}
-											
+
 						} else {
 							$error['Direccion_img']     = 'error/Ocurrio un error al mover el archivo';
 						}
@@ -676,7 +675,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "Direccion_img=''" ;
+			$SIS_data = "Direccion_img=''";
 			$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -757,8 +756,7 @@ require_once '0_validate_user_1.php';
 								die;
 
 							}
-							
-					
+
 						} else {
 							$error['File_Curriculum']     = 'error/Ocurrio un error al mover el archivo';
 						}
@@ -783,7 +781,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "File_Curriculum=''" ;
+			$SIS_data = "File_Curriculum=''";
 			$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Curriculum'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -864,8 +862,7 @@ require_once '0_validate_user_1.php';
 								die;
 
 							}
-							
-					
+
 						} else {
 							$error['File_Antecedentes']     = 'error/Ocurrio un error al mover el archivo';
 						}
@@ -890,7 +887,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "File_Antecedentes=''" ;
+			$SIS_data = "File_Antecedentes=''";
 			$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Antecedentes'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -971,8 +968,7 @@ require_once '0_validate_user_1.php';
 								die;
 
 							}
-							
-					
+
 						} else {
 							$error['File_Carnet']     = 'error/Ocurrio un error al mover el archivo';
 						}
@@ -997,7 +993,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "File_Carnet=''" ;
+			$SIS_data = "File_Carnet=''";
 			$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Carnet'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -1078,7 +1074,6 @@ require_once '0_validate_user_1.php';
 								die;
 
 							}
-					
 						} else {
 							$error['File_Contrato']     = 'error/Ocurrio un error al mover el archivo';
 						}
@@ -1103,7 +1098,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "File_Contrato=''" ;
+			$SIS_data = "File_Contrato=''";
 			$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Contrato'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -1126,9 +1121,6 @@ require_once '0_validate_user_1.php';
 				die;
 
 			}
-			
-				
-			
 
 		break;
 /*******************************************************************************************************************/
@@ -1158,7 +1150,7 @@ require_once '0_validate_user_1.php';
 					$permitidos = array("application/msword",
 										"application/vnd.ms-word",
 										"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-												
+
 										"application/pdf",
 										"application/octet-stream",
 										"application/x-real",
@@ -1172,12 +1164,12 @@ require_once '0_validate_user_1.php';
 										"image/png"
 
 												);
-												
+
 					//Se verifica que el archivo subido no exceda los 100 kb
 					$limite_kb = 10000;
 					//Sufijo
 					$sufijo = 'trab_licencia_'.$idTrabajador.'_';
-				  
+
 					if (in_array($_FILES['File_Licencia']['type'], $permitidos) && $_FILES['File_Licencia']['size'] <= $limite_kb * 1024){
 						//Se especifica carpeta de destino
 						$ruta = "upload/".$sufijo.$_FILES['File_Licencia']['name'];
@@ -1186,7 +1178,7 @@ require_once '0_validate_user_1.php';
 							//Se mueve el archivo a la carpeta previamente configurada
 							$move_result = @move_uploaded_file($_FILES["File_Licencia"]["tmp_name"], $ruta);
 							if ($move_result){
-						
+
 								//Filtro para idSistema
 								$SIS_data = "File_Licencia='".$sufijo.$_FILES['File_Licencia']['name']."'";
 
@@ -1195,12 +1187,12 @@ require_once '0_validate_user_1.php';
 								$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								//Si ejecuto correctamente la consulta
 								if($resultado==true){
-									
+
 									header( 'Location: '.$location );
 									die;
 
 								}
-								
+
 							} else {
 								$error['File_Licencia']     = 'error/Ocurrio un error al mover el archivo';
 							}
@@ -1226,7 +1218,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "File_Licencia=''" ;
+			$SIS_data = "File_Licencia=''";
 			$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_Licencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -1309,8 +1301,7 @@ require_once '0_validate_user_1.php';
 								die;
 
 							}
-							
-					
+
 						} else {
 							$error['File_RHTM']     = 'error/Ocurrio un error al mover el archivo';
 						}
@@ -1335,7 +1326,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "File_RHTM='', File_RHTM_Fecha=''" ;
+			$SIS_data = "File_RHTM='', File_RHTM_Fecha=''";
 			$resultado = db_update_data (false, $SIS_data, 'trabajadores_listado', 'idTrabajador = "'.$_GET['del_File_RHTM'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -1372,7 +1363,7 @@ require_once '0_validate_user_1.php';
 
 				//se verifica si la imagen existe
 				if (!empty($_FILES['FileTrabajador']['name'])){
-					
+
 					if ($_FILES['FileTrabajador']["error"] > 0){
 						$error['FileTrabajador'] = 'error/'.uploadPHPError($_FILES["FileTrabajador"]["error"]);
 
@@ -1385,10 +1376,9 @@ require_once '0_validate_user_1.php';
 										);
 						//Se verifica que el archivo subido no exceda los 100 kb
 						$limite_kb = 10000;
-									  
+
 						if (in_array($_FILES['FileTrabajador']['type'], $permitidos) && $_FILES['FileTrabajador']['size'] <= $limite_kb * 1024){
-							
-							
+
 							/*******************************************************************/
 							//variables
 							$ndata_1  = 0;
@@ -1409,10 +1399,10 @@ require_once '0_validate_user_1.php';
 								//obtengo el total de datos
 								$highestRow = $worksheet->getHighestRow();
 								//si es una hoja en especifico
-								if ($loadedSheetName == "Trabajadores"){ 
+								if ($loadedSheetName == "Trabajadores"){
 									//recorro
 									for ($row=2; $row<=$highestRow; $row++){
-										
+
 										$Post_Nombre   = $worksheet->getCellByColumnAndRow(1,  $row)->getValue();
 										$Post_Rut      = $worksheet->getCellByColumnAndRow(4,   $row)->getValue();
 										$Post_Email    = $worksheet->getCellByColumnAndRow(10,  $row)->getValue();
@@ -1439,7 +1429,7 @@ require_once '0_validate_user_1.php';
 											}
 											//Verifico la existencia de un email
 											if(isset($Post_Email)&&$Post_Email!=''&&!validarEmail($Post_Email)){
-												$ndata_3++;	
+												$ndata_3++;
 											}
 											//Verifico la existencia de un email
 											if(isset($Post_Fono)&&$Post_Fono!=''&&!validarNumero($Post_Fono)){
@@ -1465,7 +1455,7 @@ require_once '0_validate_user_1.php';
 							/*******************************************************************/
 							//Si no hay errores ejecuto el codigo
 							if(empty($error)){
-								
+
 								/*******************************************************************/
 								//Cargo a todos los clientes del sistema
 								$arrSexo           = array();
@@ -1476,7 +1466,7 @@ require_once '0_validate_user_1.php';
 								$arrTipoContrato   = array();
 								$arrAFP            = array();
 								$arrSalud          = array();
-									
+
 								$arrSexo           = db_select_array (false, 'idSexo,Nombre', 'core_sexo', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								$arrCiudad         = db_select_array (false, 'idCiudad,Nombre', 'core_ubicacion_ciudad', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								$arrComuna         = db_select_array (false, 'idComuna,Nombre', 'core_ubicacion_comunas', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1485,7 +1475,7 @@ require_once '0_validate_user_1.php';
 								$arrTipoContrato   = db_select_array (false, 'idTipoContrato,Nombre', 'core_tipos_contrato', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								$arrAFP            = db_select_array (false, 'idAFP,Nombre', 'sistema_afp', '', 'idEstado=1', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								$arrSalud          = db_select_array (false, 'idSalud,Nombre', 'sistema_salud', '', 'idEstado=1', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 								//recorro los datos
 								$arrSexoMod           = array();
 								$arrCiudadMod         = array();
@@ -1503,8 +1493,7 @@ require_once '0_validate_user_1.php';
 								foreach ($arrTipoContrato as $data) {   $arrTipoContratoMod[$data['Nombre']]['ID']   = $data['idTipoContrato'];}
 								foreach ($arrAFP as $data) {            $arrAFPMod[$data['Nombre']]['ID']            = $data['idAFP'];}
 								foreach ($arrSalud as $data) {          $arrSaludMod[$data['Nombre']]['ID']          = $data['idSalud'];}
-									
-								
+
 								/*******************************************************************/
 								//Cargo el archivo
 								$spreadsheet = IOFactory::load($_FILES['FileTrabajador']['tmp_name']);
@@ -1519,7 +1508,7 @@ require_once '0_validate_user_1.php';
 									//obtengo el total de datos
 									$highestRow = $worksheet->getHighestRow();
 									//si es una hoja en especifico
-									if ($loadedSheetName == "Trabajadores"){ 
+									if ($loadedSheetName == "Trabajadores"){
 										//recorro
 										for ($row=2; $row<=$highestRow; $row++){
 
@@ -1539,25 +1528,24 @@ require_once '0_validate_user_1.php';
 											$Post_AFP              = $worksheet->getCellByColumnAndRow(14,  $row)->getValue();
 											$Post_Salud            = $worksheet->getCellByColumnAndRow(15,  $row)->getValue();
 											$Post_Sueldo           = $worksheet->getCellByColumnAndRow(16,  $row)->getValue();
-											
+
 											//Mientras exista dato ejecuta
 											if(isset($Post_Nombre)&&$Post_Nombre!=''&&isset($Post_Rut)&&$Post_Rut!=''){
 
 												//verifico si existen los datos
-												if(isset($Post_Sexo)&&isset($arrSexoMod[$Post_Sexo]['ID'])){                                $ID_Sexo            = $arrSexoMod[$Post_Sexo]['ID'];}   
-												if(isset($Post_Ciudad)&&isset($arrCiudadMod[$Post_Ciudad]['ID'])){                          $ID_Ciudad          = $arrCiudadMod[$Post_Ciudad]['ID'];}  
-												if(isset($Post_Comuna)&&isset($arrComunaMod[$Post_Comuna]['ID'])){                          $ID_Comuna          = $arrComunaMod[$Post_Comuna]['ID'];} 
-												if(isset($Post_EstadoCivil)&&isset($arrEstadoCivilMod[$Post_EstadoCivil]['ID'])){           $ID_EstadoCivil     = $arrEstadoCivilMod[$Post_EstadoCivil]['ID'];} 
-												if(isset($Post_TipoTrabajador)&&isset($arrTipoTrabajadorMod[$Post_TipoTrabajador]['ID'])){  $ID_TipoTrabajador  = $arrTipoTrabajadorMod[$Post_TipoTrabajador]['ID'];} 
-												if(isset($Post_TipoContrato)&&isset($arrTipoContratoMod[$Post_TipoContrato]['ID'])){        $ID_TipoContrato    = $arrTipoContratoMod[$Post_TipoContrato]['ID'];} 
-												if(isset($Post_AFP)&&isset($arrAFPMod[$Post_AFP]['ID'])){                                   $ID_AFP             = $arrAFPMod[$Post_AFP]['ID'];} 
-												if(isset($Post_Salud)&&isset($arrSaludMod[$Post_Salud]['ID'])){                             $ID_Salud           = $arrSaludMod[$Post_Salud]['ID'];} 
-												
-												
+												if(isset($Post_Sexo)&&isset($arrSexoMod[$Post_Sexo]['ID'])){                                $ID_Sexo            = $arrSexoMod[$Post_Sexo]['ID'];}
+												if(isset($Post_Ciudad)&&isset($arrCiudadMod[$Post_Ciudad]['ID'])){                          $ID_Ciudad          = $arrCiudadMod[$Post_Ciudad]['ID'];}
+												if(isset($Post_Comuna)&&isset($arrComunaMod[$Post_Comuna]['ID'])){                          $ID_Comuna          = $arrComunaMod[$Post_Comuna]['ID'];}
+												if(isset($Post_EstadoCivil)&&isset($arrEstadoCivilMod[$Post_EstadoCivil]['ID'])){           $ID_EstadoCivil     = $arrEstadoCivilMod[$Post_EstadoCivil]['ID'];}
+												if(isset($Post_TipoTrabajador)&&isset($arrTipoTrabajadorMod[$Post_TipoTrabajador]['ID'])){  $ID_TipoTrabajador  = $arrTipoTrabajadorMod[$Post_TipoTrabajador]['ID'];}
+												if(isset($Post_TipoContrato)&&isset($arrTipoContratoMod[$Post_TipoContrato]['ID'])){        $ID_TipoContrato    = $arrTipoContratoMod[$Post_TipoContrato]['ID'];}
+												if(isset($Post_AFP)&&isset($arrAFPMod[$Post_AFP]['ID'])){                                   $ID_AFP             = $arrAFPMod[$Post_AFP]['ID'];}
+												if(isset($Post_Salud)&&isset($arrSaludMod[$Post_Salud]['ID'])){                             $ID_Salud           = $arrSaludMod[$Post_Salud]['ID'];}
+
 												/****************************************************/
 												//filtros
-												if(isset($idSistema) && $idSistema!=''){$SIS_data  = "'".$idSistema."'";           }else{$SIS_data  = "''";}
-												if(isset($idEstado) && $idEstado!=''){                   $SIS_data .= ",'".$idEstado."'";           }else{$SIS_data .= ",''";}
+												if(isset($idSistema) && $idSistema!=''){                  $SIS_data  = "'".$idSistema."'";           }else{$SIS_data  = "''";}
+												if(isset($idEstado) && $idEstado!=''){                    $SIS_data .= ",'".$idEstado."'";           }else{$SIS_data .= ",''";}
 												if(isset($Post_Nombre) && $Post_Nombre!=''){              $SIS_data .= ",'".$Post_Nombre."'";        }else{$SIS_data .= ",''";}
 												if(isset($Post_Ape_Pat) && $Post_Ape_Pat!=''){            $SIS_data .= ",'".$Post_Ape_Pat."'";       }else{$SIS_data .= ",''";}
 												if(isset($Post_Ape_Mat) && $Post_Ape_Mat!=''){            $SIS_data .= ",'".$Post_Ape_Mat."'";       }else{$SIS_data .= ",''";}
@@ -1574,7 +1562,7 @@ require_once '0_validate_user_1.php';
 												if(isset($ID_AFP) && $ID_AFP!=''){                        $SIS_data .= ",'".$ID_AFP."'";             }else{$SIS_data .= ",''";}
 												if(isset($ID_Salud) && $ID_Salud!=''){                    $SIS_data .= ",'".$ID_Salud."'";           }else{$SIS_data .= ",''";}
 												if(isset($Post_Sueldo) && $Post_Sueldo!=''){              $SIS_data .= ",'".$Post_Sueldo."'";        }else{$SIS_data .= ",''";}
-												
+
 												// inserto los datos de registro en la db
 												$SIS_columns = 'idSistema,idEstado,Nombre,ApellidoPat,ApellidoMat, Rut,idSexo,Fono,idCiudad,idComuna,Direccion,email,idEstadoCivil,idTipoTrabajador, idTipoContrato,idAFP,idSalud,SueldoLiquido';
 												$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'trabajadores_listado', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1584,7 +1572,7 @@ require_once '0_validate_user_1.php';
 													/****************************************************/
 													//Verifico la existencia de un email y si se desea enviar correos
 													if(isset($Post_Email)&&$Post_Email!=''&&isset($idOpciones)&&$idOpciones==1){
-														
+
 														//variables
 														$login_logo  = DB_SITE_MAIN.'/img/login_logo.png';
 														$Link        = DB_SITE_MAIN;
@@ -1592,13 +1580,13 @@ require_once '0_validate_user_1.php';
 														if(isset($Post_Nombre) && $Post_Nombre!=''){    $Nombre .= $Post_Nombre;}
 														if(isset($Post_Ape_Pat) && $Post_Ape_Pat!=''){  $Nombre .= " ".$Post_Ape_Pat;}
 														if(isset($Post_Ape_Mat) && $Post_Ape_Mat!=''){  $Nombre .= " ".$Post_Ape_Mat;}
-														
+
 														//envio de correo
 														try {
-															
+
 															//se consulta el correo
 															$rowusr = db_select_data (false, 'Nombre,email_principal, core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, core_sistemas.Config_Gmail_Password AS Gmail_Password', 'core_sistemas','', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-																
+
 															//Se crea el cuerpo
 															$BodyMail  = '<div style="background-color: #D9D9D9; padding: 10px;">';
 															$BodyMail .= '<img src="'.$login_logo.'" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
@@ -1611,19 +1599,19 @@ require_once '0_validate_user_1.php';
 															$BodyMail .= '</p>';
 															$BodyMail .= '<a href="'.$Link.'" style="display:block;width:100%;text-align: center;font-size: 20px;text-decoration: none;color: #004AAD;"><strong>Empezar &#8594;</strong></a>';
 															$BodyMail .= '</div>';
-																
-															$rmail = tareas_envio_correo($rowusr['email_principal'], 'Crosstech', 
+
+															$rmail = tareas_envio_correo($rowusr['email_principal'], 'Crosstech',
 																						 $Post_Email, $Nombre,
-																						 '', '', 
-																						 'Registro de Usuario', 
-																						 $BodyMail,'', 
-																						 '', 
-																						 1, 
-																						 $rowusr['Gmail_Usuario'], 
+																						 '', '',
+																						 'Registro de Usuario',
+																						 $BodyMail,'',
+																						 '',
+																						 1,
+																						 $rowusr['Gmail_Usuario'],
 																						 $rowusr['Gmail_Password']);
 															//se guarda el log
-															log_response(1, $rmail, $Post_Email.' (Asunto:Registro de Usuario)');	
-															
+															log_response(1, $rmail, $Post_Email.' (Asunto:Registro de Usuario)');
+
 														}catch (Exception $e) {
 															php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'error de registro:'.$e->getMessage(), '' );
 														}

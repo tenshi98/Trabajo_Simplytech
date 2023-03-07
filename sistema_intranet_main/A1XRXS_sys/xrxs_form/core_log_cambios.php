@@ -59,7 +59,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($Fecha) && $Fecha!=''){ $SIS_data  = "'".$Fecha."'";                            }else{$SIS_data  = "''";}
+				if(isset($Fecha) && $Fecha!=''){              $SIS_data  = "'".$Fecha."'";                            }else{$SIS_data  = "''";}
 				if(isset($Descripcion) && $Descripcion!=''){  $SIS_data .= ",'[ACTUALIZACION] ->".$Descripcion."'";   }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
@@ -87,7 +87,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idLog='".$idLog."'";
-				if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+				if(isset($Fecha) && $Fecha!=''){               $SIS_data .= ",Fecha='".$Fecha."'";}
 				if(isset($Descripcion) && $Descripcion!=''){   $SIS_data .= ",Descripcion='".$Descripcion."'";}
 
 				/*******************************************************/

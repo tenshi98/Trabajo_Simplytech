@@ -93,7 +93,7 @@ $rowdata = db_select_data (false, $SIS_query, 'colegios_listado', $SIS_join, $SI
 							if(isset($rowdata["nombre_region"])&&$rowdata["nombre_region"]!=''){   $direccion .= ', '.$rowdata["nombre_region"];}
 							//se despliega mensaje en caso de no existir direccion
 							if($direccion!=''){
-								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); 
+								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
 							}else{
 								$Alert_Text  = 'No tiene una direccion definida';
 								alert_post_data(4,2,2, $Alert_Text);

@@ -41,7 +41,7 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['SALUD_Total_deuda']))          $SALUD_Total_deuda         = $_POST['SALUD_Total_deuda'];
 	if (!empty($_POST['SEGURIDAD_Total_deuda']))      $SEGURIDAD_Total_deuda     = $_POST['SEGURIDAD_Total_deuda'];
 	if (!empty($_POST['Creacion_fecha']))             $Creacion_fecha            = $_POST['Creacion_fecha'];
-									
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -86,7 +86,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	if(isset($Observaciones) && $Observaciones!=''){ $Observaciones = EstandarizarInput($Observaciones);}
 	if(isset($Descripcion) && $Descripcion!=''){     $Descripcion   = EstandarizarInput($Descripcion);}
-		
+
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/
@@ -190,12 +190,12 @@ require_once '0_validate_user_1.php';
 				SEGURIDAD_Centro_lv_5.Nombre AS SEGURIDAD_CC_Level_5
 				';
 				$SIS_join = '
-				LEFT JOIN `centrocosto_listado`          AFP_Centro           ON AFP_Centro.idCentroCosto          = sistema_leyes_sociales.AFP_idCentroCosto
-				LEFT JOIN `centrocosto_listado_level_1`  AFP_Centro_lv_1      ON AFP_Centro_lv_1.idLevel_1         = sistema_leyes_sociales.AFP_idLevel_1
-				LEFT JOIN `centrocosto_listado_level_2`  AFP_Centro_lv_2      ON AFP_Centro_lv_2.idLevel_2         = sistema_leyes_sociales.AFP_idLevel_2
-				LEFT JOIN `centrocosto_listado_level_3`  AFP_Centro_lv_3      ON AFP_Centro_lv_3.idLevel_3         = sistema_leyes_sociales.AFP_idLevel_3
-				LEFT JOIN `centrocosto_listado_level_4`  AFP_Centro_lv_4      ON AFP_Centro_lv_4.idLevel_4         = sistema_leyes_sociales.AFP_idLevel_4
-				LEFT JOIN `centrocosto_listado_level_5`  AFP_Centro_lv_5      ON AFP_Centro_lv_5.idLevel_5         = sistema_leyes_sociales.AFP_idLevel_5
+				LEFT JOIN `centrocosto_listado`          AFP_Centro               ON AFP_Centro.idCentroCosto          = sistema_leyes_sociales.AFP_idCentroCosto
+				LEFT JOIN `centrocosto_listado_level_1`  AFP_Centro_lv_1          ON AFP_Centro_lv_1.idLevel_1         = sistema_leyes_sociales.AFP_idLevel_1
+				LEFT JOIN `centrocosto_listado_level_2`  AFP_Centro_lv_2          ON AFP_Centro_lv_2.idLevel_2         = sistema_leyes_sociales.AFP_idLevel_2
+				LEFT JOIN `centrocosto_listado_level_3`  AFP_Centro_lv_3          ON AFP_Centro_lv_3.idLevel_3         = sistema_leyes_sociales.AFP_idLevel_3
+				LEFT JOIN `centrocosto_listado_level_4`  AFP_Centro_lv_4          ON AFP_Centro_lv_4.idLevel_4         = sistema_leyes_sociales.AFP_idLevel_4
+				LEFT JOIN `centrocosto_listado_level_5`  AFP_Centro_lv_5          ON AFP_Centro_lv_5.idLevel_5         = sistema_leyes_sociales.AFP_idLevel_5
 				LEFT JOIN `centrocosto_listado`          SALUD_Centro             ON SALUD_Centro.idCentroCosto            = sistema_leyes_sociales.SALUD_idCentroCosto
 				LEFT JOIN `centrocosto_listado_level_1`  SALUD_Centro_lv_1        ON SALUD_Centro_lv_1.idLevel_1           = sistema_leyes_sociales.SALUD_idLevel_1
 				LEFT JOIN `centrocosto_listado_level_2`  SALUD_Centro_lv_2        ON SALUD_Centro_lv_2.idLevel_2           = sistema_leyes_sociales.SALUD_idLevel_2
@@ -210,9 +210,7 @@ require_once '0_validate_user_1.php';
 				LEFT JOIN `centrocosto_listado_level_5`  SEGURIDAD_Centro_lv_5    ON SEGURIDAD_Centro_lv_5.idLevel_5       = sistema_leyes_sociales.SEGURIDAD_idLevel_5
 				';
 				$rowPPM   = db_select_data (false, $SIS_query, 'sistema_leyes_sociales', $SIS_join, 'sistema_leyes_sociales.idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
-				
-				
+
 				$_SESSION['pagos_leyes_sociales_basicos']['AFP_idCentroCosto']          = $rowPPM['AFP_idCentroCosto'];
 				$_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_1']              = $rowPPM['AFP_idLevel_1'];
 				$_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_2']              = $rowPPM['AFP_idLevel_2'];
@@ -239,7 +237,7 @@ require_once '0_validate_user_1.php';
 					if(isset($rowPPM['AFP_CC_Level_3'])&&$rowPPM['AFP_CC_Level_3']!=''){$_SESSION['pagos_leyes_sociales_basicos']['AFP_CC'] .= ' - '.$rowPPM['AFP_CC_Level_3'];}
 					if(isset($rowPPM['AFP_CC_Level_4'])&&$rowPPM['AFP_CC_Level_4']!=''){$_SESSION['pagos_leyes_sociales_basicos']['AFP_CC'] .= ' - '.$rowPPM['AFP_CC_Level_4'];}
 					if(isset($rowPPM['AFP_CC_Level_5'])&&$rowPPM['AFP_CC_Level_5']!=''){$_SESSION['pagos_leyes_sociales_basicos']['AFP_CC'] .= ' - '.$rowPPM['AFP_CC_Level_5'];}
-						
+
 				}else{
 					$_SESSION['pagos_leyes_sociales_basicos']['AFP_CC'] = '';
 				}
@@ -250,7 +248,7 @@ require_once '0_validate_user_1.php';
 					if(isset($rowPPM['SALUD_CC_Level_3'])&&$rowPPM['SALUD_CC_Level_3']!=''){$_SESSION['pagos_leyes_sociales_basicos']['SALUD_CC'] .= ' - '.$rowPPM['SALUD_CC_Level_3'];}
 					if(isset($rowPPM['SALUD_CC_Level_4'])&&$rowPPM['SALUD_CC_Level_4']!=''){$_SESSION['pagos_leyes_sociales_basicos']['SALUD_CC'] .= ' - '.$rowPPM['SALUD_CC_Level_4'];}
 					if(isset($rowPPM['SALUD_CC_Level_5'])&&$rowPPM['SALUD_CC_Level_5']!=''){$_SESSION['pagos_leyes_sociales_basicos']['SALUD_CC'] .= ' - '.$rowPPM['SALUD_CC_Level_5'];}
-						
+
 				}else{
 					$_SESSION['pagos_leyes_sociales_basicos']['SALUD_CC'] = '';
 				}
@@ -261,14 +259,11 @@ require_once '0_validate_user_1.php';
 					if(isset($rowPPM['SEGURIDAD_CC_Level_3'])&&$rowPPM['SEGURIDAD_CC_Level_3']!=''){$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_CC'] .= ' - '.$rowPPM['SEGURIDAD_CC_Level_3'];}
 					if(isset($rowPPM['SEGURIDAD_CC_Level_4'])&&$rowPPM['SEGURIDAD_CC_Level_4']!=''){$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_CC'] .= ' - '.$rowPPM['SEGURIDAD_CC_Level_4'];}
 					if(isset($rowPPM['SEGURIDAD_CC_Level_5'])&&$rowPPM['SEGURIDAD_CC_Level_5']!=''){$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_CC'] .= ' - '.$rowPPM['SEGURIDAD_CC_Level_5'];}
-						
+
 				}else{
 					$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_CC'] = '';
 				}
-				
-				
-				
-					
+
 				/****************************************************/
 				if(isset($idUsuario) && $idUsuario!=''){
 					// consulto los datos
@@ -282,7 +277,7 @@ require_once '0_validate_user_1.php';
 				/****************************************************/
 				//Solo compras pagadas totalmente
 				$z = "idFactSocial=0";   //solo las que no esten asignadas
-						
+
 				//Filtro Fecha
 				if(isset($Periodo_Ano)&&$Periodo_Ano!=''){ $z.=" AND Creacion_ano='".$Periodo_Ano."'"; }
 				if(isset($Periodo_Mes)&&$Periodo_Mes!=''){ $z.=" AND Creacion_mes='".$Periodo_Mes."'"; }
@@ -295,7 +290,7 @@ require_once '0_validate_user_1.php';
 				TrabajadorNombre,
 				TrabajadorRut,
 				SueldoImponible AS Sueldo,
-				
+
 				AFP_Nombre AS AFP_Nombre,
 				AFP_Porcentaje AS AFP_Porcentaje,
 				AFP_Total AS AFP_Cotizacion,
@@ -305,14 +300,14 @@ require_once '0_validate_user_1.php';
 				TrabajoPesado AS AFP_TrabajoPesado,
 				SegCesantia_Empleador AS AFC_Empleador,
 				SegCesantia_Trabajador AS AFC_Trabajador,
-				
+
 				Salud_Nombre AS Salud_Nombre,
 				Salud_Porcentaje AS Salud_Porcentaje,
 				Salud_Total AS Salud_Cotizacion,
 				Salud_idCotizacion AS Salud_Extra_Salud_id,
 				Salud_CotizacionPorcentaje AS Salud_Extra_Porcentaje,
 				Salud_CotizacionValor AS Salud_Extra_Valor,
-				
+
 				MutualNombre AS MutualNombre,
 				MutualPorcentaje AS MutualPorcentaje,
 				MutualValor AS MutualValor
@@ -321,13 +316,13 @@ require_once '0_validate_user_1.php';
 				//Liquidaciones de sueldo
 				$arrTemporal = array();
 				$arrTemporal = db_select_array (false, $SIS_query, 'rrhh_sueldos_facturacion_trabajadores', $SIS_join, $z, 'idTrabajador ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_6');
-					
+
 				/*************************************************************************************************/
 				//Creo los datos
 				$_SESSION['pagos_leyes_sociales_trabajadores'] = array();//liquidaciones de sueldo
 				$_SESSION['pagos_leyes_sociales_trabajadores'] = array();//liquidaciones de sueldo
 				$_SESSION['pagos_leyes_sociales_formas_pago']  = array();//Formas de pago
-				
+
 				/********************************************/
 				//recorro los boletas de honorarios
 				if($arrTemporal!=false && !empty($arrTemporal) && $arrTemporal!=''){
@@ -351,7 +346,7 @@ require_once '0_validate_user_1.php';
 			unset($_SESSION['pagos_leyes_sociales_basicos']);
 			unset($_SESSION['pagos_leyes_sociales_trabajadores']);
 			unset($_SESSION['pagos_leyes_sociales_formas_pago']);
-					
+
 			//Recorro los archivos subidos y los borro antes de eliminar la variable de sesion
 			if (isset($_SESSION['pagos_leyes_sociales_archivos'])){
 				foreach ($_SESSION['ocompra_archivos'] as $key => $producto){
@@ -381,7 +376,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+				//nada
 			}
 
 		break;
@@ -503,8 +498,7 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-				
+
 			if(isset($AFP_idDocPago)){         $ndata_1 = count($AFP_idDocPago);          }else{$ndata_1 = 0;}
 			if(isset($SALUD_idDocPago)){       $ndata_2 = count($SALUD_idDocPago);        }else{$ndata_2 = 0;}
 			if(isset($SEGURIDAD_idDocPago)){   $ndata_3 = count($SEGURIDAD_idDocPago);    }else{$ndata_3 = 0;}
@@ -603,8 +597,7 @@ require_once '0_validate_user_1.php';
 
 				//Actualizo el monto pagado
 				$_SESSION['pagos_leyes_sociales_basicos']['TotalPagoGeneral']  = $Mont_tot_1 + $Mont_tot_2 + $Mont_tot_3;
-			
-	
+
 				//redirijo
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -631,9 +624,9 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha']) OR $_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha']=='' ){         $error['Pago_fecha']       = 'error/No ha ingresado la fecha de creacion';}
 				if(!isset($_SESSION['pagos_leyes_sociales_basicos']['Observaciones']) OR $_SESSION['pagos_leyes_sociales_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_CC']) OR $_SESSION['pagos_leyes_sociales_basicos']['AFP_CC']=='' ){                 $error['AFP_CC']           = 'error/No ha ingresado el Centro de Costo IVA utilizado';}
-				if(!isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_CC']) OR $_SESSION['pagos_leyes_sociales_basicos']['SALUD_CC']=='' ){                 $error['SALUD_CC']           = 'error/No ha ingresado el Centro de Costo PPM utilizado';}
-				if(!isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_CC']) OR $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_CC']=='' ){                 $error['SEGURIDAD_CC']           = 'error/No ha ingresado el Centro de Costo Retenciones utilizado';}
-				
+				if(!isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_CC']) OR $_SESSION['pagos_leyes_sociales_basicos']['SALUD_CC']=='' ){             $error['SALUD_CC']         = 'error/No ha ingresado el Centro de Costo PPM utilizado';}
+				if(!isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_CC']) OR $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_CC']=='' ){     $error['SEGURIDAD_CC']     = 'error/No ha ingresado el Centro de Costo Retenciones utilizado';}
+
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al pago';
 			}
@@ -654,8 +647,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$idEstadoPago = 1;//No Pagado
 				}
-				
-			
+
 				//Se guardan los datos basicos
 				if(isset($_SESSION['pagos_leyes_sociales_basicos']['idSistema']) && $_SESSION['pagos_leyes_sociales_basicos']['idSistema']!=''){                    $SIS_data  = "'".$_SESSION['pagos_leyes_sociales_basicos']['idSistema']."'";              }else{$SIS_data  = "''";}
 				if(isset($_SESSION['pagos_leyes_sociales_basicos']['idUsuario']) && $_SESSION['pagos_leyes_sociales_basicos']['idUsuario']!=''){                    $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['idUsuario']."'";             }else{$SIS_data .= ",''";}
@@ -673,40 +665,40 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['Observaciones']) && $_SESSION['pagos_leyes_sociales_basicos']['Observaciones']!=''){                               $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['Observaciones']."'";                    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_CotizacionOblig']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_CotizacionOblig']!=''){       $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_CotizacionOblig']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_SeguroInvalidez']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_SeguroInvalidez']!=''){       $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_SeguroInvalidez']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_APV']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_APV']!=''){                               $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_APV']."'";                    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_Cuenta_2']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_Cuenta_2']!=''){                     $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_Cuenta_2']."'";               }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_CotTrabajoPesado']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_CotTrabajoPesado']!=''){     $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_CotTrabajoPesado']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_AFCTrabajador']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_AFCTrabajador']!=''){           $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_AFCTrabajador']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_AFCEmpleador']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_AFCEmpleador']!=''){             $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_AFCEmpleador']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_MontoPago']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_MontoPago']!=''){                               $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_MontoPago']."'";                    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_Total_CotizacionLegal']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_Total_CotizacionLegal']!=''){   $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_Total_CotizacionLegal']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['Observaciones']) && $_SESSION['pagos_leyes_sociales_basicos']['Observaciones']!=''){                                      $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['Observaciones']."'";                    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_CotizacionOblig']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_CotizacionOblig']!=''){              $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_CotizacionOblig']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_SeguroInvalidez']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_SeguroInvalidez']!=''){              $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_SeguroInvalidez']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_APV']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_APV']!=''){                                      $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_APV']."'";                    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_Cuenta_2']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_Cuenta_2']!=''){                            $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_Cuenta_2']."'";               }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_CotTrabajoPesado']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_CotTrabajoPesado']!=''){            $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_CotTrabajoPesado']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_AFCTrabajador']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_AFCTrabajador']!=''){                  $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_AFCTrabajador']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_AFCEmpleador']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_AFCEmpleador']!=''){                    $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_Total_AFCEmpleador']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_MontoPago']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_MontoPago']!=''){                                      $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_MontoPago']."'";                    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_Total_CotizacionLegal']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_Total_CotizacionLegal']!=''){          $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_Total_CotizacionLegal']."'";      }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_Total_CotizacionAdicional']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_Total_CotizacionAdicional']!=''){  $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_Total_CotizacionAdicional']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_MontoPago']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_MontoPago']!=''){                           $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_MontoPago']."'";                  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_MontoPago']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_MontoPago']!=''){                                  $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_MontoPago']."'";                  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_Total_CotizacionLegal']) && $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_Total_CotizacionLegal']!=''){  $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_Total_CotizacionLegal']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_MontoPago']) && $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_MontoPago']!=''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_MontoPago']."'";              }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_idCentroCosto']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_idCentroCosto']!=''){                       $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_idCentroCosto']."'";                }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_1']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_1']!=''){                               $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_1']."'";                    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_2']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_2']!=''){                               $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_2']."'";                    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_3']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_3']!=''){                               $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_3']."'";                    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_4']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_4']!=''){                               $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_4']."'";                    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_5']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_5']!=''){                               $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_5']."'";                    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_idCentroCosto']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_idCentroCosto']!=''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_idCentroCosto']."'";              }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_1']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_1']!=''){                           $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_1']."'";                  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_2']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_2']!=''){                           $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_2']."'";                  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_3']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_3']!=''){                           $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_3']."'";                  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_4']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_4']!=''){                           $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_4']."'";                  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_5']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_5']!=''){                           $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_5']."'";                  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idCentroCosto']) && $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idCentroCosto']!=''){           $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idCentroCosto']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_1']) && $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_1']!=''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_1']."'";              }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_2']) && $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_2']!=''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_2']."'";              }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_3']) && $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_3']!=''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_3']."'";              }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_4']) && $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_4']!=''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_4']."'";              }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_5']) && $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_5']!=''){                   $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_5']."'";              }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['TotalGeneral']) && $_SESSION['pagos_leyes_sociales_basicos']['TotalGeneral']!=''){                                 $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['TotalGeneral']."'";                     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['pagos_leyes_sociales_basicos']['TotalPagoGeneral']) && $_SESSION['pagos_leyes_sociales_basicos']['TotalPagoGeneral']!=''){                         $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['TotalPagoGeneral']."'";                 }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_MontoPago']) && $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_MontoPago']!=''){                          $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_MontoPago']."'";              }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_idCentroCosto']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_idCentroCosto']!=''){                              $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_idCentroCosto']."'";                }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_1']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_1']!=''){                                      $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_1']."'";                    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_2']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_2']!=''){                                      $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_2']."'";                    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_3']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_3']!=''){                                      $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_3']."'";                    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_4']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_4']!=''){                                      $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_4']."'";                    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_5']) && $_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_5']!=''){                                      $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['AFP_idLevel_5']."'";                    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_idCentroCosto']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_idCentroCosto']!=''){                          $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_idCentroCosto']."'";              }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_1']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_1']!=''){                                  $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_1']."'";                  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_2']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_2']!=''){                                  $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_2']."'";                  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_3']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_3']!=''){                                  $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_3']."'";                  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_4']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_4']!=''){                                  $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_4']."'";                  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_5']) && $_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_5']!=''){                                  $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SALUD_idLevel_5']."'";                  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idCentroCosto']) && $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idCentroCosto']!=''){                  $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idCentroCosto']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_1']) && $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_1']!=''){                          $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_1']."'";              }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_2']) && $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_2']!=''){                          $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_2']."'";              }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_3']) && $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_3']!=''){                          $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_3']."'";              }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_4']) && $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_4']!=''){                          $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_4']."'";              }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_5']) && $_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_5']!=''){                          $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['SEGURIDAD_idLevel_5']."'";              }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['TotalGeneral']) && $_SESSION['pagos_leyes_sociales_basicos']['TotalGeneral']!=''){                                        $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['TotalGeneral']."'";                     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['pagos_leyes_sociales_basicos']['TotalPagoGeneral']) && $_SESSION['pagos_leyes_sociales_basicos']['TotalPagoGeneral']!=''){                                $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['TotalPagoGeneral']."'";                 }else{$SIS_data .= ",''";}
 				$SIS_data .= ",'".$idEstadoPago."'";
 
 				// inserto los datos de registro en la db
@@ -735,43 +727,43 @@ require_once '0_validate_user_1.php';
 						$Total_AFP = $Total_AFP + $trab['AFP_TrabajoPesado'];
 						$Total_AFP = $Total_AFP + $trab['AFC_Empleador'];
 						$Total_AFP = $Total_AFP + $trab['AFC_Trabajador'];
-						
+
 						$Total_SALUD = 0;
 						$Total_SALUD = $Total_SALUD + $trab['Salud_Cotizacion'];
 						$Total_SALUD = $Total_SALUD + $trab['Salud_Extra_Valor'];
-						
+
 						$Total_SEGURIDAD = 0;
 						$Total_SEGURIDAD = $Total_SEGURIDAD + $trab['MutualValor'];
-						
+
 						if(isset($ultimo_id) && $ultimo_id!=''){                                           $SIS_data  = "'".$ultimo_id."'";                        }else{$SIS_data  = "''";}
 						//Identificacion trabajador
-						if(isset($trab['idFactTrab']) && $trab['idFactTrab']!=''){                  $SIS_data .= ",'".$trab['idFactTrab']."'";              }else{$SIS_data .= ",''";}
-						if(isset($trab['TrabajadorNombre']) && $trab['TrabajadorNombre']!=''){      $SIS_data .= ",'".$trab['TrabajadorNombre']."'";        }else{$SIS_data .= ",''";}
-						if(isset($trab['TrabajadorRut']) && $trab['TrabajadorRut']!=''){            $SIS_data .= ",'".$trab['TrabajadorRut']."'";           }else{$SIS_data .= ",''";}
-						if(isset($trab['Sueldo']) && $trab['Sueldo']!=''){                          $SIS_data .= ",'".$trab['Sueldo']."'";                  }else{$SIS_data .= ",''";}
+						if(isset($trab['idFactTrab']) && $trab['idFactTrab']!=''){                         $SIS_data .= ",'".$trab['idFactTrab']."'";              }else{$SIS_data .= ",''";}
+						if(isset($trab['TrabajadorNombre']) && $trab['TrabajadorNombre']!=''){             $SIS_data .= ",'".$trab['TrabajadorNombre']."'";        }else{$SIS_data .= ",''";}
+						if(isset($trab['TrabajadorRut']) && $trab['TrabajadorRut']!=''){                   $SIS_data .= ",'".$trab['TrabajadorRut']."'";           }else{$SIS_data .= ",''";}
+						if(isset($trab['Sueldo']) && $trab['Sueldo']!=''){                                 $SIS_data .= ",'".$trab['Sueldo']."'";                  }else{$SIS_data .= ",''";}
 						//AFP
-						if(isset($trab['AFP_Nombre']) && $trab['AFP_Nombre']!=''){                  $SIS_data .= ",'".$trab['AFP_Nombre']."'";              }else{$SIS_data .= ",''";}
-						if(isset($trab['AFP_Porcentaje']) && $trab['AFP_Porcentaje']!=''){          $SIS_data .= ",'".$trab['AFP_Porcentaje']."'";          }else{$SIS_data .= ",''";}
-						if(isset($trab['AFP_Cotizacion']) && $trab['AFP_Cotizacion']!=''){          $SIS_data .= ",'".$trab['AFP_Cotizacion']."'";          }else{$SIS_data .= ",''";}
-						if(isset($trab['AFP_SeguroInvalidez']) && $trab['AFP_SeguroInvalidez']!=''){$SIS_data .= ",'".$trab['AFP_SeguroInvalidez']."'";     }else{$SIS_data .= ",''";}
-						if(isset($trab['AFP_APV']) && $trab['AFP_APV']!=''){                        $SIS_data .= ",'".$trab['AFP_APV']."'";                 }else{$SIS_data .= ",''";}
-						if(isset($trab['AFP_Cuenta2']) && $trab['AFP_Cuenta2']!=''){                $SIS_data .= ",'".$trab['AFP_Cuenta2']."'";             }else{$SIS_data .= ",''";}
-						if(isset($trab['AFP_TrabajoPesado']) && $trab['AFP_TrabajoPesado']!=''){    $SIS_data .= ",'".$trab['AFP_TrabajoPesado']."'";       }else{$SIS_data .= ",''";}
-						if(isset($trab['AFC_Empleador']) && $trab['AFC_Empleador']!=''){            $SIS_data .= ",'".$trab['AFC_Empleador']."'";           }else{$SIS_data .= ",''";}
-						if(isset($trab['AFC_Trabajador']) && $trab['AFC_Trabajador']!=''){          $SIS_data .= ",'".$trab['AFC_Trabajador']."'";          }else{$SIS_data .= ",''";}
+						if(isset($trab['AFP_Nombre']) && $trab['AFP_Nombre']!=''){                         $SIS_data .= ",'".$trab['AFP_Nombre']."'";              }else{$SIS_data .= ",''";}
+						if(isset($trab['AFP_Porcentaje']) && $trab['AFP_Porcentaje']!=''){                 $SIS_data .= ",'".$trab['AFP_Porcentaje']."'";          }else{$SIS_data .= ",''";}
+						if(isset($trab['AFP_Cotizacion']) && $trab['AFP_Cotizacion']!=''){                 $SIS_data .= ",'".$trab['AFP_Cotizacion']."'";          }else{$SIS_data .= ",''";}
+						if(isset($trab['AFP_SeguroInvalidez']) && $trab['AFP_SeguroInvalidez']!=''){       $SIS_data .= ",'".$trab['AFP_SeguroInvalidez']."'";     }else{$SIS_data .= ",''";}
+						if(isset($trab['AFP_APV']) && $trab['AFP_APV']!=''){                               $SIS_data .= ",'".$trab['AFP_APV']."'";                 }else{$SIS_data .= ",''";}
+						if(isset($trab['AFP_Cuenta2']) && $trab['AFP_Cuenta2']!=''){                       $SIS_data .= ",'".$trab['AFP_Cuenta2']."'";             }else{$SIS_data .= ",''";}
+						if(isset($trab['AFP_TrabajoPesado']) && $trab['AFP_TrabajoPesado']!=''){           $SIS_data .= ",'".$trab['AFP_TrabajoPesado']."'";       }else{$SIS_data .= ",''";}
+						if(isset($trab['AFC_Empleador']) && $trab['AFC_Empleador']!=''){                   $SIS_data .= ",'".$trab['AFC_Empleador']."'";           }else{$SIS_data .= ",''";}
+						if(isset($trab['AFC_Trabajador']) && $trab['AFC_Trabajador']!=''){                 $SIS_data .= ",'".$trab['AFC_Trabajador']."'";          }else{$SIS_data .= ",''";}
 
 						//Salud
-						if(isset($trab['Salud_Nombre']) && $trab['Salud_Nombre']!=''){              $SIS_data .= ",'".$trab['Salud_Nombre']."'";            }else{$SIS_data .= ",''";}
-						if(isset($trab['Salud_Porcentaje']) && $trab['Salud_Porcentaje']!=''){      $SIS_data .= ",'".$trab['Salud_Porcentaje']."'";        }else{$SIS_data .= ",''";}
-						if(isset($trab['Salud_Cotizacion']) && $trab['Salud_Cotizacion']!=''){      $SIS_data .= ",'".$trab['Salud_Cotizacion']."'";        }else{$SIS_data .= ",''";}
+						if(isset($trab['Salud_Nombre']) && $trab['Salud_Nombre']!=''){                     $SIS_data .= ",'".$trab['Salud_Nombre']."'";            }else{$SIS_data .= ",''";}
+						if(isset($trab['Salud_Porcentaje']) && $trab['Salud_Porcentaje']!=''){             $SIS_data .= ",'".$trab['Salud_Porcentaje']."'";        }else{$SIS_data .= ",''";}
+						if(isset($trab['Salud_Cotizacion']) && $trab['Salud_Cotizacion']!=''){             $SIS_data .= ",'".$trab['Salud_Cotizacion']."'";        }else{$SIS_data .= ",''";}
 						if(isset($trab['Salud_Extra_Salud_id']) && $trab['Salud_Extra_Salud_id']!=''){     $SIS_data .= ",'".$trab['Salud_Extra_Salud_id']."'";    }else{$SIS_data .= ",''";}
 						if(isset($trab['Salud_Extra_Porcentaje']) && $trab['Salud_Extra_Porcentaje']!=''){ $SIS_data .= ",'".$trab['Salud_Extra_Porcentaje']."'";  }else{$SIS_data .= ",''";}
-						if(isset($trab['Salud_Extra_Valor']) && $trab['Salud_Extra_Valor']!=''){    $SIS_data .= ",'".$trab['Salud_Extra_Valor']."'";       }else{$SIS_data .= ",''";}
+						if(isset($trab['Salud_Extra_Valor']) && $trab['Salud_Extra_Valor']!=''){           $SIS_data .= ",'".$trab['Salud_Extra_Valor']."'";       }else{$SIS_data .= ",''";}
 
 						//Seguridad
-						if(isset($trab['MutualNombre']) && $trab['MutualNombre']!=''){              $SIS_data .= ",'".$trab['MutualNombre']."'";            }else{$SIS_data .= ",''";}
-						if(isset($trab['MutualPorcentaje']) && $trab['MutualPorcentaje']!=''){      $SIS_data .= ",'".$trab['MutualPorcentaje']."'";        }else{$SIS_data .= ",''";}
-						if(isset($trab['MutualValor']) && $trab['MutualValor']!=''){                $SIS_data .= ",'".$trab['MutualValor']."'";             }else{$SIS_data .= ",''";}
+						if(isset($trab['MutualNombre']) && $trab['MutualNombre']!=''){                     $SIS_data .= ",'".$trab['MutualNombre']."'";            }else{$SIS_data .= ",''";}
+						if(isset($trab['MutualPorcentaje']) && $trab['MutualPorcentaje']!=''){             $SIS_data .= ",'".$trab['MutualPorcentaje']."'";        }else{$SIS_data .= ",''";}
+						if(isset($trab['MutualValor']) && $trab['MutualValor']!=''){                       $SIS_data .= ",'".$trab['MutualValor']."'";             }else{$SIS_data .= ",''";}
 
 						//Totales
 						if(isset($Total_AFP) && $Total_AFP!=''){                                           $SIS_data .= ",'".$Total_AFP."'";                       }else{$SIS_data .= ",''";}
@@ -787,13 +779,11 @@ require_once '0_validate_user_1.php';
 						$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_sociales_trabajadores', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					}
-					
-					
-					
+
 					/*********************************************************************/
 					//PAGOS
 					if($_SESSION['pagos_leyes_sociales_formas_pago']){
-						
+
 						/************************************/
 						//AFP
 						if(isset($_SESSION['pagos_leyes_sociales_formas_pago'][1])){
@@ -801,16 +791,16 @@ require_once '0_validate_user_1.php';
 								if(isset($ultimo_id) && $ultimo_id!=''){                                                                                             $SIS_data  = "'".$ultimo_id."'";                                                 }else{$SIS_data  = "''";}
 								if(isset($_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']."'";   }else{$SIS_data .= ",''";}
 								if(isset($_SESSION['pagos_leyes_sociales_basicos']['idUsuario']) && $_SESSION['pagos_leyes_sociales_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
-								if(isset($pago['idDocPago'])&&$pago['idDocPago']!=''){                                                                         $SIS_data .= ",'".$pago['idDocPago']."'";                                        }else{$SIS_data .= ",''";}
-								if(isset($pago['N_DocPago'])&&$pago['N_DocPago']!=''){                                                                         $SIS_data .= ",'".$pago['N_DocPago']."'";                                        }else{$SIS_data .= ",''";}
-								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                               $SIS_data .= ",'".$pago['F_Pago']."'";                                           }else{$SIS_data .= ",''";}
-								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                 $SIS_data .= ",'".$pago['Monto']."'";                                            }else{$SIS_data .= ",''";}
-								$SIS_data .= ",'1'" ;
+								if(isset($pago['idDocPago'])&&$pago['idDocPago']!=''){                                                                               $SIS_data .= ",'".$pago['idDocPago']."'";                                        }else{$SIS_data .= ",''";}
+								if(isset($pago['N_DocPago'])&&$pago['N_DocPago']!=''){                                                                               $SIS_data .= ",'".$pago['N_DocPago']."'";                                        }else{$SIS_data .= ",''";}
+								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                                     $SIS_data .= ",'".$pago['F_Pago']."'";                                           }else{$SIS_data .= ",''";}
+								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                       $SIS_data .= ",'".$pago['Monto']."'";                                            }else{$SIS_data .= ",''";}
+								$SIS_data .= ",'1'";
 
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idFactSocial, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
 								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_sociales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 							}
 						}
 						/************************************/
@@ -820,16 +810,16 @@ require_once '0_validate_user_1.php';
 								if(isset($ultimo_id) && $ultimo_id!=''){                                                                                             $SIS_data  = "'".$ultimo_id."'";                                                 }else{$SIS_data  = "''";}
 								if(isset($_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']."'";   }else{$SIS_data .= ",''";}
 								if(isset($_SESSION['pagos_leyes_sociales_basicos']['idUsuario']) && $_SESSION['pagos_leyes_sociales_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
-								if(isset($pago['idDocPago'])&&$pago['idDocPago']!=''){                                                                         $SIS_data .= ",'".$pago['idDocPago']."'";                                        }else{$SIS_data .= ",''";}
-								if(isset($pago['N_DocPago'])&&$pago['N_DocPago']!=''){                                                                         $SIS_data .= ",'".$pago['N_DocPago']."'";                                        }else{$SIS_data .= ",''";}
-								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                               $SIS_data .= ",'".$pago['F_Pago']."'";                                           }else{$SIS_data .= ",''";}
-								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                 $SIS_data .= ",'".$pago['Monto']."'";                                            }else{$SIS_data .= ",''";}
-								$SIS_data .= ",'2'" ;
+								if(isset($pago['idDocPago'])&&$pago['idDocPago']!=''){                                                                               $SIS_data .= ",'".$pago['idDocPago']."'";                                        }else{$SIS_data .= ",''";}
+								if(isset($pago['N_DocPago'])&&$pago['N_DocPago']!=''){                                                                               $SIS_data .= ",'".$pago['N_DocPago']."'";                                        }else{$SIS_data .= ",''";}
+								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                                     $SIS_data .= ",'".$pago['F_Pago']."'";                                           }else{$SIS_data .= ",''";}
+								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                       $SIS_data .= ",'".$pago['Monto']."'";                                            }else{$SIS_data .= ",''";}
+								$SIS_data .= ",'2'";
 
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idFactSocial, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
 								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_sociales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 							}
 						}
 						/************************************/
@@ -839,23 +829,21 @@ require_once '0_validate_user_1.php';
 								if(isset($ultimo_id) && $ultimo_id!=''){                                                                                             $SIS_data  = "'".$ultimo_id."'";                                                 }else{$SIS_data  = "''";}
 								if(isset($_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']."'";   }else{$SIS_data .= ",''";}
 								if(isset($_SESSION['pagos_leyes_sociales_basicos']['idUsuario']) && $_SESSION['pagos_leyes_sociales_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
-								if(isset($pago['idDocPago'])&&$pago['idDocPago']!=''){                                                                         $SIS_data .= ",'".$pago['idDocPago']."'";                                        }else{$SIS_data .= ",''";}
-								if(isset($pago['N_DocPago'])&&$pago['N_DocPago']!=''){                                                                         $SIS_data .= ",'".$pago['N_DocPago']."'";                                        }else{$SIS_data .= ",''";}
-								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                               $SIS_data .= ",'".$pago['F_Pago']."'";                                           }else{$SIS_data .= ",''";}
-								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                 $SIS_data .= ",'".$pago['Monto']."'";                                            }else{$SIS_data .= ",''";}
-								$SIS_data .= ",'3'" ;
+								if(isset($pago['idDocPago'])&&$pago['idDocPago']!=''){                                                                               $SIS_data .= ",'".$pago['idDocPago']."'";                                        }else{$SIS_data .= ",''";}
+								if(isset($pago['N_DocPago'])&&$pago['N_DocPago']!=''){                                                                               $SIS_data .= ",'".$pago['N_DocPago']."'";                                        }else{$SIS_data .= ",''";}
+								if(isset($pago['F_Pago'])&&$pago['F_Pago']!=''){                                                                                     $SIS_data .= ",'".$pago['F_Pago']."'";                                           }else{$SIS_data .= ",''";}
+								if(isset($pago['Monto'])&&$pago['Monto']!=''){                                                                                       $SIS_data .= ",'".$pago['Monto']."'";                                            }else{$SIS_data .= ",''";}
+								$SIS_data .= ",'3'";
 
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idFactSocial, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
 								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_sociales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 							}
 						}
 
 					}
-						
-						
-						
+
 					/*********************************************************************/
 					//Archivos
 					if(isset($_SESSION['pagos_leyes_sociales_archivos'])){
@@ -874,33 +862,32 @@ require_once '0_validate_user_1.php';
 					/*********************************************************************/
 					//Se guarda en historial la accion
 					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']!=''){  
-						$SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']."'";  
+					if(isset($_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']) && $_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']!=''){
+						$SIS_data .= ",'".$_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']."'";
 					}else{
 						$SIS_data .= ",''";
 					}
 					$SIS_data .= ",'1'";                                                    //Creacion Satisfactoria
 					$SIS_data .= ",'Creacion del documento'";                               //Observacion
 					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-					
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idFactSocial, Creacion_fecha, idTipo, Observacion, idUsuario';
 					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_sociales_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					/*********************************************************************/
 					//Se actualizan los registros usados para no volver a utilizarlos
-					
-					
+
 					/****************************************************/
 					if(isset($_SESSION['pagos_leyes_sociales_basicos']['Periodo_Ano']) && $_SESSION['pagos_leyes_sociales_basicos']['Periodo_Ano']!=''){   $Periodo_Ano = $_SESSION['pagos_leyes_sociales_basicos']['Periodo_Ano'];  }else{$Periodo_Ano = '';}
 					if(isset($_SESSION['pagos_leyes_sociales_basicos']['Periodo_Mes']) && $_SESSION['pagos_leyes_sociales_basicos']['Periodo_Mes']!=''){   $Periodo_Mes = $_SESSION['pagos_leyes_sociales_basicos']['Periodo_Mes'];  }else{$Periodo_Mes = '';}
-					if(isset($_SESSION['pagos_leyes_sociales_basicos']['idSistema']) && $_SESSION['pagos_leyes_sociales_basicos']['idSistema']!=''){$idSistema   = $_SESSION['pagos_leyes_sociales_basicos']['idSistema'];    }else{$idSistema   = '';}
-					
+					if(isset($_SESSION['pagos_leyes_sociales_basicos']['idSistema']) && $_SESSION['pagos_leyes_sociales_basicos']['idSistema']!=''){       $idSistema   = $_SESSION['pagos_leyes_sociales_basicos']['idSistema'];    }else{$idSistema   = '';}
+
 					/*if(isset($Periodo_Ano)&&$Periodo_Ano!=''&&isset($Periodo_Mes)&&$Periodo_Mes!=''&&isset($idSistema)&&$idSistema!=''){
 
 						//Solo compras pagadas totalmente
 						$z = "idFactSocial=0";   //solo las que no esten asignadas
-								
+
 						//Filtro Fecha
 						if(isset($Periodo_Ano)&&$Periodo_Ano!=''){ $z.=" AND Creacion_ano='".$Periodo_Ano."'"; }
 						if(isset($Periodo_Mes)&&$Periodo_Mes!=''){ $z.=" AND Creacion_mes='".$Periodo_Mes."'"; }
@@ -908,13 +895,11 @@ require_once '0_validate_user_1.php';
 
 						//Actualizacion masiva de registros
 						$SIS_data = 'idFactSocial='.$ultimo_id;
-						
+
 						$resultado = db_update_data (false, $SIS_data, 'rrhh_sueldos_facturacion_trabajadores', $z, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					}*/
-				
-					
-					
+
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos
 					//Borro todas las sesiones
@@ -922,7 +907,7 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['pagos_leyes_sociales_trabajadores']);
 					unset($_SESSION['pagos_leyes_sociales_formas_pago']);
 					unset($_SESSION['pagos_leyes_sociales_archivos']);
-							
+
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
@@ -935,8 +920,7 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-				
+
 			if(isset($AFP_idDocPago)){         $ndata_1 = count($AFP_idDocPago);        }else{$ndata_1 = 0;}
 			if(isset($SALUD_idDocPago)){       $ndata_2 = count($SALUD_idDocPago);      }else{$ndata_2 = 0;}
 			if(isset($SEGURIDAD_idDocPago)){   $ndata_3 = count($SEGURIDAD_idDocPago);  }else{$ndata_3 = 0;}
@@ -996,19 +980,19 @@ require_once '0_validate_user_1.php';
 						//si no hay numero de pago se genera uno aleatorio
 						if(isset($AFP_N_DocPago[$x])&&$AFP_N_DocPago[$x]!=''){$N_doc_p = $AFP_N_DocPago[$x];}else{$N_doc_p = genera_password(16,'numerico');}
 						//guardo los datos
-						if(isset($idFactSocial) && $idFactSocial!=''){         $SIS_data  = "'".$idFactSocial."'";         }else{$SIS_data  = "''";}
-						if(isset($Creacion_fecha) && $Creacion_fecha!=''){     $SIS_data .= ",'".$Creacion_fecha."'";      }else{$SIS_data .= ",''";}
-						if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";           }else{$SIS_data .= ",''";}
+						if(isset($idFactSocial) && $idFactSocial!=''){           $SIS_data  = "'".$idFactSocial."'";         }else{$SIS_data  = "''";}
+						if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $SIS_data .= ",'".$Creacion_fecha."'";      }else{$SIS_data .= ",''";}
+						if(isset($idUsuario) && $idUsuario!=''){                 $SIS_data .= ",'".$idUsuario."'";           }else{$SIS_data .= ",''";}
 						if(isset($AFP_idDocPago[$x])&&$AFP_idDocPago[$x]!=''){   $SIS_data .= ",'".$AFP_idDocPago[$x]."'";   }else{$SIS_data .= ",''";}
 						if(isset($N_doc_p)&&$N_doc_p!=''){                       $SIS_data .= ",'".$N_doc_p."'";             }else{$SIS_data .= ",''";}
 						if(isset($AFP_F_Pago[$x])&&$AFP_F_Pago[$x]!=''){         $SIS_data .= ",'".$AFP_F_Pago[$x]."'";      }else{$SIS_data .= ",''";}
 						if(isset($AFP_Monto[$x])&&$AFP_Monto[$x]!=''){           $SIS_data .= ",'".$AFP_Monto[$x]."'";       }else{$SIS_data .= ",''";}
-						$SIS_data .= ",'1'" ;
+						$SIS_data .= ",'1'";
 
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idFactSocial, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_sociales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 						/*********************************************************************/
 						//Mensaje
 						$s_men = 'Se ha hecho un pago de '.valores($AFP_Monto[$x], 0).' con '.$arrDoc[$AFP_idDocPago[$x]]['Nombre'].' N°'.$N_doc_p.' con fecha '.fecha_estandar($AFP_F_Pago[$x]);
@@ -1018,7 +1002,7 @@ require_once '0_validate_user_1.php';
 						$SIS_data .= ",'1'";               //Creacion Satisfactoria
 						$SIS_data .= ",'".$s_men."'";      //Observacion
 						$SIS_data .= ",'".$idUsuario."'";  //idUsuario
-						
+
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idFactSocial, Creacion_fecha, idTipo, Observacion, idUsuario';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_sociales_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1030,19 +1014,19 @@ require_once '0_validate_user_1.php';
 						//si no hay numero de pago se genera uno aleatorio
 						if(isset($SALUD_N_DocPago[$x])&&$SALUD_N_DocPago[$x]!=''){$N_doc_p = $SALUD_N_DocPago[$x];}else{$N_doc_p = genera_password(16,'numerico');}
 						//guardo los datos
-						if(isset($idFactSocial) && $idFactSocial!=''){             $SIS_data  = "'".$idFactSocial."'";           }else{$SIS_data  = "''";}
-						if(isset($Creacion_fecha) && $Creacion_fecha!=''){         $SIS_data .= ",'".$Creacion_fecha."'";        }else{$SIS_data .= ",''";}
-						if(isset($idUsuario) && $idUsuario!=''){                  $SIS_data .= ",'".$idUsuario."'";             }else{$SIS_data .= ",''";}
+						if(isset($idFactSocial) && $idFactSocial!=''){               $SIS_data  = "'".$idFactSocial."'";           }else{$SIS_data  = "''";}
+						if(isset($Creacion_fecha) && $Creacion_fecha!=''){           $SIS_data .= ",'".$Creacion_fecha."'";        }else{$SIS_data .= ",''";}
+						if(isset($idUsuario) && $idUsuario!=''){                     $SIS_data .= ",'".$idUsuario."'";             }else{$SIS_data .= ",''";}
 						if(isset($SALUD_idDocPago[$x])&&$SALUD_idDocPago[$x]!=''){   $SIS_data .= ",'".$SALUD_idDocPago[$x]."'";   }else{$SIS_data .= ",''";}
 						if(isset($N_doc_p)&&$N_doc_p!=''){                           $SIS_data .= ",'".$N_doc_p."'";               }else{$SIS_data .= ",''";}
 						if(isset($SALUD_F_Pago[$x])&&$SALUD_F_Pago[$x]!=''){         $SIS_data .= ",'".$SALUD_F_Pago[$x]."'";      }else{$SIS_data .= ",''";}
 						if(isset($SALUD_Monto[$x])&&$SALUD_Monto[$x]!=''){           $SIS_data .= ",'".$SALUD_Monto[$x]."'";       }else{$SIS_data .= ",''";}
-						$SIS_data .= ",'2'" ;
+						$SIS_data .= ",'2'";
 
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idFactSocial, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_sociales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 						/*********************************************************************/
 						//Mensaje
 						$s_men = 'Se ha hecho un pago de '.valores($SALUD_Monto[$x], 0).' con '.$arrDoc[$SALUD_idDocPago[$x]]['Nombre'].' N°'.$N_doc_p.' con fecha '.fecha_estandar($SALUD_F_Pago[$x]);
@@ -1052,7 +1036,7 @@ require_once '0_validate_user_1.php';
 						$SIS_data .= ",'1'";               //Creacion Satisfactoria
 						$SIS_data .= ",'".$s_men."'";      //Observacion
 						$SIS_data .= ",'".$idUsuario."'";  //idUsuario
-						
+
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idFactSocial, Creacion_fecha, idTipo, Observacion, idUsuario';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_sociales_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1064,19 +1048,19 @@ require_once '0_validate_user_1.php';
 						//si no hay numero de pago se genera uno aleatorio
 						if(isset($SEGURIDAD_N_DocPago[$x])&&$SEGURIDAD_N_DocPago[$x]!=''){$N_doc_p = $SEGURIDAD_N_DocPago[$x];}else{$N_doc_p = genera_password(16,'numerico');}
 						//guardo los datos
-						if(isset($idFactSocial) && $idFactSocial!=''){                     $SIS_data  = "'".$idFactSocial."'";               }else{$SIS_data  = "''";}
-						if(isset($Creacion_fecha) && $Creacion_fecha!=''){                 $SIS_data .= ",'".$Creacion_fecha."'";            }else{$SIS_data .= ",''";}
-						if(isset($idUsuario) && $idUsuario!=''){                          $SIS_data .= ",'".$idUsuario."'";                 }else{$SIS_data .= ",''";}
+						if(isset($idFactSocial) && $idFactSocial!=''){                       $SIS_data  = "'".$idFactSocial."'";               }else{$SIS_data  = "''";}
+						if(isset($Creacion_fecha) && $Creacion_fecha!=''){                   $SIS_data .= ",'".$Creacion_fecha."'";            }else{$SIS_data .= ",''";}
+						if(isset($idUsuario) && $idUsuario!=''){                             $SIS_data .= ",'".$idUsuario."'";                 }else{$SIS_data .= ",''";}
 						if(isset($SEGURIDAD_idDocPago[$x])&&$SEGURIDAD_idDocPago[$x]!=''){   $SIS_data .= ",'".$SEGURIDAD_idDocPago[$x]."'";   }else{$SIS_data .= ",''";}
 						if(isset($N_doc_p)&&$N_doc_p!=''){                                   $SIS_data .= ",'".$N_doc_p."'";                   }else{$SIS_data .= ",''";}
 						if(isset($SEGURIDAD_F_Pago[$x])&&$SEGURIDAD_F_Pago[$x]!=''){         $SIS_data .= ",'".$SEGURIDAD_F_Pago[$x]."'";      }else{$SIS_data .= ",''";}
 						if(isset($SEGURIDAD_Monto[$x])&&$SEGURIDAD_Monto[$x]!=''){           $SIS_data .= ",'".$SEGURIDAD_Monto[$x]."'";       }else{$SIS_data .= ",''";}
-						$SIS_data .= ",'3'" ;
+						$SIS_data .= ",'3'";
 
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idFactSocial, Creacion_fecha, idUsuario,idDocPago,N_DocPago,F_Pago,Monto,idTipo';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_sociales_formas_pago', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-						
+
 						/*********************************************************************/
 						//Mensaje
 						$s_men = 'Se ha hecho un pago de '.valores($SEGURIDAD_Monto[$x], 0).' con '.$arrDoc[$SEGURIDAD_idDocPago[$x]]['Nombre'].' N°'.$N_doc_p.' con fecha '.fecha_estandar($SEGURIDAD_F_Pago[$x]);
@@ -1086,7 +1070,7 @@ require_once '0_validate_user_1.php';
 						$SIS_data .= ",'1'";               //Creacion Satisfactoria
 						$SIS_data .= ",'".$s_men."'";      //Observacion
 						$SIS_data .= ",'".$idUsuario."'";  //idUsuario
-						
+
 						// inserto los datos de registro en la db
 						$SIS_columns = 'idFactSocial, Creacion_fecha, idTipo, Observacion, idUsuario';
 						$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_leyes_sociales_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1101,12 +1085,11 @@ require_once '0_validate_user_1.php';
 				$SIS_data = "TotalPagoGeneral='".$rowMonto['Pagado']."'";
 				//Verifico si queda pagado
 				if(valores_comparables($rowData['TotalGeneral'])==valores_comparables($rowMonto['Pagado'])){
-					$SIS_data .= ",idEstadoPago='2'" ;//Pagado
+					$SIS_data .= ",idEstadoPago='2'";//Pagado
 				}else{
-					$SIS_data .= ",idEstadoPago='1'" ;//No Pagado
+					$SIS_data .= ",idEstadoPago='1'";//No Pagado
 				}
-				
-				
+
 				$resultado = db_update_data (false, $SIS_data, 'pagos_leyes_sociales', 'idFactSocial = "'.$idFactSocial.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){
@@ -1114,8 +1097,7 @@ require_once '0_validate_user_1.php';
 					header( 'Location: '.$location.'&edited=true' );
 					die;
 				}
-	
-				
+
 			}
 
 		break;

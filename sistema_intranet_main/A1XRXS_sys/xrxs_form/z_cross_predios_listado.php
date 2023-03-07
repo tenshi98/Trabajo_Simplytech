@@ -51,7 +51,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){      $Nombre    = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){       $Nombre    = EstandarizarInput($Nombre);}
 	if(isset($Direccion) && $Direccion!=''){ $Direccion = EstandarizarInput($Direccion);}
 
 /*******************************************************************************************************************/
@@ -88,7 +88,7 @@ require_once '0_validate_user_1.php';
 
 				//se verifica si la imagen existe
 				if (!empty($_FILES['FilePredio']['name'])){
-					
+
 					if ($_FILES['FilePredio']["error"] > 0){
 						$error['FilePredio'] = 'error/'.uploadPHPError($_FILES["FilePredio"]["error"]);
 
@@ -101,9 +101,9 @@ require_once '0_validate_user_1.php';
 										);
 						//Se verifica que el archivo subido no exceda los 100 kb
 						$limite_kb = 10000;
-									  
+
 						if (in_array($_FILES['FilePredio']['type'], $permitidos) && $_FILES['FilePredio']['size'] <= $limite_kb * 1024){
-							
+
 							/*******************************************************************/
 							//variables
 							$ndata_1  = 0;
@@ -121,10 +121,10 @@ require_once '0_validate_user_1.php';
 								//obtengo el total de datos
 								$highestRow = $worksheet->getHighestRow();
 								//si es una hoja en especifico
-								if ($loadedSheetName == "Predio"){ 
+								if ($loadedSheetName == "Predio"){
 									//recorro
 									for ($row=2; $row<=$highestRow; $row++){
-										
+
 										$Predio_Nombre    = $worksheet->getCellByColumnAndRow(1,  $row)->getValue();
 										$Predio_Pais      = $worksheet->getCellByColumnAndRow(2,  $row)->getValue();
 										$Predio_Ciudad    = $worksheet->getCellByColumnAndRow(3,  $row)->getValue();
@@ -159,7 +159,7 @@ require_once '0_validate_user_1.php';
 							/*******************************************************************/
 							//Si no hay errores ejecuto el codigo
 							if(empty($error)){
-								
+
 								//Obtengo los id
 								$rowPais   = db_select_data (false, 'idPais', 'core_paises', '', 'Nombre="'.$Predio_Pais.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 								$rowCiudad = db_select_data (false, 'idCiudad', 'core_ubicacion_ciudad', '', 'Nombre="'.$Predio_Ciudad.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -172,7 +172,7 @@ require_once '0_validate_user_1.php';
 
 								//filtros
 								if(isset($idSistema) && $idSistema!=''){                $SIS_data  = "'".$idSistema."'";          }else{$SIS_data  = "''";}
-								if(isset($idEstado) && $idEstado!=''){                 $SIS_data .= ",'".$idEstado."'";          }else{$SIS_data .= ",''";}
+								if(isset($idEstado) && $idEstado!=''){                  $SIS_data .= ",'".$idEstado."'";          }else{$SIS_data .= ",''";}
 								if(isset($Predio_Nombre) && $Predio_Nombre!=''){        $SIS_data .= ",'".$Predio_Nombre."'";     }else{$SIS_data .= ",''";}
 								if(isset($idPais) && $idPais!=''){                      $SIS_data .= ",'".$idPais."'";            }else{$SIS_data .= ",''";}
 								if(isset($idCiudad) && $idCiudad!=''){                  $SIS_data .= ",'".$idCiudad."'";          }else{$SIS_data .= ",''";}
@@ -220,16 +220,16 @@ require_once '0_validate_user_1.php';
 										//obtengo el total de datos
 										$highestRow = $worksheet->getHighestRow();
 										//si es una hoja en especifico
-										if ($loadedSheetName == "Cuarteles"){ 
+										if ($loadedSheetName == "Cuarteles"){
 											//recorro
 											for ($row=2; $row<=$highestRow; $row++){
-												
+
 												$ID                  = $worksheet->getCellByColumnAndRow(1,   $row)->getValue();
 												$NombreCuartel       = $worksheet->getCellByColumnAndRow(2,   $row)->getValue();
 												$CodigoCuartel       = $worksheet->getCellByColumnAndRow(3,   $row)->getValue();
 												$Especie             = $worksheet->getCellByColumnAndRow(4,   $row)->getValue();
 												$Variedad            = $worksheet->getCellByColumnAndRow(5,   $row)->getValue();
-												$AnoPlantacion       = $worksheet->getCellByColumnAndRow(6,  $row)->getValue();
+												$AnoPlantacion       = $worksheet->getCellByColumnAndRow(6,   $row)->getValue();
 												$N_Hectareas         = $worksheet->getCellByColumnAndRow(7,   $row)->getValue();
 												$N_Hileras           = $worksheet->getCellByColumnAndRow(8,   $row)->getValue();
 												$N_Plantas           = $worksheet->getCellByColumnAndRow(9,   $row)->getValue();
@@ -247,13 +247,13 @@ require_once '0_validate_user_1.php';
 													$ID_N_Plantas           = str_replace(',', '.', $N_Plantas);
 													$ID_DistanciaPlantacion = str_replace(',', '.', $DistanciaPlantacion);
 													$ID_DistanciaHileras    = str_replace(',', '.', $DistanciaHileras);
-													
+
 													//verifico si existen los datos
-													if(isset($Especie)&&isset($arrEspeciesMod[$Especie]['idCategoria'])){                       $ID_idCategoria  = $arrEspeciesMod[$Especie]['idCategoria'];}   
-													if(isset($Variedad)&&isset($arrVariedadesMod[$Variedad]['idProducto'])){                    $ID_idProducto   = $arrVariedadesMod[$Variedad]['idProducto'];}  
-													if(isset($EstadoProductivo)&&isset($arrEstadoProdMod[$EstadoProductivo]['idEstadoProd'])){  $ID_idEstadoProd = $arrEstadoProdMod[$EstadoProductivo]['idEstadoProd'];} 
-													if(isset($Estado)&&isset($arrEstadoMod[$Estado]['idEstado'])){                              $ID_idEstado     = $arrEstadoMod[$Estado]['idEstado'];}         
-													
+													if(isset($Especie)&&isset($arrEspeciesMod[$Especie]['idCategoria'])){                       $ID_idCategoria  = $arrEspeciesMod[$Especie]['idCategoria'];}
+													if(isset($Variedad)&&isset($arrVariedadesMod[$Variedad]['idProducto'])){                    $ID_idProducto   = $arrVariedadesMod[$Variedad]['idProducto'];}
+													if(isset($EstadoProductivo)&&isset($arrEstadoProdMod[$EstadoProductivo]['idEstadoProd'])){  $ID_idEstadoProd = $arrEstadoProdMod[$EstadoProductivo]['idEstadoProd'];}
+													if(isset($Estado)&&isset($arrEstadoMod[$Estado]['idEstado'])){                              $ID_idEstado     = $arrEstadoMod[$Estado]['idEstado'];}
+
 													//filtros
 													if(isset($ultimo_id) && $ultimo_id!=''){                            $SIS_data  = "'".$ultimo_id."'";                }else{$SIS_data  = "''";}
 													if(isset($NombreCuartel) && $NombreCuartel!=''){                    $SIS_data .= ",'".$NombreCuartel."'";           }else{$SIS_data .= ",''";}
@@ -268,13 +268,13 @@ require_once '0_validate_user_1.php';
 													if(isset($ID_idEstadoProd) && $ID_idEstadoProd!=''){                $SIS_data .= ",'".$ID_idEstadoProd."'";         }else{$SIS_data .= ",''";}
 													if(isset($ID_DistanciaPlantacion) && $ID_DistanciaPlantacion!=''){  $SIS_data .= ",'".$ID_DistanciaPlantacion."'";  }else{$SIS_data .= ",''";}
 													if(isset($ID_DistanciaHileras) && $ID_DistanciaHileras!=''){        $SIS_data .= ",'".$ID_DistanciaHileras."'";     }else{$SIS_data .= ",''";}
-													
+
 													// inserto los datos de registro en la db
 													$SIS_columns = 'idPredio, Nombre,idEstado, Codigo, idCategoria,
-													idProducto, AnoPlantacion, Hectareas, Hileras, Plantas, idEstadoProd, 
+													idProducto, AnoPlantacion, Hectareas, Hileras, Plantas, idEstadoProd,
 													DistanciaPlant, DistanciaHileras';
 													$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'cross_predios_listado_zonas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-													
+
 												}
 											}
 										}
@@ -283,7 +283,7 @@ require_once '0_validate_user_1.php';
 									//redirijo
 									header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
 									die;
-											
+
 								}
 							}
 
@@ -321,8 +321,8 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idPredio='".$idPredio."'";
 				if(isset($idSistema) && $idSistema!=''){    $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idEstado) && $idEstado!=''){     $SIS_data .= ",idEstado='".$idEstado."'";}
-				if(isset($Nombre) && $Nombre!=''){         $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idEstado) && $idEstado!=''){      $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($Nombre) && $Nombre!=''){          $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($idPais) && $idPais!=''){          $SIS_data .= ",idPais='".$idPais."'";}
 				if(isset($idCiudad) && $idCiudad!=''){      $SIS_data .= ",idCiudad='".$idCiudad."'";}
 				if(isset($idComuna) && $idComuna!=''){      $SIS_data .= ",idComuna='".$idComuna."'";}

@@ -76,7 +76,7 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($idFacturacion) && $idFacturacion!=''){    $SIS_data  = "'".$idFacturacion."'"; }else{$SIS_data  = "''";}
 				if(isset($idSistema) && $idSistema!=''){            $SIS_data .= ",'".$idSistema."'";    }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
 				if(isset($fecha_auto) && $fecha_auto!=''){          $SIS_data .= ",'".$fecha_auto."'";   }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
@@ -91,7 +91,7 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($idTrabajador) && $idTrabajador!=''){  $SIS_data .= ",'".$idTrabajador."'"; }else{$SIS_data .= ",''";}
+				if(isset($idTrabajador) && $idTrabajador!=''){   $SIS_data .= ",'".$idTrabajador."'"; }else{$SIS_data .= ",''";}
 				if(isset($idTurnos) && $idTurnos!=''){           $SIS_data .= ",'".$idTurnos."'";     }else{$SIS_data .= ",''";}
 				if(isset($idUso) && $idUso!=''){                 $SIS_data .= ",'".$idUso."'";        }else{$SIS_data .= ",''";}
 
@@ -132,7 +132,7 @@ require_once '0_validate_user_1.php';
 				$SIS_data = "idServicios='".$idServicios."'";
 				if(isset($idFacturacion) && $idFacturacion!=''){    $SIS_data .= ",idFacturacion='".$idFacturacion."'";}
 				if(isset($idSistema) && $idSistema!=''){            $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($fecha_auto) && $fecha_auto!=''){          $SIS_data .= ",fecha_auto='".$fecha_auto."'";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
@@ -141,7 +141,7 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'";
 					$SIS_data .= ",nSem='".fecha2NSemana($Creacion_fecha)."'";
 				}
-				if(isset($idTrabajador) && $idTrabajador!=''){     $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
+				if(isset($idTrabajador) && $idTrabajador!=''){      $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
 				if(isset($idTurnos) && $idTurnos!=''){              $SIS_data .= ",idTurnos='".$idTurnos."'";}
 				if(isset($idUso) && $idUso!=''){                    $SIS_data .= ",idUso='".$idUso."'";}
 

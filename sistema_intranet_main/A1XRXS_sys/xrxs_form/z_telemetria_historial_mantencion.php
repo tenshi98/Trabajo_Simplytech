@@ -116,13 +116,13 @@ require_once '0_validate_user_1.php';
 				if(isset($idOpciones_1) && $idOpciones_1!=''){    $SIS_data .= ",'".$idOpciones_1."'";  }else{$SIS_data .= ",''";}
 				if(isset($idOpciones_2) && $idOpciones_2!=''){    $SIS_data .= ",'".$idOpciones_2."'";  }else{$SIS_data .= ",''";}
 				if(isset($idOpciones_3) && $idOpciones_3!=''){    $SIS_data .= ",'".$idOpciones_3."'";  }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){          $SIS_data .= ",'".$idUsuario."'";     }else{$SIS_data .= ",''";}
 				if(isset($Fecha) && $Fecha!=''){
 					$SIS_data .= ",'".$Fecha."'";
 					$SIS_data .= ",'".fecha2NdiaMes($Fecha)."'";
 					$SIS_data .= ",'".fecha2NMes($Fecha)."'";
 					$SIS_data .= ",'".fecha2NSemana($Fecha)."'";
-					$SIS_data .= ",'".fecha2Ano($Fecha)."'";    
+					$SIS_data .= ",'".fecha2Ano($Fecha)."'";
 				}else{
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
@@ -178,7 +178,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idOpciones_1) && $idOpciones_1!=''){   $SIS_data .= ",idOpciones_1='".$idOpciones_1."'";}else{$SIS_data .= ",idOpciones_1='1'";}
 				if(isset($idOpciones_2) && $idOpciones_2!=''){   $SIS_data .= ",idOpciones_2='".$idOpciones_2."'";}else{$SIS_data .= ",idOpciones_2='1'";}
 				if(isset($idOpciones_3) && $idOpciones_3!=''){   $SIS_data .= ",idOpciones_3='".$idOpciones_3."'";}else{$SIS_data .= ",idOpciones_3='1'";}
-				if(isset($idUsuario) && $idUsuario!=''){        $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($Fecha) && $Fecha!=''){
 					$SIS_data .= ",Fecha='".$Fecha."'";
 					$SIS_data .= ",Dia='".fecha2NdiaMes($Fecha)."'";
@@ -205,7 +205,6 @@ require_once '0_validate_user_1.php';
 					header( 'Location: '.$location.'&id='.$idMantencion.'&edited=true' );
 					die;
 				}
-				
 
 			}
 
@@ -367,8 +366,7 @@ require_once '0_validate_user_1.php';
 			}
 
 		break;
-		
-		
+
 /*******************************************************************************************************************/
 		case 'new_archivo':
 
@@ -381,8 +379,8 @@ require_once '0_validate_user_1.php';
 				$filenames = $images['name'];
 				if(count($filenames)>0){
 					for($i=0; $i < count($filenames); $i++){
-						if ($images['error'][$i] > 0){ 
-							$error['files_adj'] = 'error/'.uploadPHPError($images['error'][$i]); 
+						if ($images['error'][$i] > 0){
+							$error['files_adj'] = 'error/'.uploadPHPError($images['error'][$i]);
 						} else {
 							//Se verifican las extensiones de los archivos
 							$permitidos = array("image/jpg",
@@ -394,7 +392,7 @@ require_once '0_validate_user_1.php';
 							$limite_kb = 10000;
 							//Se verifica
 							if (in_array($images['type'][$i], $permitidos) && $images['size'][$i] <= $limite_kb * 1024){
-								//nada mas que validar	
+								//nada mas que validar
 							}else{
 								$error['files_adj']     = 'error/Esta tratando de subir un archivo no permitido o que excede el tamaño permitido';
 							}
@@ -414,8 +412,8 @@ require_once '0_validate_user_1.php';
 					if(count($filenames)>0){
 						//echo 'true';
 						for($i=0; $i < count($filenames); $i++){
-							if ($images['error'][$i] > 0){ 
-								$error['files_adj'.$i] = 'error/'.uploadPHPError($images['error'][$i]); 
+							if ($images['error'][$i] > 0){
+								$error['files_adj'.$i] = 'error/'.uploadPHPError($images['error'][$i]);
 							} else {
 								//Se verifican las extensiones de los archivos
 								$permitidos = array("image/jpg",
@@ -428,7 +426,7 @@ require_once '0_validate_user_1.php';
 								$limite_kb = 10000;
 								//Sufijo
 								$sufijo = 'tel_mnt_'.$idMantencion.'_';
-						  
+
 								if (in_array($images['type'][$i], $permitidos) && $images['size'][$i] <= $limite_kb * 1024){
 									//Se especifica carpeta de destino
 									$ruta = "upload/".$sufijo.$images['name'][$i];
@@ -551,7 +549,7 @@ require_once '0_validate_user_1.php';
 			  $limite_kb = 10000;
 			  //Sufijo
 			  $sufijo = 'tel_mnt_firma_'.$idMantencion.'_';
-			  
+
 			  if (in_array($_FILES['Path_Firma']['type'], $permitidos) && $_FILES['Path_Firma']['size'] <= $limite_kb * 1024){
 				//Se especifica carpeta de destino
 				$ruta = "upload/".$sufijo.$_FILES['Path_Firma']['name'];
@@ -561,7 +559,7 @@ require_once '0_validate_user_1.php';
 					//$move_result = @move_uploaded_file($_FILES["Path_Firma"]["tmp_name"], $ruta);
 					//Muevo el archivo
 					$move_result = @move_uploaded_file($_FILES["Path_Firma"]["tmp_name"], "upload/xxxsxx_".$_FILES['Path_Firma']['name']);
-					if ($move_result){		
+					if ($move_result){
 						//se selecciona la imagen
 						switch ($_FILES['Path_Firma']['type']) {
 							case 'image/jpg':
@@ -577,7 +575,7 @@ require_once '0_validate_user_1.php';
 								$imgBase = imagecreatefrompng('upload/xxxsxx_'.$_FILES['Path_Firma']['name']);
 								break;
 						}
-							
+
 						//se reescala la imagen en caso de ser necesario
 						$imgBase_width = imagesx( $imgBase );
 						$imgBase_height = imagesy( $imgBase );
@@ -599,7 +597,7 @@ require_once '0_validate_user_1.php';
 								$newheight = $imgBase_height;
 							}else{
 								$newheight =  $max_height;
-							} 
+							}
 							$divisor = $imgBase_height / $newheight;
 							$newwidth = floor( $imgBase_width / $divisor );
 						}
@@ -624,14 +622,12 @@ require_once '0_validate_user_1.php';
 						}
 						//se eliminan las imagenes de la memoria
 						imagedestroy($imgBase);
-						
-					
-					
+
 						//Filtro para idSistema
 						if (!empty($_POST['idMantencion']))    $idMantencion       = $_POST['idMantencion'];
-						
+
 						$SIS_data = "Path_Firma='".$sufijo.$_FILES['Path_Firma']['name']."'";
-						
+
 						/*******************************************************/
 						//se actualizan los datos
 						$resultado = db_update_data (false, $SIS_data, 'telemetria_historial_mantencion', 'idMantencion = "'.$idMantencion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -665,7 +661,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "Path_Firma=''" ;
+			$SIS_data = "Path_Firma=''";
 			$resultado = db_update_data (false, $SIS_data, 'telemetria_historial_mantencion', 'idMantencion = "'.$_GET['del_firma'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -688,8 +684,7 @@ require_once '0_validate_user_1.php';
 				die;
 
 			}
-				
-			
+
 		break;
 /*******************************************************************************************************************/
 	}

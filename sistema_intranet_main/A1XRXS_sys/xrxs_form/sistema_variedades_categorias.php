@@ -75,7 +75,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($Nombre) && $Nombre!=''){                                         $SIS_data  = "'".$Nombre."'";                        }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){                                          $SIS_data  = "'".$Nombre."'";                        }else{$SIS_data  = "''";}
 				if(isset($Temp_optima_min) && $Temp_optima_min!=''){                        $SIS_data .= ",'".$Temp_optima_min."'";              }else{$SIS_data .= ",''";}
 				if(isset($Temp_optima_max) && $Temp_optima_max!=''){                        $SIS_data .= ",'".$Temp_optima_max."'";              }else{$SIS_data .= ",''";}
 				if(isset($Temp_optima_margen_critico) && $Temp_optima_margen_critico!=''){  $SIS_data .= ",'".$Temp_optima_margen_critico."'";   }else{$SIS_data .= ",''";}
@@ -114,7 +114,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idCategoria='".$idCategoria."'";
-				if(isset($Nombre) && $Nombre!=''){                                         $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                                          $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Temp_optima_min) && $Temp_optima_min!=''){                        $SIS_data .= ",Temp_optima_min='".$Temp_optima_min."'";}
 				if(isset($Temp_optima_max) && $Temp_optima_max!=''){                        $SIS_data .= ",Temp_optima_max='".$Temp_optima_max."'";}
 				if(isset($Temp_optima_margen_critico) && $Temp_optima_margen_critico!=''){  $SIS_data .= ",Temp_optima_margen_critico='".$Temp_optima_margen_critico."'";}
@@ -178,8 +178,6 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-					
-			
 
 		break;
 

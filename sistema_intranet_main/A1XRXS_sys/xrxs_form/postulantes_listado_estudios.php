@@ -50,7 +50,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){          $Nombre      = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){           $Nombre      = EstandarizarInput($Nombre);}
 	if(isset($Descripcion) && $Descripcion!=''){ $Descripcion = EstandarizarInput($Descripcion);}
 
 /*******************************************************************************************************************/
@@ -77,11 +77,11 @@ require_once '0_validate_user_1.php';
 				if(isset($idPostulante) && $idPostulante!=''){        $SIS_data  = "'".$idPostulante."'";      }else{$SIS_data  = "''";}
 				if(isset($AnoInicio) && $AnoInicio!=''){              $SIS_data .= ",'".$AnoInicio."'";        }else{$SIS_data .= ",''";}
 				if(isset($AnoTermino) && $AnoTermino!=''){            $SIS_data .= ",'".$AnoTermino."'";       }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";         }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                $SIS_data .= ",'".$idEstado."'";         }else{$SIS_data .= ",''";}
 				if(isset($idEstudioCat) && $idEstudioCat!=''){        $SIS_data .= ",'".$idEstudioCat."'";     }else{$SIS_data .= ",''";}
 				if(isset($idEstudio) && $idEstudio!=''){              $SIS_data .= ",'".$idEstudio."'";        }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",'".$Nombre."'";           }else{$SIS_data .= ",''";}
-				if(isset($Descripcion) && $Descripcion!=''){          $SIS_data .= ",'".$Descripcion."'";    }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                    $SIS_data .= ",'".$Nombre."'";           }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion!=''){          $SIS_data .= ",'".$Descripcion."'";      }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idPostulante, AnoInicio, AnoTermino, idEstado, idEstudioCat,idEstudio,Nombre,Descripcion';
@@ -109,10 +109,10 @@ require_once '0_validate_user_1.php';
 				if(isset($idPostulante) && $idPostulante!=''){        $SIS_data .= ",idPostulante='".$idPostulante."'";}
 				if(isset($AnoInicio) && $AnoInicio!=''){              $SIS_data .= ",AnoInicio='".$AnoInicio."'";}
 				if(isset($AnoTermino) && $AnoTermino!=''){            $SIS_data .= ",AnoTermino='".$AnoTermino."'";}
-				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idEstado) && $idEstado!=''){                $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idEstudioCat) && $idEstudioCat!=''){        $SIS_data .= ",idEstudioCat='".$idEstudioCat."'";}
 				if(isset($idEstudio) && $idEstudio!=''){              $SIS_data .= ",idEstudio='".$idEstudio."'";}
-				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                    $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Descripcion) && $Descripcion!=''){          $SIS_data .= ",Descripcion='".$Descripcion."'";}
 
 				/*******************************************************/
@@ -175,11 +175,9 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
-		
-		
+
 /*******************************************************************************************************************/
 	}
 

@@ -189,7 +189,7 @@ foreach ($arrUnimed as $sen) {
 							var marcadores = [
 								<?php
 								$in=0;
-								foreach ($arrEquipo as $data) { 
+								foreach ($arrEquipo as $data) {
 									$explanation = "<div class='iw-subTitle'>Equipo: ".$data['Nombre']."</div>";
 									$explanation .= '<p>'.fecha_estandar($data['LastUpdateFecha']).' - '.$data['LastUpdateHora'].'</p>';
 									$explanation .= "<div class='iw-subTitle'>Sensores: </div><p>";

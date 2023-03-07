@@ -84,7 +84,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idTelemetria) && $idTelemetria!=''){  $SIS_data .= ",'".$idTelemetria."'";   }else{$SIS_data .= ",''";}
 				if(isset($idGrupo) && $idGrupo!=''){            $SIS_data .= ",'".$idGrupo."'";        }else{$SIS_data .= ",''";}
 				if(isset($idGrafico) && $idGrafico!=''){        $SIS_data .= ",'".$idGrafico."'";      }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){         $SIS_data .= ",'".$idEstado."'";       }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){          $SIS_data .= ",'".$idEstado."'";       }else{$SIS_data .= ",''";}
 				if(isset($Observacion) && $Observacion!=''){    $SIS_data .= ",'".$Observacion."'";    }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
@@ -118,7 +118,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idTelemetria) && $idTelemetria!=''){  $SIS_data .= ",idTelemetria='".$idTelemetria."'";}
 				if(isset($idGrupo) && $idGrupo!=''){            $SIS_data .= ",idGrupo='".$idGrupo."'";}
 				if(isset($idGrafico) && $idGrafico!=''){        $SIS_data .= ",idGrafico='".$idGrafico."'";}
-				if(isset($idEstado) && $idEstado!=''){         $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idEstado) && $idEstado!=''){          $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($Observacion) && $Observacion!=''){    $SIS_data .= ",Observacion='".$Observacion."'";}
 
 				/*******************************************************/
@@ -180,8 +180,7 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
 
 /*******************************************************************************************************************/

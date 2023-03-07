@@ -1774,7 +1774,7 @@ require_once '0_validate_user_1.php';
 							if(isset($producto['Salud_idCotizacion']) && $producto['Salud_idCotizacion']!=''){                  $SIS_data .= ",'".$producto['Salud_idCotizacion']."'";            }else{$SIS_data .= ",''";}
 							if(isset($producto['Salud_CotizacionPorcentaje']) && $producto['Salud_CotizacionPorcentaje']!=''){  $SIS_data .= ",'".$producto['Salud_CotizacionPorcentaje']."'";    }else{$SIS_data .= ",''";}
 							if(isset($producto['Salud_CotizacionValor']) && $producto['Salud_CotizacionValor']!=''){            $SIS_data .= ",'".$producto['Salud_CotizacionValor']."'";         }else{$SIS_data .= ",''";}
-							$SIS_data .= ",'1'" ;//estado no pagado
+							$SIS_data .= ",'1'";//estado no pagado
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idSistema, idUsuario, fecha_auto, Creacion_fecha,
@@ -1927,7 +1927,7 @@ require_once '0_validate_user_1.php';
 							/*                      SE ACTUALIZAN LOS DATOS UTILIZADOS                       */
 							/*********************************************************************************/
 							//filtro
-							$SIS_data = "idUso='2'" ;
+							$SIS_data = "idUso='2'";
 							$SIS_data .= ",idFactRRHH='".$ultimo_id."'";
 
 							/****************************************************/

@@ -19,9 +19,9 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idUml']))            $idUml            = $_POST['idUml'];
 	if (!empty($_POST['Nombre']))           $Nombre           = $_POST['Nombre'];
 	if (!empty($_POST['Marca']))            $Marca            = $_POST['Marca'];
-	if ( isset($_POST['StockLimite']))       $StockLimite      = $_POST['StockLimite'];
-	if ( isset($_POST['ValorIngreso']))      $ValorIngreso     = $_POST['ValorIngreso'];
-	if ( isset($_POST['ValorEgreso']))       $ValorEgreso      = $_POST['ValorEgreso'];
+	if ( isset($_POST['StockLimite']))      $StockLimite      = $_POST['StockLimite'];
+	if ( isset($_POST['ValorIngreso']))     $ValorIngreso     = $_POST['ValorIngreso'];
+	if ( isset($_POST['ValorEgreso']))      $ValorEgreso      = $_POST['ValorEgreso'];
 	if (!empty($_POST['Descripcion']))      $Descripcion      = $_POST['Descripcion'];
 	if (!empty($_POST['Codigo']))           $Codigo           = $_POST['Codigo'];
 	if (!empty($_POST['idProveedor']))      $idProveedor      = $_POST['idProveedor'];
@@ -66,7 +66,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){          $Nombre      = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){           $Nombre      = EstandarizarInput($Nombre);}
 	if(isset($Marca) && $Marca!=''){             $Marca       = EstandarizarInput($Marca);}
 	if(isset($Descripcion) && $Descripcion!=''){ $Descripcion = EstandarizarInput($Descripcion);}
 	if(isset($Codigo) && $Codigo!=''){           $Codigo      = EstandarizarInput($Codigo);}
@@ -107,18 +107,18 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($idCategoria) && $idCategoria!=''){         $SIS_data  = "'".$idCategoria."'";      }else{$SIS_data  = "''";}
 				if(isset($idUml) && $idUml!=''){                     $SIS_data .= ",'".$idUml."'";           }else{$SIS_data .= ",''";}
-				if(isset($Nombre) && $Nombre!=''){                  $SIS_data .= ",'".$Nombre."'";          }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",'".$Nombre."'";          }else{$SIS_data .= ",''";}
 				if(isset($Marca) && $Marca!=''){                     $SIS_data .= ",'".$Marca."'";           }else{$SIS_data .= ",''";}
 				if(isset($StockLimite) && $StockLimite!=''){         $SIS_data .= ",'".$StockLimite."'";     }else{$SIS_data .= ",''";}
 				if(isset($ValorIngreso) && $ValorIngreso!=''){       $SIS_data .= ",'".$ValorIngreso."'";    }else{$SIS_data .= ",''";}
 				if(isset($ValorEgreso) && $ValorEgreso!=''){         $SIS_data .= ",'".$ValorEgreso."'";     }else{$SIS_data .= ",''";}
-				if(isset($Descripcion) && $Descripcion!=''){         $SIS_data .= ",'".$Descripcion."'";   }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion!=''){         $SIS_data .= ",'".$Descripcion."'";     }else{$SIS_data .= ",''";}
 				if(isset($Codigo) && $Codigo!=''){                   $SIS_data .= ",'".$Codigo."'";          }else{$SIS_data .= ",''";}
 				if(isset($idProveedor) && $idProveedor!=''){         $SIS_data .= ",'".$idProveedor."'";     }else{$SIS_data .= ",''";}
 				if(isset($Direccion_img) && $Direccion_img!=''){     $SIS_data .= ",'".$Direccion_img."'";   }else{$SIS_data .= ",''";}
 				if(isset($FichaTecnica) && $FichaTecnica!=''){       $SIS_data .= ",'".$FichaTecnica."'";    }else{$SIS_data .= ",''";}
 				if(isset($HDS) && $HDS!=''){                         $SIS_data .= ",'".$HDS."'";             }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){              $SIS_data .= ",'".$idEstado."'";        }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";        }else{$SIS_data .= ",''";}
 				if(isset($idProveedorFijo) && $idProveedorFijo!=''){ $SIS_data .= ",'".$idProveedorFijo."'"; }else{$SIS_data .= ",''";}
 				if(isset($idTipoImagen) && $idTipoImagen!=''){       $SIS_data .= ",'".$idTipoImagen."'";    }else{$SIS_data .= ",''";}
 
@@ -160,7 +160,7 @@ require_once '0_validate_user_1.php';
 				$SIS_data = "idProducto='".$idProducto."'";
 				if(isset($idCategoria) && $idCategoria!=''){         $SIS_data .= ",idCategoria='".$idCategoria."'";}
 				if(isset($idUml) && $idUml!=''){                     $SIS_data .= ",idUml='".$idUml."'";}
-				if(isset($Nombre) && $Nombre!=''){                  $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Marca) && $Marca!=''){                     $SIS_data .= ",Marca='".$Marca."'";}
 				if(isset($StockLimite) && $StockLimite!=''){         $SIS_data .= ",StockLimite='".$StockLimite."'";}
 				if(isset($ValorIngreso) && $ValorIngreso!=''){       $SIS_data .= ",ValorIngreso='".$ValorIngreso."'";}
@@ -171,7 +171,7 @@ require_once '0_validate_user_1.php';
 				if(isset($Direccion_img) && $Direccion_img!=''){     $SIS_data .= ",Direccion_img='".$Direccion_img."'";}
 				if(isset($FichaTecnica) && $FichaTecnica!=''){       $SIS_data .= ",FichaTecnica='".$FichaTecnica."'";}
 				if(isset($HDS) && $HDS!=''){                         $SIS_data .= ",HDS='".$HDS."'";}
-				if(isset($idEstado) && $idEstado!=''){              $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idProveedorFijo) && $idProveedorFijo!=''){ $SIS_data .= ",idProveedorFijo='".$idProveedorFijo."'";}
 				if(isset($idTipoImagen) && $idTipoImagen!=''){       $SIS_data .= ",idTipoImagen='".$idTipoImagen."'";}
 
@@ -224,7 +224,7 @@ require_once '0_validate_user_1.php';
 										$max_width = 100;
 										$max_height = 50;
 									break;
-									//Tambor Azul	
+									//Tambor Azul
 									case 3:
 										$img_base = imagecreatefrompng('../LIB_assets/img/Tambor_Azul.png');
 										$max_width = 100;
@@ -381,7 +381,7 @@ require_once '0_validate_user_1.php';
 									case 9:
 									case 10:
 										$dest_x = ( $img_base_width / 2 ) - ( $img_logo_width / 2 );
-										$dest_y = 73;						
+										$dest_y = 73;
 									break;
 
 									//Cubo Carton 1x1x1
@@ -389,7 +389,7 @@ require_once '0_validate_user_1.php';
 										$dest_x = ( $img_base_width / 2 ) - ( $img_logo_width / 2 );
 										$dest_y = ( $img_base_height / 2 ) - ( $img_logo_height / 2 );
 									break;
-																	
+
 									//Cubo Carton 2x1x1
 									case 12:
 										$dest_x = ( $img_base_width / 2 ) - ( $img_logo_width / 2 );
@@ -413,7 +413,7 @@ require_once '0_validate_user_1.php';
 										$dest_x = ( $img_base_width / 2 ) - ( $img_logo_width / 2 );
 										$dest_y = ( $img_base_height / 2 ) - ( $img_logo_height / 2 );
 									break;
-																	
+
 									//Cubo Madera 2x1x1
 									case 16:
 										$dest_x = ( $img_base_width / 2 ) - ( $img_logo_width / 2 );
@@ -434,7 +434,7 @@ require_once '0_validate_user_1.php';
 
 								}
 
-								//se crea la imagen 
+								//se crea la imagen
 								imagecopymerge($img_base, $img_logo, $dest_x, $dest_y, 0, 0, $max_width, $max_height, 100);
 								//se combina la imagen
 								imagepng($img_base, $ruta);
@@ -453,8 +453,7 @@ require_once '0_validate_user_1.php';
 								imagedestroy($img_base);
 								imagedestroy($img_logo);
 							}
-							
-							
+
 						}else{
 							//Se mueve el archivo a la carpeta previamente configurada
 							//$move_result = @move_uploaded_file($_FILES["Direccion_img"]["tmp_name"], $ruta);
@@ -524,9 +523,9 @@ require_once '0_validate_user_1.php';
 								//se eliminan las imagenes de la memoria
 								imagedestroy($imgBase);
 							}
-							
+
 						}
-						
+
 						$result=1;
 
 						if ($result==1){
@@ -707,7 +706,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "FichaTecnica=''" ;
+			$SIS_data = "FichaTecnica=''";
 			$resultado = db_update_data (false, $SIS_data, 'insumos_listado', 'idProducto = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -743,7 +742,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "HDS=''" ;
+			$SIS_data = "HDS=''";
 			$resultado = db_update_data (false, $SIS_data, 'insumos_listado', 'idProducto = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){

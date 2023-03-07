@@ -1161,7 +1161,7 @@ foreach ($arrCentroCosto_lv2 as $trab) {
 					$total_margen_serv          = 0;
 					$total_margen_total         = 0;
 					$total_ing_total            = 0;
-					
+
 					/*****************************************************/
 					if($arrTemp[1]!=false && !empty($arrTemp[1]) && $arrTemp[1]!=''){
 						foreach ($arrTemp[1] as $trab) {

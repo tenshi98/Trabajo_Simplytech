@@ -48,7 +48,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 				/******************************************************************/
 				$Form_Inputs->form_tittle(3, 'SQL Normal');
 				if (!empty($_POST['submit_test'])){
-					
+
 					if (!empty($_POST['usuario']))    $usuario_1   = $_POST['usuario'];
 					if (!empty($_POST['password']))   $password_1  = $_POST['password'];
 
@@ -83,7 +83,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 				$_POST = SanitizarDatos($_POST);
 
 				if (!empty($_POST['submit_test'])){
-					
+
 					if (!empty($_POST['usuario']))    $usuario_2    = $_POST['usuario'];
 					if (!empty($_POST['password']))   $password_2   = $_POST['password'];
 

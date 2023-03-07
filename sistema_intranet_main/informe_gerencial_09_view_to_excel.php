@@ -254,7 +254,7 @@ foreach ($arrTemporal_1 as $tipo) {
 				->setCellValue('B'.$nn, DeSanitizar($tipo['Empresa']))
 				->setCellValue('C'.$nn, DeSanitizar($tipo['Documento'].' '.$tipo['N_DocPago']))
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['F_Pago']));
-				
+
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){            
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('E'.$nn, 0);            
@@ -297,7 +297,7 @@ foreach ($arrTemporal_2 as $tipo) {
 				->setCellValue('B'.$nn, DeSanitizar($tipo['Empresa']))
 				->setCellValue('C'.$nn, DeSanitizar($tipo['Documento'].' '.$tipo['N_DocPago']))
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['F_Pago']));
-				
+
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){            
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('E'.$nn, $tipo['MontoPagado']);  
@@ -340,7 +340,7 @@ foreach ($arrTemporal_3 as $tipo) {
 				->setCellValue('B'.$nn, DeSanitizar($tipo['TrabajadorNombre'].' '.$tipo['TrabajadorApellidoPat']))
 				->setCellValue('C'.$nn, DeSanitizar($tipo['Documento'].' '.$tipo['N_DocPago']))
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['F_Pago']));
-				
+
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){            
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('E'.$nn, 0); 			          
@@ -383,7 +383,7 @@ foreach ($arrTemporal_4 as $tipo) {
 				->setCellValue('B'.$nn, DeSanitizar($tipo['TrabajadorNombre'].' '.$tipo['TrabajadorApellidoPat']))
 				->setCellValue('C'.$nn, DeSanitizar($tipo['Documento'].' '.$tipo['N_DocPago']))
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['F_Pago']));
-				
+
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){            
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('E'.$nn, 0); 			          
@@ -426,7 +426,7 @@ foreach ($arrTemporal_5 as $tipo) {
 				->setCellValue('B'.$nn, DeSanitizar($tipo['TrabajadorNombre'].' '.$tipo['TrabajadorApellidoPat']))
 				->setCellValue('C'.$nn, DeSanitizar($tipo['Documento'].' '.$tipo['N_DocPago']))
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['F_Pago']));
-				
+
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){            
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('E'.$nn, 0); 			          
@@ -469,7 +469,7 @@ foreach ($arrTemporal_6 as $tipo) {
 				->setCellValue('B'.$nn, 'SII')
 				->setCellValue('C'.$nn, DeSanitizar($tipo['Documento'].' '.$tipo['N_DocPago']))
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['F_Pago']));
-				
+
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){            
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('E'.$nn, 0); 			          
@@ -512,7 +512,7 @@ foreach ($arrTemporal_7 as $tipo) {
 				->setCellValue('B'.$nn, 'Previred')
 				->setCellValue('C'.$nn, DeSanitizar($tipo['Documento'].' '.$tipo['N_DocPago']))
 				->setCellValue('D'.$nn, Fecha_estandar($tipo['F_Pago']));
-				
+
 	if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){            
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('E'.$nn, 0); 			          

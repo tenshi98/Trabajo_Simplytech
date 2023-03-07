@@ -89,7 +89,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrEquipo,$row );
 }
-		
+
 /*************************************************************/
 //Se traen todas las unidades de medida
 $arrUnimed = array();

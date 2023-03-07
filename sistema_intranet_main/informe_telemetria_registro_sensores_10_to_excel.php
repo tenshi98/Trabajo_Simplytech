@@ -382,7 +382,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 				if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]<99900&&$rutas['SensorValue_'.$i]!=0){
 					$fVariance += pow($rutas['SensorValue_'.$i] - $avg_val, 2);
 				} 
-			} 
+			}
 			if($count_val!=0){
 				$size = $count_val - 1;
 				$std_val = sqrt($fVariance)/sqrt($size);

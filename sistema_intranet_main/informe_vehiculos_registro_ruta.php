@@ -92,7 +92,7 @@ array_push( $arrRutas,$row );
 							var delay = 100;
 							
 							var locations = [ 
-								<?php foreach ( $arrRutas as $pos ) { 
+								<?php foreach ( $arrRutas as $pos ) {
 									if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){ ?>
 									['<?php echo $pos['idTabla']; ?>', <?php echo $pos['GeoLatitud']; ?>, <?php echo $pos['GeoLongitud']; ?>], 					
 								<?php } 
@@ -204,7 +204,7 @@ array_push( $arrRutas,$row );
 									moveMarker();
 
 								}
-								
+
 							}
 							/* ************************************************************************** */
 							google.maps.event.addDomListener(window, "load", initialize());

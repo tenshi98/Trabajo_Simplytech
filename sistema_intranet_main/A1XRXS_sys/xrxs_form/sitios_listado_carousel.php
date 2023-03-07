@@ -14,11 +14,11 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 
 	//Traspaso de valores input a variables
-	if (!empty($_POST['idCarousel']))         $idCarousel         = $_POST['idCarousel'];
-	if (!empty($_POST['idSitio']))            $idSitio            = $_POST['idSitio'];
-	if (!empty($_POST['idEstado']))           $idEstado           = $_POST['idEstado'];
-	if (!empty($_POST['idPosicion']))         $idPosicion         = $_POST['idPosicion'];
-	if (!empty($_POST['Imagen']))             $Imagen             = $_POST['Imagen'];
+	if (!empty($_POST['idCarousel']))          $idCarousel         = $_POST['idCarousel'];
+	if (!empty($_POST['idSitio']))             $idSitio            = $_POST['idSitio'];
+	if (!empty($_POST['idEstado']))            $idEstado           = $_POST['idEstado'];
+	if (!empty($_POST['idPosicion']))          $idPosicion         = $_POST['idPosicion'];
+	if (!empty($_POST['Imagen']))              $Imagen             = $_POST['Imagen'];
 	if ( isset($_POST['Titulo']))              $Titulo             = $_POST['Titulo'];
 	if ( isset($_POST['TituloStyle']))         $TituloStyle        = $_POST['TituloStyle'];
 	if ( isset($_POST['Subtitulo']))           $Subtitulo          = $_POST['Subtitulo'];
@@ -50,7 +50,7 @@ require_once '0_validate_user_1.php';
 			case 'Texto':              if(empty($Texto)){             $error['Texto']             = 'error/No ha ingresado el Texto';}break;
 			case 'TextoStyle':         if(empty($TextoStyle)){        $error['TextoStyle']        = 'error/No ha ingresado el estilo del Texto';}break;
 			case 'PosicionBloque':     if(empty($PosicionBloque)){    $error['PosicionBloque']    = 'error/No ha ingresado la Posicion de Bloque';}break;
-				
+
 		}
 	}
 /*******************************************************************************************************************/
@@ -105,7 +105,7 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idSitio) && $idSitio!=''){                 $SIS_data  = "'".$idSitio."'";             }else{$SIS_data  = "''";}
-				if(isset($idEstado) && $idEstado!=''){              $SIS_data .= ",'".$idEstado."'";           }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";           }else{$SIS_data .= ",''";}
 				if(isset($idPosicion) && $idPosicion!=''){           $SIS_data .= ",'".$idPosicion."'";         }else{$SIS_data .= ",''";}
 				if(isset($Imagen) && $Imagen!=''){                   $SIS_data .= ",'".$Imagen."'";             }else{$SIS_data .= ",''";}
 				if(isset($Titulo) && $Titulo!=''){                   $SIS_data .= ",'".$Titulo."'";             }else{$SIS_data .= ",''";}
@@ -156,18 +156,18 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idCarousel='".$idCarousel."'";
-				if(isset($idSitio) && $idSitio!=''){                  $SIS_data .= ",idSitio='".$idSitio."'";}
-				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",idEstado='".$idEstado."'";}
-				if(isset($idPosicion) && $idPosicion!=''){            $SIS_data .= ",idPosicion='".$idPosicion."'";}
-				if(isset($Imagen) && $Imagen!=''){                    $SIS_data .= ",Imagen='".$Imagen."'";}
+				if(isset($idSitio) && $idSitio!=''){                    $SIS_data .= ",idSitio='".$idSitio."'";}
+				if(isset($idEstado) && $idEstado!=''){                  $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idPosicion) && $idPosicion!=''){              $SIS_data .= ",idPosicion='".$idPosicion."'";}
+				if(isset($Imagen) && $Imagen!=''){                      $SIS_data .= ",Imagen='".$Imagen."'";}
 				if(isset($Titulo)){                                     $SIS_data .= ",Titulo='".$Titulo."'";}
 				if(isset($TituloStyle)){                                $SIS_data .= ",TituloStyle='".$TituloStyle."'";}
 				if(isset($Subtitulo)){                                  $SIS_data .= ",Subtitulo='".$Subtitulo."'";}
 				if(isset($SubtituloStyle)){                             $SIS_data .= ",SubtituloStyle='".$SubtituloStyle."'";}
 				if(isset($Texto)){                                      $SIS_data .= ",Texto='".$Texto."'";}
 				if(isset($TextoStyle)){                                 $SIS_data .= ",TextoStyle='".$TextoStyle."'";}
-				if(isset($PosicionBloque) && $PosicionBloque!=''){    $SIS_data .= ",PosicionBloque='".$PosicionBloque."'";}
-					
+				if(isset($PosicionBloque) && $PosicionBloque!=''){      $SIS_data .= ",PosicionBloque='".$PosicionBloque."'";}
+
 				/*******************************************************/
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'sitios_listado_carousel', 'idCarousel = "'.$idCarousel.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -227,11 +227,9 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
 
-		
 /*******************************************************************************************************************/
 	}
 

@@ -127,19 +127,18 @@ require_once '0_validate_user_1.php';
 			foreach ($arrClientes as $cli) {
 
 				//variables
-				$SIS_data  = "'".$idTransporte."'";  
+				$SIS_data  = "'".$idTransporte."'";
 				$SIS_data .= ",'".$cli['idCliente']."'";
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idTransporte, idCliente';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'transportes_listado_clientes', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
 
 			}
 
 			//redirijo
 			header( 'Location: '.$location );
-			die;  
+			die;
 
 		break;
 /*******************************************************************************************************************/

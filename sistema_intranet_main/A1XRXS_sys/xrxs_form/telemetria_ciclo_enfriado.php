@@ -88,7 +88,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idProducto) && $idProducto!=''){          $SIS_data .= ",'".$idProducto."'";       }else{$SIS_data .= ",''";}
 				if(isset($CantidadPallet) && $CantidadPallet!=''){  $SIS_data .= ",'".$CantidadPallet."'";   }else{$SIS_data .= ",''";}
 				if(isset($f_ingreso) && $f_ingreso!=''){            $SIS_data .= ",'".$f_ingreso."'";        }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
 				if(isset($Duracion) && $Duracion!=''){              $SIS_data .= ",'".$Duracion."'";         }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
@@ -132,7 +132,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idProducto) && $idProducto!=''){          $SIS_data .= ",idProducto='".$idProducto."'";}
 				if(isset($CantidadPallet) && $CantidadPallet!=''){  $SIS_data .= ",CantidadPallet='".$CantidadPallet."'";}
 				if(isset($f_ingreso) && $f_ingreso!=''){            $SIS_data .= ",f_ingreso='".$f_ingreso."'";}
-				if(isset($idUsuario) && $idUsuario!=''){           $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idUsuario) && $idUsuario!=''){            $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($Duracion) && $Duracion!=''){              $SIS_data .= ",Duracion='".$Duracion."'";}
 
 				/*******************************************************/

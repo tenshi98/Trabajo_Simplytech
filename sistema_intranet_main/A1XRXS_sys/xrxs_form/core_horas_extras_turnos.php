@@ -71,7 +71,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($Nombre) && $Nombre!=''){ $SIS_data  = "'".$Nombre."'";  }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){  $SIS_data  = "'".$Nombre."'";  }else{$SIS_data  = "''";}
 				if(isset($Valor) && $Valor!=''){    $SIS_data .= ",'".$Valor."'";  }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
@@ -110,7 +110,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idTurnos='".$idTurnos."'";
-				if(isset($Nombre) && $Nombre!=''){ $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){  $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Valor) && $Valor!=''){    $SIS_data .= ",Valor='".$Valor."'";}
 
 				/*******************************************************/

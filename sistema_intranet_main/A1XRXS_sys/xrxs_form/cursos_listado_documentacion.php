@@ -71,41 +71,41 @@ require_once '0_validate_user_1.php';
 										"image/gif",
 										"image/jpeg",
 										"image/bmp",
-						
+
 										"application/msword",
 										"application/vnd.ms-word",
 										"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-									
+
 										"application/msexcel",
 										"application/vnd.ms-excel",
 										"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-											
+
 										"application/mspowerpoint",
 										"application/vnd.ms-powerpoint",
 										"application/vnd.openxmlformats-officedocument.presentationml.presentation",
-											
+
 										"audio/basic",
 										"audio/mid",
 										"audio/mpeg",
 										"audio/x-wav",
-											
+
 										"application/pdf",
 										"application/octet-stream",
 										"application/x-real",
 										"application/vnd.adobe.xfdf",
 										"application/vnd.fdf",
 										"binary/octet-stream",
-											
+
 										"text/plain",
 										"text/richtext",
 										"application/rtf",
-											
+
 										"video/mpeg",
 										"video/quicktime",
 										"video/x-ms-asf",
 										"video/x-msvideo",
 										"video/quicktime",
-											
+
 										"application/x-zip-compressed",
 										"application/zip",
 										"multipart/x-zip",
@@ -117,12 +117,12 @@ require_once '0_validate_user_1.php';
 										"application/x-tgz",
 										"application/octet-stream"
 									);
-												
+
 					//Se verifica que el archivo subido no exceda los 100 kb
 					$limite_kb = 10000;
 					//Sufijo
 					$sufijo = 'curso_'.$idCurso.'_';
-								  
+
 					if (in_array($_FILES['File_Curso']['type'], $permitidos) && $_FILES['File_Curso']['size'] <= $limite_kb * 1024){
 						//Se especifica carpeta de destino
 						$ruta = "upload/".$sufijo.$_FILES['File_Curso']['name'];
@@ -131,7 +131,7 @@ require_once '0_validate_user_1.php';
 							//Se mueve el archivo a la carpeta previamente configurada
 							$move_result = @move_uploaded_file($_FILES["File_Curso"]["tmp_name"], $ruta);
 							if ($move_result){
-												
+
 								//Filtro para idSistema
 								$File = $sufijo.$_FILES['File_Curso']['name'];
 

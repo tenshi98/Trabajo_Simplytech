@@ -205,7 +205,7 @@
 						if($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleTotalVenta']>0){
 							echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleTotalVenta'], 0).'<br>';
 							echo Valores($Exento, 0).'<br>'; 
-							echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleTotalAPagar'], 0).'<br>'; 
+							echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleTotalAPagar'], 0).'<br>';
 						}else{
 							echo Valores(0, 0).'<br>';
 							echo Valores(0, 0).'<br>';

@@ -168,7 +168,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					document.getElementById('div_idEscala').style.display = 'none';
 					document.getElementById('div_Porcentaje_apro').style.display = 'none';
 					document.getElementById('div_Tiempo').style.display = 'none';
-					
+
 					/************************************************************/
 					//Tipo Evaluacion
 					let TipoEvaluacion= $("#idTipoEvaluacion").val();	
@@ -179,7 +179,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								
 						document.getElementById('idEscala').required = 'true';
 						document.getElementById('Porcentaje_apro').required = 'false';
-							
+
 					//Porcentaje
 					} else if(TipoEvaluacion == 2){ 
 						document.getElementById('div_idEscala').style.display = 'none';
@@ -187,7 +187,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								
 						document.getElementById('idEscala').required = 'false';
 						document.getElementById('Porcentaje_apro').required = 'true';
-								
+
 					} else {
 						document.getElementById('div_idEscala').style.display = 'none';
 						document.getElementById('div_Porcentaje_apro').style.display = 'none';
@@ -207,7 +207,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 						document.getElementById('Tiempo').required = 'false';
 					} else {
 						document.getElementById('div_Tiempo').style.display = 'none';
-						document.getElementById('Tiempo').required = 'false';	
+						document.getElementById('Tiempo').required = 'false';
 					}
 					/************************************************************/	
 					$(document).ready(function(){
@@ -230,13 +230,13 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								
 								document.getElementById('idEscala').required = 'false';
 								document.getElementById('Porcentaje_apro').required = 'true';
-								
+
 							} else {
 								document.getElementById('div_idEscala').style.display = 'none';
 								document.getElementById('div_Porcentaje_apro').style.display = 'none';
 								document.getElementById('idEscala').required = 'false';
 								document.getElementById('Porcentaje_apro').required = 'false';
-									
+
 							}
 						});
 
@@ -401,7 +401,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('div_Opcion_5').style.display = 'none';
 								document.getElementById('div_Opcion_6').style.display = 'none';
 								document.getElementById('div_OpcionCorrecta').style.display = 'none';
-								
+
 							}
 						
 						});
@@ -518,7 +518,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							document.getElementById('div_Opcion_5').style.display = '';
 							document.getElementById('div_Opcion_6').style.display = '';
 							document.getElementById('div_OpcionCorrecta').style.display = 'none';
-								
+
 						//Verdadero o Falso			
 						} else if(tipo_val == 3){
 							document.getElementById('div_Opcion_1').style.display = '';
@@ -628,7 +628,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								document.getElementById('div_Opcion_5').style.display = 'none';
 								document.getElementById('div_Opcion_6').style.display = 'none';
 								document.getElementById('div_OpcionCorrecta').style.display = 'none';
-								
+
 							}
 						
 						});
@@ -1000,13 +1000,13 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 								
 								document.getElementById('idEscala').required = 'false';
 								document.getElementById('Porcentaje_apro').required = 'true';
-								
+
 							} else {
 								document.getElementById('div_idEscala').style.display = 'none';
 								document.getElementById('div_Porcentaje_apro').style.display = 'none';
 								document.getElementById('idEscala').required = 'false';
 								document.getElementById('Porcentaje_apro').required = 'false';
-									
+
 							}
 						});
 

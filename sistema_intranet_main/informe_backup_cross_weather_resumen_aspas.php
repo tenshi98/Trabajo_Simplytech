@@ -252,7 +252,7 @@ foreach($arrConsulta as $temp) {
 			}
 			$arrData[1]['Name'] = "'Temperatura (Celsius)'";
 			$arrData[2]['Name'] = "'Funcionamiento (On-Off)'";
-			
+
 			$gr_tittle = 'Informe Sensores';
 			echo GraphLinear_3('graphLinear_1', $gr_tittle, 'Fecha', 'Temperatura', 'Funcionamiento', $Temp_1, $arrData[1]['Value'], $arrData[1]['Name'], $Temp_1, $arrData[2]['Value'], $arrData[2]['Name'], 0);
 				

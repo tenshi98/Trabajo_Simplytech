@@ -71,7 +71,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($Nombre) && $Nombre!=''){      $SIS_data  = "'".$Nombre."'";     }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){       $SIS_data  = "'".$Nombre."'";     }else{$SIS_data  = "''";}
 				if(isset($nColumnas) && $nColumnas!=''){ $SIS_data .= ",'".$nColumnas."'"; }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
@@ -108,7 +108,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idGrupo='".$idGrupo."'";
-				if(isset($Nombre) && $Nombre!=''){       $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){        $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($nColumnas) && $nColumnas!=''){  $SIS_data .= ",nColumnas='".$nColumnas."'";}
 
 				/*******************************************************/
@@ -170,8 +170,7 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
 
 /*******************************************************************************************************************/

@@ -73,13 +73,13 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idSistema) && $idSistema!=''){        $SIS_data  = "'".$idSistema."'";       }else{$SIS_data  = "''";}
-				if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",'".$idUsuario."'";      }else{$SIS_data .= ",''";}
-				if(isset($Fecha) && $Fecha!=''){ $SIS_data .= ",'".$Fecha."'";         }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){        $SIS_data .= ",'".$idUsuario."'";      }else{$SIS_data .= ",''";}
+				if(isset($Fecha) && $Fecha!=''){                $SIS_data .= ",'".$Fecha."'";          }else{$SIS_data .= ",''";}
 				if(isset($Hora) && $Hora!=''){                  $SIS_data .= ",'".$Hora."'";           }else{$SIS_data .= ",''";}
 				if(isset($Observacion) && $Observacion!=''){    $SIS_data .= ",'".$Observacion."'";    }else{$SIS_data .= ",''";}
 				if(isset($idCliente) && $idCliente!=''){        $SIS_data .= ",'".$idCliente."'";      }else{$SIS_data .= ",''";}
 				if(isset($idMaquina) && $idMaquina!=''){        $SIS_data .= ",'".$idMaquina."'";      }else{$SIS_data .= ",''";}
-				if(isset($idTrabajador) && $idTrabajador!=''){ $SIS_data .= ",'".$idTrabajador."'";   }else{$SIS_data .= ",''";}
+				if(isset($idTrabajador) && $idTrabajador!=''){  $SIS_data .= ",'".$idTrabajador."'";   }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema, idUsuario, Fecha, Hora, Observacion, idCliente, idMaquina, idTrabajador';
@@ -105,13 +105,13 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idEvento='".$idEvento."'";
 				if(isset($idSistema) && $idSistema!=''){         $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idUsuario) && $idUsuario!=''){        $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($Fecha) && $Fecha!=''){  $SIS_data .= ",Fecha='".$Fecha."'";}
+				if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($Fecha) && $Fecha!=''){                 $SIS_data .= ",Fecha='".$Fecha."'";}
 				if(isset($Hora) && $Hora!=''){                   $SIS_data .= ",Hora='".$Hora."'";}
 				if(isset($Observacion) && $Observacion!=''){     $SIS_data .= ",Observacion='".$Observacion."'";}
 				if(isset($idCliente) && $idCliente!=''){         $SIS_data .= ",idCliente='".$idCliente."'";}
 				if(isset($idMaquina) && $idMaquina!=''){         $SIS_data .= ",idMaquina='".$idMaquina."'";}
-				if(isset($idTrabajador) && $idTrabajador!=''){  $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
+				if(isset($idTrabajador) && $idTrabajador!=''){   $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
 
 				/*******************************************************/
 				//se actualizan los datos
@@ -257,7 +257,6 @@ require_once '0_validate_user_1.php';
 								header( 'Location: '.$location.'&created=true' );
 								die;
 							}
-					
 						} else {
 							$error['event_file']     = 'error/Ocurrio un error al mover el archivo';
 						}

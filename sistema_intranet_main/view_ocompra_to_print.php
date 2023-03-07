@@ -363,7 +363,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							<tr>
 								<td colspan="5" align="right"><strong>IVA 19%  </strong></td>
 								<td align="right">'.Valores(($total*19)/100, 0).'</td>
-							</tr>';	
+							</tr>';
 						$html .= '
 							<tr>
 								<td colspan="5" align="right"><strong>Total  </strong></td>
@@ -379,7 +379,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 							<tr>
 								<td colspan="5" align="right"><strong>Total  </strong></td>
 								<td align="right">'.Valores($total-(($total*10)/100), 0).'</td>
-							</tr>';	
+							</tr>';
 					}
 					
 						

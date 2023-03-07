@@ -122,7 +122,7 @@ $rowdatax = mysqli_fetch_assoc ($resultado);
 				if(isset($idEstudio)){        $x5  = $idEstudio;         }else{$x5  = $rowdatax['idEstudio'];}
 				if(isset($Nombre)){           $x6  = $Nombre;            }else{$x6  = $rowdatax['Nombre'];}
 				if(isset($Descripcion)){      $x7  = $Descripcion;       }else{$x7  = $rowdatax['Descripcion'];}
-						
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('Año Inicio','AnoInicio', $x1, 2, 1970, ano_actual());
@@ -170,7 +170,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				if(isset($idEstudio)){        $x5  = $idEstudio;         }else{$x5  = '';}
 				if(isset($Nombre)){           $x6  = $Nombre;            }else{$x6  = '';}
 				if(isset($Descripcion)){      $x7  = $Descripcion;       }else{$x7  = '';}
-						
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_n_auto('AnoInicio','AnoInicio', $x1, 2, 1970, ano_actual());

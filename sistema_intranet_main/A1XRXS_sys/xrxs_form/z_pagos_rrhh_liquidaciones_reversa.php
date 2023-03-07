@@ -118,7 +118,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($indice2) OR $indice2==''){
 					$error['idDocPago'] = 'error/No ha seleccionado un numero de documento';
 				}
-					
+
 				/*******************************************************************/
 				//Si no hay errores ejecuto el codigo
 				if(empty($error)){
@@ -154,46 +154,42 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",F_Pago_mes=''";
 								$SIS_data .= ",F_Pago_ano=''";
 								$SIS_data .= ",MontoPagado=''";
-								$SIS_data .= ",idEstado='1'" ;//abierto
-								
+								$SIS_data .= ",idEstado='1'";//abierto
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'rrhh_sueldos_facturacion_trabajadores', 'idFactTrab = "'.$tipo['idFactTrab'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
-								
+
 							//si ya tiene un saldo anterior
 							}else{
 								//se actualizala liquidacion
 								$SIS_data = "idFactTrab='".$tipo['idFactTrab']."'";
 								$SIS_data .= ",MontoPagado='".$nuevoMonto."'";
-								$SIS_data .= ",idEstado='1'" ;//abierto
-								
+								$SIS_data .= ",idEstado='1'";//abierto
+
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'rrhh_sueldos_facturacion_trabajadores', 'idFactTrab = "'.$tipo['idFactTrab'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 							}
 
 							//elimino el registro del pago en los trabajadores
 							$resultado = db_delete_data (false, 'pagos_rrhh_liquidaciones', 'idPago = "'.$tipo['idPago'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-									
+
 						}
 					}
-					
-					
-					
-					
+
 				}
 
 				//inserto la reversa
 				$SIS_data  = "'".$_SESSION['usuario']['basic_data']['idUsuario']."'";  //idUsuario
-				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idSistema']."'";  //idSistema
-				$SIS_data .= ",'".fecha_actual()."'";                                //Fecha        
-				$SIS_data .= ",'".hora_actual()."'";                                   //Hora       
+				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idSistema']."'"; //idSistema
+				$SIS_data .= ",'".fecha_actual()."'";                                  //Fecha
+				$SIS_data .= ",'".hora_actual()."'";                                   //Hora
 				$SIS_data .= ",'".$indice1."'";                                        //idDocPago
 				$SIS_data .= ",'".$indice2."'";                                        //N_DocPago
 				$SIS_data .= ",'".$Valor_Doc."'";                                      //Monto
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idUsuario, idSistema, Fecha, Hora, idDocPago, N_DocPago, Monto';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'pagos_rrhh_liquidaciones_reversa', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -208,12 +204,9 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
-		
+
 		break;
 
-	
 	}
 
 ?>

@@ -47,7 +47,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($Comentario)&&contar_palabras_censuradas($Comentario)!=0){  $error['Comentario']   = 'error/Edita Comentario, contiene palabras no permitidas';}
-	if(isset($Fono)&&!validarNumero($Fono)){                            $error['Fono']         = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Fono)&&!validarNumero($Fono)){                             $error['Fono']         = 'error/Ingrese un numero telefonico valido';}
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */

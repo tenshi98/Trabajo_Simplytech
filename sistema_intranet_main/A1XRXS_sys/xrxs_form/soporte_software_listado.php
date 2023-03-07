@@ -50,7 +50,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){              $Nombre        = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){               $Nombre        = EstandarizarInput($Nombre);}
 	if(isset($Descripcion) && $Descripcion!=''){     $Descripcion   = EstandarizarInput($Descripcion);}
 	if(isset($SitioWeb) && $SitioWeb!=''){           $SitioWeb      = EstandarizarInput($SitioWeb);}
 	if(isset($SitioDescarga) && $SitioDescarga!=''){ $SitioDescarga = EstandarizarInput($SitioDescarga);}
@@ -89,7 +89,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($Nombre) && $Nombre!=''){               $SIS_data  = "'".$Nombre."'";          }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){                $SIS_data  = "'".$Nombre."'";          }else{$SIS_data  = "''";}
 				if(isset($Descripcion) && $Descripcion!=''){      $SIS_data .= ",'".$Descripcion."'";  }else{$SIS_data .= ",''";}
 				if(isset($idLicencia) && $idLicencia!=''){        $SIS_data .= ",'".$idLicencia."'";     }else{$SIS_data .= ",''";}
 				if(isset($Peso) && $Peso!=''){                    $SIS_data .= ",'".$Peso."'";           }else{$SIS_data .= ",''";}
@@ -132,7 +132,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idSoftware='".$idSoftware."'";
-				if(isset($Nombre) && $Nombre!=''){                  $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Descripcion) && $Descripcion!=''){         $SIS_data .= ",Descripcion='".$Descripcion."'";}
 				if(isset($idLicencia) && $idLicencia!=''){           $SIS_data .= ",idLicencia='".$idLicencia."'";}
 				if(isset($Peso) && $Peso!=''){                       $SIS_data .= ",Peso='".$Peso."'";}
@@ -200,9 +200,6 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-				
-			
 
 		break;
 

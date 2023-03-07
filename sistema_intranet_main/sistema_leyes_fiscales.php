@@ -150,9 +150,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 							             'Nivel 4', 'IMPRENT_idLevel_4',  $x24,  1,  'idLevel_4',  'Nombre',  'centrocosto_listado_level_4',  0,   0,
 							             'Nivel 5', 'IMPRENT_idLevel_5',  $x25,  1,  'idLevel_5',  'Nombre',  'centrocosto_listado_level_5',  0,   0,
 							             $dbConn, 'form1');
-				
-				
-				
+
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idMantenedor', $_GET['id'], 2);	
 				?>

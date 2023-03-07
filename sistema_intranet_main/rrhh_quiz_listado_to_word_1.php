@@ -88,7 +88,7 @@ if(!$resultado){
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPreguntas,$row );
-}	
+}
 
 /**********************************************************/
 //Tipo Puntuacion

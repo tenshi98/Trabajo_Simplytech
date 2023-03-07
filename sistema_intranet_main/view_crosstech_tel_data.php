@@ -89,7 +89,7 @@ foreach ($arrUnimed as $data) {
 /**********************************************/
 //Se resetean
 $in_eq_fueralinea  = 0;
-									
+
 /**********************************************/
 //Fuera de linea
 $diaInicio   = $rowTel['LastUpdateFecha'];
@@ -162,7 +162,7 @@ if($in_eq_fueralinea!=0){
 			$Dias_anterior                = 0;
 			$CrossTech_DiasTempMin        = 0;
 			$CrossTech_FechaDiasTempMin   = 0;
-					
+
 			//declaracion
 			if(isset($rowAux['Helada'])&&$rowAux['Helada']!=''){                                  $Helada                       = $rowAux['Helada'];}
 			if(isset($rowAux['UnidadesFrio'])&&$rowAux['UnidadesFrio']!=''){                      $UnidadFrio                   = $rowAux['UnidadesFrio'];}
@@ -463,8 +463,7 @@ if($in_eq_fueralinea!=0){
 					formatPresion.format(data_gauge_4, 1);
 					chart_gauge_4.draw(data_gauge_4, options_gauge_4);
 				}
-				
-				
+
 				/* ************************************************************************** */
 				/* ************************************************************************** */
 				/* ************************************************************************** */

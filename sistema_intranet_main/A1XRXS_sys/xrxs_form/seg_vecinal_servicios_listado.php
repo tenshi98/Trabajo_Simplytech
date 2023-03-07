@@ -16,12 +16,12 @@ require_once '0_validate_user_1.php';
 	//Traspaso de valores input a variables
 	if (!empty($_POST['idServicio']))            $idServicio              = $_POST['idServicio'];
 	if (!empty($_POST['idTipo']))                $idTipo                  = $_POST['idTipo'];
-	if (!empty($_POST['Nombre']))                $Nombre 	                = $_POST['Nombre'];
-	if (!empty($_POST['Fono1']))                 $Fono1 	                = $_POST['Fono1'];
-	if (!empty($_POST['Fono2']))                 $Fono2 	                = $_POST['Fono2'];
+	if (!empty($_POST['Nombre']))                $Nombre 	              = $_POST['Nombre'];
+	if (!empty($_POST['Fono1']))                 $Fono1 	              = $_POST['Fono1'];
+	if (!empty($_POST['Fono2']))                 $Fono2 	              = $_POST['Fono2'];
 	if (!empty($_POST['idCiudad']))              $idCiudad                = $_POST['idCiudad'];
 	if (!empty($_POST['idComuna']))              $idComuna                = $_POST['idComuna'];
-	if (!empty($_POST['Direccion']))             $Direccion 	            = $_POST['Direccion'];
+	if (!empty($_POST['Direccion']))             $Direccion 	          = $_POST['Direccion'];
 	if (!empty($_POST['email']))                 $email                   = $_POST['email'];
 	if (!empty($_POST['Fax']))                   $Fax                     = $_POST['Fax'];
 	if (!empty($_POST['Web']))                   $Web                     = $_POST['Web'];
@@ -62,7 +62,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){      $Nombre    = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){       $Nombre    = EstandarizarInput($Nombre);}
 	if(isset($Direccion) && $Direccion!=''){ $Direccion = EstandarizarInput($Direccion);}
 	if(isset($email) && $email!=''){         $email     = EstandarizarInput($email);}
 	if(isset($Web) && $Web!=''){             $Web       = EstandarizarInput($Web);}
@@ -71,7 +71,7 @@ require_once '0_validate_user_1.php';
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
-	if(isset($email)&&!validarEmail($email)){       $error['email']   = 'error/El Email ingresado no es valido';}
+	if(isset($email)&&!validarEmail($email)){      $error['email']   = 'error/El Email ingresado no es valido';}
 	if(isset($Fono1)&&!validarNumero($Fono1)){     $error['Fono1']   = 'error/Ingrese un numero telefonico valido';}
 	if(isset($Fono2)&&!validarNumero($Fono2)){     $error['Fono2']   = 'error/Ingrese un numero telefonico valido';}
 
@@ -140,8 +140,8 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($idTipo) && $idTipo!=''){             $SIS_data  = "'".$idTipo."'";             }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre!=''){             $SIS_data .= ",'".$Nombre."'";            }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){              $SIS_data  = "'".$idTipo."'";             }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){              $SIS_data .= ",'".$Nombre."'";            }else{$SIS_data .= ",''";}
 				if(isset($Fono1) && $Fono1!=''){                $SIS_data .= ",'".$Fono1."'";             }else{$SIS_data .= ",''";}
 				if(isset($Fono2) && $Fono2!=''){                $SIS_data .= ",'".$Fono2."'";             }else{$SIS_data .= ",''";}
 				if(isset($idCiudad) && $idCiudad!=''){          $SIS_data .= ",'".$idCiudad."'";          }else{$SIS_data .= ",''";}
@@ -219,20 +219,19 @@ require_once '0_validate_user_1.php';
 			}else{
 				//$error['ndata_4'] = 'error/Sin direccion ingresada';
 			}
-			
-			
+
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idServicio='".$idServicio."'";
-				if(isset($idTipo) && $idTipo!=''){            $SIS_data .= ",idTipo='".$idTipo."'";}
-				if(isset($Nombre) && $Nombre!=''){            $SIS_data .= ",Nombre='".$Nombre."'";}
-				if(isset($Fono1) && $Fono1!=''){               $SIS_data .= ",Fono1='".$Fono1."'";}
-				if(isset($Fono2) && $Fono2!=''){               $SIS_data .= ",Fono2='".$Fono2."'";}
+				if(isset($idTipo) && $idTipo!=''){               $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($Nombre) && $Nombre!=''){               $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Fono1) && $Fono1!=''){                 $SIS_data .= ",Fono1='".$Fono1."'";}
+				if(isset($Fono2) && $Fono2!=''){                 $SIS_data .= ",Fono2='".$Fono2."'";}
 				if(isset($idCiudad) && $idCiudad!= ''){          $SIS_data .= ",idCiudad='".$idCiudad."'";}
 				if(isset($idComuna) && $idComuna!= ''){          $SIS_data .= ",idComuna='".$idComuna."'";}
-				if(isset($Direccion) && $Direccion!=''){       $SIS_data .= ",Direccion='".$Direccion."'";}
-				if(isset($email) && $email!=''){               $SIS_data .= ",email='".$email."'";}
+				if(isset($Direccion) && $Direccion!=''){         $SIS_data .= ",Direccion='".$Direccion."'";}
+				if(isset($email) && $email!=''){                 $SIS_data .= ",email='".$email."'";}
 				if(isset($Fax) && $Fax!= ''){                    $SIS_data .= ",Fax='".$Fax."'";}
 				if(isset($Web) && $Web!= ''){                    $SIS_data .= ",Web='".$Web."'";}
 				if(isset($GeoLatitud) && $GeoLatitud!= ''){      $SIS_data .= ",GeoLatitud='".$GeoLatitud."'";}

@@ -122,7 +122,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 								document.getElementById("idComuna").disabled = false;
 							}
 						});
-						
+
 						$("#idPais").on("change", function(){
 							
 							let idPais_sel = $("#idPais").val();

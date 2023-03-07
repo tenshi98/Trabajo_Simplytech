@@ -1055,7 +1055,7 @@ require_once '0_validate_user_1.php';
 				//Se guardan los datos basicos
 				if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema']!=''){      $SIS_data  = "'".$_SESSION['ocompra_basicos']['idSistema']."'";     }else{$SIS_data  = "''";}
 				if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
@@ -1085,7 +1085,7 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                    $SIS_data  = "'".$ultimo_id."'";                                    }else{$SIS_data  = "''";}
 							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
@@ -1097,9 +1097,9 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($producto['idProducto']) && $producto['idProducto']!=''){   $SIS_data .= ",'".$producto['idProducto']."'";   }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){$SIS_data .= ",'".$producto['Cantidad']."'";     }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){       $SIS_data .= ",'".$producto['Cantidad']."'";     }else{$SIS_data .= ",''";}
 							if(isset($producto['vUnitario']) && $producto['vUnitario']!=''){     $SIS_data .= ",'".$producto['vUnitario']."'";    }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal']!=''){    $SIS_data .= ",'".$producto['vTotal']."'";       }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){           $SIS_data .= ",'".$producto['vTotal']."'";       }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
@@ -1117,7 +1117,7 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                    $SIS_data  = "'".$ultimo_id."'";                                    }else{$SIS_data  = "''";}
 							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
@@ -1129,9 +1129,9 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($producto['idProducto']) && $producto['idProducto']!=''){   $SIS_data .= ",'".$producto['idProducto']."'";   }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){$SIS_data .= ",'".$producto['Cantidad']."'";     }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){       $SIS_data .= ",'".$producto['Cantidad']."'";     }else{$SIS_data .= ",''";}
 							if(isset($producto['vUnitario']) && $producto['vUnitario']!=''){     $SIS_data .= ",'".$producto['vUnitario']."'";    }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal']!=''){    $SIS_data .= ",'".$producto['vTotal']."'";       }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){           $SIS_data .= ",'".$producto['vTotal']."'";       }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
@@ -1149,7 +1149,7 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                    $SIS_data  = "'".$ultimo_id."'";                                    }else{$SIS_data  = "''";}
 							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
@@ -1160,11 +1160,11 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['idEquipo']) && $producto['idEquipo']!=''){    $SIS_data .= ",'".$producto['idEquipo']."'";      }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){    $SIS_data .= ",'".$producto['Cantidad']."'";      }else{$SIS_data .= ",''";}
+							if(isset($producto['idEquipo']) && $producto['idEquipo']!=''){           $SIS_data .= ",'".$producto['idEquipo']."'";      }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){           $SIS_data .= ",'".$producto['Cantidad']."'";      }else{$SIS_data .= ",''";}
 							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia']!=''){   $SIS_data .= ",'".$producto['idFrecuencia']."'";  }else{$SIS_data .= ",''";}
-							if(isset($producto['vUnitario']) && $producto['vUnitario']!=''){  $SIS_data .= ",'".$producto['vUnitario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal']!=''){        $SIS_data .= ",'".$producto['vTotal']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['vUnitario']) && $producto['vUnitario']!=''){         $SIS_data .= ",'".$producto['vUnitario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){               $SIS_data .= ",'".$producto['vTotal']."'";        }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
@@ -1182,7 +1182,7 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                    $SIS_data  = "'".$ultimo_id."'";                                    }else{$SIS_data  = "''";}
 							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
@@ -1193,11 +1193,11 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['idServicio']) && $producto['idServicio']!=''){$SIS_data .= ",'".$producto['idServicio']."'";    }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){    $SIS_data .= ",'".$producto['Cantidad']."'";      }else{$SIS_data .= ",''";}
+							if(isset($producto['idServicio']) && $producto['idServicio']!=''){       $SIS_data .= ",'".$producto['idServicio']."'";    }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){           $SIS_data .= ",'".$producto['Cantidad']."'";      }else{$SIS_data .= ",''";}
 							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia']!=''){   $SIS_data .= ",'".$producto['idFrecuencia']."'";  }else{$SIS_data .= ",''";}
-							if(isset($producto['vUnitario']) && $producto['vUnitario']!=''){  $SIS_data .= ",'".$producto['vUnitario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal']!=''){        $SIS_data .= ",'".$producto['vTotal']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['vUnitario']) && $producto['vUnitario']!=''){         $SIS_data .= ",'".$producto['vUnitario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){               $SIS_data .= ",'".$producto['vTotal']."'";        }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
@@ -1215,7 +1215,7 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                    $SIS_data  = "'".$ultimo_id."'";                                    }else{$SIS_data  = "''";}
 							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
@@ -1226,15 +1226,15 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre']!=''){        $SIS_data .= ",'".$producto['Nombre']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){    $SIS_data .= ",'".$producto['Cantidad']."'";      }else{$SIS_data .= ",''";}
+							if(isset($producto['Nombre']) && $producto['Nombre']!=''){               $SIS_data .= ",'".$producto['Nombre']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad']) && $producto['Cantidad']!=''){           $SIS_data .= ",'".$producto['Cantidad']."'";      }else{$SIS_data .= ",''";}
 							if(isset($producto['idFrecuencia']) && $producto['idFrecuencia']!=''){   $SIS_data .= ",'".$producto['idFrecuencia']."'";  }else{$SIS_data .= ",''";}
-							if(isset($producto['vUnitario']) && $producto['vUnitario']!=''){  $SIS_data .= ",'".$producto['vUnitario']."'";     }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal']!=''){        $SIS_data .= ",'".$producto['vTotal']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['vUnitario']) && $producto['vUnitario']!=''){         $SIS_data .= ",'".$producto['vUnitario']."'";     }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){               $SIS_data .= ",'".$producto['vTotal']."'";        }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, 
-							Creacion_fecha, Creacion_mes, Creacion_ano, Nombre,Cantidad, idFrecuencia, 
+							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor,
+							Creacion_fecha, Creacion_mes, Creacion_ano, Nombre,Cantidad, idFrecuencia,
 							vUnitario, vTotal';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_otros', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -1259,10 +1259,10 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($producto['idTrabajador']) && $producto['idTrabajador']!=''){  $SIS_data .= ",'".$producto['idTrabajador']."'";   }else{$SIS_data .= ",''";}
-							if(isset($producto['N_Doc']) && $producto['N_Doc']!=''){         $SIS_data .= ",'".$producto['N_Doc']."'";          }else{$SIS_data .= ",''";}
+							if(isset($producto['N_Doc']) && $producto['N_Doc']!=''){                $SIS_data .= ",'".$producto['N_Doc']."'";          }else{$SIS_data .= ",''";}
 							if(isset($producto['Descripcion']) && $producto['Descripcion']!=''){    $SIS_data .= ",'".$producto['Descripcion']."'";    }else{$SIS_data .= ",''";}
-							if(isset($producto['Valor']) && $producto['Valor']!=''){         $SIS_data .= ",'".$producto['Valor']."'";          }else{$SIS_data .= ",''";}
-							$SIS_data .= ",'1'" ; //no utilizado
+							if(isset($producto['Valor']) && $producto['Valor']!=''){                $SIS_data .= ",'".$producto['Valor']."'";          }else{$SIS_data .= ",''";}
+							$SIS_data .= ",'1'"; //no utilizado
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idOcompra, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idTrabajador, N_Doc, Descripcion, Valor, idUso';
@@ -1289,7 +1289,7 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($producto['Descripcion']) && $producto['Descripcion']!=''){    $SIS_data .= ",'".$producto['Descripcion']."'";    }else{$SIS_data .= ",''";}
-							if(isset($producto['Valor']) && $producto['Valor']!=''){         $SIS_data .= ",'".$producto['Valor']."'";          }else{$SIS_data .= ",''";}
+							if(isset($producto['Valor']) && $producto['Valor']!=''){                $SIS_data .= ",'".$producto['Valor']."'";          }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idOcompra, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, Descripcion, Valor';
@@ -1306,7 +1306,7 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                    $SIS_data  = "'".$ultimo_id."'";                                    }else{$SIS_data  = "''";}
 							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
@@ -1321,8 +1321,8 @@ require_once '0_validate_user_1.php';
 							}
 							if(isset($producto['idDocPago']) && $producto['idDocPago']!=''){    $SIS_data .= ",'".$producto['idDocPago']."'";     }else{$SIS_data .= ",''";}
 							if(isset($producto['NDocPago']) && $producto['NDocPago']!=''){      $SIS_data .= ",'".$producto['NDocPago']."'";      }else{$SIS_data .= ",''";}
-							if(isset($producto['Fpago']) && $producto['Fpago']!=''){     $SIS_data .= ",'".$producto['Fpago']."'";         }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal']!=''){   $SIS_data .= ",'".$producto['vTotal']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['Fpago']) && $producto['Fpago']!=''){            $SIS_data .= ",'".$producto['Fpago']."'";         }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){          $SIS_data .= ",'".$producto['vTotal']."'";        }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor,Creacion_fecha,
@@ -1340,7 +1340,7 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                    $SIS_data  = "'".$ultimo_id."'";                                    }else{$SIS_data  = "''";}
 							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
@@ -1370,7 +1370,7 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                    $SIS_data  = "'".$ultimo_id."'";                                    }else{$SIS_data  = "''";}
 							if(isset($_SESSION['ocompra_basicos']['idSistema']) && $_SESSION['ocompra_basicos']['idSistema']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idSistema']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idUsuario']) && $_SESSION['ocompra_basicos']['idUsuario']!=''){      $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idUsuario']."'";    }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){ $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['ocompra_basicos']['idEstado']) && $_SESSION['ocompra_basicos']['idEstado']!=''){        $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idEstado']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['idProveedor']) && $_SESSION['ocompra_basicos']['idProveedor']!=''){  $SIS_data .= ",'".$_SESSION['ocompra_basicos']['idProveedor']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
@@ -1381,11 +1381,11 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['Type']) && $producto['Type']!=''){           $SIS_data .= ",'".$producto['Type']."'";          }else{$SIS_data .= ",''";}
+							if(isset($producto['Type']) && $producto['Type']!=''){                  $SIS_data .= ",'".$producto['Type']."'";          }else{$SIS_data .= ",''";}
 							if(isset($producto['idExistencia']) && $producto['idExistencia']!=''){  $SIS_data .= ",'".$producto['idExistencia']."'";  }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, 
+							$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor,
 							Creacion_fecha, Creacion_mes, Creacion_ano, Type, idExistencia';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_sol_rel', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -1426,26 +1426,25 @@ require_once '0_validate_user_1.php';
 									$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_otros', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									break;
 							}
-							
-							
+
 						}
 					}
 					/*********************************************************************/
 					//Se guarda en historial la accion
 					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){  
-						$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";  
+					if(isset($_SESSION['ocompra_basicos']['Creacion_fecha']) && $_SESSION['ocompra_basicos']['Creacion_fecha']!=''){
+						$SIS_data .= ",'".$_SESSION['ocompra_basicos']['Creacion_fecha']."'";
 					}else{
 						$SIS_data .= ",''";
 					}
 					$SIS_data .= ",'1'";                                                                                            //Creacion Satisfactoria
 					$SIS_data .= ",'Creacion de la Orden de Compra N°".n_doc($ultimo_id, 5).", queda en espera de aprobacion'";     //Observacion
 					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";                                          //idUsuario
-					
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos
 					unset($_SESSION['ocompra_basicos']);
@@ -1459,8 +1458,7 @@ require_once '0_validate_user_1.php';
 					unset($_SESSION['ocompra_documentos']);
 					unset($_SESSION['ocompra_sol_rel']);
 					unset($_SESSION['ocompra_archivos']);
-					
-				
+
 					header( 'Location: '.$location.'&created=true' );
 					die;
 				}
@@ -1560,8 +1558,7 @@ require_once '0_validate_user_1.php';
 				die;
 
 			}
-		
-		
+
 		break;
 
 
@@ -1603,19 +1600,19 @@ require_once '0_validate_user_1.php';
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-				
+
 				//Filtros
 				$SIS_data = "idOcompra='".$idOcompra."'";
 				if(isset($idSistema) && $idSistema!=''){        $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($idEstado) && $idEstado!=''){         $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idUsuario) && $idUsuario!=''){        $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idEstado) && $idEstado!=''){          $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idProveedor) && $idProveedor!=''){    $SIS_data .= ",idProveedor='".$idProveedor."'";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
@@ -1660,8 +1657,8 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";     }else{$SIS_data  = "''";}
 				if(isset($idSistema) && $idSistema!=''){              $SIS_data .= ",'".$idSistema."'";    }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
 				if(isset($idProveedor) && $idProveedor!=''){          $SIS_data .= ",'".$idProveedor."'";  }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
@@ -1678,7 +1675,7 @@ require_once '0_validate_user_1.php';
 				if(isset($vTotal) && $vTotal!=''){                    $SIS_data .= ",'".$vTotal."'";      }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
+				$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano,
 				idProducto, Cantidad, vUnitario, vTotal';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_productos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -1690,7 +1687,7 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
-				if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){   
+				if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){
 					$cambios .= "Se agrega producto ".$rowdata['Nombre']." por una cantidad de ".$Cantidad." con valor total de ".Valores($vTotal, 0)."." ;
 				}
 
@@ -1698,19 +1695,18 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-				
-					
+
 				header( 'Location: '.$location.'&created=true' );
 				die;
 
@@ -1755,20 +1751,20 @@ require_once '0_validate_user_1.php';
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-				
+
 				//Filtros
 				$SIS_data = "idExistencia='".$idExistencia."'";
 				if(isset($idOcompra) && $idOcompra!=''){       $SIS_data .= ",idOcompra='".$idOcompra."'";}
 				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idEstado) && $idEstado!=''){         $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idProveedor) && $idProveedor!=''){   $SIS_data .= ",idProveedor='".$idProveedor."'";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
@@ -1827,21 +1823,21 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				//Se toman los datos
 				$rowdata_2 = db_select_data (false, 'ocompra_listado_existencias_productos.idOcompra, ocompra_listado_existencias_productos.Cantidad, ocompra_listado_existencias_productos.vTotal, productos_listado.Nombre AS Producto', 'ocompra_listado_existencias_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = ocompra_listado_existencias_productos.idProducto', 'ocompra_listado_existencias_productos.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = 'Se elimina '.$rowdata_2['Producto'].' por una cantidad de '.Cantidades_decimales_justos($rowdata_2['Cantidad']).' con un valor total de '.Valores($rowdata_2['vTotal'], 0).'';
-					
+
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
 				$idOcompra = $rowdata_2['idOcompra'];
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1888,8 +1884,8 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";     }else{$SIS_data  = "''";}
 				if(isset($idSistema) && $idSistema!=''){              $SIS_data .= ",'".$idSistema."'";    }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
 				if(isset($idProveedor) && $idProveedor!=''){          $SIS_data .= ",'".$idProveedor."'";  }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
@@ -1918,7 +1914,7 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
-				if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){   
+				if(isset($rowdata['Nombre'])&&$rowdata['Nombre']!=''){
 					$cambios .= "Se agrega insumo ".$rowdata['Nombre']." por una cantidad de ".$Cantidad." con valor total de ".Valores($vTotal, 0)."." ;
 				}
 
@@ -1930,14 +1926,14 @@ require_once '0_validate_user_1.php';
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-					
+
 				header( 'Location: '.$location.'&created=true' );
 				die;
 
@@ -1979,24 +1975,24 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-				
+
 				//Filtros
 				$SIS_data = "idExistencia='".$idExistencia."'";
 				if(isset($idOcompra) && $idOcompra!=''){       $SIS_data .= ",idOcompra='".$idOcompra."'";}
 				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idEstado) && $idEstado!=''){         $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idProveedor) && $idProveedor!=''){   $SIS_data .= ",idProveedor='".$idProveedor."'";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
@@ -2055,21 +2051,21 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				//Se toman los datos
 				$rowdata_2 = db_select_data (false, 'ocompra_listado_existencias_insumos.idOcompra, ocompra_listado_existencias_insumos.Cantidad, ocompra_listado_existencias_insumos.vTotal, insumos_listado.Nombre AS Producto', 'ocompra_listado_existencias_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = ocompra_listado_existencias_insumos.idProducto', 'ocompra_listado_existencias_insumos.idExistencia = '.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = 'Se elimina '.$rowdata_2['Producto'].' por una cantidad de '.Cantidades_decimales_justos($rowdata_2['Cantidad']).' con un valor total de '.Valores($rowdata_2['vTotal'], 0).'';
-					
+
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
 				$idOcompra = $rowdata_2['idOcompra'];
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -2116,8 +2112,8 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";     }else{$SIS_data  = "''";}
 				if(isset($idSistema) && $idSistema!=''){              $SIS_data .= ",'".$idSistema."'";    }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
 				if(isset($idProveedor) && $idProveedor!=''){          $SIS_data .= ",'".$idProveedor."'";  }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
@@ -2148,7 +2144,7 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
-				if(isset($rowdata_1['Nombre'])&&$rowdata_1['Nombre']!=''&&isset($rowdata_2['Nombre'])&&$rowdata_2['Nombre']!=''){   
+				if(isset($rowdata_1['Nombre'])&&$rowdata_1['Nombre']!=''&&isset($rowdata_2['Nombre'])&&$rowdata_2['Nombre']!=''){
 					$cambios .= "Se agrega arriendo ".$rowdata_1['Nombre']." por ".$Cantidad." ".$rowdata_2['Nombre']." con valor total de ".Valores($vTotal, 0)."." ;
 				}
 
@@ -2156,18 +2152,18 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-					
+
 				header( 'Location: '.$location.'&created=true' );
 				die;
 
@@ -2209,24 +2205,24 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-				
+
 				//Filtros
 				$SIS_data = "idExistencia='".$idExistencia."'";
 				if(isset($idOcompra) && $idOcompra!=''){       $SIS_data .= ",idOcompra='".$idOcompra."'";}
 				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idEstado) && $idEstado!=''){         $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idProveedor) && $idProveedor!=''){   $SIS_data .= ",idProveedor='".$idProveedor."'";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
@@ -2286,21 +2282,21 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				//Se toman los datos
 				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_arriendos.idOcompra, ocompra_listado_existencias_arriendos.Cantidad, ocompra_listado_existencias_arriendos.vTotal, equipos_arriendo_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_arriendos', 'LEFT JOIN `equipos_arriendo_listado` ON equipos_arriendo_listado.idEquipo = ocompra_listado_existencias_arriendos.idEquipo LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_arriendos.idFrecuencia', 'ocompra_listado_existencias_arriendos.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = 'Se elimina '.$rowdata_3['Producto'].' por '.Cantidades_decimales_justos($rowdata_3['Cantidad']).' '.$rowdata_3['Frecuencia'].' con un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
-					
+
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
 				$idOcompra = $rowdata_3['idOcompra'];
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -2347,8 +2343,8 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";     }else{$SIS_data  = "''";}
 				if(isset($idSistema) && $idSistema!=''){              $SIS_data .= ",'".$idSistema."'";    }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
 				if(isset($idProveedor) && $idProveedor!=''){          $SIS_data .= ",'".$idProveedor."'";  }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
@@ -2379,7 +2375,7 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
-				if(isset($rowdata_1['Nombre'])&&$rowdata_1['Nombre']!=''&&isset($rowdata_2['Nombre'])&&$rowdata_2['Nombre']!=''){   
+				if(isset($rowdata_1['Nombre'])&&$rowdata_1['Nombre']!=''&&isset($rowdata_2['Nombre'])&&$rowdata_2['Nombre']!=''){
 					$cambios .= "Se agrega servicio ".$rowdata_1['Nombre']." por ".$Cantidad." ".$rowdata_2['Nombre']." con valor total de ".Valores($vTotal, 0)."." ;
 				}
 
@@ -2387,18 +2383,18 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-					
+
 				header( 'Location: '.$location.'&created=true' );
 				die;
 
@@ -2441,24 +2437,24 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-				
+
 				//Filtros
 				$SIS_data = "idExistencia='".$idExistencia."'";
 				if(isset($idOcompra) && $idOcompra!=''){       $SIS_data .= ",idOcompra='".$idOcompra."'";}
 				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idEstado) && $idEstado!=''){         $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idProveedor) && $idProveedor!=''){   $SIS_data .= ",idProveedor='".$idProveedor."'";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
@@ -2518,21 +2514,21 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				//Se toman los datos
 				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_servicios.idOcompra, ocompra_listado_existencias_servicios.Cantidad, ocompra_listado_existencias_servicios.vTotal, servicios_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_servicios', 'LEFT JOIN `servicios_listado` ON servicios_listado.idServicio = ocompra_listado_existencias_servicios.idServicio LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_servicios.idFrecuencia', 'ocompra_listado_existencias_servicios.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = 'Se elimina '.$rowdata_3['Producto'].' por '.Cantidades_decimales_justos($rowdata_3['Cantidad']).' '.$rowdata_3['Frecuencia'].' con un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
-					
+
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha      = fecha_actual();
 				$idOcompra  = $rowdata_3['idOcompra'];
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -2568,8 +2564,8 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";     }else{$SIS_data  = "''";}
 				if(isset($idSistema) && $idSistema!=''){              $SIS_data .= ",'".$idSistema."'";    }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
 				if(isset($idProveedor) && $idProveedor!=''){          $SIS_data .= ",'".$idProveedor."'";  }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
@@ -2580,14 +2576,14 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                    $SIS_data .= ",'".$Nombre."'";        }else{$SIS_data .= ",''";}
 				if(isset($Cantidad) && $Cantidad!=''){                $SIS_data .= ",'".$Cantidad."'";      }else{$SIS_data .= ",''";}
 				if(isset($idFrecuencia) && $idFrecuencia!=''){        $SIS_data .= ",'".$idFrecuencia."'";  }else{$SIS_data .= ",''";}
 				if(isset($vUnitario) && $vUnitario!=''){              $SIS_data .= ",'".$vUnitario."'";     }else{$SIS_data .= ",''";}
 				if(isset($vTotal) && $vTotal!=''){                    $SIS_data .= ",'".$vTotal."'";        }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
+				$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano,
 				Nombre,Cantidad, idFrecuencia, vUnitario, vTotal';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_otros', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -2599,7 +2595,7 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
-				if(isset($rowdata_2['Nombre'])&&$rowdata_2['Nombre']!=''){   
+				if(isset($rowdata_2['Nombre'])&&$rowdata_2['Nombre']!=''){
 					$cambios .= "Se agrega otro ".$Nombre." por ".$Cantidad." ".$rowdata_2['Nombre']." con valor total de ".Valores($vTotal, 0)."." ;
 				}
 
@@ -2607,18 +2603,18 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-					
+
 				header( 'Location: '.$location.'&created=true' );
 				die;
 
@@ -2649,31 +2645,31 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-				
+
 				//Filtros
 				$SIS_data = "idExistencia='".$idExistencia."'";
 				if(isset($idOcompra) && $idOcompra!=''){       $SIS_data .= ",idOcompra='".$idOcompra."'";}
 				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idEstado) && $idEstado!=''){         $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idProveedor) && $idProveedor!=''){   $SIS_data .= ",idProveedor='".$idProveedor."'";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'";
 				}
-				if(isset($Nombre) && $Nombre!=''){                $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                 $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Cantidad) && $Cantidad!=''){             $SIS_data .= ",Cantidad='".$Cantidad."'";}
 				if(isset($idFrecuencia) && $idFrecuencia!=''){     $SIS_data .= ",idFrecuencia='".$idFrecuencia."'";}
 				if(isset($vUnitario) && $vUnitario!=''){           $SIS_data .= ",vUnitario='".$vUnitario."'";}
@@ -2727,21 +2723,21 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				//Se toman los datos
 				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_otros.idOcompra, ocompra_listado_existencias_otros.Cantidad, ocompra_listado_existencias_otros.vTotal, ocompra_listado_existencias_otros.Nombre,core_tiempo_frecuencia.Nombre AS Frecuencia', 'ocompra_listado_existencias_otros', 'LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia  = ocompra_listado_existencias_otros.idFrecuencia', 'ocompra_listado_existencias_otros.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = 'Se elimina '.$rowdata_3['Nombre'].' por '.Cantidades_decimales_justos($rowdata_3['Cantidad']).' '.$rowdata_3['Frecuencia'].' con un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
-					
+
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
 				$idOcompra = $rowdata_3['idOcompra'];
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -2778,7 +2774,7 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";     }else{$SIS_data  = "''";}
 				if(isset($idSistema) && $idSistema!=''){              $SIS_data .= ",'".$idSistema."'";    }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
 					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
@@ -2788,12 +2784,12 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($idTrabajador) && $idTrabajador!=''){  $SIS_data .= ",'".$idTrabajador."'";  }else{$SIS_data .= ",''";}
+				if(isset($idTrabajador) && $idTrabajador!=''){   $SIS_data .= ",'".$idTrabajador."'";  }else{$SIS_data .= ",''";}
 				if(isset($N_Doc) && $N_Doc!=''){                 $SIS_data .= ",'".$N_Doc."'";         }else{$SIS_data .= ",''";}
-				if(isset($Descripcion) && $Descripcion!=''){     $SIS_data .= ",'".$Descripcion."'"; }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion!=''){     $SIS_data .= ",'".$Descripcion."'";   }else{$SIS_data .= ",''";}
 				if(isset($Valor) && $Valor!=''){                 $SIS_data .= ",'".$Valor."'";         }else{$SIS_data .= ",''";}
-				$SIS_data .= ",'1'" ; //no utilizado
-				
+				$SIS_data .= ",'1'"; //no utilizado
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idTrabajador, N_Doc, Descripcion,
 				Valor, idUso';
@@ -2807,7 +2803,7 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
-				if(isset($rowdata_2['Nombre'])&&$rowdata_2['Nombre']!=''&&isset($rowdata_2['ApellidoPat'])&&$rowdata_2['ApellidoPat']!=''){   
+				if(isset($rowdata_2['Nombre'])&&$rowdata_2['Nombre']!=''&&isset($rowdata_2['ApellidoPat'])&&$rowdata_2['ApellidoPat']!=''){
 					$cambios .= "Se agrega boleta honorarios N° ".$N_Doc." del trabajador ".$rowdata_2['Nombre']." ".$rowdata_2['ApellidoPat']." con valor total de ".Valores($Valor, 0)."." ;
 				}
 
@@ -2815,18 +2811,18 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-					
+
 				header( 'Location: '.$location.'&created=true' );
 				die;
 
@@ -2857,29 +2853,29 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-				
+
 				//Filtros
 				$SIS_data = "idExistencia='".$idExistencia."'";
 				if(isset($idOcompra) && $idOcompra!=''){       $SIS_data .= ",idOcompra='".$idOcompra."'";}
 				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
 					$SIS_data .= ",Creacion_ano='".fecha2Ano($Creacion_fecha)."'";
 				}
-				if(isset($idTrabajador) && $idTrabajador!=''){ $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
+				if(isset($idTrabajador) && $idTrabajador!=''){  $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
 				if(isset($N_Doc) && $N_Doc!=''){                $SIS_data .= ",N_Doc='".$N_Doc."'";}
 				if(isset($Descripcion) && $Descripcion!=''){    $SIS_data .= ",Descripcion='".$Descripcion."'";}
 				if(isset($Valor) && $Valor!=''){                $SIS_data .= ",Valor='".$Valor."'";}
@@ -2931,21 +2927,21 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				//Se toman los datos
 				$rowdata_3 = db_select_data (false, 'ocompra_listado_existencias_boletas.N_Doc, ocompra_listado_existencias_boletas.Valor, trabajadores_listado.Nombre AS TrabNombre,trabajadores_listado.ApellidoPat AS TrabApellidoPat', 'ocompra_listado_existencias_boletas', 'LEFT JOIN `trabajadores_listado`  ON trabajadores_listado.idTrabajador   = ocompra_listado_existencias_boletas.idTrabajador', 'ocompra_listado_existencias_boletas.idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = 'Se elimina la boleta de honorarios N° '.$rowdata_3['N_Doc'].' del trabajador '.$rowdata_3['TrabNombre'].' '.$rowdata_3['TrabApellidoPat'].' con un valor total de '.Valores($rowdata_3['Valor'], 0).'.';
-					
+
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
 				$idOcompra = $rowdata_3['idOcompra'];
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -2982,7 +2978,7 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";     }else{$SIS_data  = "''";}
 				if(isset($idSistema) && $idSistema!=''){              $SIS_data .= ",'".$idSistema."'";    }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
 					$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
@@ -2992,11 +2988,11 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($Descripcion) && $Descripcion!=''){     $SIS_data .= ",'".$Descripcion."'"; }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion!=''){     $SIS_data .= ",'".$Descripcion."'";   }else{$SIS_data .= ",''";}
 				if(isset($Valor) && $Valor!=''){                 $SIS_data .= ",'".$Valor."'";         }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idOcompra, idSistema, 
+				$SIS_columns = 'idOcompra, idSistema,
 				idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, Descripcion,Valor';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_existencias_boletas_empresas', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -3009,18 +3005,18 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-					
+
 				header( 'Location: '.$location.'&created=true' );
 				die;
 
@@ -3050,23 +3046,23 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-				
+
 				//Filtros
 				$SIS_data = "idExistencia='".$idExistencia."'";
 				if(isset($idOcompra) && $idOcompra!=''){       $SIS_data .= ",idOcompra='".$idOcompra."'";}
 				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuario='".$idUsuario."'";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
 					$SIS_data .= ",Creacion_mes='".fecha2NMes($Creacion_fecha)."'";
@@ -3122,21 +3118,21 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				//Se toman los datos
 				$rowdata_3 = db_select_data (false, 'Valor,Descripcion', 'ocompra_listado_existencias_boletas_empresas', '', 'idExistencia ='.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = 'Se elimina la boleta de honorarios con la descripcion '.$rowdata_3['Descripcion'].' con un valor total de '.Valores($rowdata_3['Valor'], 0).'.';
-					
+
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha     = fecha_actual();
 				$idOcompra = $rowdata_3['idOcompra'];
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -3172,8 +3168,8 @@ require_once '0_validate_user_1.php';
 				//filtros
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";     }else{$SIS_data  = "''";}
 				if(isset($idSistema) && $idSistema!=''){              $SIS_data .= ",'".$idSistema."'";    }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
 				if(isset($idProveedor) && $idProveedor!=''){          $SIS_data .= ",'".$idProveedor."'";  }else{$SIS_data .= ",''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",'".$Creacion_fecha."'";
@@ -3192,7 +3188,7 @@ require_once '0_validate_user_1.php';
 				if(isset($vTotal) && $vTotal!=''){            $SIS_data .= ",'".$vTotal."'";         }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano, 
+				$SIS_columns = 'idOcompra, idSistema, idUsuario, idEstado, idProveedor, Creacion_fecha, Creacion_mes, Creacion_ano,
 				Creacion_semana, idDocPago, NDocPago, Fpago, vTotal';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_documentos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -3204,7 +3200,7 @@ require_once '0_validate_user_1.php';
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = '';
-				if(isset($rowdata_2['Nombre'])&&$rowdata_2['Nombre']!=''){   
+				if(isset($rowdata_2['Nombre'])&&$rowdata_2['Nombre']!=''){
 					$cambios .= "Se agrega documento de pago ".$rowdata_2['Nombre']." N°".$NDocPago." con fecha de pago ".$Fpago." por valor total de ".Valores($vTotal, 0)."." ;
 				}
 
@@ -3212,18 +3208,18 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-					
+
 				header( 'Location: '.$location.'&created=true' );
 				die;
 
@@ -3254,24 +3250,24 @@ require_once '0_validate_user_1.php';
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/
 				/*********************************************************************/
-				
+
 				//Filtros
 				$SIS_data = "idDocumento='".$idDocumento."'";
 				if(isset($idOcompra) && $idOcompra!=''){       $SIS_data .= ",idOcompra='".$idOcompra."'";}
 				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($idEstado) && $idEstado!=''){        $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($idEstado) && $idEstado!=''){         $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($idProveedor) && $idProveedor!=''){   $SIS_data .= ",idProveedor='".$idProveedor."'";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
@@ -3331,20 +3327,20 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				//Se toman los datos
 				$rowdata_3 = db_select_data (false, 'sistema_documentos_pago.Nombre,ocompra_listado_documentos.NDocPago, ocompra_listado_documentos.Fpago, ocompra_listado_documentos.vTotal', 'ocompra_listado_documentos', 'LEFT JOIN `sistema_documentos_pago`   ON sistema_documentos_pago.idDocPago  = ocompra_listado_documentos.idDocPago', 'ocompra_listado_documentos.idDocumento'.$indice, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 				/******************************************/
 				//Se realizan comparacion
 				$cambios = 'Se elimina '.$rowdata_3['Nombre'].' N°'.$rowdata_3['NDocPago'].' con fecha de pago '.$rowdata_3['Fpago'].' por un valor total de '.Valores($rowdata_3['vTotal'], 0).'';
-					
+
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -3372,8 +3368,8 @@ require_once '0_validate_user_1.php';
 		case 'edit_file_insert':
 
 			//Se elimina la restriccion del sql 5.7
-			mysqli_query($dbConn, "SET SESSION sql_mode = ''");	
-			
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+
 			if(empty($error)){
 
 				//Se verifica
@@ -3427,10 +3423,10 @@ require_once '0_validate_user_1.php';
 									//filtros
 									if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";     }else{$SIS_data  = "''";}
 									if(isset($idSistema) && $idSistema!=''){              $SIS_data .= ",'".$idSistema."'";    }else{$SIS_data .= ",''";}
-									if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
-									if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
+									if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";    }else{$SIS_data .= ",''";}
+									if(isset($idEstado) && $idEstado!=''){                $SIS_data .= ",'".$idEstado."'";     }else{$SIS_data .= ",''";}
 									if(isset($idProveedor) && $idProveedor!=''){          $SIS_data .= ",'".$idProveedor."'";  }else{$SIS_data .= ",''";}
-									if(isset($Creacion_fecha) && $Creacion_fecha!=''){  
+									if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 										$SIS_data .= ",'".$Creacion_fecha."'";
 										$SIS_data .= ",'".fecha2NMes($Creacion_fecha)."'";
 										$SIS_data .= ",'".fecha2Ano($Creacion_fecha)."'";
@@ -3454,18 +3450,18 @@ require_once '0_validate_user_1.php';
 									//Se guarda en historial la accion
 									$fecha = fecha_actual();
 									if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-									if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+									if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 									$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 									$SIS_data .= ",'".$cambios."'";                                          //Observacion
 									$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-									
+
 									// inserto los datos de registro en la db
 									$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 									$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 									/*********************************************************************/
 									/*********************************************************************/
-										
+
 									header( 'Location: '.$location.'&created=true' );
 									die;
 
@@ -3523,16 +3519,16 @@ require_once '0_validate_user_1.php';
 				/*********************************************************************/
 				//Se realizan comparacion
 				$cambios = 'Se elimina archivo '.$rowdata['Nombre'];
-					
+
 				/******************************************/
 				//Se guarda en historial la accion
 				$fecha = fecha_actual();
 				if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-				if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+				if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 				$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 				$SIS_data .= ",'".$cambios."'";                                          //Observacion
 				$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-				
+
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -3591,7 +3587,7 @@ require_once '0_validate_user_1.php';
 						case 1:
 							//Se trae los datos
 							$rowdata = db_select_data (false, 'ocompra_listado_existencias_productos.idExistencia, ocompra_listado_existencias_productos.Cantidad, ocompra_listado_existencias_productos.vUnitario, productos_listado.Nombre AS Producto, sistema_productos_uml.Nombre AS Medida', 'ocompra_listado_existencias_productos', 'LEFT JOIN `productos_listado` ON productos_listado.idProducto = ocompra_listado_existencias_productos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'ocompra_listado_existencias_productos.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_productos.idProducto= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 							/*********************************************************************/
 							/*********************************************************************/
 							//Se realizan comparacion
@@ -3600,11 +3596,11 @@ require_once '0_validate_user_1.php';
 							//Se guarda en historial la accion
 							$fecha = fecha_actual();
 							if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-							if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+							if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 							$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 							$SIS_data .= ",'".$cambios."'";                                          //Observacion
 							$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-							
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -3629,7 +3625,7 @@ require_once '0_validate_user_1.php';
 								//se actualizan los datos
 								$SIS_data = "idOcompra=0" ;
 								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_productos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 							}
 							break;
 						/****************************************/
@@ -3637,7 +3633,7 @@ require_once '0_validate_user_1.php';
 						case 2:
 							//Se trae los datos
 							$rowdata = db_select_data (false, 'ocompra_listado_existencias_insumos.idExistencia, ocompra_listado_existencias_insumos.Cantidad, ocompra_listado_existencias_insumos.vUnitario, insumos_listado.Nombre AS Producto, sistema_productos_uml.Nombre AS Medida', 'ocompra_listado_existencias_insumos', 'LEFT JOIN `insumos_listado` ON insumos_listado.idProducto = ocompra_listado_existencias_insumos.idProducto LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'ocompra_listado_existencias_insumos.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_insumos.idProducto= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 							/*********************************************************************/
 							/*********************************************************************/
 							//Se realizan comparacion
@@ -3646,11 +3642,11 @@ require_once '0_validate_user_1.php';
 							//Se guarda en historial la accion
 							$fecha = fecha_actual();
 							if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-							if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+							if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 							$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 							$SIS_data .= ",'".$cambios."'";                                          //Observacion
 							$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-							
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -3675,7 +3671,7 @@ require_once '0_validate_user_1.php';
 								//se actualizan los datos
 								$SIS_data = "idOcompra=0" ;
 								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_insumos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 							}
 							break;
 						/****************************************/
@@ -3683,7 +3679,7 @@ require_once '0_validate_user_1.php';
 						case 3:
 							//Se trae los datos
 							$rowdata = db_select_data (false, 'ocompra_listado_existencias_arriendos.idExistencia, ocompra_listado_existencias_arriendos.Cantidad, ocompra_listado_existencias_arriendos.vUnitario, equipos_arriendo_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Medida', 'ocompra_listado_existencias_arriendos', 'LEFT JOIN `equipos_arriendo_listado` ON equipos_arriendo_listado.idEquipo = ocompra_listado_existencias_arriendos.idEquipo LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_arriendos.idFrecuencia', 'ocompra_listado_existencias_arriendos.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_arriendos.idEquipo= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 							/*********************************************************************/
 							/*********************************************************************/
 							//Se realizan comparacion
@@ -3692,11 +3688,11 @@ require_once '0_validate_user_1.php';
 							//Se guarda en historial la accion
 							$fecha = fecha_actual();
 							if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-							if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+							if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 							$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 							$SIS_data .= ",'".$cambios."'";                                          //Observacion
 							$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-							
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -3722,7 +3718,7 @@ require_once '0_validate_user_1.php';
 								//se actualizan los datos
 								$SIS_data = "idOcompra=0" ;
 								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_arriendos', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 							}
 							break;
 						/****************************************/
@@ -3730,7 +3726,7 @@ require_once '0_validate_user_1.php';
 						case 4:
 							//Se trae los datos
 							$rowdata = db_select_data (false, 'ocompra_listado_existencias_servicios.idExistencia, ocompra_listado_existencias_servicios.Cantidad, ocompra_listado_existencias_servicios.vUnitario, servicios_listado.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Medida', 'ocompra_listado_existencias_servicios', 'LEFT JOIN `servicios_listado` ON servicios_listado.idServicio  = ocompra_listado_existencias_servicios.idServicio LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_servicios.idFrecuencia', 'ocompra_listado_existencias_servicios.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_servicios.idServicio= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 							/*********************************************************************/
 							/*********************************************************************/
 							//Se realizan comparacion
@@ -3739,12 +3735,11 @@ require_once '0_validate_user_1.php';
 							//Se guarda en historial la accion
 							$fecha = fecha_actual();
 							if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-							if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+							if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 							$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 							$SIS_data .= ",'".$cambios."'";                                          //Observacion
 							$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-							
-							
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -3770,7 +3765,7 @@ require_once '0_validate_user_1.php';
 								//se actualizan los datos
 								$SIS_data = "idOcompra=0" ;
 								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_servicios', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 							}
 							break;
 						/****************************************/
@@ -3778,7 +3773,7 @@ require_once '0_validate_user_1.php';
 						case 5:
 							//Se trae los datos
 							$rowdata = db_select_data (false, 'ocompra_listado_existencias_otros.idExistencia, ocompra_listado_existencias_otros.Cantidad, ocompra_listado_existencias_otros.vUnitario, ocompra_listado_existencias_otros.Nombre AS Producto, core_tiempo_frecuencia.Nombre AS Medida', 'ocompra_listado_existencias_otros', 'LEFT JOIN `core_tiempo_frecuencia` ON core_tiempo_frecuencia.idFrecuencia = ocompra_listado_existencias_otros.idFrecuencia', 'ocompra_listado_existencias_otros.idOcompra = '.$_GET['view'].' AND ocompra_listado_existencias_otros.Nombre= '.$_GET['del_sol_prod'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 							/*********************************************************************/
 							/*********************************************************************/
 							//Se realizan comparacion
@@ -3787,11 +3782,11 @@ require_once '0_validate_user_1.php';
 							//Se guarda en historial la accion
 							$fecha = fecha_actual();
 							if(isset($idOcompra) && $idOcompra!=''){ $SIS_data  = "'".$idOcompra."'";  }else{ $SIS_data  = "''";}
-							if(isset($Fecha) && $Fecha!=''){      $SIS_data .= ",'".$Fecha."'";    }else{ $SIS_data .= ",''"; }
+							if(isset($Fecha) && $Fecha!=''){         $SIS_data .= ",'".$Fecha."'";     }else{ $SIS_data .= ",''"; }
 							$SIS_data .= ",'2'";                                                     //Creacion Satisfactoria
 							$SIS_data .= ",'".$cambios."'";                                          //Observacion
 							$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'";   //idUsuario
-							
+
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
 							$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -3817,7 +3812,7 @@ require_once '0_validate_user_1.php';
 								//se actualizan los datos
 								$SIS_data = "idOcompra=0" ;
 								$resultado = db_update_data (false, $SIS_data, 'solicitud_listado_existencias_otros', 'idExistencia = "'.$_GET['del_solicitud'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 							}
 							break;
 					}
@@ -3838,9 +3833,7 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-		
-		
+
 		break;
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
@@ -3848,12 +3841,11 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
-			
-		
+
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 				//Filtros
-				$SIS_data = "idEstado='1'" ;
+				$SIS_data = "idEstado='1'";
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado', 'idOcompra = "'.$_GET['ing_ocompra'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
@@ -3883,9 +3875,9 @@ require_once '0_validate_user_1.php';
 
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";         }else{$SIS_data  = "''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){    $SIS_data .= ",'".$Creacion_fecha."'";   }else{$SIS_data .= ",''";}
-				if(isset($idTipo) && $idTipo!=''){                   $SIS_data .= ",'".$idTipo."'";           }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){                    $SIS_data .= ",'".$idTipo."'";           }else{$SIS_data .= ",''";}
 				if(isset($Observacion) && $Observacion!=''){          $SIS_data .= ",'".$Observacion."'";      }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, idTipo, Observacion, idUsuario';
@@ -3907,7 +3899,7 @@ require_once '0_validate_user_1.php';
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 				//Filtros
-				$SIS_data = "idEstado='3'" ;
+				$SIS_data = "idEstado='3'";
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
@@ -3930,9 +3922,9 @@ require_once '0_validate_user_1.php';
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";         }else{$SIS_data  = "''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){    $SIS_data .= ",'".$Creacion_fecha."'";   }else{$SIS_data .= ",''";}
 				if(isset($Creacion_hora) && $Creacion_hora!=''){      $SIS_data .= ",'".$Creacion_hora."'";    }else{$SIS_data .= ",''";}
-				if(isset($idTipo) && $idTipo!=''){                   $SIS_data .= ",'".$idTipo."'";           }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){                    $SIS_data .= ",'".$idTipo."'";           }else{$SIS_data .= ",''";}
 				if(isset($Observacion) && $Observacion!=''){          $SIS_data .= ",'".$Observacion."'";      }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario';
@@ -3945,8 +3937,7 @@ require_once '0_validate_user_1.php';
 					die;
 				}
 			}
-		
-		
+
 		break;
 /*******************************************************************************************************************/
 		case 'nula_ocompra':
@@ -3954,7 +3945,7 @@ require_once '0_validate_user_1.php';
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 				//Filtros
-				$SIS_data = "idEstado='4'" ;
+				$SIS_data = "idEstado='4'";
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado', 'idOcompra = "'.$idOcompra.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
@@ -3977,9 +3968,9 @@ require_once '0_validate_user_1.php';
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";         }else{$SIS_data  = "''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){    $SIS_data .= ",'".$Creacion_fecha."'";   }else{$SIS_data .= ",''";}
 				if(isset($Creacion_hora) && $Creacion_hora!=''){      $SIS_data .= ",'".$Creacion_hora."'";    }else{$SIS_data .= ",''";}
-				if(isset($idTipo) && $idTipo!=''){                   $SIS_data .= ",'".$idTipo."'";           }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){                    $SIS_data .= ",'".$idTipo."'";           }else{$SIS_data .= ",''";}
 				if(isset($Observacion) && $Observacion!=''){          $SIS_data .= ",'".$Observacion."'";      }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario';
@@ -3992,8 +3983,7 @@ require_once '0_validate_user_1.php';
 					die;
 				}
 			}
-		
-		
+
 		break;
 /*******************************************************************************************************************/
 		case 'aprob_ocompra':
@@ -4017,7 +4007,7 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/La aprobacion ya fue realizada';}
 			/*******************************************************************/
-	
+
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 
@@ -4029,9 +4019,9 @@ require_once '0_validate_user_1.php';
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";         }else{$SIS_data  = "''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){    $SIS_data .= ",'".$Creacion_fecha."'";   }else{$SIS_data .= ",''";}
 				if(isset($Creacion_hora) && $Creacion_hora!=''){      $SIS_data .= ",'".$Creacion_hora."'";    }else{$SIS_data .= ",''";}
-				if(isset($idTipo) && $idTipo!=''){                   $SIS_data .= ",'".$idTipo."'";           }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){                    $SIS_data .= ",'".$idTipo."'";           }else{$SIS_data .= ",''";}
 				if(isset($Observacion) && $Observacion!=''){          $SIS_data .= ",'".$Observacion."'";      }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario';
@@ -4042,7 +4032,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";         }else{$SIS_data  = "''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){    $SIS_data .= ",'".$Creacion_fecha."'";   }else{$SIS_data .= ",''";}
 				if(isset($Creacion_hora) && $Creacion_hora!=''){      $SIS_data .= ",'".$Creacion_hora."'";    }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, Creacion_hora, idUsuario';
@@ -4066,7 +4056,7 @@ require_once '0_validate_user_1.php';
 				//verifico cantidades
 				if($napro_list==$napro_true){
 					//Filtros
-					$SIS_data = "idEstado='2'" ;
+					$SIS_data = "idEstado='2'";
 					//se actualizan los datos
 					$resultado = db_update_data (false, $SIS_data, 'ocompra_listado', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se actualizan los datos
@@ -4091,9 +4081,9 @@ require_once '0_validate_user_1.php';
 					if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";         }else{$SIS_data  = "''";}
 					if(isset($Creacion_fecha) && $Creacion_fecha!=''){    $SIS_data .= ",'".$Creacion_fecha."'";   }else{$SIS_data .= ",''";}
 					if(isset($Creacion_hora) && $Creacion_hora!=''){      $SIS_data .= ",'".$Creacion_hora."'";    }else{$SIS_data .= ",''";}
-					if(isset($idTipo) && $idTipo!=''){                   $SIS_data .= ",'".$idTipo."'";           }else{$SIS_data .= ",''";}
+					if(isset($idTipo) && $idTipo!=''){                    $SIS_data .= ",'".$idTipo."'";           }else{$SIS_data .= ",''";}
 					if(isset($Observacion) && $Observacion!=''){          $SIS_data .= ",'".$Observacion."'";      }else{$SIS_data .= ",''";}
-					if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
+					if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
 
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario';
@@ -4104,8 +4094,7 @@ require_once '0_validate_user_1.php';
 				header( 'Location: '.$location.'&edited=true' );
 				die;
 			}
-		
-		
+
 		break;
 /*******************************************************************************************************************/
 		case 'aprob_auto_ocompra':
@@ -4114,7 +4103,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				$SIS_data = "idEstado='2'" ;
+				$SIS_data = "idEstado='2'";
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
@@ -4131,8 +4120,7 @@ require_once '0_validate_user_1.php';
 				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_productos', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se actualizan los datos
 				$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_servicios', 'idOcompra = "'.$_GET['compra_aprobar'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
-					
+
 				//Creo los datos en el historial
 				$idOcompra        = $_GET['compra_aprobar'];
 				$Creacion_fecha   = fecha_actual();
@@ -4140,14 +4128,13 @@ require_once '0_validate_user_1.php';
 				$idTipo           = 1;
 				$Observacion      = 'La Orden de Compra ha sido aprobada';
 				$idUsuario        = $_SESSION['usuario']['basic_data']['idUsuario'];
-				
-					
+
 				if(isset($idOcompra) && $idOcompra!=''){              $SIS_data  = "'".$idOcompra."'";         }else{$SIS_data  = "''";}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){    $SIS_data .= ",'".$Creacion_fecha."'";   }else{$SIS_data .= ",''";}
 				if(isset($Creacion_hora) && $Creacion_hora!=''){      $SIS_data .= ",'".$Creacion_hora."'";    }else{$SIS_data .= ",''";}
-				if(isset($idTipo) && $idTipo!=''){                   $SIS_data .= ",'".$idTipo."'";           }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){                    $SIS_data .= ",'".$idTipo."'";           }else{$SIS_data .= ",''";}
 				if(isset($Observacion) && $Observacion!=''){          $SIS_data .= ",'".$Observacion."'";      }else{$SIS_data .= ",''";}
-				if(isset($idUsuario) && $idUsuario!=''){             $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
+				if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idOcompra, Creacion_fecha, Creacion_hora, idTipo, Observacion, idUsuario';
@@ -4160,8 +4147,7 @@ require_once '0_validate_user_1.php';
 					die;
 				}
 			}
-		
-		
+
 		break;
 /*******************************************************************************************************************/
 		case 'cerrar_incompleta':
@@ -4220,7 +4206,7 @@ require_once '0_validate_user_1.php';
 					//Boletas Trabajadores
 					case 5:
 						//Variables
-						$SIS_data .= ",idUso='2'" ;
+						$SIS_data .= ",idUso='2'";
 						//se actualizan los datos
 						$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_boletas', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						break;
@@ -4233,8 +4219,7 @@ require_once '0_validate_user_1.php';
 						$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_boletas_empresas', 'idExistencia = "'.$idExistencia.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 						break;
 				}
-				
-				
+
 				header( 'Location: '.$location.'?submit_filter=+Filtrar&edited=true' );
 				die;
 			}
@@ -4289,7 +4274,7 @@ require_once '0_validate_user_1.php';
 					$ndata_5 = db_select_nrows (false, 'idOcompra', 'ocompra_listado_existencias_servicios', '', "idOcompra='".$indice."' AND cant_ingresada!=0", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					$ndata_6 = db_select_nrows (false, 'idOcompra', 'ocompra_listado_existencias_boletas', '', "idOcompra='".$indice."' AND idUso=2", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					$ndata_7 = db_select_nrows (false, 'idOcompra', 'ocompra_listado_existencias_boletas_empresas', '', "idOcompra='".$indice."' AND Total_Ingresado!=0", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 				}else{
 					$error['del'] = 'error/No existe OC a eliminar';
 				}
@@ -4302,10 +4287,10 @@ require_once '0_validate_user_1.php';
 				if($ndata_6 > 0) {$error['ndata_2'] = 'error/Existen solicitudes de boletas de honorarios facturadas';}
 				if($ndata_7 > 0) {$error['ndata_2'] = 'error/Existen solicitudes de boletas de honorarios de empresas facturadas';}
 				/*******************************************************************/
-				
+
 				//Si no hay errores ejecuto el codigo
 				if(empty($error)){
-					
+
 					/********************************************************/
 					//Log oculto de la eliminacion de la OC
 					$idOcompra   = $indice;
@@ -4324,12 +4309,12 @@ require_once '0_validate_user_1.php';
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idOcompra, idSistema, idUsuario, Fecha_elim, Hora_elim';
 					$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'ocompra_listado_log_eliminacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					/********************************************************/
 					// Se trae un listado con todos los archivos relacionados
 					$arrArchivos = array();
 					$arrArchivos = db_select_array (false, 'Nombre', 'ocompra_listado_archivos', '', 'idOcompra ='.$indice, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 					/********************************************************/
 					//se borran los datos
 					$resultado_1  = db_delete_data (false, 'ocompra_listado', 'idOcompra = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -4347,7 +4332,7 @@ require_once '0_validate_user_1.php';
 					$resultado_13 = db_delete_data (false, 'ocompra_listado_sol_rel', 'idOcompra = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
 					if($resultado_1==true OR $resultado_2==true OR $resultado_3==true OR $resultado_4==true OR $resultado_5==true OR $resultado_6==true OR $resultado_7==true OR $resultado_8==true OR $resultado_9==true OR $resultado_10==true OR $resultado_11==true OR $resultado_12==true OR $resultado_13==true){
-						
+
 						/********************************************************/
 						//Se borran los archivos relacionados
 						foreach ($arrArchivos as $archivo){
@@ -4376,14 +4361,7 @@ require_once '0_validate_user_1.php';
 
 		break;
 /*******************************************************************************************************************/
-		
-		
-		
-		
-		
-		
-		
-						
+
 	}
 
 ?>

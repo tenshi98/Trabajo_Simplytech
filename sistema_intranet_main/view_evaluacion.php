@@ -121,7 +121,7 @@ $arrAlumnos = db_select_array (false, $SIS_query, 'alumnos_evaluaciones_asignada
 								</tr>
 							</thead>
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
-								<?php foreach ($arrAlumnos as $alum) { 
+								<?php foreach ($arrAlumnos as $alum) {
 									if(isset($alum['idTipo'])&&$alum['idTipo']==1){ ?>
 										<tr class="odd">
 											<td><?php echo $alum['AlumnoNombre'].' '.$alum['AlumnoApellidoPat'].' '.$alum['AlumnoApellidoMat']; ?></td>
@@ -146,7 +146,7 @@ $arrAlumnos = db_select_array (false, $SIS_query, 'alumnos_evaluaciones_asignada
 								</tr>
 							</thead>
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
-								<?php foreach ($arrAlumnos as $alum) { 
+								<?php foreach ($arrAlumnos as $alum) {
 									if(isset($alum['idTipo'])&&$alum['idTipo']==3){ ?>
 										<tr class="odd">
 											<td><?php echo $alum['AlumnoNombre'].' '.$alum['AlumnoApellidoPat'].' '.$alum['AlumnoApellidoMat']; ?></td>
@@ -171,7 +171,7 @@ $arrAlumnos = db_select_array (false, $SIS_query, 'alumnos_evaluaciones_asignada
 								</tr>
 							</thead>
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
-								<?php foreach ($arrAlumnos as $alum) { 
+								<?php foreach ($arrAlumnos as $alum) {
 									if(isset($alum['idTipo'])&&$alum['idTipo']==2){ ?>
 										<tr class="odd">
 											<td><?php echo $alum['AlumnoNombre'].' '.$alum['AlumnoApellidoPat'].' '.$alum['AlumnoApellidoMat']; ?></td>

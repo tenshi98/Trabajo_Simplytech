@@ -110,7 +110,7 @@ LEFT JOIN `trabajadores_listado`                         ON trabajadores_listado
 LEFT JOIN `cross_shipping_recibidores`                   ON cross_shipping_recibidores.idRecibidor                    = cross_shipping_consolidacion.idRecibidor';
 $SIS_where = 'cross_shipping_consolidacion.idConsolidacion ='.$X_Puntero;
 $rowConso = db_select_data (false, $SIS_query, 'cross_shipping_consolidacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowConso');
-						
+
 /************************************************************/
 // Se traen las estibas
 $SIS_query = '

@@ -72,7 +72,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($Nombre) && $Nombre!=''){       $SIS_data  = "'".$Nombre."'";       }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){        $SIS_data  = "'".$Nombre."'";       }else{$SIS_data  = "''";}
 				if(isset($idFont) && $idFont!=''){        $SIS_data .= ",'".$idFont."'";      }else{$SIS_data .= ",''";}
 				if(isset($IconColor) && $IconColor!=''){  $SIS_data .= ",'".$IconColor."'";   }else{$SIS_data .= ",''";}
 
@@ -112,7 +112,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "id_pmcat='".$id_pmcat."'";
-				if(isset($Nombre) && $Nombre!=''){        $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){         $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($idFont) && $idFont!=''){         $SIS_data .= ",idFont='".$idFont."'";}
 				if(isset($IconColor) && $IconColor!=''){   $SIS_data .= ",IconColor='".$IconColor."'";}
 

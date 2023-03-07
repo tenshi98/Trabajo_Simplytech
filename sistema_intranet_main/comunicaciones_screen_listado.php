@@ -414,7 +414,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 							<div class="btn-group" style="width: 105px;" >
 								<?php
 								//si esta activa la conferencia
-								if(isset($Conferencia[0]['idEstado'])&&$Conferencia[0]['idEstado']==1){ 
+								if(isset($Conferencia[0]['idEstado'])&&$Conferencia[0]['idEstado']==1){
 									//si es un usuario participante o el creador
 									if(($Asiste!=0) OR ($Conferencia[0]['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){
 										//si es recurrente sienpre se muestra

@@ -40,7 +40,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){  $Nombre  = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){   $Nombre  = EstandarizarInput($Nombre);}
 	if(isset($Funcion) && $Funcion!=''){ $Funcion = EstandarizarInput($Funcion);}
 
 /*******************************************************************************************************************/
@@ -75,7 +75,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($Nombre) && $Nombre!=''){                   $SIS_data  = "'".$Nombre."'";             }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){                    $SIS_data  = "'".$Nombre."'";             }else{$SIS_data  = "''";}
 				if(isset($Funcion) && $Funcion!=''){                  $SIS_data .= ",'".$Funcion."'";           }else{$SIS_data .= ",''";}
 				if(isset($idSensorFuncion) && $idSensorFuncion!=''){  $SIS_data .= ",'".$idSensorFuncion."'";   }else{$SIS_data .= ",''";}
 
@@ -113,7 +113,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 				//Filtros
 				$SIS_data = "idSensores='".$idSensores."'";
-				if(isset($Nombre) && $Nombre!=''){                     $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                      $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Funcion) && $Funcion!=''){                    $SIS_data .= ",Funcion='".$Funcion."'";}
 				if(isset($idSensorFuncion) && $idSensorFuncion!=''){    $SIS_data .= ",idSensorFuncion='".$idSensorFuncion."'";}
 
@@ -176,8 +176,7 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
 
 /*******************************************************************************************************************/

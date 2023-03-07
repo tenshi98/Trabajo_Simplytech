@@ -53,7 +53,7 @@ if(isset($rowdata["FTP_Carpeta"])&&$rowdata["FTP_Carpeta"]!=''){
 	//si no existe la carpeta, la creo
 	if (!file_exists($s_folder)){
 		try {
-			$oldmask = umask(000);//it will set the new umask and returns the old one 
+			$oldmask = umask(000);//it will set the new umask and returns the old one
 			mkdir($s_folder, 0777);
 			umask($oldmask);//reset the old umask
 			//muestro la carpeta

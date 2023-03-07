@@ -198,7 +198,7 @@ require_once '0_validate_user_1.php';
 				/*******************************************************/
 				//Si existe una Orden de compra relacionada
 				if(isset($idOcompra)&&$idOcompra!=''){
-					
+
 					$_SESSION['boleta_ing_basicos']['idOcompra'] = $idOcompra;
 
 					$arrBoletas = array();
@@ -212,16 +212,16 @@ require_once '0_validate_user_1.php';
 						$_SESSION['boleta_ing_servicios'][$idInterno]['idExistencia']  = $motivo['idExistencia'];
 						$_SESSION['boleta_ing_servicios'][$idInterno]['Nombre']        = $motivo['Descripcion'];
 						$_SESSION['boleta_ing_servicios'][$idInterno]['vTotal']        = $motivo['Valor'];
-						
+
 						$idInterno++;
 					}
-				
+
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo!=''){
 					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'boleta_honorarios_facturacion_tipo', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 					//se guarda dato
 					$_SESSION['boleta_ing_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -256,7 +256,7 @@ require_once '0_validate_user_1.php';
 					';
 					$SIS_where = 'trabajadores_listado.idTrabajador = '.$idTrabajador;
 					$rowTrabajador = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 					//se guarda dato
 					$_SESSION['boleta_ing_basicos']['Trabajador'] = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
 				
@@ -286,9 +286,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['boleta_ing_basicos']['CentroCosto']    = ''; 
 					
 				}
-				
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 
@@ -391,7 +389,7 @@ require_once '0_validate_user_1.php';
 				/*******************************************************/
 				//Si existe una Orden de compra relacionada
 				if(isset($idOcompra)&&$idOcompra!=''){
-					
+
 					$_SESSION['boleta_ing_basicos']['idOcompra'] = $idOcompra;
 
 					$arrBoletas = array();
@@ -405,16 +403,16 @@ require_once '0_validate_user_1.php';
 						$_SESSION['boleta_ing_servicios'][$idInterno]['idExistencia']  = $motivo['idExistencia'];
 						$_SESSION['boleta_ing_servicios'][$idInterno]['Nombre']        = $motivo['Descripcion'];
 						$_SESSION['boleta_ing_servicios'][$idInterno]['vTotal']        = $motivo['Valor'];
-						
+
 						$idInterno++;
 					}
-				
+
 				}
 				/****************************************************/
 				if(isset($idTipo) && $idTipo!=''){
 					// consulto los datos
 					$rowTipoDocumento = db_select_data (false, 'Nombre', 'boleta_honorarios_facturacion_tipo', '', 'idTipo = '.$idTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 					//se guarda dato
 					$_SESSION['boleta_ing_basicos']['TipoDocumento'] = $rowTipoDocumento['Nombre'];
 				}else{
@@ -449,7 +447,7 @@ require_once '0_validate_user_1.php';
 					';
 					$SIS_where = 'trabajadores_listado.idTrabajador = '.$idTrabajador;
 					$rowTrabajador = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-				
+
 					//se guarda dato
 					$_SESSION['boleta_ing_basicos']['Trabajador'] = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
 				
@@ -503,7 +501,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				$_SESSION['boleta_ing_servicios'][$idInterno]['idServicio']    = $idInterno;
 				$_SESSION['boleta_ing_servicios'][$idInterno]['Nombre']        = $Nombre;
 				$_SESSION['boleta_ing_servicios'][$idInterno]['vTotal']        = $vTotal;
@@ -679,7 +677,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['boleta_ing_basicos']['fecha_auto']) OR $_SESSION['boleta_ing_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}
 				if(!isset($_SESSION['boleta_ing_basicos']['idEstado']) OR $_SESSION['boleta_ing_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha seleccionado el estado';}
 				if(!isset($_SESSION['boleta_ing_basicos']['Porc_Impuesto']) OR $_SESSION['boleta_ing_basicos']['Porc_Impuesto']=='' ){   $error['Porc_Impuesto']    = 'error/No hay un porcentaje de retencion configurado';}
-						
+
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la boleta de honorarios';
 			}
@@ -777,12 +775,12 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['boleta_ing_basicos']['idOcompra']) && $_SESSION['boleta_ing_basicos']['idOcompra']!=''){  
 								
 								//Actualizo 
-								$SIS_data = "idUso='2'" ;
+								$SIS_data = "idUso='2'";
 
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_boletas', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 							}
 						}
 					}
@@ -819,19 +817,19 @@ require_once '0_validate_user_1.php';
 					/*********************************************************************/
 					//Se guarda en historial la accion
 					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['boleta_ing_basicos']['Creacion_fecha']) && $_SESSION['boleta_ing_basicos']['Creacion_fecha']!=''){  
-						$SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['Creacion_fecha']."'";  
+					if(isset($_SESSION['boleta_ing_basicos']['Creacion_fecha']) && $_SESSION['boleta_ing_basicos']['Creacion_fecha']!=''){
+						$SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['Creacion_fecha']."'";
 					}else{
 						$SIS_data .= ",''";
 					}
 					$SIS_data .= ",'1'";                                                   //Creacion Satisfactoria
 					$SIS_data .= ",'Creacion del documento'";                              //Observacion
 					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'"; //idUsuario
-					
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'boleta_honorarios_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos
 					unset($_SESSION['boleta_ing_basicos']);
@@ -927,7 +925,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['boleta_eg_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idCliente) && $idCliente!=''){ 
+				if(isset($idCliente) && $idCliente!=''){
 					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = '.$idCliente, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1033,7 +1031,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['boleta_eg_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idCliente) && $idCliente!=''){ 
+				if(isset($idCliente) && $idCliente!=''){
 					// consulto los datos
 					$rowCliente = db_select_data (false, 'Nombre', 'clientes_listado', '', 'idCliente = '.$idCliente, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1065,7 +1063,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				$_SESSION['boleta_eg_servicios'][$idInterno]['idServicio']    = $idInterno;
 				$_SESSION['boleta_eg_servicios'][$idInterno]['Nombre']        = $Nombre;
 				$_SESSION['boleta_eg_servicios'][$idInterno]['vTotal']        = $vTotal;
@@ -1241,7 +1239,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['boleta_eg_basicos']['fecha_auto']) OR $_SESSION['boleta_eg_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}
 				if(!isset($_SESSION['boleta_eg_basicos']['idEstado']) OR $_SESSION['boleta_eg_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha seleccionado el estado';}
 				if(!isset($_SESSION['boleta_eg_basicos']['Porc_Impuesto']) OR $_SESSION['boleta_eg_basicos']['Porc_Impuesto']=='' ){   $error['Porc_Impuesto']    = 'error/No hay un porcentaje de retencion configurado';}
-					
+
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la boleta de honorarios';
 			}
@@ -1359,19 +1357,19 @@ require_once '0_validate_user_1.php';
 					/*********************************************************************/
 					//Se guarda en historial la accion
 					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['boleta_eg_basicos']['Creacion_fecha']) && $_SESSION['boleta_eg_basicos']['Creacion_fecha']!=''){  
-						$SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['Creacion_fecha']."'";  
+					if(isset($_SESSION['boleta_eg_basicos']['Creacion_fecha']) && $_SESSION['boleta_eg_basicos']['Creacion_fecha']!=''){
+						$SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['Creacion_fecha']."'";
 					}else{
 						$SIS_data .= ",''";
 					}
 					$SIS_data .= ",'1'";                                                   //Creacion Satisfactoria
 					$SIS_data .= ",'Creacion del documento'";                              //Observacion
 					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'"; //idUsuario
-					
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'boleta_honorarios_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos
 					unset($_SESSION['boleta_eg_basicos']);
@@ -1473,7 +1471,7 @@ require_once '0_validate_user_1.php';
 				/*******************************************************/
 				//Si existe una Orden de compra relacionada
 				if(isset($idOcompra)&&$idOcompra!=''){
-					
+
 					$_SESSION['boleta_ing_prov_basicos']['idOcompra']        = $idOcompra;
 
 					// Se trae un listado con todos las boletas de los trabajadores
@@ -1489,10 +1487,10 @@ require_once '0_validate_user_1.php';
 						$_SESSION['boleta_ing_prov_servicios'][$idInterno]['Nombre']        = $motivo['Descripcion'];
 						$_SESSION['boleta_ing_prov_servicios'][$idInterno]['vTotal']        = $motivo['Valor'] - $motivo['Total_Ingresado'];
 						$_SESSION['boleta_ing_prov_servicios'][$idInterno]['Total_ing']     = $motivo['Total_Ingresado'];
-						
+
 						$idInterno++;
 					}
-				
+
 				}
 
 				/****************************************************/
@@ -1505,7 +1503,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['boleta_ing_prov_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idProveedor) && $idProveedor!=''){ 
+				if(isset($idProveedor) && $idProveedor!=''){
 					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = '.$idProveedor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1513,8 +1511,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['boleta_ing_prov_basicos']['Proveedor'] = '';
 				}
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 
@@ -1617,7 +1614,7 @@ require_once '0_validate_user_1.php';
 				/*******************************************************/
 				//Si existe una Orden de compra relacionada
 				if(isset($idOcompra)&&$idOcompra!=''){
-					
+
 					$_SESSION['boleta_ing_prov_basicos']['idOcompra']        = $idOcompra;
 
 					// Se trae un listado con todos las boletas de los trabajadores
@@ -1633,10 +1630,10 @@ require_once '0_validate_user_1.php';
 						$_SESSION['boleta_ing_prov_servicios'][$idInterno]['Nombre']        = $motivo['Descripcion'];
 						$_SESSION['boleta_ing_prov_servicios'][$idInterno]['vTotal']        = $motivo['Valor'] - $motivo['Total_Ingresado'];
 						$_SESSION['boleta_ing_prov_servicios'][$idInterno]['Total_ing']     = $motivo['Total_Ingresado'];
-						
+
 						$idInterno++;
 					}
-				
+
 				}
 
 				/****************************************************/
@@ -1649,7 +1646,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['boleta_ing_prov_basicos']['TipoDocumento'] = '';
 				}
 				/****************************************************/
-				if(isset($idProveedor) && $idProveedor!=''){ 
+				if(isset($idProveedor) && $idProveedor!=''){
 					// consulto los datos
 					$rowProveedor = db_select_data (false, 'Nombre', 'proveedor_listado', '', 'idProveedor = '.$idProveedor, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//se guarda dato
@@ -1657,8 +1654,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['boleta_ing_prov_basicos']['Proveedor'] = '';
 				}
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -1682,7 +1678,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				$_SESSION['boleta_ing_prov_servicios'][$idInterno]['idServicio']    = $idInterno;
 				$_SESSION['boleta_ing_prov_servicios'][$idInterno]['Nombre']        = $Nombre;
 				$_SESSION['boleta_ing_prov_servicios'][$idInterno]['vTotal']        = $vTotal;
@@ -1872,7 +1868,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['boleta_ing_prov_basicos']['fecha_auto']) OR $_SESSION['boleta_ing_prov_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}
 				if(!isset($_SESSION['boleta_ing_prov_basicos']['idEstado']) OR $_SESSION['boleta_ing_prov_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha seleccionado el estado';}
 				if(!isset($_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto']) OR $_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto']=='' ){   $error['Porc_Impuesto']    = 'error/No hay un porcentaje de retencion configurado';}
-					
+
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la boleta de honorarios';
 			}
@@ -1969,7 +1965,7 @@ require_once '0_validate_user_1.php';
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_boletas_empresas', 'idExistencia = "'.$producto['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
+
 							}
 						}
 					}
@@ -2006,19 +2002,19 @@ require_once '0_validate_user_1.php';
 					/*********************************************************************/
 					//Se guarda en historial la accion
 					if(isset($ultimo_id) && $ultimo_id!=''){    $SIS_data  = "'".$ultimo_id."'";  }else{$SIS_data  = "''";}
-					if(isset($_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']) && $_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']!=''){  
-						$SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']."'";  
+					if(isset($_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']) && $_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']!=''){
+						$SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']."'";
 					}else{
 						$SIS_data .= ",''";
 					}
 					$SIS_data .= ",'1'";                                                   //Creacion Satisfactoria
 					$SIS_data .= ",'Creacion del documento'";                              //Observacion
 					$SIS_data .= ",'".$_SESSION['usuario']['basic_data']['idUsuario']."'"; //idUsuario
-					
+
 					// inserto los datos de registro en la db
 					$SIS_columns = 'idFacturacion, Creacion_fecha, idTipo, Observacion, idUsuario';
 					$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'boleta_honorarios_facturacion_historial', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					/*********************************************************************/
 					//Borro todas las sesiones una vez grabados los datos
 					unset($_SESSION['boleta_ing_prov_basicos']);
@@ -2083,10 +2079,10 @@ require_once '0_validate_user_1.php';
 				if($ndata_3 > 0) {$error['ndata_3'] = 'error/El documento que trata de eliminar ya posee pagos relacionados';}
 
 				/*******************************************************************/
-				
+
 				//Si no hay errores ejecuto el codigo
 				if(empty($error)){
-					
+
 					/********************************************************/
 					//Actualizo la OC
 					$arrServicios = array();
@@ -2098,7 +2094,7 @@ require_once '0_validate_user_1.php';
 								//Boleta Trabajadores
 								case 1:
 									//se actualizan los datos
-									$SIS_data = "idUso='1'" ;
+									$SIS_data = "idUso='1'";
 									$resultado = db_update_data (false, $SIS_data, 'ocompra_listado_existencias_boletas', 'idExistencia = "'.$serv['idExistencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									break;
 								//Boleta Clientes
@@ -2122,7 +2118,7 @@ require_once '0_validate_user_1.php';
 					// Se trae un listado con todos los archivos relacionados
 					$arrArchivos = array();
 					$arrArchivos = db_select_array (false, 'Nombre', 'boleta_honorarios_facturacion_archivos', '', 'idFacturacion ='.$indice, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					/********************************************************/
 					//se borran los datos
 					$resultado_1 = db_delete_data (false, 'boleta_honorarios_facturacion', 'idFacturacion = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -2155,9 +2151,7 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
-	
+
 		break;
 /*******************************************************************************************************************/
 	}

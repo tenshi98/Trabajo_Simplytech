@@ -95,8 +95,8 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idObservacion='".$idObservacion."'";
 				if(isset($idApoderado) && $idApoderado!=''){   $SIS_data .= ",idApoderado='".$idApoderado."'";}
-				if(isset($idUsuario) && $idUsuario!=''){      $SIS_data .= ",idUsuario='".$idUsuario."'";}
-				if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",Fecha='".$Fecha."'";}
+				if(isset($idUsuario) && $idUsuario!=''){       $SIS_data .= ",idUsuario='".$idUsuario."'";}
+				if(isset($Fecha) && $Fecha!=''){               $SIS_data .= ",Fecha='".$Fecha."'";}
 				if(isset($Observacion) && $Observacion!=''){   $SIS_data .= ",Observacion='".$Observacion."'";}
 
 				/*******************************************************/

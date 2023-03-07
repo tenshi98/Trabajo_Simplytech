@@ -42,7 +42,7 @@ if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){
 	$z .= " AND aguas_facturacion_listado_detalle.idCliente=".$_GET['idCliente'];
 	$search .= '&idCliente='.$_GET['idCliente'];
 }
-		
+
 //obtengo las facturaciones 
 $arrConsumos = array();
 $query = "SELECT 

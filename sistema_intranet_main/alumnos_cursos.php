@@ -239,7 +239,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				/*if(isset($Semanas)){     $x3  = $Semanas;     }else{$x3  = '';}
 				if(isset($F_inicio)){    $x4  = $F_inicio;    }else{$x4  = '';}
 				if(isset($F_termino)){   $x5  = $F_termino;   }else{$x5  = '';}*/
-				
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);

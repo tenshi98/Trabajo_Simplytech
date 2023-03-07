@@ -67,7 +67,7 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idCategoria) && $idCategoria!=''){  $SIS_data  = "'".$idCategoria."'"; }else{$SIS_data  = "''";}
-				if(isset($idTipo) && $idTipo!=''){           $SIS_data .= ",'".$idTipo."'";     }else{$SIS_data .= ",''";}
+				if(isset($idTipo) && $idTipo!=''){            $SIS_data .= ",'".$idTipo."'";     }else{$SIS_data .= ",''";}
 				if(isset($idProceso) && $idProceso!=''){      $SIS_data .= ",'".$idProceso."'";  }else{$SIS_data .= ",''";}
 				if(isset($idSistema) && $idSistema!=''){      $SIS_data .= ",'".$idSistema."'";  }else{$SIS_data .= ",''";}
 
@@ -106,7 +106,7 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idEmbalaje='".$idEmbalaje."'";
 				if(isset($idCategoria) && $idCategoria!=''){   $SIS_data .= ",idCategoria='".$idCategoria."'";}
-				if(isset($idTipo) && $idTipo!=''){            $SIS_data .= ",idTipo='".$idTipo."'";}
+				if(isset($idTipo) && $idTipo!=''){             $SIS_data .= ",idTipo='".$idTipo."'";}
 				if(isset($idProceso) && $idProceso!=''){       $SIS_data .= ",idProceso='".$idProceso."'";}
 				if(isset($idSistema) && $idSistema!=''){       $SIS_data .= ",idSistema='".$idSistema."'";}
 

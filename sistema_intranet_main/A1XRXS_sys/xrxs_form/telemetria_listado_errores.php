@@ -28,7 +28,7 @@ require_once '0_validate_user_1.php';
 				$idSistema    = $_SESSION['usuario']['basic_data']['idSistema'];
 
 				//Filtros
-				$SIS_data = "idLeido='1'" ;
+				$SIS_data = "idLeido='1'";
 
 				/*******************************************************/
 				//se actualizan los datos
@@ -72,7 +72,7 @@ require_once '0_validate_user_1.php';
 				$idSistema    = $_SESSION['usuario']['basic_data']['idSistema'];
 
 				//Filtros
-				$SIS_data = "idLeido='1'" ;
+				$SIS_data = "idLeido='1'";
 
 				/*******************************************************/
 				//se actualizan los datos
@@ -80,7 +80,7 @@ require_once '0_validate_user_1.php';
 
 				/*******************************************************/
 				//se actualizan los datos
-				$SIS_data = "NAlertas='0'" ;
+				$SIS_data = "NAlertas='0'";
 				$resultado = db_update_data (false, $SIS_data, 'telemetria_listado', 'idTelemetria = "'.$idTelemetria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//Si ejecuto correctamente la consulta
 				if($resultado==true){

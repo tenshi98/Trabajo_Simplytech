@@ -152,7 +152,7 @@ $html .= '
 					$html .= '
 					</tbody>
 				</table>';
-			
+
 			$html .= '
 			</td>
 		</tr>

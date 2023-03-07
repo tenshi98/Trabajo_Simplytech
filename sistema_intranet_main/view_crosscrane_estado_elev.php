@@ -238,7 +238,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				/*****************************************/
 				//recorro
 				for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-					
+
 					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_amperaje']){
 						//suma totales
 						$alimentacion_total     = $alimentacion_total + $rowResult['Sensor_amperaje_'.$i.'_Prom'];
@@ -248,7 +248,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						//busco el valor maximo
 						if($rowResult['Sensor_amperaje_'.$i.'_Prom']>$alimentacion_max){$alimentacion_max = $rowResult['Sensor_amperaje_'.$i.'_Prom'];}
 					}
-					
+
 					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_motor_subida']){
 						//suma totales
 						$motor_subida_total     = $motor_subida_total + $rowResult['Sensor_motor_subida_'.$i.'_Prom'];
@@ -258,7 +258,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						//busco el valor maximo
 						if($rowResult['Sensor_motor_subida_'.$i.'_Prom']>$motor_subida_max){$motor_subida_max = $rowResult['Sensor_motor_subida_'.$i.'_Prom'];}
 					}
-					
+
 					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_motor_bajada']){
 						//suma totales
 						$motor_bajada_total     = $motor_bajada_total + $rowResult['Sensor_motor_bajada_'.$i.'_Prom'];
@@ -268,7 +268,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						//busco el valor maximo
 						if($rowResult['Sensor_motor_bajada_'.$i.'_Prom']>$motor_bajada_max){$motor_bajada_max = $rowResult['Sensor_motor_bajada_'.$i.'_Prom'];}
 					}
-					
+
 					if($rowdata['SensoresGrupo_'.$i]==$rowdata['CrossCrane_grupo_voltaje']){
 						//promedio
 						$voltaje_prom_total = $voltaje_prom_total + $rowResult['Sensor_voltaje_'.$i.'_Prom'];
@@ -498,11 +498,11 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 						
 						var options_gauge_1  = "";
 						var options_gauge_2  = "";
-								
+
 						//carga de los graficos
 						google.charts.setOnLoadCallback(Chart_correccion_1);
 						google.charts.setOnLoadCallback(Chart_correccion_2);
-								
+
 						/* ************************************************************************** */
 						function Chart_correccion_1() {
 							var data_correccion_rows_1 = <?php echo $margen_motor_subida; ?>;
@@ -811,7 +811,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 													
 									//muestro la infowindow al inicio
 									infowindow.open(map,marker);
-									
 
 								}
 								/* ************************************************************************** */

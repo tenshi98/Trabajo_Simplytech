@@ -52,7 +52,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){           $Nombre      = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){            $Nombre      = EstandarizarInput($Nombre);}
 	if(isset($Marca) && $Marca!=''){              $Marca       = EstandarizarInput($Marca);}
 	if(isset($Descripcion) && $Descripcion!=''){  $Descripcion = EstandarizarInput($Descripcion);}
 	if(isset($Codigo) && $Codigo!=''){            $Codigo      = EstandarizarInput($Codigo);}
@@ -91,15 +91,15 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($Nombre) && $Nombre!=''){                  $SIS_data  = "'".$Nombre."'";           }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){                   $SIS_data  = "'".$Nombre."'";           }else{$SIS_data  = "''";}
 				if(isset($Marca) && $Marca!=''){                     $SIS_data .= ",'".$Marca."'";           }else{$SIS_data .= ",''";}
-				if(isset($Descripcion) && $Descripcion!=''){         $SIS_data .= ",'".$Descripcion."'";   }else{$SIS_data .= ",''";}
+				if(isset($Descripcion) && $Descripcion!=''){         $SIS_data .= ",'".$Descripcion."'";     }else{$SIS_data .= ",''";}
 				if(isset($Codigo) && $Codigo!=''){                   $SIS_data .= ",'".$Codigo."'";          }else{$SIS_data .= ",''";}
 				if(isset($idProveedor) && $idProveedor!=''){         $SIS_data .= ",'".$idProveedor."'";     }else{$SIS_data .= ",''";}
 				if(isset($Direccion_img) && $Direccion_img!=''){     $SIS_data .= ",'".$Direccion_img."'";   }else{$SIS_data .= ",''";}
 				if(isset($FichaTecnica) && $FichaTecnica!=''){       $SIS_data .= ",'".$FichaTecnica."'";    }else{$SIS_data .= ",''";}
 				if(isset($HDS) && $HDS!=''){                         $SIS_data .= ",'".$HDS."'";             }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){              $SIS_data .= ",'".$idEstado."'";        }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",'".$idEstado."'";        }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'Nombre,Marca,Descripcion,Codigo, idProveedor,Direccion_img,FichaTecnica,HDS, idEstado';
@@ -136,7 +136,7 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				$SIS_data = "idEquipo='".$idEquipo."'";
-				if(isset($Nombre) && $Nombre!=''){                  $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){                   $SIS_data .= ",Nombre='".$Nombre."'";}
 				if(isset($Marca) && $Marca!=''){                     $SIS_data .= ",Marca='".$Marca."'";}
 				if(isset($Descripcion) && $Descripcion!=''){         $SIS_data .= ",Descripcion='".$Descripcion."'";}
 				if(isset($Codigo) && $Codigo!=''){                   $SIS_data .= ",Codigo='".$Codigo."'";}
@@ -144,7 +144,7 @@ require_once '0_validate_user_1.php';
 				if(isset($Direccion_img) && $Direccion_img!=''){     $SIS_data .= ",Direccion_img='".$Direccion_img."'";}
 				if(isset($FichaTecnica) && $FichaTecnica!=''){       $SIS_data .= ",FichaTecnica='".$FichaTecnica."'";}
 				if(isset($HDS) && $HDS!=''){                         $SIS_data .= ",HDS='".$HDS."'";}
-				if(isset($idEstado) && $idEstado!=''){              $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($idEstado) && $idEstado!=''){               $SIS_data .= ",idEstado='".$idEstado."'";}
 
 				/*******************************************************/
 				//se actualizan los datos
@@ -156,7 +156,6 @@ require_once '0_validate_user_1.php';
 					die;
 
 				}
-				
 
 			}
 
@@ -390,7 +389,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "Direccion_img=''" ;
+			$SIS_data = "Direccion_img=''";
 			$resultado = db_update_data (false, $SIS_data, 'equipos_arriendo_listado', 'idEquipo = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -426,7 +425,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "FichaTecnica=''" ;
+			$SIS_data = "FichaTecnica=''";
 			$resultado = db_update_data (false, $SIS_data, 'equipos_arriendo_listado', 'idEquipo = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
@@ -462,7 +461,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "HDS=''" ;
+			$SIS_data = "HDS=''";
 			$resultado = db_update_data (false, $SIS_data, 'equipos_arriendo_listado', 'idEquipo = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){

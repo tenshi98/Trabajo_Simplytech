@@ -87,7 +87,7 @@ require_once '0_validate_user_1.php';
 
 				//se verifica si la imagen existe
 				if (!empty($_FILES['File_Amonestacion']['name'])){
-						
+
 					if ($_FILES["File_Amonestacion"]["error"] > 0){
 						$error['File_Amonestacion'] = 'error/'.uploadPHPError($_FILES["File_Amonestacion"]["error"]);
 					} else {
@@ -95,7 +95,7 @@ require_once '0_validate_user_1.php';
 						$permitidos = array("application/msword",
 											"application/vnd.ms-word",
 											"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-													
+
 											"application/pdf",
 											"application/octet-stream",
 											"application/x-real",
@@ -113,7 +113,7 @@ require_once '0_validate_user_1.php';
 						$limite_kb = 10000;
 						//Sufijo
 						$sufijo = 'amonestacion_'.$idTrabajador.'_'.genera_password_unica().'_';
-									  
+
 						if (in_array($_FILES['File_Amonestacion']['type'], $permitidos) && $_FILES['File_Amonestacion']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
 							$ruta = "upload/".$sufijo.$_FILES['File_Amonestacion']['name'];
@@ -125,10 +125,10 @@ require_once '0_validate_user_1.php';
 
 									//filtros
 									if(isset($idSistema) && $idSistema!=''){                $SIS_data  = "'".$idSistema."'";         }else{$SIS_data  = "''";}
-									if(isset($idTrabajador) && $idTrabajador!=''){         $SIS_data .= ",'".$idTrabajador."'";     }else{$SIS_data .= ",''";}
-									if(isset($idUsuario) && $idUsuario!=''){               $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
+									if(isset($idTrabajador) && $idTrabajador!=''){          $SIS_data .= ",'".$idTrabajador."'";     }else{$SIS_data .= ",''";}
+									if(isset($idUsuario) && $idUsuario!=''){                $SIS_data .= ",'".$idUsuario."'";        }else{$SIS_data .= ",''";}
 									if(isset($Fecha_ingreso) && $Fecha_ingreso!=''){        $SIS_data .= ",'".$Fecha_ingreso."'";    }else{$SIS_data .= ",''";}
-									if(isset($Fecha) && $Fecha!=''){   $SIS_data .= ",'".$Fecha."'";           }else{$SIS_data .= ",''";}
+									if(isset($Fecha) && $Fecha!=''){                        $SIS_data .= ",'".$Fecha."'";            }else{$SIS_data .= ",''";}
 									if(isset($idAmonestaciones) && $idAmonestaciones!=''){  $SIS_data .= ",'".$idAmonestaciones."'"; }else{$SIS_data .= ",''";}
 									if(isset($Observacion) && $Observacion!=''){            $SIS_data .= ",'".$Observacion."'";      }else{$SIS_data .= ",''";}
 									$SIS_data .= ",'".$sufijo.$_FILES['File_Amonestacion']['name']."'";
@@ -143,7 +143,7 @@ require_once '0_validate_user_1.php';
 										header( 'Location: '.$location.'&created=true' );
 										die;
 									}
-													
+
 								}else {
 									$error['File_Amonestacion']     = 'error/Ocurrio un error al mover el archivo';
 								}
@@ -158,10 +158,10 @@ require_once '0_validate_user_1.php';
 
 					//filtros
 					if(isset($idSistema) && $idSistema!=''){               $SIS_data  = "'".$idSistema."'";          }else{$SIS_data  = "''";}
-					if(isset($idTrabajador) && $idTrabajador!=''){        $SIS_data .= ",'".$idTrabajador."'";      }else{$SIS_data .= ",''";}
-					if(isset($idUsuario) && $idUsuario!=''){              $SIS_data .= ",'".$idUsuario."'";         }else{$SIS_data .= ",''";}
+					if(isset($idTrabajador) && $idTrabajador!=''){         $SIS_data .= ",'".$idTrabajador."'";      }else{$SIS_data .= ",''";}
+					if(isset($idUsuario) && $idUsuario!=''){               $SIS_data .= ",'".$idUsuario."'";         }else{$SIS_data .= ",''";}
 					if(isset($Fecha_ingreso) && $Fecha_ingreso!=''){       $SIS_data .= ",'".$Fecha_ingreso."'";     }else{$SIS_data .= ",''";}
-					if(isset($Fecha) && $Fecha!=''){  $SIS_data .= ",'".$Fecha."'";            }else{$SIS_data .= ",''";}
+					if(isset($Fecha) && $Fecha!=''){                       $SIS_data .= ",'".$Fecha."'";             }else{$SIS_data .= ",''";}
 					if(isset($idAmonestaciones) && $idAmonestaciones!=''){ $SIS_data .= ",'".$idAmonestaciones."'";  }else{$SIS_data .= ",''";}
 					if(isset($Observacion) && $Observacion!=''){           $SIS_data .= ",'".$Observacion."'";       }else{$SIS_data .= ",''";}
 
@@ -206,7 +206,7 @@ require_once '0_validate_user_1.php';
 
 				//se verifica si la imagen existe
 				if (!empty($_FILES['File_Amonestacion']['name'])){
-						
+
 					if ($_FILES["File_Amonestacion"]["error"] > 0){
 						$error['File_Amonestacion'] = 'error/'.uploadPHPError($_FILES["File_Amonestacion"]["error"]);
 					} else {
@@ -214,7 +214,7 @@ require_once '0_validate_user_1.php';
 						$permitidos = array("application/msword",
 											"application/vnd.ms-word",
 											"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-													
+
 											"application/pdf",
 											"application/octet-stream",
 											"application/x-real",
@@ -232,7 +232,7 @@ require_once '0_validate_user_1.php';
 						$limite_kb = 10000;
 						//Sufijo
 						$sufijo = 'amonestacion_'.$idTrabajador.'_'.genera_password_unica().'_';
-									  
+
 						if (in_array($_FILES['File_Amonestacion']['type'], $permitidos) && $_FILES['File_Amonestacion']['size'] <= $limite_kb * 1024){
 							//Se especifica carpeta de destino
 							$ruta = "upload/".$sufijo.$_FILES['File_Amonestacion']['name'];
@@ -245,10 +245,10 @@ require_once '0_validate_user_1.php';
 									//Filtros
 									$SIS_data = "idCartaAmo='".$idCartaAmo."'";
 									if(isset($idSistema) && $idSistema!=''){                $SIS_data .= ",idSistema='".$idSistema."'";}
-									if(isset($idTrabajador) && $idTrabajador!=''){         $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
-									if(isset($idUsuario) && $idUsuario!=''){               $SIS_data .= ",idUsuario='".$idUsuario."'";}
+									if(isset($idTrabajador) && $idTrabajador!=''){          $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
+									if(isset($idUsuario) && $idUsuario!=''){                $SIS_data .= ",idUsuario='".$idUsuario."'";}
 									if(isset($Fecha_ingreso) && $Fecha_ingreso!=''){        $SIS_data .= ",Fecha_ingreso='".$Fecha_ingreso."'";}
-									if(isset($Fecha) && $Fecha!=''){   $SIS_data .= ",Fecha='".$Fecha."'";}
+									if(isset($Fecha) && $Fecha!=''){                        $SIS_data .= ",Fecha='".$Fecha."'";}
 									if(isset($idAmonestaciones) && $idAmonestaciones!=''){  $SIS_data .= ",idAmonestaciones='".$idAmonestaciones."'";}
 									if(isset($Observacion) && $Observacion!=''){            $SIS_data .= ",Observacion='".$Observacion."'";}
 									$SIS_data .= ",File_Amonestacion='".$sufijo.$_FILES['File_Amonestacion']['name']."'";
@@ -258,7 +258,7 @@ require_once '0_validate_user_1.php';
 									$resultado = db_update_data (false, $SIS_data, 'trabajadores_cartas_amonestacion', 'idCartaAmo = "'.$idCartaAmo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 									//Si ejecuto correctamente la consulta
 									if($resultado==true){
-										
+
 										header( 'Location: '.$location.'&edited=true' );
 										die;
 
@@ -278,10 +278,10 @@ require_once '0_validate_user_1.php';
 					//Filtros
 					$SIS_data = "idCartaAmo='".$idCartaAmo."'";
 					if(isset($idSistema) && $idSistema!=''){                $SIS_data .= ",idSistema='".$idSistema."'";}
-					if(isset($idTrabajador) && $idTrabajador!=''){         $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
-					if(isset($idUsuario) && $idUsuario!=''){               $SIS_data .= ",idUsuario='".$idUsuario."'";}
+					if(isset($idTrabajador) && $idTrabajador!=''){          $SIS_data .= ",idTrabajador='".$idTrabajador."'";}
+					if(isset($idUsuario) && $idUsuario!=''){                $SIS_data .= ",idUsuario='".$idUsuario."'";}
 					if(isset($Fecha_ingreso) && $Fecha_ingreso!=''){        $SIS_data .= ",Fecha_ingreso='".$Fecha_ingreso."'";}
-					if(isset($Fecha) && $Fecha!=''){   $SIS_data .= ",Fecha='".$Fecha."'";}
+					if(isset($Fecha) && $Fecha!=''){                        $SIS_data .= ",Fecha='".$Fecha."'";}
 					if(isset($idAmonestaciones) && $idAmonestaciones!=''){  $SIS_data .= ",idAmonestaciones='".$idAmonestaciones."'";}
 					if(isset($Observacion) && $Observacion!=''){            $SIS_data .= ",Observacion='".$Observacion."'";}
 
@@ -290,7 +290,7 @@ require_once '0_validate_user_1.php';
 					$resultado = db_update_data (false, $SIS_data, 'trabajadores_cartas_amonestacion', 'idCartaAmo = "'.$idCartaAmo.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Si ejecuto correctamente la consulta
 					if($resultado==true){
-						
+
 						header( 'Location: '.$location.'&edited=true' );
 						die;
 
@@ -376,7 +376,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "File_Amonestacion=''" ;
+			$SIS_data = "File_Amonestacion=''";
 			$resultado = db_update_data (false, $SIS_data, 'trabajadores_cartas_amonestacion', 'idCartaAmo = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){

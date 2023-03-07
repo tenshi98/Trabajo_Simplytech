@@ -188,11 +188,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								$colacion           = 0;
 								$FueraHorario       = 0;
 								//Recorrido
-								foreach ($permisos as $con) { 
+								foreach ($permisos as $con) {
 									/*****************************************************************/
 									//Verifico si esta dentro del mismo dia
 									if($fecha!=''&&$fecha==$con['EquipoFecha']){
-										
+
 										/***************************************/
 										//Verifico hora inicio
 										if($HoraInicio>$con['EquipoHora']&&$con['EquipoValor']==$con['EquipoActivacionValor']){
@@ -241,7 +241,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 												}
 											}
 										}
-										
+
 										/***************************************/
 										//Verifico el sobretiempo
 										if($SobreTiempo_1=='00:00:00'&&$con['EquipoJornada_inicio']>=$con['EquipoHora']&&$con['EquipoValor']==$con['EquipoActivacionValor']){
@@ -250,7 +250,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										if($con['EquipoJornada_termino']<=$con['EquipoHora']&&$con['EquipoValor']!=$con['EquipoActivacionValor']){
 											$SobreTiempo_2 = restahoras($con['EquipoJornada_termino'],$con['EquipoHora'] );
 										}
-										
+
 										/***************************************/
 										//Verifico si tiene algun dato que figure como fuera de horario
 										if(isset($con['FueraHorario'])&&$con['FueraHorario']==1){

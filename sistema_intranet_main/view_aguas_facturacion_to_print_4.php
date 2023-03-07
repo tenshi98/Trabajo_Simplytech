@@ -67,7 +67,7 @@
 			if(isset($rowDatos['ClienteRemarcador'])&&$rowDatos['ClienteRemarcador']!=''&&$rowDatos['ClienteRemarcador']!=0){
 				$ndecim = 2;
 			}else{
-				$ndecim = 0;	
+				$ndecim = 0;
 			}
 			?>
 		<tr>

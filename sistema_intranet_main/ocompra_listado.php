@@ -911,7 +911,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_select_disabled('Insumo','idProducto_fake', $x1, 1, 'idProducto', 'Nombre', 'insumos_listado', $zx2, $dbConn);
 				$Form_Inputs->form_input_disabled('Cantidad','Cantidad_fake', $x2);
 				/****************************/
-				
+
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['ocompra_insumos'][$_GET['editIns']]['idProducto'], 2);
 
 				if(isset($row_data['Proveedor'])&&$row_data['Proveedor']!=''){$prov=$row_data['Proveedor'];}else{$prov='Sin proveedor';}
@@ -1100,7 +1100,7 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_select_disabled('Producto','idProducto_fake', $x1, 1, 'idProducto', 'Nombre', 'productos_listado', $zx1, $dbConn);
 				$Form_Inputs->form_input_disabled('Cantidad','Cantidad_fake', $x2);
 				/****************************/
-				
+
 				$Form_Inputs->form_input_hidden('oldidProducto', $_SESSION['ocompra_productos'][$_GET['editProd']]['idProducto'], 2);
 
 				if(isset($row_data['Proveedor'])&&$row_data['Proveedor']!=''){$prov=$row_data['Proveedor'];}else{$prov='Sin proveedor';}
@@ -1239,9 +1239,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1);
-				
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
@@ -1713,9 +1711,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x1, 2, 'idProveedor', 'Nombre', 'proveedor_listado', $w, '', $dbConn);
 				$Form_Inputs->form_date('Fecha de Orden de Compra','Creacion_fecha', $x2, 2);
 				$Form_Inputs->form_textarea('Observaciones','Observaciones', $x3, 1);
-				
-				
-				
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);

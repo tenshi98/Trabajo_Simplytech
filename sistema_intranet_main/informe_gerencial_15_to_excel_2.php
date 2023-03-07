@@ -186,7 +186,7 @@ $nn=3;
 foreach ($arrCreativo as $datais) {
 	$spreadsheet->setActiveSheetIndex(0)->setCellValue('A'.$nn, DeSanitizar($datais[0]['Proveedor']));
 	$nn++;
-	
+
 	foreach ($datais as $prod) {
 
 		// subtotales Netos

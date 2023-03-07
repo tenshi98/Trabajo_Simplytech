@@ -41,8 +41,7 @@ $Total_Temperatura = 0;
 $Total_Humedad     = 0;
 $Total_Presion     = 0;
 $Count_Data        = 0;
-		
-		
+
 //filtro
 $z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
 //solo los equipos que tengan el seguimiento activado
@@ -106,7 +105,7 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrEquipo,$row );
 }
-		
+
 /*************************************************************/
 //Se traen todas las unidades de medida
 $arrUnimed = array();

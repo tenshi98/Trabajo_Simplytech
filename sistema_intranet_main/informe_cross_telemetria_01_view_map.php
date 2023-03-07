@@ -71,10 +71,10 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelaciona
 							mapTypeId: google.maps.MapTypeId.SATELLITE
 						}
 						var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-								
+
 						// marker position
 						var factory = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
-								
+
 						// InfoWindow content
 						var content = '<div id="iw-container">' +
 										'<div class="iw-title">Mediciones</div>' +
@@ -173,7 +173,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelaciona
 										
 						//muestro la infowindow al inicio
 						infowindow.open(map,marker);
-								
+
 						//centralizo el mapa en base al ultimo dato obtenido
 						map.panTo(marker.getPosition());
 								

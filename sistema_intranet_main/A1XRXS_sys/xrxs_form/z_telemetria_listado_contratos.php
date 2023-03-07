@@ -199,10 +199,10 @@ require_once '0_validate_user_1.php';
 				/***********************************************************/
 				//Actualizo la tabla de telemetria relacionado
 				$SIS_data = "idTelemetria='".$idTelemetria."'";
-				$SIS_data .= ",idContrato=''" ;
-				$SIS_data .= ",Codigo=''" ;
-				$SIS_data .= ",F_Inicio=''" ;
-				$SIS_data .= ",F_Termino=''" ;
+				$SIS_data .= ",idContrato=''";
+				$SIS_data .= ",Codigo=''";
+				$SIS_data .= ",F_Inicio=''";
+				$SIS_data .= ",F_Termino=''";
 
 				/*******************************************************/
 				//se actualizan los datos

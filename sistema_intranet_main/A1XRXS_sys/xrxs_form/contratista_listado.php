@@ -19,12 +19,12 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idEstado']))         $idEstado           = $_POST['idEstado'];
 	if (!empty($_POST['idTipo']))           $idTipo             = $_POST['idTipo'];
 	if (!empty($_POST['email']))            $email              = $_POST['email'];
-	if (!empty($_POST['Nombre']))           $Nombre 	          = $_POST['Nombre'];
-	if (!empty($_POST['Rut']))              $Rut 	              = $_POST['Rut'];
-	if (!empty($_POST['fNacimiento']))      $fNacimiento 	      = $_POST['fNacimiento'];
-	if (!empty($_POST['Direccion']))        $Direccion 	      = $_POST['Direccion'];
-	if (!empty($_POST['Fono1']))            $Fono1 	          = $_POST['Fono1'];
-	if (!empty($_POST['Fono2']))            $Fono2 	          = $_POST['Fono2'];
+	if (!empty($_POST['Nombre']))           $Nombre 	        = $_POST['Nombre'];
+	if (!empty($_POST['Rut']))              $Rut 	            = $_POST['Rut'];
+	if (!empty($_POST['fNacimiento']))      $fNacimiento 	    = $_POST['fNacimiento'];
+	if (!empty($_POST['Direccion']))        $Direccion 	        = $_POST['Direccion'];
+	if (!empty($_POST['Fono1']))            $Fono1 	            = $_POST['Fono1'];
+	if (!empty($_POST['Fono2']))            $Fono2 	            = $_POST['Fono2'];
 	if (!empty($_POST['idCiudad']))         $idCiudad           = $_POST['idCiudad'];
 	if (!empty($_POST['idComuna']))         $idComuna           = $_POST['idComuna'];
 	if (!empty($_POST['Fax']))              $Fax                = $_POST['Fax'];
@@ -51,7 +51,7 @@ require_once '0_validate_user_1.php';
 			case 'idTipo':            if(empty($idTipo)){            $error['idTipo']             = 'error/No ha seleccionado el tipo de contratista';}break;
 			case 'email':             if(empty($email)){             $error['email']              = 'error/No ha ingresado la email';}break;
 			case 'Nombre':            if(empty($Nombre)){            $error['Nombre']             = 'error/No ha ingresado el Nombre';}break;
-			case 'Rut':               if(empty($Rut)){               $error['Rut']                = 'error/No ha ingresado el Rut';}break;	
+			case 'Rut':               if(empty($Rut)){               $error['Rut']                = 'error/No ha ingresado el Rut';}break;
 			case 'fNacimiento':       if(empty($fNacimiento)){       $error['fNacimiento']        = 'error/No ha ingresado la fecha de nacimiento';}break;
 			case 'Direccion':         if(empty($Direccion)){         $error['Direccion']          = 'error/No ha ingresado la direccion';}break;
 			case 'Fono1':             if(empty($Fono1)){             $error['Fono1']              = 'error/No ha ingresado el numero telefonico';}break;
@@ -71,7 +71,7 @@ require_once '0_validate_user_1.php';
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
 	if(isset($email) && $email!=''){                     $email           = EstandarizarInput($email);}
-	if(isset($Nombre) && $Nombre!=''){                  $Nombre          = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){                   $Nombre          = EstandarizarInput($Nombre);}
 	if(isset($Direccion) && $Direccion!=''){             $Direccion       = EstandarizarInput($Direccion);}
 	if(isset($PersonaContacto) && $PersonaContacto!=''){ $PersonaContacto = EstandarizarInput($PersonaContacto);}
 	if(isset($Web) && $Web!=''){                         $Web             = EstandarizarInput($Web);}
@@ -83,10 +83,10 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($email)&&!validarEmail($email)){   $error['email']   = 'error/El Email ingresado no es valido';}
-	if(isset($Fono1)&&!validarNumero($Fono1)){ $error['Fono1']   = 'error/Ingrese un numero telefonico valido';}
-	if(isset($Fono2)&&!validarNumero($Fono2)){ $error['Fono2']   = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Fono1)&&!validarNumero($Fono1)){  $error['Fono1']   = 'error/Ingrese un numero telefonico valido';}
+	if(isset($Fono2)&&!validarNumero($Fono2)){  $error['Fono2']   = 'error/Ingrese un numero telefonico valido';}
 	if(isset($Rut)&&!validarRut($Rut)){         $error['Rut']     = 'error/El Rut ingresado no es valido';}
-	if(isset($Fax)&&!validarNumero($Fax)){     $error['Fax']     = 'error/Ingrese un numero de fax valido';}
+	if(isset($Fax)&&!validarNumero($Fax)){      $error['Fax']     = 'error/Ingrese un numero de fax valido';}
 
 	if(isset($email)&&contar_palabras_censuradas($email)!=0){                      $error['email']           = 'error/Edita email, contiene palabras no permitidas';}
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                    $error['Nombre']          = 'error/Edita Nombre,contiene palabras no permitidas';}

@@ -60,7 +60,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($Nombre) && $Nombre!=''){$Nombre = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){ $Nombre = EstandarizarInput($Nombre);}
 	if(isset($Codigo) && $Codigo!=''){ $Codigo = EstandarizarInput($Codigo);}
 
 /*******************************************************************************************************************/
@@ -97,8 +97,8 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				if(isset($idPredio) && $idPredio!=''){                    $SIS_data  = "'".$idPredio."'";            }else{$SIS_data  = "''";}
-				if(isset($Nombre) && $Nombre!=''){                       $SIS_data .= ",'".$Nombre."'";             }else{$SIS_data .= ",''";}
-				if(isset($idEstado) && $idEstado!=''){                   $SIS_data .= ",'".$idEstado."'";           }else{$SIS_data .= ",''";}
+				if(isset($Nombre) && $Nombre!=''){                        $SIS_data .= ",'".$Nombre."'";             }else{$SIS_data .= ",''";}
+				if(isset($idEstado) && $idEstado!=''){                    $SIS_data .= ",'".$idEstado."'";           }else{$SIS_data .= ",''";}
 				if(isset($Codigo) && $Codigo!=''){                        $SIS_data .= ",'".$Codigo."'";             }else{$SIS_data .= ",''";}
 				if(isset($idCategoria) && $idCategoria!=''){              $SIS_data .= ",'".$idCategoria."'";        }else{$SIS_data .= ",''";}
 				if(isset($idProducto) && $idProducto!=''){                $SIS_data .= ",'".$idProducto."'";         }else{$SIS_data .= ",''";}
@@ -145,8 +145,8 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idZona='".$idZona."'";
 				if(isset($idPredio) && $idPredio!=''){                   $SIS_data .= ",idPredio='".$idPredio."'";}
-				if(isset($Nombre) && $Nombre!=''){                      $SIS_data .= ",Nombre='".$Nombre."'";}
-				if(isset($idEstado) && $idEstado!=''){                  $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($Nombre) && $Nombre!=''){                       $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($idEstado) && $idEstado!=''){                   $SIS_data .= ",idEstado='".$idEstado."'";}
 				if(isset($Codigo) && $Codigo!=''){                       $SIS_data .= ",Codigo='".$Codigo."'";}
 				if(isset($idCategoria) && $idCategoria!=''){             $SIS_data .= ",idCategoria='".$idCategoria."'";}
 				if(isset($idProducto) && $idProducto!=''){               $SIS_data .= ",idProducto='".$idProducto."'";}

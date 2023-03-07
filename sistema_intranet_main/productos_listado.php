@@ -372,7 +372,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 								
 							} else {
 								document.getElementById('div_idTipoReceta').style.display = 'none';
-								
+
 							}
 						
 						});

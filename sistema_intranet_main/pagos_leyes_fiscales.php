@@ -1122,9 +1122,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn); ?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				
-				
-				
+
 				$Form_Inputs->form_input_disabled('Saldo IVA Total','fake_emp', $x0);
 				$Form_Inputs->form_input_disabled($xtext,'fake_emp', $x1);
 				$Form_Inputs->form_input_number('Monto a Pagar', 'IVA_MontoPago', $x2, 2);

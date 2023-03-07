@@ -72,7 +72,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//filtros
-				if(isset($Nombre) && $Nombre!=''){         $SIS_data  = "'".$Nombre."'";       }else{$SIS_data  = "''";}
+				if(isset($Nombre) && $Nombre!=''){          $SIS_data  = "'".$Nombre."'";       }else{$SIS_data  = "''";}
 				if(isset($idSistema) && $idSistema!=''){    $SIS_data .= ",'".$idSistema."'";   }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
@@ -110,7 +110,7 @@ require_once '0_validate_user_1.php';
 				//Filtros
 				$SIS_data = "idRuta='".$idRuta."'";
 				if(isset($idSistema) && $idSistema!=''){    $SIS_data .= ",idSistema='".$idSistema."'";}
-				if(isset($Nombre) && $Nombre!=''){         $SIS_data .= ",Nombre='".$Nombre."'";}
+				if(isset($Nombre) && $Nombre!=''){          $SIS_data .= ",Nombre='".$Nombre."'";}
 
 				/*******************************************************/
 				//se actualizan los datos
@@ -172,8 +172,7 @@ require_once '0_validate_user_1.php';
 				//se valida hackeo
 				require_once '0_hacking_1.php';
 			}
-			
-			
+
 		break;
 
 /*******************************************************************************************************************/

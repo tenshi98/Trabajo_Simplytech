@@ -1266,7 +1266,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 							<?php } ?>
 						</td>
 					</tr>
-					<?php foreach ($arrTarea as $tarea) {  
+					<?php foreach ($arrTarea as $tarea) {
 						$s_tarea = $tarea['LicitacionLVL_1'];
 						if(isset($tarea['LicitacionLVL_2'])&&$tarea['LicitacionLVL_2']!=''){$s_tarea .= ' - '.$tarea['LicitacionLVL_2'];}
 						if(isset($tarea['LicitacionLVL_3'])&&$tarea['LicitacionLVL_3']!=''){$s_tarea .= ' - '.$tarea['LicitacionLVL_3'];}
@@ -1320,7 +1320,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 								</div>
 							</td>
 						</tr>
-						<?php if($arrArchivos){ 
+						<?php if($arrArchivos){
 								$zxcv = 0;
 								foreach ($arrArchivos as $arch) {
 									if(isset($arch['idTrabajoOT'])&&$arch['idTrabajoOT']==$tarea['idTrabajoOT']){

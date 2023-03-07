@@ -302,7 +302,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 					<?php
 					foreach ($arrTipo as $tipo) {
 						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
-						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 					}
 					?>
 					document.getElementById("idProducto").onchange = function() {myFunction()};
@@ -384,7 +384,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 					<?php
 					foreach ($arrTipo as $tipo) {
 						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
-						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 					}
 					?>
 					document.getElementById("idProducto").onchange = function() {myFunction()};
@@ -677,8 +677,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				if(isset($idProducto)){     $x11 = $idProducto;    }else{$x11 = '';}
 				if(isset($DosisAplicar)){   $x12 = $DosisAplicar;  }else{$x12 = '';}
 				if(isset($Objetivo)){       $x13 = $Objetivo;      }else{$x13 = '';}
-				
-			
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Identificación cuartel');
@@ -715,7 +714,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 					<?php
 					foreach ($arrTipo as $tipo) {
 						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
-						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';	
+						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 					}
 					?>
 					document.getElementById("idProducto").onchange = function() {myFunction()};
@@ -864,7 +863,7 @@ $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 						$Form_Inputs->form_input_number_spinner('Temperatura minima','TempMin', $x16, -20, 500, '0.01', 2, 2);
 						$Form_Inputs->form_input_number_spinner('Temperatura maxima','TempMax', $x17, -20, 500, '0.01', 2, 2);
 						$Form_Inputs->form_input_number_spinner('Humedad','HumTempMax', $x25, -20, 500, '0.01', 2, 2);
-						
+
 						break;
 					//Programada
 					case 2:
@@ -998,7 +997,7 @@ $arrCuarteles = array();
 $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado_cuarteles', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrCuarteles');
 
 /*****************************************/
-//Se trae un listado con los Tractores	
+//Se trae un listado con los tractores
 $SIS_query = '
 cross_solicitud_aplicacion_listado_tractores.idTractores,
 cross_solicitud_aplicacion_listado_tractores.idCuarteles,

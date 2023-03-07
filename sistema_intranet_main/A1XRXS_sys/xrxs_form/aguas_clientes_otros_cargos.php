@@ -44,7 +44,7 @@ require_once '0_validate_user_1.php';
 			case 'idUsuario':        if(empty($idUsuario)){         $error['idUsuario']        = 'error/No ha seleccionado el usuario';}break;
 			case 'FechaEjecucion':   if(empty($FechaEjecucion)){    $error['FechaEjecucion']   = 'error/No ha ingresado la Fecha de Ejecucion';}break;
 			case 'Fecha':            if(empty($Fecha)){             $error['Fecha']            = 'error/No ha ingresado la Fecha';}break;
-			case 'Dia':              if(empty($Dia)){               $error['Dia']              = 'error/No ha ingresado el Dia';}break;	
+			case 'Dia':              if(empty($Dia)){               $error['Dia']              = 'error/No ha ingresado el Dia';}break;
 			case 'idMes':            if(empty($idMes)){             $error['idMes']            = 'error/No ha ingresado el mes';}break;
 			case 'Ano':              if(empty($Ano)){               $error['Ano']              = 'error/No ha ingresado el año';}break;
 			case 'Observacion':      if(empty($Observacion)){       $error['Observacion']      = 'error/No ha ingresado la observacion';}break;
@@ -370,7 +370,7 @@ require_once '0_validate_user_1.php';
 
 			/*******************************************************/
 			//se actualizan los datos
-			$SIS_data = "Archivo=''" ;
+			$SIS_data = "Archivo=''";
 			$resultado = db_update_data (false, $SIS_data, 'aguas_clientes_otros_cargos', 'idOtrosCargos = "'.$_GET['del_Archivo'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){

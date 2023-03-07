@@ -340,7 +340,7 @@ $Form_Inputs = new Inputs();
 								<td style="background-color: #E5E5E5;" colspan="11"><strong>FACTURAS DE PRODUCTOS</strong></td>
 							</tr>
 							<?php
-							foreach ($_SESSION['pago_proveedor_productos'] as $key => $tipo){ 
+							foreach ($_SESSION['pago_proveedor_productos'] as $key => $tipo){
 								$Registro_total++; ?>
 								<tr class="odd">
 									<td>
@@ -418,7 +418,7 @@ $Form_Inputs = new Inputs();
 								<td style="background-color: #E5E5E5;" colspan="11"><strong>FACTURAS DE ARRIENDOS</strong></td>
 							</tr>
 							<?php
-							foreach ($_SESSION['pago_proveedor_arriendo'] as $key => $tipo){ 
+							foreach ($_SESSION['pago_proveedor_arriendo'] as $key => $tipo){
 								$Registro_total++; ?>
 								<tr class="odd">
 									<td>
@@ -496,7 +496,7 @@ $Form_Inputs = new Inputs();
 								<td style="background-color: #E5E5E5;" colspan="11"><strong>FACTURAS DE SERVICIOS</strong></td>
 							</tr>
 							<?php
-							foreach ($_SESSION['pago_proveedor_servicio'] as $key => $tipo){ 
+							foreach ($_SESSION['pago_proveedor_servicio'] as $key => $tipo){
 								$Registro_total++; ?>
 								<tr class="odd">
 									<td>
@@ -775,7 +775,7 @@ $Form_Inputs = new Inputs();
 					<?php
 					//Se verifican si existen los datos
 					if(isset($F_Pago)){     $x1  = $F_Pago;   }else{$x1  = '';}
-				
+
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_date('Fecha de Anulacion','F_Pago', $x1, 2);

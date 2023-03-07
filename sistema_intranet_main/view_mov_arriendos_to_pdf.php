@@ -397,9 +397,9 @@ $html .= '
 										}
 									$html .= '</td>';
 									break;
-								
+
 							}
-						
+
 						$html .= '</tr>
 					</tbody>
 				</table>

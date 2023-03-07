@@ -144,7 +144,7 @@ foreach ($arrGrupos as $sen) {
 								if($in_eq_alertas>0){    
 									$danger = 'warning';
 									$eq_ok  = '<a href="#" title="Con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';
-								}elseif($in_eq_fueralinea>0){ 
+								}elseif($in_eq_fueralinea>0){
 									$danger = 'danger';
 									$eq_ok  = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';
 								}else{
@@ -199,10 +199,10 @@ foreach ($arrGrupos as $sen) {
 									$names[] = $titulo;
 								}
 								array_multisort($names, SORT_ASC, $arrGruposTitulo);
-									
+
 								//se recorre el arreglo
 								foreach($arrGruposTitulo as $titulo=>$items) {
-									
+
 									$columna_a = '';
 									$columna_b = '';
 									$total_col1 = 0;

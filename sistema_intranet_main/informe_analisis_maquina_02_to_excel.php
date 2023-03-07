@@ -218,11 +218,11 @@ foreach ($arrGrupo as $grupo) {
 									->setCellValue('D'.$nn, Cantidades_decimales_justos($rowMaquina['PuntoMedAlerta_'.$i]))
 									->setCellValue('E'.$nn, Cantidades_decimales_justos($rowMaquina['PuntoMedCondenatorio_'.$i]))
 									->setCellValue('F'.$nn, DeSanitizar($uniMed));
-									
+
 						//Suma de 1
 						$nn++;
 					}
-			
+
 					//Suma de 1
 					$nn++;
 				break;

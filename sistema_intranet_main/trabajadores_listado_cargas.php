@@ -102,7 +102,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				if(isset($idSexo)){              $x4  = $idSexo;               }else{$x4  = $rowdata['idSexo'];}
 				if(isset($FNacimiento)){         $x5  = $FNacimiento;          }else{$x5  = $rowdata['FNacimiento'];}
 				if(isset($idEstado)){            $x6  = $idEstado;             }else{$x6  = $rowdata['idEstado'];}
-						
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
@@ -146,7 +146,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				if(isset($ApellidoMat)){         $x3  = $ApellidoMat;          }else{$x3  = '';}
 				if(isset($idSexo)){              $x4  = $idSexo;               }else{$x4  = '';}
 				if(isset($FNacimiento)){         $x5  = $FNacimiento;          }else{$x5  = '';}
-						
+
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
