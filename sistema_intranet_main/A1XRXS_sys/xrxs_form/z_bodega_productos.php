@@ -563,7 +563,7 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['productos_ing_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['productos_ing_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
@@ -1022,14 +1022,14 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_ing_basicos']['idTipo']) OR $_SESSION['productos_ing_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['productos_ing_basicos']['idUsoIVA']) OR $_SESSION['productos_ing_basicos']['idUsoIVA']=='' ){             $error['idUsoIVA']         = 'error/No ha seleccionado la exencion del IVA';}
 				//compruebo que sea una factura y que tenga fecha de pago
-				if(isset($_SESSION['productos_ing_basicos']['idDocumentos']) && $_SESSION['productos_ing_basicos']['idDocumentos']==2 ){     
-					if(!isset($_SESSION['productos_ing_basicos']['Pago_fecha']) OR $_SESSION['productos_ing_basicos']['Pago_fecha']=='' OR $_SESSION['productos_ing_basicos']['Pago_fecha']=='0000-00-00' ){     
+				if(isset($_SESSION['productos_ing_basicos']['idDocumentos']) && $_SESSION['productos_ing_basicos']['idDocumentos']==2 ){
+					if(!isset($_SESSION['productos_ing_basicos']['Pago_fecha']) OR $_SESSION['productos_ing_basicos']['Pago_fecha']=='' OR $_SESSION['productos_ing_basicos']['Pago_fecha']=='0000-00-00' ){
 						$error['Pago_fecha']  = 'error/No ha ingresado la fecha de vencimiento de la factura';
 					}
 				}
 				//se verifica el uso del iva
 				if(isset($_SESSION['productos_ing_basicos']['idUsoIVA'])&&$_SESSION['productos_ing_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['productos_ing_impuestos'])){     
+					if(!isset($_SESSION['productos_ing_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -1169,7 +1169,7 @@ require_once '0_validate_user_1.php';
 							/**********************************************************************/
 							//Actualizo el valor de los productos
 							$SIS_data = "idProducto='".$producto['idProducto']."'";
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso'] != ''&&isset($_SESSION['productos_ing_basicos']['idProveedor']) && $_SESSION['productos_ing_basicos']['idProveedor']!=''){     
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso'] != ''&&isset($_SESSION['productos_ing_basicos']['idProveedor']) && $_SESSION['productos_ing_basicos']['idProveedor']!=''){
 								$SIS_data .= ",idProveedor='".$_SESSION['productos_ing_basicos']['idProveedor']."'";
 								$SIS_data .= ",ValorIngreso='".$producto['ValorIngreso']."'";
 							}
@@ -1198,16 +1198,15 @@ require_once '0_validate_user_1.php';
 					if (isset($_SESSION['productos_ing_guias'])){
 						foreach ($_SESSION['productos_ing_guias'] as $key => $guias){
 							//filtro
-							if(isset($ultimo_id) && $ultimo_id!=''){ 
-								
-								$SIS_data  = "DocRel='".$ultimo_id."'";    
+							if(isset($ultimo_id) && $ultimo_id!=''){
+
+								$SIS_data  = "DocRel='".$ultimo_id."'";
 								$SIS_data .= ",idEstado='2'";
 
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_productos_facturacion', 'idFacturacion = "'.$guias['idGuia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
-							
+
 							}
 						}
 					}
@@ -1330,7 +1329,6 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
 			/*******************************************************************/
-			
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -1850,13 +1848,12 @@ require_once '0_validate_user_1.php';
 				if($n_existencia!=0) {
 					$error['productos'] = 'error/No hay suficientes existencias para algunos productos';
 				}
-				
-			
+
 			}
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['productos_egr_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['productos_egr_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
@@ -2124,14 +2121,14 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_egr_basicos']['idTrabajador']) OR $_SESSION['productos_egr_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el vendedor';}
 				if(!isset($_SESSION['productos_egr_basicos']['idUsoIVA']) OR $_SESSION['productos_egr_basicos']['idUsoIVA']=='' ){             $error['idUsoIVA']         = 'error/No ha seleccionado la exencion del IVA';}
 				//compruebo que sea una factura y que tenga fecha de pago
-				if(isset($_SESSION['productos_egr_basicos']['idDocumentos']) && $_SESSION['productos_egr_basicos']['idDocumentos']==2 ){     
-					if(!isset($_SESSION['productos_egr_basicos']['Pago_fecha']) OR $_SESSION['productos_egr_basicos']['Pago_fecha']=='' OR $_SESSION['productos_egr_basicos']['Pago_fecha']=='0000-00-00' ){     
+				if(isset($_SESSION['productos_egr_basicos']['idDocumentos']) && $_SESSION['productos_egr_basicos']['idDocumentos']==2 ){
+					if(!isset($_SESSION['productos_egr_basicos']['Pago_fecha']) OR $_SESSION['productos_egr_basicos']['Pago_fecha']=='' OR $_SESSION['productos_egr_basicos']['Pago_fecha']=='0000-00-00' ){
 						$error['Pago_fecha']  = 'error/No ha ingresado la fecha de vencimiento de la factura';
 					}
 				}
 				//se verifica el uso del iva
 				if(isset($_SESSION['productos_egr_basicos']['idUsoIVA'])&&$_SESSION['productos_egr_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['productos_egr_impuestos'])){     
+					if(!isset($_SESSION['productos_egr_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -2239,7 +2236,7 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de los productos
-					if (isset($_SESSION['productos_egr_productos'])){			
+					if (isset($_SESSION['productos_egr_productos'])){
 						foreach ($_SESSION['productos_egr_productos'] as $key => $producto){
 
 							//filtros
@@ -2275,7 +2272,7 @@ require_once '0_validate_user_1.php';
 							/********************************************************************************/
 							//Actualizo el valor de los productos
 							$SIS_data = "idProducto='".$producto['idProducto']."'";
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso'] != ''&&isset($_SESSION['productos_egr_basicos']['idCliente']) && $_SESSION['productos_egr_basicos']['idCliente']!=''){     
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso'] != ''&&isset($_SESSION['productos_egr_basicos']['idCliente']) && $_SESSION['productos_egr_basicos']['idCliente']!=''){
 								$SIS_data .= ",idCliente='".$_SESSION['productos_egr_basicos']['idCliente']."'";
 								$SIS_data .= ",ValorEgreso='".$producto['ValorEgreso']."'";
 							}
@@ -2283,8 +2280,7 @@ require_once '0_validate_user_1.php';
 							/*******************************************************/
 							//se actualizan los datos
 							$resultado = db_update_data (false, $SIS_data, 'productos_listado', 'idProducto = "'.$producto['idProducto'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
-				
+
 						}
 					}
 
@@ -2293,16 +2289,15 @@ require_once '0_validate_user_1.php';
 					if (isset($_SESSION['productos_egr_guias'])){
 						foreach ($_SESSION['productos_egr_guias'] as $key => $guias){
 							//filtro
-							if(isset($ultimo_id) && $ultimo_id!=''){ 
-								
-								$SIS_data  = "DocRel='".$ultimo_id."'";    
+							if(isset($ultimo_id) && $ultimo_id!=''){
+
+								$SIS_data  = "DocRel='".$ultimo_id."'";
 								$SIS_data .= ",idEstado='2'";
 
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_productos_facturacion', 'idFacturacion = "'.$guias['idGuia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
-							
+
 							}
 						}
 					}
@@ -2706,13 +2701,12 @@ require_once '0_validate_user_1.php';
 				if($n_existencia!=0) {
 					$error['productos'] = 'error/No hay suficientes existencias para algunos productos';
 				}
-				
-			
+
 			}
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['productos_gasto_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['productos_gasto_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
@@ -2750,7 +2744,7 @@ require_once '0_validate_user_1.php';
 			$Total_egresos      = $rowResultado['egreso'] + $Number;
 			$Total_existencias  = $rowResultado['ingreso'] - $rowResultado['egreso'];
 			$ProductoNombre     = $rowResultado['Nombre'];
-			$ProductoUnimed     = $rowResultado['Unimed'];	
+			$ProductoUnimed     = $rowResultado['Unimed'];
 			//Verifico si los egresos son inferiores a los ingresos
 			if($rowResultado['ingreso']<$Total_egresos){
 				$error['productos'] = 'error/No hay suficientes existencias, solo quedan '.$Total_existencias;
@@ -3375,13 +3369,12 @@ require_once '0_validate_user_1.php';
 				if($n_existencia!=0) {
 					$error['productos'] = 'error/No hay suficientes existencias para algunos productos';
 				}
-				
-			
+
 			}
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['productos_traspaso_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['productos_traspaso_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
@@ -3423,7 +3416,7 @@ require_once '0_validate_user_1.php';
 			$Total_egresos     = $rowResultado['egreso'] + $Number;
 			$Total_existencias = $rowResultado['ingreso'] - $rowResultado['egreso'];
 			$ProductoNombre    = $rowResultado['Nombre'];
-			$ProductoUnimed    = $rowResultado['Unimed'];	
+			$ProductoUnimed    = $rowResultado['Unimed'];
 			//Verifico si los egresos son inferiores a los ingresos
 			if($rowResultado['ingreso']<$Total_egresos){
 				$error['productos'] = 'error/No hay suficientes existencias, solo quedan '.$Total_existencias;
@@ -4595,13 +4588,12 @@ require_once '0_validate_user_1.php';
 				if($n_existencia!=0) {
 					$error['productos'] = 'error/No hay suficientes existencias para algunos producto';
 				}
-				
-			
+
 			}
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['productos_traspasoempresa_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['productos_traspasoempresa_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
@@ -5186,13 +5178,12 @@ require_once '0_validate_user_1.php';
 				if($n_existencia!=0) {
 					$error['productos'] = 'error/No hay suficientes existencias para algunos productos';
 				}
-				
-			
+
 			}
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['productos_traspasomanualempresa_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['productos_traspasomanualempresa_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
@@ -5432,7 +5423,7 @@ require_once '0_validate_user_1.php';
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 
-				//se actualizael documento 
+				//se actualiza el documento
 				$SIS_data = "idFacturacion='".$idFacturacion."'";
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
@@ -5782,7 +5773,7 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['productos_ing_manual_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['productos_ing_manual_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
@@ -6016,7 +6007,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_ing_manual_basicos']['idTipo']) OR $_SESSION['productos_ing_manual_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				//se verifica el uso del iva
 				if(isset($_SESSION['productos_ing_manual_basicos']['idUsoIVA'])&&$_SESSION['productos_ing_manual_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['productos_ing_manual_impuestos'])){     
+					if(!isset($_SESSION['productos_ing_manual_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -6094,7 +6085,7 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de los trabajadores	
-					if(isset($_SESSION['productos_ing_manual_productos'])){	
+					if(isset($_SESSION['productos_ing_manual_productos'])){
 						foreach ($_SESSION['productos_ing_manual_productos'] as $key => $producto){
 
 							//filtros
@@ -6548,12 +6539,12 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['Cantidad_ing']  = $Cantidad_ing[$j1];
 					$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['ValorIngreso']  = $ValorTotal[$j1]/$Cantidad_ing[$j1];
-					$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];				
+					$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
 					$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['Nombre']        = $arrProd['Prod'][$idProducto[$j1]]['Nombre'];
 					$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['Unimed']        = $arrProd['Prod'][$idProducto[$j1]]['Unimed'];
 				}
@@ -6845,7 +6836,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_ing_nd_basicos']['idTipo']) OR $_SESSION['productos_ing_nd_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
 				//se verifica el uso del iva
 				if(isset($_SESSION['productos_ing_nd_basicos']['idUsoIVA'])&&$_SESSION['productos_ing_nd_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['productos_ing_nd_impuestos'])){     
+					if(!isset($_SESSION['productos_ing_nd_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -7096,7 +7087,6 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
 			/*******************************************************************/
-			
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -7203,7 +7193,6 @@ require_once '0_validate_user_1.php';
 
 			}
 
-	
 		break;
 /*******************************************************************************************************************/
 		case 'clear_all_ing_nc':
@@ -7424,12 +7413,12 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['Cantidad_eg']   = $Cantidad_eg[$j1];
 					$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['ValorIngreso']  = $ValorTotal[$j1]/$Cantidad_eg[$j1];
-					$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];				
+					$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
 					$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['Nombre']        = $arrProd['Prod'][$idProducto[$j1]]['Nombre'];
 					$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['Unimed']        = $arrProd['Prod'][$idProducto[$j1]]['Unimed'];
 				}
@@ -7723,7 +7712,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_ing_nc_basicos']['idProveedor']) OR $_SESSION['productos_ing_nc_basicos']['idProveedor']=='' ){       $error['idProveedor']      = 'error/No ha seleccionado el proveedor';}
 				//se verifica el uso del iva
 				if(isset($_SESSION['productos_ing_nc_basicos']['idUsoIVA'])&&$_SESSION['productos_ing_nc_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['productos_ing_nc_impuestos'])){     
+					if(!isset($_SESSION['productos_ing_nc_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -8299,7 +8288,7 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['productos_egr_nd_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['productos_egr_nd_productos'][$idProducto[$j1]]['Cantidad_eg']   = $Cantidad_eg[$j1];
@@ -8596,7 +8585,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_egr_nd_basicos']['idTipo']) OR $_SESSION['productos_egr_nd_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
 				//se verifica el uso del iva
 				if(isset($_SESSION['productos_egr_nd_basicos']['idUsoIVA'])&&$_SESSION['productos_egr_nd_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['productos_egr_nd_impuestos'])){     
+					if(!isset($_SESSION['productos_egr_nd_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -8847,7 +8836,6 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
 			/*******************************************************************/
-			
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -8954,7 +8942,6 @@ require_once '0_validate_user_1.php';
 
 			}
 
-	
 		break;
 /*******************************************************************************************************************/
 		case 'clear_all_egr_nc':
@@ -9176,7 +9163,7 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['productos_egr_nc_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['productos_egr_nc_productos'][$idProducto[$j1]]['Cantidad_ing']  = $Cantidad_ing[$j1];
@@ -9479,7 +9466,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_egr_nc_basicos']['idCliente']) OR $_SESSION['productos_egr_nc_basicos']['idCliente']=='' ){           $error['idCliente']        = 'error/No ha seleccionado el cliente';}
 				//se verifica el uso del iva
 				if(isset($_SESSION['productos_egr_nc_basicos']['idUsoIVA'])&&$_SESSION['productos_egr_nc_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['productos_egr_nc_impuestos'])){     
+					if(!isset($_SESSION['productos_egr_nc_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}

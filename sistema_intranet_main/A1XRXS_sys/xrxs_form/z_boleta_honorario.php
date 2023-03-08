@@ -118,7 +118,6 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-
 		case 'new_ingreso':
 
 			//Se elimina la restriccion del sql 5.7
@@ -232,13 +231,13 @@ require_once '0_validate_user_1.php';
 					//Se traen todos los datos del trabajador
 					$SIS_query = '
 					trabajadores_listado.Nombre,
-					trabajadores_listado.ApellidoPat, 
+					trabajadores_listado.ApellidoPat,
 					trabajadores_listado.ApellidoMat,
-					trabajadores_listado.idCentroCosto, 
-					trabajadores_listado.idLevel_1, 
-					trabajadores_listado.idLevel_2, 
-					trabajadores_listado.idLevel_3, 
-					trabajadores_listado.idLevel_4, 
+					trabajadores_listado.idCentroCosto,
+					trabajadores_listado.idLevel_1,
+					trabajadores_listado.idLevel_2,
+					trabajadores_listado.idLevel_3,
+					trabajadores_listado.idLevel_4,
 					trabajadores_listado.idLevel_5,
 					centrocosto_listado.Nombre AS CentroCosto_Nombre,
 					centrocosto_listado_level_1.Nombre AS CentroCosto_Level_1,
@@ -259,14 +258,14 @@ require_once '0_validate_user_1.php';
 
 					//se guarda dato
 					$_SESSION['boleta_ing_basicos']['Trabajador'] = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
-				
+
 					$_SESSION['boleta_ing_basicos']['idCentroCosto']        = $rowTrabajador['idCentroCosto'];       //idCentroCosto
 					$_SESSION['boleta_ing_basicos']['idLevel_1']            = $rowTrabajador['idLevel_1'];           //idLevel_1
 					$_SESSION['boleta_ing_basicos']['idLevel_2']            = $rowTrabajador['idLevel_2'];           //idLevel_2
 					$_SESSION['boleta_ing_basicos']['idLevel_3']            = $rowTrabajador['idLevel_3'];           //idLevel_3
 					$_SESSION['boleta_ing_basicos']['idLevel_4']            = $rowTrabajador['idLevel_4'];           //idLevel_4
 					$_SESSION['boleta_ing_basicos']['idLevel_5']            = $rowTrabajador['idLevel_5'];           //idLevel_5
-					
+
 					$_SESSION['boleta_ing_basicos']['CentroCosto']          = '';  //CentroCosto
 					if(isset($rowTrabajador['CentroCosto_Nombre'])&&$rowTrabajador['CentroCosto_Nombre']!=''){   $_SESSION['boleta_ing_basicos']['CentroCosto']  = $rowTrabajador['CentroCosto_Nombre'];}
 					if(isset($rowTrabajador['CentroCosto_Level_1'])&&$rowTrabajador['CentroCosto_Level_1']!=''){ $_SESSION['boleta_ing_basicos']['CentroCosto'] .= ' - '.$rowTrabajador['CentroCosto_Level_1'];}
@@ -283,8 +282,8 @@ require_once '0_validate_user_1.php';
 					$_SESSION['boleta_ing_basicos']['idLevel_3']      = '';
 					$_SESSION['boleta_ing_basicos']['idLevel_4']      = '';
 					$_SESSION['boleta_ing_basicos']['idLevel_5']      = '';
-					$_SESSION['boleta_ing_basicos']['CentroCosto']    = ''; 
-					
+					$_SESSION['boleta_ing_basicos']['CentroCosto']    = '';
+
 				}
 
 				header( 'Location: '.$location.'&view=true' );
@@ -423,13 +422,13 @@ require_once '0_validate_user_1.php';
 					//Se traen todos los datos del trabajador
 					$SIS_query = '
 					trabajadores_listado.Nombre,
-					trabajadores_listado.ApellidoPat, 
+					trabajadores_listado.ApellidoPat,
 					trabajadores_listado.ApellidoMat,
-					trabajadores_listado.idCentroCosto, 
-					trabajadores_listado.idLevel_1, 
-					trabajadores_listado.idLevel_2, 
-					trabajadores_listado.idLevel_3, 
-					trabajadores_listado.idLevel_4, 
+					trabajadores_listado.idCentroCosto,
+					trabajadores_listado.idLevel_1,
+					trabajadores_listado.idLevel_2,
+					trabajadores_listado.idLevel_3,
+					trabajadores_listado.idLevel_4,
 					trabajadores_listado.idLevel_5,
 					centrocosto_listado.Nombre AS CentroCosto_Nombre,
 					centrocosto_listado_level_1.Nombre AS CentroCosto_Level_1,
@@ -450,14 +449,14 @@ require_once '0_validate_user_1.php';
 
 					//se guarda dato
 					$_SESSION['boleta_ing_basicos']['Trabajador'] = $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat'];
-				
+
 					$_SESSION['boleta_ing_basicos']['idCentroCosto']        = $rowTrabajador['idCentroCosto'];       //idCentroCosto
 					$_SESSION['boleta_ing_basicos']['idLevel_1']            = $rowTrabajador['idLevel_1'];           //idLevel_1
 					$_SESSION['boleta_ing_basicos']['idLevel_2']            = $rowTrabajador['idLevel_2'];           //idLevel_2
 					$_SESSION['boleta_ing_basicos']['idLevel_3']            = $rowTrabajador['idLevel_3'];           //idLevel_3
 					$_SESSION['boleta_ing_basicos']['idLevel_4']            = $rowTrabajador['idLevel_4'];           //idLevel_4
 					$_SESSION['boleta_ing_basicos']['idLevel_5']            = $rowTrabajador['idLevel_5'];           //idLevel_5
-					
+
 					$_SESSION['boleta_ing_basicos']['CentroCosto']          = '';  //CentroCosto
 					if(isset($rowTrabajador['CentroCosto_Nombre'])&&$rowTrabajador['CentroCosto_Nombre']!=''){   $_SESSION['boleta_ing_basicos']['CentroCosto']  = $rowTrabajador['CentroCosto_Nombre'];}
 					if(isset($rowTrabajador['CentroCosto_Level_1'])&&$rowTrabajador['CentroCosto_Level_1']!=''){ $_SESSION['boleta_ing_basicos']['CentroCosto'] .= ' - '.$rowTrabajador['CentroCosto_Level_1'];}
@@ -474,8 +473,8 @@ require_once '0_validate_user_1.php';
 					$_SESSION['boleta_ing_basicos']['idLevel_3']      = '';
 					$_SESSION['boleta_ing_basicos']['idLevel_4']      = '';
 					$_SESSION['boleta_ing_basicos']['idLevel_5']      = '';
-					$_SESSION['boleta_ing_basicos']['CentroCosto']    = ''; 
-					
+					$_SESSION['boleta_ing_basicos']['CentroCosto']    = '';
+
 				}
 
 				header( 'Location: '.$location.'&view=true' );
@@ -630,7 +629,6 @@ require_once '0_validate_user_1.php';
 			}
 
 		break;
-
 /*******************************************************************************************************************/
 		case 'del_file_ing':
 
@@ -654,7 +652,6 @@ require_once '0_validate_user_1.php';
 
 
 		break;
-
 /*******************************************************************************************************************/
 		case 'ing_bodega':
 
@@ -703,7 +700,7 @@ require_once '0_validate_user_1.php';
 				//Se guardan los datos basicos
 				if(isset($_SESSION['boleta_ing_basicos']['idSistema']) && $_SESSION['boleta_ing_basicos']['idSistema']!=''){    $SIS_data  = "'".$_SESSION['boleta_ing_basicos']['idSistema']."'";   }else{$SIS_data  = "''";}
 				if(isset($_SESSION['boleta_ing_basicos']['idUsuario']) && $_SESSION['boleta_ing_basicos']['idUsuario']!=''){    $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['idTipo']) && $_SESSION['boleta_ing_basicos']['idTipo']!=''){   $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idTipo']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['idTipo']) && $_SESSION['boleta_ing_basicos']['idTipo']!=''){          $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idTipo']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['boleta_ing_basicos']['Creacion_fecha']) && $_SESSION['boleta_ing_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['boleta_ing_basicos']['Creacion_fecha'])."'";
@@ -715,23 +712,23 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['boleta_ing_basicos']['N_Doc']) && $_SESSION['boleta_ing_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['N_Doc']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['Observaciones']) && $_SESSION['boleta_ing_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['Observaciones']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['idTrabajador']) && $_SESSION['boleta_ing_basicos']['idTrabajador']!=''){      $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idTrabajador']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['idEstado']) && $_SESSION['boleta_ing_basicos']['idEstado']!=''){       $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idEstado']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['fecha_auto']) && $_SESSION['boleta_ing_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['fecha_auto']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['valor_neto'])&&$_SESSION['boleta_ing_basicos']['valor_neto']!=''){      $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['valor_neto']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['valor_imp'])&&$_SESSION['boleta_ing_basicos']['valor_imp']!=''){        $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['valor_imp']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['valor_total'])&&$_SESSION['boleta_ing_basicos']['valor_total']!=''){    $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['valor_total']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['idOcompra'])&&$_SESSION['boleta_ing_basicos']['idOcompra']!=''){        $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idOcompra']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['idCentroCosto'])&&$_SESSION['boleta_ing_basicos']['idCentroCosto']!=''){$SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idCentroCosto']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['idLevel_1'])&&$_SESSION['boleta_ing_basicos']['idLevel_1']!=''){        $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idLevel_1']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['idLevel_2'])&&$_SESSION['boleta_ing_basicos']['idLevel_2']!=''){        $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idLevel_2']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['idLevel_3'])&&$_SESSION['boleta_ing_basicos']['idLevel_3']!=''){        $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idLevel_3']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['idLevel_4'])&&$_SESSION['boleta_ing_basicos']['idLevel_4']!=''){        $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idLevel_4']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['idLevel_5'])&&$_SESSION['boleta_ing_basicos']['idLevel_5']!=''){        $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idLevel_5']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['CentroCosto'])&&$_SESSION['boleta_ing_basicos']['CentroCosto']!=''){    $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['CentroCosto']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_basicos']['Porc_Impuesto'])&&$_SESSION['boleta_ing_basicos']['Porc_Impuesto']!=''){$SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['Porc_Impuesto']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['N_Doc']) && $_SESSION['boleta_ing_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['N_Doc']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['Observaciones']) && $_SESSION['boleta_ing_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['Observaciones']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['idTrabajador']) && $_SESSION['boleta_ing_basicos']['idTrabajador']!=''){      $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idTrabajador']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['idEstado']) && $_SESSION['boleta_ing_basicos']['idEstado']!=''){              $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idEstado']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['fecha_auto']) && $_SESSION['boleta_ing_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['fecha_auto']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['valor_neto'])&&$_SESSION['boleta_ing_basicos']['valor_neto']!=''){            $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['valor_neto']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['valor_imp'])&&$_SESSION['boleta_ing_basicos']['valor_imp']!=''){              $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['valor_imp']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['valor_total'])&&$_SESSION['boleta_ing_basicos']['valor_total']!=''){          $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['valor_total']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['idOcompra'])&&$_SESSION['boleta_ing_basicos']['idOcompra']!=''){              $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idOcompra']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['idCentroCosto'])&&$_SESSION['boleta_ing_basicos']['idCentroCosto']!=''){      $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idCentroCosto']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['idLevel_1'])&&$_SESSION['boleta_ing_basicos']['idLevel_1']!=''){              $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idLevel_1']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['idLevel_2'])&&$_SESSION['boleta_ing_basicos']['idLevel_2']!=''){              $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idLevel_2']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['idLevel_3'])&&$_SESSION['boleta_ing_basicos']['idLevel_3']!=''){              $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idLevel_3']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['idLevel_4'])&&$_SESSION['boleta_ing_basicos']['idLevel_4']!=''){              $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idLevel_4']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['idLevel_5'])&&$_SESSION['boleta_ing_basicos']['idLevel_5']!=''){              $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idLevel_5']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['CentroCosto'])&&$_SESSION['boleta_ing_basicos']['CentroCosto']!=''){          $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['CentroCosto']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_basicos']['Porc_Impuesto'])&&$_SESSION['boleta_ing_basicos']['Porc_Impuesto']!=''){      $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['Porc_Impuesto']."'";   }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema, idUsuario, idTipo, Creacion_fecha,
@@ -751,7 +748,7 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                        $SIS_data  = "'".$ultimo_id."'";                                     }else{$SIS_data  = "''";}
 							if(isset($_SESSION['boleta_ing_basicos']['idSistema']) && $_SESSION['boleta_ing_basicos']['idSistema']!=''){    $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idSistema']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['boleta_ing_basicos']['idUsuario']) && $_SESSION['boleta_ing_basicos']['idUsuario']!=''){    $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['boleta_ing_basicos']['idTipo']) && $_SESSION['boleta_ing_basicos']['idTipo']!=''){   $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idTipo']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['boleta_ing_basicos']['idTipo']) && $_SESSION['boleta_ing_basicos']['idTipo']!=''){          $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idTipo']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['boleta_ing_basicos']['Creacion_fecha']) && $_SESSION['boleta_ing_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['boleta_ing_basicos']['Creacion_fecha'])."'";
@@ -761,8 +758,8 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre']!=''){       $SIS_data .= ",'".$producto['Nombre']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal']!=''){       $SIS_data .= ",'".$producto['vTotal']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['Nombre']) && $producto['Nombre']!=''){              $SIS_data .= ",'".$producto['Nombre']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){              $SIS_data .= ",'".$producto['vTotal']."'";        }else{$SIS_data .= ",''";}
 							if(isset($producto['idExistencia']) && $producto['idExistencia']!=''){  $SIS_data .= ",'".$producto['idExistencia']."'";  }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
@@ -772,9 +769,9 @@ require_once '0_validate_user_1.php';
 
 							/*******************************************************************/
 							//Si existe la OC se actualizan los estados de esta
-							if(isset($_SESSION['boleta_ing_basicos']['idOcompra']) && $_SESSION['boleta_ing_basicos']['idOcompra']!=''){  
-								
-								//Actualizo 
+							if(isset($_SESSION['boleta_ing_basicos']['idOcompra']) && $_SESSION['boleta_ing_basicos']['idOcompra']!=''){
+
+								//Actualizo
 								$SIS_data = "idUso='2'";
 
 								/*******************************************************/
@@ -794,7 +791,7 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                     $SIS_data  = "'".$ultimo_id."'";                                    }else{$SIS_data  = "''";}
 							if(isset($_SESSION['boleta_ing_basicos']['idSistema']) && $_SESSION['boleta_ing_basicos']['idSistema']!=''){ $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idSistema']."'"; }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['boleta_ing_basicos']['idUsuario']) && $_SESSION['boleta_ing_basicos']['idUsuario']!=''){ $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idUsuario']."'"; }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['boleta_ing_basicos']['idTipo']) && $_SESSION['boleta_ing_basicos']['idTipo']!=''){$SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idTipo']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['boleta_ing_basicos']['idTipo']) && $_SESSION['boleta_ing_basicos']['idTipo']!=''){       $SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['idTipo']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['boleta_ing_basicos']['Creacion_fecha']) && $_SESSION['boleta_ing_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['boleta_ing_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['boleta_ing_basicos']['Creacion_fecha'])."'";
@@ -850,7 +847,6 @@ require_once '0_validate_user_1.php';
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-
 		case 'new_egreso':
 
 			//Se elimina la restriccion del sql 5.7
@@ -1192,7 +1188,6 @@ require_once '0_validate_user_1.php';
 			}
 
 		break;
-
 /*******************************************************************************************************************/
 		case 'del_file_eg':
 
@@ -1216,7 +1211,6 @@ require_once '0_validate_user_1.php';
 
 
 		break;
-
 /*******************************************************************************************************************/
 		case 'eg_bodega':
 
@@ -1265,7 +1259,7 @@ require_once '0_validate_user_1.php';
 				//Se guardan los datos basicos
 				if(isset($_SESSION['boleta_eg_basicos']['idSistema']) && $_SESSION['boleta_eg_basicos']['idSistema']!=''){    $SIS_data  = "'".$_SESSION['boleta_eg_basicos']['idSistema']."'";   }else{$SIS_data  = "''";}
 				if(isset($_SESSION['boleta_eg_basicos']['idUsuario']) && $_SESSION['boleta_eg_basicos']['idUsuario']!=''){    $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_eg_basicos']['idTipo']) && $_SESSION['boleta_eg_basicos']['idTipo']!=''){   $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['idTipo']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_eg_basicos']['idTipo']) && $_SESSION['boleta_eg_basicos']['idTipo']!=''){          $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['idTipo']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['boleta_eg_basicos']['Creacion_fecha']) && $_SESSION['boleta_eg_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['boleta_eg_basicos']['Creacion_fecha'])."'";
@@ -1277,15 +1271,15 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['boleta_eg_basicos']['N_Doc']) && $_SESSION['boleta_eg_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['N_Doc']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_eg_basicos']['Observaciones']) && $_SESSION['boleta_eg_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['Observaciones']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_eg_basicos']['idCliente']) && $_SESSION['boleta_eg_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['idCliente']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_eg_basicos']['idEstado']) && $_SESSION['boleta_eg_basicos']['idEstado']!=''){       $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['idEstado']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_eg_basicos']['fecha_auto']) && $_SESSION['boleta_eg_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['fecha_auto']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_eg_basicos']['valor_neto'])&&$_SESSION['boleta_eg_basicos']['valor_neto']!=''){      $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['valor_neto']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_eg_basicos']['valor_imp'])&&$_SESSION['boleta_eg_basicos']['valor_imp']!=''){        $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['valor_imp']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_eg_basicos']['valor_total'])&&$_SESSION['boleta_eg_basicos']['valor_total']!=''){    $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['valor_total']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_eg_basicos']['Porc_Impuesto'])&&$_SESSION['boleta_eg_basicos']['Porc_Impuesto']!=''){$SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['Porc_Impuesto']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_eg_basicos']['N_Doc']) && $_SESSION['boleta_eg_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['N_Doc']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_eg_basicos']['Observaciones']) && $_SESSION['boleta_eg_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['Observaciones']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_eg_basicos']['idCliente']) && $_SESSION['boleta_eg_basicos']['idCliente']!=''){            $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['idCliente']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_eg_basicos']['idEstado']) && $_SESSION['boleta_eg_basicos']['idEstado']!=''){              $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['idEstado']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_eg_basicos']['fecha_auto']) && $_SESSION['boleta_eg_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['fecha_auto']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_eg_basicos']['valor_neto'])&&$_SESSION['boleta_eg_basicos']['valor_neto']!=''){            $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['valor_neto']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_eg_basicos']['valor_imp'])&&$_SESSION['boleta_eg_basicos']['valor_imp']!=''){              $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['valor_imp']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_eg_basicos']['valor_total'])&&$_SESSION['boleta_eg_basicos']['valor_total']!=''){          $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['valor_total']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_eg_basicos']['Porc_Impuesto'])&&$_SESSION['boleta_eg_basicos']['Porc_Impuesto']!='')       $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['Porc_Impuesto']."'";   }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema, idUsuario, idTipo, Creacion_fecha,
@@ -1304,7 +1298,7 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                      $SIS_data  = "'".$ultimo_id."'";                                    }else{$SIS_data  = "''";}
 							if(isset($_SESSION['boleta_eg_basicos']['idSistema']) && $_SESSION['boleta_eg_basicos']['idSistema']!=''){    $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['idSistema']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['boleta_eg_basicos']['idUsuario']) && $_SESSION['boleta_eg_basicos']['idUsuario']!=''){    $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['boleta_eg_basicos']['idTipo']) && $_SESSION['boleta_eg_basicos']['idTipo']!=''){   $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['idTipo']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['boleta_eg_basicos']['idTipo']) && $_SESSION['boleta_eg_basicos']['idTipo']!=''){          $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['idTipo']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['boleta_eg_basicos']['Creacion_fecha']) && $_SESSION['boleta_eg_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['boleta_eg_basicos']['Creacion_fecha'])."'";
@@ -1334,7 +1328,7 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                   $SIS_data  = "'".$ultimo_id."'";                                   }else{$SIS_data  = "''";}
 							if(isset($_SESSION['boleta_eg_basicos']['idSistema']) && $_SESSION['boleta_eg_basicos']['idSistema']!=''){ $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['idSistema']."'"; }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['boleta_eg_basicos']['idUsuario']) && $_SESSION['boleta_eg_basicos']['idUsuario']!=''){ $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['idUsuario']."'"; }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['boleta_eg_basicos']['idTipo']) && $_SESSION['boleta_eg_basicos']['idTipo']!=''){$SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['idTipo']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['boleta_eg_basicos']['idTipo']) && $_SESSION['boleta_eg_basicos']['idTipo']!=''){       $SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['idTipo']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['boleta_eg_basicos']['Creacion_fecha']) && $_SESSION['boleta_eg_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['boleta_eg_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['boleta_eg_basicos']['Creacion_fecha'])."'";
@@ -1384,14 +1378,12 @@ require_once '0_validate_user_1.php';
 			}
 
 		break;
-
 /*******************************************************************************************************************/
 /*                                                                                                                 */
 /*                                                    INGRESOS  EMPRESAS                                           */
 /*                                                                                                                 */
 /*******************************************************************************************************************/
 /*******************************************************************************************************************/
-
 		case 'new_ingreso_emp':
 
 			//Se elimina la restriccion del sql 5.7
@@ -1695,7 +1687,7 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			/*******************************************************************/
-			//se verifica la existencia de la OC 
+			//se verifica la existencia de la OC
 			if(isset($_SESSION['boleta_ing_prov_basicos']['idOcompra'])&&$_SESSION['boleta_ing_prov_basicos']['idOcompra']!=''){
 				//Se verifica si el dato existe
 				if(isset($idExistencia)){
@@ -1821,7 +1813,6 @@ require_once '0_validate_user_1.php';
 			}
 
 		break;
-
 /*******************************************************************************************************************/
 		case 'del_file_ing_emp':
 
@@ -1845,7 +1836,6 @@ require_once '0_validate_user_1.php';
 
 
 		break;
-
 /*******************************************************************************************************************/
 		case 'ing_bodega_emp':
 
@@ -1894,7 +1884,7 @@ require_once '0_validate_user_1.php';
 				//Se guardan los datos basicos
 				if(isset($_SESSION['boleta_ing_prov_basicos']['idSistema']) && $_SESSION['boleta_ing_prov_basicos']['idSistema']!=''){    $SIS_data  = "'".$_SESSION['boleta_ing_prov_basicos']['idSistema']."'";   }else{$SIS_data  = "''";}
 				if(isset($_SESSION['boleta_ing_prov_basicos']['idUsuario']) && $_SESSION['boleta_ing_prov_basicos']['idUsuario']!=''){    $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_prov_basicos']['idTipo']) && $_SESSION['boleta_ing_prov_basicos']['idTipo']!=''){   $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idTipo']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_prov_basicos']['idTipo']) && $_SESSION['boleta_ing_prov_basicos']['idTipo']!=''){          $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idTipo']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']) && $_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['boleta_ing_prov_basicos']['Creacion_fecha'])."'";
@@ -1906,16 +1896,16 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['boleta_ing_prov_basicos']['N_Doc']) && $_SESSION['boleta_ing_prov_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['N_Doc']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_prov_basicos']['Observaciones']) && $_SESSION['boleta_ing_prov_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['Observaciones']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_prov_basicos']['idProveedor']) && $_SESSION['boleta_ing_prov_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idProveedor']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_prov_basicos']['idEstado']) && $_SESSION['boleta_ing_prov_basicos']['idEstado']!=''){       $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idEstado']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_prov_basicos']['fecha_auto']) && $_SESSION['boleta_ing_prov_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['fecha_auto']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_prov_basicos']['valor_neto'])&&$_SESSION['boleta_ing_prov_basicos']['valor_neto']!=''){      $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['valor_neto']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_prov_basicos']['valor_imp'])&&$_SESSION['boleta_ing_prov_basicos']['valor_imp']!=''){        $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['valor_imp']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_prov_basicos']['valor_total'])&&$_SESSION['boleta_ing_prov_basicos']['valor_total']!=''){    $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['valor_total']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_prov_basicos']['idOcompra'])&&$_SESSION['boleta_ing_prov_basicos']['idOcompra']!=''){        $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idOcompra']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto'])&&$_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto']!=''){$SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_prov_basicos']['N_Doc']) && $_SESSION['boleta_ing_prov_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['N_Doc']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_prov_basicos']['Observaciones']) && $_SESSION['boleta_ing_prov_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['Observaciones']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_prov_basicos']['idProveedor']) && $_SESSION['boleta_ing_prov_basicos']['idProveedor']!=''){        $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idProveedor']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_prov_basicos']['idEstado']) && $_SESSION['boleta_ing_prov_basicos']['idEstado']!=''){              $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idEstado']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_prov_basicos']['fecha_auto']) && $_SESSION['boleta_ing_prov_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['fecha_auto']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_prov_basicos']['valor_neto'])&&$_SESSION['boleta_ing_prov_basicos']['valor_neto']!=''){            $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['valor_neto']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_prov_basicos']['valor_imp'])&&$_SESSION['boleta_ing_prov_basicos']['valor_imp']!=''){              $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['valor_imp']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_prov_basicos']['valor_total'])&&$_SESSION['boleta_ing_prov_basicos']['valor_total']!=''){          $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['valor_total']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_prov_basicos']['idOcompra'])&&$_SESSION['boleta_ing_prov_basicos']['idOcompra']!=''){              $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idOcompra']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto'])&&$_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto']!=''){      $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['Porc_Impuesto']."'";   }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idSistema, idUsuario, idTipo, Creacion_fecha,
@@ -1934,7 +1924,7 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                  $SIS_data  = "'".$ultimo_id."'";                                          }else{$SIS_data  = "''";}
 							if(isset($_SESSION['boleta_ing_prov_basicos']['idSistema']) && $_SESSION['boleta_ing_prov_basicos']['idSistema']!=''){    $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idSistema']."'";  }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['boleta_ing_prov_basicos']['idUsuario']) && $_SESSION['boleta_ing_prov_basicos']['idUsuario']!=''){    $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idUsuario']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['boleta_ing_prov_basicos']['idTipo']) && $_SESSION['boleta_ing_prov_basicos']['idTipo']!=''){   $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idTipo']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['boleta_ing_prov_basicos']['idTipo']) && $_SESSION['boleta_ing_prov_basicos']['idTipo']!=''){          $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idTipo']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']) && $_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['boleta_ing_prov_basicos']['Creacion_fecha'])."'";
@@ -1944,8 +1934,8 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 								$SIS_data .= ",''";
 							}
-							if(isset($producto['Nombre']) && $producto['Nombre']!=''){       $SIS_data .= ",'".$producto['Nombre']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['vTotal']) && $producto['vTotal']!=''){       $SIS_data .= ",'".$producto['vTotal']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['Nombre']) && $producto['Nombre']!=''){              $SIS_data .= ",'".$producto['Nombre']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['vTotal']) && $producto['vTotal']!=''){              $SIS_data .= ",'".$producto['vTotal']."'";        }else{$SIS_data .= ",''";}
 							if(isset($producto['idExistencia']) && $producto['idExistencia']!=''){  $SIS_data .= ",'".$producto['idExistencia']."'";  }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
@@ -1955,11 +1945,11 @@ require_once '0_validate_user_1.php';
 
 							/*******************************************************************/
 							//Si existe la OC se actualizan los estados de esta
-							if(isset($_SESSION['boleta_ing_prov_basicos']['idOcompra']) && $_SESSION['boleta_ing_prov_basicos']['idOcompra']!=''){  
-								
+							if(isset($_SESSION['boleta_ing_prov_basicos']['idOcompra']) && $_SESSION['boleta_ing_prov_basicos']['idOcompra']!=''){
+
 								//calculo
 								$nuevo_total = $producto['vTotal'] + $producto['Total_ing'];
-								//Actualizo 
+								//Actualizo
 								$SIS_data = "Total_Ingresado='".$nuevo_total."'";
 
 								/*******************************************************/
@@ -1979,7 +1969,7 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                               $SIS_data  = "'".$ultimo_id."'";                                         }else{$SIS_data  = "''";}
 							if(isset($_SESSION['boleta_ing_prov_basicos']['idSistema']) && $_SESSION['boleta_ing_prov_basicos']['idSistema']!=''){ $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idSistema']."'"; }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['boleta_ing_prov_basicos']['idUsuario']) && $_SESSION['boleta_ing_prov_basicos']['idUsuario']!=''){ $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idUsuario']."'"; }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['boleta_ing_prov_basicos']['idTipo']) && $_SESSION['boleta_ing_prov_basicos']['idTipo']!=''){$SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idTipo']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['boleta_ing_prov_basicos']['idTipo']) && $_SESSION['boleta_ing_prov_basicos']['idTipo']!=''){       $SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['idTipo']."'";    }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']) && $_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['boleta_ing_prov_basicos']['Creacion_fecha'])."'";
@@ -2087,7 +2077,7 @@ require_once '0_validate_user_1.php';
 					//Actualizo la OC
 					$arrServicios = array();
 					$arrServicios = db_select_array (false, 'boleta_honorarios_facturacion_servicios.idTipo, boleta_honorarios_facturacion_servicios.vTotal, boleta_honorarios_facturacion_servicios.idExistencia, ocompra_listado_existencias_boletas_empresas.Total_Ingresado', 'boleta_honorarios_facturacion_servicios', 'LEFT JOIN `ocompra_listado_existencias_boletas_empresas`   ON ocompra_listado_existencias_boletas_empresas.idExistencia   = boleta_honorarios_facturacion_servicios.idExistencia', 'boleta_honorarios_facturacion_servicios.idFacturacion ='.$indice, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					
+
 					foreach ($arrServicios as $serv) {
 						if(isset($serv['idExistencia'])&&$serv['idExistencia']!=0){
 							switch ($serv['idTipo']) {
@@ -2104,7 +2094,7 @@ require_once '0_validate_user_1.php';
 								case 3:
 									//calculo
 									$nuevo_total = $serv['Total_Ingresado'] - $serv['vTotal'];
-									//Actualizo 
+									//Actualizo
 									$SIS_data = "Total_Ingresado='".$nuevo_total."'";
 									/*******************************************************/
 									//se actualizan los datos

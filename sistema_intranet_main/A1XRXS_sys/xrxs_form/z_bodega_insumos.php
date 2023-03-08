@@ -128,7 +128,7 @@ require_once '0_validate_user_1.php';
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
 	if(isset($Observaciones) && $Observaciones!=''){ $Observaciones = EstandarizarInput($Observaciones);}
-	if(isset($Nombre) && $Nombre!=''){              $Nombre        = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){               $Nombre        = EstandarizarInput($Nombre);}
 
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
@@ -197,12 +197,12 @@ require_once '0_validate_user_1.php';
 				//Se guardan los datos basicos del formulario recien llenado
 				if(isset($idDocumentos) && $idDocumentos!=''){           $_SESSION['insumos_ing_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['insumos_ing_basicos']['idDocumentos']      = '';}
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['insumos_ing_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['insumos_ing_basicos']['N_Doc']             = '';}
-				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['insumos_ing_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['insumos_ing_basicos']['idBodega']          = '';}
+				if(isset($idBodega) && $idBodega!=''){                   $_SESSION['insumos_ing_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['insumos_ing_basicos']['idBodega']          = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['insumos_ing_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['insumos_ing_basicos']['Observaciones']     = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['insumos_ing_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['insumos_ing_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['insumos_ing_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_ing_basicos']['idUsuario']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['insumos_ing_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_ing_basicos']['idUsuario']         = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['insumos_ing_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['insumos_ing_basicos']['Creacion_fecha']    = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['insumos_ing_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_ing_basicos']['idTipo']            = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['insumos_ing_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_ing_basicos']['idTipo']            = '';}
 				if(isset($idProveedor) && $idProveedor!=''){             $_SESSION['insumos_ing_basicos']['idProveedor']       = $idProveedor;       }else{$_SESSION['insumos_ing_basicos']['idProveedor']       = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['insumos_ing_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['insumos_ing_basicos']['fecha_auto']        = '';}
 				if(isset($fecha_fact_desde) && $fecha_fact_desde!=''){   $_SESSION['insumos_ing_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['insumos_ing_basicos']['fecha_fact_desde']  = '';}
@@ -275,11 +275,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['insumos_ing_basicos']['Proveedor'] = '';
 				}
-				
-				
-				
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -352,12 +348,12 @@ require_once '0_validate_user_1.php';
 				//Se guardan los datos basicos del formulario recien llenado
 				if(isset($idDocumentos) && $idDocumentos!=''){           $_SESSION['insumos_ing_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['insumos_ing_basicos']['idDocumentos']      = '';}
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['insumos_ing_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['insumos_ing_basicos']['N_Doc']             = '';}
-				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['insumos_ing_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['insumos_ing_basicos']['idBodega']          = '';}
+				if(isset($idBodega) && $idBodega!=''){                   $_SESSION['insumos_ing_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['insumos_ing_basicos']['idBodega']          = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['insumos_ing_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['insumos_ing_basicos']['Observaciones']     = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['insumos_ing_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['insumos_ing_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['insumos_ing_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_ing_basicos']['idUsuario']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['insumos_ing_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_ing_basicos']['idUsuario']         = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['insumos_ing_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['insumos_ing_basicos']['Creacion_fecha']    = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['insumos_ing_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_ing_basicos']['idTipo']            = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['insumos_ing_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_ing_basicos']['idTipo']            = '';}
 				if(isset($idProveedor) && $idProveedor!=''){             $_SESSION['insumos_ing_basicos']['idProveedor']       = $idProveedor;       }else{$_SESSION['insumos_ing_basicos']['idProveedor']       = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['insumos_ing_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['insumos_ing_basicos']['fecha_auto']        = '';}
 				if(isset($fecha_fact_desde) && $fecha_fact_desde!=''){   $_SESSION['insumos_ing_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['insumos_ing_basicos']['fecha_fact_desde']  = '';}
@@ -420,11 +416,7 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['insumos_ing_basicos']['Proveedor'] = '';
 				}
-				
-				
-				
-				
-				
+
 				//Se redirije
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -575,7 +567,7 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['insumos_ing_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['insumos_ing_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
@@ -885,8 +877,8 @@ require_once '0_validate_user_1.php';
 
 				//se crea el nuevo producto
 				$_SESSION['insumos_ing_descuentos'][$oldidProducto]['idDescuento'] = $oldidProducto;
-				$_SESSION['insumos_ing_descuentos'][$oldidProducto]['Nombre'] = $Nombre;
-				$_SESSION['insumos_ing_descuentos'][$oldidProducto]['vTotal'] = $vTotal;
+				$_SESSION['insumos_ing_descuentos'][$oldidProducto]['Nombre']      = $Nombre;
+				$_SESSION['insumos_ing_descuentos'][$oldidProducto]['vTotal']      = $vTotal;
 
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -982,14 +974,14 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['insumos_ing_basicos']['idTipo']) OR $_SESSION['insumos_ing_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['insumos_ing_basicos']['idUsoIVA']) OR $_SESSION['insumos_ing_basicos']['idUsoIVA']=='' ){             $error['idUsoIVA']         = 'error/No ha seleccionado la exencion de IVA';}
 				//compruebo que sea una factura y que tenga fecha de pago
-				if(isset($_SESSION['insumos_ing_basicos']['idDocumentos']) && $_SESSION['insumos_ing_basicos']['idDocumentos']==2 ){     
-					if(!isset($_SESSION['insumos_ing_basicos']['Pago_fecha']) OR $_SESSION['insumos_ing_basicos']['Pago_fecha']=='' OR $_SESSION['insumos_ing_basicos']['Pago_fecha']=='0000-00-00' ){     
+				if(isset($_SESSION['insumos_ing_basicos']['idDocumentos']) && $_SESSION['insumos_ing_basicos']['idDocumentos']==2 ){
+					if(!isset($_SESSION['insumos_ing_basicos']['Pago_fecha']) OR $_SESSION['insumos_ing_basicos']['Pago_fecha']=='' OR $_SESSION['insumos_ing_basicos']['Pago_fecha']=='0000-00-00' ){
 						$error['Pago_fecha']  = 'error/No ha ingresado la fecha de vencimiento de la factura';
 					}
 				}
 				//se verifica el uso del iva
 				if(isset($_SESSION['insumos_ing_basicos']['idUsoIVA'])&&$_SESSION['insumos_ing_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['insumos_ing_impuestos'])){     
+					if(!isset($_SESSION['insumos_ing_impuestos'])){
 						$error['impuesto']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -1025,12 +1017,12 @@ require_once '0_validate_user_1.php';
 
 				//Se guardan los datos basicos
 				if(isset($_SESSION['insumos_ing_basicos']['idDocumentos']) && $_SESSION['insumos_ing_basicos']['idDocumentos']!=''){      $SIS_data  = "'".$_SESSION['insumos_ing_basicos']['idDocumentos']."'";   }else{$SIS_data  = "''";}
-				if(isset($_SESSION['insumos_ing_basicos']['N_Doc']) && $_SESSION['insumos_ing_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idBodega']) && $_SESSION['insumos_ing_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['N_Doc']) && $_SESSION['insumos_ing_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idBodega']) && $_SESSION['insumos_ing_basicos']['idBodega']!=''){              $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_ing_basicos']['Observaciones']) && $_SESSION['insumos_ing_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['Observaciones']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idSistema']) && $_SESSION['insumos_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idUsuario']) && $_SESSION['insumos_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idTipo']) && $_SESSION['insumos_ing_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idSistema']) && $_SESSION['insumos_ing_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idUsuario']) && $_SESSION['insumos_ing_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idTipo']) && $_SESSION['insumos_ing_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_ing_basicos']['Creacion_fecha']) && $_SESSION['insumos_ing_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['insumos_ing_basicos']['Creacion_fecha'])."'";
@@ -1058,37 +1050,37 @@ require_once '0_validate_user_1.php';
 				}
 				$SIS_data .= ",'1'";
 				$SIS_data .= ",''";
-				if(isset($_SESSION['insumos_ing_basicos']['fecha_auto']) && $_SESSION['insumos_ing_basicos']['fecha_auto']!=''){        $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['valor_neto_fact'])&&$_SESSION['insumos_ing_basicos']['valor_neto_fact']!=''){ $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['valor_neto_fact']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['valor_neto_imp'])&&$_SESSION['insumos_ing_basicos']['valor_neto_imp']!=''){   $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['valor_neto_imp']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['fecha_auto']) && $_SESSION['insumos_ing_basicos']['fecha_auto']!=''){                $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['fecha_auto']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['valor_neto_fact'])&&$_SESSION['insumos_ing_basicos']['valor_neto_fact']!=''){        $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['valor_neto_fact']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['valor_neto_imp'])&&$_SESSION['insumos_ing_basicos']['valor_neto_imp']!=''){          $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['valor_neto_imp']."'";      }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_ing_basicos']['valor_total_fact'])&&$_SESSION['insumos_ing_basicos']['valor_total_fact']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['valor_total_fact']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][1]['valor'])&&$_SESSION['insumos_ing_impuestos'][1]['valor']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][1]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][2]['valor'])&&$_SESSION['insumos_ing_impuestos'][2]['valor']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][2]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][3]['valor'])&&$_SESSION['insumos_ing_impuestos'][3]['valor']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][3]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][4]['valor'])&&$_SESSION['insumos_ing_impuestos'][4]['valor']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][4]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][5]['valor'])&&$_SESSION['insumos_ing_impuestos'][5]['valor']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][5]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][6]['valor'])&&$_SESSION['insumos_ing_impuestos'][6]['valor']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][6]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][7]['valor'])&&$_SESSION['insumos_ing_impuestos'][7]['valor']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][7]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][8]['valor'])&&$_SESSION['insumos_ing_impuestos'][8]['valor']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][8]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][9]['valor'])&&$_SESSION['insumos_ing_impuestos'][9]['valor']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][9]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_impuestos'][10]['valor'])&&$_SESSION['insumos_ing_impuestos'][10]['valor']!=''){         $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][10]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idOcompra']) && $_SESSION['insumos_ing_basicos']['idOcompra']!=''){          $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idOcompra']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idCentroCosto']) && $_SESSION['insumos_ing_basicos']['idCentroCosto']!=''){  $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idCentroCosto']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idLevel_1']) && $_SESSION['insumos_ing_basicos']['idLevel_1']!=''){          $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_1']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idLevel_2']) && $_SESSION['insumos_ing_basicos']['idLevel_2']!=''){          $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_2']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idLevel_3']) && $_SESSION['insumos_ing_basicos']['idLevel_3']!=''){          $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_3']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idLevel_4']) && $_SESSION['insumos_ing_basicos']['idLevel_4']!=''){          $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_4']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idLevel_5']) && $_SESSION['insumos_ing_basicos']['idLevel_5']!=''){          $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_5']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['fecha_fact_desde']) && $_SESSION['insumos_ing_basicos']['fecha_fact_desde']!=''){   $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['fecha_fact_desde']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['fecha_fact_hasta']) && $_SESSION['insumos_ing_basicos']['fecha_fact_hasta']!=''){   $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['fecha_fact_hasta']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_basicos']['idUsoIVA']) && $_SESSION['insumos_ing_basicos']['idUsoIVA']!=''){            $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idUsoIVA']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][1]['valor'])&&$_SESSION['insumos_ing_impuestos'][1]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][1]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][2]['valor'])&&$_SESSION['insumos_ing_impuestos'][2]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][2]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][3]['valor'])&&$_SESSION['insumos_ing_impuestos'][3]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][3]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][4]['valor'])&&$_SESSION['insumos_ing_impuestos'][4]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][4]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][5]['valor'])&&$_SESSION['insumos_ing_impuestos'][5]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][5]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][6]['valor'])&&$_SESSION['insumos_ing_impuestos'][6]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][6]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][7]['valor'])&&$_SESSION['insumos_ing_impuestos'][7]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][7]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][8]['valor'])&&$_SESSION['insumos_ing_impuestos'][8]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][8]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][9]['valor'])&&$_SESSION['insumos_ing_impuestos'][9]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][9]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_impuestos'][10]['valor'])&&$_SESSION['insumos_ing_impuestos'][10]['valor']!=''){                $SIS_data .= ",'".$_SESSION['insumos_ing_impuestos'][10]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idOcompra']) && $_SESSION['insumos_ing_basicos']['idOcompra']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idOcompra']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idCentroCosto']) && $_SESSION['insumos_ing_basicos']['idCentroCosto']!=''){          $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idCentroCosto']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idLevel_1']) && $_SESSION['insumos_ing_basicos']['idLevel_1']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_1']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idLevel_2']) && $_SESSION['insumos_ing_basicos']['idLevel_2']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_2']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idLevel_3']) && $_SESSION['insumos_ing_basicos']['idLevel_3']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_3']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idLevel_4']) && $_SESSION['insumos_ing_basicos']['idLevel_4']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_4']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idLevel_5']) && $_SESSION['insumos_ing_basicos']['idLevel_5']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idLevel_5']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['fecha_fact_desde']) && $_SESSION['insumos_ing_basicos']['fecha_fact_desde']!=''){    $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['fecha_fact_desde']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['fecha_fact_hasta']) && $_SESSION['insumos_ing_basicos']['fecha_fact_hasta']!=''){    $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['fecha_fact_hasta']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_basicos']['idUsoIVA']) && $_SESSION['insumos_ing_basicos']['idUsoIVA']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idUsoIVA']."'";            }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idDocumentos,N_Doc, idBodegaDestino, Observaciones, idSistema, idUsuario, idTipo, 
-				Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idProveedor, Pago_fecha, Pago_dia, 
+				$SIS_columns = 'idDocumentos,N_Doc, idBodegaDestino, Observaciones, idSistema, idUsuario, idTipo,
+				Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idProveedor, Pago_fecha, Pago_dia,
 				Pago_Semana, Pago_mes, Pago_ano, idEstado, DocRel, fecha_auto, ValorNeto, ValorNetoImp,ValorTotal,
 				Impuesto_01,Impuesto_02,Impuesto_03,Impuesto_04,Impuesto_05,Impuesto_06,Impuesto_07,Impuesto_08,
-				Impuesto_09, Impuesto_10, idOcompra, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, 
+				Impuesto_09, Impuesto_10, idOcompra, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4,
 				idLevel_5, fecha_fact_desde, fecha_fact_hasta, idUsoIVA';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -1100,7 +1092,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_ing_productos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                  $SIS_data  = "'".$ultimo_id."'";                                         }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                           $SIS_data  = "'".$ultimo_id."'";                                         }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_ing_basicos']['idBodega']) && $_SESSION['insumos_ing_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_basicos']['idSistema']) && $_SESSION['insumos_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_basicos']['idUsuario']) && $_SESSION['insumos_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -1114,29 +1106,29 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['insumos_ing_basicos']['idDocumentos']) && $_SESSION['insumos_ing_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idDocumentos']."'";       }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_ing_basicos']['N_Doc']) && $_SESSION['insumos_ing_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_ing_basicos']['idTipo']) && $_SESSION['insumos_ing_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                 $SIS_data .= ",'".$producto['idProducto']."'";                                }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                         $SIS_data .= ",'".$producto['Number']."'";                                    }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                             $SIS_data .= ",'".$producto['ValorIngreso']."'";                              }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                 $SIS_data .= ",'".$producto['ValorTotal']."'";                                }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_ing_basicos']['idProveedor']) && $_SESSION['insumos_ing_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idProveedor']."'";        }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_ing_basicos']['fecha_auto']) && $_SESSION['insumos_ing_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_ing_basicos']['N_Doc']) && $_SESSION['insumos_ing_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_ing_basicos']['idTipo']) && $_SESSION['insumos_ing_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                        $SIS_data .= ",'".$producto['idProducto']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                $SIS_data .= ",'".$producto['Number']."'";                                    }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                    $SIS_data .= ",'".$producto['ValorIngreso']."'";                              }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                        $SIS_data .= ",'".$producto['ValorTotal']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_ing_basicos']['idProveedor']) && $_SESSION['insumos_ing_basicos']['idProveedor']!=''){        $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idProveedor']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_ing_basicos']['fecha_auto']) && $_SESSION['insumos_ing_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, 
-							Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_ing, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
+							Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_ing,
 							Valor, ValorTotal, idProveedor, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 							/*******************************************************************/
 							//Actualizo el valor de los productos
 							$SIS_data = "idProducto='".$producto['idProducto']."'";
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso'] != ''&&isset($_SESSION['insumos_ing_basicos']['idProveedor']) && $_SESSION['insumos_ing_basicos']['idProveedor']!=''){     
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso'] != ''&&isset($_SESSION['insumos_ing_basicos']['idProveedor']) && $_SESSION['insumos_ing_basicos']['idProveedor']!=''){
 								$SIS_data .= ",idProveedor='".$_SESSION['insumos_ing_basicos']['idProveedor']."'";
 								$SIS_data .= ",ValorIngreso='".$producto['ValorIngreso']."'";
 							}
-					
+
 							/*******************************************************/
 							//se actualizan los datos
 							$resultado = db_update_data (false, $SIS_data, 'insumos_listado', 'idProducto = "'.$producto['idProducto'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1162,7 +1154,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_ing_descuentos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                  $SIS_data  = "'".$ultimo_id."'";                                         }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                           $SIS_data  = "'".$ultimo_id."'";                                         }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_ing_basicos']['idSistema']) && $_SESSION['insumos_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_basicos']['idUsuario']) && $_SESSION['insumos_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_basicos']['Creacion_fecha']) && $_SESSION['insumos_ing_basicos']['Creacion_fecha']!=''){
@@ -1191,7 +1183,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_ing_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                  $SIS_data  = "'".$ultimo_id."'";                                         }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                           $SIS_data  = "'".$ultimo_id."'";                                         }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_ing_basicos']['idBodega']) && $_SESSION['insumos_ing_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_basicos']['idSistema']) && $_SESSION['insumos_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_basicos']['idUsuario']) && $_SESSION['insumos_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -1219,9 +1211,9 @@ require_once '0_validate_user_1.php';
 					if (isset($_SESSION['insumos_ing_guias'])){
 						foreach ($_SESSION['insumos_ing_guias'] as $key => $guias){
 							//filtro
-							if(isset($ultimo_id) && $ultimo_id!=''){ 
-								
-								$SIS_data  = "DocRel='".$ultimo_id."'";    
+							if(isset($ultimo_id) && $ultimo_id!=''){
+
+								$SIS_data  = "DocRel='".$ultimo_id."'";
 								$SIS_data .= ",idEstado='2'";
 
 								/*******************************************************/
@@ -1305,13 +1297,13 @@ require_once '0_validate_user_1.php';
 				unset($_SESSION['insumos_egr_archivos']);
 
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['insumos_egr_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['insumos_egr_basicos']['idBodega']       = '';}
+				if(isset($idBodega) && $idBodega!=''){                   $_SESSION['insumos_egr_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['insumos_egr_basicos']['idBodega']       = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['insumos_egr_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['insumos_egr_basicos']['Observaciones']  = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['insumos_egr_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['insumos_egr_basicos']['idSistema']      = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['insumos_egr_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['insumos_egr_basicos']['idUsuario']      = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['insumos_egr_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['insumos_egr_basicos']['idUsuario']      = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['insumos_egr_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['insumos_egr_basicos']['Creacion_fecha'] = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['insumos_egr_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['insumos_egr_basicos']['idTipo']         = '';}
-				if(isset($idTrabajador) && $idTrabajador!=''){          $_SESSION['insumos_egr_basicos']['idTrabajador']    = $idTrabajador;    }else{$_SESSION['insumos_egr_basicos']['idTrabajador']   = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['insumos_egr_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['insumos_egr_basicos']['idTipo']         = '';}
+				if(isset($idTrabajador) && $idTrabajador!=''){           $_SESSION['insumos_egr_basicos']['idTrabajador']    = $idTrabajador;    }else{$_SESSION['insumos_egr_basicos']['idTrabajador']   = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['insumos_egr_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['insumos_egr_basicos']['fecha_auto']     = '';}
 
 				/********************************************************************************/
@@ -1409,13 +1401,13 @@ require_once '0_validate_user_1.php';
 				unset($_SESSION['insumos_egr_descuentos']);
 
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['insumos_egr_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['insumos_egr_basicos']['idBodega']       = '';}
+				if(isset($idBodega) && $idBodega!=''){                   $_SESSION['insumos_egr_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['insumos_egr_basicos']['idBodega']       = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['insumos_egr_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['insumos_egr_basicos']['Observaciones']  = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['insumos_egr_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['insumos_egr_basicos']['idSistema']      = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['insumos_egr_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['insumos_egr_basicos']['idUsuario']      = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['insumos_egr_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['insumos_egr_basicos']['idUsuario']      = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['insumos_egr_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['insumos_egr_basicos']['Creacion_fecha'] = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['insumos_egr_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['insumos_egr_basicos']['idTipo']         = '';}
-				if(isset($idTrabajador) && $idTrabajador!=''){          $_SESSION['insumos_egr_basicos']['idTrabajador']    = $idTrabajador;    }else{$_SESSION['insumos_egr_basicos']['idTrabajador']   = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['insumos_egr_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['insumos_egr_basicos']['idTipo']         = '';}
+				if(isset($idTrabajador) && $idTrabajador!=''){           $_SESSION['insumos_egr_basicos']['idTrabajador']    = $idTrabajador;    }else{$_SESSION['insumos_egr_basicos']['idTrabajador']   = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['insumos_egr_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['insumos_egr_basicos']['fecha_auto']     = '';}
 
 				/********************************************************************************/
@@ -1547,13 +1539,13 @@ require_once '0_validate_user_1.php';
 					insumos_listado.ValorIngreso,
 					insumos_listado.Nombre AS InsumoNombre,
 					sistema_productos_uml.Nombre AS Unimed,
-					SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+					SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso,
 					SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
 					$SIS_join = '
 					LEFT JOIN `insumos_listado`        ON insumos_listado.idProducto    = bodegas_insumos_facturacion_existencias.idProducto
 					LEFT JOIN `sistema_productos_uml`  ON sistema_productos_uml.idUml   = insumos_listado.idUml ';
-					$SIS_where = 'bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto[$j1].' 
-					AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_egr_basicos']['idBodega'];
+					$SIS_where = 'bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto[$j1];
+					$SIS_where.= ' AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_egr_basicos']['idBodega'];
 					$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					//Sumo los egresos
@@ -1575,13 +1567,12 @@ require_once '0_validate_user_1.php';
 				if($n_existencia!=0) {
 					$error['productos'] = 'error/No hay suficientes existencias para algunos insumos';
 				}
-				
-			
+
 			}
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['insumos_egr_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['insumos_egr_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
@@ -1604,8 +1595,8 @@ require_once '0_validate_user_1.php';
 
 			// Se traen los totales de los productos
 			$SIS_query = '
-			SUM(Cantidad_ing) AS ingreso, 
-			SUM(Cantidad_eg) AS egreso, 
+			SUM(Cantidad_ing) AS ingreso,
+			SUM(Cantidad_eg) AS egreso,
 			insumos_listado.Nombre AS InsumoNombre,
 			sistema_productos_uml.Nombre AS Unimed';
 			$SIS_join = '
@@ -1617,7 +1608,7 @@ require_once '0_validate_user_1.php';
 			//Sumo los egresos
 			$Total_egresos     = $rowResultado['egreso'] + $Number;
 			$Total_existencias = $rowResultado['ingreso'] - $rowResultado['egreso'];
-			//Se guardan datos		
+			//Se guardan datos
 			$Ins_Nombre    = $rowResultado['InsumoNombre'];
 			$Ins_Unimed    = $rowResultado['Unimed'];
 			//Verifico si los egresos son inferiores a los ingresos
@@ -1805,8 +1796,8 @@ require_once '0_validate_user_1.php';
 
 				//se crea el nuevo producto
 				$_SESSION['insumos_egr_descuentos'][$oldidProducto]['idDescuento'] = $oldidProducto;
-				$_SESSION['insumos_egr_descuentos'][$oldidProducto]['Nombre'] = $Nombre;
-				$_SESSION['insumos_egr_descuentos'][$oldidProducto]['vTotal'] = $vTotal;
+				$_SESSION['insumos_egr_descuentos'][$oldidProducto]['Nombre']      = $Nombre;
+				$_SESSION['insumos_egr_descuentos'][$oldidProducto]['vTotal']      = $vTotal;
 
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -1864,11 +1855,11 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//Se guardan los datos basicos
-				if(isset($_SESSION['insumos_egr_basicos']['idBodega']) && $_SESSION['insumos_egr_basicos']['idBodega']!=''){       $SIS_data  = "'".$_SESSION['insumos_egr_basicos']['idBodega']."'";       }else{$SIS_data  = "''";}
+				if(isset($_SESSION['insumos_egr_basicos']['idBodega']) && $_SESSION['insumos_egr_basicos']['idBodega']!=''){              $SIS_data  = "'".$_SESSION['insumos_egr_basicos']['idBodega']."'";       }else{$SIS_data  = "''";}
 				if(isset($_SESSION['insumos_egr_basicos']['Observaciones']) && $_SESSION['insumos_egr_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['Observaciones']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_basicos']['idSistema']) && $_SESSION['insumos_egr_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_basicos']['idUsuario']) && $_SESSION['insumos_egr_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_basicos']['idTipo']) && $_SESSION['insumos_egr_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_basicos']['idSistema']) && $_SESSION['insumos_egr_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_basicos']['idUsuario']) && $_SESSION['insumos_egr_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_basicos']['idTipo']) && $_SESSION['insumos_egr_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_egr_basicos']['idTrabajador']) && $_SESSION['insumos_egr_basicos']['idTrabajador']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idTrabajador']."'";  }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_egr_basicos']['Creacion_fecha']) && $_SESSION['insumos_egr_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['Creacion_fecha']."'";
@@ -1881,17 +1872,17 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['insumos_egr_basicos']['fecha_auto']) && $_SESSION['insumos_egr_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['fecha_auto']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_basicos']['fecha_auto']) && $_SESSION['insumos_egr_basicos']['fecha_auto']!=''){           $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['fecha_auto']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_egr_basicos']['idCentroCosto']) && $_SESSION['insumos_egr_basicos']['idCentroCosto']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idCentroCosto']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_basicos']['idLevel_1']) && $_SESSION['insumos_egr_basicos']['idLevel_1']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idLevel_1']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_basicos']['idLevel_2']) && $_SESSION['insumos_egr_basicos']['idLevel_2']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idLevel_2']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_basicos']['idLevel_3']) && $_SESSION['insumos_egr_basicos']['idLevel_3']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idLevel_3']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_basicos']['idLevel_4']) && $_SESSION['insumos_egr_basicos']['idLevel_4']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idLevel_4']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_basicos']['idLevel_5']) && $_SESSION['insumos_egr_basicos']['idLevel_5']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idLevel_5']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_basicos']['idLevel_1']) && $_SESSION['insumos_egr_basicos']['idLevel_1']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idLevel_1']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_basicos']['idLevel_2']) && $_SESSION['insumos_egr_basicos']['idLevel_2']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idLevel_2']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_basicos']['idLevel_3']) && $_SESSION['insumos_egr_basicos']['idLevel_3']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idLevel_3']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_basicos']['idLevel_4']) && $_SESSION['insumos_egr_basicos']['idLevel_4']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idLevel_4']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_basicos']['idLevel_5']) && $_SESSION['insumos_egr_basicos']['idLevel_5']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idLevel_5']."'";      }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idBodegaOrigen, Observaciones, idSistema, idUsuario, idTipo, idTrabajador, 
-				Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, fecha_auto, idCentroCosto, 
+				$SIS_columns = 'idBodegaOrigen, Observaciones, idSistema, idUsuario, idTipo, idTrabajador,
+				Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, fecha_auto, idCentroCosto,
 				idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -1903,7 +1894,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_egr_productos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                  $SIS_data  = "'".$ultimo_id."'";                                         }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                           $SIS_data  = "'".$ultimo_id."'";                                         }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_egr_basicos']['idBodega']) && $_SESSION['insumos_egr_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_basicos']['idSistema']) && $_SESSION['insumos_egr_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_basicos']['idUsuario']) && $_SESSION['insumos_egr_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -1917,26 +1908,26 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['insumos_egr_basicos']['idDocumentos']) && $_SESSION['insumos_egr_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_egr_basicos']['N_Doc']) && $_SESSION['insumos_egr_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_egr_basicos']['idTipo']) && $_SESSION['insumos_egr_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                 $SIS_data .= ",'".$producto['idProducto']."'";                           }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                         $SIS_data .= ",'".$producto['Number']."'";                               }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_egr_basicos']['N_Doc']) && $_SESSION['insumos_egr_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_egr_basicos']['idTipo']) && $_SESSION['insumos_egr_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                        $SIS_data .= ",'".$producto['idProducto']."'";                           }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                $SIS_data .= ",'".$producto['Number']."'";                               }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_basicos']['idTrabajador']) && $_SESSION['insumos_egr_basicos']['idTrabajador']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idTrabajador']."'";  }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                               $SIS_data .= ",'".$producto['ValorEgreso']."'";                          }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                 $SIS_data .= ",'".$producto['ValorTotal']."'";                           }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_egr_basicos']['idCliente']) && $_SESSION['insumos_egr_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idCliente']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_egr_basicos']['fecha_auto']) && $_SESSION['insumos_egr_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                      $SIS_data .= ",'".$producto['ValorEgreso']."'";                          }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                        $SIS_data .= ",'".$producto['ValorTotal']."'";                           }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_egr_basicos']['idCliente']) && $_SESSION['insumos_egr_basicos']['idCliente']!=''){            $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idCliente']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_egr_basicos']['fecha_auto']) && $_SESSION['insumos_egr_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, 
-							Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg,idTrabajador, Valor, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes,
+							Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg,idTrabajador, Valor,
 							ValorTotal, idCliente, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 							/*******************************************************************/
 							//Actualizo el valor de los productos
 							$SIS_data = "idProducto='".$producto['idProducto']."'";
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso'] != ''&&isset($_SESSION['insumos_egr_basicos']['idCliente']) && $_SESSION['insumos_egr_basicos']['idCliente']!=''){     
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso'] != ''&&isset($_SESSION['insumos_egr_basicos']['idCliente']) && $_SESSION['insumos_egr_basicos']['idCliente']!=''){
 								$SIS_data .= ",idCliente='".$_SESSION['insumos_egr_basicos']['idCliente']."'";
 								$SIS_data .= ",ValorEgreso='".$producto['ValorEgreso']."'";
 							}
@@ -1944,8 +1935,7 @@ require_once '0_validate_user_1.php';
 							/*******************************************************/
 							//se actualizan los datos
 							$resultado = db_update_data (false, $SIS_data, 'insumos_listado', 'idProducto = "'.$producto['idProducto'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
-				
+
 						}
 					}
 
@@ -1955,7 +1945,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_egr_descuentos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                  $SIS_data  = "'".$ultimo_id."'";                                         }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                           $SIS_data  = "'".$ultimo_id."'";                                         }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_egr_basicos']['idSistema']) && $_SESSION['insumos_egr_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_basicos']['idUsuario']) && $_SESSION['insumos_egr_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_basicos']['Creacion_fecha']) && $_SESSION['insumos_egr_basicos']['Creacion_fecha']!=''){
@@ -1984,7 +1974,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_egr_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                  $SIS_data  = "'".$ultimo_id."'";                                         }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                           $SIS_data  = "'".$ultimo_id."'";                                         }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_egr_basicos']['idBodega']) && $_SESSION['insumos_egr_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_basicos']['idSistema']) && $_SESSION['insumos_egr_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_basicos']['idUsuario']) && $_SESSION['insumos_egr_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -2083,9 +2073,9 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['insumos_traspaso_basicos']['N_Doc']           = $N_Doc;            }else{$_SESSION['insumos_traspaso_basicos']['N_Doc']            = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['insumos_traspaso_basicos']['Observaciones']   = $Observaciones;    }else{$_SESSION['insumos_traspaso_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['insumos_traspaso_basicos']['idSistema']       = $idSistema;        }else{$_SESSION['insumos_traspaso_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['insumos_traspaso_basicos']['idUsuario']       = $idUsuario;        }else{$_SESSION['insumos_traspaso_basicos']['idUsuario']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['insumos_traspaso_basicos']['idUsuario']       = $idUsuario;        }else{$_SESSION['insumos_traspaso_basicos']['idUsuario']        = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['insumos_traspaso_basicos']['Creacion_fecha']  = $Creacion_fecha;   }else{$_SESSION['insumos_traspaso_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['insumos_traspaso_basicos']['idTipo']          = $idTipo;           }else{$_SESSION['insumos_traspaso_basicos']['idTipo']           = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['insumos_traspaso_basicos']['idTipo']          = $idTipo;           }else{$_SESSION['insumos_traspaso_basicos']['idTipo']           = '';}
 				if(isset($idBodegaOrigen) && $idBodegaOrigen!=''){       $_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']  = $idBodegaOrigen;   }else{$_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']   = '';}
 				if(isset($idBodegaDestino) && $idBodegaDestino!=''){     $_SESSION['insumos_traspaso_basicos']['idBodegaDestino'] = $idBodegaDestino;  }else{$_SESSION['insumos_traspaso_basicos']['idBodegaDestino']  = '';}
 				if(isset($idCliente) && $idCliente!=''){                 $_SESSION['insumos_traspaso_basicos']['idCliente']       = $idCliente;        }else{$_SESSION['insumos_traspaso_basicos']['idCliente']        = '';}
@@ -2177,9 +2167,9 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['insumos_traspaso_basicos']['N_Doc']           = $N_Doc;            }else{$_SESSION['insumos_traspaso_basicos']['N_Doc']            = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['insumos_traspaso_basicos']['Observaciones']   = $Observaciones;    }else{$_SESSION['insumos_traspaso_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['insumos_traspaso_basicos']['idSistema']       = $idSistema;        }else{$_SESSION['insumos_traspaso_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['insumos_traspaso_basicos']['idUsuario']       = $idUsuario;        }else{$_SESSION['insumos_traspaso_basicos']['idUsuario']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['insumos_traspaso_basicos']['idUsuario']       = $idUsuario;        }else{$_SESSION['insumos_traspaso_basicos']['idUsuario']        = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['insumos_traspaso_basicos']['Creacion_fecha']  = $Creacion_fecha;   }else{$_SESSION['insumos_traspaso_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['insumos_traspaso_basicos']['idTipo']          = $idTipo;           }else{$_SESSION['insumos_traspaso_basicos']['idTipo']           = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['insumos_traspaso_basicos']['idTipo']          = $idTipo;           }else{$_SESSION['insumos_traspaso_basicos']['idTipo']           = '';}
 				if(isset($idBodegaOrigen) && $idBodegaOrigen!=''){       $_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']  = $idBodegaOrigen;   }else{$_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']   = '';}
 				if(isset($idBodegaDestino) && $idBodegaDestino!=''){     $_SESSION['insumos_traspaso_basicos']['idBodegaDestino'] = $idBodegaDestino;  }else{$_SESSION['insumos_traspaso_basicos']['idBodegaDestino']  = '';}
 				if(isset($idCliente) && $idCliente!=''){                 $_SESSION['insumos_traspaso_basicos']['idCliente']       = $idCliente;        }else{$_SESSION['insumos_traspaso_basicos']['idCliente']        = '';}
@@ -2315,13 +2305,13 @@ require_once '0_validate_user_1.php';
 					insumos_listado.Nombre,
 					sistema_productos_uml.Nombre AS Unimed,
 					insumos_listado.ValorIngreso,
-					SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+					SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso,
 					SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
 					$SIS_join = '
 					LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
 					LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml';
 					$SIS_where = '
-					bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto[$j1].' 
+					bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto[$j1].'
 					AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_traspaso_basicos']['idBodegaOrigen'];
 					$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Sumo los egresos
@@ -2343,13 +2333,12 @@ require_once '0_validate_user_1.php';
 				if($n_existencia!=0) {
 					$error['productos'] = 'error/No hay suficientes existencias para algunos insumos';
 				}
-				
-			
+
 			}
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['insumos_traspaso_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['insumos_traspaso_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
@@ -2374,20 +2363,20 @@ require_once '0_validate_user_1.php';
 			$SIS_query = '
 			insumos_listado.Nombre,
 			sistema_productos_uml.Nombre AS Unimed,
-			SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+			SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso,
 			SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
 			$SIS_join = '
 			LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
 			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml';
 			$SIS_where = '
-			bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto.' 
+			bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto.'
 			AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_traspaso_basicos']['idBodegaOrigen'];
 			$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Sumo los egresos
 			$Total_egresos     = $rowResultado['egreso'] + $Number;
 			$Total_existencias = $rowResultado['ingreso'] - $rowResultado['egreso'];
 			$ProductoNombre    = $rowResultado['Nombre'];
-			$ProductoUnimed    = $rowResultado['Unimed'];	
+			$ProductoUnimed    = $rowResultado['Unimed'];
 			//Verifico si los egresos son inferiores a los ingresos
 			if($rowResultado['ingreso']<$Total_egresos){
 				$error['productos'] = 'error/No hay suficientes existencias, solo quedan '.$Total_existencias;
@@ -2411,7 +2400,7 @@ require_once '0_validate_user_1.php';
 				$_SESSION['insumos_traspaso_productos'][$idProducto]['ValorTotal']   = $ValorIngreso*$Number;
 				$_SESSION['insumos_traspaso_productos'][$idProducto]['Nombre']       = $ProductoNombre;
 				$_SESSION['insumos_traspaso_productos'][$idProducto]['Unimed']       = $ProductoUnimed;
-					
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
@@ -2472,14 +2461,14 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//Se guardan los datos basicos
-				if(isset($_SESSION['insumos_traspaso_basicos']['idDocumentos']) && $_SESSION['insumos_traspaso_basicos']['idDocumentos']!=''){ $SIS_data  = "'".$_SESSION['insumos_traspaso_basicos']['idDocumentos']."'";       }else{$SIS_data  = "''";}
-				if(isset($_SESSION['insumos_traspaso_basicos']['N_Doc']) && $_SESSION['insumos_traspaso_basicos']['N_Doc']!=''){               $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['N_Doc']."'";             }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspaso_basicos']['idDocumentos']) && $_SESSION['insumos_traspaso_basicos']['idDocumentos']!=''){        $SIS_data  = "'".$_SESSION['insumos_traspaso_basicos']['idDocumentos']."'";       }else{$SIS_data  = "''";}
+				if(isset($_SESSION['insumos_traspaso_basicos']['N_Doc']) && $_SESSION['insumos_traspaso_basicos']['N_Doc']!=''){                      $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['N_Doc']."'";             }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']) && $_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']!=''){    $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_traspaso_basicos']['idBodegaDestino']) && $_SESSION['insumos_traspaso_basicos']['idBodegaDestino']!=''){  $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idBodegaDestino']."'";   }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_traspaso_basicos']['Observaciones']) && $_SESSION['insumos_traspaso_basicos']['Observaciones']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['Observaciones']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspaso_basicos']['idSistema']) && $_SESSION['insumos_traspaso_basicos']['idSistema']!=''){       $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idSistema']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspaso_basicos']['idUsuario']) && $_SESSION['insumos_traspaso_basicos']['idUsuario']!=''){       $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idUsuario']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspaso_basicos']['idTipo']) && $_SESSION['insumos_traspaso_basicos']['idTipo']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idTipo']."'";            }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspaso_basicos']['idSistema']) && $_SESSION['insumos_traspaso_basicos']['idSistema']!=''){              $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idSistema']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspaso_basicos']['idUsuario']) && $_SESSION['insumos_traspaso_basicos']['idUsuario']!=''){              $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idUsuario']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspaso_basicos']['idTipo']) && $_SESSION['insumos_traspaso_basicos']['idTipo']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idTipo']."'";            }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_traspaso_basicos']['Creacion_fecha']) && $_SESSION['insumos_traspaso_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['insumos_traspaso_basicos']['Creacion_fecha'])."'";
@@ -2491,17 +2480,17 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['insumos_traspaso_basicos']['fecha_auto']) && $_SESSION['insumos_traspaso_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['fecha_auto']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspaso_basicos']['fecha_auto']) && $_SESSION['insumos_traspaso_basicos']['fecha_auto']!=''){           $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['fecha_auto']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_traspaso_basicos']['idCentroCosto']) && $_SESSION['insumos_traspaso_basicos']['idCentroCosto']!=''){     $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idCentroCosto']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspaso_basicos']['idLevel_1']) && $_SESSION['insumos_traspaso_basicos']['idLevel_1']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idLevel_1']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspaso_basicos']['idLevel_2']) && $_SESSION['insumos_traspaso_basicos']['idLevel_2']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idLevel_2']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspaso_basicos']['idLevel_3']) && $_SESSION['insumos_traspaso_basicos']['idLevel_3']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idLevel_3']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspaso_basicos']['idLevel_4']) && $_SESSION['insumos_traspaso_basicos']['idLevel_4']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idLevel_4']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspaso_basicos']['idLevel_5']) && $_SESSION['insumos_traspaso_basicos']['idLevel_5']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idLevel_5']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspaso_basicos']['idLevel_1']) && $_SESSION['insumos_traspaso_basicos']['idLevel_1']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idLevel_1']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspaso_basicos']['idLevel_2']) && $_SESSION['insumos_traspaso_basicos']['idLevel_2']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idLevel_2']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspaso_basicos']['idLevel_3']) && $_SESSION['insumos_traspaso_basicos']['idLevel_3']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idLevel_3']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspaso_basicos']['idLevel_4']) && $_SESSION['insumos_traspaso_basicos']['idLevel_4']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idLevel_4']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspaso_basicos']['idLevel_5']) && $_SESSION['insumos_traspaso_basicos']['idLevel_5']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idLevel_5']."'";      }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, idBodegaDestino, Observaciones, idSistema, 
-				idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, 
+				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, idBodegaDestino, Observaciones, idSistema,
+				idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano,
 				fecha_auto, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -2509,15 +2498,15 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de los trabajadores
-					if(isset($_SESSION['insumos_traspaso_productos'])){	
+					if(isset($_SESSION['insumos_traspaso_productos'])){
 						foreach ($_SESSION['insumos_traspaso_productos'] as $key => $producto){
 
 							//Primero se realiza el egreso del producto
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                               }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']) && $_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']!=''){  $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idBodegaOrigen']."'"; }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspaso_basicos']['idSistema']) && $_SESSION['insumos_traspaso_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idSistema']."'";      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspaso_basicos']['idUsuario']) && $_SESSION['insumos_traspaso_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idUsuario']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspaso_basicos']['idSistema']) && $_SESSION['insumos_traspaso_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idSistema']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspaso_basicos']['idUsuario']) && $_SESSION['insumos_traspaso_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idUsuario']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_traspaso_basicos']['Creacion_fecha']) && $_SESSION['insumos_traspaso_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['insumos_traspaso_basicos']['Creacion_fecha'])."'";
@@ -2528,17 +2517,17 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['insumos_traspaso_basicos']['idDocumentos']) && $_SESSION['insumos_traspaso_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspaso_basicos']['N_Doc']) && $_SESSION['insumos_traspaso_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspaso_basicos']['idTipo']) && $_SESSION['insumos_traspaso_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                           $SIS_data .= ",'".$producto['idProducto']."'";                                }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                                   $SIS_data .= ",'".$producto['Number']."'";                                    }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                         $SIS_data .= ",'".$producto['ValorEgreso']."'";                               }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                           $SIS_data .= ",'".$producto['ValorTotal']."'";                                }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspaso_basicos']['fecha_auto']) && $_SESSION['insumos_traspaso_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspaso_basicos']['N_Doc']) && $_SESSION['insumos_traspaso_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspaso_basicos']['idTipo']) && $_SESSION['insumos_traspaso_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                  $SIS_data .= ",'".$producto['idProducto']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                          $SIS_data .= ",'".$producto['Number']."'";                                    }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                $SIS_data .= ",'".$producto['ValorEgreso']."'";                               }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                  $SIS_data .= ",'".$producto['ValorTotal']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspaso_basicos']['fecha_auto']) && $_SESSION['insumos_traspaso_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, 
-							Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
+							Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg,
 							Valor, ValorTotal, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -2547,8 +2536,8 @@ require_once '0_validate_user_1.php';
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                              $SIS_data  = "'".$ultimo_id."'";                                                 }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_traspaso_basicos']['idBodegaDestino']) && $_SESSION['insumos_traspaso_basicos']['idBodegaDestino']!=''){  $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idBodegaDestino']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspaso_basicos']['idSistema']) && $_SESSION['insumos_traspaso_basicos']['idSistema']!=''){       $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idSistema']."'";        }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspaso_basicos']['idUsuario']) && $_SESSION['insumos_traspaso_basicos']['idUsuario']!=''){       $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idUsuario']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspaso_basicos']['idSistema']) && $_SESSION['insumos_traspaso_basicos']['idSistema']!=''){              $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idSistema']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspaso_basicos']['idUsuario']) && $_SESSION['insumos_traspaso_basicos']['idUsuario']!=''){              $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idUsuario']."'";        }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_traspaso_basicos']['Creacion_fecha']) && $_SESSION['insumos_traspaso_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['insumos_traspaso_basicos']['Creacion_fecha'])."'";
@@ -2559,21 +2548,20 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['insumos_traspaso_basicos']['idDocumentos']) && $_SESSION['insumos_traspaso_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspaso_basicos']['N_Doc']) && $_SESSION['insumos_traspaso_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspaso_basicos']['idTipo']) && $_SESSION['insumos_traspaso_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                           $SIS_data .= ",'".$producto['idProducto']."'";                                }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                                   $SIS_data .= ",'".$producto['Number']."'";                                    }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                         $SIS_data .= ",'".$producto['ValorEgreso']."'";                               }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                           $SIS_data .= ",'".$producto['ValorTotal']."'";                                }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspaso_basicos']['fecha_auto']) && $_SESSION['insumos_traspaso_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspaso_basicos']['N_Doc']) && $_SESSION['insumos_traspaso_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspaso_basicos']['idTipo']) && $_SESSION['insumos_traspaso_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                  $SIS_data .= ",'".$producto['idProducto']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                          $SIS_data .= ",'".$producto['Number']."'";                                    }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                $SIS_data .= ",'".$producto['ValorEgreso']."'";                               }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                  $SIS_data .= ",'".$producto['ValorTotal']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspaso_basicos']['fecha_auto']) && $_SESSION['insumos_traspaso_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['insumos_traspaso_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, 
-							Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_ing, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
+							Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_ing,
 							Valor, ValorTotal, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
-							
+
 						}
 					}
 					/*********************************************************************/
@@ -2655,9 +2643,9 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['insumos_traspasoempresa_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['insumos_traspasoempresa_basicos']['N_Doc']            = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['insumos_traspasoempresa_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['insumos_traspasoempresa_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['insumos_traspasoempresa_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['insumos_traspasoempresa_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['insumos_traspasoempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_traspasoempresa_basicos']['idUsuario']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['insumos_traspasoempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_traspasoempresa_basicos']['idUsuario']        = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['insumos_traspasoempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_traspasoempresa_basicos']['idTipo']           = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['insumos_traspasoempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_traspasoempresa_basicos']['idTipo']           = '';}
 				if(isset($idBodegaOrigen) && $idBodegaOrigen!=''){       $_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']    = $idBodegaOrigen;    }else{$_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']   = '';}
 				if(isset($idBodegaDestino) && $idBodegaDestino!=''){     $_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']   = $idBodegaDestino;   }else{$_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']  = '';}
 				if(isset($idSistemaDestino) && $idSistemaDestino!=''){   $_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']  = $idSistemaDestino;  }else{$_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino'] = '';}
@@ -2759,9 +2747,9 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['insumos_traspasoempresa_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['insumos_traspasoempresa_basicos']['N_Doc']            = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['insumos_traspasoempresa_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['insumos_traspasoempresa_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['insumos_traspasoempresa_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['insumos_traspasoempresa_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['insumos_traspasoempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_traspasoempresa_basicos']['idUsuario']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['insumos_traspasoempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_traspasoempresa_basicos']['idUsuario']        = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['insumos_traspasoempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_traspasoempresa_basicos']['idTipo']           = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['insumos_traspasoempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_traspasoempresa_basicos']['idTipo']           = '';}
 				if(isset($idBodegaOrigen) && $idBodegaOrigen!=''){       $_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']    = $idBodegaOrigen;    }else{$_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']   = '';}
 				if(isset($idBodegaDestino) && $idBodegaDestino!=''){     $_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']   = $idBodegaDestino;   }else{$_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']  = '';}
 				if(isset($idSistemaDestino) && $idSistemaDestino!=''){   $_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']  = $idSistemaDestino;  }else{$_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino'] = '';}
@@ -2908,13 +2896,13 @@ require_once '0_validate_user_1.php';
 					insumos_listado.Nombre,
 					sistema_productos_uml.Nombre AS Unimed,
 					insumos_listado.ValorIngreso,
-					SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+					SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso,
 					SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
 					$SIS_join = '
 					LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
 					LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml';
 					$SIS_where = '
-					bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto[$j1].' 
+					bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto[$j1].'
 					AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen'];
 					$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Sumo los egresos
@@ -2936,13 +2924,12 @@ require_once '0_validate_user_1.php';
 				if($n_existencia!=0) {
 					$error['productos'] = 'error/No hay suficientes existencias para algunos insumos';
 				}
-				
-			
+
 			}
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['insumos_traspasoempresa_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['insumos_traspasoempresa_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
@@ -2968,13 +2955,13 @@ require_once '0_validate_user_1.php';
 			$SIS_query = '
 			insumos_listado.Nombre,
 			sistema_productos_uml.Nombre AS Unimed,
-			SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+			SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso,
 			SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
 			$SIS_join = '
 			LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
 			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml';
 			$SIS_where = '
-			bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto.' 
+			bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto.'
 			AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen'];
 			$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Sumo los egresos
@@ -3067,15 +3054,15 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//Se guardan los datos basicos
-				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idDocumentos']) && $_SESSION['insumos_traspasoempresa_basicos']['idDocumentos']!=''){   $SIS_data  = "'".$_SESSION['insumos_traspasoempresa_basicos']['idDocumentos']."'";        }else{$SIS_data  = "''";}
-				if(isset($_SESSION['insumos_traspasoempresa_basicos']['N_Doc']) && $_SESSION['insumos_traspasoempresa_basicos']['N_Doc']!=''){                 $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idDocumentos']) && $_SESSION['insumos_traspasoempresa_basicos']['idDocumentos']!=''){          $SIS_data  = "'".$_SESSION['insumos_traspasoempresa_basicos']['idDocumentos']."'";        }else{$SIS_data  = "''";}
+				if(isset($_SESSION['insumos_traspasoempresa_basicos']['N_Doc']) && $_SESSION['insumos_traspasoempresa_basicos']['N_Doc']!=''){                        $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']) && $_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']) && $_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']!=''){    $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']) && $_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']!=''){  $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasoempresa_basicos']['Observaciones']) && $_SESSION['insumos_traspasoempresa_basicos']['Observaciones']!=''){ $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['Observaciones']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idSistema']) && $_SESSION['insumos_traspasoempresa_basicos']['idSistema']!=''){         $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idSistema']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idUsuario']) && $_SESSION['insumos_traspasoempresa_basicos']['idUsuario']!=''){         $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idUsuario']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idTipo']) && $_SESSION['insumos_traspasoempresa_basicos']['idTipo']!=''){               $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasoempresa_basicos']['Observaciones']) && $_SESSION['insumos_traspasoempresa_basicos']['Observaciones']!=''){        $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['Observaciones']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idSistema']) && $_SESSION['insumos_traspasoempresa_basicos']['idSistema']!=''){                $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idSistema']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idUsuario']) && $_SESSION['insumos_traspasoempresa_basicos']['idUsuario']!=''){                $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idUsuario']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idTipo']) && $_SESSION['insumos_traspasoempresa_basicos']['idTipo']!=''){                      $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']) && $_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha'])."'";
@@ -3087,18 +3074,18 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']) && $_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']) && $_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']!=''){           $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idCentroCosto']) && $_SESSION['insumos_traspasoempresa_basicos']['idCentroCosto']!=''){     $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idCentroCosto']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idLevel_1']) && $_SESSION['insumos_traspasoempresa_basicos']['idLevel_1']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idLevel_1']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idLevel_2']) && $_SESSION['insumos_traspasoempresa_basicos']['idLevel_2']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idLevel_2']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idLevel_3']) && $_SESSION['insumos_traspasoempresa_basicos']['idLevel_3']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idLevel_3']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idLevel_4']) && $_SESSION['insumos_traspasoempresa_basicos']['idLevel_4']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idLevel_4']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idLevel_5']) && $_SESSION['insumos_traspasoempresa_basicos']['idLevel_5']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idLevel_5']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idLevel_1']) && $_SESSION['insumos_traspasoempresa_basicos']['idLevel_1']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idLevel_1']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idLevel_2']) && $_SESSION['insumos_traspasoempresa_basicos']['idLevel_2']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idLevel_2']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idLevel_3']) && $_SESSION['insumos_traspasoempresa_basicos']['idLevel_3']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idLevel_3']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idLevel_4']) && $_SESSION['insumos_traspasoempresa_basicos']['idLevel_4']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idLevel_4']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasoempresa_basicos']['idLevel_5']) && $_SESSION['insumos_traspasoempresa_basicos']['idLevel_5']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idLevel_5']."'";      }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, idBodegaDestino, 
-				idSistemaDestino, Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, 
-				Creacion_Semana, Creacion_mes, Creacion_ano, fecha_auto, idCentroCosto, idLevel_1, 
+				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, idBodegaDestino,
+				idSistemaDestino, Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha,
+				Creacion_Semana, Creacion_mes, Creacion_ano, fecha_auto, idCentroCosto, idLevel_1,
 				idLevel_2, idLevel_3, idLevel_4, idLevel_5';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -3113,8 +3100,8 @@ require_once '0_validate_user_1.php';
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                          $SIS_data  = "'".$ultimo_id."'";                                                      }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']) && $_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']!=''){  $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idBodegaOrigen']."'"; }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idSistema']) && $_SESSION['insumos_traspasoempresa_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idSistema']."'";      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idUsuario']) && $_SESSION['insumos_traspasoempresa_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idUsuario']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idSistema']) && $_SESSION['insumos_traspasoempresa_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idSistema']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idUsuario']) && $_SESSION['insumos_traspasoempresa_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idUsuario']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']) && $_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha'])."'";
@@ -3125,16 +3112,16 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idDocumentos']) && $_SESSION['insumos_traspasoempresa_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspasoempresa_basicos']['N_Doc']) && $_SESSION['insumos_traspasoempresa_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idTipo']) && $_SESSION['insumos_traspasoempresa_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                         $SIS_data .= ",'".$producto['idProducto']."'";                                       }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                                                 $SIS_data .= ",'".$producto['Number']."'";                                           }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                       $SIS_data .= ",'".$producto['ValorEgreso']."'";                                      }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                         $SIS_data .= ",'".$producto['ValorTotal']."'";                                       }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']) && $_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspasoempresa_basicos']['N_Doc']) && $_SESSION['insumos_traspasoempresa_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idTipo']) && $_SESSION['insumos_traspasoempresa_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                                $SIS_data .= ",'".$producto['idProducto']."'";                                       }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                                        $SIS_data .= ",'".$producto['Number']."'";                                           }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                              $SIS_data .= ",'".$producto['ValorEgreso']."'";                                      }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                                $SIS_data .= ",'".$producto['ValorTotal']."'";                                       }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']) && $_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes,
 							Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg, Valor, ValorTotal, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -3144,7 +3131,7 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                                $SIS_data  = "'".$ultimo_id."'";                                                         }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']) && $_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idBodegaDestino']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']) && $_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']!=''){    $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idUsuario']) && $_SESSION['insumos_traspasoempresa_basicos']['idUsuario']!=''){           $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idUsuario']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idUsuario']) && $_SESSION['insumos_traspasoempresa_basicos']['idUsuario']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idUsuario']."'";         }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']) && $_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha'])."'";
@@ -3155,17 +3142,17 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idDocumentos']) && $_SESSION['insumos_traspasoempresa_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspasoempresa_basicos']['N_Doc']) && $_SESSION['insumos_traspasoempresa_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idTipo']) && $_SESSION['insumos_traspasoempresa_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                         $SIS_data .= ",'".$producto['idProducto']."'";                                       }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                                                 $SIS_data .= ",'".$producto['Number']."'";                                           }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                       $SIS_data .= ",'".$producto['ValorEgreso']."'";                                      }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                         $SIS_data .= ",'".$producto['ValorTotal']."'";                                       }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']) && $_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspasoempresa_basicos']['N_Doc']) && $_SESSION['insumos_traspasoempresa_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idTipo']) && $_SESSION['insumos_traspasoempresa_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                                $SIS_data .= ",'".$producto['idProducto']."'";                                       }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                                        $SIS_data .= ",'".$producto['Number']."'";                                           }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                              $SIS_data .= ",'".$producto['ValorEgreso']."'";                                      }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                                $SIS_data .= ",'".$producto['ValorTotal']."'";                                       }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']) && $_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['insumos_traspasoempresa_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, 
-							Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
+							Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto,
 							Cantidad_ing, Valor, ValorTotal, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -3187,9 +3174,9 @@ require_once '0_validate_user_1.php';
 					if ($arrPermiso!=false && !empty($arrPermiso) && $arrPermiso!='') {
 						foreach($arrPermiso as $permiso) {
 							if(isset($_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']) && $_SESSION['insumos_traspasoempresa_basicos']['idSistemaDestino']!=''){   $SIS_data  = "'".$_SESSION['insumos_egr_basicos']['idSistemaDestino']."'";   }else{$SIS_data  = "''";}
-							if(isset($permiso['idUsuario']) && $permiso['idUsuario']!=''){                                                                                  $SIS_data .= ",'".$permiso['idUsuario']."'";                                 }else{$SIS_data .= ",''";}
+							if(isset($permiso['idUsuario']) && $permiso['idUsuario']!=''){                                                                                         $SIS_data .= ",'".$permiso['idUsuario']."'";                                 }else{$SIS_data .= ",''";}
 							if(isset($Notificacion) && $Notificacion!=''){                                                                                                         $SIS_data .= ",'".$Notificacion."'";                                         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']) && $_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']!=''){$SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['Creacion_fecha']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']) && $_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']!=''){       $SIS_data .= ",'".$_SESSION['insumos_egr_basicos']['Creacion_fecha']."'";    }else{$SIS_data .= ",''";}
 							if(isset($Estado) && $Estado!=''){                                                                                                                     $SIS_data .= ",'".$Estado."'";                                               }else{$SIS_data .= ",''";}
 							$SIS_data .= ",'".hora_actual()."'";
 
@@ -3263,9 +3250,9 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']             = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']     = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']         = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']    = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']            = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']            = '';}
 				if(isset($idBodegaOrigen) && $idBodegaOrigen!=''){       $_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']    = $idBodegaOrigen;    }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']    = '';}
 				if(isset($idSistemaDestino) && $idSistemaDestino!=''){   $_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino']  = $idSistemaDestino;  }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino']  = '';}
 				if(isset($idCliente) && $idCliente!=''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idCliente']         = $idCliente;         }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idCliente']         = '';}
@@ -3350,9 +3337,9 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']             = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']     = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']         = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']    = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']            = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']            = '';}
 				if(isset($idBodegaOrigen) && $idBodegaOrigen!=''){       $_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']    = $idBodegaOrigen;    }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']    = '';}
 				if(isset($idSistemaDestino) && $idSistemaDestino!=''){   $_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino']  = $idSistemaDestino;  }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino']  = '';}
 				if(isset($idCliente) && $idCliente!=''){                 $_SESSION['insumos_traspasomanualempresa_basicos']['idCliente']         = $idCliente;         }else{$_SESSION['insumos_traspasomanualempresa_basicos']['idCliente']         = '';}
@@ -3489,13 +3476,13 @@ require_once '0_validate_user_1.php';
 					insumos_listado.Nombre,
 					sistema_productos_uml.Nombre AS Unimed,
 					insumos_listado.ValorIngreso,
-					SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+					SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso,
 					SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
 					$SIS_join = '
 					LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
 					LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml';
 					$SIS_where = '
-					bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto[$j1].' 
+					bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto[$j1].'
 					AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen'];
 					$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Sumo los egresos
@@ -3517,13 +3504,12 @@ require_once '0_validate_user_1.php';
 				if($n_existencia!=0) {
 					$error['productos'] = 'error/No hay suficientes existencias para algunos insumos';
 				}
-				
-			
+
 			}
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['insumos_traspasomanualempresa_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['insumos_traspasomanualempresa_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
@@ -3548,13 +3534,13 @@ require_once '0_validate_user_1.php';
 			$SIS_query = '
 			insumos_listado.Nombre,
 			sistema_productos_uml.Nombre AS Unimed,
-			SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+			SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso,
 			SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
 			$SIS_join = '
 			LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
 			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml';
 			$SIS_where = '
-			bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto.' 
+			bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto.'
 			AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen'];
 			$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Sumo los egresos
@@ -3646,14 +3632,14 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//Se guardan los datos basicos
-				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idDocumentos']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idDocumentos']!=''){   $SIS_data  = "'".$_SESSION['insumos_traspasomanualempresa_basicos']['idDocumentos']."'";        }else{$SIS_data  = "''";}
-				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']) && $_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']!=''){                 $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idDocumentos']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idDocumentos']!=''){          $SIS_data  = "'".$_SESSION['insumos_traspasomanualempresa_basicos']['idDocumentos']."'";        }else{$SIS_data  = "''";}
+				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']) && $_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']!=''){                        $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino']!=''){  $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idSistemaDestino']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']) && $_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']!=''){ $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']!=''){         $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']!=''){         $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']!=''){               $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']) && $_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']!=''){        $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['Observaciones']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']!=''){                $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']!=''){                $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']!=''){                      $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']) && $_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha'])."'";
@@ -3665,17 +3651,17 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto']) && $_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto']!=''){    $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto']) && $_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto']!=''){           $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idCentroCosto']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idCentroCosto']!=''){     $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idCentroCosto']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_1']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_1']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_1']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_2']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_2']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_2']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_3']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_3']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_3']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_4']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_4']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_4']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_5']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_5']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_5']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_1']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_1']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_1']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_2']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_2']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_2']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_3']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_3']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_3']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_4']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_4']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_4']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_5']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_5']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idLevel_5']."'";      }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, idSistemaDestino, Observaciones, 
-				idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, 
+				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, idSistemaDestino, Observaciones,
+				idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano,
 				fecha_auto, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -3690,8 +3676,8 @@ require_once '0_validate_user_1.php';
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                                      $SIS_data  = "'".$ultimo_id."'";                                                            }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']!=''){  $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idBodegaOrigen']."'"; }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']."'";      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idSistema']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idUsuario']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']) && $_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['insumos_traspasomanualempresa_basicos']['Creacion_fecha'])."'";
@@ -3702,17 +3688,17 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idDocumentos']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']) && $_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                                     $SIS_data .= ",'".$producto['idProducto']."'";                                             }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                                                             $SIS_data .= ",'".$producto['Number']."'";                                                 }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                                   $SIS_data .= ",'".$producto['ValorEgreso']."'";                                            }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                                     $SIS_data .= ",'".$producto['ValorTotal']."'";                                             }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto']) && $_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']) && $_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']) && $_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                                            $SIS_data .= ",'".$producto['idProducto']."'";                                             }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                                                    $SIS_data .= ",'".$producto['Number']."'";                                                 }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                                          $SIS_data .= ",'".$producto['ValorEgreso']."'";                                            }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                                            $SIS_data .= ",'".$producto['ValorTotal']."'";                                             }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto']) && $_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['insumos_traspasomanualempresa_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, 
-							Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
+							Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg,
 							Valor, ValorTotal, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -3761,7 +3747,7 @@ require_once '0_validate_user_1.php';
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 
-				//se actualizael documento 
+				//se actualiza el documento
 				$SIS_data = "idFacturacion='".$idFacturacion."'";
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){
 					$SIS_data .= ",Creacion_fecha='".$Creacion_fecha."'";
@@ -3835,12 +3821,12 @@ require_once '0_validate_user_1.php';
 				unset($_SESSION['insumos_ing_manual_archivos']);
 
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idBodega) && $idBodega!=''){             $_SESSION['insumos_ing_manual_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_manual_basicos']['idBodega']        = '';}
+				if(isset($idBodega) && $idBodega!=''){              $_SESSION['insumos_ing_manual_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_manual_basicos']['idBodega']        = '';}
 				if(isset($Observaciones) && $Observaciones!=''){    $_SESSION['insumos_ing_manual_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['insumos_ing_manual_basicos']['Observaciones']   = '';}
 				if(isset($idSistema) && $idSistema!=''){            $_SESSION['insumos_ing_manual_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['insumos_ing_manual_basicos']['idSistema']       = '';}
-				if(isset($idUsuario) && $idUsuario!=''){           $_SESSION['insumos_ing_manual_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_manual_basicos']['idUsuario']       = '';}
+				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['insumos_ing_manual_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_manual_basicos']['idUsuario']       = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  $_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']  = '';}
-				if(isset($idTipo) && $idTipo!=''){                 $_SESSION['insumos_ing_manual_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_manual_basicos']['idTipo']          = '';}
+				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['insumos_ing_manual_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_manual_basicos']['idTipo']          = '';}
 				if(isset($idProveedor) && $idProveedor!=''){        $_SESSION['insumos_ing_manual_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['insumos_ing_manual_basicos']['idProveedor']     = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){          $_SESSION['insumos_ing_manual_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['insumos_ing_manual_basicos']['fecha_auto']      = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){              $_SESSION['insumos_ing_manual_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['insumos_ing_manual_basicos']['idUsoIVA']        = '';}
@@ -3945,12 +3931,12 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idBodega) && $idBodega!=''){             $_SESSION['insumos_ing_manual_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_manual_basicos']['idBodega']        = '';}
+				if(isset($idBodega) && $idBodega!=''){              $_SESSION['insumos_ing_manual_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_manual_basicos']['idBodega']        = '';}
 				if(isset($Observaciones) && $Observaciones!=''){    $_SESSION['insumos_ing_manual_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['insumos_ing_manual_basicos']['Observaciones']   = '';}
 				if(isset($idSistema) && $idSistema!=''){            $_SESSION['insumos_ing_manual_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['insumos_ing_manual_basicos']['idSistema']       = '';}
-				if(isset($idUsuario) && $idUsuario!=''){           $_SESSION['insumos_ing_manual_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_manual_basicos']['idUsuario']       = '';}
+				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['insumos_ing_manual_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_manual_basicos']['idUsuario']       = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  $_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']  = '';}
-				if(isset($idTipo) && $idTipo!=''){                 $_SESSION['insumos_ing_manual_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_manual_basicos']['idTipo']          = '';}
+				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['insumos_ing_manual_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_manual_basicos']['idTipo']          = '';}
 				if(isset($idProveedor) && $idProveedor!=''){        $_SESSION['insumos_ing_manual_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['insumos_ing_manual_basicos']['idProveedor']     = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){          $_SESSION['insumos_ing_manual_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['insumos_ing_manual_basicos']['fecha_auto']      = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){              $_SESSION['insumos_ing_manual_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['insumos_ing_manual_basicos']['idUsoIVA']        = '';}
@@ -4107,7 +4093,7 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['insumos_ing_manual_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['insumos_ing_manual_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
@@ -4342,7 +4328,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['insumos_ing_manual_basicos']['idTipo']) OR $_SESSION['insumos_ing_manual_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				//se verifica el uso del iva
 				if(isset($_SESSION['insumos_ing_manual_basicos']['idUsoIVA'])&&$_SESSION['insumos_ing_manual_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['insumos_ing_manual_impuestos'])){     
+					if(!isset($_SESSION['insumos_ing_manual_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -4370,11 +4356,11 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//Se guardan los datos basicos
-				if(isset($_SESSION['insumos_ing_manual_basicos']['idBodega']) && $_SESSION['insumos_ing_manual_basicos']['idBodega']!=''){       $SIS_data  = "'".$_SESSION['insumos_ing_manual_basicos']['idBodega']."'";       }else{$SIS_data  = "''";}
+				if(isset($_SESSION['insumos_ing_manual_basicos']['idBodega']) && $_SESSION['insumos_ing_manual_basicos']['idBodega']!=''){              $SIS_data  = "'".$_SESSION['insumos_ing_manual_basicos']['idBodega']."'";       }else{$SIS_data  = "''";}
 				if(isset($_SESSION['insumos_ing_manual_basicos']['Observaciones']) && $_SESSION['insumos_ing_manual_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['Observaciones']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_basicos']['idSistema']) && $_SESSION['insumos_ing_manual_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_basicos']['idUsuario']) && $_SESSION['insumos_ing_manual_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_basicos']['idTipo']) && $_SESSION['insumos_ing_manual_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_basicos']['idSistema']) && $_SESSION['insumos_ing_manual_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_basicos']['idUsuario']) && $_SESSION['insumos_ing_manual_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_basicos']['idTipo']) && $_SESSION['insumos_ing_manual_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']) && $_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['insumos_ing_manual_basicos']['Creacion_fecha'])."'";
@@ -4389,43 +4375,43 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['insumos_ing_manual_basicos']['idProveedor']) && $_SESSION['insumos_ing_manual_basicos']['idProveedor']!=''){   $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idProveedor']."'";        }else{$SIS_data .= ",''";}
 				$SIS_data .= ",'1'";
 				$SIS_data .= ",''";
-				if(isset($_SESSION['insumos_ing_manual_basicos']['fecha_auto']) && $_SESSION['insumos_ing_manual_basicos']['fecha_auto']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_basicos']['fecha_auto']) && $_SESSION['insumos_ing_manual_basicos']['fecha_auto']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_ing_manual_basicos']['valor_neto_fact'])&&$_SESSION['insumos_ing_manual_basicos']['valor_neto_fact']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['valor_neto_fact']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_ing_manual_basicos']['valor_total_fact'])&&$_SESSION['insumos_ing_manual_basicos']['valor_total_fact']!=''){   $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['valor_total_fact']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_impuestos'][1]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][1]['valor']!=''){        $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][1]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_impuestos'][2]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][2]['valor']!=''){        $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][2]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_impuestos'][3]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][3]['valor']!=''){        $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][3]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_impuestos'][4]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][4]['valor']!=''){        $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][4]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_impuestos'][5]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][5]['valor']!=''){        $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][5]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_impuestos'][6]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][6]['valor']!=''){        $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][6]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_impuestos'][7]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][7]['valor']!=''){        $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][7]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_impuestos'][8]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][8]['valor']!=''){        $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][8]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_impuestos'][9]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][9]['valor']!=''){        $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][9]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_impuestos'][10]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][10]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][10]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_basicos']['idCentroCosto']) && $_SESSION['insumos_ing_manual_basicos']['idCentroCosto']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idCentroCosto']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_basicos']['idLevel_1']) && $_SESSION['insumos_ing_manual_basicos']['idLevel_1']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idLevel_1']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_basicos']['idLevel_2']) && $_SESSION['insumos_ing_manual_basicos']['idLevel_2']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idLevel_2']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_basicos']['idLevel_3']) && $_SESSION['insumos_ing_manual_basicos']['idLevel_3']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idLevel_3']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_basicos']['idLevel_4']) && $_SESSION['insumos_ing_manual_basicos']['idLevel_4']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idLevel_4']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_basicos']['idLevel_5']) && $_SESSION['insumos_ing_manual_basicos']['idLevel_5']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idLevel_5']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_manual_basicos']['idUsoIVA']) && $_SESSION['insumos_ing_manual_basicos']['idUsoIVA']!=''){         $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idUsoIVA']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_impuestos'][1]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][1]['valor']!=''){               $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][1]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_impuestos'][2]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][2]['valor']!=''){               $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][2]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_impuestos'][3]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][3]['valor']!=''){               $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][3]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_impuestos'][4]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][4]['valor']!=''){               $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][4]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_impuestos'][5]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][5]['valor']!=''){               $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][5]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_impuestos'][6]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][6]['valor']!=''){               $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][6]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_impuestos'][7]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][7]['valor']!=''){               $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][7]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_impuestos'][8]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][8]['valor']!=''){               $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][8]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_impuestos'][9]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][9]['valor']!=''){               $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][9]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_impuestos'][10]['valor'])&&$_SESSION['insumos_ing_manual_impuestos'][10]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_manual_impuestos'][10]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_basicos']['idCentroCosto']) && $_SESSION['insumos_ing_manual_basicos']['idCentroCosto']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idCentroCosto']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_basicos']['idLevel_1']) && $_SESSION['insumos_ing_manual_basicos']['idLevel_1']!=''){               $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idLevel_1']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_basicos']['idLevel_2']) && $_SESSION['insumos_ing_manual_basicos']['idLevel_2']!=''){               $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idLevel_2']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_basicos']['idLevel_3']) && $_SESSION['insumos_ing_manual_basicos']['idLevel_3']!=''){               $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idLevel_3']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_basicos']['idLevel_4']) && $_SESSION['insumos_ing_manual_basicos']['idLevel_4']!=''){               $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idLevel_4']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_basicos']['idLevel_5']) && $_SESSION['insumos_ing_manual_basicos']['idLevel_5']!=''){               $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idLevel_5']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_manual_basicos']['idUsoIVA']) && $_SESSION['insumos_ing_manual_basicos']['idUsoIVA']!=''){                 $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idUsoIVA']."'";           }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idBodegaDestino, Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, 
+				$SIS_columns = 'idBodegaDestino, Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha,
 				Creacion_Semana, Creacion_mes, Creacion_ano, idProveedor, idEstado, DocRel, fecha_auto, ValorNeto,ValorTotal,Impuesto_01,Impuesto_02,Impuesto_03,
-				Impuesto_04,Impuesto_05,Impuesto_06,Impuesto_07,Impuesto_08,Impuesto_09,Impuesto_10, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, 
+				Impuesto_04,Impuesto_05,Impuesto_06,Impuesto_07,Impuesto_08,Impuesto_09,Impuesto_10, idCentroCosto, idLevel_1, idLevel_2, idLevel_3,
 				idLevel_4, idLevel_5, idUsoIVA';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					/*********************************************************************/
-					//Se guardan los datos de los productos		
-					if(isset($_SESSION['insumos_ing_manual_productos'])){	
+					//Se guardan los datos de los productos
+					if(isset($_SESSION['insumos_ing_manual_productos'])){
 						foreach ($_SESSION['insumos_ing_manual_productos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                $SIS_data  = "'".$ultimo_id."'";                                                }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                         $SIS_data  = "'".$ultimo_id."'";                                                }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_ing_manual_basicos']['idBodega']) && $_SESSION['insumos_ing_manual_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_manual_basicos']['idSistema']) && $_SESSION['insumos_ing_manual_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_manual_basicos']['idUsuario']) && $_SESSION['insumos_ing_manual_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -4447,8 +4433,8 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['insumos_ing_manual_basicos']['fecha_auto']) && $_SESSION['insumos_ing_manual_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, 
-							Creacion_mes, Creacion_ano, idTipo, idProducto, Cantidad_ing, Valor, ValorTotal, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha,
+							Creacion_mes, Creacion_ano, idTipo, idProducto, Cantidad_ing, Valor, ValorTotal,
 							idProveedor,fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -4461,7 +4447,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_ing_manual_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                $SIS_data  = "'".$ultimo_id."'";                                                }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                         $SIS_data  = "'".$ultimo_id."'";                                                }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_ing_manual_basicos']['idBodega']) && $_SESSION['insumos_ing_manual_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_manual_basicos']['idSistema']) && $_SESSION['insumos_ing_manual_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_manual_basicos']['idUsuario']) && $_SESSION['insumos_ing_manual_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_manual_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -4542,7 +4528,6 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
 			/*******************************************************************/
-			
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -4577,14 +4562,14 @@ require_once '0_validate_user_1.php';
 				//Se guardan los datos basicos del formulario recien llenado
 				if(isset($idDocumentos) && $idDocumentos!=''){           $_SESSION['insumos_vent_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['insumos_vent_basicos']['idDocumentos']      = '';}
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['insumos_vent_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['insumos_vent_basicos']['N_Doc']             = '';}
-				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['insumos_vent_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['insumos_vent_basicos']['idBodega']          = '';}
+				if(isset($idBodega) && $idBodega!=''){                   $_SESSION['insumos_vent_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['insumos_vent_basicos']['idBodega']          = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['insumos_vent_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['insumos_vent_basicos']['Observaciones']     = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['insumos_vent_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['insumos_vent_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['insumos_vent_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_vent_basicos']['idUsuario']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['insumos_vent_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_vent_basicos']['idUsuario']         = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['insumos_vent_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['insumos_vent_basicos']['Creacion_fecha']    = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['insumos_vent_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_vent_basicos']['idTipo']            = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['insumos_vent_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_vent_basicos']['idTipo']            = '';}
 				if(isset($idCliente) && $idCliente!=''){                 $_SESSION['insumos_vent_basicos']['idCliente']         = $idCliente;         }else{$_SESSION['insumos_vent_basicos']['idCliente']         = '';}
-				if(isset($idTrabajador) && $idTrabajador!=''){          $_SESSION['insumos_vent_basicos']['idTrabajador']      = $idTrabajador;      }else{$_SESSION['insumos_vent_basicos']['idTrabajador']      = '';}
+				if(isset($idTrabajador) && $idTrabajador!=''){           $_SESSION['insumos_vent_basicos']['idTrabajador']      = $idTrabajador;      }else{$_SESSION['insumos_vent_basicos']['idTrabajador']      = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['insumos_vent_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['insumos_vent_basicos']['fecha_auto']        = '';}
 				if(isset($OC_Ventas) && $OC_Ventas!=''){                 $_SESSION['insumos_vent_basicos']['OC_Ventas']         = $OC_Ventas;         }else{$_SESSION['insumos_vent_basicos']['OC_Ventas']         = '';}
 				if(isset($fecha_fact_desde) && $fecha_fact_desde!=''){   $_SESSION['insumos_vent_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['insumos_vent_basicos']['fecha_fact_desde']  = '';}
@@ -4733,14 +4718,14 @@ require_once '0_validate_user_1.php';
 				//Se guardan los datos basicos del formulario recien llenado
 				if(isset($idDocumentos) && $idDocumentos!=''){           $_SESSION['insumos_vent_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['insumos_vent_basicos']['idDocumentos']      = '';}
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['insumos_vent_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['insumos_vent_basicos']['N_Doc']             = '';}
-				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['insumos_vent_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['insumos_vent_basicos']['idBodega']          = '';}
+				if(isset($idBodega) && $idBodega!=''){                   $_SESSION['insumos_vent_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['insumos_vent_basicos']['idBodega']          = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['insumos_vent_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['insumos_vent_basicos']['Observaciones']     = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['insumos_vent_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['insumos_vent_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['insumos_vent_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_vent_basicos']['idUsuario']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['insumos_vent_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['insumos_vent_basicos']['idUsuario']         = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['insumos_vent_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['insumos_vent_basicos']['Creacion_fecha']    = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['insumos_vent_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_vent_basicos']['idTipo']            = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['insumos_vent_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['insumos_vent_basicos']['idTipo']            = '';}
 				if(isset($idCliente) && $idCliente!=''){                 $_SESSION['insumos_vent_basicos']['idCliente']         = $idCliente;         }else{$_SESSION['insumos_vent_basicos']['idCliente']         = '';}
-				if(isset($idTrabajador) && $idTrabajador!=''){          $_SESSION['insumos_vent_basicos']['idTrabajador']      = $idTrabajador;      }else{$_SESSION['insumos_vent_basicos']['idTrabajador']      = '';}
+				if(isset($idTrabajador) && $idTrabajador!=''){           $_SESSION['insumos_vent_basicos']['idTrabajador']      = $idTrabajador;      }else{$_SESSION['insumos_vent_basicos']['idTrabajador']      = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['insumos_vent_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['insumos_vent_basicos']['fecha_auto']        = '';}
 				if(isset($OC_Ventas) && $OC_Ventas!=''){                 $_SESSION['insumos_vent_basicos']['OC_Ventas']         = $OC_Ventas;         }else{$_SESSION['insumos_vent_basicos']['OC_Ventas']         = '';}
 				if(isset($fecha_fact_desde) && $fecha_fact_desde!=''){   $_SESSION['insumos_vent_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['insumos_vent_basicos']['fecha_fact_desde']  = '';}
@@ -5036,13 +5021,13 @@ require_once '0_validate_user_1.php';
 					$SIS_query = '
 					insumos_listado.Nombre,
 					sistema_productos_uml.Nombre AS Unimed,
-					SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+					SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso,
 					SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
 					$SIS_join = '
 					LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
 					LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml';
 					$SIS_where = '
-					bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto[$j1].' 
+					bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto[$j1].'
 					AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_vent_basicos']['idBodega'];
 					$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Sumo los egresos
@@ -5063,13 +5048,12 @@ require_once '0_validate_user_1.php';
 				if($n_existencia!=0) {
 					$error['productos'] = 'error/No hay suficientes existencias para algunos insumos';
 				}
-				
-			
+
 			}
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['insumos_vent_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['insumos_vent_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
@@ -5095,13 +5079,13 @@ require_once '0_validate_user_1.php';
 			$SIS_query = '
 			insumos_listado.Nombre,
 			sistema_productos_uml.Nombre AS Unimed,
-			SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+			SUM(bodegas_insumos_facturacion_existencias.Cantidad_ing) AS ingreso,
 			SUM(bodegas_insumos_facturacion_existencias.Cantidad_eg) AS egreso';
 			$SIS_join = '
 			LEFT JOIN `insumos_listado`         ON insumos_listado.idProducto     = bodegas_insumos_facturacion_existencias.idProducto
 			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = insumos_listado.idUml';
 			$SIS_where = '
-			bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto.' 
+			bodegas_insumos_facturacion_existencias.idProducto = '.$idProducto.'
 			AND bodegas_insumos_facturacion_existencias.idBodega='.$_SESSION['insumos_vent_basicos']['idBodega'];
 			$rowResultado = db_select_data (false, $SIS_query, 'bodegas_insumos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Sumo los egresos
@@ -5295,8 +5279,8 @@ require_once '0_validate_user_1.php';
 
 				//se crea el nuevo producto
 				$_SESSION['insumos_vent_descuentos'][$oldidProducto]['idDescuento'] = $oldidProducto;
-				$_SESSION['insumos_vent_descuentos'][$oldidProducto]['Nombre'] = $Nombre;
-				$_SESSION['insumos_vent_descuentos'][$oldidProducto]['vTotal'] = $vTotal;
+				$_SESSION['insumos_vent_descuentos'][$oldidProducto]['Nombre']      = $Nombre;
+				$_SESSION['insumos_vent_descuentos'][$oldidProducto]['vTotal']      = $vTotal;
 
 				header( 'Location: '.$location.'&view=true' );
 				die;
@@ -5338,14 +5322,14 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['insumos_vent_basicos']['idTrabajador']) OR $_SESSION['insumos_vent_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el vendedor';}
 				if(!isset($_SESSION['insumos_vent_basicos']['idUsoIVA']) OR $_SESSION['insumos_vent_basicos']['idUsoIVA']=='' ){             $error['idUsoIVA']         = 'error/No ha seleccionado la exencion del IVA';}
 				//compruebo que sea una factura y que tenga fecha de pago
-				if(isset($_SESSION['insumos_vent_basicos']['idDocumentos']) && $_SESSION['insumos_vent_basicos']['idDocumentos']==2 ){     
-					if(!isset($_SESSION['insumos_vent_basicos']['Pago_fecha']) OR $_SESSION['insumos_vent_basicos']['Pago_fecha']=='' OR $_SESSION['insumos_vent_basicos']['Pago_fecha']=='0000-00-00' ){     
+				if(isset($_SESSION['insumos_vent_basicos']['idDocumentos']) && $_SESSION['insumos_vent_basicos']['idDocumentos']==2 ){
+					if(!isset($_SESSION['insumos_vent_basicos']['Pago_fecha']) OR $_SESSION['insumos_vent_basicos']['Pago_fecha']=='' OR $_SESSION['insumos_vent_basicos']['Pago_fecha']=='0000-00-00' ){
 						$error['Pago_fecha']  = 'error/No ha ingresado la fecha de vencimiento de la factura';
 					}
 				}
 				//se verifica el uso del iva
 				if(isset($_SESSION['insumos_vent_basicos']['idUsoIVA'])&&$_SESSION['insumos_vent_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['insumos_vent_impuestos'])){     
+					if(!isset($_SESSION['insumos_vent_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -5381,12 +5365,12 @@ require_once '0_validate_user_1.php';
 
 				//Se guardan los datos basicos
 				if(isset($_SESSION['insumos_vent_basicos']['idDocumentos']) && $_SESSION['insumos_vent_basicos']['idDocumentos']!=''){      $SIS_data  = "'".$_SESSION['insumos_vent_basicos']['idDocumentos']."'";   }else{$SIS_data  = "''";}
-				if(isset($_SESSION['insumos_vent_basicos']['N_Doc']) && $_SESSION['insumos_vent_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idBodega']) && $_SESSION['insumos_vent_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['N_Doc']) && $_SESSION['insumos_vent_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idBodega']) && $_SESSION['insumos_vent_basicos']['idBodega']!=''){              $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_vent_basicos']['Observaciones']) && $_SESSION['insumos_vent_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['Observaciones']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idSistema']) && $_SESSION['insumos_vent_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idUsuario']) && $_SESSION['insumos_vent_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idTipo']) && $_SESSION['insumos_vent_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idSistema']) && $_SESSION['insumos_vent_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idUsuario']) && $_SESSION['insumos_vent_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idTipo']) && $_SESSION['insumos_vent_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_vent_basicos']['Creacion_fecha']) && $_SESSION['insumos_vent_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['insumos_vent_basicos']['Creacion_fecha'])."'";
@@ -5398,22 +5382,22 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['insumos_vent_basicos']['idCliente']) && $_SESSION['insumos_vent_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idCliente']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idTrabajador']) && $_SESSION['insumos_vent_basicos']['idTrabajador']!=''){      $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idTrabajador']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['fecha_auto']) && $_SESSION['insumos_vent_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idCliente']) && $_SESSION['insumos_vent_basicos']['idCliente']!=''){             $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idCliente']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idTrabajador']) && $_SESSION['insumos_vent_basicos']['idTrabajador']!=''){       $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idTrabajador']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['fecha_auto']) && $_SESSION['insumos_vent_basicos']['fecha_auto']!=''){           $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['fecha_auto']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_vent_basicos']['valor_neto_fact'])&&$_SESSION['insumos_vent_basicos']['valor_neto_fact']!=''){   $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['valor_neto_fact']."'";   }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_vent_basicos']['valor_neto_imp'])&&$_SESSION['insumos_vent_basicos']['valor_neto_imp']!=''){     $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['valor_neto_imp']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_vent_basicos']['valor_total_fact'])&&$_SESSION['insumos_vent_basicos']['valor_total_fact']!=''){ $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['valor_total_fact']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_impuestos'][1]['valor'])&&$_SESSION['insumos_vent_impuestos'][1]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_impuestos'][2]['valor'])&&$_SESSION['insumos_vent_impuestos'][2]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_impuestos'][3]['valor'])&&$_SESSION['insumos_vent_impuestos'][3]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_impuestos'][4]['valor'])&&$_SESSION['insumos_vent_impuestos'][4]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_impuestos'][5]['valor'])&&$_SESSION['insumos_vent_impuestos'][5]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_impuestos'][6]['valor'])&&$_SESSION['insumos_vent_impuestos'][6]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_impuestos'][7]['valor'])&&$_SESSION['insumos_vent_impuestos'][7]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_impuestos'][8]['valor'])&&$_SESSION['insumos_vent_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_impuestos'][9]['valor'])&&$_SESSION['insumos_vent_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_impuestos'][10]['valor'])&&$_SESSION['insumos_vent_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_impuestos'][1]['valor'])&&$_SESSION['insumos_vent_impuestos'][1]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_impuestos'][2]['valor'])&&$_SESSION['insumos_vent_impuestos'][2]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_impuestos'][3]['valor'])&&$_SESSION['insumos_vent_impuestos'][3]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_impuestos'][4]['valor'])&&$_SESSION['insumos_vent_impuestos'][4]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_impuestos'][5]['valor'])&&$_SESSION['insumos_vent_impuestos'][5]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_impuestos'][6]['valor'])&&$_SESSION['insumos_vent_impuestos'][6]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_impuestos'][7]['valor'])&&$_SESSION['insumos_vent_impuestos'][7]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_impuestos'][8]['valor'])&&$_SESSION['insumos_vent_impuestos'][8]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_impuestos'][9]['valor'])&&$_SESSION['insumos_vent_impuestos'][9]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_impuestos'][10]['valor'])&&$_SESSION['insumos_vent_impuestos'][10]['valor']!=''){           $SIS_data .= ",'".$_SESSION['insumos_vent_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_vent_basicos']['Pago_fecha']) && $_SESSION['insumos_vent_basicos']['Pago_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['Pago_fecha']."'";
 					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['insumos_vent_basicos']['Pago_fecha'])."'";
@@ -5428,23 +5412,23 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 				}
 				$SIS_data .= ",'1'";
-				if(isset($_SESSION['insumos_vent_basicos']['OC_Ventas']) && $_SESSION['insumos_vent_basicos']['OC_Ventas']!=''){          $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['OC_Ventas']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idCentroCosto']) && $_SESSION['insumos_vent_basicos']['idCentroCosto']!=''){  $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idCentroCosto']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idLevel_1']) && $_SESSION['insumos_vent_basicos']['idLevel_1']!=''){          $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_1']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idLevel_2']) && $_SESSION['insumos_vent_basicos']['idLevel_2']!=''){          $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_2']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idLevel_3']) && $_SESSION['insumos_vent_basicos']['idLevel_3']!=''){          $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_3']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idLevel_4']) && $_SESSION['insumos_vent_basicos']['idLevel_4']!=''){          $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_4']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idLevel_5']) && $_SESSION['insumos_vent_basicos']['idLevel_5']!=''){          $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_5']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['OC_Ventas']) && $_SESSION['insumos_vent_basicos']['OC_Ventas']!=''){                 $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['OC_Ventas']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idCentroCosto']) && $_SESSION['insumos_vent_basicos']['idCentroCosto']!=''){         $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idCentroCosto']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idLevel_1']) && $_SESSION['insumos_vent_basicos']['idLevel_1']!=''){                 $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_1']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idLevel_2']) && $_SESSION['insumos_vent_basicos']['idLevel_2']!=''){                 $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_2']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idLevel_3']) && $_SESSION['insumos_vent_basicos']['idLevel_3']!=''){                 $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_3']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idLevel_4']) && $_SESSION['insumos_vent_basicos']['idLevel_4']!=''){                 $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_4']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idLevel_5']) && $_SESSION['insumos_vent_basicos']['idLevel_5']!=''){                 $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idLevel_5']."'";          }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_vent_basicos']['fecha_fact_desde']) && $_SESSION['insumos_vent_basicos']['fecha_fact_desde']!=''){   $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['fecha_fact_desde']."'";   }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_vent_basicos']['fecha_fact_hasta']) && $_SESSION['insumos_vent_basicos']['fecha_fact_hasta']!=''){   $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['fecha_fact_hasta']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_vent_basicos']['idUsoIVA']) && $_SESSION['insumos_vent_basicos']['idUsoIVA']!=''){            $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idUsoIVA']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_vent_basicos']['idUsoIVA']) && $_SESSION['insumos_vent_basicos']['idUsoIVA']!=''){                   $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idUsoIVA']."'";           }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, Observaciones, idSistema, idUsuario, 
-				idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idCliente, idTrabajador, 
-				fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, 
-				Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, 
-				Impuesto_10, Pago_fecha, Pago_dia, Pago_Semana, Pago_mes, Pago_ano, idEstado,OC_Ventas, 
+				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, Observaciones, idSistema, idUsuario,
+				idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, idCliente, idTrabajador,
+				fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02,
+				Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09,
+				Impuesto_10, Pago_fecha, Pago_dia, Pago_Semana, Pago_mes, Pago_ano, idEstado,OC_Ventas,
 				idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5, fecha_fact_desde,
 				fecha_fact_hasta, idUsoIVA';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -5453,11 +5437,11 @@ require_once '0_validate_user_1.php';
 				if($ultimo_id!=0){
 					/*********************************************************************/
 					//Se guardan los datos de los productos
-					if (isset($_SESSION['insumos_vent_productos'])){			
+					if (isset($_SESSION['insumos_vent_productos'])){
 						foreach ($_SESSION['insumos_vent_productos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                    $SIS_data  = "'".$ultimo_id."'";                                          }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                             $SIS_data  = "'".$ultimo_id."'";                                          }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_vent_basicos']['idBodega']) && $_SESSION['insumos_vent_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_vent_basicos']['idSistema']) && $_SESSION['insumos_vent_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_vent_basicos']['idUsuario']) && $_SESSION['insumos_vent_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -5471,33 +5455,32 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['insumos_vent_basicos']['idDocumentos']) && $_SESSION['insumos_vent_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_vent_basicos']['N_Doc']) && $_SESSION['insumos_vent_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_vent_basicos']['idTipo']) && $_SESSION['insumos_vent_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                   $SIS_data .= ",'".$producto['idProducto']."'";                            }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                           $SIS_data .= ",'".$producto['Number']."'";                                }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                 $SIS_data .= ",'".$producto['ValorEgreso']."'";                           }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                   $SIS_data .= ",'".$producto['ValorTotal']."'";                            }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_vent_basicos']['idCliente']) && $_SESSION['insumos_vent_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idCliente']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_vent_basicos']['fecha_auto']) && $_SESSION['insumos_vent_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_vent_basicos']['N_Doc']) && $_SESSION['insumos_vent_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_vent_basicos']['idTipo']) && $_SESSION['insumos_vent_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                          $SIS_data .= ",'".$producto['idProducto']."'";                            }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                  $SIS_data .= ",'".$producto['Number']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                        $SIS_data .= ",'".$producto['ValorEgreso']."'";                           }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                          $SIS_data .= ",'".$producto['ValorTotal']."'";                            }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_vent_basicos']['idCliente']) && $_SESSION['insumos_vent_basicos']['idCliente']!=''){            $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idCliente']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_vent_basicos']['fecha_auto']) && $_SESSION['insumos_vent_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, 
-							Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg, Valor, ValorTotal, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes,
+							Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg, Valor, ValorTotal,
 							idCliente, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 							/********************************************************************************/
 							//Actualizo el valor de los productos
 							$SIS_data = "idProducto='".$producto['idProducto']."'";
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){     
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){
 								$SIS_data .= ",ValorEgreso='".$producto['ValorEgreso']."'";
 							}
 
 							/*******************************************************/
 							//se actualizan los datos
 							$resultado = db_update_data (false, $SIS_data, 'insumos_listado', 'idProducto = "'.$producto['idProducto'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
-				
+
 						}
 					}
 
@@ -5506,9 +5489,9 @@ require_once '0_validate_user_1.php';
 					if (isset($_SESSION['insumos_vent_guias'])){
 						foreach ($_SESSION['insumos_vent_guias'] as $key => $guias){
 							//filtro
-							if(isset($ultimo_id) && $ultimo_id!=''){ 
-								
-								$SIS_data  = "DocRel='".$ultimo_id."'";    
+							if(isset($ultimo_id) && $ultimo_id!=''){
+
+								$SIS_data  = "DocRel='".$ultimo_id."'";
 								$SIS_data .= ",idEstado='2'";
 
 								/*******************************************************/
@@ -5525,7 +5508,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_vent_descuentos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                    $SIS_data  = "'".$ultimo_id."'";                                          }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                             $SIS_data  = "'".$ultimo_id."'";                                          }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_vent_basicos']['idSistema']) && $_SESSION['insumos_vent_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_vent_basicos']['idUsuario']) && $_SESSION['insumos_vent_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_vent_basicos']['Creacion_fecha']) && $_SESSION['insumos_vent_basicos']['Creacion_fecha']!=''){
@@ -5554,7 +5537,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_vent_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                    $SIS_data  = "'".$ultimo_id."'";                                          }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                             $SIS_data  = "'".$ultimo_id."'";                                          }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_vent_basicos']['idBodega']) && $_SESSION['insumos_vent_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_vent_basicos']['idSistema']) && $_SESSION['insumos_vent_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_vent_basicos']['idUsuario']) && $_SESSION['insumos_vent_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_vent_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -5667,10 +5650,10 @@ require_once '0_validate_user_1.php';
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  $_SESSION['insumos_ing_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['insumos_ing_nd_basicos']['Creacion_fecha']  = '';}
 				if(isset($Observaciones) && $Observaciones!=''){    $_SESSION['insumos_ing_nd_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['insumos_ing_nd_basicos']['Observaciones']   = '';}
 				if(isset($idSistema) && $idSistema!=''){            $_SESSION['insumos_ing_nd_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['insumos_ing_nd_basicos']['idSistema']       = '';}
-				if(isset($idUsuario) && $idUsuario!=''){           $_SESSION['insumos_ing_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_nd_basicos']['idUsuario']       = '';}
-				if(isset($idTipo) && $idTipo!=''){                 $_SESSION['insumos_ing_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_nd_basicos']['idTipo']          = '';}
+				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['insumos_ing_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_nd_basicos']['idUsuario']       = '';}
+				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['insumos_ing_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_nd_basicos']['idTipo']          = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){          $_SESSION['insumos_ing_nd_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['insumos_ing_nd_basicos']['fecha_auto']      = '';}
-				if(isset($idBodega) && $idBodega!=''){             $_SESSION['insumos_ing_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_nd_basicos']['idBodega']        = '';}
+				if(isset($idBodega) && $idBodega!=''){              $_SESSION['insumos_ing_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_nd_basicos']['idBodega']        = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){              $_SESSION['insumos_ing_nd_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['insumos_ing_nd_basicos']['idUsoIVA']        = '';}
 				//datos basicos vacios
 				$_SESSION['insumos_ing_nd_basicos']['Pago_fecha']       = '0000-00-00';
@@ -5808,10 +5791,10 @@ require_once '0_validate_user_1.php';
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  $_SESSION['insumos_ing_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['insumos_ing_nd_basicos']['Creacion_fecha']  = '';}
 				if(isset($Observaciones) && $Observaciones!=''){    $_SESSION['insumos_ing_nd_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['insumos_ing_nd_basicos']['Observaciones']   = '';}
 				if(isset($idSistema) && $idSistema!=''){            $_SESSION['insumos_ing_nd_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['insumos_ing_nd_basicos']['idSistema']       = '';}
-				if(isset($idUsuario) && $idUsuario!=''){           $_SESSION['insumos_ing_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_nd_basicos']['idUsuario']       = '';}
-				if(isset($idTipo) && $idTipo!=''){                 $_SESSION['insumos_ing_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_nd_basicos']['idTipo']          = '';}
+				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['insumos_ing_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_nd_basicos']['idUsuario']       = '';}
+				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['insumos_ing_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_nd_basicos']['idTipo']          = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){          $_SESSION['insumos_ing_nd_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['insumos_ing_nd_basicos']['fecha_auto']      = '';}
-				if(isset($idBodega) && $idBodega!=''){             $_SESSION['insumos_ing_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_nd_basicos']['idBodega']        = '';}
+				if(isset($idBodega) && $idBodega!=''){              $_SESSION['insumos_ing_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_nd_basicos']['idBodega']        = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){              $_SESSION['insumos_ing_nd_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['insumos_ing_nd_basicos']['idUsoIVA']        = '';}
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
@@ -5970,12 +5953,12 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['insumos_ing_nd_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['insumos_ing_nd_productos'][$idProducto[$j1]]['Cantidad_ing']  = $Cantidad_ing[$j1];
 					$_SESSION['insumos_ing_nd_productos'][$idProducto[$j1]]['ValorIngreso']  = $ValorTotal[$j1]/$Cantidad_ing[$j1];
-					$_SESSION['insumos_ing_nd_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];				
+					$_SESSION['insumos_ing_nd_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
 					$_SESSION['insumos_ing_nd_productos'][$idProducto[$j1]]['Nombre']        = $arrProd['Prod'][$idProducto[$j1]]['Nombre'];
 					$_SESSION['insumos_ing_nd_productos'][$idProducto[$j1]]['Unimed']        = $arrProd['Prod'][$idProducto[$j1]]['Unimed'];
 				}
@@ -6268,7 +6251,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['insumos_ing_nd_basicos']['idTipo']) OR $_SESSION['insumos_ing_nd_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
 				//se verifica el uso del iva
 				if(isset($_SESSION['insumos_ing_nd_basicos']['idUsoIVA'])&&$_SESSION['insumos_ing_nd_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['insumos_ing_nd_impuestos'])){     
+					if(!isset($_SESSION['insumos_ing_nd_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -6317,10 +6300,10 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 				}
 				if(isset($_SESSION['insumos_ing_nd_basicos']['idDocumentos']) && $_SESSION['insumos_ing_nd_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idDocumentos']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_basicos']['N_Doc']) && $_SESSION['insumos_ing_nd_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['N_Doc']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_basicos']['idTipo']) && $_SESSION['insumos_ing_nd_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idTipo']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_basicos']['N_Doc']) && $_SESSION['insumos_ing_nd_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['N_Doc']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_basicos']['idTipo']) && $_SESSION['insumos_ing_nd_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idTipo']."'";         }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_ing_nd_basicos']['Observaciones']) && $_SESSION['insumos_ing_nd_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['Observaciones']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_basicos']['idProveedor']) && $_SESSION['insumos_ing_nd_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idProveedor']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_basicos']['idProveedor']) && $_SESSION['insumos_ing_nd_basicos']['idProveedor']!=''){        $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idProveedor']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_ing_nd_basicos']['Pago_fecha']) && $_SESSION['insumos_ing_nd_basicos']['Pago_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['Pago_fecha']."'";
 					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['insumos_ing_nd_basicos']['Pago_fecha'])."'";
@@ -6335,33 +6318,33 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 				}
 				$SIS_data .= ",'1'";
-				if(isset($_SESSION['insumos_ing_nd_basicos']['fecha_auto']) && $_SESSION['insumos_ing_nd_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['fecha_auto']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_basicos']['fecha_auto']) && $_SESSION['insumos_ing_nd_basicos']['fecha_auto']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_ing_nd_basicos']['valor_neto_fact'])&&$_SESSION['insumos_ing_nd_basicos']['valor_neto_fact']!=''){   $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['valor_neto_fact']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_ing_nd_basicos']['valor_neto_imp'])&&$_SESSION['insumos_ing_nd_basicos']['valor_neto_imp']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['valor_neto_imp']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_ing_nd_basicos']['valor_total_fact'])&&$_SESSION['insumos_ing_nd_basicos']['valor_total_fact']!=''){ $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['valor_total_fact']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_impuestos'][1]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][1]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][1]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_impuestos'][2]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][2]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][2]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_impuestos'][3]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][3]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][3]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_impuestos'][4]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][4]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][4]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_impuestos'][5]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][5]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][5]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_impuestos'][6]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][6]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][6]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_impuestos'][7]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][7]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][7]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_impuestos'][8]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][8]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_impuestos'][9]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][9]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_impuestos'][10]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][10]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_basicos']['idCentroCosto']) && $_SESSION['insumos_ing_nd_basicos']['idCentroCosto']!=''){    $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idCentroCosto']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_basicos']['idLevel_1']) && $_SESSION['insumos_ing_nd_basicos']['idLevel_1']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idLevel_1']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_basicos']['idLevel_2']) && $_SESSION['insumos_ing_nd_basicos']['idLevel_2']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idLevel_2']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_basicos']['idLevel_3']) && $_SESSION['insumos_ing_nd_basicos']['idLevel_3']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idLevel_3']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_basicos']['idLevel_4']) && $_SESSION['insumos_ing_nd_basicos']['idLevel_4']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idLevel_4']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_basicos']['idLevel_5']) && $_SESSION['insumos_ing_nd_basicos']['idLevel_5']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idLevel_5']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nd_basicos']['idUsoIVA']) && $_SESSION['insumos_ing_nd_basicos']['idUsoIVA']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idUsoIVA']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_impuestos'][1]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][1]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][1]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_impuestos'][2]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][2]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][2]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_impuestos'][3]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][3]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][3]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_impuestos'][4]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][4]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][4]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_impuestos'][5]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][5]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][5]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_impuestos'][6]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][6]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][6]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_impuestos'][7]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][7]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][7]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_impuestos'][8]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][8]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][8]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_impuestos'][9]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][9]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][9]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_impuestos'][10]['valor'])&&$_SESSION['insumos_ing_nd_impuestos'][10]['valor']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_nd_impuestos'][10]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_basicos']['idCentroCosto']) && $_SESSION['insumos_ing_nd_basicos']['idCentroCosto']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idCentroCosto']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_basicos']['idLevel_1']) && $_SESSION['insumos_ing_nd_basicos']['idLevel_1']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idLevel_1']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_basicos']['idLevel_2']) && $_SESSION['insumos_ing_nd_basicos']['idLevel_2']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idLevel_2']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_basicos']['idLevel_3']) && $_SESSION['insumos_ing_nd_basicos']['idLevel_3']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idLevel_3']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_basicos']['idLevel_4']) && $_SESSION['insumos_ing_nd_basicos']['idLevel_4']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idLevel_4']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_basicos']['idLevel_5']) && $_SESSION['insumos_ing_nd_basicos']['idLevel_5']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idLevel_5']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nd_basicos']['idUsoIVA']) && $_SESSION['insumos_ing_nd_basicos']['idUsoIVA']!=''){               $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idUsoIVA']."'";           }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idBodegaDestino, idSistema, idUsuario, Creacion_fecha, Creacion_Semana, Creacion_mes,
-				Creacion_ano, idDocumentos, N_Doc, idTipo,Observaciones, idProveedor, Pago_fecha,Pago_dia, Pago_Semana, Pago_mes, 
-				Pago_ano, idEstado, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03, 
-				Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10, idCentroCosto, 
+				Creacion_ano, idDocumentos, N_Doc, idTipo,Observaciones, idProveedor, Pago_fecha,Pago_dia, Pago_Semana, Pago_mes,
+				Pago_ano, idEstado, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03,
+				Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10, idCentroCosto,
 				idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5, idUsoIVA';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -6373,7 +6356,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_ing_nd_productos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                        $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                 $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_ing_nd_basicos']['idBodega']) && $_SESSION['insumos_ing_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_nd_basicos']['idSistema']) && $_SESSION['insumos_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_nd_basicos']['idUsuario']) && $_SESSION['insumos_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -6387,19 +6370,19 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['insumos_ing_nd_basicos']['idDocumentos']) && $_SESSION['insumos_ing_nd_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idDocumentos']."'";       }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_ing_nd_basicos']['N_Doc']) && $_SESSION['insumos_ing_nd_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_ing_nd_basicos']['idTipo']) && $_SESSION['insumos_ing_nd_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                       $SIS_data .= ",'".$producto['idProducto']."'";                                   }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad_ing']) && $producto['Cantidad_ing']!=''){                                                   $SIS_data .= ",'".$producto['Cantidad_ing']."'";                                 }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                   $SIS_data .= ",'".$producto['ValorIngreso']."'";                                 }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                       $SIS_data .= ",'".$producto['ValorTotal']."'";                                   }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_ing_nd_basicos']['idProveedor']) && $_SESSION['insumos_ing_nd_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idProveedor']."'";        }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_ing_nd_basicos']['fecha_auto']) && $_SESSION['insumos_ing_nd_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_ing_nd_basicos']['N_Doc']) && $_SESSION['insumos_ing_nd_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_ing_nd_basicos']['idTipo']) && $_SESSION['insumos_ing_nd_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                              $SIS_data .= ",'".$producto['idProducto']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad_ing']) && $producto['Cantidad_ing']!=''){                                                          $SIS_data .= ",'".$producto['Cantidad_ing']."'";                                 }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                          $SIS_data .= ",'".$producto['ValorIngreso']."'";                                 }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                              $SIS_data .= ",'".$producto['ValorTotal']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_ing_nd_basicos']['idProveedor']) && $_SESSION['insumos_ing_nd_basicos']['idProveedor']!=''){        $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idProveedor']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_ing_nd_basicos']['fecha_auto']) && $_SESSION['insumos_ing_nd_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario,
-							Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, 
-							idTipo, idProducto, Cantidad_ing, Valor, ValorTotal, idProveedor, 
+							Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc,
+							idTipo, idProducto, Cantidad_ing, Valor, ValorTotal, idProveedor,
 							fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -6412,7 +6395,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_ing_nd_otros'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                        $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                 $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_ing_nd_basicos']['idBodega']) && $_SESSION['insumos_ing_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_nd_basicos']['idSistema']) && $_SESSION['insumos_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_nd_basicos']['idUsuario']) && $_SESSION['insumos_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -6442,7 +6425,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_ing_nd_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                        $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                 $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_ing_nd_basicos']['idBodega']) && $_SESSION['insumos_ing_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_nd_basicos']['idSistema']) && $_SESSION['insumos_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_nd_basicos']['idUsuario']) && $_SESSION['insumos_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -6520,7 +6503,6 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
 			/*******************************************************************/
-			
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -6556,12 +6538,12 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                    $_SESSION['insumos_ing_nc_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['insumos_ing_nc_basicos']['N_Doc']           = '';}
 				if(isset($Observaciones) && $Observaciones!=''){    $_SESSION['insumos_ing_nc_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['insumos_ing_nc_basicos']['Observaciones']   = '';}
 				if(isset($idSistema) && $idSistema!=''){            $_SESSION['insumos_ing_nc_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['insumos_ing_nc_basicos']['idSistema']       = '';}
-				if(isset($idUsuario) && $idUsuario!=''){           $_SESSION['insumos_ing_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_nc_basicos']['idUsuario']       = '';}
+				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['insumos_ing_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_nc_basicos']['idUsuario']       = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  $_SESSION['insumos_ing_nc_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['insumos_ing_nc_basicos']['Creacion_fecha']  = '';}
-				if(isset($idTipo) && $idTipo!=''){                 $_SESSION['insumos_ing_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_nc_basicos']['idTipo']          = '';}
+				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['insumos_ing_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_nc_basicos']['idTipo']          = '';}
 				if(isset($idProveedor) && $idProveedor!=''){        $_SESSION['insumos_ing_nc_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['insumos_ing_nc_basicos']['idProveedor']     = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){          $_SESSION['insumos_ing_nc_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['insumos_ing_nc_basicos']['fecha_auto']      = '';}
-				if(isset($idBodega) && $idBodega!=''){             $_SESSION['insumos_ing_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_nc_basicos']['idBodega']        = '';}
+				if(isset($idBodega) && $idBodega!=''){              $_SESSION['insumos_ing_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_nc_basicos']['idBodega']        = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){              $_SESSION['insumos_ing_nc_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['insumos_ing_nc_basicos']['idUsoIVA']        = '';}
 
 				/***********************************/
@@ -6621,16 +6603,12 @@ require_once '0_validate_user_1.php';
 				}else{
 					$_SESSION['insumos_ing_nc_basicos']['Proveedor'] = '';
 				}
-				
-			
-				
-				
+
 				header( 'Location: '.$location.'&view=true' );
 				die;
 
 			}
 
-	
 		break;
 /*******************************************************************************************************************/
 		case 'clear_all_ing_nc':
@@ -6686,12 +6664,12 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                    $_SESSION['insumos_ing_nc_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['insumos_ing_nc_basicos']['N_Doc']           = '';}
 				if(isset($Observaciones) && $Observaciones!=''){    $_SESSION['insumos_ing_nc_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['insumos_ing_nc_basicos']['Observaciones']   = '';}
 				if(isset($idSistema) && $idSistema!=''){            $_SESSION['insumos_ing_nc_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['insumos_ing_nc_basicos']['idSistema']       = '';}
-				if(isset($idUsuario) && $idUsuario!=''){           $_SESSION['insumos_ing_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_nc_basicos']['idUsuario']       = '';}
+				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['insumos_ing_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_ing_nc_basicos']['idUsuario']       = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  $_SESSION['insumos_ing_nc_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['insumos_ing_nc_basicos']['Creacion_fecha']  = '';}
-				if(isset($idTipo) && $idTipo!=''){                 $_SESSION['insumos_ing_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_nc_basicos']['idTipo']          = '';}
+				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['insumos_ing_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_ing_nc_basicos']['idTipo']          = '';}
 				if(isset($idProveedor) && $idProveedor!=''){        $_SESSION['insumos_ing_nc_basicos']['idProveedor']      = $idProveedor;     }else{$_SESSION['insumos_ing_nc_basicos']['idProveedor']     = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){          $_SESSION['insumos_ing_nc_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['insumos_ing_nc_basicos']['fecha_auto']      = '';}
-				if(isset($idBodega) && $idBodega!=''){             $_SESSION['insumos_ing_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_nc_basicos']['idBodega']        = '';}
+				if(isset($idBodega) && $idBodega!=''){              $_SESSION['insumos_ing_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_ing_nc_basicos']['idBodega']        = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){              $_SESSION['insumos_ing_nc_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['insumos_ing_nc_basicos']['idUsoIVA']        = '';}
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
@@ -6851,12 +6829,12 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['insumos_ing_nc_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['insumos_ing_nc_productos'][$idProducto[$j1]]['Cantidad_eg']   = $Cantidad_eg[$j1];
 					$_SESSION['insumos_ing_nc_productos'][$idProducto[$j1]]['ValorIngreso']  = $ValorTotal[$j1]/$Cantidad_eg[$j1];
-					$_SESSION['insumos_ing_nc_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];				
+					$_SESSION['insumos_ing_nc_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
 					$_SESSION['insumos_ing_nc_productos'][$idProducto[$j1]]['Nombre']        = $arrProd['Prod'][$idProducto[$j1]]['Nombre'];
 					$_SESSION['insumos_ing_nc_productos'][$idProducto[$j1]]['Unimed']        = $arrProd['Prod'][$idProducto[$j1]]['Unimed'];
 				}
@@ -7151,7 +7129,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['insumos_ing_nc_basicos']['idProveedor']) OR $_SESSION['insumos_ing_nc_basicos']['idProveedor']=='' ){       $error['idProveedor']      = 'error/No ha seleccionado el proveedor';}
 				//se verifica el uso del iva
 				if(isset($_SESSION['insumos_ing_nc_basicos']['idUsoIVA'])&&$_SESSION['insumos_ing_nc_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['insumos_ing_nc_impuestos'])){     
+					if(!isset($_SESSION['insumos_ing_nc_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -7186,12 +7164,12 @@ require_once '0_validate_user_1.php';
 
 				//Se guardan los datos basicos
 				if(isset($_SESSION['insumos_ing_nc_basicos']['idDocumentos']) && $_SESSION['insumos_ing_nc_basicos']['idDocumentos']!=''){      $SIS_data  = "'".$_SESSION['insumos_ing_nc_basicos']['idDocumentos']."'";   }else{$SIS_data  = "''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['N_Doc']) && $_SESSION['insumos_ing_nc_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['N_Doc']) && $_SESSION['insumos_ing_nc_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_ing_nc_basicos']['Observaciones']) && $_SESSION['insumos_ing_nc_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['Observaciones']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idBodega']) && $_SESSION['insumos_ing_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idSistema']) && $_SESSION['insumos_ing_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idUsuario']) && $_SESSION['insumos_ing_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idTipo']) && $_SESSION['insumos_ing_nc_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idBodega']) && $_SESSION['insumos_ing_nc_basicos']['idBodega']!=''){              $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idSistema']) && $_SESSION['insumos_ing_nc_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idUsuario']) && $_SESSION['insumos_ing_nc_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idTipo']) && $_SESSION['insumos_ing_nc_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['insumos_ing_nc_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['insumos_ing_nc_basicos']['Creacion_fecha'])."'";
@@ -7203,36 +7181,36 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idProveedor']) && $_SESSION['insumos_ing_nc_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idProveedor']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['fecha_auto']) && $_SESSION['insumos_ing_nc_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idProveedor']) && $_SESSION['insumos_ing_nc_basicos']['idProveedor']!=''){         $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idProveedor']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['fecha_auto']) && $_SESSION['insumos_ing_nc_basicos']['fecha_auto']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['fecha_auto']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_ing_nc_basicos']['valor_neto_fact'])&&$_SESSION['insumos_ing_nc_basicos']['valor_neto_fact']!=''){   $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['valor_neto_fact']."'";   }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_ing_nc_basicos']['valor_neto_imp'])&&$_SESSION['insumos_ing_nc_basicos']['valor_neto_imp']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['valor_neto_imp']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_ing_nc_basicos']['valor_total_fact'])&&$_SESSION['insumos_ing_nc_basicos']['valor_total_fact']!=''){ $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['valor_total_fact']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_impuestos'][1]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][1]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_impuestos'][2]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][2]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_impuestos'][3]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][3]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_impuestos'][4]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][4]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_impuestos'][5]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][5]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_impuestos'][6]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][6]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_impuestos'][7]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][7]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_impuestos'][8]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_impuestos'][9]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_impuestos'][10]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_impuestos'][1]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][1]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_impuestos'][2]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][2]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_impuestos'][3]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][3]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_impuestos'][4]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][4]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_impuestos'][5]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][5]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_impuestos'][6]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][6]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_impuestos'][7]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][7]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_impuestos'][8]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][8]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_impuestos'][9]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][9]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_impuestos'][10]['valor'])&&$_SESSION['insumos_ing_nc_impuestos'][10]['valor']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_nc_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
 				$SIS_data .= ",'1'";
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idCentroCosto']) && $_SESSION['insumos_ing_nc_basicos']['idCentroCosto']!=''){    $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idCentroCosto']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_1']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_1']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_1']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_2']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_2']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_2']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_3']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_3']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_3']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_4']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_4']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_4']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_5']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_5']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_5']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_ing_nc_basicos']['idUsoIVA']) && $_SESSION['insumos_ing_nc_basicos']['idUsoIVA']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idUsoIVA']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idCentroCosto']) && $_SESSION['insumos_ing_nc_basicos']['idCentroCosto']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idCentroCosto']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_1']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_1']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_1']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_2']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_2']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_2']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_3']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_3']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_3']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_4']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_4']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_4']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idLevel_5']) && $_SESSION['insumos_ing_nc_basicos']['idLevel_5']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idLevel_5']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_ing_nc_basicos']['idUsoIVA']) && $_SESSION['insumos_ing_nc_basicos']['idUsoIVA']!=''){               $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idUsoIVA']."'";          }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idDocumentos,N_Doc, Observaciones, 
-				idBodegaOrigen, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, 
-				Creacion_ano, idProveedor, fecha_auto, ValorNeto, ValorNetoImp,ValorTotal, Impuesto_01, 
-				Impuesto_02, Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, 
-				Impuesto_09, Impuesto_10, idEstado, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, 
+				$SIS_columns = 'idDocumentos,N_Doc, Observaciones,
+				idBodegaOrigen, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes,
+				Creacion_ano, idProveedor, fecha_auto, ValorNeto, ValorNetoImp,ValorTotal, Impuesto_01,
+				Impuesto_02, Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08,
+				Impuesto_09, Impuesto_10, idEstado, idCentroCosto, idLevel_1, idLevel_2, idLevel_3,
 				idLevel_4, idLevel_5, idUsoIVA';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -7244,7 +7222,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_ing_nc_productos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                        $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                 $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_ing_nc_basicos']['idBodega']) && $_SESSION['insumos_ing_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_nc_basicos']['idSistema']) && $_SESSION['insumos_ing_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_nc_basicos']['idUsuario']) && $_SESSION['insumos_ing_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -7258,17 +7236,17 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['insumos_ing_nc_basicos']['idDocumentos']) && $_SESSION['insumos_ing_nc_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_ing_nc_basicos']['N_Doc']) && $_SESSION['insumos_ing_nc_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_ing_nc_basicos']['idTipo']) && $_SESSION['insumos_ing_nc_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                       $SIS_data .= ",'".$producto['idProducto']."'";                              }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad_eg']) && $producto['Cantidad_eg']!=''){                                                     $SIS_data .= ",'".$producto['Cantidad_eg']."'";                             }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                   $SIS_data .= ",'".$producto['ValorIngreso']."'";                            }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                       $SIS_data .= ",'".$producto['ValorTotal']."'";                              }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_ing_nc_basicos']['idProveedor']) && $_SESSION['insumos_ing_nc_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idProveedor']."'";   }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_ing_nc_basicos']['fecha_auto']) && $_SESSION['insumos_ing_nc_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_ing_nc_basicos']['N_Doc']) && $_SESSION['insumos_ing_nc_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_ing_nc_basicos']['idTipo']) && $_SESSION['insumos_ing_nc_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                              $SIS_data .= ",'".$producto['idProducto']."'";                              }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad_eg']) && $producto['Cantidad_eg']!=''){                                                            $SIS_data .= ",'".$producto['Cantidad_eg']."'";                             }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                          $SIS_data .= ",'".$producto['ValorIngreso']."'";                            }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                              $SIS_data .= ",'".$producto['ValorTotal']."'";                              }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_ing_nc_basicos']['idProveedor']) && $_SESSION['insumos_ing_nc_basicos']['idProveedor']!=''){        $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idProveedor']."'";   }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_ing_nc_basicos']['fecha_auto']) && $_SESSION['insumos_ing_nc_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano,
 							idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg, Valor,ValorTotal,	 idProveedor, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -7281,7 +7259,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_ing_nc_otros'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                        $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                 $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_ing_nd_basicos']['idBodega']) && $_SESSION['insumos_ing_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_nd_basicos']['idSistema']) && $_SESSION['insumos_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_nd_basicos']['idUsuario']) && $_SESSION['insumos_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -7311,7 +7289,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_ing_nc_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                        $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                 $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_ing_nc_basicos']['idBodega']) && $_SESSION['insumos_ing_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_nc_basicos']['idSistema']) && $_SESSION['insumos_ing_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_ing_nc_basicos']['idUsuario']) && $_SESSION['insumos_ing_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_ing_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -7424,10 +7402,10 @@ require_once '0_validate_user_1.php';
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  $_SESSION['insumos_egr_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;   }else{$_SESSION['insumos_egr_nd_basicos']['Creacion_fecha']  = '';}
 				if(isset($Observaciones) && $Observaciones!=''){    $_SESSION['insumos_egr_nd_basicos']['Observaciones']    = $Observaciones;    }else{$_SESSION['insumos_egr_nd_basicos']['Observaciones']   = '';}
 				if(isset($idSistema) && $idSistema!=''){            $_SESSION['insumos_egr_nd_basicos']['idSistema']        = $idSistema;        }else{$_SESSION['insumos_egr_nd_basicos']['idSistema']       = '';}
-				if(isset($idUsuario) && $idUsuario!=''){           $_SESSION['insumos_egr_nd_basicos']['idUsuario']        = $idUsuario;        }else{$_SESSION['insumos_egr_nd_basicos']['idUsuario']       = '';}
-				if(isset($idTipo) && $idTipo!=''){                 $_SESSION['insumos_egr_nd_basicos']['idTipo']           = $idTipo;           }else{$_SESSION['insumos_egr_nd_basicos']['idTipo']          = '';}
+				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['insumos_egr_nd_basicos']['idUsuario']        = $idUsuario;        }else{$_SESSION['insumos_egr_nd_basicos']['idUsuario']       = '';}
+				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['insumos_egr_nd_basicos']['idTipo']           = $idTipo;           }else{$_SESSION['insumos_egr_nd_basicos']['idTipo']          = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){          $_SESSION['insumos_egr_nd_basicos']['fecha_auto']       = $fecha_auto;       }else{$_SESSION['insumos_egr_nd_basicos']['fecha_auto']      = '';}
-				if(isset($idBodega) && $idBodega!=''){             $_SESSION['insumos_egr_nd_basicos']['idBodega']         = $idBodega;         }else{$_SESSION['insumos_egr_nd_basicos']['idBodega']        = '';}
+				if(isset($idBodega) && $idBodega!=''){              $_SESSION['insumos_egr_nd_basicos']['idBodega']         = $idBodega;         }else{$_SESSION['insumos_egr_nd_basicos']['idBodega']        = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){              $_SESSION['insumos_egr_nd_basicos']['idUsoIVA']         = $idUsoIVA;         }else{$_SESSION['insumos_egr_nd_basicos']['idUsoIVA']        = '';}
 				//datos basicos vacios
 				$_SESSION['insumos_egr_nd_basicos']['Pago_fecha']       = '0000-00-00';
@@ -7565,10 +7543,10 @@ require_once '0_validate_user_1.php';
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  $_SESSION['insumos_egr_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;   }else{$_SESSION['insumos_egr_nd_basicos']['Creacion_fecha']  = '';}
 				if(isset($Observaciones) && $Observaciones!=''){    $_SESSION['insumos_egr_nd_basicos']['Observaciones']    = $Observaciones;    }else{$_SESSION['insumos_egr_nd_basicos']['Observaciones']   = '';}
 				if(isset($idSistema) && $idSistema!=''){            $_SESSION['insumos_egr_nd_basicos']['idSistema']        = $idSistema;        }else{$_SESSION['insumos_egr_nd_basicos']['idSistema']       = '';}
-				if(isset($idUsuario) && $idUsuario!=''){           $_SESSION['insumos_egr_nd_basicos']['idUsuario']        = $idUsuario;        }else{$_SESSION['insumos_egr_nd_basicos']['idUsuario']       = '';}
-				if(isset($idTipo) && $idTipo!=''){                 $_SESSION['insumos_egr_nd_basicos']['idTipo']           = $idTipo;           }else{$_SESSION['insumos_egr_nd_basicos']['idTipo']          = '';}
+				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['insumos_egr_nd_basicos']['idUsuario']        = $idUsuario;        }else{$_SESSION['insumos_egr_nd_basicos']['idUsuario']       = '';}
+				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['insumos_egr_nd_basicos']['idTipo']           = $idTipo;           }else{$_SESSION['insumos_egr_nd_basicos']['idTipo']          = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){          $_SESSION['insumos_egr_nd_basicos']['fecha_auto']       = $fecha_auto;       }else{$_SESSION['insumos_egr_nd_basicos']['fecha_auto']      = '';}
-				if(isset($idBodega) && $idBodega!=''){             $_SESSION['insumos_egr_nd_basicos']['idBodega']         = $idBodega;         }else{$_SESSION['insumos_egr_nd_basicos']['idBodega']        = '';}
+				if(isset($idBodega) && $idBodega!=''){              $_SESSION['insumos_egr_nd_basicos']['idBodega']         = $idBodega;         }else{$_SESSION['insumos_egr_nd_basicos']['idBodega']        = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){              $_SESSION['insumos_egr_nd_basicos']['idUsoIVA']         = $idUsoIVA;         }else{$_SESSION['insumos_egr_nd_basicos']['idUsoIVA']        = '';}
 				//datos basicos vacios
 				$_SESSION['insumos_egr_nd_basicos']['Pago_fecha']       = '0000-00-00';
@@ -7730,7 +7708,7 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['insumos_egr_nd_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['insumos_egr_nd_productos'][$idProducto[$j1]]['Cantidad_eg']   = $Cantidad_eg[$j1];
@@ -8028,7 +8006,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['insumos_egr_nd_basicos']['idTipo']) OR $_SESSION['insumos_egr_nd_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
 				//se verifica el uso del iva
 				if(isset($_SESSION['insumos_egr_nd_basicos']['idUsoIVA'])&&$_SESSION['insumos_egr_nd_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['insumos_egr_nd_impuestos'])){     
+					if(!isset($_SESSION['insumos_egr_nd_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -8077,10 +8055,10 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 				}
 				if(isset($_SESSION['insumos_egr_nd_basicos']['idDocumentos']) && $_SESSION['insumos_egr_nd_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idDocumentos']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_basicos']['N_Doc']) && $_SESSION['insumos_egr_nd_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['N_Doc']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_basicos']['idTipo']) && $_SESSION['insumos_egr_nd_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idTipo']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_basicos']['N_Doc']) && $_SESSION['insumos_egr_nd_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['N_Doc']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_basicos']['idTipo']) && $_SESSION['insumos_egr_nd_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idTipo']."'";         }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_egr_nd_basicos']['Observaciones']) && $_SESSION['insumos_egr_nd_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['Observaciones']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_basicos']['idCliente']) && $_SESSION['insumos_egr_nd_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idCliente']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_basicos']['idCliente']) && $_SESSION['insumos_egr_nd_basicos']['idCliente']!=''){            $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idCliente']."'";      }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_egr_nd_basicos']['Pago_fecha']) && $_SESSION['insumos_egr_nd_basicos']['Pago_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['Pago_fecha']."'";
 					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['insumos_egr_nd_basicos']['Pago_fecha'])."'";
@@ -8095,33 +8073,33 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 				}
 				$SIS_data .= ",'1'";
-				if(isset($_SESSION['insumos_egr_nd_basicos']['fecha_auto']) && $_SESSION['insumos_egr_nd_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['fecha_auto']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_basicos']['fecha_auto']) && $_SESSION['insumos_egr_nd_basicos']['fecha_auto']!=''){           $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_egr_nd_basicos']['valor_neto_fact'])&&$_SESSION['insumos_egr_nd_basicos']['valor_neto_fact']!=''){   $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['valor_neto_fact']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_egr_nd_basicos']['valor_neto_imp'])&&$_SESSION['insumos_egr_nd_basicos']['valor_neto_imp']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['valor_neto_imp']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_egr_nd_basicos']['valor_total_fact'])&&$_SESSION['insumos_egr_nd_basicos']['valor_total_fact']!=''){ $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['valor_total_fact']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_impuestos'][1]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][1]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][1]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_impuestos'][2]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][2]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][2]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_impuestos'][3]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][3]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][3]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_impuestos'][4]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][4]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][4]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_impuestos'][5]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][5]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][5]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_impuestos'][6]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][6]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][6]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_impuestos'][7]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][7]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][7]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_impuestos'][8]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][8]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_impuestos'][9]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][9]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_impuestos'][10]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][10]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_basicos']['idCentroCosto']) && $_SESSION['insumos_egr_nd_basicos']['idCentroCosto']!=''){    $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idCentroCosto']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_basicos']['idLevel_1']) && $_SESSION['insumos_egr_nd_basicos']['idLevel_1']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idLevel_1']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_basicos']['idLevel_2']) && $_SESSION['insumos_egr_nd_basicos']['idLevel_2']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idLevel_2']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_basicos']['idLevel_3']) && $_SESSION['insumos_egr_nd_basicos']['idLevel_3']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idLevel_3']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_basicos']['idLevel_4']) && $_SESSION['insumos_egr_nd_basicos']['idLevel_4']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idLevel_4']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_basicos']['idLevel_5']) && $_SESSION['insumos_egr_nd_basicos']['idLevel_5']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idLevel_5']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nd_basicos']['idUsoIVA']) && $_SESSION['insumos_egr_nd_basicos']['idUsoIVA']!=''){       $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idUsoIVA']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_impuestos'][1]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][1]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][1]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_impuestos'][2]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][2]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][2]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_impuestos'][3]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][3]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][3]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_impuestos'][4]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][4]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][4]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_impuestos'][5]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][5]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][5]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_impuestos'][6]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][6]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][6]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_impuestos'][7]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][7]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][7]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_impuestos'][8]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][8]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][8]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_impuestos'][9]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][9]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][9]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_impuestos'][10]['valor'])&&$_SESSION['insumos_egr_nd_impuestos'][10]['valor']!=''){           $SIS_data .= ",'".$_SESSION['insumos_egr_nd_impuestos'][10]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_basicos']['idCentroCosto']) && $_SESSION['insumos_egr_nd_basicos']['idCentroCosto']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idCentroCosto']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_basicos']['idLevel_1']) && $_SESSION['insumos_egr_nd_basicos']['idLevel_1']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idLevel_1']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_basicos']['idLevel_2']) && $_SESSION['insumos_egr_nd_basicos']['idLevel_2']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idLevel_2']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_basicos']['idLevel_3']) && $_SESSION['insumos_egr_nd_basicos']['idLevel_3']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idLevel_3']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_basicos']['idLevel_4']) && $_SESSION['insumos_egr_nd_basicos']['idLevel_4']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idLevel_4']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_basicos']['idLevel_5']) && $_SESSION['insumos_egr_nd_basicos']['idLevel_5']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idLevel_5']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nd_basicos']['idUsoIVA']) && $_SESSION['insumos_egr_nd_basicos']['idUsoIVA']!=''){               $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idUsoIVA']."'";           }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idBodegaOrigen, idSistema, idUsuario, Creacion_fecha, Creacion_Semana, Creacion_mes,
-				Creacion_ano, idDocumentos, N_Doc, idTipo,Observaciones, idCliente, Pago_fecha,Pago_dia, Pago_Semana, Pago_mes, 
-				Pago_ano, idEstado, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03, 
-				Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10, idCentroCosto, 
+				Creacion_ano, idDocumentos, N_Doc, idTipo,Observaciones, idCliente, Pago_fecha,Pago_dia, Pago_Semana, Pago_mes,
+				Pago_ano, idEstado, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03,
+				Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10, idCentroCosto,
 				idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5, idUsoIVA';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -8133,7 +8111,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_egr_nd_productos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                        $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                 $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_egr_nd_basicos']['idBodega']) && $_SESSION['insumos_egr_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_nd_basicos']['idSistema']) && $_SESSION['insumos_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_nd_basicos']['idUsuario']) && $_SESSION['insumos_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -8147,19 +8125,19 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['insumos_egr_nd_basicos']['idDocumentos']) && $_SESSION['insumos_egr_nd_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idDocumentos']."'";       }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_egr_nd_basicos']['N_Doc']) && $_SESSION['insumos_egr_nd_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_egr_nd_basicos']['idTipo']) && $_SESSION['insumos_egr_nd_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                       $SIS_data .= ",'".$producto['idProducto']."'";                                   }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad_eg']) && $producto['Cantidad_eg']!=''){                                                     $SIS_data .= ",'".$producto['Cantidad_eg']."'";                                  }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                   $SIS_data .= ",'".$producto['ValorIngreso']."'";                                 }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                       $SIS_data .= ",'".$producto['ValorTotal']."'";                                   }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_egr_nd_basicos']['idCliente']) && $_SESSION['insumos_egr_nd_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idCliente']."'";          }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_egr_nd_basicos']['fecha_auto']) && $_SESSION['insumos_egr_nd_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_egr_nd_basicos']['N_Doc']) && $_SESSION['insumos_egr_nd_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_egr_nd_basicos']['idTipo']) && $_SESSION['insumos_egr_nd_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                              $SIS_data .= ",'".$producto['idProducto']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad_eg']) && $producto['Cantidad_eg']!=''){                                                            $SIS_data .= ",'".$producto['Cantidad_eg']."'";                                  }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                          $SIS_data .= ",'".$producto['ValorIngreso']."'";                                 }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                              $SIS_data .= ",'".$producto['ValorTotal']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_egr_nd_basicos']['idCliente']) && $_SESSION['insumos_egr_nd_basicos']['idCliente']!=''){            $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idCliente']."'";          }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_egr_nd_basicos']['fecha_auto']) && $_SESSION['insumos_egr_nd_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario,
-							Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, 
-							idTipo, idProducto, Cantidad_eg, Valor, ValorTotal, idCliente, 
+							Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc,
+							idTipo, idProducto, Cantidad_eg, Valor, ValorTotal, idCliente,
 							fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -8172,7 +8150,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_egr_nd_otros'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                        $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                 $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_egr_nd_basicos']['idBodega']) && $_SESSION['insumos_egr_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_nd_basicos']['idSistema']) && $_SESSION['insumos_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_nd_basicos']['idUsuario']) && $_SESSION['insumos_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -8202,7 +8180,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_egr_nd_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                        $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                 $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_egr_nd_basicos']['idBodega']) && $_SESSION['insumos_egr_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_nd_basicos']['idSistema']) && $_SESSION['insumos_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_nd_basicos']['idUsuario']) && $_SESSION['insumos_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -8280,7 +8258,6 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
 			/*******************************************************************/
-			
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -8316,12 +8293,12 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                    $_SESSION['insumos_egr_nc_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['insumos_egr_nc_basicos']['N_Doc']          = '';}
 				if(isset($Observaciones) && $Observaciones!=''){    $_SESSION['insumos_egr_nc_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['insumos_egr_nc_basicos']['Observaciones']  = '';}
 				if(isset($idSistema) && $idSistema!=''){            $_SESSION['insumos_egr_nc_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['insumos_egr_nc_basicos']['idSistema']      = '';}
-				if(isset($idUsuario) && $idUsuario!=''){           $_SESSION['insumos_egr_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_egr_nc_basicos']['idUsuario']      = '';}
+				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['insumos_egr_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_egr_nc_basicos']['idUsuario']      = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  $_SESSION['insumos_egr_nc_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['insumos_egr_nc_basicos']['Creacion_fecha'] = '';}
-				if(isset($idTipo) && $idTipo!=''){                 $_SESSION['insumos_egr_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_egr_nc_basicos']['idTipo']         = '';}
+				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['insumos_egr_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_egr_nc_basicos']['idTipo']         = '';}
 				if(isset($idCliente) && $idCliente!=''){            $_SESSION['insumos_egr_nc_basicos']['idCliente']        = $idCliente;       }else{$_SESSION['insumos_egr_nc_basicos']['idCliente']      = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){          $_SESSION['insumos_egr_nc_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['insumos_egr_nc_basicos']['fecha_auto']     = '';}
-				if(isset($idBodega) && $idBodega!=''){             $_SESSION['insumos_egr_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_egr_nc_basicos']['idBodega']       = '';}
+				if(isset($idBodega) && $idBodega!=''){              $_SESSION['insumos_egr_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_egr_nc_basicos']['idBodega']       = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){              $_SESSION['insumos_egr_nc_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['insumos_egr_nc_basicos']['idUsoIVA']       = '';}
 
 				/***********************************/
@@ -8387,7 +8364,6 @@ require_once '0_validate_user_1.php';
 
 			}
 
-	
 		break;
 /*******************************************************************************************************************/
 		case 'clear_all_egr_nc':
@@ -8443,12 +8419,12 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                    $_SESSION['insumos_egr_nc_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['insumos_egr_nc_basicos']['N_Doc']          = '';}
 				if(isset($Observaciones) && $Observaciones!=''){    $_SESSION['insumos_egr_nc_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['insumos_egr_nc_basicos']['Observaciones']  = '';}
 				if(isset($idSistema) && $idSistema!=''){            $_SESSION['insumos_egr_nc_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['insumos_egr_nc_basicos']['idSistema']      = '';}
-				if(isset($idUsuario) && $idUsuario!=''){           $_SESSION['insumos_egr_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_egr_nc_basicos']['idUsuario']      = '';}
+				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['insumos_egr_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['insumos_egr_nc_basicos']['idUsuario']      = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  $_SESSION['insumos_egr_nc_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['insumos_egr_nc_basicos']['Creacion_fecha'] = '';}
-				if(isset($idTipo) && $idTipo!=''){                 $_SESSION['insumos_egr_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_egr_nc_basicos']['idTipo']         = '';}
+				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['insumos_egr_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['insumos_egr_nc_basicos']['idTipo']         = '';}
 				if(isset($idCliente) && $idCliente!=''){            $_SESSION['insumos_egr_nc_basicos']['idCliente']        = $idCliente;       }else{$_SESSION['insumos_egr_nc_basicos']['idCliente']      = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){          $_SESSION['insumos_egr_nc_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['insumos_egr_nc_basicos']['fecha_auto']     = '';}
-				if(isset($idBodega) && $idBodega!=''){             $_SESSION['insumos_egr_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_egr_nc_basicos']['idBodega']       = '';}
+				if(isset($idBodega) && $idBodega!=''){              $_SESSION['insumos_egr_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['insumos_egr_nc_basicos']['idBodega']       = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){              $_SESSION['insumos_egr_nc_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['insumos_egr_nc_basicos']['idUsoIVA']       = '';}
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
@@ -8598,7 +8574,7 @@ require_once '0_validate_user_1.php';
 				// Se trae un listado con todos los productos
 				$arrProductos = array();
 				$arrProductos = db_select_array (false, 'insumos_listado.idProducto, insumos_listado.Nombre,sistema_productos_uml.Nombre AS Unimed', 'insumos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml', 'insumos_listado.idEstado=1', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
+
 				$arrProd = array();
 				foreach ($arrProductos as $producto){
 					$arrProd['Prod'][$producto['idProducto']]['Nombre'] = $producto['Nombre'];
@@ -8608,7 +8584,7 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-				
+
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					$_SESSION['insumos_egr_nc_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
 					$_SESSION['insumos_egr_nc_productos'][$idProducto[$j1]]['Cantidad_ing']  = $Cantidad_ing[$j1];
@@ -8909,7 +8885,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['insumos_egr_nc_basicos']['idCliente']) OR $_SESSION['insumos_egr_nc_basicos']['idCliente']=='' ){           $error['idCliente']        = 'error/No ha seleccionado el cliente';}
 				//se verifica el uso del iva
 				if(isset($_SESSION['insumos_egr_nc_basicos']['idUsoIVA'])&&$_SESSION['insumos_egr_nc_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['insumos_egr_nc_impuestos'])){     
+					if(!isset($_SESSION['insumos_egr_nc_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -8944,12 +8920,12 @@ require_once '0_validate_user_1.php';
 
 				//Se guardan los datos basicos
 				if(isset($_SESSION['insumos_egr_nc_basicos']['idDocumentos']) && $_SESSION['insumos_egr_nc_basicos']['idDocumentos']!=''){      $SIS_data  = "'".$_SESSION['insumos_egr_nc_basicos']['idDocumentos']."'";   }else{$SIS_data  = "''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['N_Doc']) && $_SESSION['insumos_egr_nc_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['N_Doc']) && $_SESSION['insumos_egr_nc_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_egr_nc_basicos']['Observaciones']) && $_SESSION['insumos_egr_nc_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['Observaciones']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idBodega']) && $_SESSION['insumos_egr_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idSistema']) && $_SESSION['insumos_egr_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idUsuario']) && $_SESSION['insumos_egr_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idTipo']) && $_SESSION['insumos_egr_nc_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idBodega']) && $_SESSION['insumos_egr_nc_basicos']['idBodega']!=''){              $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idSistema']) && $_SESSION['insumos_egr_nc_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idUsuario']) && $_SESSION['insumos_egr_nc_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idTipo']) && $_SESSION['insumos_egr_nc_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['insumos_egr_nc_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['insumos_egr_nc_basicos']['Creacion_fecha'])."'";
@@ -8961,36 +8937,36 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idCliente']) && $_SESSION['insumos_egr_nc_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idCliente']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['fecha_auto']) && $_SESSION['insumos_egr_nc_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idCliente']) && $_SESSION['insumos_egr_nc_basicos']['idCliente']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idCliente']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['fecha_auto']) && $_SESSION['insumos_egr_nc_basicos']['fecha_auto']!=''){           $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['fecha_auto']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_egr_nc_basicos']['valor_neto_fact'])&&$_SESSION['insumos_egr_nc_basicos']['valor_neto_fact']!=''){   $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['valor_neto_fact']."'";   }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_egr_nc_basicos']['valor_neto_imp'])&&$_SESSION['insumos_egr_nc_basicos']['valor_neto_imp']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['valor_neto_imp']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['insumos_egr_nc_basicos']['valor_total_fact'])&&$_SESSION['insumos_egr_nc_basicos']['valor_total_fact']!=''){ $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['valor_total_fact']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_impuestos'][1]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][1]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_impuestos'][2]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][2]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_impuestos'][3]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][3]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_impuestos'][4]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][4]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_impuestos'][5]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][5]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_impuestos'][6]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][6]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_impuestos'][7]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][7]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_impuestos'][8]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_impuestos'][9]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_impuestos'][10]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_impuestos'][1]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][1]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_impuestos'][2]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][2]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_impuestos'][3]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][3]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_impuestos'][4]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][4]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_impuestos'][5]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][5]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_impuestos'][6]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][6]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_impuestos'][7]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][7]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_impuestos'][8]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][8]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_impuestos'][9]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][9]['valor']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_impuestos'][10]['valor'])&&$_SESSION['insumos_egr_nc_impuestos'][10]['valor']!=''){           $SIS_data .= ",'".$_SESSION['insumos_egr_nc_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
 				$SIS_data .= ",'1'";
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idCentroCosto']) && $_SESSION['insumos_egr_nc_basicos']['idCentroCosto']!=''){    $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idCentroCosto']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_1']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_1']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_1']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_2']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_2']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_2']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_3']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_3']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_3']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_4']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_4']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_4']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_5']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_5']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_5']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['insumos_egr_nc_basicos']['idUsoIVA']) && $_SESSION['insumos_egr_nc_basicos']['idUsoIVA']!=''){       $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idUsoIVA']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idCentroCosto']) && $_SESSION['insumos_egr_nc_basicos']['idCentroCosto']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idCentroCosto']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_1']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_1']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_1']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_2']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_2']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_2']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_3']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_3']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_3']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_4']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_4']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_4']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idLevel_5']) && $_SESSION['insumos_egr_nc_basicos']['idLevel_5']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idLevel_5']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['insumos_egr_nc_basicos']['idUsoIVA']) && $_SESSION['insumos_egr_nc_basicos']['idUsoIVA']!=''){               $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idUsoIVA']."'";          }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idDocumentos,N_Doc, Observaciones, 
-				idBodegaDestino, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, 
-				Creacion_ano, idCliente, fecha_auto, ValorNeto, ValorNetoImp,ValorTotal, Impuesto_01, 
-				Impuesto_02, Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, 
-				Impuesto_09, Impuesto_10, idEstado, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, 
+				$SIS_columns = 'idDocumentos,N_Doc, Observaciones,
+				idBodegaDestino, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes,
+				Creacion_ano, idCliente, fecha_auto, ValorNeto, ValorNetoImp,ValorTotal, Impuesto_01,
+				Impuesto_02, Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08,
+				Impuesto_09, Impuesto_10, idEstado, idCentroCosto, idLevel_1, idLevel_2, idLevel_3,
 				idLevel_4, idLevel_5, idUsoIVA';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -9002,7 +8978,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_egr_nc_productos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                        $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                 $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_egr_nc_basicos']['idBodega']) && $_SESSION['insumos_egr_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_nc_basicos']['idSistema']) && $_SESSION['insumos_egr_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_nc_basicos']['idUsuario']) && $_SESSION['insumos_egr_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -9016,17 +8992,17 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['insumos_egr_nc_basicos']['idDocumentos']) && $_SESSION['insumos_egr_nc_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_egr_nc_basicos']['N_Doc']) && $_SESSION['insumos_egr_nc_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_egr_nc_basicos']['idTipo']) && $_SESSION['insumos_egr_nc_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                       $SIS_data .= ",'".$producto['idProducto']."'";                              }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad_ing']) && $producto['Cantidad_ing']!=''){                                                   $SIS_data .= ",'".$producto['Cantidad_ing']."'";                            }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                   $SIS_data .= ",'".$producto['ValorIngreso']."'";                            }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                       $SIS_data .= ",'".$producto['ValorTotal']."'";                              }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_egr_nc_basicos']['idCliente']) && $_SESSION['insumos_egr_nc_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idCliente']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['insumos_egr_nc_basicos']['fecha_auto']) && $_SESSION['insumos_egr_nc_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_egr_nc_basicos']['N_Doc']) && $_SESSION['insumos_egr_nc_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_egr_nc_basicos']['idTipo']) && $_SESSION['insumos_egr_nc_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                              $SIS_data .= ",'".$producto['idProducto']."'";                              }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad_ing']) && $producto['Cantidad_ing']!=''){                                                          $SIS_data .= ",'".$producto['Cantidad_ing']."'";                            }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                          $SIS_data .= ",'".$producto['ValorIngreso']."'";                            }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                              $SIS_data .= ",'".$producto['ValorTotal']."'";                              }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_egr_nc_basicos']['idCliente']) && $_SESSION['insumos_egr_nc_basicos']['idCliente']!=''){            $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idCliente']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['insumos_egr_nc_basicos']['fecha_auto']) && $_SESSION['insumos_egr_nc_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano,
 							idDocumentos, N_Doc, idTipo, idProducto, Cantidad_ing, Valor,ValorTotal, idCliente, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_insumos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -9039,7 +9015,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_egr_nc_otros'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                        $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                 $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_egr_nd_basicos']['idBodega']) && $_SESSION['insumos_egr_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_nd_basicos']['idSistema']) && $_SESSION['insumos_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_nd_basicos']['idUsuario']) && $_SESSION['insumos_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -9069,7 +9045,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['insumos_egr_nc_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                        $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                 $SIS_data  = "'".$ultimo_id."'";                                            }else{$SIS_data  = "''";}
 							if(isset($_SESSION['insumos_egr_nc_basicos']['idBodega']) && $_SESSION['insumos_egr_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_nc_basicos']['idSistema']) && $_SESSION['insumos_egr_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['insumos_egr_nc_basicos']['idUsuario']) && $_SESSION['insumos_egr_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['insumos_egr_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}

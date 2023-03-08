@@ -241,11 +241,11 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 					$Form_Inputs->form_input_number('Capacidad (Kilos)','Capacidad', $x10, 1);
 					$Form_Inputs->form_input_number('Metros Cubicos (M3)','MCubicos', $x11, 1);
 					$Form_Inputs->form_select_filter('Tipo de Carga','idTipoCarga', $x12, 1, 'idTipoCarga', 'Nombre', 'vehiculos_tipo_carga', 0, '', $dbConn);
-				
+
 					$Form_Inputs->form_tittle(3, 'Proceso Aprobacion');
 					$Form_Inputs->form_select('Proceso','idProceso', $x13, 2, 'idProceso', 'Nombre', 'core_estado_aprobacion_vehiculos', 0, '', $dbConn);
 					$Form_Inputs->form_textarea('Motivo', 'Motivo', $x14, 1);
-				
+
 					$Form_Inputs->form_tittle(3, 'Datos Movilizacion');
 					$Form_Inputs->form_input_number('Velocidad Maxima','LimiteVelocidad', $x15, 1);
 					$Form_Inputs->form_input_number_spinner('N° Maximo Alertas de Velocidad','AlertLimiteVelocidad', $x16, 0, 15, 1, 0, 2);

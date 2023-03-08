@@ -587,7 +587,7 @@ if($in_eq_fueralinea!=0){
 						map.panTo(latlon);
 					}
 				}
-				
+
 				/* ************************************************************************** */
 				// Sets the map on all markers in the array.
 				function setMapOnAll(map) {

@@ -101,7 +101,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 					$Form_Inputs->form_select_filter('Especie','idCategoria', $x3, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0,  '',$dbConn);
 					$Form_Inputs->form_input_text('Codigo', 'Codigo', $x4, 1);
 					$Form_Inputs->form_input_number_spinner('Max dias Aplicacion','MaxAplicacion', $x5, 0, 500, 1, 0, 2);
-				
+
 					$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
 					?>
 

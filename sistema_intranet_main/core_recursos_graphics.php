@@ -107,8 +107,8 @@ require_once 'core/Web.Header.Main.php';
 				$Graphics_markerColor = "var markerColor = [''];";
 				$Graphics_markerLine  = "var markerLine = [''];";
 
-				echo GraphBarr_1('graphBarra_1', 'Basico', 'Eje-x Titulo', 'Eje-y Titulo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 0); 
-				
+				echo GraphBarr_1('graphBarra_1', 'Basico', 'Eje-x Titulo', 'Eje-y Titulo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 0);
+
 				/***************************************************************/
 				$Graphics_xData = 'var xData = [
 				  [2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011, 2013, 2014, 2015, 2016],
@@ -149,8 +149,8 @@ require_once 'core/Web.Header.Main.php';
 				$Graphics_markerColor = "var markerColor = [''];";
 				$Graphics_markerLine  = "var markerLine = [''];";
 
-				echo GraphBarrLat_1('graphBarraLat_1', 'Basico', 'Eje-x Titulo', 'Eje-y Titulo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 0); 
-				
+				echo GraphBarrLat_1('graphBarraLat_1', 'Basico', 'Eje-x Titulo', 'Eje-y Titulo', $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_info, $Graphics_markerColor, $Graphics_markerLine,1, 0);
+
 				/***************************************************************/
 				$Graphics_xData = 'var xData = [
 				  [10, 15, 13, 17, 10, 15, 13, 17, 10],

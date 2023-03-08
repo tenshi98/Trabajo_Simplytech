@@ -90,7 +90,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 											 'Posicion Texto','idPosition', $x3, 2, 'idPosition', 'Nombre', 'core_card_position', 0, 0, 
 											 $dbConn, 'form1');
 					$Form_Inputs->form_select('Uso Avatar','idCardImage', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				
+
 					$Form_Inputs->form_input_hidden('idCard', $_GET['id'], 2);
 					?>
 

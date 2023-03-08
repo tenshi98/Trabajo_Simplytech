@@ -114,7 +114,7 @@ require_once '0_validate_user_1.php';
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
 	if(isset($Observaciones) && $Observaciones!=''){ $Observaciones = EstandarizarInput($Observaciones);}
-	if(isset($Nombre) && $Nombre!=''){              $Nombre        = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){               $Nombre        = EstandarizarInput($Nombre);}
 
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
@@ -939,14 +939,14 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['servicios_ing_basicos']['idTipo']) OR $_SESSION['servicios_ing_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
 				if(!isset($_SESSION['servicios_ing_basicos']['idUsoIVA']) OR $_SESSION['servicios_ing_basicos']['idUsoIVA']=='' ){             $error['idUsoIVA']         = 'error/No ha seleccionado la exencion de IVA';}
 				//compruebo que sea una factura y que tenga fecha de pago
-				if(isset($_SESSION['servicios_ing_basicos']['idDocumentos']) && $_SESSION['servicios_ing_basicos']['idDocumentos']==2 ){     
-					if(!isset($_SESSION['servicios_ing_basicos']['Pago_fecha']) OR $_SESSION['servicios_ing_basicos']['Pago_fecha']=='' OR $_SESSION['servicios_ing_basicos']['Pago_fecha']=='0000-00-00' ){     
+				if(isset($_SESSION['servicios_ing_basicos']['idDocumentos']) && $_SESSION['servicios_ing_basicos']['idDocumentos']==2 ){
+					if(!isset($_SESSION['servicios_ing_basicos']['Pago_fecha']) OR $_SESSION['servicios_ing_basicos']['Pago_fecha']=='' OR $_SESSION['servicios_ing_basicos']['Pago_fecha']=='0000-00-00' ){
 						$error['Pago_fecha']  = 'error/No ha ingresado la fecha de vencimiento de la factura';
 					}
 				}
 				//se verifica el uso del iva
 				if(isset($_SESSION['servicios_ing_basicos']['idUsoIVA'])&&$_SESSION['servicios_ing_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['servicios_ing_impuestos'])){     
+					if(!isset($_SESSION['servicios_ing_impuestos'])){
 						$error['Pago_fecha']  = 'error/No ha seleccionado un impuesto para la factura';
 					}
 				}
@@ -1086,7 +1086,7 @@ require_once '0_validate_user_1.php';
 							/*******************************************************************/
 							//Actualizo el valor de los productos
 							$SIS_data = "idServicio='".$producto['idServicio']."'";
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso'] != ''&&isset($_SESSION['servicios_ing_basicos']['idProveedor']) && $_SESSION['servicios_ing_basicos']['idProveedor']!=''){     
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso'] != ''&&isset($_SESSION['servicios_ing_basicos']['idProveedor']) && $_SESSION['servicios_ing_basicos']['idProveedor']!=''){
 								$SIS_data .= ",idProveedor='".$_SESSION['servicios_ing_basicos']['idProveedor']."'";
 								$SIS_data .= ",ValorIngreso='".$producto['ValorIngreso']."'";
 							}
@@ -1114,16 +1114,15 @@ require_once '0_validate_user_1.php';
 					if (isset($_SESSION['servicios_ing_guias'])){
 						foreach ($_SESSION['servicios_ing_guias'] as $key => $guias){
 							//filtro
-							if(isset($ultimo_id) && $ultimo_id!=''){ 
-								
-								$SIS_data  = "DocRel='".$ultimo_id."'";    
+							if(isset($ultimo_id) && $ultimo_id!=''){
+
+								$SIS_data  = "DocRel='".$ultimo_id."'";
 								$SIS_data .= ",idEstado='2'";
 
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_servicios_facturacion', 'idFacturacion = "'.$guias['idGuia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
-							
+
 							}
 						}
 					}
@@ -1241,7 +1240,6 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
 			/*******************************************************************/
-			
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -1360,7 +1358,6 @@ require_once '0_validate_user_1.php';
 
 			}
 
-	
 		break;
 /*******************************************************************************************************************/
 		case 'clear_all_egr':
@@ -1943,14 +1940,14 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['servicios_egr_basicos']['idTrabajador']) OR $_SESSION['servicios_egr_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el vendedor';}
 				if(!isset($_SESSION['servicios_egr_basicos']['idUsoIVA']) OR $_SESSION['servicios_egr_basicos']['idUsoIVA']=='' ){             $error['idUsoIVA']         = 'error/No ha seleccionado la exencion del IVA';}
 				//compruebo que sea una factura y que tenga fecha de pago
-				if(isset($_SESSION['servicios_egr_basicos']['idDocumentos']) && $_SESSION['servicios_egr_basicos']['idDocumentos']==2 ){     
-					if(!isset($_SESSION['servicios_egr_basicos']['Pago_fecha']) OR $_SESSION['servicios_egr_basicos']['Pago_fecha']=='' OR $_SESSION['servicios_egr_basicos']['Pago_fecha']=='0000-00-00' ){     
+				if(isset($_SESSION['servicios_egr_basicos']['idDocumentos']) && $_SESSION['servicios_egr_basicos']['idDocumentos']==2 ){
+					if(!isset($_SESSION['servicios_egr_basicos']['Pago_fecha']) OR $_SESSION['servicios_egr_basicos']['Pago_fecha']=='' OR $_SESSION['servicios_egr_basicos']['Pago_fecha']=='0000-00-00' ){
 						$error['Pago_fecha']  = 'error/No ha ingresado la fecha de vencimiento de la factura';
 					}
 				}
 				//se verifica el uso del iva
 				if(isset($_SESSION['servicios_egr_basicos']['idUsoIVA'])&&$_SESSION['servicios_egr_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['servicios_egr_impuestos'])){     
+					if(!isset($_SESSION['servicios_egr_impuestos'])){
 						$error['Pago_fecha']  = 'error/No ha seleccionado un impuesto para la factura';
 					}
 				}
@@ -2089,14 +2086,13 @@ require_once '0_validate_user_1.php';
 							/********************************************************************************/
 							//Actualizo el valor de los productos
 							$SIS_data = "idServicio='".$producto['idServicio']."'";
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){     
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){
 								$SIS_data .= ",ValorEgreso='".$producto['ValorTotal']."'";
 							}
 							/*******************************************************/
 							//se actualizan los datos
 							$resultado = db_update_data (false, $SIS_data, 'servicios_listado', 'idServicio = "'.$producto['idServicio'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-							
-				
+
 						}
 					}
 
@@ -2105,16 +2101,15 @@ require_once '0_validate_user_1.php';
 					if (isset($_SESSION['servicios_egr_guias'])){
 						foreach ($_SESSION['servicios_egr_guias'] as $key => $guias){
 							//filtro
-							if(isset($ultimo_id) && $ultimo_id!=''){ 
-								
-								$SIS_data  = "DocRel='".$ultimo_id."'";    
+							if(isset($ultimo_id) && $ultimo_id!=''){
+
+								$SIS_data  = "DocRel='".$ultimo_id."'";
 								$SIS_data .= ",idEstado='2'";
 
 								/*******************************************************/
 								//se actualizan los datos
 								$resultado = db_update_data (false, $SIS_data, 'bodegas_servicios_facturacion', 'idFacturacion = "'.$guias['idGuia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-								
-							
+
 							}
 						}
 					}
@@ -2830,7 +2825,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['servicios_ing_nd_basicos']['idTipo']) OR $_SESSION['servicios_ing_nd_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
 				//se verifica el uso del iva
 				if(isset($_SESSION['servicios_ing_nd_basicos']['idUsoIVA'])&&$_SESSION['servicios_ing_nd_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['servicios_ing_nd_impuestos'])){     
+					if(!isset($_SESSION['servicios_ing_nd_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -3078,7 +3073,6 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
 			/*******************************************************************/
-			
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -3175,7 +3169,6 @@ require_once '0_validate_user_1.php';
 
 			}
 
-	
 		break;
 /*******************************************************************************************************************/
 		case 'clear_all_ing_nc':
@@ -3665,7 +3658,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['servicios_ing_nc_basicos']['idProveedor']) OR $_SESSION['servicios_ing_nc_basicos']['idProveedor']=='' ){           $error['idProveedor']        = 'error/No ha seleccionado el cliente';}
 				//se verifica el uso del iva
 				if(isset($_SESSION['servicios_ing_nc_basicos']['idUsoIVA'])&&$_SESSION['servicios_ing_nc_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['servicios_ing_nc_impuestos'])){     
+					if(!isset($_SESSION['servicios_ing_nc_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -4495,7 +4488,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['servicios_egr_nd_basicos']['idTipo']) OR $_SESSION['servicios_egr_nd_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
 				//se verifica el uso del iva
 				if(isset($_SESSION['servicios_egr_nd_basicos']['idUsoIVA'])&&$_SESSION['servicios_egr_nd_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['servicios_egr_nd_impuestos'])){     
+					if(!isset($_SESSION['servicios_egr_nd_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
@@ -4743,7 +4736,6 @@ require_once '0_validate_user_1.php';
 			//generacion de errores
 			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Documento que esta tratando de ingresar ya fue ingresado';}
 			/*******************************************************************/
-			
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -4840,7 +4832,6 @@ require_once '0_validate_user_1.php';
 
 			}
 
-	
 		break;
 /*******************************************************************************************************************/
 		case 'clear_all_egr_nc':
@@ -5331,7 +5322,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['servicios_egr_nc_basicos']['idCliente']) OR $_SESSION['servicios_egr_nc_basicos']['idCliente']=='' ){           $error['idCliente']        = 'error/No ha seleccionado el cliente';}
 				//se verifica el uso del iva
 				if(isset($_SESSION['servicios_egr_nc_basicos']['idUsoIVA'])&&$_SESSION['servicios_egr_nc_basicos']['idUsoIVA']==2){
-					if(!isset($_SESSION['servicios_egr_nc_impuestos'])){     
+					if(!isset($_SESSION['servicios_egr_nc_impuestos'])){
 						$error['impuestos']  = 'error/No ha seleccionado un impuesto';
 					}
 				}
