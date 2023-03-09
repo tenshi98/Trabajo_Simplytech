@@ -175,8 +175,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 					$Form_Inputs->form_input_text('Subtitulo', 'Nosotros_Subtitulo', $x33, 1);
 					$Form_Inputs->form_textarea('Texto', 'Nosotros_Texto', $x34, 1);
 					$Form_Inputs->form_input_icon('Link Video', 'Nosotros_Link', $x35, 1,'fa fa-link');
-					
-					
+
 					$Form_Inputs->form_input_hidden('idSitio', simpleDecode($_GET['id'], fecha_actual()), 2);
 					?>
 

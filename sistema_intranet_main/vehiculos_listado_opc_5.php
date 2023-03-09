@@ -75,8 +75,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select_filter('Pasajeros Disponibles','idHijos', $x1, 2, 'idHijos', 'Rut,Nombre,ApellidoPat,ApellidoMat', 'apoderados_listado_hijos', 'idVehiculo=0', '', $dbConn);
-					
-					
+
 					$Form_Inputs->form_input_hidden('idVehiculo', $_GET['id'], 2);
 					?>
 

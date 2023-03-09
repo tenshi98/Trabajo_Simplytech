@@ -99,8 +99,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 					$Form_Inputs->form_select_filter('Banco','idBanco', $x1, 1, 'idBanco', 'Nombre', 'core_bancos', 0, '', $dbConn);
 					$Form_Inputs->form_input_icon('N° Cuenta Banco', 'NCuentaBanco', $x2, 1,'fa fa-university');
 					$Form_Inputs->form_input_icon('Mail de confirmacion', 'MailBanco', $x3, 1,'fa fa-envelope-o');
-					
-					
+
 					$Form_Inputs->form_input_hidden('idTransporte', $_GET['id'], 2);
 					?>
 

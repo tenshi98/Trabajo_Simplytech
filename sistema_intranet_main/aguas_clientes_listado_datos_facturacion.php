@@ -109,13 +109,12 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_joi
 					$Form_Inputs->form_select_depend1('Ciudad de Facturacion','idCiudadFact', $x7, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 													'Comuna de Facturacion','idComunaFact', $x8, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 													$dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Direccion de Facturacion', 'DireccionFact', $x9, 2,'fa fa-map');	
+					$Form_Inputs->form_input_icon('Direccion de Facturacion', 'DireccionFact', $x9, 2,'fa fa-map');
 					$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x10, 1,'fa fa-industry');
 					$Form_Inputs->form_select_filter('Rubro','idRubro', $x11, 1, 'idRubro', 'Codigo,Nombre', 'core_rubros', 0, '', $dbConn);
 					$Form_Inputs->form_input_number('Latitud', 'latitud', $x12, 2);
 					$Form_Inputs->form_input_number('Longitud', 'longitud', $x13, 2);
-					
-					
+
 					$Form_Inputs->form_input_hidden('idCliente', $_GET['id'], 2);
 
 					?>

@@ -102,8 +102,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 					$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x5, 1, 1);
 					$Form_Inputs->form_time('Hora Termino','HoraTermino', $x6, 1, 1);
 					$Form_Inputs->form_input_text('Nombre de la Ruta', 'Nombre', $x7, 2);
-					
-					
+
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idRutaAlt', $_GET['id'], 2);

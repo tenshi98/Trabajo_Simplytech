@@ -99,10 +99,10 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 					$Form_Inputs->form_input_icon('ID Google (Mapas)', 'Config_IDGoogle', $x1, 1,'fa fa-google-plus-square');
 					$Form_Inputs->form_input_icon('ApiKey (Android)', 'Config_Google_apiKey', $x2, 1,'fa fa-google-plus-square');
 					$Form_Inputs->form_input_icon('ApiKey (Firebase)', 'Config_FCM_apiKey', $x3, 1,'fa fa-google-plus-square');
-					$Form_Inputs->form_post_data(2, '<strong>Main ApiKey (Firebase)</strong> sirve para la notificacion desde varias plataformas a una misma APP.');	
+					$Form_Inputs->form_post_data(2, '<strong>Main ApiKey (Firebase)</strong> sirve para la notificacion desde varias plataformas a una misma APP.');
 					$Form_Inputs->form_input_icon('Main ApiKey (Firebase)', 'Config_FCM_Main_apiKey', $x4, 1,'fa fa-google-plus-square');
 
-					$Form_Inputs->form_post_data(2, 'El Token y el Instance ID de Whatsapp se obtienen con el proveedor del servicio.');	
+					$Form_Inputs->form_post_data(2, 'El Token y el Instance ID de Whatsapp se obtienen con el proveedor del servicio.');
 					$Form_Inputs->form_input_icon('Whatsapp Token', 'Config_WhatsappToken', $x5, 1,'fa fa-google-plus-square');
 					$Form_Inputs->form_input_icon('Whatsapp Instance Id', 'Config_WhatsappInstanceId', $x6, 1,'fa fa-google-plus-square');
 

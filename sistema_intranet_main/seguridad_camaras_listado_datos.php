@@ -114,8 +114,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 					$Form_Inputs->form_input_text('Web o IP', 'Config_IP', $x11, 1);
 					$Form_Inputs->form_input_number_spinner('N° Puerto','Config_Puerto', $x12, 0, 10000, 1, 0, 1);
 					$Form_Inputs->form_input_text('Web configuracion', 'Config_Web', $x13, 1);
-					
-					
+
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idCamara', $_GET['id'], 2);

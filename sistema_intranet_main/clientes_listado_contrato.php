@@ -170,8 +170,7 @@ $arrHistorial = db_select_array (false, 'clientes_listado_historial_contratos.Cr
 					}
 
 					$Form_Inputs->form_ckeditor('Observaciones','Contrato_Obs', $x15, 1, 2);
-					
-					
+
 					$Form_Inputs->form_input_hidden('idCliente', $_GET['id'], 2);
 					?>
 

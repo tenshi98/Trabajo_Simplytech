@@ -128,7 +128,7 @@ require_once '0_validate_user_1.php';
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
 	if(isset($Observaciones) && $Observaciones!=''){ $Observaciones = EstandarizarInput($Observaciones);}
-	if(isset($Nombre) && $Nombre!=''){              $Nombre        = EstandarizarInput($Nombre);}
+	if(isset($Nombre) && $Nombre!=''){               $Nombre        = EstandarizarInput($Nombre);}
 
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
@@ -197,12 +197,12 @@ require_once '0_validate_user_1.php';
 				//Se guardan los datos basicos del formulario recien llenado
 				if(isset($idDocumentos) && $idDocumentos!=''){          $_SESSION['productos_ing_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['productos_ing_basicos']['idDocumentos']      = '';}
 				if(isset($N_Doc) && $N_Doc!=''){                        $_SESSION['productos_ing_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['productos_ing_basicos']['N_Doc']             = '';}
-				if(isset($idBodega) && $idBodega!=''){                 $_SESSION['productos_ing_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['productos_ing_basicos']['idBodega']          = '';}
+				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['productos_ing_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['productos_ing_basicos']['idBodega']          = '';}
 				if(isset($Observaciones) && $Observaciones!=''){        $_SESSION['productos_ing_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['productos_ing_basicos']['Observaciones']     = '';}
 				if(isset($idSistema) && $idSistema!=''){                $_SESSION['productos_ing_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['productos_ing_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario!=''){               $_SESSION['productos_ing_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['productos_ing_basicos']['idUsuario']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['productos_ing_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['productos_ing_basicos']['idUsuario']         = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){      $_SESSION['productos_ing_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['productos_ing_basicos']['Creacion_fecha']    = '';}
-				if(isset($idTipo) && $idTipo!=''){                     $_SESSION['productos_ing_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['productos_ing_basicos']['idTipo']            = '';}
+				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['productos_ing_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['productos_ing_basicos']['idTipo']            = '';}
 				if(isset($idProveedor) && $idProveedor!=''){            $_SESSION['productos_ing_basicos']['idProveedor']       = $idProveedor;       }else{$_SESSION['productos_ing_basicos']['idProveedor']       = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){              $_SESSION['productos_ing_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['productos_ing_basicos']['fecha_auto']        = '';}
 				if(isset($fecha_fact_desde) && $fecha_fact_desde!=''){  $_SESSION['productos_ing_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['productos_ing_basicos']['fecha_fact_desde']  = '';}
@@ -344,12 +344,12 @@ require_once '0_validate_user_1.php';
 				//Se guardan los datos basicos del formulario recien llenado
 				if(isset($idDocumentos) && $idDocumentos!=''){          $_SESSION['productos_ing_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['productos_ing_basicos']['idDocumentos']      = '';}
 				if(isset($N_Doc) && $N_Doc!=''){                        $_SESSION['productos_ing_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['productos_ing_basicos']['N_Doc']             = '';}
-				if(isset($idBodega) && $idBodega!=''){                 $_SESSION['productos_ing_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['productos_ing_basicos']['idBodega']          = '';}
+				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['productos_ing_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['productos_ing_basicos']['idBodega']          = '';}
 				if(isset($Observaciones) && $Observaciones!=''){        $_SESSION['productos_ing_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['productos_ing_basicos']['Observaciones']     = '';}
 				if(isset($idSistema) && $idSistema!=''){                $_SESSION['productos_ing_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['productos_ing_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario!=''){               $_SESSION['productos_ing_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['productos_ing_basicos']['idUsuario']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['productos_ing_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['productos_ing_basicos']['idUsuario']         = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){      $_SESSION['productos_ing_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['productos_ing_basicos']['Creacion_fecha']    = '';}
-				if(isset($idTipo) && $idTipo!=''){                     $_SESSION['productos_ing_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['productos_ing_basicos']['idTipo']            = '';}
+				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['productos_ing_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['productos_ing_basicos']['idTipo']            = '';}
 				if(isset($idProveedor) && $idProveedor!=''){            $_SESSION['productos_ing_basicos']['idProveedor']       = $idProveedor;       }else{$_SESSION['productos_ing_basicos']['idProveedor']       = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){              $_SESSION['productos_ing_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['productos_ing_basicos']['fecha_auto']        = '';}
 				if(isset($fecha_fact_desde) && $fecha_fact_desde!=''){  $_SESSION['productos_ing_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['productos_ing_basicos']['fecha_fact_desde']  = '';}
@@ -955,26 +955,26 @@ require_once '0_validate_user_1.php';
 
 				//Se traen los productos utilizados
 				$SIS_query = '
-				ocompra_listado_existencias_productos.idExistencia, 
-				ocompra_listado_existencias_productos.idProducto, 
-				ocompra_listado_existencias_productos.Cantidad, 
-				ocompra_listado_existencias_productos.vUnitario, 
-				ocompra_listado_existencias_productos.vTotal, 
+				ocompra_listado_existencias_productos.idExistencia,
+				ocompra_listado_existencias_productos.idProducto,
+				ocompra_listado_existencias_productos.Cantidad,
+				ocompra_listado_existencias_productos.vUnitario,
+				ocompra_listado_existencias_productos.vTotal,
 				ocompra_listado_existencias_productos.cant_ingresada,
 				productos_listado.Nombre,
 				sistema_productos_uml.Nombre AS Unimed';
 				$SIS_join  = '
 				LEFT JOIN `productos_listado`     ON productos_listado.idProducto  = ocompra_listado_existencias_insumos.idProducto
 				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml   = productos_listado.idUml';
-				$SIS_where = 'ocompra_listado_existencias_productos.idOcompra="'.$idOcompra.'" 
-				AND ocompra_listado_existencias_productos.Cantidad > ocompra_listado_existencias_productos.cant_ingresada';
+				$SIS_where = 'ocompra_listado_existencias_productos.idOcompra="'.$idOcompra.'"';
+				$SIS_where.= ' AND ocompra_listado_existencias_productos.Cantidad > ocompra_listado_existencias_productos.cant_ingresada';
 				$SIS_order = 0;
 				$arrProductos = array();
-				$arrProductos = db_select_array (false, $SIS_query, 
-												'ocompra_listado_existencias_productos', 
-												$SIS_join, 
-												$SIS_where, 
-												$SIS_order, 
+				$arrProductos = db_select_array (false, $SIS_query,
+												'ocompra_listado_existencias_productos',
+												$SIS_join,
+												$SIS_where,
+												$SIS_order,
 												$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Guardo la OC
@@ -1065,12 +1065,12 @@ require_once '0_validate_user_1.php';
 
 				//Se guardan los datos basicos
 				if(isset($_SESSION['productos_ing_basicos']['idDocumentos']) && $_SESSION['productos_ing_basicos']['idDocumentos']!=''){      $SIS_data  = "'".$_SESSION['productos_ing_basicos']['idDocumentos']."'";   }else{$SIS_data  = "''";}
-				if(isset($_SESSION['productos_ing_basicos']['N_Doc']) && $_SESSION['productos_ing_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['idBodega']) && $_SESSION['productos_ing_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['N_Doc']) && $_SESSION['productos_ing_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['idBodega']) && $_SESSION['productos_ing_basicos']['idBodega']!=''){              $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_ing_basicos']['Observaciones']) && $_SESSION['productos_ing_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['Observaciones']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['idSistema']) && $_SESSION['productos_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['idUsuario']) && $_SESSION['productos_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['idTipo']) && $_SESSION['productos_ing_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['idSistema']) && $_SESSION['productos_ing_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['idUsuario']) && $_SESSION['productos_ing_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['idTipo']) && $_SESSION['productos_ing_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_ing_basicos']['Creacion_fecha']) && $_SESSION['productos_ing_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['productos_ing_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['productos_ing_basicos']['Creacion_fecha'])."'";
@@ -1098,35 +1098,35 @@ require_once '0_validate_user_1.php';
 				}
 				$SIS_data .= ",'1'";
 				$SIS_data .= ",''";
-				if(isset($_SESSION['productos_ing_basicos']['fecha_auto']) && $_SESSION['productos_ing_basicos']['fecha_auto']!=''){         $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['valor_neto_fact'])&&$_SESSION['productos_ing_basicos']['valor_neto_fact']!=''){  $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['valor_neto_fact']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['valor_neto_imp'])&&$_SESSION['productos_ing_basicos']['valor_neto_imp']!=''){    $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['valor_neto_imp']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['valor_total_fact'])&&$_SESSION['productos_ing_basicos']['valor_total_fact']!=''){$SIS_data .= ",'".$_SESSION['productos_ing_basicos']['valor_total_fact']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_impuestos'][1]['valor'])&&$_SESSION['productos_ing_impuestos'][1]['valor']!=''){            $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_impuestos'][2]['valor'])&&$_SESSION['productos_ing_impuestos'][2]['valor']!=''){            $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_impuestos'][3]['valor'])&&$_SESSION['productos_ing_impuestos'][3]['valor']!=''){            $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_impuestos'][4]['valor'])&&$_SESSION['productos_ing_impuestos'][4]['valor']!=''){            $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_impuestos'][5]['valor'])&&$_SESSION['productos_ing_impuestos'][5]['valor']!=''){            $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_impuestos'][6]['valor'])&&$_SESSION['productos_ing_impuestos'][6]['valor']!=''){            $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_impuestos'][7]['valor'])&&$_SESSION['productos_ing_impuestos'][7]['valor']!=''){            $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_impuestos'][8]['valor'])&&$_SESSION['productos_ing_impuestos'][8]['valor']!=''){            $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_impuestos'][9]['valor'])&&$_SESSION['productos_ing_impuestos'][9]['valor']!=''){            $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_impuestos'][10]['valor'])&&$_SESSION['productos_ing_impuestos'][10]['valor']!=''){          $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['idOcompra']) && $_SESSION['productos_ing_basicos']['idOcompra']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idOcompra']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['idCentroCosto']) && $_SESSION['productos_ing_basicos']['idCentroCosto']!=''){   $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idCentroCosto']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['idLevel_1']) && $_SESSION['productos_ing_basicos']['idLevel_1']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idLevel_1']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['idLevel_2']) && $_SESSION['productos_ing_basicos']['idLevel_2']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idLevel_2']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['idLevel_3']) && $_SESSION['productos_ing_basicos']['idLevel_3']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idLevel_3']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['idLevel_4']) && $_SESSION['productos_ing_basicos']['idLevel_4']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idLevel_4']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['idLevel_5']) && $_SESSION['productos_ing_basicos']['idLevel_5']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idLevel_5']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['fecha_fact_desde']) && $_SESSION['productos_ing_basicos']['fecha_fact_desde']!=''){    $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['fecha_fact_desde']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['fecha_fact_hasta']) && $_SESSION['productos_ing_basicos']['fecha_fact_hasta']!=''){    $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['fecha_fact_hasta']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_basicos']['idUsoIVA']) && $_SESSION['productos_ing_basicos']['idUsoIVA']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idUsoIVA']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['fecha_auto']) && $_SESSION['productos_ing_basicos']['fecha_auto']!=''){                $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['fecha_auto']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['valor_neto_fact'])&&$_SESSION['productos_ing_basicos']['valor_neto_fact']!=''){        $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['valor_neto_fact']."'";   }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['valor_neto_imp'])&&$_SESSION['productos_ing_basicos']['valor_neto_imp']!=''){          $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['valor_neto_imp']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['valor_total_fact'])&&$_SESSION['productos_ing_basicos']['valor_total_fact']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['valor_total_fact']."'";  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_impuestos'][1]['valor'])&&$_SESSION['productos_ing_impuestos'][1]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_impuestos'][2]['valor'])&&$_SESSION['productos_ing_impuestos'][2]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_impuestos'][3]['valor'])&&$_SESSION['productos_ing_impuestos'][3]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_impuestos'][4]['valor'])&&$_SESSION['productos_ing_impuestos'][4]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_impuestos'][5]['valor'])&&$_SESSION['productos_ing_impuestos'][5]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_impuestos'][6]['valor'])&&$_SESSION['productos_ing_impuestos'][6]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_impuestos'][7]['valor'])&&$_SESSION['productos_ing_impuestos'][7]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_impuestos'][8]['valor'])&&$_SESSION['productos_ing_impuestos'][8]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_impuestos'][9]['valor'])&&$_SESSION['productos_ing_impuestos'][9]['valor']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_impuestos'][10]['valor'])&&$_SESSION['productos_ing_impuestos'][10]['valor']!=''){                $SIS_data .= ",'".$_SESSION['productos_ing_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['idOcompra']) && $_SESSION['productos_ing_basicos']['idOcompra']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idOcompra']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['idCentroCosto']) && $_SESSION['productos_ing_basicos']['idCentroCosto']!=''){          $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idCentroCosto']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['idLevel_1']) && $_SESSION['productos_ing_basicos']['idLevel_1']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idLevel_1']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['idLevel_2']) && $_SESSION['productos_ing_basicos']['idLevel_2']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idLevel_2']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['idLevel_3']) && $_SESSION['productos_ing_basicos']['idLevel_3']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idLevel_3']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['idLevel_4']) && $_SESSION['productos_ing_basicos']['idLevel_4']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idLevel_4']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['idLevel_5']) && $_SESSION['productos_ing_basicos']['idLevel_5']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idLevel_5']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['fecha_fact_desde']) && $_SESSION['productos_ing_basicos']['fecha_fact_desde']!=''){    $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['fecha_fact_desde']."'";  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['fecha_fact_hasta']) && $_SESSION['productos_ing_basicos']['fecha_fact_hasta']!=''){    $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['fecha_fact_hasta']."'";  }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_basicos']['idUsoIVA']) && $_SESSION['productos_ing_basicos']['idUsoIVA']!=''){                    $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idUsoIVA']."'";          }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idDocumentos,N_Doc, idBodegaDestino, Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha,Creacion_Semana, 
-				Creacion_mes, Creacion_ano, idProveedor, Pago_fecha, Pago_dia, Pago_Semana, Pago_mes, Pago_ano, idEstado, DocRel, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, 
-				Impuesto_02, Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10, idOcompra, idCentroCosto, idLevel_1, idLevel_2, 
+				$SIS_columns = 'idDocumentos,N_Doc, idBodegaDestino, Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha,Creacion_Semana,
+				Creacion_mes, Creacion_ano, idProveedor, Pago_fecha, Pago_dia, Pago_Semana, Pago_mes, Pago_ano, idEstado, DocRel, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01,
+				Impuesto_02, Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10, idOcompra, idCentroCosto, idLevel_1, idLevel_2,
 				idLevel_3, idLevel_4, idLevel_5, fecha_fact_desde, fecha_fact_hasta, idUsoIVA';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -1138,7 +1138,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_ing_productos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                               $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_ing_basicos']['idBodega']) && $_SESSION['productos_ing_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_basicos']['idSistema']) && $_SESSION['productos_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_basicos']['idUsuario']) && $_SESSION['productos_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -1152,17 +1152,17 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['productos_ing_basicos']['idDocumentos']) && $_SESSION['productos_ing_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idDocumentos']."'";       }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_ing_basicos']['N_Doc']) && $_SESSION['productos_ing_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_ing_basicos']['idTipo']) && $_SESSION['productos_ing_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                     $SIS_data .= ",'".$producto['idProducto']."'";                                  }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                             $SIS_data .= ",'".$producto['Number']."'";                                      }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                 $SIS_data .= ",'".$producto['ValorIngreso']."'";                                }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                     $SIS_data .= ",'".$producto['ValorTotal']."'";                                  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_ing_basicos']['idProveedor']) && $_SESSION['productos_ing_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idProveedor']."'";        }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_ing_basicos']['fecha_auto']) && $_SESSION['productos_ing_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_ing_basicos']['N_Doc']) && $_SESSION['productos_ing_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_ing_basicos']['idTipo']) && $_SESSION['productos_ing_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                            $SIS_data .= ",'".$producto['idProducto']."'";                                  }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                    $SIS_data .= ",'".$producto['Number']."'";                                      }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                        $SIS_data .= ",'".$producto['ValorIngreso']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                            $SIS_data .= ",'".$producto['ValorTotal']."'";                                  }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_ing_basicos']['idProveedor']) && $_SESSION['productos_ing_basicos']['idProveedor']!=''){        $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idProveedor']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_ing_basicos']['fecha_auto']) && $_SESSION['productos_ing_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes,
 							Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_ing,Valor, ValorTotal, idProveedor, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -1217,7 +1217,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_ing_descuentos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                               $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_ing_basicos']['idSistema']) && $_SESSION['productos_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_basicos']['idUsuario']) && $_SESSION['productos_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_basicos']['Creacion_fecha']) && $_SESSION['productos_ing_basicos']['Creacion_fecha']!=''){
@@ -1246,7 +1246,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_ing_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                               $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_ing_basicos']['idBodega']) && $_SESSION['productos_ing_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_basicos']['idSistema']) && $_SESSION['productos_ing_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_basicos']['idUsuario']) && $_SESSION['productos_ing_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -1363,14 +1363,14 @@ require_once '0_validate_user_1.php';
 				//Se guardan los datos basicos del formulario recien llenado
 				if(isset($idDocumentos) && $idDocumentos!=''){           $_SESSION['productos_egr_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['productos_egr_basicos']['idDocumentos']      = '';}
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['productos_egr_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['productos_egr_basicos']['N_Doc']             = '';}
-				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['productos_egr_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['productos_egr_basicos']['idBodega']          = '';}
+				if(isset($idBodega) && $idBodega!=''){                   $_SESSION['productos_egr_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['productos_egr_basicos']['idBodega']          = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['productos_egr_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['productos_egr_basicos']['Observaciones']     = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['productos_egr_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['productos_egr_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['productos_egr_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['productos_egr_basicos']['idUsuario']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['productos_egr_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['productos_egr_basicos']['idUsuario']         = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['productos_egr_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['productos_egr_basicos']['Creacion_fecha']    = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['productos_egr_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['productos_egr_basicos']['idTipo']            = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['productos_egr_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['productos_egr_basicos']['idTipo']            = '';}
 				if(isset($idCliente) && $idCliente!=''){                 $_SESSION['productos_egr_basicos']['idCliente']         = $idCliente;         }else{$_SESSION['productos_egr_basicos']['idCliente']         = '';}
-				if(isset($idTrabajador) && $idTrabajador!=''){          $_SESSION['productos_egr_basicos']['idTrabajador']      = $idTrabajador;      }else{$_SESSION['productos_egr_basicos']['idTrabajador']      = '';}
+				if(isset($idTrabajador) && $idTrabajador!=''){           $_SESSION['productos_egr_basicos']['idTrabajador']      = $idTrabajador;      }else{$_SESSION['productos_egr_basicos']['idTrabajador']      = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['productos_egr_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['productos_egr_basicos']['fecha_auto']        = '';}
 				if(isset($OC_Ventas) && $OC_Ventas!=''){                 $_SESSION['productos_egr_basicos']['OC_Ventas']         = $OC_Ventas;         }else{$_SESSION['productos_egr_basicos']['OC_Ventas']         = '';}
 				if(isset($fecha_fact_desde) && $fecha_fact_desde!=''){   $_SESSION['productos_egr_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['productos_egr_basicos']['fecha_fact_desde']  = '';}
@@ -1519,14 +1519,14 @@ require_once '0_validate_user_1.php';
 				//Se guardan los datos basicos del formulario recien llenado
 				if(isset($idDocumentos) && $idDocumentos!=''){           $_SESSION['productos_egr_basicos']['idDocumentos']      = $idDocumentos;      }else{$_SESSION['productos_egr_basicos']['idDocumentos']      = '';}
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['productos_egr_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['productos_egr_basicos']['N_Doc']             = '';}
-				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['productos_egr_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['productos_egr_basicos']['idBodega']          = '';}
+				if(isset($idBodega) && $idBodega!=''){                   $_SESSION['productos_egr_basicos']['idBodega']          = $idBodega;          }else{$_SESSION['productos_egr_basicos']['idBodega']          = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['productos_egr_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['productos_egr_basicos']['Observaciones']     = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['productos_egr_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['productos_egr_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['productos_egr_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['productos_egr_basicos']['idUsuario']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['productos_egr_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['productos_egr_basicos']['idUsuario']         = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['productos_egr_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['productos_egr_basicos']['Creacion_fecha']    = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['productos_egr_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['productos_egr_basicos']['idTipo']            = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['productos_egr_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['productos_egr_basicos']['idTipo']            = '';}
 				if(isset($idCliente) && $idCliente!=''){                 $_SESSION['productos_egr_basicos']['idCliente']         = $idCliente;         }else{$_SESSION['productos_egr_basicos']['idCliente']         = '';}
-				if(isset($idTrabajador) && $idTrabajador!=''){          $_SESSION['productos_egr_basicos']['idTrabajador']      = $idTrabajador;      }else{$_SESSION['productos_egr_basicos']['idTrabajador']      = '';}
+				if(isset($idTrabajador) && $idTrabajador!=''){           $_SESSION['productos_egr_basicos']['idTrabajador']      = $idTrabajador;      }else{$_SESSION['productos_egr_basicos']['idTrabajador']      = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['productos_egr_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['productos_egr_basicos']['fecha_auto']        = '';}
 				if(isset($OC_Ventas) && $OC_Ventas!=''){                 $_SESSION['productos_egr_basicos']['OC_Ventas']         = $OC_Ventas;         }else{$_SESSION['productos_egr_basicos']['OC_Ventas']         = '';}
 				if(isset($fecha_fact_desde) && $fecha_fact_desde!=''){   $_SESSION['productos_egr_basicos']['fecha_fact_desde']  = $fecha_fact_desde;  }else{$_SESSION['productos_egr_basicos']['fecha_fact_desde']  = '';}
@@ -1821,13 +1821,13 @@ require_once '0_validate_user_1.php';
 					$SIS_query = '
 					productos_listado.Nombre,
 					sistema_productos_uml.Nombre AS Unimed,
-					SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+					SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso,
 					SUM(bodegas_productos_facturacion_existencias.Cantidad_eg) AS egreso';
 					$SIS_join = '
 					LEFT JOIN `productos_listado`       ON productos_listado.idProducto   = bodegas_productos_facturacion_existencias.idProducto
 					LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = productos_listado.idUml';
 					$SIS_where = '
-					bodegas_productos_facturacion_existencias.idProducto = '.$idProducto[$j1].' 
+					bodegas_productos_facturacion_existencias.idProducto = '.$idProducto[$j1].'
 					AND bodegas_productos_facturacion_existencias.idBodega='.$_SESSION['productos_egr_basicos']['idBodega'];
 					$rowResultado = db_select_data (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Sumo los egresos
@@ -1878,21 +1878,21 @@ require_once '0_validate_user_1.php';
 			$SIS_query = '
 			productos_listado.Nombre,
 			sistema_productos_uml.Nombre AS Unimed,
-			SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+			SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso,
 			SUM(bodegas_productos_facturacion_existencias.Cantidad_eg) AS egreso';
 			$SIS_join = '
 			LEFT JOIN `productos_listado`       ON productos_listado.idProducto   = bodegas_productos_facturacion_existencias.idProducto
 			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = productos_listado.idUml';
 			$SIS_where = '
-			bodegas_productos_facturacion_existencias.idProducto = '.$idProducto.' 
+			bodegas_productos_facturacion_existencias.idProducto = '.$idProducto.'
 			AND bodegas_productos_facturacion_existencias.idBodega='.$_SESSION['productos_egr_basicos']['idBodega'];
 			$rowResultado = db_select_data (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Sumo los egresos
 			$Total_egresos     = $rowResultado['egreso'] + $Number;
 			$Total_existencias = $rowResultado['ingreso'] - $rowResultado['egreso'];
 			$ProductoNombre    = $rowResultado['Nombre'];
-			$ProductoUnimed    = $rowResultado['Unimed'];	
-			
+			$ProductoUnimed    = $rowResultado['Unimed'];
+
 			//Verifico si los egresos son inferiores a los ingresos
 			if($rowResultado['ingreso']<$Total_egresos){
 				$error['productos'] = 'error/No hay suficientes existencias, solo quedan '.$Total_existencias;
@@ -2164,12 +2164,12 @@ require_once '0_validate_user_1.php';
 
 				//Se guardan los datos basicos
 				if(isset($_SESSION['productos_egr_basicos']['idDocumentos']) && $_SESSION['productos_egr_basicos']['idDocumentos']!=''){      $SIS_data  = "'".$_SESSION['productos_egr_basicos']['idDocumentos']."'";   }else{$SIS_data  = "''";}
-				if(isset($_SESSION['productos_egr_basicos']['N_Doc']) && $_SESSION['productos_egr_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_basicos']['idBodega']) && $_SESSION['productos_egr_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_basicos']['N_Doc']) && $_SESSION['productos_egr_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_basicos']['idBodega']) && $_SESSION['productos_egr_basicos']['idBodega']!=''){              $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_basicos']['Observaciones']) && $_SESSION['productos_egr_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['Observaciones']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_basicos']['idSistema']) && $_SESSION['productos_egr_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_basicos']['idUsuario']) && $_SESSION['productos_egr_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_basicos']['idTipo']) && $_SESSION['productos_egr_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_basicos']['idSistema']) && $_SESSION['productos_egr_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_basicos']['idUsuario']) && $_SESSION['productos_egr_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_basicos']['idTipo']) && $_SESSION['productos_egr_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_basicos']['Creacion_fecha']) && $_SESSION['productos_egr_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['productos_egr_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['productos_egr_basicos']['Creacion_fecha'])."'";
@@ -2181,22 +2181,22 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['productos_egr_basicos']['idCliente']) && $_SESSION['productos_egr_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idCliente']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_basicos']['idTrabajador']) && $_SESSION['productos_egr_basicos']['idTrabajador']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idTrabajador']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_basicos']['fecha_auto']) && $_SESSION['productos_egr_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_basicos']['idCliente']) && $_SESSION['productos_egr_basicos']['idCliente']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idCliente']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_basicos']['idTrabajador']) && $_SESSION['productos_egr_basicos']['idTrabajador']!=''){       $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idTrabajador']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_basicos']['fecha_auto']) && $_SESSION['productos_egr_basicos']['fecha_auto']!=''){           $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['fecha_auto']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_basicos']['valor_neto_fact'])&&$_SESSION['productos_egr_basicos']['valor_neto_fact']!=''){   $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['valor_neto_fact']."'";   }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_basicos']['valor_neto_imp'])&&$_SESSION['productos_egr_basicos']['valor_neto_imp']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['valor_neto_imp']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_basicos']['valor_total_fact'])&&$_SESSION['productos_egr_basicos']['valor_total_fact']!=''){ $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['valor_total_fact']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_impuestos'][1]['valor'])&&$_SESSION['productos_egr_impuestos'][1]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_impuestos'][2]['valor'])&&$_SESSION['productos_egr_impuestos'][2]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_impuestos'][3]['valor'])&&$_SESSION['productos_egr_impuestos'][3]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_impuestos'][4]['valor'])&&$_SESSION['productos_egr_impuestos'][4]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_impuestos'][5]['valor'])&&$_SESSION['productos_egr_impuestos'][5]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_impuestos'][6]['valor'])&&$_SESSION['productos_egr_impuestos'][6]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_impuestos'][7]['valor'])&&$_SESSION['productos_egr_impuestos'][7]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_impuestos'][8]['valor'])&&$_SESSION['productos_egr_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_impuestos'][9]['valor'])&&$_SESSION['productos_egr_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_impuestos'][10]['valor'])&&$_SESSION['productos_egr_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_impuestos'][1]['valor'])&&$_SESSION['productos_egr_impuestos'][1]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_impuestos'][2]['valor'])&&$_SESSION['productos_egr_impuestos'][2]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_impuestos'][3]['valor'])&&$_SESSION['productos_egr_impuestos'][3]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_impuestos'][4]['valor'])&&$_SESSION['productos_egr_impuestos'][4]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_impuestos'][5]['valor'])&&$_SESSION['productos_egr_impuestos'][5]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_impuestos'][6]['valor'])&&$_SESSION['productos_egr_impuestos'][6]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_impuestos'][7]['valor'])&&$_SESSION['productos_egr_impuestos'][7]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_impuestos'][8]['valor'])&&$_SESSION['productos_egr_impuestos'][8]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_impuestos'][9]['valor'])&&$_SESSION['productos_egr_impuestos'][9]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_impuestos'][10]['valor'])&&$_SESSION['productos_egr_impuestos'][10]['valor']!=''){           $SIS_data .= ",'".$_SESSION['productos_egr_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_basicos']['Pago_fecha']) && $_SESSION['productos_egr_basicos']['Pago_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['productos_egr_basicos']['Pago_fecha']."'";
 					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['productos_egr_basicos']['Pago_fecha'])."'";
@@ -2211,23 +2211,23 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 				}
 				$SIS_data .= ",'1'";
-				if(isset($_SESSION['productos_egr_basicos']['OC_Ventas']) && $_SESSION['productos_egr_basicos']['OC_Ventas']!=''){          $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['OC_Ventas']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_basicos']['idCentroCosto']) && $_SESSION['productos_egr_basicos']['idCentroCosto']!=''){  $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idCentroCosto']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_basicos']['idLevel_1']) && $_SESSION['productos_egr_basicos']['idLevel_1']!=''){          $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idLevel_1']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_basicos']['idLevel_2']) && $_SESSION['productos_egr_basicos']['idLevel_2']!=''){          $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idLevel_2']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_basicos']['idLevel_3']) && $_SESSION['productos_egr_basicos']['idLevel_3']!=''){          $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idLevel_3']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_basicos']['idLevel_4']) && $_SESSION['productos_egr_basicos']['idLevel_4']!=''){          $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idLevel_4']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_basicos']['idLevel_5']) && $_SESSION['productos_egr_basicos']['idLevel_5']!=''){          $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idLevel_5']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_basicos']['OC_Ventas']) && $_SESSION['productos_egr_basicos']['OC_Ventas']!=''){                 $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['OC_Ventas']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_basicos']['idCentroCosto']) && $_SESSION['productos_egr_basicos']['idCentroCosto']!=''){         $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idCentroCosto']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_basicos']['idLevel_1']) && $_SESSION['productos_egr_basicos']['idLevel_1']!=''){                 $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idLevel_1']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_basicos']['idLevel_2']) && $_SESSION['productos_egr_basicos']['idLevel_2']!=''){                 $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idLevel_2']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_basicos']['idLevel_3']) && $_SESSION['productos_egr_basicos']['idLevel_3']!=''){                 $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idLevel_3']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_basicos']['idLevel_4']) && $_SESSION['productos_egr_basicos']['idLevel_4']!=''){                 $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idLevel_4']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_basicos']['idLevel_5']) && $_SESSION['productos_egr_basicos']['idLevel_5']!=''){                 $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idLevel_5']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_basicos']['fecha_fact_desde']) && $_SESSION['productos_egr_basicos']['fecha_fact_desde']!=''){   $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['fecha_fact_desde']."'"; }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_basicos']['fecha_fact_hasta']) && $_SESSION['productos_egr_basicos']['fecha_fact_hasta']!=''){   $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['fecha_fact_hasta']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_basicos']['idUsoIVA']) && $_SESSION['productos_egr_basicos']['idUsoIVA']!=''){            $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idUsoIVA']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_basicos']['idUsoIVA']) && $_SESSION['productos_egr_basicos']['idUsoIVA']!=''){                   $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idUsoIVA']."'";         }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, 
-				Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, 
-				idCliente, idTrabajador, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, 
-				Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, 
-				Impuesto_10, Pago_fecha, Pago_dia, Pago_Semana, Pago_mes, Pago_ano, idEstado,OC_Ventas, 
+				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen,
+				Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano,
+				idCliente, idTrabajador, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02,
+				Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09,
+				Impuesto_10, Pago_fecha, Pago_dia, Pago_Semana, Pago_mes, Pago_ano, idEstado,OC_Ventas,
 				idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5, fecha_fact_desde,
 				fecha_fact_hasta, idUsoIVA';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -2240,7 +2240,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_egr_productos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                               $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_egr_basicos']['idBodega']) && $_SESSION['productos_egr_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_basicos']['idSistema']) && $_SESSION['productos_egr_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_basicos']['idUsuario']) && $_SESSION['productos_egr_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -2254,18 +2254,18 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['productos_egr_basicos']['idDocumentos']) && $_SESSION['productos_egr_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_egr_basicos']['N_Doc']) && $_SESSION['productos_egr_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_egr_basicos']['idTipo']) && $_SESSION['productos_egr_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                     $SIS_data .= ",'".$producto['idProducto']."'";                             }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                             $SIS_data .= ",'".$producto['Number']."'";                                 }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                   $SIS_data .= ",'".$producto['ValorEgreso']."'";                            }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                     $SIS_data .= ",'".$producto['ValorTotal']."'";                             }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_egr_basicos']['idCliente']) && $_SESSION['productos_egr_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idCliente']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_egr_basicos']['fecha_auto']) && $_SESSION['productos_egr_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_egr_basicos']['N_Doc']) && $_SESSION['productos_egr_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_egr_basicos']['idTipo']) && $_SESSION['productos_egr_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                            $SIS_data .= ",'".$producto['idProducto']."'";                             }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                    $SIS_data .= ",'".$producto['Number']."'";                                 }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                          $SIS_data .= ",'".$producto['ValorEgreso']."'";                            }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                            $SIS_data .= ",'".$producto['ValorTotal']."'";                             }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_egr_basicos']['idCliente']) && $_SESSION['productos_egr_basicos']['idCliente']!=''){            $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idCliente']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_egr_basicos']['fecha_auto']) && $_SESSION['productos_egr_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, 
-							idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema,
+							idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg,
 							Valor, ValorTotal, idCliente, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -2308,7 +2308,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_egr_descuentos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                               $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_egr_basicos']['idSistema']) && $_SESSION['productos_egr_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_basicos']['idUsuario']) && $_SESSION['productos_egr_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_basicos']['Creacion_fecha']) && $_SESSION['productos_egr_basicos']['Creacion_fecha']!=''){
@@ -2337,7 +2337,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_egr_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                      $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                               $SIS_data  = "'".$ultimo_id."'";                                           }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_egr_basicos']['idBodega']) && $_SESSION['productos_egr_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_basicos']['idSistema']) && $_SESSION['productos_egr_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_basicos']['idUsuario']) && $_SESSION['productos_egr_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -2449,12 +2449,12 @@ require_once '0_validate_user_1.php';
 				unset($_SESSION['productos_gasto_archivos']);
 
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['productos_gasto_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['productos_gasto_basicos']['idBodega']        = '';}
+				if(isset($idBodega) && $idBodega!=''){                   $_SESSION['productos_gasto_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['productos_gasto_basicos']['idBodega']        = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['productos_gasto_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['productos_gasto_basicos']['Observaciones']   = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['productos_gasto_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['productos_gasto_basicos']['idSistema']       = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['productos_gasto_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['productos_gasto_basicos']['idUsuario']       = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['productos_gasto_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['productos_gasto_basicos']['idUsuario']       = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['productos_gasto_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['productos_gasto_basicos']['Creacion_fecha']  = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['productos_gasto_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['productos_gasto_basicos']['idTipo']          = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['productos_gasto_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['productos_gasto_basicos']['idTipo']          = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['productos_gasto_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['productos_gasto_basicos']['fecha_auto']      = '';}
 
 				/********************************************************************************/
@@ -2545,12 +2545,12 @@ require_once '0_validate_user_1.php';
 				unset($_SESSION['productos_gasto_productos']);
 
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idBodega) && $idBodega!=''){                  $_SESSION['productos_gasto_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['productos_gasto_basicos']['idBodega']        = '';}
+				if(isset($idBodega) && $idBodega!=''){                   $_SESSION['productos_gasto_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['productos_gasto_basicos']['idBodega']        = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['productos_gasto_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['productos_gasto_basicos']['Observaciones']   = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['productos_gasto_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['productos_gasto_basicos']['idSistema']       = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['productos_gasto_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['productos_gasto_basicos']['idUsuario']       = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['productos_gasto_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['productos_gasto_basicos']['idUsuario']       = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['productos_gasto_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['productos_gasto_basicos']['Creacion_fecha']  = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['productos_gasto_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['productos_gasto_basicos']['idTipo']          = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['productos_gasto_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['productos_gasto_basicos']['idTipo']          = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['productos_gasto_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['productos_gasto_basicos']['fecha_auto']      = '';}
 
 				/********************************************************************************/
@@ -2673,13 +2673,13 @@ require_once '0_validate_user_1.php';
 					productos_listado.Nombre,
 					sistema_productos_uml.Nombre AS Unimed,
 					productos_listado.ValorIngreso,
-					SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+					SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso,
 					SUM(bodegas_productos_facturacion_existencias.Cantidad_eg) AS egreso';
 					$SIS_join = '
 					LEFT JOIN `productos_listado`       ON productos_listado.idProducto   = bodegas_productos_facturacion_existencias.idProducto
 					LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = productos_listado.idUml';
 					$SIS_where = '
-					bodegas_productos_facturacion_existencias.idProducto = '.$idProducto[$j1].' 
+					bodegas_productos_facturacion_existencias.idProducto = '.$idProducto[$j1].'
 					AND bodegas_productos_facturacion_existencias.idBodega='.$_SESSION['productos_gasto_basicos']['idBodega'];
 					$rowResultado = db_select_data (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Sumo los egresos
@@ -2731,13 +2731,13 @@ require_once '0_validate_user_1.php';
 			$SIS_query = '
 			productos_listado.Nombre,
 			sistema_productos_uml.Nombre AS Unimed,
-			SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+			SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso,
 			SUM(bodegas_productos_facturacion_existencias.Cantidad_eg) AS egreso';
 			$SIS_join = '
 			LEFT JOIN `productos_listado`       ON productos_listado.idProducto   = bodegas_productos_facturacion_existencias.idProducto
 			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = productos_listado.idUml';
 			$SIS_where = '
-			bodegas_productos_facturacion_existencias.idProducto = '.$idProducto.' 
+			bodegas_productos_facturacion_existencias.idProducto = '.$idProducto.'
 			AND bodegas_productos_facturacion_existencias.idBodega='.$_SESSION['productos_gasto_basicos']['idBodega'];
 			$rowResultado = db_select_data (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Sumo los egresos
@@ -2939,12 +2939,12 @@ require_once '0_validate_user_1.php';
 
 				//Se guardan los datos basicos
 				if(isset($_SESSION['productos_gasto_basicos']['idDocumentos']) && $_SESSION['productos_gasto_basicos']['idDocumentos']!=''){      $SIS_data  = "'".$_SESSION['productos_gasto_basicos']['idDocumentos']."'";   }else{$SIS_data  = "''";}
-				if(isset($_SESSION['productos_gasto_basicos']['N_Doc']) && $_SESSION['productos_gasto_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_gasto_basicos']['idBodega']) && $_SESSION['productos_gasto_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_gasto_basicos']['N_Doc']) && $_SESSION['productos_gasto_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_gasto_basicos']['idBodega']) && $_SESSION['productos_gasto_basicos']['idBodega']!=''){              $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_gasto_basicos']['Observaciones']) && $_SESSION['productos_gasto_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['Observaciones']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_gasto_basicos']['idSistema']) && $_SESSION['productos_gasto_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_gasto_basicos']['idUsuario']) && $_SESSION['productos_gasto_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_gasto_basicos']['idTipo']) && $_SESSION['productos_gasto_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_gasto_basicos']['idSistema']) && $_SESSION['productos_gasto_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_gasto_basicos']['idUsuario']) && $_SESSION['productos_gasto_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_gasto_basicos']['idTipo']) && $_SESSION['productos_gasto_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_gasto_basicos']['Creacion_fecha']) && $_SESSION['productos_gasto_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['productos_gasto_basicos']['Creacion_fecha'])."'";
@@ -2956,17 +2956,17 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['productos_gasto_basicos']['fecha_auto']) && $_SESSION['productos_gasto_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_gasto_basicos']['fecha_auto']) && $_SESSION['productos_gasto_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_gasto_basicos']['idCentroCosto']) && $_SESSION['productos_gasto_basicos']['idCentroCosto']!=''){    $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idCentroCosto']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_gasto_basicos']['idLevel_1']) && $_SESSION['productos_gasto_basicos']['idLevel_1']!=''){     $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idLevel_1']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_gasto_basicos']['idLevel_2']) && $_SESSION['productos_gasto_basicos']['idLevel_2']!=''){     $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idLevel_2']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_gasto_basicos']['idLevel_3']) && $_SESSION['productos_gasto_basicos']['idLevel_3']!=''){     $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idLevel_3']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_gasto_basicos']['idLevel_4']) && $_SESSION['productos_gasto_basicos']['idLevel_4']!=''){     $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idLevel_4']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_gasto_basicos']['idLevel_5']) && $_SESSION['productos_gasto_basicos']['idLevel_5']!=''){     $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idLevel_5']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_gasto_basicos']['idLevel_1']) && $_SESSION['productos_gasto_basicos']['idLevel_1']!=''){            $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idLevel_1']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_gasto_basicos']['idLevel_2']) && $_SESSION['productos_gasto_basicos']['idLevel_2']!=''){            $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idLevel_2']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_gasto_basicos']['idLevel_3']) && $_SESSION['productos_gasto_basicos']['idLevel_3']!=''){            $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idLevel_3']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_gasto_basicos']['idLevel_4']) && $_SESSION['productos_gasto_basicos']['idLevel_4']!=''){            $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idLevel_4']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_gasto_basicos']['idLevel_5']) && $_SESSION['productos_gasto_basicos']['idLevel_5']!=''){            $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idLevel_5']."'";        }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, Observaciones, 
-				idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, fecha_auto, 
+				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, Observaciones,
+				idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, fecha_auto,
 				idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -2978,7 +2978,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_gasto_productos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                          $SIS_data  = "'".$ultimo_id."'";                                             }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                   $SIS_data  = "'".$ultimo_id."'";                                             }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_gasto_basicos']['idBodega']) && $_SESSION['productos_gasto_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_gasto_basicos']['idSistema']) && $_SESSION['productos_gasto_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_gasto_basicos']['idUsuario']) && $_SESSION['productos_gasto_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -2992,17 +2992,17 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['productos_gasto_basicos']['idDocumentos']) && $_SESSION['productos_gasto_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_gasto_basicos']['N_Doc']) && $_SESSION['productos_gasto_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_gasto_basicos']['idTipo']) && $_SESSION['productos_gasto_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                         $SIS_data .= ",'".$producto['idProducto']."'";                               }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                                 $SIS_data .= ",'".$producto['Number']."'";                                   }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                       $SIS_data .= ",'".$producto['ValorEgreso']."'";                              }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                         $SIS_data .= ",'".$producto['ValorTotal']."'";                               }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_gasto_basicos']['fecha_auto']) && $_SESSION['productos_gasto_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_gasto_basicos']['N_Doc']) && $_SESSION['productos_gasto_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_gasto_basicos']['idTipo']) && $_SESSION['productos_gasto_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                $SIS_data .= ",'".$producto['idProducto']."'";                               }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                        $SIS_data .= ",'".$producto['Number']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                              $SIS_data .= ",'".$producto['ValorEgreso']."'";                              }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                $SIS_data .= ",'".$producto['ValorTotal']."'";                               }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_gasto_basicos']['fecha_auto']) && $_SESSION['productos_gasto_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, 
-							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, 
+							$SIS_columns = 'idFacturacion, idBodega,
+							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc,
 							idTipo, idProducto, Cantidad_eg, Valor, ValorTotal, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -3015,7 +3015,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_gasto_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                          $SIS_data  = "'".$ultimo_id."'";                                             }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                   $SIS_data  = "'".$ultimo_id."'";                                             }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_gasto_basicos']['idBodega']) && $_SESSION['productos_gasto_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_gasto_basicos']['idSistema']) && $_SESSION['productos_gasto_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_gasto_basicos']['idUsuario']) && $_SESSION['productos_gasto_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_gasto_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -3111,9 +3111,9 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['productos_traspaso_basicos']['N_Doc']            = $N_Doc;            }else{$_SESSION['productos_traspaso_basicos']['N_Doc']            = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['productos_traspaso_basicos']['Observaciones']    = $Observaciones;    }else{$_SESSION['productos_traspaso_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['productos_traspaso_basicos']['idSistema']        = $idSistema;        }else{$_SESSION['productos_traspaso_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['productos_traspaso_basicos']['idUsuario']        = $idUsuario;        }else{$_SESSION['productos_traspaso_basicos']['idUsuario']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['productos_traspaso_basicos']['idUsuario']        = $idUsuario;        }else{$_SESSION['productos_traspaso_basicos']['idUsuario']        = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['productos_traspaso_basicos']['Creacion_fecha']   = $Creacion_fecha;   }else{$_SESSION['productos_traspaso_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['productos_traspaso_basicos']['idTipo']           = $idTipo;           }else{$_SESSION['productos_traspaso_basicos']['idTipo']           = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['productos_traspaso_basicos']['idTipo']           = $idTipo;           }else{$_SESSION['productos_traspaso_basicos']['idTipo']           = '';}
 				if(isset($idBodegaOrigen) && $idBodegaOrigen!=''){       $_SESSION['productos_traspaso_basicos']['idBodegaOrigen']   = $idBodegaOrigen;   }else{$_SESSION['productos_traspaso_basicos']['idBodegaOrigen']   = '';}
 				if(isset($idBodegaDestino) && $idBodegaDestino!=''){     $_SESSION['productos_traspaso_basicos']['idBodegaDestino']  = $idBodegaDestino;  }else{$_SESSION['productos_traspaso_basicos']['idBodegaDestino']  = '';}
 				if(isset($idCliente) && $idCliente!=''){                 $_SESSION['productos_traspaso_basicos']['idCliente']        = $idCliente;        }else{$_SESSION['productos_traspaso_basicos']['idCliente']        = '';}
@@ -3204,9 +3204,9 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['productos_traspaso_basicos']['N_Doc']            = $N_Doc;            }else{$_SESSION['productos_traspaso_basicos']['N_Doc']            = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['productos_traspaso_basicos']['Observaciones']    = $Observaciones;    }else{$_SESSION['productos_traspaso_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['productos_traspaso_basicos']['idSistema']        = $idSistema;        }else{$_SESSION['productos_traspaso_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['productos_traspaso_basicos']['idUsuario']        = $idUsuario;        }else{$_SESSION['productos_traspaso_basicos']['idUsuario']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['productos_traspaso_basicos']['idUsuario']        = $idUsuario;        }else{$_SESSION['productos_traspaso_basicos']['idUsuario']        = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['productos_traspaso_basicos']['Creacion_fecha']   = $Creacion_fecha;   }else{$_SESSION['productos_traspaso_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['productos_traspaso_basicos']['idTipo']           = $idTipo;           }else{$_SESSION['productos_traspaso_basicos']['idTipo']           = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['productos_traspaso_basicos']['idTipo']           = $idTipo;           }else{$_SESSION['productos_traspaso_basicos']['idTipo']           = '';}
 				if(isset($idBodegaOrigen) && $idBodegaOrigen!=''){       $_SESSION['productos_traspaso_basicos']['idBodegaOrigen']   = $idBodegaOrigen;   }else{$_SESSION['productos_traspaso_basicos']['idBodegaOrigen']   = '';}
 				if(isset($idBodegaDestino) && $idBodegaDestino!=''){     $_SESSION['productos_traspaso_basicos']['idBodegaDestino']  = $idBodegaDestino;  }else{$_SESSION['productos_traspaso_basicos']['idBodegaDestino']  = '';}
 				if(isset($idCliente) && $idCliente!=''){                 $_SESSION['productos_traspaso_basicos']['idCliente']        = $idCliente;        }else{$_SESSION['productos_traspaso_basicos']['idCliente']        = '';}
@@ -3341,13 +3341,13 @@ require_once '0_validate_user_1.php';
 					productos_listado.Nombre,
 					sistema_productos_uml.Nombre AS Unimed,
 					productos_listado.ValorIngreso,
-					SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+					SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso,
 					SUM(bodegas_productos_facturacion_existencias.Cantidad_eg) AS egreso';
 					$SIS_join = '
 					LEFT JOIN `productos_listado`       ON productos_listado.idProducto   = bodegas_productos_facturacion_existencias.idProducto
 					LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = productos_listado.idUml';
 					$SIS_where = '
-					bodegas_productos_facturacion_existencias.idProducto = '.$idProducto[$j1].' 
+					bodegas_productos_facturacion_existencias.idProducto = '.$idProducto[$j1].'
 					AND bodegas_productos_facturacion_existencias.idBodega='.$_SESSION['productos_traspaso_basicos']['idBodegaOrigen'];
 					$rowResultado = db_select_data (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Sumo los egresos
@@ -3387,10 +3387,6 @@ require_once '0_validate_user_1.php';
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
-			
-			
-
-
 
 		break;
 /*******************************************************************************************************************/
@@ -3403,13 +3399,13 @@ require_once '0_validate_user_1.php';
 			$SIS_query = '
 			productos_listado.Nombre,
 			sistema_productos_uml.Nombre AS Unimed,
-			SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+			SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso,
 			SUM(bodegas_productos_facturacion_existencias.Cantidad_eg) AS egreso';
 			$SIS_join = '
 			LEFT JOIN `productos_listado`       ON productos_listado.idProducto   = bodegas_productos_facturacion_existencias.idProducto
 			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = productos_listado.idUml';
 			$SIS_where = '
-			bodegas_productos_facturacion_existencias.idProducto = '.$idProducto.' 
+			bodegas_productos_facturacion_existencias.idProducto = '.$idProducto.'
 			AND bodegas_productos_facturacion_existencias.idBodega='.$_SESSION['productos_traspaso_basicos']['idBodegaOrigen'];
 			$rowResultado = db_select_data (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Sumo los egresos
@@ -3500,14 +3496,14 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//Se guardan los datos basicos
-				if(isset($_SESSION['productos_traspaso_basicos']['idDocumentos']) && $_SESSION['productos_traspaso_basicos']['idDocumentos']!=''){ $SIS_data  = "'".$_SESSION['productos_traspaso_basicos']['idDocumentos']."'";       }else{$SIS_data  = "''";}
-				if(isset($_SESSION['productos_traspaso_basicos']['N_Doc']) && $_SESSION['productos_traspaso_basicos']['N_Doc']!=''){               $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['N_Doc']."'";             }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspaso_basicos']['idDocumentos']) && $_SESSION['productos_traspaso_basicos']['idDocumentos']!=''){        $SIS_data  = "'".$_SESSION['productos_traspaso_basicos']['idDocumentos']."'";       }else{$SIS_data  = "''";}
+				if(isset($_SESSION['productos_traspaso_basicos']['N_Doc']) && $_SESSION['productos_traspaso_basicos']['N_Doc']!=''){                      $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['N_Doc']."'";             }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_traspaso_basicos']['idBodegaOrigen']) && $_SESSION['productos_traspaso_basicos']['idBodegaOrigen']!=''){    $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idBodegaOrigen']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_traspaso_basicos']['idBodegaDestino']) && $_SESSION['productos_traspaso_basicos']['idBodegaDestino']!=''){  $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idBodegaDestino']."'";   }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_traspaso_basicos']['Observaciones']) && $_SESSION['productos_traspaso_basicos']['Observaciones']!=''){      $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['Observaciones']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspaso_basicos']['idSistema']) && $_SESSION['productos_traspaso_basicos']['idSistema']!=''){       $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idSistema']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspaso_basicos']['idUsuario']) && $_SESSION['productos_traspaso_basicos']['idUsuario']!=''){       $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idUsuario']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspaso_basicos']['idTipo']) && $_SESSION['productos_traspaso_basicos']['idTipo']!=''){             $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idTipo']."'";            }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspaso_basicos']['idSistema']) && $_SESSION['productos_traspaso_basicos']['idSistema']!=''){              $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idSistema']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspaso_basicos']['idUsuario']) && $_SESSION['productos_traspaso_basicos']['idUsuario']!=''){              $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idUsuario']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspaso_basicos']['idTipo']) && $_SESSION['productos_traspaso_basicos']['idTipo']!=''){                    $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idTipo']."'";            }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_traspaso_basicos']['Creacion_fecha']) && $_SESSION['productos_traspaso_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['productos_traspaso_basicos']['Creacion_fecha'])."'";
@@ -3519,17 +3515,17 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['productos_traspaso_basicos']['fecha_auto']) && $_SESSION['productos_traspaso_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspaso_basicos']['fecha_auto']) && $_SESSION['productos_traspaso_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_traspaso_basicos']['idCentroCosto']) && $_SESSION['productos_traspaso_basicos']['idCentroCosto']!=''){    $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idCentroCosto']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspaso_basicos']['idLevel_1']) && $_SESSION['productos_traspaso_basicos']['idLevel_1']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idLevel_1']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspaso_basicos']['idLevel_2']) && $_SESSION['productos_traspaso_basicos']['idLevel_2']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idLevel_2']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspaso_basicos']['idLevel_3']) && $_SESSION['productos_traspaso_basicos']['idLevel_3']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idLevel_3']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspaso_basicos']['idLevel_4']) && $_SESSION['productos_traspaso_basicos']['idLevel_4']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idLevel_4']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspaso_basicos']['idLevel_5']) && $_SESSION['productos_traspaso_basicos']['idLevel_5']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idLevel_5']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspaso_basicos']['idLevel_1']) && $_SESSION['productos_traspaso_basicos']['idLevel_1']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idLevel_1']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspaso_basicos']['idLevel_2']) && $_SESSION['productos_traspaso_basicos']['idLevel_2']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idLevel_2']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspaso_basicos']['idLevel_3']) && $_SESSION['productos_traspaso_basicos']['idLevel_3']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idLevel_3']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspaso_basicos']['idLevel_4']) && $_SESSION['productos_traspaso_basicos']['idLevel_4']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idLevel_4']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspaso_basicos']['idLevel_5']) && $_SESSION['productos_traspaso_basicos']['idLevel_5']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idLevel_5']."'";        }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, idBodegaDestino, 
-				Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, 
+				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, idBodegaDestino,
+				Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano,
 				fecha_auto, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -3544,8 +3540,8 @@ require_once '0_validate_user_1.php';
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                $SIS_data  = "'".$ultimo_id."'";                                                 }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_traspaso_basicos']['idBodegaOrigen']) && $_SESSION['productos_traspaso_basicos']['idBodegaOrigen']!=''){  $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idBodegaOrigen']."'"; }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspaso_basicos']['idSistema']) && $_SESSION['productos_traspaso_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idSistema']."'";      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspaso_basicos']['idUsuario']) && $_SESSION['productos_traspaso_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idUsuario']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspaso_basicos']['idSistema']) && $_SESSION['productos_traspaso_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idSistema']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspaso_basicos']['idUsuario']) && $_SESSION['productos_traspaso_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idUsuario']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_traspaso_basicos']['Creacion_fecha']) && $_SESSION['productos_traspaso_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['productos_traspaso_basicos']['Creacion_fecha'])."'";
@@ -3556,17 +3552,17 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['productos_traspaso_basicos']['idDocumentos']) && $_SESSION['productos_traspaso_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspaso_basicos']['N_Doc']) && $_SESSION['productos_traspaso_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspaso_basicos']['idTipo']) && $_SESSION['productos_traspaso_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                               $SIS_data .= ",'".$producto['idProducto']."'";                                  }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                                       $SIS_data .= ",'".$producto['Number']."'";                                      }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                             $SIS_data .= ",'".$producto['ValorEgreso']."'";                                 }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                               $SIS_data .= ",'".$producto['ValorTotal']."'";                                  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspaso_basicos']['fecha_auto']) && $_SESSION['productos_traspaso_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspaso_basicos']['N_Doc']) && $_SESSION['productos_traspaso_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspaso_basicos']['idTipo']) && $_SESSION['productos_traspaso_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                      $SIS_data .= ",'".$producto['idProducto']."'";                                  }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                              $SIS_data .= ",'".$producto['Number']."'";                                      }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                    $SIS_data .= ",'".$producto['ValorEgreso']."'";                                 }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                      $SIS_data .= ",'".$producto['ValorTotal']."'";                                  }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspaso_basicos']['fecha_auto']) && $_SESSION['productos_traspaso_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, 
-							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, 
+							$SIS_columns = 'idFacturacion, idBodega,
+							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc,
 							idTipo, idProducto, Cantidad_eg, Valor, ValorTotal, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -3575,8 +3571,8 @@ require_once '0_validate_user_1.php';
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                  $SIS_data  = "'".$ultimo_id."'";                                                   }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_traspaso_basicos']['idBodegaDestino']) && $_SESSION['productos_traspaso_basicos']['idBodegaDestino']!=''){  $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idBodegaDestino']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspaso_basicos']['idSistema']) && $_SESSION['productos_traspaso_basicos']['idSistema']!=''){       $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idSistema']."'";        }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspaso_basicos']['idUsuario']) && $_SESSION['productos_traspaso_basicos']['idUsuario']!=''){       $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idUsuario']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspaso_basicos']['idSistema']) && $_SESSION['productos_traspaso_basicos']['idSistema']!=''){              $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idSistema']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspaso_basicos']['idUsuario']) && $_SESSION['productos_traspaso_basicos']['idUsuario']!=''){              $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idUsuario']."'";        }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_traspaso_basicos']['Creacion_fecha']) && $_SESSION['productos_traspaso_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['productos_traspaso_basicos']['Creacion_fecha'])."'";
@@ -3587,17 +3583,17 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['productos_traspaso_basicos']['idDocumentos']) && $_SESSION['productos_traspaso_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspaso_basicos']['N_Doc']) && $_SESSION['productos_traspaso_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspaso_basicos']['idTipo']) && $_SESSION['productos_traspaso_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                               $SIS_data .= ",'".$producto['idProducto']."'";                                  }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                                       $SIS_data .= ",'".$producto['Number']."'";                                      }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                             $SIS_data .= ",'".$producto['ValorEgreso']."'";                                 }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                               $SIS_data .= ",'".$producto['ValorTotal']."'";                                  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspaso_basicos']['fecha_auto']) && $_SESSION['productos_traspaso_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspaso_basicos']['N_Doc']) && $_SESSION['productos_traspaso_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspaso_basicos']['idTipo']) && $_SESSION['productos_traspaso_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                      $SIS_data .= ",'".$producto['idProducto']."'";                                  }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                              $SIS_data .= ",'".$producto['Number']."'";                                      }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                    $SIS_data .= ",'".$producto['ValorEgreso']."'";                                 }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                      $SIS_data .= ",'".$producto['ValorTotal']."'";                                  }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspaso_basicos']['fecha_auto']) && $_SESSION['productos_traspaso_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_traspaso_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, 
-							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, 
+							$SIS_columns = 'idFacturacion, idBodega,
+							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc,
 							idTipo, idProducto, Cantidad_ing, Valor, ValorTotal, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -3661,9 +3657,9 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                      $_SESSION['productos_transform_basicos']['N_Doc']            = $N_Doc;             }else{$_SESSION['productos_transform_basicos']['N_Doc']            = '';}
 				if(isset($Observaciones) && $Observaciones!=''){      $_SESSION['productos_transform_basicos']['Observaciones']    = $Observaciones;     }else{$_SESSION['productos_transform_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){              $_SESSION['productos_transform_basicos']['idSistema']        = $idSistema;         }else{$_SESSION['productos_transform_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){             $_SESSION['productos_transform_basicos']['idUsuario']        = $idUsuario;         }else{$_SESSION['productos_transform_basicos']['idUsuario']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){              $_SESSION['productos_transform_basicos']['idUsuario']        = $idUsuario;         }else{$_SESSION['productos_transform_basicos']['idUsuario']        = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){    $_SESSION['productos_transform_basicos']['Creacion_fecha']   = $Creacion_fecha;    }else{$_SESSION['productos_transform_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo!=''){                   $_SESSION['productos_transform_basicos']['idTipo']           = $idTipo;            }else{$_SESSION['productos_transform_basicos']['idTipo']           = '';}
+				if(isset($idTipo) && $idTipo!=''){                    $_SESSION['productos_transform_basicos']['idTipo']           = $idTipo;            }else{$_SESSION['productos_transform_basicos']['idTipo']           = '';}
 				if(isset($idBodegaOrigen) && $idBodegaOrigen!=''){    $_SESSION['productos_transform_basicos']['idBodegaOrigen']   = $idBodegaOrigen;    }else{$_SESSION['productos_transform_basicos']['idBodegaOrigen']   = '';}
 				if(isset($idBodegaDestino) && $idBodegaDestino!=''){  $_SESSION['productos_transform_basicos']['idBodegaDestino']  = $idBodegaDestino;   }else{$_SESSION['productos_transform_basicos']['idBodegaDestino']  = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){            $_SESSION['productos_transform_basicos']['fecha_auto']       = $fecha_auto;        }else{$_SESSION['productos_transform_basicos']['fecha_auto']       = '';}
@@ -3733,9 +3729,9 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                      $_SESSION['productos_transform_basicos']['N_Doc']            = $N_Doc;             }else{$_SESSION['productos_transform_basicos']['N_Doc']            = '';}
 				if(isset($Observaciones) && $Observaciones!=''){      $_SESSION['productos_transform_basicos']['Observaciones']    = $Observaciones;     }else{$_SESSION['productos_transform_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){              $_SESSION['productos_transform_basicos']['idSistema']        = $idSistema;         }else{$_SESSION['productos_transform_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){             $_SESSION['productos_transform_basicos']['idUsuario']        = $idUsuario;         }else{$_SESSION['productos_transform_basicos']['idUsuario']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){              $_SESSION['productos_transform_basicos']['idUsuario']        = $idUsuario;         }else{$_SESSION['productos_transform_basicos']['idUsuario']        = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){    $_SESSION['productos_transform_basicos']['Creacion_fecha']   = $Creacion_fecha;    }else{$_SESSION['productos_transform_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo!=''){                   $_SESSION['productos_transform_basicos']['idTipo']           = $idTipo;            }else{$_SESSION['productos_transform_basicos']['idTipo']           = '';}
+				if(isset($idTipo) && $idTipo!=''){                    $_SESSION['productos_transform_basicos']['idTipo']           = $idTipo;            }else{$_SESSION['productos_transform_basicos']['idTipo']           = '';}
 				if(isset($idBodegaOrigen) && $idBodegaOrigen!=''){    $_SESSION['productos_transform_basicos']['idBodegaOrigen']   = $idBodegaOrigen;    }else{$_SESSION['productos_transform_basicos']['idBodegaOrigen']   = '';}
 				if(isset($idBodegaDestino) && $idBodegaDestino!=''){  $_SESSION['productos_transform_basicos']['idBodegaDestino']  = $idBodegaDestino;   }else{$_SESSION['productos_transform_basicos']['idBodegaDestino']  = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){            $_SESSION['productos_transform_basicos']['fecha_auto']       = $fecha_auto;        }else{$_SESSION['productos_transform_basicos']['fecha_auto']       = '';}
@@ -3852,7 +3848,7 @@ require_once '0_validate_user_1.php';
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
-			
+
 				header( 'Location: '.$location.'&trans2='.$idProducto );
 				die;
 
@@ -3883,14 +3879,13 @@ require_once '0_validate_user_1.php';
 				$SIS_where = 'productos_recetas.idProducto ='.$idProducto;
 				$SIS_order = 0;
 				$arrRecetas = array();
-				$arrRecetas = db_select_array (false, $SIS_query, 
-												'productos_recetas', 
-												$SIS_join, 
-												$SIS_where, 
-												$SIS_order, 
+				$arrRecetas = db_select_array (false, $SIS_query,
+												'productos_recetas',
+												$SIS_join,
+												$SIS_where,
+												$SIS_order,
 												$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-											
-											
+
 				//recorro los registros y agrego las salidas de materiales
 				$ValorEgreso = 0;
 				$ValorTotal = 0;
@@ -3902,8 +3897,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['productos_transform_productos'][$receta['idProductoRel']]['ValorTotal']   = $receta['ValorIngreso'] * $Cantidad;
 					$_SESSION['productos_transform_productos'][$receta['idProductoRel']]['Nombre']       = $receta['Nombre'];
 					$_SESSION['productos_transform_productos'][$receta['idProductoRel']]['Unimed']       = $receta['Unimed'];
-					
-					
+
 					$ValorEgreso  = $ValorEgreso + $receta['ValorIngreso'];
 					$ValorTotal   = $ValorTotal + ($receta['ValorIngreso'] * $Cantidad);
 
@@ -3971,7 +3965,7 @@ require_once '0_validate_user_1.php';
 
 				//Consulto por el producto
 				$rowProdx = db_select_data (false, 'productos_listado.idProducto, productos_listado.Nombre,productos_listado.ValorIngreso, sistema_productos_uml.Nombre AS Unimed', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'productos_listado.idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-		
+
 				//Se guardan los datos
 				$_SESSION['productos_transform_productos_prod'][$idProducto]['idProducto']    = $idProducto;
 				$_SESSION['productos_transform_productos_prod'][$idProducto]['Number']        = $Number;
@@ -4084,14 +4078,14 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//Se guardan los datos basicos
-				if(isset($_SESSION['productos_transform_basicos']['idDocumentos']) && $_SESSION['productos_transform_basicos']['idDocumentos']!=''){ $SIS_data  = "'".$_SESSION['productos_transform_basicos']['idDocumentos']."'";       }else{$SIS_data  = "''";}
-				if(isset($_SESSION['productos_transform_basicos']['N_Doc']) && $_SESSION['productos_transform_basicos']['N_Doc']!=''){               $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['N_Doc']."'";             }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_transform_basicos']['idDocumentos']) && $_SESSION['productos_transform_basicos']['idDocumentos']!=''){        $SIS_data  = "'".$_SESSION['productos_transform_basicos']['idDocumentos']."'";       }else{$SIS_data  = "''";}
+				if(isset($_SESSION['productos_transform_basicos']['N_Doc']) && $_SESSION['productos_transform_basicos']['N_Doc']!=''){                      $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['N_Doc']."'";             }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_transform_basicos']['idBodegaOrigen']) && $_SESSION['productos_transform_basicos']['idBodegaOrigen']!=''){    $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idBodegaOrigen']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_transform_basicos']['idBodegaDestino']) && $_SESSION['productos_transform_basicos']['idBodegaDestino']!=''){  $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idBodegaDestino']."'";   }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_transform_basicos']['Observaciones']) && $_SESSION['productos_transform_basicos']['Observaciones']!=''){      $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['Observaciones']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_transform_basicos']['idSistema']) && $_SESSION['productos_transform_basicos']['idSistema']!=''){       $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idSistema']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_transform_basicos']['idUsuario']) && $_SESSION['productos_transform_basicos']['idUsuario']!=''){       $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idUsuario']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_transform_basicos']['idTipo']) && $_SESSION['productos_transform_basicos']['idTipo']!=''){             $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idTipo']."'";            }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_transform_basicos']['idSistema']) && $_SESSION['productos_transform_basicos']['idSistema']!=''){              $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idSistema']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_transform_basicos']['idUsuario']) && $_SESSION['productos_transform_basicos']['idUsuario']!=''){              $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idUsuario']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_transform_basicos']['idTipo']) && $_SESSION['productos_transform_basicos']['idTipo']!=''){                    $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idTipo']."'";            }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_transform_basicos']['Creacion_fecha']) && $_SESSION['productos_transform_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['productos_transform_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['productos_transform_basicos']['Creacion_fecha'])."'";
@@ -4103,17 +4097,17 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['productos_transform_basicos']['fecha_auto']) && $_SESSION['productos_transform_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_transform_basicos']['fecha_auto']) && $_SESSION['productos_transform_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_transform_basicos']['idCentroCosto']) && $_SESSION['productos_transform_basicos']['idCentroCosto']!=''){    $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idCentroCosto']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_transform_basicos']['idLevel_1']) && $_SESSION['productos_transform_basicos']['idLevel_1']!=''){     $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idLevel_1']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_transform_basicos']['idLevel_2']) && $_SESSION['productos_transform_basicos']['idLevel_2']!=''){     $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idLevel_2']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_transform_basicos']['idLevel_3']) && $_SESSION['productos_transform_basicos']['idLevel_3']!=''){     $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idLevel_3']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_transform_basicos']['idLevel_4']) && $_SESSION['productos_transform_basicos']['idLevel_4']!=''){     $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idLevel_4']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_transform_basicos']['idLevel_5']) && $_SESSION['productos_transform_basicos']['idLevel_5']!=''){     $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idLevel_5']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_transform_basicos']['idLevel_1']) && $_SESSION['productos_transform_basicos']['idLevel_1']!=''){            $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idLevel_1']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_transform_basicos']['idLevel_2']) && $_SESSION['productos_transform_basicos']['idLevel_2']!=''){            $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idLevel_2']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_transform_basicos']['idLevel_3']) && $_SESSION['productos_transform_basicos']['idLevel_3']!=''){            $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idLevel_3']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_transform_basicos']['idLevel_4']) && $_SESSION['productos_transform_basicos']['idLevel_4']!=''){            $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idLevel_4']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_transform_basicos']['idLevel_5']) && $_SESSION['productos_transform_basicos']['idLevel_5']!=''){            $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idLevel_5']."'";        }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, 
-				idBodegaDestino, Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, 
+				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen,
+				idBodegaDestino, Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes,
 				Creacion_ano, fecha_auto, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -4132,8 +4126,8 @@ require_once '0_validate_user_1.php';
 							}else{
 								if(isset($_SESSION['productos_transform_basicos']['idBodegaOrigen']) && $_SESSION['productos_transform_basicos']['idBodegaOrigen']!=''){    $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idBodegaOrigen']."'";   }else{$SIS_data .= ",''";}
 							}
-							if(isset($_SESSION['productos_transform_basicos']['idSistema']) && $_SESSION['productos_transform_basicos']['idSistema']!=''){           $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idSistema']."'";        }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_transform_basicos']['idUsuario']) && $_SESSION['productos_transform_basicos']['idUsuario']!=''){           $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idUsuario']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['idSistema']) && $_SESSION['productos_transform_basicos']['idSistema']!=''){                  $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idSistema']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['idUsuario']) && $_SESSION['productos_transform_basicos']['idUsuario']!=''){                  $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idUsuario']."'";        }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_transform_basicos']['Creacion_fecha']) && $_SESSION['productos_transform_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['productos_transform_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['productos_transform_basicos']['Creacion_fecha'])."'";
@@ -4144,18 +4138,18 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['productos_transform_basicos']['idDocumentos']) && $_SESSION['productos_transform_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_transform_basicos']['N_Doc']) && $_SESSION['productos_transform_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_transform_basicos']['idTipo']) && $_SESSION['productos_transform_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                 $SIS_data .= ",'".$producto['idProducto']."'";                                   }else{$SIS_data .= ",''";}
-							if(isset($producto['prod_ingreso']) && $producto['prod_ingreso']!=''){                                                             $SIS_data .= ",'".$producto['prod_ingreso']."'";                                 }else{$SIS_data .= ",''";}
-							if(isset($producto['prod_egreso']) && $producto['prod_egreso']!=''){                                                               $SIS_data .= ",'".$producto['prod_egreso']."'";                                  }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                               $SIS_data .= ",'".$producto['ValorEgreso']."'";                                  }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                 $SIS_data .= ",'".$producto['ValorTotal']."'";                                   }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_transform_basicos']['fecha_auto']) && $_SESSION['productos_transform_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['N_Doc']) && $_SESSION['productos_transform_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['idTipo']) && $_SESSION['productos_transform_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                        $SIS_data .= ",'".$producto['idProducto']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($producto['prod_ingreso']) && $producto['prod_ingreso']!=''){                                                                    $SIS_data .= ",'".$producto['prod_ingreso']."'";                                 }else{$SIS_data .= ",''";}
+							if(isset($producto['prod_egreso']) && $producto['prod_egreso']!=''){                                                                      $SIS_data .= ",'".$producto['prod_egreso']."'";                                  }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                      $SIS_data .= ",'".$producto['ValorEgreso']."'";                                  }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                        $SIS_data .= ",'".$producto['ValorTotal']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['fecha_auto']) && $_SESSION['productos_transform_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, 
-							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, 
+							$SIS_columns = 'idFacturacion, idBodega,
+							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc,
 							idTipo, idProducto, Cantidad_ing, Cantidad_eg, Valor, ValorTotal, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -4168,9 +4162,9 @@ require_once '0_validate_user_1.php';
 
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                        $SIS_data  = "'".$ultimo_id."'";                                                    }else{$SIS_data  = "''";}
-							if(isset($_SESSION['productos_transform_basicos']['idBodegaOrigen']) && $_SESSION['productos_transform_basicos']['idBodegaOrigen']!=''){ $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idBodegaOrigen']."'";   }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_transform_basicos']['idSistema']) && $_SESSION['productos_transform_basicos']['idSistema']!=''){           $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idSistema']."'";        }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_transform_basicos']['idUsuario']) && $_SESSION['productos_transform_basicos']['idUsuario']!=''){           $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idUsuario']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['idBodegaOrigen']) && $_SESSION['productos_transform_basicos']['idBodegaOrigen']!=''){        $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idBodegaOrigen']."'";   }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['idSistema']) && $_SESSION['productos_transform_basicos']['idSistema']!=''){                  $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idSistema']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['idUsuario']) && $_SESSION['productos_transform_basicos']['idUsuario']!=''){                  $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idUsuario']."'";        }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_transform_basicos']['Creacion_fecha']) && $_SESSION['productos_transform_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['productos_transform_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['productos_transform_basicos']['Creacion_fecha'])."'";
@@ -4181,17 +4175,17 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['productos_transform_basicos']['idDocumentos']) && $_SESSION['productos_transform_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_transform_basicos']['N_Doc']) && $_SESSION['productos_transform_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_transform_basicos']['idTipo']) && $_SESSION['productos_transform_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                 $SIS_data .= ",'".$producto['idProducto']."'";                                   }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                                         $SIS_data .= ",'".$producto['Number']."'";                                       }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                               $SIS_data .= ",'".$producto['ValorEgreso']."'";                                  }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                 $SIS_data .= ",'".$producto['ValorTotal']."'";                                   }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_transform_basicos']['fecha_auto']) && $_SESSION['productos_transform_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['N_Doc']) && $_SESSION['productos_transform_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['idTipo']) && $_SESSION['productos_transform_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                        $SIS_data .= ",'".$producto['idProducto']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                                $SIS_data .= ",'".$producto['Number']."'";                                       }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                      $SIS_data .= ",'".$producto['ValorEgreso']."'";                                  }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                        $SIS_data .= ",'".$producto['ValorTotal']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['fecha_auto']) && $_SESSION['productos_transform_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, 
-							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, 
+							$SIS_columns = 'idFacturacion, idBodega,
+							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc,
 							idTipo, idProducto, Cantidad_eg, Valor, ValorTotal, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -4204,9 +4198,9 @@ require_once '0_validate_user_1.php';
 
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                        $SIS_data  = "'".$ultimo_id."'";                                                    }else{$SIS_data  = "''";}
-							if(isset($_SESSION['productos_transform_basicos']['idBodegaOrigen']) && $_SESSION['productos_transform_basicos']['idBodegaOrigen']!=''){ $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idBodegaOrigen']."'";   }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_transform_basicos']['idSistema']) && $_SESSION['productos_transform_basicos']['idSistema']!=''){           $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idSistema']."'";        }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_transform_basicos']['idUsuario']) && $_SESSION['productos_transform_basicos']['idUsuario']!=''){           $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idUsuario']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['idBodegaOrigen']) && $_SESSION['productos_transform_basicos']['idBodegaOrigen']!=''){        $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idBodegaOrigen']."'";   }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['idSistema']) && $_SESSION['productos_transform_basicos']['idSistema']!=''){                  $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idSistema']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['idUsuario']) && $_SESSION['productos_transform_basicos']['idUsuario']!=''){                  $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idUsuario']."'";        }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_transform_basicos']['Creacion_fecha']) && $_SESSION['productos_transform_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['productos_transform_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['productos_transform_basicos']['Creacion_fecha'])."'";
@@ -4217,17 +4211,17 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['productos_transform_basicos']['idDocumentos']) && $_SESSION['productos_transform_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_transform_basicos']['N_Doc']) && $_SESSION['productos_transform_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_transform_basicos']['idTipo']) && $_SESSION['productos_transform_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                 $SIS_data .= ",'".$producto['idProducto']."'";                                   }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                                         $SIS_data .= ",'".$producto['Number']."'";                                       }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                               $SIS_data .= ",'".$producto['ValorEgreso']."'";                                  }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                 $SIS_data .= ",'".$producto['ValorTotal']."'";                                   }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_transform_basicos']['fecha_auto']) && $_SESSION['productos_transform_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['N_Doc']) && $_SESSION['productos_transform_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['idTipo']) && $_SESSION['productos_transform_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                        $SIS_data .= ",'".$producto['idProducto']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                                $SIS_data .= ",'".$producto['Number']."'";                                       }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                      $SIS_data .= ",'".$producto['ValorEgreso']."'";                                  }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                        $SIS_data .= ",'".$producto['ValorTotal']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_transform_basicos']['fecha_auto']) && $_SESSION['productos_transform_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_transform_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, 
-							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, 
+							$SIS_columns = 'idFacturacion, idBodega,
+							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc,
 							idTipo, idProducto, Cantidad_eg, Valor, ValorTotal, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -4304,9 +4298,9 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['productos_traspasoempresa_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['productos_traspasoempresa_basicos']['N_Doc']             = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['productos_traspasoempresa_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['productos_traspasoempresa_basicos']['Observaciones']     = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['productos_traspasoempresa_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['productos_traspasoempresa_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['productos_traspasoempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['productos_traspasoempresa_basicos']['idUsuario']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['productos_traspasoempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['productos_traspasoempresa_basicos']['idUsuario']         = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']    = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['productos_traspasoempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['productos_traspasoempresa_basicos']['idTipo']            = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['productos_traspasoempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['productos_traspasoempresa_basicos']['idTipo']            = '';}
 				if(isset($idBodegaOrigen) && $idBodegaOrigen!=''){       $_SESSION['productos_traspasoempresa_basicos']['idBodegaOrigen']    = $idBodegaOrigen;    }else{$_SESSION['productos_traspasoempresa_basicos']['idBodegaOrigen']    = '';}
 				if(isset($idBodegaDestino) && $idBodegaDestino!=''){     $_SESSION['productos_traspasoempresa_basicos']['idBodegaDestino']   = $idBodegaDestino;   }else{$_SESSION['productos_traspasoempresa_basicos']['idBodegaDestino']   = '';}
 				if(isset($idSistemaDestino) && $idSistemaDestino!=''){   $_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino']  = $idSistemaDestino;  }else{$_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino']  = '';}
@@ -4413,9 +4407,9 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['productos_traspasoempresa_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['productos_traspasoempresa_basicos']['N_Doc']             = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['productos_traspasoempresa_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['productos_traspasoempresa_basicos']['Observaciones']     = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['productos_traspasoempresa_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['productos_traspasoempresa_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['productos_traspasoempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['productos_traspasoempresa_basicos']['idUsuario']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['productos_traspasoempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['productos_traspasoempresa_basicos']['idUsuario']         = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']    = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['productos_traspasoempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['productos_traspasoempresa_basicos']['idTipo']            = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['productos_traspasoempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['productos_traspasoempresa_basicos']['idTipo']            = '';}
 				if(isset($idBodegaOrigen) && $idBodegaOrigen!=''){       $_SESSION['productos_traspasoempresa_basicos']['idBodegaOrigen']    = $idBodegaOrigen;    }else{$_SESSION['productos_traspasoempresa_basicos']['idBodegaOrigen']    = '';}
 				if(isset($idBodegaDestino) && $idBodegaDestino!=''){     $_SESSION['productos_traspasoempresa_basicos']['idBodegaDestino']   = $idBodegaDestino;   }else{$_SESSION['productos_traspasoempresa_basicos']['idBodegaDestino']   = '';}
 				if(isset($idSistemaDestino) && $idSistemaDestino!=''){   $_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino']  = $idSistemaDestino;  }else{$_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino']  = '';}
@@ -4560,13 +4554,13 @@ require_once '0_validate_user_1.php';
 					productos_listado.Nombre,
 					sistema_productos_uml.Nombre AS Unimed,
 					productos_listado.ValorIngreso,
-					SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+					SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso,
 					SUM(bodegas_productos_facturacion_existencias.Cantidad_eg) AS egreso';
 					$SIS_join = '
 					LEFT JOIN `productos_listado`       ON productos_listado.idProducto   = bodegas_productos_facturacion_existencias.idProducto
 					LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = productos_listado.idUml';
 					$SIS_where = '
-					bodegas_productos_facturacion_existencias.idProducto = '.$idProducto[$j1].' 
+					bodegas_productos_facturacion_existencias.idProducto = '.$idProducto[$j1].'
 					AND bodegas_productos_facturacion_existencias.idBodega='.$_SESSION['productos_traspasoempresa_basicos']['idBodegaOrigen'];
 					$rowResultado = db_select_data (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Sumo los egresos
@@ -4618,13 +4612,13 @@ require_once '0_validate_user_1.php';
 			$SIS_query = '
 			productos_listado.Nombre,
 			sistema_productos_uml.Nombre AS Unimed,
-			SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+			SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso,
 			SUM(bodegas_productos_facturacion_existencias.Cantidad_eg) AS egreso';
 			$SIS_join = '
 			LEFT JOIN `productos_listado`       ON productos_listado.idProducto   = bodegas_productos_facturacion_existencias.idProducto
 			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = productos_listado.idUml';
 			$SIS_where = '
-			bodegas_productos_facturacion_existencias.idProducto = '.$idProducto.' 
+			bodegas_productos_facturacion_existencias.idProducto = '.$idProducto.'
 			AND bodegas_productos_facturacion_existencias.idBodega='.$_SESSION['productos_traspasoempresa_basicos']['idBodegaOrigen'];
 			$rowResultado = db_select_data (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Sumo los egresos
@@ -4716,15 +4710,15 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//Se guardan los datos basicos
-				if(isset($_SESSION['productos_traspasoempresa_basicos']['idDocumentos']) && $_SESSION['productos_traspasoempresa_basicos']['idDocumentos']!=''){   $SIS_data  = "'".$_SESSION['productos_traspasoempresa_basicos']['idDocumentos']."'";        }else{$SIS_data  = "''";}
-				if(isset($_SESSION['productos_traspasoempresa_basicos']['N_Doc']) && $_SESSION['productos_traspasoempresa_basicos']['N_Doc']!=''){                 $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasoempresa_basicos']['idDocumentos']) && $_SESSION['productos_traspasoempresa_basicos']['idDocumentos']!=''){          $SIS_data  = "'".$_SESSION['productos_traspasoempresa_basicos']['idDocumentos']."'";        }else{$SIS_data  = "''";}
+				if(isset($_SESSION['productos_traspasoempresa_basicos']['N_Doc']) && $_SESSION['productos_traspasoempresa_basicos']['N_Doc']!=''){                        $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_traspasoempresa_basicos']['idBodegaOrigen']) && $_SESSION['productos_traspasoempresa_basicos']['idBodegaOrigen']!=''){      $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idBodegaOrigen']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_traspasoempresa_basicos']['idBodegaDestino']) && $_SESSION['productos_traspasoempresa_basicos']['idBodegaDestino']!=''){    $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idBodegaDestino']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino']) && $_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino']!=''){  $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasoempresa_basicos']['Observaciones']) && $_SESSION['productos_traspasoempresa_basicos']['Observaciones']!=''){ $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['Observaciones']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasoempresa_basicos']['idSistema']) && $_SESSION['productos_traspasoempresa_basicos']['idSistema']!=''){         $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idSistema']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasoempresa_basicos']['idUsuario']) && $_SESSION['productos_traspasoempresa_basicos']['idUsuario']!=''){         $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idUsuario']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasoempresa_basicos']['idTipo']) && $_SESSION['productos_traspasoempresa_basicos']['idTipo']!=''){               $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasoempresa_basicos']['Observaciones']) && $_SESSION['productos_traspasoempresa_basicos']['Observaciones']!=''){        $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['Observaciones']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasoempresa_basicos']['idSistema']) && $_SESSION['productos_traspasoempresa_basicos']['idSistema']!=''){                $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idSistema']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasoempresa_basicos']['idUsuario']) && $_SESSION['productos_traspasoempresa_basicos']['idUsuario']!=''){                $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idUsuario']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasoempresa_basicos']['idTipo']) && $_SESSION['productos_traspasoempresa_basicos']['idTipo']!=''){                      $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']) && $_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha'])."'";
@@ -4736,18 +4730,18 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['productos_traspasoempresa_basicos']['fecha_auto']) && $_SESSION['productos_traspasoempresa_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasoempresa_basicos']['fecha_auto']) && $_SESSION['productos_traspasoempresa_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_traspasoempresa_basicos']['idCentroCosto']) && $_SESSION['productos_traspasoempresa_basicos']['idCentroCosto']!=''){    $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idCentroCosto']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasoempresa_basicos']['idLevel_1']) && $_SESSION['productos_traspasoempresa_basicos']['idLevel_1']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idLevel_1']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasoempresa_basicos']['idLevel_2']) && $_SESSION['productos_traspasoempresa_basicos']['idLevel_2']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idLevel_2']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasoempresa_basicos']['idLevel_3']) && $_SESSION['productos_traspasoempresa_basicos']['idLevel_3']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idLevel_3']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasoempresa_basicos']['idLevel_4']) && $_SESSION['productos_traspasoempresa_basicos']['idLevel_4']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idLevel_4']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasoempresa_basicos']['idLevel_5']) && $_SESSION['productos_traspasoempresa_basicos']['idLevel_5']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idLevel_5']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasoempresa_basicos']['idLevel_1']) && $_SESSION['productos_traspasoempresa_basicos']['idLevel_1']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idLevel_1']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasoempresa_basicos']['idLevel_2']) && $_SESSION['productos_traspasoempresa_basicos']['idLevel_2']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idLevel_2']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasoempresa_basicos']['idLevel_3']) && $_SESSION['productos_traspasoempresa_basicos']['idLevel_3']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idLevel_3']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasoempresa_basicos']['idLevel_4']) && $_SESSION['productos_traspasoempresa_basicos']['idLevel_4']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idLevel_4']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasoempresa_basicos']['idLevel_5']) && $_SESSION['productos_traspasoempresa_basicos']['idLevel_5']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idLevel_5']."'";        }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, 
-				idBodegaDestino, idSistemaDestino, Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, 
-				Creacion_Semana, Creacion_mes, Creacion_ano, fecha_auto, idCentroCosto, idLevel_1, idLevel_2, 
+				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen,
+				idBodegaDestino, idSistemaDestino, Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha,
+				Creacion_Semana, Creacion_mes, Creacion_ano, fecha_auto, idCentroCosto, idLevel_1, idLevel_2,
 				idLevel_3, idLevel_4, idLevel_5';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -4762,8 +4756,8 @@ require_once '0_validate_user_1.php';
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                              $SIS_data  = "'".$ultimo_id."'";                                                        }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_traspasoempresa_basicos']['idBodegaOrigen']) && $_SESSION['productos_traspasoempresa_basicos']['idBodegaOrigen']!=''){  $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idBodegaOrigen']."'"; }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspasoempresa_basicos']['idSistema']) && $_SESSION['productos_traspasoempresa_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idSistema']."'";      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspasoempresa_basicos']['idUsuario']) && $_SESSION['productos_traspasoempresa_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idUsuario']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspasoempresa_basicos']['idSistema']) && $_SESSION['productos_traspasoempresa_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idSistema']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspasoempresa_basicos']['idUsuario']) && $_SESSION['productos_traspasoempresa_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idUsuario']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']) && $_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha'])."'";
@@ -4774,17 +4768,17 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['productos_traspasoempresa_basicos']['idDocumentos']) && $_SESSION['productos_traspasoempresa_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspasoempresa_basicos']['N_Doc']) && $_SESSION['productos_traspasoempresa_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspasoempresa_basicos']['idTipo']) && $_SESSION['productos_traspasoempresa_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                             $SIS_data .= ",'".$producto['idProducto']."'";                                         }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                                                     $SIS_data .= ",'".$producto['Number']."'";                                             }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                           $SIS_data .= ",'".$producto['ValorEgreso']."'";                                        }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                             $SIS_data .= ",'".$producto['ValorTotal']."'";                                         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspasoempresa_basicos']['fecha_auto']) && $_SESSION['productos_traspasoempresa_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspasoempresa_basicos']['N_Doc']) && $_SESSION['productos_traspasoempresa_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspasoempresa_basicos']['idTipo']) && $_SESSION['productos_traspasoempresa_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                                    $SIS_data .= ",'".$producto['idProducto']."'";                                         }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                                            $SIS_data .= ",'".$producto['Number']."'";                                             }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                                  $SIS_data .= ",'".$producto['ValorEgreso']."'";                                        }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                                    $SIS_data .= ",'".$producto['ValorTotal']."'";                                         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspasoempresa_basicos']['fecha_auto']) && $_SESSION['productos_traspasoempresa_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, 
-							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, 
+							$SIS_columns = 'idFacturacion, idBodega,
+							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc,
 							idTipo, idProducto, Cantidad_eg, Valor, ValorTotal, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -4794,7 +4788,7 @@ require_once '0_validate_user_1.php';
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                                    $SIS_data  = "'".$ultimo_id."'";                                                           }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_traspasoempresa_basicos']['idBodegaDestino']) && $_SESSION['productos_traspasoempresa_basicos']['idBodegaDestino']!=''){      $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idBodegaDestino']."'";   }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino']) && $_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino']!=''){    $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspasoempresa_basicos']['idUsuario']) && $_SESSION['productos_traspasoempresa_basicos']['idUsuario']!=''){           $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idUsuario']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspasoempresa_basicos']['idUsuario']) && $_SESSION['productos_traspasoempresa_basicos']['idUsuario']!=''){                  $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idUsuario']."'";         }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']) && $_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha'])."'";
@@ -4805,17 +4799,17 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['productos_traspasoempresa_basicos']['idDocumentos']) && $_SESSION['productos_traspasoempresa_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspasoempresa_basicos']['N_Doc']) && $_SESSION['productos_traspasoempresa_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspasoempresa_basicos']['idTipo']) && $_SESSION['productos_traspasoempresa_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                             $SIS_data .= ",'".$producto['idProducto']."'";                                         }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                                                     $SIS_data .= ",'".$producto['Number']."'";                                             }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                           $SIS_data .= ",'".$producto['ValorEgreso']."'";                                        }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                             $SIS_data .= ",'".$producto['ValorTotal']."'";                                         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspasoempresa_basicos']['fecha_auto']) && $_SESSION['productos_traspasoempresa_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspasoempresa_basicos']['N_Doc']) && $_SESSION['productos_traspasoempresa_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspasoempresa_basicos']['idTipo']) && $_SESSION['productos_traspasoempresa_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                                    $SIS_data .= ",'".$producto['idProducto']."'";                                         }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                                            $SIS_data .= ",'".$producto['Number']."'";                                             }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                                  $SIS_data .= ",'".$producto['ValorEgreso']."'";                                        }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                                    $SIS_data .= ",'".$producto['ValorTotal']."'";                                         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspasoempresa_basicos']['fecha_auto']) && $_SESSION['productos_traspasoempresa_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, 
-							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, 
+							$SIS_columns = 'idFacturacion, idBodega,
+							idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc,
 							idTipo, idProducto, Cantidad_ing, Valor, ValorTotal, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -4831,10 +4825,10 @@ require_once '0_validate_user_1.php';
 
 					$SIS_query = 'usuarios_permisos.idUsuario';
 					$SIS_join  = '
-					INNER JOIN core_permisos_listado    ON core_permisos_listado.idAdmpm   = usuarios_permisos.idAdmpm 
-					INNER JOIN usuarios_listado         ON usuarios_listado.idUsuario      = usuarios_permisos.idUsuario 
+					INNER JOIN core_permisos_listado    ON core_permisos_listado.idAdmpm   = usuarios_permisos.idAdmpm
+					INNER JOIN usuarios_listado         ON usuarios_listado.idUsuario      = usuarios_permisos.idUsuario
 					INNER JOIN usuarios_sistemas        ON usuarios_sistemas.idUsuario     = usuarios_permisos.idUsuario ';
-					$SIS_where = 'core_permisos_listado.Direccionbase = "'.$Direccionbase.'" 
+					$SIS_where = 'core_permisos_listado.Direccionbase = "'.$Direccionbase.'"
 					AND usuarios_sistemas.idSistema = "'.$_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino'].'"';
 					$SIS_order = 0;
 					$arrPermiso = array();
@@ -4845,9 +4839,9 @@ require_once '0_validate_user_1.php';
 					if ($arrPermiso!=false && !empty($arrPermiso) && $arrPermiso!='') {
 						foreach($arrPermiso as $permiso) {
 							if(isset($_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino']) && $_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino']!=''){   $SIS_data  = "'".$_SESSION['productos_traspasoempresa_basicos']['idSistemaDestino']."'";   }else{$SIS_data  = "''";}
-							if(isset($permiso['idUsuario']) && $permiso['idUsuario']!=''){                                                                                      $SIS_data .= ",'".$permiso['idUsuario']."'";                                               }else{$SIS_data .= ",''";}
+							if(isset($permiso['idUsuario']) && $permiso['idUsuario']!=''){                                                                                             $SIS_data .= ",'".$permiso['idUsuario']."'";                                               }else{$SIS_data .= ",''";}
 							if(isset($Notificacion) && $Notificacion!=''){                                                                                                             $SIS_data .= ",'".$Notificacion."'";                                                       }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']) && $_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']!=''){$SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']) && $_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']!=''){       $SIS_data .= ",'".$_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']."'";    }else{$SIS_data .= ",''";}
 							if(isset($Estado) && $Estado!=''){                                                                                                                         $SIS_data .= ",'".$Estado."'";                                                             }else{$SIS_data .= ",''";}
 							$SIS_data .= ",'".hora_actual()."'";
 
@@ -4920,9 +4914,9 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['productos_traspasomanualempresa_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['productos_traspasomanualempresa_basicos']['N_Doc']             = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['productos_traspasomanualempresa_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['productos_traspasomanualempresa_basicos']['Observaciones']     = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['productos_traspasomanualempresa_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['productos_traspasomanualempresa_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']         = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['productos_traspasomanualempresa_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['productos_traspasomanualempresa_basicos']['Creacion_fecha']    = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['productos_traspasomanualempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['productos_traspasomanualempresa_basicos']['idTipo']            = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['productos_traspasomanualempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['productos_traspasomanualempresa_basicos']['idTipo']            = '';}
 				if(isset($idBodegaOrigen) && $idBodegaOrigen!=''){       $_SESSION['productos_traspasomanualempresa_basicos']['idBodegaOrigen']    = $idBodegaOrigen;    }else{$_SESSION['productos_traspasomanualempresa_basicos']['idBodegaOrigen']    = '';}
 				if(isset($idSistemaDestino) && $idSistemaDestino!=''){   $_SESSION['productos_traspasomanualempresa_basicos']['idSistemaDestino']  = $idSistemaDestino;  }else{$_SESSION['productos_traspasomanualempresa_basicos']['idSistemaDestino']  = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['productos_traspasomanualempresa_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['productos_traspasomanualempresa_basicos']['fecha_auto']        = '';}
@@ -5013,9 +5007,9 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                         $_SESSION['productos_traspasomanualempresa_basicos']['N_Doc']             = $N_Doc;             }else{$_SESSION['productos_traspasomanualempresa_basicos']['N_Doc']             = '';}
 				if(isset($Observaciones) && $Observaciones!=''){         $_SESSION['productos_traspasomanualempresa_basicos']['Observaciones']     = $Observaciones;     }else{$_SESSION['productos_traspasomanualempresa_basicos']['Observaciones']     = '';}
 				if(isset($idSistema) && $idSistema!=''){                 $_SESSION['productos_traspasomanualempresa_basicos']['idSistema']         = $idSistema;         }else{$_SESSION['productos_traspasomanualempresa_basicos']['idSistema']         = '';}
-				if(isset($idUsuario) && $idUsuario!=''){                $_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']         = '';}
+				if(isset($idUsuario) && $idUsuario!=''){                 $_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']         = $idUsuario;         }else{$_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']         = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){       $_SESSION['productos_traspasomanualempresa_basicos']['Creacion_fecha']    = $Creacion_fecha;    }else{$_SESSION['productos_traspasomanualempresa_basicos']['Creacion_fecha']    = '';}
-				if(isset($idTipo) && $idTipo!=''){                      $_SESSION['productos_traspasomanualempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['productos_traspasomanualempresa_basicos']['idTipo']            = '';}
+				if(isset($idTipo) && $idTipo!=''){                       $_SESSION['productos_traspasomanualempresa_basicos']['idTipo']            = $idTipo;            }else{$_SESSION['productos_traspasomanualempresa_basicos']['idTipo']            = '';}
 				if(isset($idBodegaOrigen) && $idBodegaOrigen!=''){       $_SESSION['productos_traspasomanualempresa_basicos']['idBodegaOrigen']    = $idBodegaOrigen;    }else{$_SESSION['productos_traspasomanualempresa_basicos']['idBodegaOrigen']    = '';}
 				if(isset($idSistemaDestino) && $idSistemaDestino!=''){   $_SESSION['productos_traspasomanualempresa_basicos']['idSistemaDestino']  = $idSistemaDestino;  }else{$_SESSION['productos_traspasomanualempresa_basicos']['idSistemaDestino']  = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){               $_SESSION['productos_traspasomanualempresa_basicos']['fecha_auto']        = $fecha_auto;        }else{$_SESSION['productos_traspasomanualempresa_basicos']['fecha_auto']        = '';}
@@ -5150,13 +5144,13 @@ require_once '0_validate_user_1.php';
 					productos_listado.Nombre,
 					sistema_productos_uml.Nombre AS Unimed,
 					productos_listado.ValorIngreso,
-					SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+					SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso,
 					SUM(bodegas_productos_facturacion_existencias.Cantidad_eg) AS egreso';
 					$SIS_join = '
 					LEFT JOIN `productos_listado`       ON productos_listado.idProducto   = bodegas_productos_facturacion_existencias.idProducto
 					LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = productos_listado.idUml';
 					$SIS_where = '
-					bodegas_productos_facturacion_existencias.idProducto = '.$idProducto[$j1].' 
+					bodegas_productos_facturacion_existencias.idProducto = '.$idProducto[$j1].'
 					AND bodegas_productos_facturacion_existencias.idBodega='.$_SESSION['productos_traspasomanualempresa_basicos']['idBodegaOrigen'];
 					$rowResultado = db_select_data (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					//Sumo los egresos
@@ -5196,9 +5190,6 @@ require_once '0_validate_user_1.php';
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
-			
-	
-
 
 		break;
 /*******************************************************************************************************************/
@@ -5211,13 +5202,13 @@ require_once '0_validate_user_1.php';
 			$SIS_query = '
 			productos_listado.Nombre,
 			sistema_productos_uml.Nombre AS Unimed,
-			SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso, 
+			SUM(bodegas_productos_facturacion_existencias.Cantidad_ing) AS ingreso,
 			SUM(bodegas_productos_facturacion_existencias.Cantidad_eg) AS egreso';
 			$SIS_join = '
 			LEFT JOIN `productos_listado`       ON productos_listado.idProducto   = bodegas_productos_facturacion_existencias.idProducto
 			LEFT JOIN `sistema_productos_uml`   ON sistema_productos_uml.idUml    = productos_listado.idUml';
 			$SIS_where = '
-			bodegas_productos_facturacion_existencias.idProducto = '.$idProducto.' 
+			bodegas_productos_facturacion_existencias.idProducto = '.$idProducto.'
 			AND bodegas_productos_facturacion_existencias.idBodega='.$_SESSION['productos_traspasomanualempresa_basicos']['idBodegaOrigen'];
 			$rowResultado = db_select_data (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Sumo los egresos
@@ -5308,14 +5299,14 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//Se guardan los datos basicos
-				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idDocumentos']) && $_SESSION['productos_traspasomanualempresa_basicos']['idDocumentos']!=''){   $SIS_data  = "'".$_SESSION['productos_traspasomanualempresa_basicos']['idDocumentos']."'";        }else{$SIS_data  = "''";}
-				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['N_Doc']) && $_SESSION['productos_traspasomanualempresa_basicos']['N_Doc']!=''){                 $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idDocumentos']) && $_SESSION['productos_traspasomanualempresa_basicos']['idDocumentos']!=''){          $SIS_data  = "'".$_SESSION['productos_traspasomanualempresa_basicos']['idDocumentos']."'";        }else{$SIS_data  = "''";}
+				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['N_Doc']) && $_SESSION['productos_traspasomanualempresa_basicos']['N_Doc']!=''){                        $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idBodegaOrigen']) && $_SESSION['productos_traspasomanualempresa_basicos']['idBodegaOrigen']!=''){      $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idBodegaOrigen']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idSistemaDestino']) && $_SESSION['productos_traspasomanualempresa_basicos']['idSistemaDestino']!=''){  $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idSistemaDestino']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['Observaciones']) && $_SESSION['productos_traspasomanualempresa_basicos']['Observaciones']!=''){ $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['Observaciones']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idSistema']) && $_SESSION['productos_traspasomanualempresa_basicos']['idSistema']!=''){         $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idSistema']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']) && $_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']!=''){         $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idTipo']) && $_SESSION['productos_traspasomanualempresa_basicos']['idTipo']!=''){               $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['Observaciones']) && $_SESSION['productos_traspasomanualempresa_basicos']['Observaciones']!=''){        $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['Observaciones']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idSistema']) && $_SESSION['productos_traspasomanualempresa_basicos']['idSistema']!=''){                $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idSistema']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']) && $_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']!=''){                $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idTipo']) && $_SESSION['productos_traspasomanualempresa_basicos']['idTipo']!=''){                      $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['Creacion_fecha']) && $_SESSION['productos_traspasomanualempresa_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['productos_traspasomanualempresa_basicos']['Creacion_fecha'])."'";
@@ -5327,17 +5318,17 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['fecha_auto']) && $_SESSION['productos_traspasomanualempresa_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['fecha_auto']) && $_SESSION['productos_traspasomanualempresa_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idCentroCosto']) && $_SESSION['productos_traspasomanualempresa_basicos']['idCentroCosto']!=''){    $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idCentroCosto']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idLevel_1']) && $_SESSION['productos_traspasomanualempresa_basicos']['idLevel_1']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idLevel_1']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idLevel_2']) && $_SESSION['productos_traspasomanualempresa_basicos']['idLevel_2']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idLevel_2']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idLevel_3']) && $_SESSION['productos_traspasomanualempresa_basicos']['idLevel_3']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idLevel_3']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idLevel_4']) && $_SESSION['productos_traspasomanualempresa_basicos']['idLevel_4']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idLevel_4']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idLevel_5']) && $_SESSION['productos_traspasomanualempresa_basicos']['idLevel_5']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idLevel_5']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idLevel_1']) && $_SESSION['productos_traspasomanualempresa_basicos']['idLevel_1']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idLevel_1']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idLevel_2']) && $_SESSION['productos_traspasomanualempresa_basicos']['idLevel_2']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idLevel_2']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idLevel_3']) && $_SESSION['productos_traspasomanualempresa_basicos']['idLevel_3']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idLevel_3']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idLevel_4']) && $_SESSION['productos_traspasomanualempresa_basicos']['idLevel_4']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idLevel_4']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idLevel_5']) && $_SESSION['productos_traspasomanualempresa_basicos']['idLevel_5']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idLevel_5']."'";        }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, idSistemaDestino, 
-				Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano, 
+				$SIS_columns = 'idDocumentos,N_Doc, idBodegaOrigen, idSistemaDestino,
+				Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, Creacion_ano,
 				fecha_auto, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -5352,8 +5343,8 @@ require_once '0_validate_user_1.php';
 							//filtros
 							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                                          $SIS_data  = "'".$ultimo_id."'";                                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idBodegaOrigen']) && $_SESSION['productos_traspasomanualempresa_basicos']['idBodegaOrigen']!=''){  $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idBodegaOrigen']."'"; }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idSistema']) && $_SESSION['productos_traspasomanualempresa_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idSistema']."'";      }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']) && $_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idSistema']) && $_SESSION['productos_traspasomanualempresa_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idSistema']."'";      }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']) && $_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_traspasomanualempresa_basicos']['Creacion_fecha']) && $_SESSION['productos_traspasomanualempresa_basicos']['Creacion_fecha']!=''){
 								$SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['Creacion_fecha']."'";
 								$SIS_data .= ",'".fecha2NMes($_SESSION['productos_traspasomanualempresa_basicos']['Creacion_fecha'])."'";
@@ -5364,17 +5355,17 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idDocumentos']) && $_SESSION['productos_traspasomanualempresa_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspasomanualempresa_basicos']['N_Doc']) && $_SESSION['productos_traspasomanualempresa_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idTipo']) && $_SESSION['productos_traspasomanualempresa_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                                         $SIS_data .= ",'".$producto['idProducto']."'";                                               }else{$SIS_data .= ",''";}
-							if(isset($producto['Number']) && $producto['Number']!=''){                                                                                                 $SIS_data .= ",'".$producto['Number']."'";                                                   }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                                       $SIS_data .= ",'".$producto['ValorEgreso']."'";                                              }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                                         $SIS_data .= ",'".$producto['ValorTotal']."'";                                               }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_traspasomanualempresa_basicos']['fecha_auto']) && $_SESSION['productos_traspasomanualempresa_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspasomanualempresa_basicos']['N_Doc']) && $_SESSION['productos_traspasomanualempresa_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspasomanualempresa_basicos']['idTipo']) && $_SESSION['productos_traspasomanualempresa_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                                                $SIS_data .= ",'".$producto['idProducto']."'";                                               }else{$SIS_data .= ",''";}
+							if(isset($producto['Number']) && $producto['Number']!=''){                                                                                                        $SIS_data .= ",'".$producto['Number']."'";                                                   }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorEgreso']) && $producto['ValorEgreso']!=''){                                                                                              $SIS_data .= ",'".$producto['ValorEgreso']."'";                                              }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                                                $SIS_data .= ",'".$producto['ValorTotal']."'";                                               }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_traspasomanualempresa_basicos']['fecha_auto']) && $_SESSION['productos_traspasomanualempresa_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_traspasomanualempresa_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, 
-							idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema,
+							idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, idDocumentos, N_Doc, idTipo, idProducto,
 							Cantidad_eg, Valor, ValorTotal, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -5499,12 +5490,12 @@ require_once '0_validate_user_1.php';
 				unset($_SESSION['productos_ing_manual_archivos']);
 
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idBodega) && $idBodega!=''){             $_SESSION['productos_ing_manual_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['productos_ing_manual_basicos']['idBodega']         = '';}
+				if(isset($idBodega) && $idBodega!=''){              $_SESSION['productos_ing_manual_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['productos_ing_manual_basicos']['idBodega']         = '';}
 				if(isset($Observaciones) && $Observaciones!=''){    $_SESSION['productos_ing_manual_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['productos_ing_manual_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){            $_SESSION['productos_ing_manual_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['productos_ing_manual_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){           $_SESSION['productos_ing_manual_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['productos_ing_manual_basicos']['idUsuario']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['productos_ing_manual_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['productos_ing_manual_basicos']['idUsuario']        = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  $_SESSION['productos_ing_manual_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['productos_ing_manual_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo!=''){                 $_SESSION['productos_ing_manual_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['productos_ing_manual_basicos']['idTipo']           = '';}
+				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['productos_ing_manual_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['productos_ing_manual_basicos']['idTipo']           = '';}
 				if(isset($idProveedor) && $idProveedor!=''){        $_SESSION['productos_ing_manual_basicos']['idProveedor']     = $idProveedor;     }else{$_SESSION['productos_ing_manual_basicos']['idProveedor']      = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){          $_SESSION['productos_ing_manual_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['productos_ing_manual_basicos']['fecha_auto']       = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){              $_SESSION['productos_ing_manual_basicos']['idUsoIVA']        = $idUsoIVA;        }else{$_SESSION['productos_ing_manual_basicos']['idUsoIVA']         = '';}
@@ -5611,12 +5602,12 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//Se guardan los datos basicos del formulario recien llenado
-				if(isset($idBodega) && $idBodega!=''){             $_SESSION['productos_ing_manual_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['productos_ing_manual_basicos']['idBodega']         = '';}
+				if(isset($idBodega) && $idBodega!=''){              $_SESSION['productos_ing_manual_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['productos_ing_manual_basicos']['idBodega']         = '';}
 				if(isset($Observaciones) && $Observaciones!=''){    $_SESSION['productos_ing_manual_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['productos_ing_manual_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){            $_SESSION['productos_ing_manual_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['productos_ing_manual_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){           $_SESSION['productos_ing_manual_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['productos_ing_manual_basicos']['idUsuario']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['productos_ing_manual_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['productos_ing_manual_basicos']['idUsuario']        = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){  $_SESSION['productos_ing_manual_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['productos_ing_manual_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo!=''){                 $_SESSION['productos_ing_manual_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['productos_ing_manual_basicos']['idTipo']           = '';}
+				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['productos_ing_manual_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['productos_ing_manual_basicos']['idTipo']           = '';}
 				if(isset($idProveedor) && $idProveedor!=''){        $_SESSION['productos_ing_manual_basicos']['idProveedor']     = $idProveedor;     }else{$_SESSION['productos_ing_manual_basicos']['idProveedor']      = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){          $_SESSION['productos_ing_manual_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['productos_ing_manual_basicos']['fecha_auto']       = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){              $_SESSION['productos_ing_manual_basicos']['idUsoIVA']        = $idUsoIVA;        }else{$_SESSION['productos_ing_manual_basicos']['idUsoIVA']         = '';}
@@ -6034,11 +6025,11 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//Se guardan los datos basicos
-				if(isset($_SESSION['productos_ing_manual_basicos']['idBodega']) && $_SESSION['productos_ing_manual_basicos']['idBodega']!=''){       $SIS_data  = "'".$_SESSION['productos_ing_manual_basicos']['idBodega']."'";       }else{$SIS_data  = "''";}
+				if(isset($_SESSION['productos_ing_manual_basicos']['idBodega']) && $_SESSION['productos_ing_manual_basicos']['idBodega']!=''){              $SIS_data  = "'".$_SESSION['productos_ing_manual_basicos']['idBodega']."'";       }else{$SIS_data  = "''";}
 				if(isset($_SESSION['productos_ing_manual_basicos']['Observaciones']) && $_SESSION['productos_ing_manual_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['Observaciones']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_basicos']['idSistema']) && $_SESSION['productos_ing_manual_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_basicos']['idUsuario']) && $_SESSION['productos_ing_manual_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_basicos']['idTipo']) && $_SESSION['productos_ing_manual_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_basicos']['idSistema']) && $_SESSION['productos_ing_manual_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_basicos']['idUsuario']) && $_SESSION['productos_ing_manual_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_basicos']['idTipo']) && $_SESSION['productos_ing_manual_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_ing_manual_basicos']['Creacion_fecha']) && $_SESSION['productos_ing_manual_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['productos_ing_manual_basicos']['Creacion_fecha'])."'";
@@ -6053,43 +6044,43 @@ require_once '0_validate_user_1.php';
 				if(isset($_SESSION['productos_ing_manual_basicos']['idProveedor']) && $_SESSION['productos_ing_manual_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idProveedor']."'";        }else{$SIS_data .= ",''";}
 				$SIS_data .= ",'1'";
 				$SIS_data .= ",''";
-				if(isset($_SESSION['productos_ing_manual_basicos']['fecha_auto']) && $_SESSION['productos_ing_manual_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['fecha_auto']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_basicos']['fecha_auto']) && $_SESSION['productos_ing_manual_basicos']['fecha_auto']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['fecha_auto']."'";           }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_ing_manual_basicos']['valor_neto_fact'])&&$_SESSION['productos_ing_manual_basicos']['valor_neto_fact']!=''){   $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['valor_neto_fact']."'";      }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_ing_manual_basicos']['valor_total_fact'])&&$_SESSION['productos_ing_manual_basicos']['valor_total_fact']!=''){ $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['valor_total_fact']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_impuestos'][1]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][1]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][1]['valor']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_impuestos'][2]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][2]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][2]['valor']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_impuestos'][3]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][3]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][3]['valor']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_impuestos'][4]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][4]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][4]['valor']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_impuestos'][5]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][5]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][5]['valor']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_impuestos'][6]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][6]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][6]['valor']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_impuestos'][7]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][7]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][7]['valor']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_impuestos'][8]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][8]['valor']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_impuestos'][9]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][9]['valor']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_impuestos'][10]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][10]['valor']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_basicos']['idCentroCosto']) && $_SESSION['productos_ing_manual_basicos']['idCentroCosto']!=''){    $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idCentroCosto']."'";       }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_basicos']['idLevel_1']) && $_SESSION['productos_ing_manual_basicos']['idLevel_1']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idLevel_1']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_basicos']['idLevel_2']) && $_SESSION['productos_ing_manual_basicos']['idLevel_2']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idLevel_2']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_basicos']['idLevel_3']) && $_SESSION['productos_ing_manual_basicos']['idLevel_3']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idLevel_3']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_basicos']['idLevel_4']) && $_SESSION['productos_ing_manual_basicos']['idLevel_4']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idLevel_4']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_basicos']['idLevel_5']) && $_SESSION['productos_ing_manual_basicos']['idLevel_5']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idLevel_5']."'";           }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_manual_basicos']['idUsoIVA']) && $_SESSION['productos_ing_manual_basicos']['idUsoIVA']!=''){       $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idUsoIVA']."'";            }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_impuestos'][1]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][1]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][1]['valor']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_impuestos'][2]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][2]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][2]['valor']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_impuestos'][3]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][3]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][3]['valor']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_impuestos'][4]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][4]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][4]['valor']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_impuestos'][5]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][5]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][5]['valor']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_impuestos'][6]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][6]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][6]['valor']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_impuestos'][7]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][7]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][7]['valor']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_impuestos'][8]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][8]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][8]['valor']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_impuestos'][9]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][9]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][9]['valor']."'";           }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_impuestos'][10]['valor'])&&$_SESSION['productos_ing_manual_impuestos'][10]['valor']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_manual_impuestos'][10]['valor']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_basicos']['idCentroCosto']) && $_SESSION['productos_ing_manual_basicos']['idCentroCosto']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idCentroCosto']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_basicos']['idLevel_1']) && $_SESSION['productos_ing_manual_basicos']['idLevel_1']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idLevel_1']."'";            }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_basicos']['idLevel_2']) && $_SESSION['productos_ing_manual_basicos']['idLevel_2']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idLevel_2']."'";            }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_basicos']['idLevel_3']) && $_SESSION['productos_ing_manual_basicos']['idLevel_3']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idLevel_3']."'";            }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_basicos']['idLevel_4']) && $_SESSION['productos_ing_manual_basicos']['idLevel_4']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idLevel_4']."'";            }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_basicos']['idLevel_5']) && $_SESSION['productos_ing_manual_basicos']['idLevel_5']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idLevel_5']."'";            }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_manual_basicos']['idUsoIVA']) && $_SESSION['productos_ing_manual_basicos']['idUsoIVA']!=''){               $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idUsoIVA']."'";             }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idBodegaDestino, Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha, 
-				Creacion_Semana, Creacion_mes, Creacion_ano, idProveedor, idEstado, DocRel, fecha_auto, ValorNeto, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03, 
-				Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, 
+				$SIS_columns = 'idBodegaDestino, Observaciones, idSistema, idUsuario, idTipo, Creacion_fecha,
+				Creacion_Semana, Creacion_mes, Creacion_ano, idProveedor, idEstado, DocRel, fecha_auto, ValorNeto, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03,
+				Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10, idCentroCosto, idLevel_1, idLevel_2, idLevel_3,
 				idLevel_4, idLevel_5, idUsoIVA';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					/*********************************************************************/
-					//Se guardan los datos de los trabajadores	
+					//Se guardan los datos de los trabajadores
 					if(isset($_SESSION['productos_ing_manual_productos'])){
 						foreach ($_SESSION['productos_ing_manual_productos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                    $SIS_data  = "'".$ultimo_id."'";                                                  }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                             $SIS_data  = "'".$ultimo_id."'";                                                  }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_ing_manual_basicos']['idBodega']) && $_SESSION['productos_ing_manual_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_manual_basicos']['idSistema']) && $_SESSION['productos_ing_manual_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_manual_basicos']['idUsuario']) && $_SESSION['productos_ing_manual_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -6111,7 +6102,7 @@ require_once '0_validate_user_1.php';
 							if(isset($_SESSION['productos_ing_manual_basicos']['fecha_auto']) && $_SESSION['productos_ing_manual_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes,
 							Creacion_ano, idTipo, idProducto, Cantidad_ing,Valor, ValorTotal, idProveedor, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -6124,7 +6115,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_ing_manual_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                                    $SIS_data  = "'".$ultimo_id."'";                                                  }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                             $SIS_data  = "'".$ultimo_id."'";                                                  }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_ing_manual_basicos']['idBodega']) && $_SESSION['productos_ing_manual_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_manual_basicos']['idSistema']) && $_SESSION['productos_ing_manual_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_manual_basicos']['idUsuario']) && $_SESSION['productos_ing_manual_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_manual_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -6236,10 +6227,10 @@ require_once '0_validate_user_1.php';
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){   $_SESSION['productos_ing_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['productos_ing_nd_basicos']['Creacion_fecha']   = '';}
 				if(isset($Observaciones) && $Observaciones!=''){     $_SESSION['productos_ing_nd_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['productos_ing_nd_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){             $_SESSION['productos_ing_nd_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['productos_ing_nd_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['productos_ing_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['productos_ing_nd_basicos']['idUsuario']        = '';}
-				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['productos_ing_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['productos_ing_nd_basicos']['idTipo']           = '';}
+				if(isset($idUsuario) && $idUsuario!=''){             $_SESSION['productos_ing_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['productos_ing_nd_basicos']['idUsuario']        = '';}
+				if(isset($idTipo) && $idTipo!=''){                   $_SESSION['productos_ing_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['productos_ing_nd_basicos']['idTipo']           = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){           $_SESSION['productos_ing_nd_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['productos_ing_nd_basicos']['fecha_auto']       = '';}
-				if(isset($idBodega) && $idBodega!=''){              $_SESSION['productos_ing_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['productos_ing_nd_basicos']['idBodega']         = '';}
+				if(isset($idBodega) && $idBodega!=''){               $_SESSION['productos_ing_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['productos_ing_nd_basicos']['idBodega']         = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){               $_SESSION['productos_ing_nd_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['productos_ing_nd_basicos']['idUsoIVA']         = '';}
 				//datos basicos vacios
 				$_SESSION['productos_ing_nd_basicos']['Pago_fecha']       = '0000-00-00';
@@ -6377,10 +6368,10 @@ require_once '0_validate_user_1.php';
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){   $_SESSION['productos_ing_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['productos_ing_nd_basicos']['Creacion_fecha']   = '';}
 				if(isset($Observaciones) && $Observaciones!=''){     $_SESSION['productos_ing_nd_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['productos_ing_nd_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){             $_SESSION['productos_ing_nd_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['productos_ing_nd_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['productos_ing_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['productos_ing_nd_basicos']['idUsuario']        = '';}
-				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['productos_ing_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['productos_ing_nd_basicos']['idTipo']           = '';}
+				if(isset($idUsuario) && $idUsuario!=''){             $_SESSION['productos_ing_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['productos_ing_nd_basicos']['idUsuario']        = '';}
+				if(isset($idTipo) && $idTipo!=''){                   $_SESSION['productos_ing_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['productos_ing_nd_basicos']['idTipo']           = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){           $_SESSION['productos_ing_nd_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['productos_ing_nd_basicos']['fecha_auto']       = '';}
-				if(isset($idBodega) && $idBodega!=''){              $_SESSION['productos_ing_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['productos_ing_nd_basicos']['idBodega']         = '';}
+				if(isset($idBodega) && $idBodega!=''){               $_SESSION['productos_ing_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['productos_ing_nd_basicos']['idBodega']         = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){               $_SESSION['productos_ing_nd_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['productos_ing_nd_basicos']['idUsoIVA']         = '';}
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
@@ -6885,10 +6876,10 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 				}
 				if(isset($_SESSION['productos_ing_nd_basicos']['idDocumentos']) && $_SESSION['productos_ing_nd_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idDocumentos']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_basicos']['N_Doc']) && $_SESSION['productos_ing_nd_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['N_Doc']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_basicos']['idTipo']) && $_SESSION['productos_ing_nd_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idTipo']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_basicos']['N_Doc']) && $_SESSION['productos_ing_nd_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['N_Doc']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_basicos']['idTipo']) && $_SESSION['productos_ing_nd_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idTipo']."'";         }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_ing_nd_basicos']['Observaciones']) && $_SESSION['productos_ing_nd_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['Observaciones']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_basicos']['idProveedor']) && $_SESSION['productos_ing_nd_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idProveedor']."'";    }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_basicos']['idProveedor']) && $_SESSION['productos_ing_nd_basicos']['idProveedor']!=''){        $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idProveedor']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_ing_nd_basicos']['Pago_fecha']) && $_SESSION['productos_ing_nd_basicos']['Pago_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['Pago_fecha']."'";
 					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['productos_ing_nd_basicos']['Pago_fecha'])."'";
@@ -6903,33 +6894,33 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 				}
 				$SIS_data .= ",'1'";
-				if(isset($_SESSION['productos_ing_nd_basicos']['fecha_auto']) && $_SESSION['productos_ing_nd_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['fecha_auto']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_basicos']['fecha_auto']) && $_SESSION['productos_ing_nd_basicos']['fecha_auto']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_ing_nd_basicos']['valor_neto_fact'])&&$_SESSION['productos_ing_nd_basicos']['valor_neto_fact']!=''){   $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['valor_neto_fact']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_ing_nd_basicos']['valor_neto_imp'])&&$_SESSION['productos_ing_nd_basicos']['valor_neto_imp']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['valor_neto_imp']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_ing_nd_basicos']['valor_total_fact'])&&$_SESSION['productos_ing_nd_basicos']['valor_total_fact']!=''){ $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['valor_total_fact']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_impuestos'][1]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][1]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][1]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_impuestos'][2]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][2]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][2]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_impuestos'][3]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][3]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][3]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_impuestos'][4]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][4]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][4]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_impuestos'][5]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][5]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][5]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_impuestos'][6]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][6]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][6]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_impuestos'][7]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][7]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][7]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_impuestos'][8]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][8]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_impuestos'][9]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][9]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_impuestos'][10]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][10]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_basicos']['idCentroCosto']) && $_SESSION['productos_ing_nd_basicos']['idCentroCosto']!=''){    $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idCentroCosto']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_basicos']['idLevel_1']) && $_SESSION['productos_ing_nd_basicos']['idLevel_1']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idLevel_1']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_basicos']['idLevel_2']) && $_SESSION['productos_ing_nd_basicos']['idLevel_2']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idLevel_2']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_basicos']['idLevel_3']) && $_SESSION['productos_ing_nd_basicos']['idLevel_3']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idLevel_3']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_basicos']['idLevel_4']) && $_SESSION['productos_ing_nd_basicos']['idLevel_4']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idLevel_4']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_basicos']['idLevel_5']) && $_SESSION['productos_ing_nd_basicos']['idLevel_5']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idLevel_5']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nd_basicos']['idUsoIVA']) && $_SESSION['productos_ing_nd_basicos']['idUsoIVA']!=''){       $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idUsoIVA']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_impuestos'][1]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][1]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][1]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_impuestos'][2]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][2]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][2]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_impuestos'][3]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][3]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][3]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_impuestos'][4]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][4]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][4]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_impuestos'][5]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][5]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][5]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_impuestos'][6]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][6]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][6]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_impuestos'][7]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][7]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][7]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_impuestos'][8]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][8]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][8]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_impuestos'][9]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][9]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][9]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_impuestos'][10]['valor'])&&$_SESSION['productos_ing_nd_impuestos'][10]['valor']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_nd_impuestos'][10]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_basicos']['idCentroCosto']) && $_SESSION['productos_ing_nd_basicos']['idCentroCosto']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idCentroCosto']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_basicos']['idLevel_1']) && $_SESSION['productos_ing_nd_basicos']['idLevel_1']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idLevel_1']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_basicos']['idLevel_2']) && $_SESSION['productos_ing_nd_basicos']['idLevel_2']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idLevel_2']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_basicos']['idLevel_3']) && $_SESSION['productos_ing_nd_basicos']['idLevel_3']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idLevel_3']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_basicos']['idLevel_4']) && $_SESSION['productos_ing_nd_basicos']['idLevel_4']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idLevel_4']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_basicos']['idLevel_5']) && $_SESSION['productos_ing_nd_basicos']['idLevel_5']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idLevel_5']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nd_basicos']['idUsoIVA']) && $_SESSION['productos_ing_nd_basicos']['idUsoIVA']!=''){               $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idUsoIVA']."'";           }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idBodegaDestino, idSistema, idUsuario, Creacion_fecha, Creacion_Semana, Creacion_mes,
-				Creacion_ano, idDocumentos, N_Doc, idTipo,Observaciones, idProveedor, Pago_fecha,Pago_dia, Pago_Semana, Pago_mes, 
-				Pago_ano, idEstado, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03, 
-				Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10, idCentroCosto, 
+				Creacion_ano, idDocumentos, N_Doc, idTipo,Observaciones, idProveedor, Pago_fecha,Pago_dia, Pago_Semana, Pago_mes,
+				Pago_ano, idEstado, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03,
+				Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10, idCentroCosto,
 				idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5, idUsoIVA';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -6941,7 +6932,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_ing_nd_productos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_dat  = "'".$ultimo_id."'";                                               }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                     $SIS_dat  = "'".$ultimo_id."'";                                               }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_ing_nd_basicos']['idBodega']) && $_SESSION['productos_ing_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_nd_basicos']['idSistema']) && $_SESSION['productos_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_nd_basicos']['idUsuario']) && $_SESSION['productos_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -6955,14 +6946,14 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['productos_ing_nd_basicos']['idDocumentos']) && $_SESSION['productos_ing_nd_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idDocumentos']."'";       }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_ing_nd_basicos']['N_Doc']) && $_SESSION['productos_ing_nd_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_ing_nd_basicos']['idTipo']) && $_SESSION['productos_ing_nd_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                           $SIS_data .= ",'".$producto['idProducto']."'";                                     }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad_ing']) && $producto['Cantidad_ing']!=''){                                                       $SIS_data .= ",'".$producto['Cantidad_ing']."'";                                   }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                       $SIS_data .= ",'".$producto['ValorIngreso']."'";                                   }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                           $SIS_data .= ",'".$producto['ValorTotal']."'";                                     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_ing_nd_basicos']['idProveedor']) && $_SESSION['productos_ing_nd_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idProveedor']."'";        }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_ing_nd_basicos']['fecha_auto']) && $_SESSION['productos_ing_nd_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_ing_nd_basicos']['N_Doc']) && $_SESSION['productos_ing_nd_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_ing_nd_basicos']['idTipo']) && $_SESSION['productos_ing_nd_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                  $SIS_data .= ",'".$producto['idProducto']."'";                                     }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad_ing']) && $producto['Cantidad_ing']!=''){                                                              $SIS_data .= ",'".$producto['Cantidad_ing']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                              $SIS_data .= ",'".$producto['ValorIngreso']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                  $SIS_data .= ",'".$producto['ValorTotal']."'";                                     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_ing_nd_basicos']['idProveedor']) && $_SESSION['productos_ing_nd_basicos']['idProveedor']!=''){        $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idProveedor']."'";        }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_ing_nd_basicos']['fecha_auto']) && $_SESSION['productos_ing_nd_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario,
@@ -6979,7 +6970,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_ing_nd_otros'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                     $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_ing_nd_basicos']['idBodega']) && $_SESSION['productos_ing_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_nd_basicos']['idSistema']) && $_SESSION['productos_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_nd_basicos']['idUsuario']) && $_SESSION['productos_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -7009,7 +7000,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_ing_nd_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                     $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_ing_nd_basicos']['idBodega']) && $_SESSION['productos_ing_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_nd_basicos']['idSistema']) && $_SESSION['productos_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_nd_basicos']['idUsuario']) && $_SESSION['productos_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -7122,12 +7113,12 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                     $_SESSION['productos_ing_nc_basicos']['N_Doc']           = $N_Doc;           }else{$_SESSION['productos_ing_nc_basicos']['N_Doc']            = '';}
 				if(isset($Observaciones) && $Observaciones!=''){     $_SESSION['productos_ing_nc_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['productos_ing_nc_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){             $_SESSION['productos_ing_nc_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['productos_ing_nc_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['productos_ing_nc_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['productos_ing_nc_basicos']['idUsuario']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){             $_SESSION['productos_ing_nc_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['productos_ing_nc_basicos']['idUsuario']        = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){   $_SESSION['productos_ing_nc_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['productos_ing_nc_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['productos_ing_nc_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['productos_ing_nc_basicos']['idTipo']           = '';}
+				if(isset($idTipo) && $idTipo!=''){                   $_SESSION['productos_ing_nc_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['productos_ing_nc_basicos']['idTipo']           = '';}
 				if(isset($idProveedor) && $idProveedor!=''){         $_SESSION['productos_ing_nc_basicos']['idProveedor']     = $idProveedor;     }else{$_SESSION['productos_ing_nc_basicos']['idProveedor']      = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){           $_SESSION['productos_ing_nc_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['productos_ing_nc_basicos']['fecha_auto']       = '';}
-				if(isset($idBodega) && $idBodega!=''){              $_SESSION['productos_ing_nc_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['productos_ing_nc_basicos']['idBodega']         = '';}
+				if(isset($idBodega) && $idBodega!=''){               $_SESSION['productos_ing_nc_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['productos_ing_nc_basicos']['idBodega']         = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){               $_SESSION['productos_ing_nc_basicos']['idUsoIVA']        = $idUsoIVA;        }else{$_SESSION['productos_ing_nc_basicos']['idUsoIVA']         = '';}
 
 				/***********************************/
@@ -7248,12 +7239,12 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                     $_SESSION['productos_ing_nc_basicos']['N_Doc']           = $N_Doc;           }else{$_SESSION['productos_ing_nc_basicos']['N_Doc']            = '';}
 				if(isset($Observaciones) && $Observaciones!=''){     $_SESSION['productos_ing_nc_basicos']['Observaciones']   = $Observaciones;   }else{$_SESSION['productos_ing_nc_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){             $_SESSION['productos_ing_nc_basicos']['idSistema']       = $idSistema;       }else{$_SESSION['productos_ing_nc_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['productos_ing_nc_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['productos_ing_nc_basicos']['idUsuario']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){             $_SESSION['productos_ing_nc_basicos']['idUsuario']       = $idUsuario;       }else{$_SESSION['productos_ing_nc_basicos']['idUsuario']        = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){   $_SESSION['productos_ing_nc_basicos']['Creacion_fecha']  = $Creacion_fecha;  }else{$_SESSION['productos_ing_nc_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['productos_ing_nc_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['productos_ing_nc_basicos']['idTipo']           = '';}
+				if(isset($idTipo) && $idTipo!=''){                   $_SESSION['productos_ing_nc_basicos']['idTipo']          = $idTipo;          }else{$_SESSION['productos_ing_nc_basicos']['idTipo']           = '';}
 				if(isset($idProveedor) && $idProveedor!=''){         $_SESSION['productos_ing_nc_basicos']['idProveedor']     = $idProveedor;     }else{$_SESSION['productos_ing_nc_basicos']['idProveedor']      = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){           $_SESSION['productos_ing_nc_basicos']['fecha_auto']      = $fecha_auto;      }else{$_SESSION['productos_ing_nc_basicos']['fecha_auto']       = '';}
-				if(isset($idBodega) && $idBodega!=''){              $_SESSION['productos_ing_nc_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['productos_ing_nc_basicos']['idBodega']         = '';}
+				if(isset($idBodega) && $idBodega!=''){               $_SESSION['productos_ing_nc_basicos']['idBodega']        = $idBodega;        }else{$_SESSION['productos_ing_nc_basicos']['idBodega']         = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){               $_SESSION['productos_ing_nc_basicos']['idUsoIVA']        = $idUsoIVA;        }else{$_SESSION['productos_ing_nc_basicos']['idUsoIVA']         = '';}
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
@@ -7747,12 +7738,12 @@ require_once '0_validate_user_1.php';
 
 				//Se guardan los datos basicos
 				if(isset($_SESSION['productos_ing_nc_basicos']['idDocumentos']) && $_SESSION['productos_ing_nc_basicos']['idDocumentos']!=''){      $SIS_data  = "'".$_SESSION['productos_ing_nc_basicos']['idDocumentos']."'";   }else{$SIS_data  = "''";}
-				if(isset($_SESSION['productos_ing_nc_basicos']['N_Doc']) && $_SESSION['productos_ing_nc_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_basicos']['N_Doc']) && $_SESSION['productos_ing_nc_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_ing_nc_basicos']['Observaciones']) && $_SESSION['productos_ing_nc_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['Observaciones']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_basicos']['idBodega']) && $_SESSION['productos_ing_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_basicos']['idSistema']) && $_SESSION['productos_ing_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_basicos']['idUsuario']) && $_SESSION['productos_ing_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_basicos']['idTipo']) && $_SESSION['productos_ing_nc_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_basicos']['idBodega']) && $_SESSION['productos_ing_nc_basicos']['idBodega']!=''){              $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_basicos']['idSistema']) && $_SESSION['productos_ing_nc_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_basicos']['idUsuario']) && $_SESSION['productos_ing_nc_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_basicos']['idTipo']) && $_SESSION['productos_ing_nc_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_ing_nc_basicos']['Creacion_fecha']) && $_SESSION['productos_ing_nc_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['productos_ing_nc_basicos']['Creacion_fecha'])."'";
@@ -7764,36 +7755,36 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['productos_ing_nc_basicos']['idProveedor']) && $_SESSION['productos_ing_nc_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idProveedor']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_basicos']['fecha_auto']) && $_SESSION['productos_ing_nc_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_basicos']['idProveedor']) && $_SESSION['productos_ing_nc_basicos']['idProveedor']!=''){         $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idProveedor']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_basicos']['fecha_auto']) && $_SESSION['productos_ing_nc_basicos']['fecha_auto']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['fecha_auto']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_ing_nc_basicos']['valor_neto_fact'])&&$_SESSION['productos_ing_nc_basicos']['valor_neto_fact']!=''){   $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['valor_neto_fact']."'";   }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_ing_nc_basicos']['valor_neto_imp'])&&$_SESSION['productos_ing_nc_basicos']['valor_neto_imp']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['valor_neto_imp']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_ing_nc_basicos']['valor_total_fact'])&&$_SESSION['productos_ing_nc_basicos']['valor_total_fact']!=''){ $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['valor_total_fact']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_impuestos'][1]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][1]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_impuestos'][2]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][2]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_impuestos'][3]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][3]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_impuestos'][4]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][4]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_impuestos'][5]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][5]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_impuestos'][6]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][6]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_impuestos'][7]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][7]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_impuestos'][8]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_impuestos'][9]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_impuestos'][10]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_impuestos'][1]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][1]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_impuestos'][2]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][2]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_impuestos'][3]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][3]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_impuestos'][4]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][4]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_impuestos'][5]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][5]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_impuestos'][6]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][6]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_impuestos'][7]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][7]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_impuestos'][8]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][8]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_impuestos'][9]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][9]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_impuestos'][10]['valor'])&&$_SESSION['productos_ing_nc_impuestos'][10]['valor']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_nc_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
 				$SIS_data .= ",'1'";
-				if(isset($_SESSION['productos_ing_nc_basicos']['idCentroCosto']) && $_SESSION['productos_ing_nc_basicos']['idCentroCosto']!=''){    $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idCentroCosto']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_basicos']['idLevel_1']) && $_SESSION['productos_ing_nc_basicos']['idLevel_1']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idLevel_1']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_basicos']['idLevel_2']) && $_SESSION['productos_ing_nc_basicos']['idLevel_2']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idLevel_2']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_basicos']['idLevel_3']) && $_SESSION['productos_ing_nc_basicos']['idLevel_3']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idLevel_3']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_basicos']['idLevel_4']) && $_SESSION['productos_ing_nc_basicos']['idLevel_4']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idLevel_4']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_basicos']['idLevel_5']) && $_SESSION['productos_ing_nc_basicos']['idLevel_5']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idLevel_5']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_ing_nc_basicos']['idUsoIVA']) && $_SESSION['productos_ing_nc_basicos']['idUsoIVA']!=''){       $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idUsoIVA']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_basicos']['idCentroCosto']) && $_SESSION['productos_ing_nc_basicos']['idCentroCosto']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idCentroCosto']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_basicos']['idLevel_1']) && $_SESSION['productos_ing_nc_basicos']['idLevel_1']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idLevel_1']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_basicos']['idLevel_2']) && $_SESSION['productos_ing_nc_basicos']['idLevel_2']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idLevel_2']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_basicos']['idLevel_3']) && $_SESSION['productos_ing_nc_basicos']['idLevel_3']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idLevel_3']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_basicos']['idLevel_4']) && $_SESSION['productos_ing_nc_basicos']['idLevel_4']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idLevel_4']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_basicos']['idLevel_5']) && $_SESSION['productos_ing_nc_basicos']['idLevel_5']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idLevel_5']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_ing_nc_basicos']['idUsoIVA']) && $_SESSION['productos_ing_nc_basicos']['idUsoIVA']!=''){               $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idUsoIVA']."'";          }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idDocumentos,N_Doc, Observaciones, 
-				idBodegaOrigen, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, 
-				Creacion_ano, idProveedor, fecha_auto, ValorNeto, ValorNetoImp,ValorTotal, Impuesto_01, 
-				Impuesto_02, Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, 
-				Impuesto_09, Impuesto_10, idEstado, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, 
+				$SIS_columns = 'idDocumentos,N_Doc, Observaciones,
+				idBodegaOrigen, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes,
+				Creacion_ano, idProveedor, fecha_auto, ValorNeto, ValorNetoImp,ValorTotal, Impuesto_01,
+				Impuesto_02, Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08,
+				Impuesto_09, Impuesto_10, idEstado, idCentroCosto, idLevel_1, idLevel_2, idLevel_3,
 				idLevel_4, idLevel_5, idUsoIVA';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -7805,7 +7796,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_ing_nc_productos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                     $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_ing_nc_basicos']['idBodega']) && $_SESSION['productos_ing_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_nc_basicos']['idSistema']) && $_SESSION['productos_ing_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_nc_basicos']['idUsuario']) && $_SESSION['productos_ing_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -7819,17 +7810,17 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['productos_ing_nc_basicos']['idDocumentos']) && $_SESSION['productos_ing_nc_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_ing_nc_basicos']['N_Doc']) && $_SESSION['productos_ing_nc_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_ing_nc_basicos']['idTipo']) && $_SESSION['productos_ing_nc_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                           $SIS_data .= ",'".$producto['idProducto']."'";                                }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad_eg']) && $producto['Cantidad_eg']!=''){                                                         $SIS_data .= ",'".$producto['Cantidad_eg']."'";                               }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                       $SIS_data .= ",'".$producto['ValorIngreso']."'";                              }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                           $SIS_data .= ",'".$producto['ValorTotal']."'";                                }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_ing_nc_basicos']['idProveedor']) && $_SESSION['productos_ing_nc_basicos']['idProveedor']!=''){ $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idProveedor']."'";   }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_ing_nc_basicos']['fecha_auto']) && $_SESSION['productos_ing_nc_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_ing_nc_basicos']['N_Doc']) && $_SESSION['productos_ing_nc_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_ing_nc_basicos']['idTipo']) && $_SESSION['productos_ing_nc_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                  $SIS_data .= ",'".$producto['idProducto']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad_eg']) && $producto['Cantidad_eg']!=''){                                                                $SIS_data .= ",'".$producto['Cantidad_eg']."'";                               }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                              $SIS_data .= ",'".$producto['ValorIngreso']."'";                              }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                  $SIS_data .= ",'".$producto['ValorTotal']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_ing_nc_basicos']['idProveedor']) && $_SESSION['productos_ing_nc_basicos']['idProveedor']!=''){        $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idProveedor']."'";   }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_ing_nc_basicos']['fecha_auto']) && $_SESSION['productos_ing_nc_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano,
 							idDocumentos, N_Doc, idTipo, idProducto, Cantidad_eg, Valor,ValorTotal,	 idProveedor, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -7842,7 +7833,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_ing_nc_otros'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                     $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_ing_nd_basicos']['idBodega']) && $_SESSION['productos_ing_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_nd_basicos']['idSistema']) && $_SESSION['productos_ing_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_nd_basicos']['idUsuario']) && $_SESSION['productos_ing_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -7872,7 +7863,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_ing_nc_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                     $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_ing_nc_basicos']['idBodega']) && $_SESSION['productos_ing_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_nc_basicos']['idSistema']) && $_SESSION['productos_ing_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_ing_nc_basicos']['idUsuario']) && $_SESSION['productos_ing_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_ing_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -7985,10 +7976,10 @@ require_once '0_validate_user_1.php';
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){   $_SESSION['productos_egr_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['productos_egr_nd_basicos']['Creacion_fecha']   = '';}
 				if(isset($Observaciones) && $Observaciones!=''){     $_SESSION['productos_egr_nd_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['productos_egr_nd_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){             $_SESSION['productos_egr_nd_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['productos_egr_nd_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['productos_egr_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['productos_egr_nd_basicos']['idUsuario']        = '';}
-				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['productos_egr_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['productos_egr_nd_basicos']['idTipo']           = '';}
+				if(isset($idUsuario) && $idUsuario!=''){             $_SESSION['productos_egr_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['productos_egr_nd_basicos']['idUsuario']        = '';}
+				if(isset($idTipo) && $idTipo!=''){                   $_SESSION['productos_egr_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['productos_egr_nd_basicos']['idTipo']           = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){           $_SESSION['productos_egr_nd_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['productos_egr_nd_basicos']['fecha_auto']       = '';}
-				if(isset($idBodega) && $idBodega!=''){              $_SESSION['productos_egr_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['productos_egr_nd_basicos']['idBodega']         = '';}
+				if(isset($idBodega) && $idBodega!=''){               $_SESSION['productos_egr_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['productos_egr_nd_basicos']['idBodega']         = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){               $_SESSION['productos_egr_nd_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['productos_egr_nd_basicos']['idUsoIVA']         = '';}
 				//datos basicos vacios
 				$_SESSION['productos_egr_nd_basicos']['Pago_fecha']       = '0000-00-00';
@@ -8126,10 +8117,10 @@ require_once '0_validate_user_1.php';
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){   $_SESSION['productos_egr_nd_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['productos_egr_nd_basicos']['Creacion_fecha']   = '';}
 				if(isset($Observaciones) && $Observaciones!=''){     $_SESSION['productos_egr_nd_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['productos_egr_nd_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){             $_SESSION['productos_egr_nd_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['productos_egr_nd_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['productos_egr_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['productos_egr_nd_basicos']['idUsuario']        = '';}
-				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['productos_egr_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['productos_egr_nd_basicos']['idTipo']           = '';}
+				if(isset($idUsuario) && $idUsuario!=''){             $_SESSION['productos_egr_nd_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['productos_egr_nd_basicos']['idUsuario']        = '';}
+				if(isset($idTipo) && $idTipo!=''){                   $_SESSION['productos_egr_nd_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['productos_egr_nd_basicos']['idTipo']           = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){           $_SESSION['productos_egr_nd_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['productos_egr_nd_basicos']['fecha_auto']       = '';}
-				if(isset($idBodega) && $idBodega!=''){              $_SESSION['productos_egr_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['productos_egr_nd_basicos']['idBodega']         = '';}
+				if(isset($idBodega) && $idBodega!=''){               $_SESSION['productos_egr_nd_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['productos_egr_nd_basicos']['idBodega']         = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){               $_SESSION['productos_egr_nd_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['productos_egr_nd_basicos']['idUsoIVA']         = '';}
 				//Se agrega el impuesto en caso de ser utilizado
 				if(isset($idUsoIVA) && $idUsoIVA != ''&& $idUsoIVA == 2){
@@ -8634,10 +8625,10 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 				}
 				if(isset($_SESSION['productos_egr_nd_basicos']['idDocumentos']) && $_SESSION['productos_egr_nd_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idDocumentos']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_basicos']['N_Doc']) && $_SESSION['productos_egr_nd_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['N_Doc']."'";          }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_basicos']['idTipo']) && $_SESSION['productos_egr_nd_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idTipo']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_basicos']['N_Doc']) && $_SESSION['productos_egr_nd_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['N_Doc']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_basicos']['idTipo']) && $_SESSION['productos_egr_nd_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idTipo']."'";         }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_nd_basicos']['Observaciones']) && $_SESSION['productos_egr_nd_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['Observaciones']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_basicos']['idCliente']) && $_SESSION['productos_egr_nd_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idCliente']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_basicos']['idCliente']) && $_SESSION['productos_egr_nd_basicos']['idCliente']!=''){            $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idCliente']."'";      }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_nd_basicos']['Pago_fecha']) && $_SESSION['productos_egr_nd_basicos']['Pago_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['Pago_fecha']."'";
 					$SIS_data .= ",'".fecha2NdiaMes($_SESSION['productos_egr_nd_basicos']['Pago_fecha'])."'";
@@ -8652,33 +8643,33 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 				}
 				$SIS_data .= ",'1'";
-				if(isset($_SESSION['productos_egr_nd_basicos']['fecha_auto']) && $_SESSION['productos_egr_nd_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['fecha_auto']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_basicos']['fecha_auto']) && $_SESSION['productos_egr_nd_basicos']['fecha_auto']!=''){           $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_nd_basicos']['valor_neto_fact'])&&$_SESSION['productos_egr_nd_basicos']['valor_neto_fact']!=''){   $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['valor_neto_fact']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_nd_basicos']['valor_neto_imp'])&&$_SESSION['productos_egr_nd_basicos']['valor_neto_imp']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['valor_neto_imp']."'";     }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_nd_basicos']['valor_total_fact'])&&$_SESSION['productos_egr_nd_basicos']['valor_total_fact']!=''){ $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['valor_total_fact']."'";   }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_impuestos'][1]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][1]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][1]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_impuestos'][2]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][2]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][2]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_impuestos'][3]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][3]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][3]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_impuestos'][4]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][4]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][4]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_impuestos'][5]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][5]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][5]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_impuestos'][6]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][6]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][6]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_impuestos'][7]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][7]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][7]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_impuestos'][8]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][8]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_impuestos'][9]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][9]['valor']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_impuestos'][10]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][10]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_basicos']['idCentroCosto']) && $_SESSION['productos_egr_nd_basicos']['idCentroCosto']!=''){    $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idCentroCosto']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_basicos']['idLevel_1']) && $_SESSION['productos_egr_nd_basicos']['idLevel_1']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idLevel_1']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_basicos']['idLevel_2']) && $_SESSION['productos_egr_nd_basicos']['idLevel_2']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idLevel_2']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_basicos']['idLevel_3']) && $_SESSION['productos_egr_nd_basicos']['idLevel_3']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idLevel_3']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_basicos']['idLevel_4']) && $_SESSION['productos_egr_nd_basicos']['idLevel_4']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idLevel_4']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_basicos']['idLevel_5']) && $_SESSION['productos_egr_nd_basicos']['idLevel_5']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idLevel_5']."'";         }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nd_basicos']['idUsoIVA']) && $_SESSION['productos_egr_nd_basicos']['idUsoIVA']!=''){       $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idUsoIVA']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_impuestos'][1]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][1]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][1]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_impuestos'][2]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][2]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][2]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_impuestos'][3]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][3]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][3]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_impuestos'][4]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][4]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][4]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_impuestos'][5]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][5]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][5]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_impuestos'][6]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][6]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][6]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_impuestos'][7]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][7]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][7]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_impuestos'][8]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][8]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][8]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_impuestos'][9]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][9]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][9]['valor']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_impuestos'][10]['valor'])&&$_SESSION['productos_egr_nd_impuestos'][10]['valor']!=''){           $SIS_data .= ",'".$_SESSION['productos_egr_nd_impuestos'][10]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_basicos']['idCentroCosto']) && $_SESSION['productos_egr_nd_basicos']['idCentroCosto']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idCentroCosto']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_basicos']['idLevel_1']) && $_SESSION['productos_egr_nd_basicos']['idLevel_1']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idLevel_1']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_basicos']['idLevel_2']) && $_SESSION['productos_egr_nd_basicos']['idLevel_2']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idLevel_2']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_basicos']['idLevel_3']) && $_SESSION['productos_egr_nd_basicos']['idLevel_3']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idLevel_3']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_basicos']['idLevel_4']) && $_SESSION['productos_egr_nd_basicos']['idLevel_4']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idLevel_4']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_basicos']['idLevel_5']) && $_SESSION['productos_egr_nd_basicos']['idLevel_5']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idLevel_5']."'";          }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nd_basicos']['idUsoIVA']) && $_SESSION['productos_egr_nd_basicos']['idUsoIVA']!=''){               $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idUsoIVA']."'";           }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
 				$SIS_columns = 'idBodegaOrigen, idSistema, idUsuario, Creacion_fecha, Creacion_Semana, Creacion_mes,
-				Creacion_ano, idDocumentos, N_Doc, idTipo,Observaciones, idCliente, Pago_fecha,Pago_dia, Pago_Semana, Pago_mes, 
-				Pago_ano, idEstado, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03, 
-				Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10, idCentroCosto, 
+				Creacion_ano, idDocumentos, N_Doc, idTipo,Observaciones, idCliente, Pago_fecha,Pago_dia, Pago_Semana, Pago_mes,
+				Pago_ano, idEstado, fecha_auto, ValorNeto, ValorNetoImp, ValorTotal, Impuesto_01, Impuesto_02, Impuesto_03,
+				Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, Impuesto_09, Impuesto_10, idCentroCosto,
 				idLevel_1, idLevel_2, idLevel_3, idLevel_4, idLevel_5, idUsoIVA';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -8690,7 +8681,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_egr_nd_productos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                     $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_egr_nd_basicos']['idBodega']) && $_SESSION['productos_egr_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_nd_basicos']['idSistema']) && $_SESSION['productos_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_nd_basicos']['idUsuario']) && $_SESSION['productos_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -8704,14 +8695,14 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['productos_egr_nd_basicos']['idDocumentos']) && $_SESSION['productos_egr_nd_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idDocumentos']."'";       }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_egr_nd_basicos']['N_Doc']) && $_SESSION['productos_egr_nd_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_egr_nd_basicos']['idTipo']) && $_SESSION['productos_egr_nd_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                           $SIS_data .= ",'".$producto['idProducto']."'";                                     }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad_eg']) && $producto['Cantidad_eg']!=''){                                                         $SIS_data .= ",'".$producto['Cantidad_eg']."'";                                    }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                       $SIS_data .= ",'".$producto['ValorIngreso']."'";                                   }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                           $SIS_data .= ",'".$producto['ValorTotal']."'";                                     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_egr_nd_basicos']['idCliente']) && $_SESSION['productos_egr_nd_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idCliente']."'";          }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_egr_nd_basicos']['fecha_auto']) && $_SESSION['productos_egr_nd_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_egr_nd_basicos']['N_Doc']) && $_SESSION['productos_egr_nd_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['N_Doc']."'";              }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_egr_nd_basicos']['idTipo']) && $_SESSION['productos_egr_nd_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idTipo']."'";             }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                  $SIS_data .= ",'".$producto['idProducto']."'";                                     }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad_eg']) && $producto['Cantidad_eg']!=''){                                                                $SIS_data .= ",'".$producto['Cantidad_eg']."'";                                    }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                              $SIS_data .= ",'".$producto['ValorIngreso']."'";                                   }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                  $SIS_data .= ",'".$producto['ValorTotal']."'";                                     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_egr_nd_basicos']['idCliente']) && $_SESSION['productos_egr_nd_basicos']['idCliente']!=''){            $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idCliente']."'";          }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_egr_nd_basicos']['fecha_auto']) && $_SESSION['productos_egr_nd_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['fecha_auto']."'";         }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
 							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario,
@@ -8728,7 +8719,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_egr_nd_otros'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                     $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_egr_nd_basicos']['idBodega']) && $_SESSION['productos_egr_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_nd_basicos']['idSistema']) && $_SESSION['productos_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_nd_basicos']['idUsuario']) && $_SESSION['productos_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -8758,7 +8749,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_egr_nd_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                     $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_egr_nd_basicos']['idBodega']) && $_SESSION['productos_egr_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_nd_basicos']['idSistema']) && $_SESSION['productos_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_nd_basicos']['idUsuario']) && $_SESSION['productos_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -8871,12 +8862,12 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                     $_SESSION['productos_egr_nc_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['productos_egr_nc_basicos']['N_Doc']            = '';}
 				if(isset($Observaciones) && $Observaciones!=''){     $_SESSION['productos_egr_nc_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['productos_egr_nc_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){             $_SESSION['productos_egr_nc_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['productos_egr_nc_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['productos_egr_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['productos_egr_nc_basicos']['idUsuario']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){             $_SESSION['productos_egr_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['productos_egr_nc_basicos']['idUsuario']        = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){   $_SESSION['productos_egr_nc_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['productos_egr_nc_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['productos_egr_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['productos_egr_nc_basicos']['idTipo']           = '';}
+				if(isset($idTipo) && $idTipo!=''){                   $_SESSION['productos_egr_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['productos_egr_nc_basicos']['idTipo']           = '';}
 				if(isset($idCliente) && $idCliente!=''){             $_SESSION['productos_egr_nc_basicos']['idCliente']        = $idCliente;       }else{$_SESSION['productos_egr_nc_basicos']['idCliente']        = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){           $_SESSION['productos_egr_nc_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['productos_egr_nc_basicos']['fecha_auto']       = '';}
-				if(isset($idBodega) && $idBodega!=''){              $_SESSION['productos_egr_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['productos_egr_nc_basicos']['idBodega']         = '';}
+				if(isset($idBodega) && $idBodega!=''){               $_SESSION['productos_egr_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['productos_egr_nc_basicos']['idBodega']         = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){               $_SESSION['productos_egr_nc_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['productos_egr_nc_basicos']['idUsoIVA']         = '';}
 
 				/***********************************/
@@ -8997,12 +8988,12 @@ require_once '0_validate_user_1.php';
 				if(isset($N_Doc) && $N_Doc!=''){                     $_SESSION['productos_egr_nc_basicos']['N_Doc']            = $N_Doc;           }else{$_SESSION['productos_egr_nc_basicos']['N_Doc']            = '';}
 				if(isset($Observaciones) && $Observaciones!=''){     $_SESSION['productos_egr_nc_basicos']['Observaciones']    = $Observaciones;   }else{$_SESSION['productos_egr_nc_basicos']['Observaciones']    = '';}
 				if(isset($idSistema) && $idSistema!=''){             $_SESSION['productos_egr_nc_basicos']['idSistema']        = $idSistema;       }else{$_SESSION['productos_egr_nc_basicos']['idSistema']        = '';}
-				if(isset($idUsuario) && $idUsuario!=''){            $_SESSION['productos_egr_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['productos_egr_nc_basicos']['idUsuario']        = '';}
+				if(isset($idUsuario) && $idUsuario!=''){             $_SESSION['productos_egr_nc_basicos']['idUsuario']        = $idUsuario;       }else{$_SESSION['productos_egr_nc_basicos']['idUsuario']        = '';}
 				if(isset($Creacion_fecha) && $Creacion_fecha!=''){   $_SESSION['productos_egr_nc_basicos']['Creacion_fecha']   = $Creacion_fecha;  }else{$_SESSION['productos_egr_nc_basicos']['Creacion_fecha']   = '';}
-				if(isset($idTipo) && $idTipo!=''){                  $_SESSION['productos_egr_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['productos_egr_nc_basicos']['idTipo']           = '';}
+				if(isset($idTipo) && $idTipo!=''){                   $_SESSION['productos_egr_nc_basicos']['idTipo']           = $idTipo;          }else{$_SESSION['productos_egr_nc_basicos']['idTipo']           = '';}
 				if(isset($idCliente) && $idCliente!=''){             $_SESSION['productos_egr_nc_basicos']['idCliente']        = $idCliente;       }else{$_SESSION['productos_egr_nc_basicos']['idCliente']        = '';}
 				if(isset($fecha_auto) && $fecha_auto!=''){           $_SESSION['productos_egr_nc_basicos']['fecha_auto']       = $fecha_auto;      }else{$_SESSION['productos_egr_nc_basicos']['fecha_auto']       = '';}
-				if(isset($idBodega) && $idBodega!=''){              $_SESSION['productos_egr_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['productos_egr_nc_basicos']['idBodega']         = '';}
+				if(isset($idBodega) && $idBodega!=''){               $_SESSION['productos_egr_nc_basicos']['idBodega']         = $idBodega;        }else{$_SESSION['productos_egr_nc_basicos']['idBodega']         = '';}
 				if(isset($idUsoIVA) && $idUsoIVA!=''){               $_SESSION['productos_egr_nc_basicos']['idUsoIVA']         = $idUsoIVA;        }else{$_SESSION['productos_egr_nc_basicos']['idUsoIVA']         = '';}
 
 				//Se agrega el impuesto en caso de ser utilizado
@@ -9176,10 +9167,6 @@ require_once '0_validate_user_1.php';
 				header( 'Location: '.$location.'&view=true' );
 				die;
 			}
-			
-			
-	
-
 
 		break;
 /*******************************************************************************************************************/
@@ -9501,12 +9488,12 @@ require_once '0_validate_user_1.php';
 
 				//Se guardan los datos basicos
 				if(isset($_SESSION['productos_egr_nc_basicos']['idDocumentos']) && $_SESSION['productos_egr_nc_basicos']['idDocumentos']!=''){      $SIS_data  = "'".$_SESSION['productos_egr_nc_basicos']['idDocumentos']."'";   }else{$SIS_data  = "''";}
-				if(isset($_SESSION['productos_egr_nc_basicos']['N_Doc']) && $_SESSION['productos_egr_nc_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_basicos']['N_Doc']) && $_SESSION['productos_egr_nc_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_nc_basicos']['Observaciones']) && $_SESSION['productos_egr_nc_basicos']['Observaciones']!=''){    $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['Observaciones']."'"; }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_basicos']['idBodega']) && $_SESSION['productos_egr_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_basicos']['idSistema']) && $_SESSION['productos_egr_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_basicos']['idUsuario']) && $_SESSION['productos_egr_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_basicos']['idTipo']) && $_SESSION['productos_egr_nc_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_basicos']['idBodega']) && $_SESSION['productos_egr_nc_basicos']['idBodega']!=''){              $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_basicos']['idSistema']) && $_SESSION['productos_egr_nc_basicos']['idSistema']!=''){            $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_basicos']['idUsuario']) && $_SESSION['productos_egr_nc_basicos']['idUsuario']!=''){            $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_basicos']['idTipo']) && $_SESSION['productos_egr_nc_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_nc_basicos']['Creacion_fecha']) && $_SESSION['productos_egr_nc_basicos']['Creacion_fecha']!=''){
 					$SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['Creacion_fecha']."'";
 					$SIS_data .= ",'".fecha2NSemana($_SESSION['productos_egr_nc_basicos']['Creacion_fecha'])."'";
@@ -9518,36 +9505,36 @@ require_once '0_validate_user_1.php';
 					$SIS_data .= ",''";
 					$SIS_data .= ",''";
 				}
-				if(isset($_SESSION['productos_egr_nc_basicos']['idCliente']) && $_SESSION['productos_egr_nc_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idCliente']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_basicos']['fecha_auto']) && $_SESSION['productos_egr_nc_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['fecha_auto']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_basicos']['idCliente']) && $_SESSION['productos_egr_nc_basicos']['idCliente']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idCliente']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_basicos']['fecha_auto']) && $_SESSION['productos_egr_nc_basicos']['fecha_auto']!=''){           $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['fecha_auto']."'";        }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_nc_basicos']['valor_neto_fact'])&&$_SESSION['productos_egr_nc_basicos']['valor_neto_fact']!=''){   $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['valor_neto_fact']."'";   }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_nc_basicos']['valor_neto_imp'])&&$_SESSION['productos_egr_nc_basicos']['valor_neto_imp']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['valor_neto_imp']."'";    }else{$SIS_data .= ",''";}
 				if(isset($_SESSION['productos_egr_nc_basicos']['valor_total_fact'])&&$_SESSION['productos_egr_nc_basicos']['valor_total_fact']!=''){ $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['valor_total_fact']."'";  }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_impuestos'][1]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][1]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_impuestos'][2]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][2]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_impuestos'][3]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][3]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_impuestos'][4]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][4]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_impuestos'][5]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][5]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_impuestos'][6]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][6]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_impuestos'][7]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][7]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_impuestos'][8]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][8]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_impuestos'][9]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][9]['valor']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_impuestos'][10]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][10]['valor']!=''){    $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_impuestos'][1]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][1]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][1]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_impuestos'][2]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][2]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][2]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_impuestos'][3]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][3]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][3]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_impuestos'][4]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][4]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][4]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_impuestos'][5]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][5]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][5]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_impuestos'][6]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][6]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][6]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_impuestos'][7]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][7]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][7]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_impuestos'][8]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][8]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][8]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_impuestos'][9]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][9]['valor']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][9]['valor']."'";        }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_impuestos'][10]['valor'])&&$_SESSION['productos_egr_nc_impuestos'][10]['valor']!=''){           $SIS_data .= ",'".$_SESSION['productos_egr_nc_impuestos'][10]['valor']."'";       }else{$SIS_data .= ",''";}
 				$SIS_data .= ",'1'";
-				if(isset($_SESSION['productos_egr_nc_basicos']['idCentroCosto']) && $_SESSION['productos_egr_nc_basicos']['idCentroCosto']!=''){    $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idCentroCosto']."'";    }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_basicos']['idLevel_1']) && $_SESSION['productos_egr_nc_basicos']['idLevel_1']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idLevel_1']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_basicos']['idLevel_2']) && $_SESSION['productos_egr_nc_basicos']['idLevel_2']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idLevel_2']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_basicos']['idLevel_3']) && $_SESSION['productos_egr_nc_basicos']['idLevel_3']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idLevel_3']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_basicos']['idLevel_4']) && $_SESSION['productos_egr_nc_basicos']['idLevel_4']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idLevel_4']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_basicos']['idLevel_5']) && $_SESSION['productos_egr_nc_basicos']['idLevel_5']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idLevel_5']."'";        }else{$SIS_data .= ",''";}
-				if(isset($_SESSION['productos_egr_nc_basicos']['idUsoIVA']) && $_SESSION['productos_egr_nc_basicos']['idUsoIVA']!=''){       $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idUsoIVA']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_basicos']['idCentroCosto']) && $_SESSION['productos_egr_nc_basicos']['idCentroCosto']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idCentroCosto']."'";     }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_basicos']['idLevel_1']) && $_SESSION['productos_egr_nc_basicos']['idLevel_1']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idLevel_1']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_basicos']['idLevel_2']) && $_SESSION['productos_egr_nc_basicos']['idLevel_2']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idLevel_2']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_basicos']['idLevel_3']) && $_SESSION['productos_egr_nc_basicos']['idLevel_3']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idLevel_3']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_basicos']['idLevel_4']) && $_SESSION['productos_egr_nc_basicos']['idLevel_4']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idLevel_4']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_basicos']['idLevel_5']) && $_SESSION['productos_egr_nc_basicos']['idLevel_5']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idLevel_5']."'";         }else{$SIS_data .= ",''";}
+				if(isset($_SESSION['productos_egr_nc_basicos']['idUsoIVA']) && $_SESSION['productos_egr_nc_basicos']['idUsoIVA']!=''){               $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idUsoIVA']."'";          }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idDocumentos,N_Doc, Observaciones, 
-				idBodegaDestino, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes, 
-				Creacion_ano, idCliente, fecha_auto, ValorNeto, ValorNetoImp,ValorTotal, Impuesto_01, 
-				Impuesto_02, Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08, 
-				Impuesto_09, Impuesto_10, idEstado, idCentroCosto, idLevel_1, idLevel_2, idLevel_3, 
+				$SIS_columns = 'idDocumentos,N_Doc, Observaciones,
+				idBodegaDestino, idSistema, idUsuario, idTipo, Creacion_fecha, Creacion_Semana, Creacion_mes,
+				Creacion_ano, idCliente, fecha_auto, ValorNeto, ValorNetoImp,ValorTotal, Impuesto_01,
+				Impuesto_02, Impuesto_03, Impuesto_04, Impuesto_05, Impuesto_06, Impuesto_07, Impuesto_08,
+				Impuesto_09, Impuesto_10, idEstado, idCentroCosto, idLevel_1, idLevel_2, idLevel_3,
 				idLevel_4, idLevel_5, idUsoIVA';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -9559,7 +9546,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_egr_nc_productos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                     $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_egr_nc_basicos']['idBodega']) && $_SESSION['productos_egr_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_nc_basicos']['idSistema']) && $_SESSION['productos_egr_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_nc_basicos']['idUsuario']) && $_SESSION['productos_egr_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -9573,17 +9560,17 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",''";
 							}
 							if(isset($_SESSION['productos_egr_nc_basicos']['idDocumentos']) && $_SESSION['productos_egr_nc_basicos']['idDocumentos']!=''){      $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idDocumentos']."'";  }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_egr_nc_basicos']['N_Doc']) && $_SESSION['productos_egr_nc_basicos']['N_Doc']!=''){             $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_egr_nc_basicos']['idTipo']) && $_SESSION['productos_egr_nc_basicos']['idTipo']!=''){           $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
-							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                           $SIS_data .= ",'".$producto['idProducto']."'";                                }else{$SIS_data .= ",''";}
-							if(isset($producto['Cantidad_ing']) && $producto['Cantidad_ing']!=''){                                                       $SIS_data .= ",'".$producto['Cantidad_ing']."'";                              }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                       $SIS_data .= ",'".$producto['ValorIngreso']."'";                              }else{$SIS_data .= ",''";}
-							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                           $SIS_data .= ",'".$producto['ValorTotal']."'";                                }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_egr_nc_basicos']['idCliente']) && $_SESSION['productos_egr_nc_basicos']['idCliente']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idCliente']."'";     }else{$SIS_data .= ",''";}
-							if(isset($_SESSION['productos_egr_nc_basicos']['fecha_auto']) && $_SESSION['productos_egr_nc_basicos']['fecha_auto']!=''){   $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_egr_nc_basicos']['N_Doc']) && $_SESSION['productos_egr_nc_basicos']['N_Doc']!=''){                    $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['N_Doc']."'";         }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_egr_nc_basicos']['idTipo']) && $_SESSION['productos_egr_nc_basicos']['idTipo']!=''){                  $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idTipo']."'";        }else{$SIS_data .= ",''";}
+							if(isset($producto['idProducto']) && $producto['idProducto']!=''){                                                                  $SIS_data .= ",'".$producto['idProducto']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($producto['Cantidad_ing']) && $producto['Cantidad_ing']!=''){                                                              $SIS_data .= ",'".$producto['Cantidad_ing']."'";                              }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorIngreso']) && $producto['ValorIngreso']!=''){                                                              $SIS_data .= ",'".$producto['ValorIngreso']."'";                              }else{$SIS_data .= ",''";}
+							if(isset($producto['ValorTotal']) && $producto['ValorTotal']!=''){                                                                  $SIS_data .= ",'".$producto['ValorTotal']."'";                                }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_egr_nc_basicos']['idCliente']) && $_SESSION['productos_egr_nc_basicos']['idCliente']!=''){            $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idCliente']."'";     }else{$SIS_data .= ",''";}
+							if(isset($_SESSION['productos_egr_nc_basicos']['fecha_auto']) && $_SESSION['productos_egr_nc_basicos']['fecha_auto']!=''){          $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['fecha_auto']."'";    }else{$SIS_data .= ",''";}
 
 							// inserto los datos de registro en la db
-							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano, 
+							$SIS_columns = 'idFacturacion, idBodega, idSistema, idUsuario, Creacion_fecha, Creacion_mes, Creacion_ano,
 							idDocumentos, N_Doc, idTipo, idProducto, Cantidad_ing, Valor,ValorTotal, idCliente, fecha_auto';
 							$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'bodegas_productos_facturacion_existencias', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
@@ -9596,7 +9583,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_egr_nc_otros'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                     $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_egr_nd_basicos']['idBodega']) && $_SESSION['productos_egr_nd_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_nd_basicos']['idSistema']) && $_SESSION['productos_egr_nd_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_nd_basicos']['idUsuario']) && $_SESSION['productos_egr_nd_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nd_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}
@@ -9626,7 +9613,7 @@ require_once '0_validate_user_1.php';
 						foreach ($_SESSION['productos_egr_nc_archivos'] as $key => $producto){
 
 							//filtros
-							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                            $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
+							if(isset($ultimo_id) && $ultimo_id!=''){                                                                                     $SIS_data  = "'".$ultimo_id."'";                                              }else{$SIS_data  = "''";}
 							if(isset($_SESSION['productos_egr_nc_basicos']['idBodega']) && $_SESSION['productos_egr_nc_basicos']['idBodega']!=''){       $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idBodega']."'";      }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_nc_basicos']['idSistema']) && $_SESSION['productos_egr_nc_basicos']['idSistema']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idSistema']."'";     }else{$SIS_data .= ",''";}
 							if(isset($_SESSION['productos_egr_nc_basicos']['idUsuario']) && $_SESSION['productos_egr_nc_basicos']['idUsuario']!=''){     $SIS_data .= ",'".$_SESSION['productos_egr_nc_basicos']['idUsuario']."'";     }else{$SIS_data .= ",''";}

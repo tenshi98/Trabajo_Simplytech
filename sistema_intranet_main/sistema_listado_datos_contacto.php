@@ -225,8 +225,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					$Form_Inputs->form_input_fax('Fax', 'Contacto_Fax', $x4, 1);
 					$Form_Inputs->form_input_icon('Web', 'Contacto_Web', $x5, 1,'fa fa-internet-explorer');
 					$Form_Inputs->form_input_icon('Email', 'Contacto_Email', $x6, 1,'fa fa-envelope-o');
-					
-					
+
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
 					?>
 					

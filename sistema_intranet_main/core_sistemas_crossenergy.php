@@ -98,8 +98,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 					$Form_Inputs->form_date('Periodo Termino','CrossEnergy_PeriodoTermino', $x2, 2);
 					$Form_Inputs->form_time('Horario Inicio','CrossEnergy_HorarioInicio', $x3, 2, 1);
 					$Form_Inputs->form_time('Horario Termino','CrossEnergy_HorarioTermino', $x4, 2, 1);
-					
-					
+
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
 					$Form_Inputs->form_input_hidden('CrossEnergy_PeriodoInicioOld', $rowdata['CrossEnergy_PeriodoInicio'], 2);
 					$Form_Inputs->form_input_hidden('CrossEnergy_PeriodoTerminoOld', $rowdata['CrossEnergy_PeriodoTermino'], 2);

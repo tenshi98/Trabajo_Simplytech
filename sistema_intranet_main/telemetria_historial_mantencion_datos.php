@@ -131,8 +131,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 					$Form_Inputs->form_input_text('Nombre persona recepcion', 'Recepcion_Nombre', $x9, 1);
 					$Form_Inputs->form_input_rut('Rut persona recepcion', 'Recepcion_Rut', $x10, 1);
 					$Form_Inputs->form_input_icon('Email persona recepcion', 'Recepcion_Email', $x11, 1,'fa fa-envelope-o');
-					
-					
+
 					$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 					$Form_Inputs->form_input_hidden('idMantencion', $_GET['id'], 2);
 					?>

@@ -92,8 +92,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_joi
 					$Form_Inputs->form_select('Tipo de Medicion','idPuntoMuestreo', $x2, 2, 'idPuntoMuestreo', 'Nombre', 'aguas_analisis_aguas_tipo_punto_muestreo', 0, '', $dbConn);
 					$Form_Inputs->form_input_number('UTM Norte', 'UTM_norte', $x3, 2);
 					$Form_Inputs->form_input_number('UTM Este', 'UTM_este', $x4, 2);
-					
-					
+
 					$Form_Inputs->form_input_hidden('idCliente', $_GET['id'], 2);
 
 					?>

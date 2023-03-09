@@ -214,8 +214,7 @@ $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select('Equipo Telemetria','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);
-					
-					
+
 					$Form_Inputs->form_input_hidden('idVehiculo', $_GET['id'], 2);
 					?>
 

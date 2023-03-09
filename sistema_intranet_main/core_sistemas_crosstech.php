@@ -124,8 +124,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 					$Form_Inputs->form_tittle(3, 'Horas sobre x Grados');
 					$Form_Inputs->form_input_number_spinner('Horas Temp Max','CrossTech_TempMax', $x10, -100, 100, '0.01', 2, 2);
 					$Form_Inputs->form_date('Fecha a contar desde','CrossTech_FechaTempMax', $x11, 2);
-					
-					
+
 					$Form_Inputs->form_tittle(3, 'Dias - Grados C°');
 					$Form_Inputs->form_input_number_spinner('Temp Min','CrossTech_DiasTempMin', $x12, -100, 100, '0.01', 2, 2);
 					$Form_Inputs->form_date('Fecha a contar desde','CrossTech_FechaDiasTempMin', $x13, 2);

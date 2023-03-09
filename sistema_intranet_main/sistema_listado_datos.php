@@ -226,8 +226,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 										 $dbConn, 'form1');
 					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');
 					$Form_Inputs->form_input_icon('Rubro', 'Rubro', $x6, 1,'fa fa-sitemap');
-					
-					
+
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
 					?>
 

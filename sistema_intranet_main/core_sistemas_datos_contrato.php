@@ -97,8 +97,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 					$Form_Inputs->form_input_text('Numero de Contrato', 'Contrato_Numero', $x2, 1);
 					$Form_Inputs->form_date('Fecha inicio Contrato','Contrato_Fecha', $x3, 1);
 					$Form_Inputs->form_select_n_auto('Duracion Contrato(Meses)','Contrato_Duracion', $x4, 1, 1, 72);
-					
-					
+
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);
 					
 					?>

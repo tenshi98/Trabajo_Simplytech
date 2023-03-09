@@ -102,8 +102,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_select_n_auto('Semanas de Duracion','Semanas', $x3, 2, 1, 50);
 					$Form_Inputs->form_date('F. Inicio','F_inicio', $x4, 1);
 					$Form_Inputs->form_date('F. Termino','F_termino', $x5, 1);
-					
-					
+
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idCurso', $_GET['id'], 2);

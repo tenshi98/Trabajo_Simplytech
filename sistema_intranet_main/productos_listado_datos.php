@@ -125,8 +125,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 					$Form_Inputs->form_input_number_spinner('Carencia TESCO','EfectoResidual', $x13, 0, 500, 1, 0, 1);
 					$Form_Inputs->form_input_number_spinner('Tiempo Re-Ingreso','EfectoRetroactivo', $x14, 0, 500, 1, 0, 1);
 					$Form_Inputs->form_textarea('Aporte Nutricional','AporteNutricional', $x15, 1);
-					
-					
+
 					$Form_Inputs->form_input_hidden('idProducto', $_GET['id'], 2);
 					?>
 

@@ -105,8 +105,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_icon('Persona de Contacto', 'ContactoPersona', $x1, 1,'fa fa-address-card-o');
 					$Form_Inputs->form_input_phone('Fono de Persona de Contacto', 'ContactoFono', $x2, 1);
-					
-					
+
 					$Form_Inputs->form_input_hidden('idTrabajador', $_GET['id'], 2);
 					?>
 
