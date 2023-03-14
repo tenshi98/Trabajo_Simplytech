@@ -73,8 +73,6 @@ $SIS_order = 'cross_predios_listado_zonas.idZona ASC, cross_predios_listado_zona
 $arrZonas = array();
 $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrZonas');
 
-
-
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

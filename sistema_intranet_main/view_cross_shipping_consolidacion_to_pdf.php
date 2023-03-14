@@ -250,9 +250,7 @@ $html .= '
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Patente Carro</td>
 							<td style="vertical-align: top; width:30%;">'.$rowConso['PatenteCarro'].'</td>
 						</tr>
-							
-							
-							
+
 						<tr><td colspan="4" rowspan="1" style="vertical-align: top;background-color:#DDD"><strong>Cuerpo Parametros Evaluados</strong></td></tr>
 						<tr>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Condicion CTN</td>

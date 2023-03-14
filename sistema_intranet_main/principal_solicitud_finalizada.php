@@ -1136,9 +1136,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								}
 								</script>
 							</div>
-							
-							
-							
+
 						</div>
 					<?php } ?>
 				</div>

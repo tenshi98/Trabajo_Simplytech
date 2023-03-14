@@ -18,11 +18,11 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['Rut']) && $_GET['Rut']!=''){                   $location .= "&Rut=".$_GET['Rut'];                          $search .= "&Rut=".$_GET['Rut'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){             $location .= "&Nombre=".$_GET['Nombre'];                    $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){                          $location .= "&Rut=".$_GET['Rut'];                          $search .= "&Rut=".$_GET['Rut'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){                    $location .= "&Nombre=".$_GET['Nombre'];                    $search .= "&Nombre=".$_GET['Nombre'];}
 if(isset($_GET['ApellidoPaterno']) && $_GET['ApellidoPaterno']!=''){  $location .= "&ApellidoPaterno=".$_GET['ApellidoPaterno'];  $search .= "&ApellidoPaterno=".$_GET['ApellidoPaterno'];}
 if(isset($_GET['ApellidoMaterno']) && $_GET['ApellidoMaterno']!=''){  $location .= "&ApellidoMaterno=".$_GET['ApellidoMaterno'];  $search .= "&ApellidoMaterno=".$_GET['ApellidoMaterno'];}
-			
+
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -80,8 +80,6 @@ LEFT JOIN `sistema_afp`             ON sistema_afp.idAFP                = person
 $SIS_where = 'personas_listado.idPersona = '.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-
-
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -125,9 +123,7 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SI
 								<strong>Sueldo : </strong><?php echo $rowdata['Sueldo']; ?><br/>
 								<strong>AFP : </strong><?php echo $rowdata['AFP']; ?><br/>
 							</p>
-							
-							
-							
+
 						</div>
 					</div>
 				</div>
@@ -239,11 +235,11 @@ $SIS_where = "personas_listado.idPersona!=0";
 $SIS_where.= " AND personas_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['Rut']) && $_GET['Rut']!=''){                   $SIS_where .= " AND personas_listado.Rut LIKE '%".EstandarizarInput($_GET['Rut'])."%'";}
-if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){             $SIS_where .= " AND personas_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['Rut']) && $_GET['Rut']!=''){                          $SIS_where .= " AND personas_listado.Rut LIKE '%".EstandarizarInput($_GET['Rut'])."%'";}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){                    $SIS_where .= " AND personas_listado.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
 if(isset($_GET['ApellidoPaterno']) && $_GET['ApellidoPaterno']!=''){  $SIS_where .= " AND personas_listado.ApellidoPaterno LIKE '%".EstandarizarInput($_GET['ApellidoPaterno'])."%'";}
 if(isset($_GET['ApellidoMaterno']) && $_GET['ApellidoMaterno']!=''){  $SIS_where .= " AND personas_listado.ApellidoMaterno LIKE '%".EstandarizarInput($_GET['ApellidoMaterno'])."%'";}
-			
+
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'idPersona', 'personas_listado', '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');
@@ -358,24 +354,24 @@ $arrUsers = db_select_array (false, $SIS_query, 'personas_listado', $SIS_join, $
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 					<?php foreach ($arrUsers as $usuarios){ ?>
-					<tr class="odd">
-						<td><?php echo $usuarios['Rut']; ?></td>
-						<td><?php echo $usuarios['ApellidoPaterno']; ?></td>
-						<td><?php echo $usuarios['ApellidoMaterno']; ?></td>
-						<td><?php echo $usuarios['Nombre']; ?></td>
-						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
-						<td>
-							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_personas.php?view='.simpleEncode($usuarios['idPersona'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idPersona']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=4){
-									$ubicacion = $location.'&del='.simpleEncode($usuarios['idPersona'], fecha_actual());
-									$dialogo   = '¿Realmente deseas eliminar a la persona '.$usuarios['Nombre'].' '.$usuarios['ApellidoPaterno'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-								<?php } ?>
-							</div>
-						</td>
-					</tr>
+						<tr class="odd">
+							<td><?php echo $usuarios['Rut']; ?></td>
+							<td><?php echo $usuarios['ApellidoPaterno']; ?></td>
+							<td><?php echo $usuarios['ApellidoMaterno']; ?></td>
+							<td><?php echo $usuarios['Nombre']; ?></td>
+							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
+							<td>
+								<div class="btn-group" style="width: 105px;" >
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_personas.php?view='.simpleEncode($usuarios['idPersona'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idPersona']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=4){
+										$ubicacion = $location.'&del='.simpleEncode($usuarios['idPersona'], fecha_actual());
+										$dialogo   = '¿Realmente deseas eliminar a la persona '.$usuarios['Nombre'].' '.$usuarios['ApellidoPaterno'].'?'; ?>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<?php } ?>
+								</div>
+							</td>
+						</tr>
 					<?php } ?>
 				</tbody>
 			</table>

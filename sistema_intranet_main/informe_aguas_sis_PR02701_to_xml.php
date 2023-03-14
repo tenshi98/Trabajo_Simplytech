@@ -187,6 +187,4 @@ header('Content-Desposition: attachment; filename="foobar.xml"');
 echo $xml->asXML();
 //exit();
 
-
-
 ?>
