@@ -27,6 +27,8 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['NErroresMax']))      $NErroresMax         = $_POST['NErroresMax'];
 	if (!empty($_POST['NErroresActual']))   $NErroresActual      = $_POST['NErroresActual'];
 	if (!empty($_POST['idEstado']))         $idEstado            = $_POST['idEstado'];
+	if (!empty($_POST['HoraInicio']))       $HoraInicio          = $_POST['HoraInicio'];
+	if (!empty($_POST['HoraTermino']))      $HoraTermino         = $_POST['HoraTermino'];
 
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -52,6 +54,8 @@ require_once '0_validate_user_1.php';
 			case 'NErroresMax':       if(empty($NErroresMax)){         $error['NErroresMax']        = 'error/No ha ingresado el numero maximo de errores';}break;
 			case 'NErroresActual':    if(empty($NErroresActual)){      $error['NErroresActual']     = 'error/No ha ingresado el numero actual de errores';}break;
 			case 'idEstado':          if(empty($idEstado)){            $error['idEstado']           = 'error/No ha seleccionado el estado';}break;
+			case 'HoraInicio':        if(empty($HoraInicio)){          $error['HoraInicio']         = 'error/No ha ingresado la hora de inicio';}break;
+			case 'HoraTermino':       if(empty($HoraTermino)){         $error['HoraTermino']        = 'error/No ha ingresado la hora de termino';}break;
 
 		}
 	}
@@ -103,9 +107,12 @@ require_once '0_validate_user_1.php';
 				if(isset($NErroresMax) && $NErroresMax!=''){            $SIS_data .= ",'".$NErroresMax."'";      }else{$SIS_data .= ",''";}
 				if(isset($NErroresActual) && $NErroresActual!=''){      $SIS_data .= ",'".$NErroresActual."'";   }else{$SIS_data .= ",''";}
 				if(isset($idEstado) && $idEstado!=''){                  $SIS_data .= ",'".$idEstado."'";         }else{$SIS_data .= ",''";}
+				if(isset($HoraInicio) && $HoraInicio!=''){              $SIS_data .= ",'".$HoraInicio."'";       }else{$SIS_data .= ",''";}
+				if(isset($HoraTermino) && $HoraTermino!=''){            $SIS_data .= ",'".$HoraTermino."'";      }else{$SIS_data .= ",''";}
 
 				// inserto los datos de registro en la db
-				$SIS_columns = 'idTelemetria, Nombre,idTipo, idTipoAlerta, idUniMed, valor_error, valor_diferencia, Rango_ini, Rango_fin, NErroresMax, NErroresActual, idEstado';
+				$SIS_columns = 'idTelemetria, Nombre,idTipo, idTipoAlerta, idUniMed, valor_error, valor_diferencia, Rango_ini,
+				Rango_fin, NErroresMax, NErroresActual, idEstado, HoraInicio, HoraTermino';
 				$ultimo_id = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_alarmas_perso', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Si ejecuto correctamente la consulta
@@ -149,7 +156,9 @@ require_once '0_validate_user_1.php';
 				if(isset($Rango_fin) && $Rango_fin!=''){                  $SIS_data .= ",Rango_fin='".$Rango_fin."'";}
 				if(isset($NErroresMax) && $NErroresMax!=''){              $SIS_data .= ",NErroresMax='".$NErroresMax."'";         }else{$SIS_data .= ",NErroresMax='0'";}
 				if(isset($NErroresActual) && $NErroresActual!=''){        $SIS_data .= ",NErroresActual='".$NErroresActual."'";   }else{$SIS_data .= ",NErroresActual='0'";}
-				if(isset($idEstado) && $idEstado!=''){                    $SIS_data .= ",idEstado='".$idEstado."'";   }
+				if(isset($idEstado) && $idEstado!=''){                    $SIS_data .= ",idEstado='".$idEstado."'";}
+				if(isset($HoraInicio) && $HoraInicio!=''){                $SIS_data .= ",HoraInicio='".$HoraInicio."'";}
+				if(isset($HoraTermino) && $HoraTermino!=''){              $SIS_data .= ",HoraTermino='".$HoraTermino."'";}
 
 				/*******************************************************/
 				//se actualizan los datos
@@ -244,9 +253,9 @@ require_once '0_validate_user_1.php';
 					//filtros
 					if(isset($idTelemetria) && $idTelemetria!=''){    $SIS_data  = "'".$idTelemetria."'"; }else{$SIS_data  = "''";}
 					if(isset($idAlarma) && $idAlarma!=''){            $SIS_data .= ",'".$idAlarma."'";    }else{$SIS_data .= ",''";}
-					if(isset($idEstado) && $idEstado!=''){           $SIS_data .= ",'".$idEstado."'";    }else{$SIS_data .= ",''";}
-					if(isset($idUsuario) && $idUsuario!=''){         $SIS_data .= ",'".$idUsuario."'";   }else{$SIS_data .= ",''";}
-					if(isset($Fecha) && $Fecha!=''){$SIS_data .= ",'".$Fecha."'";      }else{$SIS_data .= ",''";}
+					if(isset($idEstado) && $idEstado!=''){            $SIS_data .= ",'".$idEstado."'";    }else{$SIS_data .= ",''";}
+					if(isset($idUsuario) && $idUsuario!=''){          $SIS_data .= ",'".$idUsuario."'";   }else{$SIS_data .= ",''";}
+					if(isset($Fecha) && $Fecha!=''){                  $SIS_data .= ",'".$Fecha."'";       }else{$SIS_data .= ",''";}
 					if(isset($Hora) && $Hora!=''){                    $SIS_data .= ",'".$Hora."'";        }else{$SIS_data .= ",''";}
 					if(isset($TimeStamp) && $TimeStamp!=''){          $SIS_data .= ",'".$TimeStamp."'";   }else{$SIS_data .= ",''";}
 
@@ -309,9 +318,9 @@ require_once '0_validate_user_1.php';
 						//filtros
 						if(isset($idTelemetria) && $idTelemetria!=''){            $SIS_data  = "'".$idTelemetria."'";          }else{$SIS_data  = "''";}
 						if(isset($alarm['idAlarma']) && $alarm['idAlarma']!=''){  $SIS_data .= ",'".$alarm['idAlarma']."'";    }else{$SIS_data .= ",''";}
-						if(isset($idEstado) && $idEstado!=''){                   $SIS_data .= ",'".$idEstado."'";             }else{$SIS_data .= ",''";}
-						if(isset($idUsuario) && $idUsuario!=''){                 $SIS_data .= ",'".$idUsuario."'";            }else{$SIS_data .= ",''";}
-						if(isset($Fecha) && $Fecha!=''){     $SIS_data .= ",'".$Fecha."'";               }else{$SIS_data .= ",''";}
+						if(isset($idEstado) && $idEstado!=''){                    $SIS_data .= ",'".$idEstado."'";             }else{$SIS_data .= ",''";}
+						if(isset($idUsuario) && $idUsuario!=''){                  $SIS_data .= ",'".$idUsuario."'";            }else{$SIS_data .= ",''";}
+						if(isset($Fecha) && $Fecha!=''){                          $SIS_data .= ",'".$Fecha."'";                }else{$SIS_data .= ",''";}
 						if(isset($Hora) && $Hora!=''){                            $SIS_data .= ",'".$Hora."'";                 }else{$SIS_data .= ",''";}
 						if(isset($TimeStamp) && $TimeStamp!=''){                  $SIS_data .= ",'".$TimeStamp."'";            }else{$SIS_data .= ",''";}
 

@@ -99,599 +99,733 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Alerta borrada correct
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['editItem'])){
-// consulto los datos
-$rowdata = db_select_data (false, 'Sensor_N, Rango_ini, Rango_fin, valor_especifico', 'telemetria_listado_alarmas_perso_items', '', 'idItem ='.$_GET['editItem'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	// consulto los datos
+	$rowdata = db_select_data (false, 'Sensor_N, Rango_ini, Rango_fin, valor_especifico', 'telemetria_listado_alarmas_perso_items', '', 'idItem ='.$_GET['editItem'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-//numero sensores equipo
-$N_Maximo_Sensores = 72;
-$subquery = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresGrupo_'.$i;
-	$subquery .= ',SensoresNombre_'.$i;
-	$subquery .= ',SensoresActivo_'.$i;
-}
-//Se traen todos los datos
-$rowSensores = db_select_data (false, 'idTelemetria, cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowSensores');
+	//numero sensores equipo
+	$N_Maximo_Sensores = 72;
+	$subquery = '';
+	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+		$subquery .= ',SensoresGrupo_'.$i;
+		$subquery .= ',SensoresNombre_'.$i;
+		$subquery .= ',SensoresActivo_'.$i;
+	}
+	//Se traen todos los datos
+	$rowSensores = db_select_data (false, 'idTelemetria, cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowSensores');
 
-$arrGrupos = array();
-$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
+	$arrGrupos = array();
+	$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
 
-$arrFinalGrupos    = array();
-foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];}
+	$arrFinalGrupos    = array();
+	foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];}
 
-?>
+	?>
 
-<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
-		<header>
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Editar Item</h5>
-		</header>
-		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+		<div class="box dark">
+			<header>
+				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+				<h5>Editar Item</h5>
+			</header>
+			<div class="body">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php
-				$Form_Inputs = new Form_Inputs();
+					<?php
+					$Form_Inputs = new Form_Inputs();
 
-				echo '<div class="form-group" id="div_sensorn" >
-						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">Sensor</label>
-						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
-							<select name="Sensor_N" id="Sensor_N" class="form-control" required="">
-								<option value="" selected>Seleccione una Opcion</option>';
+					echo '<div class="form-group" id="div_sensorn" >
+							<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">Sensor</label>
+							<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
+								<select name="Sensor_N" id="Sensor_N" class="form-control" required="">
+									<option value="" selected>Seleccione una Opcion</option>';
 
-								for ($i = 1; $i <= $rowSensores['cantSensores']; $i++) {
-									//solo sensores activos
-									if(isset($rowSensores['SensoresActivo_'.$i])&&$rowSensores['SensoresActivo_'.$i]==1){
-										//se verifica que el grupo exista
-										if(isset($arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]])&&$arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]]!=''){
-											//Se trae el grupo
-											$Grupos = $arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]];
-											//Se marca como seleccionado
-											$selected = '';
-											if($rowdata['Sensor_N']==$i){
-												$selected = 'selected';
+									for ($i = 1; $i <= $rowSensores['cantSensores']; $i++) {
+										//solo sensores activos
+										if(isset($rowSensores['SensoresActivo_'.$i])&&$rowSensores['SensoresActivo_'.$i]==1){
+											//se verifica que el grupo exista
+											if(isset($arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]])&&$arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]]!=''){
+												//Se trae el grupo
+												$Grupos = $arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]];
+												//Se marca como seleccionado
+												$selected = '';
+												if($rowdata['Sensor_N']==$i){
+													$selected = 'selected';
+												}
+												//se imprime
+												echo '<option value="'.$i.'" '.$selected.'>'.$Grupos.' - '.$rowSensores['SensoresNombre_'.$i].'</option>';
+											//si no existe grupo se imprime sin este
+											}else{
+												//Se marca como seleccionado
+												$selected = '';
+												if($rowdata['Sensor_N']==$i){
+													$selected = 'selected';
+												}
+												//se imprime
+												echo '<option value="'.$i.'" '.$selected.'>'.$rowSensores['SensoresNombre_'.$i].'</option>';
 											}
-											//se imprime
-											echo '<option value="'.$i.'" '.$selected.'>'.$Grupos.' - '.$rowSensores['SensoresNombre_'.$i].'</option>';
-										//si no existe grupo se imprime sin este
-										}else{
-											//Se marca como seleccionado
-											$selected = '';
-											if($rowdata['Sensor_N']==$i){
-												$selected = 'selected';
-											}
-											//se imprime
-											echo '<option value="'.$i.'" '.$selected.'>'.$rowSensores['SensoresNombre_'.$i].'</option>';
 										}
 									}
-								}
 
-							echo '
-							</select>
-						</div>
-					</div>';
+								echo '
+								</select>
+							</div>
+						</div>';
 
-				if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''&&($_GET['idTipo']==3 OR $_GET['idTipo']==4)){
-					//Se verifican si existen los datos
-					if(isset($Rango_ini)){  $x1  = $Rango_ini;  }else{$x1  = Cantidades_decimales_justos($rowdata['Rango_ini']);}
-					if(isset($Rango_fin)){  $x2  = $Rango_fin;  }else{$x2  = Cantidades_decimales_justos($rowdata['Rango_fin']);}
+					if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){
+						switch ($_GET['idTipo']) {
+							case 3:
+							case 4:
+								//Se verifican si existen los datos
+								if(isset($Rango_ini)){  $x1  = $Rango_ini;  }else{$x1  = Cantidades_decimales_justos($rowdata['Rango_ini']);}
+								if(isset($Rango_fin)){  $x2  = $Rango_fin;  }else{$x2  = Cantidades_decimales_justos($rowdata['Rango_fin']);}
 
-					//opcionales
-					$Form_Inputs->form_post_data(1, 'Rango de valores donde normalmente trabaja el sensor, en caso de que un valor sea distinto de este rango (inferior al minimo, superior al maximo) marcara una alerta personalizada');
-					$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x1, 2);
-					$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x2, 2);
-				}elseif(isset($_GET['idTipo'])&&$_GET['idTipo']!=''&&$_GET['idTipo']==6){
-					if(isset($valor_especifico)){  $x3  = $valor_especifico;  }else{$x3  = Cantidades_decimales_justos($rowdata['valor_especifico']);}
+								//opcionales
+								$Form_Inputs->form_post_data(1, 'Rango de valores donde normalmente trabaja el sensor, en caso de que un valor sea distinto de este rango (inferior al minimo, superior al maximo) marcara una alerta personalizada');
+								$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x1, 2);
+								$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x2, 2);
+								break;
+							case 6:
+								if(isset($valor_especifico)){  $x3  = $valor_especifico;  }else{$x3  = Cantidades_decimales_justos($rowdata['valor_especifico']);}
 
-					//opcionales
-					$Form_Inputs->form_post_data(1, 'El valor especifico que es considerado como error (por ejemplo 0 o 1)');
-					$Form_Inputs->form_input_number('Valor Especifico','valor_especifico', $x3, 2);
+								//opcionales
+								$Form_Inputs->form_post_data(1, 'El valor especifico que es considerado como error (por ejemplo 0 o 1)');
+								$Form_Inputs->form_input_number('Valor Especifico','valor_especifico', $x3, 2);
+								break;
+							case 7:
+								if(isset($valor_especifico)){  $x3  = $valor_especifico;  }else{$x3  = Cantidades_decimales_justos($rowdata['valor_especifico']);}
 
-				}
+								//opcionales
+								$Form_Inputs->form_post_data(1, 'Valor con el cual se considera que el sensor esta activo');
+								$Form_Inputs->form_input_number('Valor Encendido','valor_especifico', $x3, 2);
+								break;
+						}
+					}
 
-				$Form_Inputs->form_input_hidden('idItem', $_GET['editItem'], 2);
+					$Form_Inputs->form_input_hidden('idItem', $_GET['editItem'], 2);
 
-				?>
+					?>
 
-				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_item">
-					<a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
-				</div>
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_item">
+						<a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					</div>
 
-			</form>
-            <?php widget_validator(); ?>
+				</form>
+				<?php widget_validator(); ?>
+			</div>
 		</div>
 	</div>
-</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['addItem'])){
+	//numero sensores equipo
+	$N_Maximo_Sensores = 72;
+	$subquery = '';
+	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+		$subquery .= ',SensoresGrupo_'.$i;
+		$subquery .= ',SensoresNombre_'.$i;
+		$subquery .= ',SensoresActivo_'.$i;
+	}
+	//Se traen todos los datos
+	$rowSensores = db_select_data (false, 'idTelemetria, cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowSensores');
 
-//numero sensores equipo
-$N_Maximo_Sensores = 72;
-$subquery = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresGrupo_'.$i;
-	$subquery .= ',SensoresNombre_'.$i;
-	$subquery .= ',SensoresActivo_'.$i;
-}
-//Se traen todos los datos
-$rowSensores = db_select_data (false, 'idTelemetria, cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowSensores');
+	$arrGrupos = array();
+	$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
 
-$arrGrupos = array();
-$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
+	$arrFinalGrupos    = array();
+	foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];}
 
-$arrFinalGrupos    = array();
-foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];}
+	?>
 
-?>
+	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+		<div class="box dark">
+			<header>
+				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+				<h5>Crear Item</h5>
+			</header>
+			<div class="body">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
-		<header>
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Crear Item</h5>
-		</header>
-		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+					<?php
+					$Form_Inputs = new Form_Inputs();
 
-				<?php
-				$Form_Inputs = new Form_Inputs();
+					echo '<div class="form-group" id="div_sensorn" >
+							<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">Sensor</label>
+							<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
+								<select name="Sensor_N" id="Sensor_N" class="form-control" required="">
+									<option value="" selected>Seleccione una Opcion</option>';
 
-				echo '<div class="form-group" id="div_sensorn" >
-						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">Sensor</label>
-						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
-							<select name="Sensor_N" id="Sensor_N" class="form-control" required="">
-								<option value="" selected>Seleccione una Opcion</option>';
-
-								for ($i = 1; $i <= $rowSensores['cantSensores']; $i++) {
-									//solo sensores activos
-									if(isset($rowSensores['SensoresActivo_'.$i])&&$rowSensores['SensoresActivo_'.$i]==1){
-										//se verifica que el grupo exista
-										if(isset($arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]])&&$arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]]!=''){
-											//Se trae el grupo
-											$Grupos = $arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]];
-											//se imprime
-											echo '<option value="'.$i.'">'.$Grupos.' - '.$rowSensores['SensoresNombre_'.$i].'</option>';
-										//si no existe grupo se imprime sin este
-										}else{
-											//se imprime
-											echo '<option value="'.$i.'">'.$rowSensores['SensoresNombre_'.$i].'</option>';
+									for ($i = 1; $i <= $rowSensores['cantSensores']; $i++) {
+										//solo sensores activos
+										if(isset($rowSensores['SensoresActivo_'.$i])&&$rowSensores['SensoresActivo_'.$i]==1){
+											//se verifica que el grupo exista
+											if(isset($arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]])&&$arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]]!=''){
+												//Se trae el grupo
+												$Grupos = $arrFinalGrupos[$rowSensores['SensoresGrupo_'.$i]];
+												//se imprime
+												echo '<option value="'.$i.'">'.$Grupos.' - '.$rowSensores['SensoresNombre_'.$i].'</option>';
+											//si no existe grupo se imprime sin este
+											}else{
+												//se imprime
+												echo '<option value="'.$i.'">'.$rowSensores['SensoresNombre_'.$i].'</option>';
+											}
 										}
 									}
-								}
 
-							echo '
-							</select>
-						</div>
-					</div>';
+								echo '
+								</select>
+							</div>
+						</div>';
 
-				if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''&&($_GET['idTipo']==3 OR $_GET['idTipo']==4)){
-					//Se verifican si existen los datos
-					if(isset($Rango_ini)){  $x1  = $Rango_ini;  }else{$x1  = '';}
-					if(isset($Rango_fin)){  $x2  = $Rango_fin;  }else{$x2  = '';}
+					if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){
+						switch ($_GET['idTipo']) {
+							case 3:
+							case 4:
+								//Se verifican si existen los datos
+								if(isset($Rango_ini)){  $x1  = $Rango_ini;  }else{$x1  = '';}
+								if(isset($Rango_fin)){  $x2  = $Rango_fin;  }else{$x2  = '';}
 
-					//opcionales
-					$Form_Inputs->form_post_data(1, 'Rango de valores donde normalmente trabaja el sensor, en caso de que un valor sea distinto de este rango (inferior al minimo, superior al maximo) marcara una alerta personalizada');
-					$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x1, 2);
-					$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x2, 2);
-				}elseif(isset($_GET['idTipo'])&&$_GET['idTipo']!=''&&$_GET['idTipo']==6){
-					if(isset($valor_especifico)){  $x3  = $valor_especifico;  }else{$x3  = '';}
+								//opcionales
+								$Form_Inputs->form_post_data(1, 'Rango de valores donde normalmente trabaja el sensor, en caso de que un valor sea distinto de este rango (inferior al minimo, superior al maximo) marcara una alerta personalizada');
+								$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x1, 2);
+								$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x2, 2);
+								break;
+							case 6:
+								if(isset($valor_especifico)){  $x3  = $valor_especifico;  }else{$x3  = '';}
 
-					//opcionales
-					$Form_Inputs->form_post_data(1, 'El valor especifico que es considerado como error (por ejemplo 0 o 1)');
-					$Form_Inputs->form_input_number('Valor Especifico','valor_especifico', $x3, 2);
+								//opcionales
+								$Form_Inputs->form_post_data(1, 'El valor especifico que es considerado como error (por ejemplo 0 o 1)');
+								$Form_Inputs->form_input_number('Valor Especifico','valor_especifico', $x3, 2);
+								break;
+							case 7:
+								if(isset($valor_especifico)){  $x3  = $valor_especifico;  }else{$x3  = '';}
 
-				}
+								//opcionales
+								$Form_Inputs->form_post_data(1, 'Valor con el cual se considera que el sensor esta activo');
+								$Form_Inputs->form_input_number('Valor Encendido','valor_especifico', $x3, 2);
+								break;
+						}
+					}
 
-				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
-				$Form_Inputs->form_input_hidden('idAlarma', $_GET['listItems'], 2);
+					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
+					$Form_Inputs->form_input_hidden('idAlarma', $_GET['listItems'], 2);
 
-				?>
+					?>
 
-				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_item">
-					<a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
-				</div>
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_item">
+						<a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo']; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					</div>
 
-			</form>
-            <?php widget_validator(); ?>
+				</form>
+				<?php widget_validator(); ?>
+			</div>
 		</div>
 	</div>
-</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['listItems'])){
-// Se trae un listado con todas las alarmas
-$arrAlarmas = array();
-$arrAlarmas = db_select_array (false, 'idItem, Sensor_N, Rango_ini, Rango_fin, valor_especifico', 'telemetria_listado_alarmas_perso_items', '', 'idAlarma ='.$_GET['listItems'], 'idItem ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAlarmas');
+	// Se trae un listado con todas las alarmas
+	$arrAlarmas = array();
+	$arrAlarmas = db_select_array (false, 'idItem, Sensor_N, Rango_ini, Rango_fin, valor_especifico', 'telemetria_listado_alarmas_perso_items', '', 'idAlarma ='.$_GET['listItems'], 'idItem ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAlarmas');
 
-//numero sensores equipo
-$N_Maximo_Sensores = 72;
-$subquery = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresGrupo_'.$i;
-	$subquery .= ',SensoresNombre_'.$i;
-}
-//Se traen todos los datos
-$rowSensores = db_select_data (false, 'idTelemetria, cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowSensores');
+	//numero sensores equipo
+	$N_Maximo_Sensores = 72;
+	$subquery = '';
+	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+		$subquery .= ',SensoresGrupo_'.$i;
+		$subquery .= ',SensoresNombre_'.$i;
+	}
+	//Se traen todos los datos
+	$rowSensores = db_select_data (false, 'idTelemetria, cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowSensores');
 
-$arrGrupos = array();
-$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
+	$arrGrupos = array();
+	$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
 
-$arrFinalGrupos    = array();
-foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];}
+	$arrFinalGrupos    = array();
+	foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];}
 
-?>
+	?>
 
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo']; ?>&addItem=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Item</a><?php } ?>
-</div>
-<div class="clearfix"></div>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo']; ?>&addItem=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Item</a><?php } ?>
+	</div>
+	<div class="clearfix"></div>
 
 
 
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<div class="box">
-		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Items de <?php echo $_GET['nombre_equipo']; ?></h5>
-		</header>
-        <div class="table-responsive">
-			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
-				<thead>
-					<tr role="row">
-						<th>Sensor</th>
-						<th width="10">Acciones</th>
-					</tr>
-				</thead>
-				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php foreach ($arrAlarmas as $alarmas) { ?>
-						<tr class="odd">
-							<td><?php
-							$grupo = $arrFinalGrupos[$rowSensores['SensoresGrupo_'.$alarmas['Sensor_N']]];
-							echo $grupo.$rowSensores['SensoresNombre_'.$alarmas['Sensor_N']];
-							if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''&&($_GET['idTipo']==3 OR $_GET['idTipo']==4)){
-								echo ' (Rango: '.Cantidades_decimales_justos($alarmas['Rango_ini']).' / '.Cantidades_decimales_justos($alarmas['Rango_fin']).')';
-							}elseif(isset($_GET['idTipo'])&&$_GET['idTipo']!=''&&$_GET['idTipo']==6){
-								echo ' (Valor especifico: '.Cantidades_decimales_justos($alarmas['valor_especifico']).')';
-							}
-							?>
-							</td>
-							<td>
-								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo'].'&editItem='.$alarmas['idItem']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=4){
-										//se verifica que el usuario no sea uno mismo
-										$ubicacion = $new_location.'&delAlarma_item='.simpleEncode($alarmas['idItem'], fecha_actual());
-										$ubicacion.='&nombre_equipo='.$_GET['nombre_equipo'];
-										$ubicacion.='&listItems='.$_GET['listItems'];
-										$ubicacion.='&idTipo='.$_GET['idTipo'];
-										$dialogo   = '¿Realmente deseas eliminar el item '.$grupo.$rowSensores['SensoresNombre_'.$alarmas['Sensor_N']].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
-									<?php } ?>
-								</div>
-							</td>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<div class="box">
+			<header>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de Items de <?php echo $_GET['nombre_equipo']; ?></h5>
+			</header>
+			<div class="table-responsive">
+				<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
+					<thead>
+						<tr role="row">
+							<th>Sensor</th>
+							<th width="10">Acciones</th>
 						</tr>
-					<?php } ?>
-				</tbody>
-			</table>
+					</thead>
+					<tbody role="alert" aria-live="polite" aria-relevant="all">
+						<?php foreach ($arrAlarmas as $alarmas) { ?>
+							<tr class="odd">
+								<td>
+									<?php
+									$grupo = $arrFinalGrupos[$rowSensores['SensoresGrupo_'.$alarmas['Sensor_N']]];
+									echo $grupo.$rowSensores['SensoresNombre_'.$alarmas['Sensor_N']];
+									if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){
+										switch ($_GET['idTipo']) {
+											case 3:
+											case 4:
+												echo ' (Rango: '.Cantidades_decimales_justos($alarmas['Rango_ini']).' / '.Cantidades_decimales_justos($alarmas['Rango_fin']).')';
+												break;
+											case 6:
+												echo ' (Valor Especifico: '.Cantidades_decimales_justos($alarmas['valor_especifico']).')';
+												break;
+											case 7:
+												echo ' (Valor Encendido: '.Cantidades_decimales_justos($alarmas['valor_especifico']).')';
+												break;
+										}
+									}
+									?>
+								</td>
+								<td>
+									<div class="btn-group" style="width: 70px;" >
+										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo'].'&editItem='.$alarmas['idItem']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=4){
+											//se verifica que el usuario no sea uno mismo
+											$ubicacion = $new_location.'&delAlarma_item='.simpleEncode($alarmas['idItem'], fecha_actual());
+											$ubicacion.='&nombre_equipo='.$_GET['nombre_equipo'];
+											$ubicacion.='&listItems='.$_GET['listItems'];
+											$ubicacion.='&idTipo='.$_GET['idTipo'];
+											$dialogo   = '¿Realmente deseas eliminar el item '.$grupo.$rowSensores['SensoresNombre_'.$alarmas['Sensor_N']].'?'; ?>
+											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<?php } ?>
+									</div>
+								</td>
+							</tr>
+						<?php } ?>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
-</div>
 
-<div class="clearfix"></div>
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $new_location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
-</div>
-
+	<div class="clearfix"></div>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
+	<a href="<?php echo $new_location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
+	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['editAlarma'])){
-// consulto los datos
-$SIS_query = 'Nombre,idTipoAlerta, idUniMed, idTipo, valor_error, valor_diferencia, Rango_ini, Rango_fin,
-NErroresMax, NErroresActual, idEstado';
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso', '', 'idAlarma ='.$_GET['editAlarma'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	// consulto los datos
+	$SIS_query = 'Nombre,idTipoAlerta, idUniMed, idTipo, valor_error, valor_diferencia, Rango_ini, Rango_fin,
+	NErroresMax, NErroresActual, idEstado, HoraInicio, HoraTermino';
+	$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso', '', 'idAlarma ='.$_GET['editAlarma'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-?>
+	?>
 
-<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
-		<header>
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Editar Alarma Personalizada</h5>
-		</header>
-		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+		<div class="box dark">
+			<header>
+				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+				<h5>Editar Alarma Personalizada</h5>
+			</header>
+			<div class="body">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php
-				//Se verifican si existen los datos
-				if(isset($Nombre)){            $x1  = $Nombre;            }else{$x1  = $rowdata['Nombre'];}
-				if(isset($idTipoAlerta)){      $x2  = $idTipoAlerta;      }else{$x2  = $rowdata['idTipoAlerta'];}
-				if(isset($idUniMed)){          $x3  = $idUniMed;          }else{$x3  = $rowdata['idUniMed'];}
-				if(isset($idTipo)){            $x4  = $idTipo;            }else{$x4  = $rowdata['idTipo'];}
-				if(isset($NErroresMax)){       $x5  = $NErroresMax;       }else{$x5  = Cantidades_decimales_justos($rowdata['NErroresMax']);}
-				if(isset($NErroresActual)){    $x6  = $NErroresActual;    }else{$x6  = Cantidades_decimales_justos($rowdata['NErroresActual']);}
-				if(isset($valor_error)){       $x7  = $valor_error;       }else{$x7  = Cantidades_decimales_justos($rowdata['valor_error']);}
-				if(isset($valor_diferencia)){  $x8  = $valor_diferencia;  }else{$x8  = Cantidades_decimales_justos($rowdata['valor_diferencia']);}
-				if(isset($Rango_ini)){         $x9  = $Rango_ini;         }else{$x9  = Cantidades_decimales_justos($rowdata['Rango_ini']);}
-				if(isset($Rango_fin)){         $x10 = $Rango_fin;         }else{$x10 = Cantidades_decimales_justos($rowdata['Rango_fin']);}
-				if(isset($idEstado)){          $x11 = $idEstado;          }else{$x11 = $rowdata['idEstado'];}
+					<?php
+					//Se verifican si existen los datos
+					if(isset($Nombre)){            $x1  = $Nombre;            }else{$x1  = $rowdata['Nombre'];}
+					if(isset($idTipoAlerta)){      $x2  = $idTipoAlerta;      }else{$x2  = $rowdata['idTipoAlerta'];}
+					if(isset($idUniMed)){          $x3  = $idUniMed;          }else{$x3  = $rowdata['idUniMed'];}
+					if(isset($idTipo)){            $x4  = $idTipo;            }else{$x4  = $rowdata['idTipo'];}
+					if(isset($NErroresMax)){       $x5  = $NErroresMax;       }else{$x5  = Cantidades_decimales_justos($rowdata['NErroresMax']);}
+					if(isset($NErroresActual)){    $x6  = $NErroresActual;    }else{$x6  = Cantidades_decimales_justos($rowdata['NErroresActual']);}
+					if(isset($valor_error)){       $x7  = $valor_error;       }else{$x7  = Cantidades_decimales_justos($rowdata['valor_error']);}
+					if(isset($valor_diferencia)){  $x8  = $valor_diferencia;  }else{$x8  = Cantidades_decimales_justos($rowdata['valor_diferencia']);}
+					if(isset($Rango_ini)){         $x9  = $Rango_ini;         }else{$x9  = Cantidades_decimales_justos($rowdata['Rango_ini']);}
+					if(isset($Rango_fin)){         $x10 = $Rango_fin;         }else{$x10 = Cantidades_decimales_justos($rowdata['Rango_fin']);}
+					if(isset($HoraInicio)){        $x11 = $HoraInicio;        }else{$x11 = $rowdata['HoraInicio'];}
+					if(isset($HoraTermino)){       $x12 = $HoraTermino;       }else{$x12 = $rowdata['HoraTermino'];}
+					if(isset($idEstado)){          $x13 = $idEstado;          }else{$x13 = $rowdata['idEstado'];}
 
-				//se dibujan los inputs
-				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+					//se dibujan los inputs
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 
-				$Form_Inputs->form_post_data(1, 'Seleccione un Tipo Alarma');
-				$Form_Inputs->form_select('Tipo Alarma','idTipo', $x4, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
-				$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x5, 2);
-				$Form_Inputs->form_input_number('N° Actual Errores','NErroresActual', $x6, 1);
-				//opcionales ocultos
-				$Form_Inputs->form_input_number('Valor de error','valor_error', $x7, 1);
-				$Form_Inputs->form_input_number('Porcentaje de diferencia','valor_diferencia', $x8, 1);
-				$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x9, 1);
-				$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x10, 1);
+					$Form_Inputs->form_post_data(1, 'Seleccione un Tipo Alarma');
+					$Form_Inputs->form_select('Tipo Alarma','idTipo', $x4, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
+					$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x5, 2);
+					$Form_Inputs->form_input_number('N° Actual Errores','NErroresActual', $x6, 1);
+					//opcionales ocultos
+					$Form_Inputs->form_input_number('Valor de error','valor_error', $x7, 1);
+					$Form_Inputs->form_input_number('Porcentaje de diferencia','valor_diferencia', $x8, 1);
+					$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x9, 1);
+					$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x10, 1);
+					$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x11, 1, 2);
+					$Form_Inputs->form_time('Hora Termino','HoraTermino', $x12, 1, 2);
 
-				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 60 minutos.<br/>- <strong>Catastrofica</strong> = cada 15 minutos.');
-				$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
+					$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 60 minutos.<br/>- <strong>Catastrofica</strong> = cada 15 minutos.');
+					$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
 
-				$Form_Inputs->form_post_data(1, 'Se utiliza unicamente en <strong>Informes CrossCrane - Alertas por Grua</strong> para poder agrupar los errores de voltaje.');
-				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);
+					$Form_Inputs->form_post_data(1, 'Se utiliza unicamente en <strong>Informes CrossCrane - Alertas por Grua</strong> para poder agrupar los errores de voltaje.');
+					$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);
 
-				$Form_Inputs->form_post_data(1, 'Al desactivarla, se elimina la opcion de que la plataforma registre esta alarma');
-				$Form_Inputs->form_select('Estado','idEstado', $x11, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
+					$Form_Inputs->form_post_data(1, 'Al desactivarla, se elimina la opcion de que la plataforma registre esta alarma');
+					$Form_Inputs->form_select('Estado','idEstado', $x13, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 
-				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
-				$Form_Inputs->form_input_hidden('idAlarma', $_GET['editAlarma'], 2);
+					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
+					$Form_Inputs->form_input_hidden('idAlarma', $_GET['editAlarma'], 2);
 
-				?>
+					?>
 
-				<script>
+					<script>
 
-					$(document).ready(function(){
-						document.getElementById("div_valor_error").style.display = "none";
-						document.getElementById("div_valor_diferencia").style.display = "none";
-						document.getElementById("div_Rango_ini").style.display = "none";
-						document.getElementById("div_Rango_fin").style.display = "none";
-						cambia_tipo();
-					});
+						$(document).ready(function(){
+							document.getElementById("div_valor_error").style.display = "none";
+							document.getElementById("div_valor_diferencia").style.display = "none";
+							document.getElementById("div_Rango_ini").style.display = "none";
+							document.getElementById("div_Rango_fin").style.display = "none";
+							document.getElementById("div_HoraInicio").style.display = "none";
+							document.getElementById("div_HoraTermino").style.display = "none";
+							cambia_tipo();
+						});
 
-					document.getElementById("idTipo").onchange = function() {cambia_tipo()};
+						document.getElementById("idTipo").onchange = function() {cambia_tipo()};
 
-					function cambia_tipo(){
-						let Componente = document.form1.idTipo[document.form1.idTipo.selectedIndex].value;
+						function cambia_tipo(){
+							let Componente = document.form1.idTipo[document.form1.idTipo.selectedIndex].value;
 
-						switch(Componente) {
-							//Errores Conjuntos
-							case '1':
-								document.getElementById("div_valor_error").style.display = "block";
-								document.getElementById("div_valor_diferencia").style.display = "none";
-								document.getElementById("div_Rango_ini").style.display = "none";
-								document.getElementById("div_Rango_fin").style.display = "none";
-								document.getElementById("valor_diferencia").value = "";
-								document.getElementById("Rango_ini").value = "";
-								document.getElementById("Rango_fin").value = "";
-								document.getElementById("alert_post_data").innerHTML = "Todos los sensores tienen el mismo valor de error";
-							break;
-							//Rango Porcentaje Grupo
-							case '2':
-								document.getElementById("div_valor_error").style.display = "none";
-								document.getElementById("div_valor_diferencia").style.display = "block";
-								document.getElementById("div_Rango_ini").style.display = "none";
-								document.getElementById("div_Rango_fin").style.display = "none";
-								document.getElementById("valor_error").value = "";
-								document.getElementById("Rango_ini").value = "";
-								document.getElementById("Rango_fin").value = "";
-								document.getElementById("alert_post_data").innerHTML = "Un sensor tiene un valor que es x porcentaje inferior o superior a otro sensor dentro del grupo de sensores";
-							break;
-							//Alertas Personalizadas (al menos 1 error)
-							case '3':
-								document.getElementById("div_valor_error").style.display = "none";
-								document.getElementById("div_valor_diferencia").style.display = "none";
-								document.getElementById("div_Rango_ini").style.display = "none";
-								document.getElementById("div_Rango_fin").style.display = "none";
-								document.getElementById("valor_error").value = "";
-								document.getElementById("valor_diferencia").value = "";
-								document.getElementById("Rango_ini").value = "";
-								document.getElementById("Rango_fin").value = "";
-								document.getElementById("alert_post_data").innerHTML = "Al menos un sensor se encuentra fuera del rango de trabajo normal";
-							break;
-							//Alertas Personalizadas (todos con error)
-							case '4':
-								document.getElementById("div_valor_error").style.display = "none";
-								document.getElementById("div_valor_diferencia").style.display = "none";
-								document.getElementById("div_Rango_ini").style.display = "none";
-								document.getElementById("div_Rango_fin").style.display = "none";
-								document.getElementById("valor_error").value = "";
-								document.getElementById("valor_diferencia").value = "";
-								document.getElementById("Rango_ini").value = "";
-								document.getElementById("Rango_fin").value = "";
-								document.getElementById("alert_post_data").innerHTML = "Todos los sensores se encuentra fuera del rango de trabajo normal";
-							break;
-							//Promedios fuera de Rangos
-							case '5':
-								document.getElementById("div_valor_error").style.display = "none";
-								document.getElementById("div_valor_diferencia").style.display = "none";
-								document.getElementById("div_Rango_ini").style.display = "block";
-								document.getElementById("div_Rango_fin").style.display = "block";
-								document.getElementById("valor_error").value = "";
-								document.getElementById("valor_diferencia").value = "";
-								document.getElementById("alert_post_data").innerHTML = "El promedio de los sensores esta fuera del rango establecido";
-							break;
-							//Alertas Personalizadas (todos con valor especifico)
-							case '6':
-								document.getElementById("div_valor_error").style.display = "none";
-								document.getElementById("div_valor_diferencia").style.display = "none";
-								document.getElementById("div_Rango_ini").style.display = "none";
-								document.getElementById("div_Rango_fin").style.display = "none";
-								document.getElementById("valor_error").value = "";
-								document.getElementById("valor_diferencia").value = "";
-								document.getElementById("Rango_ini").value = "";
-								document.getElementById("Rango_fin").value = "";
-								document.getElementById("alert_post_data").innerHTML = "Todos los sensores estan con un valor predefinido, el cual indica error";
-							break;
+							switch(Componente) {
+								//Errores Conjuntos
+								case '1':
+									document.getElementById("div_valor_error").style.display = "block";
+									document.getElementById("div_valor_diferencia").style.display = "none";
+									document.getElementById("div_Rango_ini").style.display = "none";
+									document.getElementById("div_Rango_fin").style.display = "none";
+									document.getElementById("div_HoraInicio").style.display = "none";
+									document.getElementById("div_HoraTermino").style.display = "none";
+									//reseteo
+									document.getElementById("valor_diferencia").value = "";
+									document.getElementById("Rango_ini").value = "";
+									document.getElementById("Rango_fin").value = "";
+									document.getElementById("HoraInicio").value = "";
+									document.getElementById("HoraTermino").value = "";
+									document.getElementById("alert_post_data").innerHTML = "Todos los sensores tienen el mismo valor de error";
+								break;
+								//Rango Porcentaje Grupo
+								case '2':
+									document.getElementById("div_valor_error").style.display = "none";
+									document.getElementById("div_valor_diferencia").style.display = "block";
+									document.getElementById("div_Rango_ini").style.display = "none";
+									document.getElementById("div_Rango_fin").style.display = "none";
+									document.getElementById("div_HoraInicio").style.display = "none";
+									document.getElementById("div_HoraTermino").style.display = "none";
+									//reseteo
+									document.getElementById("valor_error").value = "";
+									document.getElementById("Rango_ini").value = "";
+									document.getElementById("Rango_fin").value = "";
+									document.getElementById("HoraInicio").value = "";
+									document.getElementById("HoraTermino").value = "";
+									document.getElementById("alert_post_data").innerHTML = "Un sensor tiene un valor que es x porcentaje inferior o superior a otro sensor dentro del grupo de sensores";
+								break;
+								//Alertas Personalizadas (al menos 1 error)
+								case '3':
+									document.getElementById("div_valor_error").style.display = "none";
+									document.getElementById("div_valor_diferencia").style.display = "none";
+									document.getElementById("div_Rango_ini").style.display = "none";
+									document.getElementById("div_Rango_fin").style.display = "none";
+									document.getElementById("div_HoraInicio").style.display = "none";
+									document.getElementById("div_HoraTermino").style.display = "none";
+									//reseteo
+									document.getElementById("valor_error").value = "";
+									document.getElementById("valor_diferencia").value = "";
+									document.getElementById("Rango_ini").value = "";
+									document.getElementById("Rango_fin").value = "";
+									document.getElementById("HoraInicio").value = "";
+									document.getElementById("HoraTermino").value = "";
+									document.getElementById("alert_post_data").innerHTML = "Al menos un sensor se encuentra fuera del rango de trabajo normal";
+								break;
+								//Alertas Personalizadas (todos con error)
+								case '4':
+									document.getElementById("div_valor_error").style.display = "none";
+									document.getElementById("div_valor_diferencia").style.display = "none";
+									document.getElementById("div_Rango_ini").style.display = "none";
+									document.getElementById("div_Rango_fin").style.display = "none";
+									document.getElementById("div_HoraInicio").style.display = "none";
+									document.getElementById("div_HoraTermino").style.display = "none";
+									//reseteo
+									document.getElementById("valor_error").value = "";
+									document.getElementById("valor_diferencia").value = "";
+									document.getElementById("Rango_ini").value = "";
+									document.getElementById("Rango_fin").value = "";
+									document.getElementById("HoraInicio").value = "";
+									document.getElementById("HoraTermino").value = "";
+									document.getElementById("alert_post_data").innerHTML = "Todos los sensores se encuentra fuera del rango de trabajo normal";
+								break;
+								//Promedios fuera de Rangos
+								case '5':
+									document.getElementById("div_valor_error").style.display = "none";
+									document.getElementById("div_valor_diferencia").style.display = "none";
+									document.getElementById("div_Rango_ini").style.display = "block";
+									document.getElementById("div_Rango_fin").style.display = "block";
+									document.getElementById("div_HoraInicio").style.display = "none";
+									document.getElementById("div_HoraTermino").style.display = "none";
+									//reseteo
+									document.getElementById("valor_error").value = "";
+									document.getElementById("valor_diferencia").value = "";
+									document.getElementById("HoraInicio").value = "";
+									document.getElementById("HoraTermino").value = "";
+									document.getElementById("alert_post_data").innerHTML = "El promedio de los sensores esta fuera del rango establecido";
+								break;
+								//Alertas Personalizadas (todos con valor especifico)
+								case '6':
+									document.getElementById("div_valor_error").style.display = "none";
+									document.getElementById("div_valor_diferencia").style.display = "none";
+									document.getElementById("div_Rango_ini").style.display = "none";
+									document.getElementById("div_Rango_fin").style.display = "none";
+									document.getElementById("div_HoraInicio").style.display = "none";
+									document.getElementById("div_HoraTermino").style.display = "none";
+									//reseteo
+									document.getElementById("valor_error").value = "";
+									document.getElementById("valor_diferencia").value = "";
+									document.getElementById("Rango_ini").value = "";
+									document.getElementById("Rango_fin").value = "";
+									document.getElementById("HoraInicio").value = "";
+									document.getElementById("HoraTermino").value = "";
+									document.getElementById("alert_post_data").innerHTML = "Todos los sensores estan con un valor predefinido, el cual indica error";
+								break;
+								//Sensor funcionando fuera de horario
+								case '7':
+									document.getElementById("div_valor_error").style.display = "none";
+									document.getElementById("div_valor_diferencia").style.display = "none";
+									document.getElementById("div_Rango_ini").style.display = "none";
+									document.getElementById("div_Rango_fin").style.display = "none";
+									document.getElementById("div_HoraInicio").style.display = "block";
+									document.getElementById("div_HoraTermino").style.display = "block";
+									//reseteo
+									document.getElementById("valor_error").value = "";
+									document.getElementById("valor_diferencia").value = "";
+									document.getElementById("Rango_ini").value = "";
+									document.getElementById("Rango_fin").value = "";
+									document.getElementById("alert_post_data").innerHTML = "Los sensores seleccionados estan funcionando fuera de los horarios establecidos";
+								break;
+
+							}
 
 						}
+					</script>
 
-					}
-				</script>
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
+						<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					</div>
 
-				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit">
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
-				</div>
-
-			</form>
-            <?php widget_validator(); ?>
+				</form>
+				<?php widget_validator(); ?>
+			</div>
 		</div>
 	</div>
-</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['newAlarma'])){ ?>
 
-<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
-		<header>
-			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Crear Alarma Personalizada</h5>
-		</header>
-		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
+		<div class="box dark">
+			<header>
+				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
+				<h5>Crear Alarma Personalizada</h5>
+			</header>
+			<div class="body">
+				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
 
-				<?php
-				//Se verifican si existen los datos
-				if(isset($Nombre)){            $x1  = $Nombre;            }else{$x1  = '';}
-				if(isset($idTipoAlerta)){      $x2  = $idTipoAlerta;      }else{$x2  = '';}
-				if(isset($idUniMed)){          $x3  = $idUniMed;          }else{$x3  = '';}
-				if(isset($idTipo)){            $x4  = $idTipo;            }else{$x4  = '';}
-				if(isset($NErroresMax)){       $x5  = $NErroresMax;       }else{$x5  = '';}
-				if(isset($NErroresActual)){    $x6  = $NErroresActual;    }else{$x6  = '';}
-				if(isset($valor_error)){       $x7  = $valor_error;       }else{$x7  = '';}
-				if(isset($valor_diferencia)){  $x8  = $valor_diferencia;  }else{$x8  = '';}
-				if(isset($Rango_ini)){         $x9  = $Rango_ini;         }else{$x9  = '';}
-				if(isset($Rango_fin)){         $x10 = $Rango_fin;         }else{$x10 = '';}
+					<?php
+					//Se verifican si existen los datos
+					if(isset($Nombre)){            $x1  = $Nombre;            }else{$x1  = '';}
+					if(isset($idTipoAlerta)){      $x2  = $idTipoAlerta;      }else{$x2  = '';}
+					if(isset($idUniMed)){          $x3  = $idUniMed;          }else{$x3  = '';}
+					if(isset($idTipo)){            $x4  = $idTipo;            }else{$x4  = '';}
+					if(isset($NErroresMax)){       $x5  = $NErroresMax;       }else{$x5  = '';}
+					if(isset($NErroresActual)){    $x6  = $NErroresActual;    }else{$x6  = '';}
+					if(isset($valor_error)){       $x7  = $valor_error;       }else{$x7  = '';}
+					if(isset($valor_diferencia)){  $x8  = $valor_diferencia;  }else{$x8  = '';}
+					if(isset($Rango_ini)){         $x9  = $Rango_ini;         }else{$x9  = '';}
+					if(isset($Rango_fin)){         $x10 = $Rango_fin;         }else{$x10 = '';}
+					if(isset($HoraInicio)){        $x11 = $HoraInicio;        }else{$x11 = '';}
+					if(isset($HoraTermino)){       $x12 = $HoraTermino;       }else{$x12 = '';}
 
-				//se dibujan los inputs
-				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+					//se dibujan los inputs
+					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 
-				$Form_Inputs->form_post_data(1, 'Seleccione un Tipo Alarma');
-				$Form_Inputs->form_select('Tipo Alarma','idTipo', $x4, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
-				$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x5, 2);
-				$Form_Inputs->form_input_number('N° Actual Errores','NErroresActual', $x6, 1);
-				//opcionales ocultos
-				$Form_Inputs->form_input_number('Valor de error','valor_error', $x7, 1);
-				$Form_Inputs->form_input_number('Porcentaje de diferencia','valor_diferencia', $x8, 1);
-				$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x9, 1);
-				$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x10, 1);
+					$Form_Inputs->form_post_data(1, 'Seleccione un Tipo Alarma');
+					$Form_Inputs->form_select('Tipo Alarma','idTipo', $x4, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
+					$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x5, 2);
+					$Form_Inputs->form_input_number('N° Actual Errores','NErroresActual', $x6, 1);
+					//opcionales ocultos
+					$Form_Inputs->form_input_number('Valor de error','valor_error', $x7, 1);
+					$Form_Inputs->form_input_number('Porcentaje de diferencia','valor_diferencia', $x8, 1);
+					$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x9, 1);
+					$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x10, 1);
+					$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x11, 1, 2);
+					$Form_Inputs->form_time('Hora Termino','HoraTermino', $x12, 1, 2);
 
-				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 60 minutos.<br/>- <strong>Catastrofica</strong> = cada 15 minutos.');
-				$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
+					$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 60 minutos.<br/>- <strong>Catastrofica</strong> = cada 15 minutos.');
+					$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
 
-				$Form_Inputs->form_post_data(1, 'Se utiliza unicamente en <strong>Informes CrossCrane - Alertas por Grua</strong> para poder agrupar los errores de voltaje.');
-				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);
+					$Form_Inputs->form_post_data(1, 'Se utiliza unicamente en <strong>Informes CrossCrane - Alertas por Grua</strong> para poder agrupar los errores de voltaje.');
+					$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);
 
-				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
-				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
+					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
+					$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 
-				?>
-				<script>
+					?>
+					<script>
 
-					$(document).ready(function(){
-						document.getElementById("div_valor_error").style.display = "none";
-						document.getElementById("div_valor_diferencia").style.display = "none";
-						document.getElementById("div_Rango_ini").style.display = "none";
-						document.getElementById("div_Rango_fin").style.display = "none";
-					});
+						$(document).ready(function(){
+							document.getElementById("div_valor_error").style.display = "none";
+							document.getElementById("div_valor_diferencia").style.display = "none";
+							document.getElementById("div_Rango_ini").style.display = "none";
+							document.getElementById("div_Rango_fin").style.display = "none";
+							document.getElementById("div_HoraInicio").style.display = "none";
+							document.getElementById("div_HoraTermino").style.display = "none";
+						});
 
-					document.getElementById("idTipo").onchange = function() {cambia_tipo()};
+						document.getElementById("idTipo").onchange = function() {cambia_tipo()};
 
-					function cambia_tipo(){
-						let Componente = document.form1.idTipo[document.form1.idTipo.selectedIndex].value;
+						function cambia_tipo(){
+							let Componente = document.form1.idTipo[document.form1.idTipo.selectedIndex].value;
 
-						switch(Componente) {
-							//Errores Conjuntos
-							case '1':
-								document.getElementById("div_valor_error").style.display = "block";
-								document.getElementById("div_valor_diferencia").style.display = "none";
-								document.getElementById("div_Rango_ini").style.display = "none";
-								document.getElementById("div_Rango_fin").style.display = "none";
-								document.getElementById("valor_diferencia").value = "";
-								document.getElementById("Rango_ini").value = "";
-								document.getElementById("Rango_fin").value = "";
-								document.getElementById("alert_post_data").innerHTML = "Todos los sensores tienen el mismo valor de error";
-							break;
-							//Rango Porcentaje Grupo
-							case '2':
-								document.getElementById("div_valor_error").style.display = "none";
-								document.getElementById("div_valor_diferencia").style.display = "block";
-								document.getElementById("div_Rango_ini").style.display = "none";
-								document.getElementById("div_Rango_fin").style.display = "none";
-								document.getElementById("valor_error").value = "";
-								document.getElementById("Rango_ini").value = "";
-								document.getElementById("Rango_fin").value = "";
-								document.getElementById("alert_post_data").innerHTML = "Un sensor tiene un valor que es x porcentaje inferior o superior a otro sensor dentro del grupo de sensores";
-							break;
-							//Alertas Personalizadas (al menos 1 error)
-							case '3':
-								document.getElementById("div_valor_error").style.display = "none";
-								document.getElementById("div_valor_diferencia").style.display = "none";
-								document.getElementById("div_Rango_ini").style.display = "none";
-								document.getElementById("div_Rango_fin").style.display = "none";
-								document.getElementById("valor_error").value = "";
-								document.getElementById("valor_diferencia").value = "";
-								document.getElementById("Rango_ini").value = "";
-								document.getElementById("Rango_fin").value = "";
-								document.getElementById("alert_post_data").innerHTML = "Al menos un sensor se encuentra fuera del rango de trabajo normal";
-							break;
-							//Alertas Personalizadas (todos con error)
-							case '4':
-								document.getElementById("div_valor_error").style.display = "none";
-								document.getElementById("div_valor_diferencia").style.display = "none";
-								document.getElementById("div_Rango_ini").style.display = "none";
-								document.getElementById("div_Rango_fin").style.display = "none";
-								document.getElementById("valor_error").value = "";
-								document.getElementById("valor_diferencia").value = "";
-								document.getElementById("Rango_ini").value = "";
-								document.getElementById("Rango_fin").value = "";
-								document.getElementById("alert_post_data").innerHTML = "Todos los sensores se encuentra fuera del rango de trabajo normal";
-							break;
-							//Promedios fuera de Rangos
-							case '5':
-								document.getElementById("div_valor_error").style.display = "none";
-								document.getElementById("div_valor_diferencia").style.display = "none";
-								document.getElementById("div_Rango_ini").style.display = "block";
-								document.getElementById("div_Rango_fin").style.display = "block";
-								document.getElementById("valor_error").value = "";
-								document.getElementById("valor_diferencia").value = "";
-								document.getElementById("alert_post_data").innerHTML = "El promedio de los sensores esta fuera del rango establecido";
-							break;
-							//Alertas Personalizadas (todos con valor especifico)
-							case '6':
-								document.getElementById("div_valor_error").style.display = "none";
-								document.getElementById("div_valor_diferencia").style.display = "none";
-								document.getElementById("div_Rango_ini").style.display = "none";
-								document.getElementById("div_Rango_fin").style.display = "none";
-								document.getElementById("valor_error").value = "";
-								document.getElementById("valor_diferencia").value = "";
-								document.getElementById("Rango_ini").value = "";
-								document.getElementById("Rango_fin").value = "";
-								document.getElementById("alert_post_data").innerHTML = "Todos los sensores estan con un valor predefinido, el cual indica error";
-							break;
+							switch(Componente) {
+								//Errores Conjuntos
+								case '1':
+									document.getElementById("div_valor_error").style.display = "block";
+									document.getElementById("div_valor_diferencia").style.display = "none";
+									document.getElementById("div_Rango_ini").style.display = "none";
+									document.getElementById("div_Rango_fin").style.display = "none";
+									document.getElementById("div_HoraInicio").style.display = "none";
+									document.getElementById("div_HoraTermino").style.display = "none";
+									//reseteo
+									document.getElementById("valor_diferencia").value = "";
+									document.getElementById("Rango_ini").value = "";
+									document.getElementById("Rango_fin").value = "";
+									document.getElementById("HoraInicio").value = "";
+									document.getElementById("HoraTermino").value = "";
+									document.getElementById("alert_post_data").innerHTML = "Todos los sensores tienen el mismo valor de error";
+								break;
+								//Rango Porcentaje Grupo
+								case '2':
+									document.getElementById("div_valor_error").style.display = "none";
+									document.getElementById("div_valor_diferencia").style.display = "block";
+									document.getElementById("div_Rango_ini").style.display = "none";
+									document.getElementById("div_Rango_fin").style.display = "none";
+									document.getElementById("div_HoraInicio").style.display = "none";
+									document.getElementById("div_HoraTermino").style.display = "none";
+									//reseteo
+									document.getElementById("valor_error").value = "";
+									document.getElementById("Rango_ini").value = "";
+									document.getElementById("Rango_fin").value = "";
+									document.getElementById("HoraInicio").value = "";
+									document.getElementById("HoraTermino").value = "";
+									document.getElementById("alert_post_data").innerHTML = "Un sensor tiene un valor que es x porcentaje inferior o superior a otro sensor dentro del grupo de sensores";
+								break;
+								//Alertas Personalizadas (al menos 1 error)
+								case '3':
+									document.getElementById("div_valor_error").style.display = "none";
+									document.getElementById("div_valor_diferencia").style.display = "none";
+									document.getElementById("div_Rango_ini").style.display = "none";
+									document.getElementById("div_Rango_fin").style.display = "none";
+									document.getElementById("div_HoraInicio").style.display = "none";
+									document.getElementById("div_HoraTermino").style.display = "none";
+									//reseteo
+									document.getElementById("valor_error").value = "";
+									document.getElementById("valor_diferencia").value = "";
+									document.getElementById("Rango_ini").value = "";
+									document.getElementById("Rango_fin").value = "";
+									document.getElementById("HoraInicio").value = "";
+									document.getElementById("HoraTermino").value = "";
+									document.getElementById("alert_post_data").innerHTML = "Al menos un sensor se encuentra fuera del rango de trabajo normal";
+								break;
+								//Alertas Personalizadas (todos con error)
+								case '4':
+									document.getElementById("div_valor_error").style.display = "none";
+									document.getElementById("div_valor_diferencia").style.display = "none";
+									document.getElementById("div_Rango_ini").style.display = "none";
+									document.getElementById("div_Rango_fin").style.display = "none";
+									document.getElementById("div_HoraInicio").style.display = "none";
+									document.getElementById("div_HoraTermino").style.display = "none";
+									//reseteo
+									document.getElementById("valor_error").value = "";
+									document.getElementById("valor_diferencia").value = "";
+									document.getElementById("Rango_ini").value = "";
+									document.getElementById("Rango_fin").value = "";
+									document.getElementById("HoraInicio").value = "";
+									document.getElementById("HoraTermino").value = "";
+									document.getElementById("alert_post_data").innerHTML = "Todos los sensores se encuentra fuera del rango de trabajo normal";
+								break;
+								//Promedios fuera de Rangos
+								case '5':
+									document.getElementById("div_valor_error").style.display = "none";
+									document.getElementById("div_valor_diferencia").style.display = "none";
+									document.getElementById("div_Rango_ini").style.display = "block";
+									document.getElementById("div_Rango_fin").style.display = "block";
+									document.getElementById("div_HoraInicio").style.display = "none";
+									document.getElementById("div_HoraTermino").style.display = "none";
+									//reseteo
+									document.getElementById("valor_error").value = "";
+									document.getElementById("valor_diferencia").value = "";
+									document.getElementById("HoraInicio").value = "";
+									document.getElementById("HoraTermino").value = "";
+									document.getElementById("alert_post_data").innerHTML = "El promedio de los sensores esta fuera del rango establecido";
+								break;
+								//Alertas Personalizadas (todos con valor especifico)
+								case '6':
+									document.getElementById("div_valor_error").style.display = "none";
+									document.getElementById("div_valor_diferencia").style.display = "none";
+									document.getElementById("div_Rango_ini").style.display = "none";
+									document.getElementById("div_Rango_fin").style.display = "none";
+									document.getElementById("div_HoraInicio").style.display = "none";
+									document.getElementById("div_HoraTermino").style.display = "none";
+									//reseteo
+									document.getElementById("valor_error").value = "";
+									document.getElementById("valor_diferencia").value = "";
+									document.getElementById("Rango_ini").value = "";
+									document.getElementById("Rango_fin").value = "";
+									document.getElementById("HoraInicio").value = "";
+									document.getElementById("HoraTermino").value = "";
+									document.getElementById("alert_post_data").innerHTML = "Todos los sensores estan con un valor predefinido, el cual indica error";
+								break;
+								//Sensor funcionando fuera de horario
+								case '7':
+									document.getElementById("div_valor_error").style.display = "none";
+									document.getElementById("div_valor_diferencia").style.display = "none";
+									document.getElementById("div_Rango_ini").style.display = "none";
+									document.getElementById("div_Rango_fin").style.display = "none";
+									document.getElementById("div_HoraInicio").style.display = "block";
+									document.getElementById("div_HoraTermino").style.display = "block";
+									//reseteo
+									document.getElementById("valor_error").value = "";
+									document.getElementById("valor_diferencia").value = "";
+									document.getElementById("Rango_ini").value = "";
+									document.getElementById("Rango_fin").value = "";
+									document.getElementById("alert_post_data").innerHTML = "Los sensores seleccionados estan funcionando fuera de los horarios establecidos";
+								break;
 
+							}
 						}
-					}
-				</script>
+					</script>
 
-				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
-					<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
-				</div>
+					<div class="form-group">
+						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit">
+						<a href="<?php echo $new_location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
+					</div>
 
-			</form>
-            <?php widget_validator(); ?>
+				</form>
+				<?php widget_validator(); ?>
+			</div>
 		</div>
 	</div>
-</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 // tomo los datos del equipo
@@ -712,6 +846,8 @@ telemetria_listado_alarmas_perso.NErroresMax,
 telemetria_listado_alarmas_perso.NErroresActual,
 telemetria_listado_alarmas_perso.Rango_ini AS AlarmIni,
 telemetria_listado_alarmas_perso.Rango_fin AS AlarmFin,
+telemetria_listado_alarmas_perso.HoraInicio AS HoraIni,
+telemetria_listado_alarmas_perso.HoraTermino AS HoraFin,
 telemetria_listado_alarmas_perso_tipos.Nombre AS Tipo,
 telemetria_listado_alarmas_perso_items.Sensor_N,
 telemetria_listado_alarmas_perso_items.Rango_ini,
@@ -745,7 +881,7 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Alertas Personalizadas'); ?>
-	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location; ?>&newAlarma=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Alarma</a><?php } ?>
 	</div>
 </div>
@@ -832,7 +968,11 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 								}else{
 									echo '<br/>';
 								}
-
+								if(isset($alarmas[0]['HoraIni'])&&$alarmas[0]['HoraIni']!=0&&isset($alarmas[0]['HoraFin'])&&$alarmas[0]['HoraFin']!=0){
+									echo '(Activo desde '.$alarmas[0]['HoraIni'].' hasta las '.$alarmas[0]['HoraFin'].')<br/>';
+								}else{
+									echo '<br/>';
+								}
 								echo '<strong>Sensores: </strong>';
 								echo '<ul>';
 								foreach ($alarmas as $alarm) {
@@ -846,12 +986,20 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 										$sub_nom .= $alarm['SensoresNombre_'.$alarm['Sensor_N']];
 									}
 									//valores
-									if(isset($alarmas[0]['idTipo'])&&$alarmas[0]['idTipo']!=''&&($alarmas[0]['idTipo']==3 OR $alarmas[0]['idTipo']==4)){
-										$sub_nom .= ' (Rango: '.Cantidades_decimales_justos($alarm['Rango_ini']).' / '.Cantidades_decimales_justos($alarm['Rango_fin']).')';
-									}elseif(isset($alarmas[0]['idTipo'])&&$alarmas[0]['idTipo']!=''&&$alarmas[0]['idTipo']==6){
-										$sub_nom .= ' (Valor especifico: '.Cantidades_decimales_justos($alarm['valor_especifico']).')';
+									if(isset($alarmas[0]['idTipo'])&&$alarmas[0]['idTipo']!=''){
+										switch ($alarmas[0]['idTipo']) {
+											case 3:
+											case 4:
+												$sub_nom .= ' (Rango: '.Cantidades_decimales_justos($alarm['Rango_ini']).' / '.Cantidades_decimales_justos($alarm['Rango_fin']).')';
+												break;
+											case 6:
+												$sub_nom .= ' (Valor Especifico: '.Cantidades_decimales_justos($alarm['valor_especifico']).')';
+												break;
+											case 7:
+												$sub_nom .= ' (Valor Encendido: '.Cantidades_decimales_justos($alarm['valor_especifico']).')';
+												break;
+										}
 									}
-
 									/*if(isset($alarm['Rango_ini'])&&$alarm['Rango_ini']!=0&&isset($alarm['Rango_fin'])&&$alarm['Rango_fin']!=0){
 										$sub_nom .= '('.Cantidades_decimales_justos($alarm['Rango_ini']).' / '.Cantidades_decimales_justos($alarm['Rango_fin']).')';
 									}*/
