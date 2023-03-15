@@ -701,7 +701,7 @@ array_push( $arrMatriz,$row );
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquina', $rowdata['Nombre'], 'Matriz Analisis'); ?>
-	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&matriz='.$_GET['matriz'].'&new_matriz=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Matriz</a><?php } ?>
 	</div>
 </div>
@@ -2230,7 +2230,7 @@ function arrayToUL(array $array, array $TipoMaq, array $Trabajo, $lv, $rowlevel,
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquina', $rowdata['Nombre'], 'Componentes'); ?>
-	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&componente='.$_GET['componente'].'&new_componente=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Componente</a><?php } ?>
 	</div>
 </div>
@@ -2593,7 +2593,7 @@ array_push( $arrMaquina,$row );
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente', $rowdata['Nombre'], 'Maquinas'); ?>
-	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Maquina</a><?php } ?>
 	</div>
 </div>

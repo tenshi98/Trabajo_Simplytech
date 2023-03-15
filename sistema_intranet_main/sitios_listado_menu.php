@@ -207,7 +207,7 @@ $arrMenu = db_select_array (false, $SIS_query, 'sitios_listado_menu', $SIS_join,
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Sitio', $rowdata['Nombre'], 'Elementos Menu'); ?>
-	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&new=true'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Menu</a><?php } ?>
 	</div>
 </div>

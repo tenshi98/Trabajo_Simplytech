@@ -902,7 +902,7 @@ array_push( $arrZonas,$row );
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Predio', $rowdata['Nombre'], 'Editar Cuarteles'); ?>
-	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Cuartel</a><?php } ?>
 	</div>
 </div>

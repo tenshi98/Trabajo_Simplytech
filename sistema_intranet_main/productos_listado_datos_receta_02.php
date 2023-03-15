@@ -280,7 +280,7 @@ $arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Productos', $rowdata['Nombre'], 'Editar Receta'); ?>
-	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&addProd=true'; ?>" class="btn btn-default pull-right margin_width" >Agregar Materia Prima</a><?php } ?>
 	</div>
 </div>
