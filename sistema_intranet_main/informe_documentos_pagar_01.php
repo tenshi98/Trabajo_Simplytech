@@ -112,13 +112,13 @@ array_push( $arrCheques,$row );
 			if (($Mes+1)==13) {$mes_adelante=1; $Ano_b=$Ano_b+1;}else{$mes_adelante=$Mes+1; }
 			?>
 			<div class="btn-group pull-left" style="width: 35px;" >
-				<a href="<?php echo $original.'?Mes='.$mes_atras.'&Ano='.$Ano_a ?>" class="btn btn-default">‹</a>
+				<a href="<?php echo $original.'?Mes='.$mes_atras.'&Ano='.$Ano_a ?>" class="btn btn-default"><i class="fa fa-angle-left faa-horizontal animated" aria-hidden="true"></i></a>
 			</div>
 			<div class="fcenter" >
 				<h5>Listado de Documentos por pagar <?php echo $meses[$Mes]." ".$Ano?></h5>
 			</div>
 			<div class="btn-group pull-right" style="width: 35px;" >
-				<a href="<?php echo $original.'?Mes='.$mes_adelante.'&Ano='.$Ano_b ?>" class="btn btn-default">›</a>
+				<a href="<?php echo $original.'?Mes='.$mes_adelante.'&Ano='.$Ano_b ?>" class="btn btn-default"><i class="fa fa-angle-right faa-horizontal animated" aria-hidden="true"></i></a>
 			</div>
 
 		</header>

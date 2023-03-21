@@ -167,9 +167,9 @@ foreach ($arrTemporal_7 as $temp) {
 								$Ano_b  = ano_actual() + 1;
 							}
 							?>
-							<td class="fc-header-left"><a href="<?php echo '?submit_filter=Filtrar&Ano='.$Ano_a.'&idSistema='.$_GET['idSistema'] ?>" class="btn btn-default">‹</a></td>
+							<td class="fc-header-left"><a href="<?php echo '?submit_filter=Filtrar&Ano='.$Ano_a.'&idSistema='.$_GET['idSistema'] ?>" class="btn btn-default"><i class="fa fa-angle-left faa-horizontal animated" aria-hidden="true"></i></a></td>
 							<td class="fc-header-center"><span class="fc-header-title"><h2>Flujo de Caja <?php echo $Ano?></h2></span></td>
-							<td class="fc-header-right"><a href="<?php echo '?submit_filter=Filtrar&Ano='.$Ano_b.'&idSistema='.$_GET['idSistema'] ?>" class="btn btn-default">›</a></td>
+							<td class="fc-header-right"><a href="<?php echo '?submit_filter=Filtrar&Ano='.$Ano_b.'&idSistema='.$_GET['idSistema'] ?>" class="btn btn-default"><i class="fa fa-angle-right faa-horizontal animated" aria-hidden="true"></i></a></td>
 						</tr>
 					</tbody>
 				</table>

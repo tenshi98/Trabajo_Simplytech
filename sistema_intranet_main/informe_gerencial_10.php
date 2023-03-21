@@ -1567,9 +1567,9 @@ $Total_4 = 0;
 								$Ano_b  = ano_actual() + 1;
 							}
 							?>
-							<td class="fc-header-left"><a href="<?php echo '?Ano='.$Ano_a ?>" class="btn btn-default">‹</a></td>
+							<td class="fc-header-left"><a href="<?php echo '?Ano='.$Ano_a ?>" class="btn btn-default"><i class="fa fa-angle-left faa-horizontal animated" aria-hidden="true"></i></a></td>
 							<td class="fc-header-center"><span class="fc-header-title"><h2>Ventas por vendedor <?php echo $Ano?></h2></span></td>
-							<td class="fc-header-right"><a href="<?php echo '?Ano='.$Ano_b ?>" class="btn btn-default">›</a></td>
+							<td class="fc-header-right"><a href="<?php echo '?Ano='.$Ano_b ?>" class="btn btn-default"><i class="fa fa-angle-right faa-horizontal animated" aria-hidden="true"></i></a></td>
 						</tr>
 					</tbody>
 				</table>
