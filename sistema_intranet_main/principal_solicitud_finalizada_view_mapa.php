@@ -100,7 +100,7 @@ $query = "SELECT idTabla, idTelemetria
 FROM `telemetria_listado_tablarelacionada_".simpleDecode($_GET['idTelemetria'], fecha_actual())."`
 WHERE idSolicitud = ".simpleDecode($_GET['idSolicitud'], fecha_actual())." AND idZona!=0  
 ORDER BY FechaSistema ASC, HoraSistema ASC ";
-					
+
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta

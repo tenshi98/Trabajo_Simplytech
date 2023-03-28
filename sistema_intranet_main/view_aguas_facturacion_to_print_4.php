@@ -129,7 +129,7 @@
 			</tr>
 		<?php } ?>
 
-		<?php 
+		<?php
 		//Otros Cargos 1
 		if(isset($rowDatos['DetalleOtrosCargos1Valor'])&&$rowDatos['DetalleOtrosCargos1Valor']!=0){ ?>
 			<tr>

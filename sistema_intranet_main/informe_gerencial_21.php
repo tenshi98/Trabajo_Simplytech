@@ -214,7 +214,7 @@ array_push( $arrTemporal_4,$row );
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="table-responsive" style="height: 800px;">
 
-		<?php 
+		<?php
 		//Datos
 		$tabla = '';
 		foreach ($arrTemporal_1 as $temp) {
