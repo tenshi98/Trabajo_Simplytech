@@ -1546,7 +1546,7 @@ require_once '0_validate_user_1.php';
 			unset($_SESSION['hijos']);
 
 			//se verifica que el usuario exista
-			if (isset($_GET['id'])&&$_GET['id']==$_SESSION['usuario']['basic_data']['idUsuario']) {
+			if (isset($_GET['id'])&&simpleDecode($_GET['id'], fecha_actual())==$_SESSION['usuario']['basic_data']['idUsuario']) {
 				//se verifica el envio de datos
 				if(isset($_GET['ini'])&&$_GET['ini']!=''){
 
@@ -1569,7 +1569,7 @@ require_once '0_validate_user_1.php';
 					$SIS_join = '
 					LEFT JOIN `core_config_ram`   ON core_config_ram.idConfigRam    = core_sistemas.idConfigRam
 					LEFT JOIN `core_config_time`  ON core_config_time.idConfigTime  = core_sistemas.idConfigTime';
-					$rowSistema = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, 'core_sistemas.idSistema = "'.$_GET['ini'].'"', $dbConn, 'rowSistema', $original, $form_trabajo);
+					$rowSistema = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, 'core_sistemas.idSistema = "'.simpleDecode($_GET['ini'], fecha_actual()).'"', $dbConn, 'rowSistema', $original, $form_trabajo);
 
 					//Se crean las variables con todos los datos
 					$_SESSION['usuario']['basic_data']['Config_idTheme']     = $rowSistema['Config_idTheme'];
@@ -1580,7 +1580,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['usuario']['basic_data']['ConfigTime']         = $rowSistema['ConfigTime'];
 					$_SESSION['usuario']['basic_data']['CorreoInterno']      = $rowSistema['idOpcionesGen_8'];
 					$_SESSION['usuario']['basic_data']['idInterfaz']         = $rowSistema['idOpcionesGen_7'];
-					$_SESSION['usuario']['basic_data']['idSistema']          = $_GET['ini'];
+					$_SESSION['usuario']['basic_data']['idSistema']          = simpleDecode($_GET['ini'], fecha_actual());
 					$_SESSION['usuario']['basic_data']['Social_idUso']       = $rowSistema['Social_idUso'];
 					$_SESSION['usuario']['basic_data']['Social_facebook']    = $rowSistema['Social_facebook'];
 					$_SESSION['usuario']['basic_data']['Social_twitter']     = $rowSistema['Social_twitter'];
@@ -1597,7 +1597,7 @@ require_once '0_validate_user_1.php';
 					$Hora           = hora_actual();
 					$IP_Client      = obtenerIpCliente();
 					$Agent_Transp   = obtenerSistOperativo().' - '.obtenerNavegador();
-					$idSistema      = $_GET['ini'];
+					$idSistema      = simpleDecode($_GET['ini'], fecha_actual());
 
 					//filtros
 					if(isset($idUsuario) && $idUsuario!=''){       $SIS_data  = "'".$idUsuario."'";        }else{$SIS_data  = "''";}

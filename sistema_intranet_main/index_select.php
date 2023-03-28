@@ -92,6 +92,7 @@ if (!empty($_GET['ini'])){
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/bootstrap_fileinput/themes/explorer/theme.min.css" media="all" >
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/country_picker/css/bootstrap-select.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/chosen/chosen.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/tooltipster/css/tooltipster.bundle.min.css">
 
 		<!-- Javascript -->
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/js/main.min.js"></script>
@@ -124,7 +125,7 @@ if (!empty($_GET['ini'])){
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="72x72"   href="img/mifavicon-72x72.png">
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="114x114" href="img/mifavicon-114x114.png">
 			<link rel="apple-touch-icon" type="image/x-icon" sizes="144x144" href="img/mifavicon-144x144.png">
-		<?php 
+		<?php
 		//Favicon predefinido
 		}else{ ?>
 			<link rel="icon"             type="image/png"                    href="<?php echo DB_SITE_REPO ?>/LIB_assets/img/favicons/favicon.png" >
@@ -147,43 +148,40 @@ if (!empty($_GET['ini'])){
 
 	<body class="login">
 		<canvas id="canv" style="width: 100%;height: 100%;position: fixed;top: 0px;left: 0px;"></canvas>
-	  
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //Si el usuario es un super usuario
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	// Se trae un listado con todos los sistemas
 	$arrSistemas  = array();
-	$arrSistemas  = db_select_array (false, 
+	$arrSistemas  = db_select_array (false,
 	'core_sistemas.idSistema,
-	core_sistemas.Nombre AS RazonSocial, 
-	core_interfaces.Nombre AS Interfaz', 
+	core_sistemas.Nombre AS RazonSocial,
+	core_interfaces.Nombre AS Interfaz',
 	'core_sistemas',
-	'LEFT JOIN `core_interfaces`  ON core_interfaces.idInterfaz  = core_sistemas.idOpcionesGen_7', 
+	'LEFT JOIN `core_interfaces`  ON core_interfaces.idInterfaz  = core_sistemas.idOpcionesGen_7',
 	'core_sistemas.idEstado=1',
 	'core_sistemas.Nombre ASC',
 	$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGraficos');
-					
+
 //Si el usuario es un usuario normal
 }else{
 	// Se trae un listado con todos los sistemas
 	$arrSistemas  = array();
-	$arrSistemas  = db_select_array (false, 
+	$arrSistemas  = db_select_array (false,
 	'usuarios_sistemas.idSistema,
-	core_sistemas.Nombre AS RazonSocial, 
-	core_interfaces.Nombre AS Interfaz', 
+	core_sistemas.Nombre AS RazonSocial,
+	core_interfaces.Nombre AS Interfaz',
 	'usuarios_sistemas',
 	'LEFT JOIN `core_sistemas`  ON core_sistemas.idSistema  = usuarios_sistemas.idSistema LEFT JOIN `core_interfaces`  ON core_interfaces.idInterfaz  = core_sistemas.idOpcionesGen_7', 
-	'usuarios_sistemas.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'].' AND core_sistemas.idEstado=1', 
+	'usuarios_sistemas.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'].' AND core_sistemas.idEstado=1',
 	'core_sistemas.Nombre ASC',
 	$dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGraficos');
-												
+
 }
 
-
 ?>
-
-
 
 <div class="container">
 
@@ -194,8 +192,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo DB_SOFT_NAME; ?></h5>
 			</header>
 			<div class="table-responsive">
-				
-	
 
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 					<div class="usercard usercard-widget widget-user">
@@ -242,7 +238,12 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 											<td><?php echo $sis['Interfaz']; ?></td>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a href="<?php echo $location.'?ini='.$sis['idSistema'].'&id='.$_SESSION['usuario']['basic_data']['idUsuario']; ?>" title="Seleccionar sistema" class="btn btn-primary btn-sm tooltip"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+													<?php
+													$link = $location;
+													$link.= '?ini='.simpleEncode($sis['idSistema'], fecha_actual());
+													$link.= '&id='.simpleEncode($_SESSION['usuario']['basic_data']['idUsuario'], fecha_actual());
+													?>
+													<a href="<?php echo $link; ?>" title="Acceder a <?php echo $sis['RazonSocial']; ?>" class="btn btn-primary btn-sm tooltip"><i class="fa fa-arrow-right" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>
@@ -257,9 +258,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 		</div>
 
 	</div>
-		
-		
-	
+
 </div>
 
 	<script id="rendered-js" >
@@ -352,10 +351,23 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
     </script>
 
-<script src="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/js/bootstrap.min.js"></script>
-<script src="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/screenfull/screenfull.js"></script>
-<script src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/jquery-ui-1.10.3.min.js"></script>
-<script src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/main.min.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/screenfull/screenfull.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/jquery-ui-1.10.3.min.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/main.min.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/tooltipster/js/tooltipster.bundle.min.js"></script>
+
+		<script>
+			$(document).ready(function(){
+				//Burbuja de ayuda
+				$('.tooltip').tooltipster({
+					animation: 'grow',
+					delay: 130,
+					maxWidth: 300
+				});
+
+			});
+		</script>
 
 	</body>
 </html>
