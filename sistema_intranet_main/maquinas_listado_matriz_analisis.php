@@ -85,7 +85,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 			<h5>Clonar Matriz <?php echo $_GET['nombre_matriz']; ?></h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -134,7 +134,7 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_jo
 			<h5>Editar Parametros</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se dibujan los inputs
@@ -398,7 +398,7 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_jo
 			<h5>Modificacion Matriz de Analisis</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -439,7 +439,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 			<h5>Crear Matriz de Analisis</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

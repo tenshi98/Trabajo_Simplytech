@@ -168,7 +168,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Agregar Insumos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -240,7 +240,7 @@ $Form_Inputs = new Inputs();
 			<h5>Agregar Insumos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
 					<a onclick="producto_add();"  class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Agregar Nuevo</a>
@@ -400,7 +400,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 			<h5>Modificar Centro de Costo</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -448,7 +448,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 			<h5>Modificar Datos Basicos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
         	 
 			
 			
@@ -652,7 +652,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 			<h5>Crear Traspaso a otra empresa</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -789,7 +789,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_insumos_facturacion', $S
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Creacion_fecha)){    $x1  = $Creacion_fecha;     }else{$x1  = '';}

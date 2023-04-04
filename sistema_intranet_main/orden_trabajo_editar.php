@@ -213,7 +213,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Modificar Observacion del trabajo</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -267,7 +267,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Modificar analisis del trabajo</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -327,7 +327,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Editar Productos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
         		
 				<?php
 				//Se verifican si existen los datos
@@ -561,7 +561,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Agregar Itemizado</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
         		
 				<?php 
 				//variables
@@ -623,7 +623,7 @@ $z="idMaquina={$rowdata['idMaquina']}";
 			<h5>Agregar Tarea</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -761,7 +761,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Editar Productos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
         		
 				<?php
 				//Se verifican si existen los datos
@@ -878,7 +878,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Agregar Itemizado</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
         		
 				<?php 
 				//variables
@@ -964,7 +964,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Agregar Productos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1109,7 +1109,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Editar Productos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1242,7 +1242,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Agregar Insumos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1389,7 +1389,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Editar Insumos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1498,7 +1498,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Agregar Trabajador</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1562,7 +1562,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Editar Trabajador</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1616,7 +1616,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Modificar datos basicos de la OT</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1673,7 +1673,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Modificar datos basicos de la OT</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

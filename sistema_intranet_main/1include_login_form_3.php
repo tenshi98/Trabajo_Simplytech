@@ -34,7 +34,7 @@
 
 			<div class="tab-content" style="min-height: 200px !important;">
 				<div id="login" class="tab-pane active">
-					<form class="" method="post"  name="form1" novalidate>
+					<form class="" method="post"  name="form1" autocomplete="off" novalidate>
 						<h1 class="text-center text-info">Iniciar sesión</h1>
 						<p class="text-center color-gray-light">Ingrese su nombre de usuario y contraseña para acceder</p>
 						<?php
@@ -66,7 +66,7 @@
 					</form>
 				</div>
 				<div id="forgot" class="tab-pane">
-					<form class="" method="post"  name="form2" novalidate>
+					<form class="" method="post"  name="form2" autocomplete="off" novalidate>
 						<h1 class="text-center text-info">¿Olvidaste tu contraseña?</h1>
 						<p class="text-center color-gray-light">Ingresa tu Email para recuperar tu contraseña.Revisa la bandeja de entrada o spam de tu correo.</p>
 						<?php

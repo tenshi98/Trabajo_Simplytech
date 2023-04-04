@@ -70,7 +70,7 @@ $Form_Inputs = new Inputs();
 			</header>
 			<div class="body">
 
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 					<div>
 						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
@@ -151,7 +151,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 			<h5>Seleccionar Facturacion</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idFacturacion)){   $x1  = $idFacturacion;  }else{$x1  = '';}

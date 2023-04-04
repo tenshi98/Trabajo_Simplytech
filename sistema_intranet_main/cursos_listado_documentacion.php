@@ -86,7 +86,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Subir Nuevo Archivo</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" enctype="multipart/form-data" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

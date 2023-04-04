@@ -199,7 +199,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 			<h5>Subir Archivo</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
+			<form class="form-horizontal" method="post" id="form1" name="form1" enctype="multipart/form-data" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -274,7 +274,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 			<h5>Agregar Tarea</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -400,7 +400,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 			<h5>Modificar Tarea</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -469,7 +469,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 			<h5>Agregar Productos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -554,7 +554,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_prod
 			<h5>Editar Productos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -634,7 +634,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 			<h5>Agregar Insumos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -719,7 +719,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado_insu
 			<h5>Editar Insumos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -779,7 +779,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 			<h5>Agregar Trabajador</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -836,7 +836,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 			<h5>Editar Trabajador</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -877,7 +877,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 			<h5>Modificar datos basicos de la OT</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1501,7 +1501,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				

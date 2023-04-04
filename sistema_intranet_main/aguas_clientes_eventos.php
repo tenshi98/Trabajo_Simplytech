@@ -93,7 +93,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 			<h5>Modificar Evento</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" enctype="multipart/form-data" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -158,7 +158,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 			<h5>Crear Evento</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" enctype="multipart/form-data" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -278,7 +278,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){        $x1  = $idCliente;         }else{$x1  = '';}

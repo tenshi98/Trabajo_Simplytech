@@ -210,7 +210,7 @@ $rowdata = db_select_data (false, 'Nombre,idCiudad,idComuna,Direccion,GeoLatitud
 
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 				<div style="margin-top:20px;">
-					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+					<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 						<?php
 						if(isset($idZona)){      $x0  = $idZona;      }else{$x0  = $rowdata['idZona'];}

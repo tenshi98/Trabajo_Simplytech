@@ -143,7 +143,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 			<h5>Agregar Detalle</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -179,7 +179,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 			<h5>Cerrar Cuartel</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -275,7 +275,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 			<h5>Editar Producto Químico</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -358,7 +358,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 			<h5>Agregar Producto Químico</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -448,7 +448,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 			<h5>Editar Tractor</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -506,7 +506,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 			<h5>Agregar Tractor</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -572,7 +572,7 @@ if(isset($row_data_ini['idProducto'])&&$row_data_ini['idProducto']!=0){$z.= " AN
 			<h5>Editar Cuartel</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -660,7 +660,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 			<h5>Agregar Cuartel</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -758,7 +758,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 			<h5>Agregar Material de Seguridad</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -804,7 +804,7 @@ $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 			<h5>Modificar la Solicitud de Aplicacion</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

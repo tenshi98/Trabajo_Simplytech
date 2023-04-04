@@ -99,7 +99,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Editar Aprobador</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -144,7 +144,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 			<h5>Agregar Aprobador</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

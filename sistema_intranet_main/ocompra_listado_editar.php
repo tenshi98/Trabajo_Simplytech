@@ -290,7 +290,7 @@ if(!empty($_GET['addFile'])){ ?>
 			<h5>Subir Archivo</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
+			<form class="form-horizontal" method="post" id="form1" name="form1" enctype="multipart/form-data" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -342,7 +342,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_documentos', $SIS
 			<h5>Editar Documentos Acompañantes</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -392,7 +392,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_documentos', $SIS
 			<h5>Agregar Documentos Acompañantes</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -448,7 +448,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_bolet
 			<h5>Editar Boletas</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -487,7 +487,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_bolet
 			<h5>Agregar Boletas</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -535,7 +535,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 			<h5>Editar Boletas</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -580,7 +580,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 			<h5>Agregar Boletas</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -630,7 +630,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros
 			<h5>Editar Otros</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -706,7 +706,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_otros
 			<h5>Agregar Otros</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -781,7 +781,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_servi
 			<h5>Editar Servicio</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -857,7 +857,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_servi
 			<h5>Agregar Servicio</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -931,7 +931,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_arrie
 			<h5>Editar Equipo</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1007,7 +1007,7 @@ $rowdata = db_select_data (false, $SIS_query, 'ocompra_listado_existencias_arrie
 			<h5>Agregar Equipo</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1096,7 +1096,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Editar solicitud de Insumo</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1187,7 +1187,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Agregar Insumos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1275,7 +1275,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Editar solicitud de Productos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1365,7 +1365,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Agregar Productos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1433,7 +1433,7 @@ $w="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 			<h5>Modificar Orden de Compra</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

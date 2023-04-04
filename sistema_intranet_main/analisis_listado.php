@@ -193,7 +193,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Modificacion del Analisis</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -408,7 +408,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Ingreso datos de <?php echo $rowdata2['Nombre']; ?></h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTipo)){             $x1  = $idTipo;            }else{$x1  = '';}
@@ -526,7 +526,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_2
 			<h5>Seleccion de Maquina y Analisis</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_muestreo)){         $x1  = $f_muestreo;        }else{$x1  = '';}
@@ -650,7 +650,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'analisis_listado', $SIS_join, $S
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($f_muestreo)){         $x1  = $f_muestreo;        }else{$x1  = '';}

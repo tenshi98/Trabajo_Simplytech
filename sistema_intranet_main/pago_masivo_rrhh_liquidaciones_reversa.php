@@ -190,7 +190,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -303,7 +303,7 @@ $arrAFP = db_select_array (false, $SIS_query, 'pagos_rrhh_liquidaciones_reversa'
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 				<?php
 				if(isset($idDocPago)){       $x1  = $idDocPago;       }else{$x1  = '';}
 				if(isset($N_DocPago)){       $x2  = $N_DocPago;       }else{$x2  = '';}

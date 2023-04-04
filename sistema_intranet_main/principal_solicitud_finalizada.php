@@ -302,7 +302,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 			</script>
 
 			<div class="container">
-				<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+				<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 					<div class="field">
 						<div class="input-group">
 							<input type="text" class="form-control" placeholder="N° Solicitud" name="NSolicitud" id="NSolicitud" required="" onkeypress="return soloNumerosNaturales_NSolicitud(event)" value="<?php echo $row_data['NSolicitud']; ?>">
@@ -1299,7 +1299,7 @@ if($ndata_1==0) {
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

@@ -533,7 +533,7 @@ array_push( $arrZonas,$row );
 
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
 				<div style="margin-top:20px;">
-					<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
+					<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 
 						<?php
 						//Deteccion de Zona

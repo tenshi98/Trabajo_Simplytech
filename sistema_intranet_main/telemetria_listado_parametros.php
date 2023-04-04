@@ -72,7 +72,7 @@ $rowdata = db_select_data (false, 'Nombre AS Equipo,SensorActivacionID, SensorAc
 			<h5>Editar Sensor Activacion de <?php echo $rowdata['Equipo']; ?></h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//se dibujan los inputs
@@ -140,7 +140,7 @@ $rowdata = db_select_data (false, 'Nombre AS Equipo'.$cadena, 'telemetria_listad
 			<h5>Editar Parametros de <?php echo $rowdata['Equipo']; ?></h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//se dibujan los inputs

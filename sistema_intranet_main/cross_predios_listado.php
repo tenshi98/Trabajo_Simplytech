@@ -80,7 +80,7 @@ alert_post_data(2,1,2, $Alert_Text);
 			<h5>Crear Predio con Plantilla</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate >
+			<form class="form-horizontal" method="post" id="form1" name="form1" enctype="multipart/form-data" autocomplete="off" novalidate>
 
 				<?php
 				//Se dibujan los inputs
@@ -426,7 +426,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 			<h5>Crear Predio</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -527,7 +527,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'cross_predios_listado', $SIS_jo
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Nombre)){          $x1  = $Nombre;       }else{$x1  = '';}

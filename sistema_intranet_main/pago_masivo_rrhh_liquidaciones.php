@@ -569,7 +569,7 @@ $_SESSION['form_require'].=',idFacturacion';
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" action="<?php echo $location ?>" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 
 				<?php
 				$input  = '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/chosen/chosen.css">';

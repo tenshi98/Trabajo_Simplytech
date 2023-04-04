@@ -77,7 +77,7 @@ $rowdata = db_select_data (false, $SIS_query, 'principal_calendario_listado', $S
 			<h5>Modificacion del Evento</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -194,7 +194,7 @@ if(isset($rowlevel['level'])&&$rowlevel['level']!=''){
 			<h5>Crear Evento</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

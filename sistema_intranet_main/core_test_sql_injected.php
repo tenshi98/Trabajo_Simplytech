@@ -39,7 +39,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 		</header>
 		<div class="body">
 
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//se dibujan los inputs

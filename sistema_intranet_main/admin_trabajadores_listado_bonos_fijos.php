@@ -79,7 +79,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado_bonos_fijos'
 			<h5>Editar Bono Asignado</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -117,7 +117,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 			<h5>Crear Bono Asignado</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

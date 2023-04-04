@@ -118,7 +118,7 @@ switch ($_GET['edit_cambio_estado']) {
 			<h5><?php echo $slc_tittle; ?></h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -164,7 +164,7 @@ $rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado_tareas'
 			<h5>Editar Tarea</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -202,7 +202,7 @@ $rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado_tareas'
 			<h5>Subir Archivo</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
+			<form class="form-horizontal" method="post" id="form1" name="form1" enctype="multipart/form-data" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -269,7 +269,7 @@ $usrfil .= $responsables;
 		</header>
 		<div class="body">
 
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
 					<h3 class="pull-left" style="margin-top: 0px;margin-bottom: 0px;">Trabajos</h3>
@@ -375,7 +375,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		</header>
 		<div class="body">
 
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
 					<h3 class="pull-left" style="margin-top: 0px;margin-bottom: 0px;">Responsables</h3>
@@ -469,7 +469,7 @@ $rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_
 			<h5>Modificar datos basicos de la Tarea</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

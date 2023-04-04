@@ -81,7 +81,7 @@ if(!empty($_GET['new_oc'])){  ?>
 			<h5>Datos Nueva Orden de Compra</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -144,7 +144,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Modificar Proveedor</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -200,7 +200,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Modificar Proveedor</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -256,7 +256,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Modificar Proveedor</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -312,7 +312,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Modificar Proveedor</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -368,7 +368,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Modificar Proveedor</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

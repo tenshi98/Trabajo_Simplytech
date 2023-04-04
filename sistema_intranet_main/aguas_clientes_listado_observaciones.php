@@ -80,7 +80,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_observaciones', $S
 			<h5>Editar Observacion</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -115,7 +115,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 			<h5>Crear Observacion</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

@@ -79,7 +79,7 @@ alert_post_data(2,1,2, $Alert_Text);
 			<h5>Envio Observacion Masiva</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate >
+			<form class="form-horizontal" method="post" id="form1" name="form1" enctype="multipart/form-data" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -173,7 +173,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'].' AND aguas_cl
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

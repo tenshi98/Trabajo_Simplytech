@@ -79,7 +79,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_menu_otros', $SIS_
 			<h5>Editar Menu</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se dibujan los inputs
@@ -132,7 +132,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 			<h5>Crear Menu</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se dibujan los inputs

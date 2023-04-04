@@ -128,7 +128,7 @@ if(!empty($_GET['editItem'])){
 				<h5>Editar Item</h5>
 			</header>
 			<div class="body">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 					<?php
 					$Form_Inputs = new Form_Inputs();
@@ -244,7 +244,7 @@ if(!empty($_GET['editItem'])){
 				<h5>Crear Item</h5>
 			</header>
 			<div class="body">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 					<?php
 					$Form_Inputs = new Form_Inputs();
@@ -432,7 +432,7 @@ if(!empty($_GET['editItem'])){
 				<h5>Editar Alarma Personalizada</h5>
 			</header>
 			<div class="body">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 					<?php
 					//Se verifican si existen los datos
@@ -638,7 +638,7 @@ if(!empty($_GET['editItem'])){
 				<h5>Crear Alarma Personalizada</h5>
 			</header>
 			<div class="body">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 					<?php
 					//Se verifican si existen los datos

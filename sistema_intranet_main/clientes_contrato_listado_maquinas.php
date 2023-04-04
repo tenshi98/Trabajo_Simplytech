@@ -189,7 +189,7 @@ if(!empty($_GET['clone_idMaquina'])){
 			<h5>Clonar <?php echo 'Maquina '.$_GET['nombre_maquina']; ?></h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -223,7 +223,7 @@ if(!empty($_GET['clone_idMaquina'])){
 			<h5>Clonar Matriz <?php echo $_GET['nombre_matriz']; ?></h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -285,7 +285,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Editar Parametros</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se dibujan los inputs
@@ -584,7 +584,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 			<h5>Modificacion Matriz de Analisis</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -624,7 +624,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 			<h5>Crear Matriz de Analisis</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -800,7 +800,7 @@ $w = 'idUtilizable=1';
 			<h5>Agregar Trabajo</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -953,7 +953,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Modificar Componente</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1483,7 +1483,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Crear Componente</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -2377,7 +2377,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Editar Configuracion</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -2440,7 +2440,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Editar Maquina</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -2497,7 +2497,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 			<h5>Crear Nueva Maquina</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

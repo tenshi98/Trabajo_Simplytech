@@ -193,7 +193,7 @@ $rowData = db_select_data (false, 'NSolicitud, f_programacion, horaProg, f_progr
 			<h5>Clonar Solicitud <?php echo n_doc($_GET['NSolicitud'], 5); ?></h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -251,7 +251,7 @@ if(isset($_SESSION['sol_apli_basicos']['idProducto'])&&$_SESSION['sol_apli_basic
 			<h5>Editar Cuartel</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -327,7 +327,7 @@ array_push( $arrTipo,$row );
 			<h5>Editar Producto Químico</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -427,7 +427,7 @@ array_push( $arrTipo,$row );
 			<h5>Agregar Producto Químico</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -512,7 +512,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 			<h5>Editar Tractor</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -568,7 +568,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 			<h5>Agregar Tractor</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -612,7 +612,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 			<h5>Agregar Material de Seguridad</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -713,7 +713,7 @@ array_push( $arrCuenta2,$row );
 			</header>
 			<div class="body">
 
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 					<h3>Parámetros de Aplicación</h3>
 					<div>
 						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
@@ -1151,7 +1151,7 @@ array_push( $arrCuenta2,$row );
 			<h5>Modificar Parámetros de Aplicacion</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1259,7 +1259,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Modificar la Solicitud de Aplicacion</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1656,7 +1656,7 @@ array_push( $arrCuenta2,$row );
 			</header>
 			<div class="body">
 
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 					<h3>Parámetros de Aplicación</h3>
 					<div>
 						<div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 nopadding">
@@ -2094,7 +2094,7 @@ array_push( $arrCuenta2,$row );
 			<h5>Generar Nueva Solicitud de Aplicacion - PASO 2</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -2204,7 +2204,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Generar Nueva Solicitud de Aplicacion - PASO 1</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -2363,7 +2363,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($NSolicitud)){       $x1  = $NSolicitud;       }else{$x1  = '';}

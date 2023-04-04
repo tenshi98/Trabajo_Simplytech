@@ -175,7 +175,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 		</header>
         <div class="table-responsive">
 			<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 					<?php
 					//Se verifican si existen los datos

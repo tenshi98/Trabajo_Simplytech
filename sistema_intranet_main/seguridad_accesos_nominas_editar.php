@@ -79,7 +79,7 @@ if(!empty($_GET['addFile'])){ ?>
 			<h5>Subir Archivo</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
+			<form class="form-horizontal" method="post" id="form1" name="form1" enctype="multipart/form-data" autocomplete="off" novalidate>
 
 				<?php
 				//Se dibujan los inputs
@@ -118,7 +118,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listad
 			<h5>Editar Persona</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -156,7 +156,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas_listad
 			<h5>Agregar Persona</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -203,7 +203,7 @@ $row_data = db_select_data (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 			<h5>Modificar datos basicos del Ingreso</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

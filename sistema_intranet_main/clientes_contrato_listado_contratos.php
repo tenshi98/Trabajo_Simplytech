@@ -116,7 +116,7 @@ $rowdata = db_select_data (false, $SIS_query, 'licitacion_listado_level_'.$_GET[
 			<h5>Modificar Rama</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -277,7 +277,7 @@ $rowdata = db_select_data (false, $SIS_query, 'licitacion_listado_level_'.$_GET[
 			<h5>Crear Rama</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -797,7 +797,7 @@ $rowdata = db_select_data (false, $SIS_query, 'licitacion_listado', '', $SIS_whe
 			<h5>Editar Contrato</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -902,7 +902,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 			<h5>Crear Contrato</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

@@ -144,7 +144,7 @@ $row_data = db_select_data (false, $SIS_query, 'cross_quality_registrar_inspecci
 			<h5>Subir Archivo</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
+			<form class="form-horizontal" method="post" id="form1" name="form1" enctype="multipart/form-data" autocomplete="off" novalidate>
 
 				<?php
 				//Se dibujan los inputs
@@ -231,7 +231,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 			<h5>Ingreso datos de <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProductor)){     $x1  = $idProductor;     }else{$x1  = $rowMuestras['idProductor'];}
@@ -413,7 +413,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 			<h5>Ingreso datos de <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProductor)){     $x1  = $idProductor;     }else{$x1  = $rowMuestras['idProductor'];}
@@ -587,7 +587,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 			<h5>Ingreso datos de <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idProductor)){     $x1  = $idProductor;     }else{$x1  = '';}
@@ -732,7 +732,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 			<h5>Agregar Maquina</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -790,7 +790,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 			<h5>Agregar Trabajador</h5>
 		</header>
 		<div class="body">
-        	<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+        	<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idTrabajador)){     $x1  = $idTrabajador;    }else{$x1  = '';}
@@ -876,7 +876,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 			<h5>Modificar Inspeccion</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

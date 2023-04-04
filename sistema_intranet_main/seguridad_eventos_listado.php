@@ -197,7 +197,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 			<h5>Crear Evento</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -313,7 +313,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_eventos_listado', $SIS
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idUsuario)){   $x1  = $idUsuario;  }else{$x1  = '';}

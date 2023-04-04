@@ -153,7 +153,7 @@ $rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $
 
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
-					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+					<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 						<?php
 						//Se dibujan los inputs

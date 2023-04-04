@@ -79,7 +79,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 			<h5>Modificacion datos del Usuario <?php echo $rowdata['Nombre']; ?></h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 		
 				<?php
 				//Se verifican si existen los datos
@@ -128,7 +128,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 			<h5>Crear Usuario</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

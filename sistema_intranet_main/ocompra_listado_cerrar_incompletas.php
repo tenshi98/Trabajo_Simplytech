@@ -227,7 +227,7 @@ switch ($_GET['type']) {
 			<h5>Modificar cantidades recibidas OC N° <?php echo n_doc($_GET['idOcompraTi'], 5); ?></h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				
@@ -776,7 +776,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Filtro de Busqueda</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

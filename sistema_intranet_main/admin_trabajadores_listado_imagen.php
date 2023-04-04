@@ -111,7 +111,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 
 				<?php }else{ ?>
 
-					<form class="form-horizontal" method="post" enctype="multipart/form-data" id="form1" name="form1" novalidate>
+					<form class="form-horizontal" method="post" id="form1" name="form1" enctype="multipart/form-data" autocomplete="off" novalidate>
 
 						<?php
 						//se dibujan los inputs

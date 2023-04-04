@@ -124,7 +124,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 			<h5>Subir Archivo</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
+			<form class="form-horizontal" method="post" id="form1" name="form1" enctype="multipart/form-data" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -184,7 +184,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 			<h5>Clonar Estiba</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idEstiba)){           $x1  = $idEstiba;           }else{$x1  = $rowEstiba['idEstiba'];}
@@ -255,7 +255,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 			<h5>Editar Estiba</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idEstiba)){           $x1  = $idEstiba;           }else{$x1  = $rowEstiba['idEstiba'];}
@@ -303,7 +303,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 			<h5>Ingreso Estibas</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -382,7 +382,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 			<h5>Modificar Consolidacion</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos

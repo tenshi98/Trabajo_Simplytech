@@ -145,7 +145,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 	<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 
 		<ul class="list-group inbox-options">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<li class="list-group-item"><i class="fa fa-inbox" aria-hidden="true"></i>  Pago</li>
 				<li class="list-group-item">		

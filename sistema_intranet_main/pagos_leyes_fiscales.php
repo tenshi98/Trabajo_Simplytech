@@ -164,7 +164,7 @@ input[type="date"].form-control{
 			</header>
 			<div class="body">
 
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 					<?php if($IVA_Total_deuda>0){ ?>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
 							<p class="pull-left" style="margin-top: 0px;margin-bottom: 0px;">IVA a Pagar <strong><?php echo valores($IVA_Total_deuda, 0); ?></strong></p>
@@ -705,7 +705,7 @@ input[type="date"].form-control{
 			</header>
 			<div class="body">
 
-				<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+				<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 					<?php if($_SESSION['pagos_leyes_fiscales_basicos']['IVA_MontoPago']!=0){ ?>
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 breadcrumb-bar" style="margin-bottom:10px;">
 							<p class="pull-left" style="margin-top: 0px;margin-bottom: 0px;">IVA a Pagar <strong><?php echo valores($_SESSION['pagos_leyes_fiscales_basicos']['IVA_MontoPago'], 0); ?></strong></p>
@@ -979,7 +979,7 @@ input[type="date"].form-control{
 			<h5>Subir Archivo</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate enctype="multipart/form-data">
+			<form class="form-horizontal" method="post" id="form1" name="form1" enctype="multipart/form-data" autocomplete="off" novalidate>
 
 				<?php
 				//Se dibujan los inputs
@@ -1019,7 +1019,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn); ?>
 			</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php 
 				
@@ -1086,7 +1086,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn); ?>
 			</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php 
 				//Saldo general del bloque
@@ -1154,7 +1154,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 			<h5>Modificar datos basicos del egreso</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1717,7 +1717,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 			<h5>Crear Pago</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1838,7 +1838,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($Periodo_Ano)){   $x1 = $Periodo_Ano;  }else{$x1 = '';}

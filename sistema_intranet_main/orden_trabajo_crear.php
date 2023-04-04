@@ -156,7 +156,7 @@ if(!empty($_GET['clone'])){  ?>
 			<h5>Crear Nueva Orden de Trabajo en base a otra existente</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -220,7 +220,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Editar Productos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
         		
 				<?php
 				//Se verifican si existen los datos
@@ -455,7 +455,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Agregar Itemizado</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
         		
 				<?php 
 				//variables
@@ -499,7 +499,7 @@ $z="idMaquina=".$_SESSION['ot_basicos']['idMaquina'];
 			<h5>Agregar Tarea</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -611,7 +611,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Agregar Productos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -723,7 +723,7 @@ foreach ($arrPermisos as $prod) {
 			<h5>Agregar Insumos</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -811,7 +811,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 			<h5>Agregar Trabajador</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -848,7 +848,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 			<h5>Modificar datos basicos de la OT</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1143,7 +1143,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 			<h5>Crear Nueva Orden de Trabajo</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -1291,7 +1291,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join
 <div class="collapse col-xs-12 col-sm-12 col-md-12 col-lg-12" id="collapseForm">
 	<div class="well">
 		<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" novalidate>
+			<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 				<?php
 				//Se verifican si existen los datos
 				if(isset($idCliente)){        $x0  = $idCliente;        }else{$x0  = '';}

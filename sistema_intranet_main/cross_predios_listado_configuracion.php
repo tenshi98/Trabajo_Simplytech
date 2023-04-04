@@ -311,7 +311,7 @@ array_push( $arrPuntos,$row );
 
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
-					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+					<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 						<?php
 						//Se dibujan los inputs
@@ -637,7 +637,7 @@ array_push( $arrZonas,$row );
 
 			<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 				<div style="margin-top:20px;">
-					<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+					<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 						<?php
 						//Se dibujan los inputs
@@ -733,7 +733,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Editar Cuartel</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
@@ -793,7 +793,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 			<h5>Crear Cuartel</h5>
 		</header>
 		<div class="body">
-			<form class="form-horizontal" method="post" id="form1" name="form1" novalidate>
+			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
 				<?php
 				//Se verifican si existen los datos
