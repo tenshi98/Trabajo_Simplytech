@@ -75,13 +75,14 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	//se traen lo datos del equipo
 	$SIS_query = '
-	telemetria_listado.SensoresNombre_'.$_GET['sensorn'].' AS SensorNombre,
+	telemetria_listado_sensores_nombre.SensoresNombre_'.$_GET['sensorn'].' AS SensorNombre,
 	telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema,
 	'.$subquery.'
 	telemetria_listado_unidad_medida.Nombre AS Unimed';
 	$SIS_join  = '
-	LEFT JOIN `telemetria_listado`                ON telemetria_listado.idTelemetria            = telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria
-	LEFT JOIN `telemetria_listado_unidad_medida`  ON telemetria_listado_unidad_medida.idUniMed  = telemetria_listado.SensoresUniMed_'.$_GET['sensorn'];
+	LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria  = telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria  = telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria
+	LEFT JOIN `telemetria_listado_unidad_medida`    ON telemetria_listado_unidad_medida.idUniMed        = telemetria_listado_sensores_unimed.SensoresUniMed_'.$_GET['sensorn'];
 	$SIS_where .= ' GROUP BY telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema';
 	$SIS_order  = 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema ASC LIMIT 10000';
 	$arrEquipos = array();
@@ -145,9 +146,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	/*                                                          Impresion PDF                                                         */
 	/**********************************************************************************************************************************/
 	//Config
-	$pdf_titulo     = 'Max – Min Sensor';
-	$pdf_subtitulo  = 'Max – Min Sensor N° '.$_GET['sensorn'].' '.DeSanitizar($arrEquipos[0]['SensorNombre']).' '.DeSanitizar($rowEquipo['NombreEquipo']);
-	$pdf_file       = 'Max – Min Sensor N° '.$_GET['sensorn'].' '.DeSanitizar($arrEquipos[0]['SensorNombre']).' '.DeSanitizar($rowEquipo['NombreEquipo']).'.pdf';
+	$pdf_titulo     = 'Max - Min Sensor';
+	$pdf_subtitulo  = 'Max - Min Sensor N° '.$_GET['sensorn'].' '.DeSanitizar($arrEquipos[0]['SensorNombre']).' '.DeSanitizar($rowEquipo['NombreEquipo']);
+	$pdf_file       = 'Max - Min Sensor N° '.$_GET['sensorn'].' '.DeSanitizar($arrEquipos[0]['SensorNombre']).' '.DeSanitizar($rowEquipo['NombreEquipo']).'.pdf';
 	$OpcDom         = "'A4', 'landscape'";
 	$OpcTcpOrt      = "P";  //P->PORTRAIT - L->LANDSCAPE
 	$OpcTcpPg       = "A4"; //Tipo de Hoja

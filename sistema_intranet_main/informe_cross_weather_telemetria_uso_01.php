@@ -32,19 +32,30 @@ if(!empty($_GET['submit_filter'])){
 $rowdata = db_select_data (false, 'Nombre,cantSensores, Direccion_img', 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Se arma la consulta
-$aa = '';
+$cadena = '';
 for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
-	$aa .= ',SensoresNombre_'.$i;
-	$aa .= ',SensoresUso_'.$i;
-	$aa .= ',SensoresFechaUso_'.$i;
-	$aa .= ',SensoresAccionC_'.$i;
-	$aa .= ',SensoresAccionT_'.$i;
-	$aa .= ',SensoresAccionMedC_'.$i;
-	$aa .= ',SensoresAccionMedT_'.$i;
-	$aa .= ',SensoresAccionAlerta_'.$i;
+	$cadena .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$cadena .= ',telemetria_listado_sensores_uso.SensoresUso_'.$i;
+	$cadena .= ',telemetria_listado_sensores_uso_fecha.SensoresFechaUso_'.$i;
+	$cadena .= ',telemetria_listado_sensores_accion_c.SensoresAccionC_'.$i;
+	$cadena .= ',telemetria_listado_sensores_accion_t.SensoresAccionT_'.$i;
+	$cadena .= ',telemetria_listado_sensores_accion_med_c.SensoresAccionMedC_'.$i;
+	$cadena .= ',telemetria_listado_sensores_accion_med_t.SensoresAccionMedT_'.$i;
+	$cadena .= ',telemetria_listado_sensores_accion_alerta.SensoresAccionAlerta_'.$i;
 }
 // consulto los datos
-$rowMed = db_select_data (false, 'Nombre'.$aa, 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowMed');
+$SIS_query = 'telemetria_listado.Nombre'.$cadena;
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_uso`             ON telemetria_listado_sensores_uso.idTelemetria            = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_uso_fecha`       ON telemetria_listado_sensores_uso_fecha.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_c`        ON telemetria_listado_sensores_accion_c.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_t`        ON telemetria_listado_sensores_accion_t.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_med_c`    ON telemetria_listado_sensores_accion_med_c.idTelemetria   = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_med_t`    ON telemetria_listado_sensores_accion_med_t.idTelemetria   = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_alerta`   ON telemetria_listado_sensores_accion_alerta.idTelemetria  = telemetria_listado.idTelemetria';
+$SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['idTelemetria'];
+$rowMed = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowMed');
 
 //Cuento si hay sensores activos
 $rowcount = 0;
@@ -90,27 +101,23 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 								<tr class="odd">
 									<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>
 									<td><?php echo fecha_estandar($rowMed['SensoresFechaUso_'.$i]); ?></td>
-									<td><?php echo Cantidades($rowMed['SensoresAccionC_'.$i], 2); ?></td>	
-									<td><?php echo Cantidades($rowMed['SensoresAccionMedC_'.$i], 2); ?></td>	
+									<td><?php echo Cantidades($rowMed['SensoresAccionC_'.$i], 2); ?></td>
+									<td><?php echo Cantidades($rowMed['SensoresAccionMedC_'.$i], 2); ?></td>
 									<td><?php if(isset($rowMed['SensoresAccionC_'.$i])&&$rowMed['SensoresAccionC_'.$i]!=0){echo porcentaje($rowMed['SensoresAccionMedC_'.$i]/$rowMed['SensoresAccionC_'.$i]);} ?></td>
-									<td><?php echo Cantidades($rowMed['SensoresAccionT_'.$i]/3600, 2); ?></td>	
-									<td><?php echo Cantidades($rowMed['SensoresAccionMedT_'.$i]/3600, 2); ?></td>	
+									<td><?php echo Cantidades($rowMed['SensoresAccionT_'.$i]/3600, 2); ?></td>
+									<td><?php echo Cantidades($rowMed['SensoresAccionMedT_'.$i]/3600, 2); ?></td>
 									<td><?php if(isset($rowMed['SensoresAccionT_'.$i])&&$rowMed['SensoresAccionT_'.$i]!=0){echo porcentaje($rowMed['SensoresAccionMedT_'.$i]/$rowMed['SensoresAccionT_'.$i]);} ?></td>
-									<td><?php echo Cantidades($rowMed['SensoresAccionAlerta_'.$i], 2); ?></td>	
+									<td><?php echo Cantidades($rowMed['SensoresAccionAlerta_'.$i], 2); ?></td>
 								</tr>
-							<?php 	
+							<?php
 							}
 						}
-					} ?>        
+					} ?>
 				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
-
-	
-	
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -128,7 +135,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$w .= " AND telemetria_listado.idTab=4";//CrossWeather			
+	$w .= " AND telemetria_listado.idTab=4";//CrossWeather
 }
 
 ?>

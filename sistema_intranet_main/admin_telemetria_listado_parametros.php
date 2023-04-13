@@ -50,9 +50,16 @@ if(!empty($_GET['modAct'])){
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresNombre_'.$i;
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
 }
-$rowdata = db_select_data (false, 'Nombre AS Equipo,SensorActivacionID, SensorActivacionValor,cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$SIS_query = '
+telemetria_listado.Nombre AS Equipo,
+telemetria_listado.SensorActivacionID,
+telemetria_listado.SensorActivacionValor,
+telemetria_listado.cantSensores'.$subquery;
+$SIS_join = 'LEFT JOIN `telemetria_listado_sensores_nombre` ON telemetria_listado_sensores_nombre.idTelemetria = telemetria_listado.idTelemetria';
+$SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
@@ -106,16 +113,27 @@ $rowdata = db_select_data (false, 'Nombre AS Equipo,SensorActivacionID, SensorAc
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['mod'])){
 //Armo cadena
-$cadena  = ',SensoresNombre_'.$_GET['mod'].' AS Nombre';
-$cadena .= ',SensoresUniMed_'.$_GET['mod'].' AS UniMed';
-$cadena .= ',SensoresUso_'.$_GET['mod'].' AS Uso';
-$cadena .= ',SensoresFechaUso_'.$_GET['mod'].' AS FechaUso';
-$cadena .= ',SensoresAccionC_'.$_GET['mod'].' AS AccionC';
-$cadena .= ',SensoresAccionT_'.$_GET['mod'].' AS AccionT';
-$cadena .= ',SensoresAccionAlerta_'.$_GET['mod'].' AS AccionAlerta';
+$cadena  = ',telemetria_listado_sensores_nombre.SensoresNombre_'.$_GET['mod'].' AS Nombre';
+$cadena .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$_GET['mod'].' AS UniMed';
+$cadena .= ',telemetria_listado_sensores_uso.SensoresUso_'.$_GET['mod'].' AS Uso';
+$cadena .= ',telemetria_listado_sensores_uso_fecha.SensoresFechaUso_'.$_GET['mod'].' AS FechaUso';
+$cadena .= ',telemetria_listado_sensores_accion_c.SensoresAccionC_'.$_GET['mod'].' AS AccionC';
+$cadena .= ',telemetria_listado_sensores_accion_t.SensoresAccionT_'.$_GET['mod'].' AS AccionT';
+$cadena .= ',telemetria_listado_sensores_accion_alerta.SensoresAccionAlerta_'.$_GET['mod'].' AS AccionAlerta';
 
 // consulto los datos
-$rowdata = db_select_data (false, 'Nombre AS Equipo'.$cadena, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$SIS_query = 'telemetria_listado.Nombre AS Equipo'.$cadena;
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_uso`             ON telemetria_listado_sensores_uso.idTelemetria            = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_uso_fecha`       ON telemetria_listado_sensores_uso_fecha.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_c`        ON telemetria_listado_sensores_accion_c.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_t`        ON telemetria_listado_sensores_accion_t.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_alerta`   ON telemetria_listado_sensores_accion_alerta.idTelemetria  = telemetria_listado.idTelemetria';
+$SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
+// consulto los datos
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
 
@@ -236,16 +254,29 @@ $rowdata = db_select_data (false, 'Nombre AS Equipo'.$cadena, 'telemetria_listad
 } else  {
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
-$qry = '';
+$subquery = '';
 //Recorro la configuracion de los sensores
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$qry .= ', SensoresNombre_'.$i;
-	$qry .= ', SensoresTipo_'.$i;
-	$qry .= ', SensoresGrupo_'.$i;
-	$qry .= ', SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$subquery .= ',telemetria_listado_sensores_tipo.SensoresTipo_'.$i;
+	$subquery .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 //Consultas
-$rowdata = db_select_data (false, 'Nombre,id_Geo, id_Sensores,cantSensores,SensorActivacionID, SensorActivacionValor'.$qry, 'telemetria_listado', '', 'idTelemetria ='.$_GET['id'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$SIS_query = '
+telemetria_listado.Nombre,
+telemetria_listado.id_Geo,
+telemetria_listado.id_Sensores,
+telemetria_listado.cantSensores,
+telemetria_listado.SensorActivacionID,
+telemetria_listado.SensorActivacionValor'.$subquery;
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_tipo`            ON telemetria_listado_sensores_tipo.idTelemetria           = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_grupo`           ON telemetria_listado_sensores_grupo.idTelemetria          = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria';
+$SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 $arrGrupos = array();
 $arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');

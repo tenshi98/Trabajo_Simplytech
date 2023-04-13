@@ -37,7 +37,7 @@ if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']
 	$SIS_where_1.=" AND telemetria_listado_errores_999.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 	$SIS_where_2.=" AND telemetria_listado_error_fuera_linea.Fecha_inicio BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){  
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){
 	$SIS_where_1.=" AND telemetria_listado_errores_999.idTelemetria=".$_GET['idTelemetria'];
 	$SIS_where_2.=" AND telemetria_listado_error_fuera_linea.idTelemetria=".$_GET['idTelemetria'];
 	$SIS_where_3.=" AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
@@ -47,12 +47,12 @@ if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){
 $N_Maximo_Sensores = 72;
 $consql = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$consql .= ',telemetria_listado.SensoresGrupo_'.$i;
-	$consql .= ',telemetria_listado.SensoresNombre_'.$i;
+	$consql .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$consql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
 }
 
 /*********************************************************/
-//consulto							
+//consulto
 $SIS_query = '
 core_sistemas.Nombre AS Sistema,
 telemetria_listado.Nombre AS EquipoNombre,
@@ -63,9 +63,11 @@ COUNT(telemetria_listado_errores_999.idErrores) AS Cuenta,
 telemetria_listado_errores_999.Descripcion,
 telemetria_listado_errores_999.Valor'.$consql;
 $SIS_join  = '
-LEFT JOIN telemetria_listado     ON telemetria_listado.idTelemetria  = telemetria_listado_errores_999.idTelemetria
-LEFT JOIN core_sistemas          ON core_sistemas.idSistema          = telemetria_listado_errores_999.idSistema
-LEFT JOIN core_telemetria_tabs   ON core_telemetria_tabs.idTab       = telemetria_listado.idTab';
+LEFT JOIN telemetria_listado                    ON telemetria_listado.idTelemetria                  = telemetria_listado_errores_999.idTelemetria
+LEFT JOIN core_sistemas                         ON core_sistemas.idSistema                          = telemetria_listado_errores_999.idSistema
+LEFT JOIN core_telemetria_tabs                  ON core_telemetria_tabs.idTab                       = telemetria_listado.idTab
+LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria  = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria   = telemetria_listado.idTelemetria';
 $SIS_order = 'core_sistemas.Nombre ASC, telemetria_listado.Nombre ASC, core_telemetria_tabs.Nombre ASC, telemetria_listado_errores_999.Sensor ASC, telemetria_listado_errores_999.Descripcion ASC, telemetria_listado_errores_999.Valor ASC';
 $SIS_where_1.= ' GROUP BY core_sistemas.Nombre,telemetria_listado.Nombre,core_telemetria_tabs.Nombre,telemetria_listado_errores_999.Sensor, telemetria_listado_errores_999.Descripcion, telemetria_listado_errores_999.Valor';
 $arrEquipos1 = array();
@@ -77,10 +79,10 @@ $SIS_query = '
 core_sistemas.Nombre AS Sistema,
 telemetria_listado.Nombre AS EquipoNombre,
 core_telemetria_tabs.Nombre AS EquipoTab,
-telemetria_listado_error_fuera_linea.Fecha_inicio, 
-telemetria_listado_error_fuera_linea.Hora_inicio, 
-telemetria_listado_error_fuera_linea.Fecha_termino, 
-telemetria_listado_error_fuera_linea.Hora_termino, 
+telemetria_listado_error_fuera_linea.Fecha_inicio,
+telemetria_listado_error_fuera_linea.Hora_inicio,
+telemetria_listado_error_fuera_linea.Fecha_termino,
+telemetria_listado_error_fuera_linea.Hora_termino,
 telemetria_listado_error_fuera_linea.Tiempo';
 $SIS_join  = '
 LEFT JOIN telemetria_listado     ON telemetria_listado.idTelemetria  = telemetria_listado_error_fuera_linea.idTelemetria
@@ -97,7 +99,7 @@ core_sistemas.Nombre AS Sistema,
 telemetria_listado.Nombre AS EquipoNombre,
 core_telemetria_tabs.Nombre AS EquipoTab,
 telemetria_listado.LastUpdateFecha,
-telemetria_listado.LastUpdateHora, 
+telemetria_listado.LastUpdateHora,
 telemetria_listado.TiempoFueraLinea';
 $SIS_join  = '
 LEFT JOIN `core_sistemas`        ON core_sistemas.idSistema      = telemetria_listado.idSistema
@@ -111,7 +113,7 @@ $arrTelemetria = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_
 //Se consultan datos
 $arrGrupos = array();
 $arrGrupos = db_select_array (false, 'idGrupo,Nombre,nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
-				
+
 $arrFinalGrupos = array();
 foreach ($arrGrupos as $sen) {
 	$arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];
@@ -133,8 +135,8 @@ $spreadsheet->getProperties()->setCreator(DeSanitizar($rowEmpresa['Nombre']))
 							 ->setCategory("office 2007 result file");
 
 /**********************************************************************************/
-/*                                    Pagina 1                                    */ 
-/**********************************************************************************/          
+/*                                    Pagina 1                                    */
+/**********************************************************************************/
 //variables
 $nn = 1;
 //Titulo columnas
@@ -154,7 +156,7 @@ $nn = 2;
 //Recorro
 foreach ($arrEquipos1 as $equip) {
 	if(isset($equip['Valor'])&&$equip['Valor']==99900){
-	
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, DeSanitizar($equip['Sistema']))
 					->setCellValue('B'.$nn, DeSanitizar($equip['EquipoNombre']))
@@ -165,12 +167,12 @@ foreach ($arrEquipos1 as $equip) {
 					->setCellValue('G'.$nn, DeSanitizar($equip['SensoresNombre_'.$equip['EquipoNSensor']]))
 					->setCellValue('H'.$nn, $equip['Cuenta'])
 					->setCellValue('I'.$nn, DeSanitizar($equip['Descripcion']));
-					
+
 		//Se suma 1
 		$nn++;
 	}
 }
-						
+
 //seteo el nombre de la hoja
 $spreadsheet->getActiveSheet(0)->setTitle('99900');
 //ancho de columnas
@@ -180,7 +182,7 @@ $spreadsheet->getActiveSheet(0)->getColumnDimension('C')->setWidth(12);
 $spreadsheet->getActiveSheet(0)->getColumnDimension('D')->setWidth(12);
 $spreadsheet->getActiveSheet(0)->getColumnDimension('E')->setWidth(20);
 $spreadsheet->getActiveSheet(0)->getColumnDimension('F')->setWidth(20);
-$spreadsheet->getActiveSheet(0)->getColumnDimension('G')->setWidth(20);*/  
+$spreadsheet->getActiveSheet(0)->getColumnDimension('G')->setWidth(20);*/
 //negrita
 $spreadsheet->getActiveSheet(0)->getStyle('A1:I1')->getFont()->setBold(true);
 //Coloreo celdas
@@ -201,8 +203,8 @@ $spreadsheet->getActiveSheet(0)->getStyle('A1:I'.$nn)->applyFromArray(
 
 
 /**********************************************************************************/
-/*                                    Pagina 2                                    */ 
-/**********************************************************************************/  			
+/*                                    Pagina 2                                    */
+/**********************************************************************************/
 //Se crea nueva hoja
 $spreadsheet->createSheet();
 
@@ -225,7 +227,7 @@ $nn = 2;
 //Recorro
 foreach ($arrEquipos1 as $equip) {
 	if(isset($equip['Valor'])&&$equip['Valor']==99901){
-	
+
 		$spreadsheet->setActiveSheetIndex(1)
 					->setCellValue('A'.$nn, DeSanitizar($equip['Sistema']))
 					->setCellValue('B'.$nn, DeSanitizar($equip['EquipoNombre']))
@@ -236,12 +238,12 @@ foreach ($arrEquipos1 as $equip) {
 					->setCellValue('G'.$nn, DeSanitizar($equip['SensoresNombre_'.$equip['EquipoNSensor']]))
 					->setCellValue('H'.$nn, $equip['Cuenta'])
 					->setCellValue('I'.$nn, DeSanitizar($equip['Descripcion']));
-					
+
 		//Se suma 1
 		$nn++;
 	}
 }
-						
+
 //seteo el nombre de la hoja
 $spreadsheet->getActiveSheet(1)->setTitle('99901');
 //ancho de columnas
@@ -271,8 +273,8 @@ $spreadsheet->getActiveSheet(1)->getStyle('A1:I'.$nn)->applyFromArray(
 );
 
 /**********************************************************************************/
-/*                                    Pagina 3                                    */ 
-/**********************************************************************************/  			
+/*                                    Pagina 3                                    */
+/**********************************************************************************/
 //Se crea nueva hoja
 $spreadsheet->createSheet();
 
@@ -288,13 +290,12 @@ $spreadsheet->setActiveSheetIndex(2)
             ->setCellValue('F'.$nn, 'Fecha Termino')
             ->setCellValue('G'.$nn, 'Hora Termino')
             ->setCellValue('H'.$nn, 'Tiempo');
-							
+
 //variables
 $nn = 2;
 //Recorro
 foreach ($arrErrores as $error) {
 
-	
 	$spreadsheet->setActiveSheetIndex(2)
 				->setCellValue('A'.$nn, DeSanitizar($error['Sistema']))
 				->setCellValue('B'.$nn, DeSanitizar($error['EquipoNombre']))
@@ -304,12 +305,12 @@ foreach ($arrErrores as $error) {
 				->setCellValue('F'.$nn, $error['Fecha_termino'])
 				->setCellValue('G'.$nn, $error['Hora_termino'])
 				->setCellValue('H'.$nn, $error['Tiempo']);
-					
+
 	//Se suma 1
 	$nn++;
-									
+
 }
-						
+
 //seteo el nombre de la hoja
 $spreadsheet->getActiveSheet(2)->setTitle('Fuera de Linea');
 //ancho de columnas
@@ -339,8 +340,8 @@ $spreadsheet->getActiveSheet(2)->getStyle('A1:H'.$nn)->applyFromArray(
 );
 
 /**********************************************************************************/
-/*                                    Pagina 4                                    */ 
-/**********************************************************************************/  			
+/*                                    Pagina 4                                    */
+/**********************************************************************************/
 //Se crea nueva hoja
 $spreadsheet->createSheet();
 
@@ -354,14 +355,14 @@ $spreadsheet->setActiveSheetIndex(3)
             ->setCellValue('D'.$nn, 'Fecha Inicio')
             ->setCellValue('E'.$nn, 'Hora Inicio')
             ->setCellValue('F'.$nn, 'Tiempo Actual');
-							
+
 //variables
 $nn = 2;
 //Recorro
 /*************************************************************/
-//Listado de fuera de linea actuales							
+//Listado de fuera de linea actuales
 foreach ($arrTelemetria as $tel) {
-	
+
 	$diaInicio   = $tel['LastUpdateFecha'];
 	$diaTermino  = fecha_actual();
 	$tiempo1     = $tel['LastUpdateHora'];
@@ -383,13 +384,13 @@ foreach ($arrTelemetria as $tel) {
 					->setCellValue('D'.$nn, $tel['LastUpdateFecha'])
 					->setCellValue('E'.$nn, $tel['LastUpdateHora'])
 					->setCellValue('F'.$nn, $Tiempo);
-						
+
 		//Se suma 1
 		$nn++;
 	}
-									
+
 }
-						
+
 //seteo el nombre de la hoja
 $spreadsheet->getActiveSheet(3)->setTitle('Fuera de Linea Actual');
 //ancho de columnas
@@ -417,7 +418,7 @@ $spreadsheet->getActiveSheet(3)->getStyle('A1:F'.$nn)->applyFromArray(
         )
     )
 );
-/**********************************************************************************/ 
+/**********************************************************************************/
 // Set active sheet index to the first sheet, so Excel opens this as the first sheet
 $spreadsheet->setActiveSheetIndex(0);
 

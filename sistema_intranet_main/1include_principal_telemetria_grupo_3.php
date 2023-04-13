@@ -20,22 +20,26 @@ $z = " WHERE (TimeStamp BETWEEN '".$f_inicio." ".$h_inicio ."' AND '".$f_termino
 $N_Maximo_Sensores = 72;
 $consql = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-    $consql .= ',telemetria_listado.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
-    $consql .= ',telemetria_listado.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
-    $consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
-    $consql .= ',telemetria_listado.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
+	$consql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
+    $consql .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
+    $consql .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
+    $consql .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
     $consql .= ',telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.Sensor_'.$i.' AS SensorValue_'.$i;
-
 }
 //Se traen todos los registros
-$SIS_query = ' 
+$SIS_query = '
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.cantSensores AS cantSensores,
 telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.TimeStamp,
 telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.FechaSistema,
 telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.HoraSistema
 '.$consql;
-$SIS_join  = 'LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTelemetria';
+$SIS_join  = '
+LEFT JOIN `telemetria_listado`                   ON telemetria_listado.idTelemetria                   = telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_grupo`    ON telemetria_listado_sensores_grupo.idTelemetria    = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_nombre`   ON telemetria_listado_sensores_nombre.idTelemetria   = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`   ON telemetria_listado_sensores_unimed.idTelemetria   = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`   ON telemetria_listado_sensores_activo.idTelemetria   = telemetria_listado.idTelemetria';
 $SIS_where = ' (TimeStamp BETWEEN "'.$f_inicio.' '.$h_inicio .'" AND "'.$f_termino.' '.$h_termino.'")';
 $SIS_order = 'telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.TimeStamp ASC';
 $arrRutas = array();
@@ -45,7 +49,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacio
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['line','corechart']});</script>
-			
+
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -59,11 +63,11 @@ $arrRutas = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacio
 				google.charts.setOnLoadCallback(drawChart);
 
 				function drawChart() {
-					
+
 					var chartDiv = document.getElementById('chart_div');
 
 					var data = new google.visualization.DataTable();
-					data.addColumn('string', 'Fecha - Hora'); 
+					data.addColumn('string', 'Fecha - Hora');
 					data.addColumn('number', "Temperatura");
 					data.addColumn('number', "Humedad");
 					data.addRows([
@@ -75,7 +79,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacio
 							$Humedad           = 0;
 							$Humedad_N         = 0;
 
-							//recorro los sensores		
+							//recorro los sensores
 							for ($x = 1; $x <= $N_Maximo_Sensores; $x++) {
 								if($fac['SensoresGrupo_'.$x]==simpleDecode($_GET['idGrupo'], fecha_actual())){
 									//si sensor esta activo
@@ -96,7 +100,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacio
 									}
 								}
 							}
-								
+
 							//Si es temperatura
 							if($Temperatura_N!=0){
 								$New_Temperatura     = $Temperatura/$Temperatura_N;
@@ -105,7 +109,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacio
 							}
 							//Si es humedad
 							if($Humedad_N!=0){      $New_Humedad     = $Humedad/$Humedad_N;         }else{$New_Humedad = 0;}
-								
+
 							//Se genera la cadena
 							if($New_Temperatura!=0 OR $New_Humedad!=0){
 								$chain  = "'".Fecha_estandar($fac['FechaSistema'])." - ".Hora_estandar($fac['HoraSistema'])."'";
@@ -113,8 +117,6 @@ $arrRutas = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacio
 								//se imprime dato
 								echo '['.$chain.'],';
 							}
-									
-						 
 						}  ?>
 					]);
 
@@ -147,8 +149,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacio
 
 			</script>
 			<div id='chart_div' style='width: 95%; height: 500px;'></div>
-					
+
 		</div>
 	</div>
 </div>
-		

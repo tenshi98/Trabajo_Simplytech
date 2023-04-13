@@ -36,7 +36,7 @@ if(isset($_GET['f_ejecucion_desde'])&&$_GET['f_ejecucion_desde']!=''&&isset($_GE
 if(isset($_GET['f_termino_desde'])&&$_GET['f_termino_desde']!=''&&isset($_GET['f_termino_hasta'])&&$_GET['f_termino_hasta']!=''){
 	$search .="&f_termino_desde=".$_GET['f_termino_desde'];
 	$search .="&f_termino_hasta=".$_GET['f_termino_hasta'];
-}     
+}
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
@@ -120,10 +120,10 @@ cross_predios_listado_zonas.DistanciaPlant AS CuartelDistanciaPlant,
 cross_predios_listado_zonas.Plantas AS CuartelCantPlantas,
 
 telemetria_listado.Nombre AS TractorNombre,
-telemetria_listado.SensoresNombre_1 AS TractorSensorNombre_1,
-telemetria_listado.SensoresNombre_2 AS TractorSensorNombre_2,
-telemetria_listado.SensoresNombre_3 AS TractorSensorNombre_3,
-telemetria_listado.SensoresNombre_4 AS TractorSensorNombre_4,
+telemetria_listado_sensores_nombre.SensoresNombre_1 AS TractorSensorNombre_1,
+telemetria_listado_sensores_nombre.SensoresNombre_2 AS TractorSensorNombre_2,
+telemetria_listado_sensores_nombre.SensoresNombre_3 AS TractorSensorNombre_3,
+telemetria_listado_sensores_nombre.SensoresNombre_4 AS TractorSensorNombre_4,
 cross_solicitud_aplicacion_listado_tractores.idTractores,
 cross_solicitud_aplicacion_listado_tractores.GeoVelocidadMin,
 cross_solicitud_aplicacion_listado_tractores.GeoVelocidadMax,
@@ -142,11 +142,11 @@ LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_list
 LEFT JOIN `cross_solicitud_aplicacion_listado_tractores`   ON cross_solicitud_aplicacion_listado_tractores.idCuarteles   = cross_solicitud_aplicacion_listado_cuarteles.idCuarteles
 LEFT JOIN `telemetria_listado`                             ON telemetria_listado.idTelemetria                            = cross_solicitud_aplicacion_listado_tractores.idTelemetria
 LEFT JOIN `sistema_variedades_categorias`                  ON sistema_variedades_categorias.idCategoria                  = cross_solicitud_aplicacion_listado.idCategoria
-LEFT JOIN `variedades_listado`                             ON variedades_listado.idProducto                              = cross_solicitud_aplicacion_listado.idProducto';
+LEFT JOIN `variedades_listado`                             ON variedades_listado.idProducto                              = cross_solicitud_aplicacion_listado.idProducto
+LEFT JOIN `telemetria_listado_sensores_nombre`             ON telemetria_listado_sensores_nombre.idTelemetria            = telemetria_listado.idTelemetria';
 $SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrOTS = array();
 $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOTS');
-
 
 ?>
 

@@ -50,8 +50,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	/****************************************/
 	//consulto
 	$SIS_query = '
-	telemetria_listado.SensoresNombre_'.$sensorn.' AS SensorNombre,
-	telemetria_listado.SensoresGrupo_'.$sensorn.' AS SensorGrupo,
+	telemetria_listado_sensores_nombre.SensoresNombre_'.$sensorn.' AS SensorNombre,
+	telemetria_listado_sensores_grupo.SensoresGrupo_'.$sensorn.' AS SensorGrupo,
 
 	backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTabla,
 	backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema,
@@ -59,8 +59,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$sensorn.' AS SensorValue,
 	telemetria_listado_unidad_medida.Nombre AS Unimed';
 	$SIS_join  = '
-	LEFT JOIN `telemetria_listado`                ON telemetria_listado.idTelemetria            = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria
-	LEFT JOIN `telemetria_listado_unidad_medida`  ON telemetria_listado_unidad_medida.idUniMed  = telemetria_listado.SensoresUniMed_'.$sensorn;
+	LEFT JOIN `telemetria_listado`                   ON telemetria_listado.idTelemetria                   = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_nombre`   ON telemetria_listado_sensores_nombre.idTelemetria   = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_grupo`    ON telemetria_listado_sensores_grupo.idTelemetria    = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_unimed`   ON telemetria_listado_sensores_unimed.idTelemetria   = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_unidad_medida`     ON telemetria_listado_unidad_medida.idUniMed         = telemetria_listado_sensores_unimed.SensoresUniMed_'.$sensorn;
 	$SIS_order = 'backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema ASC, backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.HoraSistema ASC LIMIT 10000';
 	$arrEquipos = array();
 	$arrEquipos = db_select_array (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos');

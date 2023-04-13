@@ -60,10 +60,16 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	//obtengo el nombre de los sensores
 	$subquery = '';
 	foreach ($arrOperaciones as $oper) {
-		$subquery .= ',SensoresNombre_'.$oper['N_Sensor'];
+		$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
 	}
 	//Consultas
-	$rowdata = db_select_data (false, 'Nombre,SensorActivacionID,SensorActivacionValor'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+	$SIS_query = '
+	telemetria_listado.Nombre,
+	telemetria_listado.SensorActivacionID,
+	telemetria_listado.SensorActivacionValor'.$subquery;
+	$SIS_join  = 'LEFT JOIN `telemetria_listado_sensores_nombre` ON telemetria_listado_sensores_nombre.idTelemetria = telemetria_listado.idTelemetria';
+	$SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['idTelemetria'];
+	$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 	//verifico el sensor de activacion este configurado
 	if(isset($rowdata['SensorActivacionID'])&&$rowdata['SensorActivacionID']!=''&&$rowdata['SensorActivacionID']!=0){
 		$SIS_where.=" AND Sensor_".$rowdata['SensorActivacionID']." = '".$rowdata['SensorActivacionValor']."'";
@@ -86,7 +92,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$SIS_order = 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema ASC, telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.HoraSistema ASC LIMIT 10000';
 	$arrMediciones = array();
 	$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMediciones');
-										
+
 	?>
 	<style>
 
@@ -150,12 +156,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	.carro{left:50%;margin-left:92px;margin-top:110px;position:absolute;top:0%;z-index: 100;}
 	.elevacion{left:50%;margin-left:115px;margin-top:170px;position:absolute;top:0%;z-index: 100;}
 	.carga{left:50%;margin-left:115px;margin-top:270px;position:absolute;top:0%;z-index: 100;}
-	.carga_maxima{left:50%;margin-left:205px;margin-top:60px;position:absolute;top:0%;z-index: 100;}	
-	.partida{left:50%;margin-left:-105px;margin-top:140px;position:absolute;top:0%;z-index: 100;}	
-	.parada{left:50%;margin-left:-105px;margin-top:170px;position:absolute;top:0%;z-index: 100;}	
-	.voltaje{left:50%;margin-left:-105px;margin-top:360px;position:absolute;top:0%;z-index: 100;}	
-		
-		
+	.carga_maxima{left:50%;margin-left:205px;margin-top:60px;position:absolute;top:0%;z-index: 100;}
+	.partida{left:50%;margin-left:-105px;margin-top:140px;position:absolute;top:0%;z-index: 100;}
+	.parada{left:50%;margin-left:-105px;margin-top:170px;position:absolute;top:0%;z-index: 100;}
+	.voltaje{left:50%;margin-left:-105px;margin-top:360px;position:absolute;top:0%;z-index: 100;}
+
 	</style>
 
 
@@ -166,7 +171,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Historial Operaciones de <?php echo $rowdata['Nombre']; ?></h5>
 			</header>
 			<div class="row">
-				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">  
+				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div style="height: 550px;">
 						<div class="giro btn-group btn-group-xs" role="group" aria-label="...">
 							<button type="button" id="giro_left"  class="btn btn-default"><i class="fa fa-arrow-left" aria-hidden="true"></i></button>
@@ -197,13 +202,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<button type="button" id="partida"   class="btn btn-default"><i class="fa fa-toggle-on" aria-hidden="true"></i></button>
 							<button type="button" id="parada"   class="btn btn-default"><i class="fa fa-hand-paper-o" aria-hidden="true"></i></button>
 						</div>
-						
-						
+
 						<div class="voltaje btn-group-vertical btn-group-xs" role="group" aria-label="...">
 							<button type="button" id="voltaje"   class="btn btn-default"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></button>
 						</div>
-						
-						 
+
 						<div id="crane">
 							<div id="peak">
 								<section id="light"></section>
@@ -310,7 +313,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									</tr>
 								</thead>
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
-									<?php foreach ($arrMediciones as $med) { 
+									<?php foreach ($arrMediciones as $med) {
 										$data_s = '';
 										$data_x = '';
 										foreach ($arrOperaciones as $oper) {
@@ -440,10 +443,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		}else{
 			document.getElementById('carga_maxima').style.backgroundColor  = '#ffffff';
 		}
-		
-		 
-		
-		
+
 		//Limitador carga maxima 3ra velocidad elevacion
 		if (typeof $(this).data('sensor_14') !== 'undefined') {
 			// your code here

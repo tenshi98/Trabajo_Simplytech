@@ -19,7 +19,7 @@ $SIS_query = '
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.GeoLatitud,
 telemetria_listado.GeoLongitud,
-telemetria_listado.SensoresNombre_'.simpleDecode($_GET['sensorn'], fecha_actual()).' AS SensorNombre,
+telemetria_listado_sensores_nombre.SensoresNombre_'.simpleDecode($_GET['sensorn'], fecha_actual()).' AS SensorNombre,
 
 backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTabla,
 backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.FechaSistema,
@@ -31,10 +31,12 @@ core_ubicacion_ciudad.Nombre AS Ciudad,
 core_ubicacion_comunas.Nombre AS Comuna,
 telemetria_listado.Direccion';
 $SIS_join  = '
-LEFT JOIN `telemetria_listado`                 ON telemetria_listado.idTelemetria             = backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTelemetria
-LEFT JOIN `telemetria_listado_unidad_medida`   ON telemetria_listado_unidad_medida.idUniMed   = telemetria_listado.SensoresUniMed_'.simpleDecode($_GET['sensorn'], fecha_actual()).'
-LEFT JOIN `core_ubicacion_ciudad`              ON core_ubicacion_ciudad.idCiudad              = telemetria_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`             ON core_ubicacion_comunas.idComuna             = telemetria_listado.idComuna';
+LEFT JOIN `telemetria_listado`                   ON telemetria_listado.idTelemetria                   = backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_nombre`   ON telemetria_listado_sensores_nombre.idTelemetria   = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`   ON telemetria_listado_sensores_unimed.idTelemetria   = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_unidad_medida`     ON telemetria_listado_unidad_medida.idUniMed         = telemetria_listado_sensores_unimed.SensoresUniMed_'.simpleDecode($_GET['sensorn'], fecha_actual()).'
+LEFT JOIN `core_ubicacion_ciudad`                ON core_ubicacion_ciudad.idCiudad                    = telemetria_listado.idCiudad
+LEFT JOIN `core_ubicacion_comunas`               ON core_ubicacion_comunas.idComuna                   = telemetria_listado.idComuna';
 $SIS_where = 'backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTabla = '.simpleDecode($_GET['view'], fecha_actual());
 $rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()), $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
@@ -45,7 +47,7 @@ $rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_tablare
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>
-				
+
 		</header>
         <div class="table-responsive">
 			<?php
@@ -53,7 +55,7 @@ $rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_tablare
 			$explanation .= '<strong>Equipo: </strong>'.$rowdata['NombreEquipo'].'<br/>';
 			$explanation .= '<strong>Sensor: </strong>'.$rowdata['SensorNombre'].'<br/>';
 			$explanation .= '<strong>Medicion Actual: </strong>'.Cantidades_decimales_justos($rowdata['SensorValue']).' '.$rowdata['Unimed'].'<br/>';
-					
+
 			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
 			?>
         </div>

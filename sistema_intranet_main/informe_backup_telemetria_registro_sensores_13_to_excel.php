@@ -107,9 +107,9 @@ function crear_data($limite, $idTelemetria, $f_inicio, $f_termino, $dbConn ) {
 	$N_Maximo_Sensores = 72;
 	$subquery = '';
 	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-		$subquery .= ',telemetria_listado.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
-		$subquery .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensorUniMed_'.$i;
-		$subquery .= ',telemetria_listado.SensoresGrupo_'.$i.' AS SensorGrupo_'.$i;
+		$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
+		$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i.' AS SensorUniMed_'.$i;
+		$subquery .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i.' AS SensorGrupo_'.$i;
 		$subquery .= ',backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.' AS SensorValue_'.$i;
 	}
 	//Se traen todos los registros
@@ -118,14 +118,18 @@ function crear_data($limite, $idTelemetria, $f_inicio, $f_termino, $dbConn ) {
 	telemetria_listado.cantSensores,
 	backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema,
 	backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.HoraSistema'.$subquery;
-	$SIS_join  = 'LEFT JOIN `telemetria_listado`     ON telemetria_listado.idTelemetria   = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria';
+	$SIS_join  = '
+	LEFT JOIN `telemetria_listado`                  ON telemetria_listado.idTelemetria                   = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria   = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria    = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria   = telemetria_listado.idTelemetria';
 	$SIS_where = '(FechaSistema BETWEEN "'.$f_inicio.'" AND "'.$f_termino.'")';
 	$SIS_order = 'backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria ASC LIMIT '.$limite.', 5000';
 	$arrRutas = array();
 	$arrRutas = db_select_array (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrRutas');
-	
+
 	return $arrRutas;
-	
+
 }
 
 
@@ -157,40 +161,40 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	for ($i = 1; $i <= $arrTemporal[0]['cantSensores']; $i++) {
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue($arrData[$i].'1', DeSanitizar($arrGru[$arrTemporal[0]['SensorGrupo_'.$i]]));
-	}  
-	 
+	}
+
 	/***********************************************************/
 	//Titulo columnas
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A2', 'Equipo')
 				->setCellValue('B2', 'Fecha')
 				->setCellValue('C2', 'Hora');
-				
+
 	for ($i = 1; $i <= $arrTemporal[0]['cantSensores']; $i++) {
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue($arrData[$i].'2', DeSanitizar($arrTemporal[0]['SensorNombre_'.$i]).' ('.DeSanitizar($arrUni[$arrTemporal[0]['SensorUniMed_'.$i]]).')');
-	}   
+	}
 
 	/***********************************************************/
-	//Datos        
+	//Datos
 	$nn=3;
 	foreach ($arrTemporal as $rutas) {
-							
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, DeSanitizar($rutas['NombreEquipo']))
 					->setCellValue('B'.$nn, fecha_estandar($rutas['FechaSistema']))
 					->setCellValue('C'.$nn, $rutas['HoraSistema']);
-					
+
 		for ($i = 1; $i <= $arrTemporal[0]['cantSensores']; $i++) {
 			if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]<99900){$xdata=Cantidades_decimales_justos($rutas['SensorValue_'.$i]);}else{$xdata='Sin Datos';}
 			if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]==0&&isset($rutas['SensorUniMed_'.$i])&&$rutas['SensorUniMed_'.$i]==2){$xdata='Sin Datos';}
 			$spreadsheet->setActiveSheetIndex(0)
 						->setCellValue($arrData[$i].$nn, $xdata);
 		}
-				   
+
 		$nn++;
-	   
-	} 
+
+	}
 	/***********************************************************/
 	// Rename worksheet
 	$super_titulo = 'Hoja 1';
@@ -199,7 +203,6 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	}
 	$spreadsheet->getActiveSheet(0)->setTitle($super_titulo);
 
-	
 //Si no se slecciono se traen todos los equipos a los cuales tiene permiso
 }else{
 	//Inicia variable
@@ -208,7 +211,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$SIS_where.= " AND telemetria_listado.idSistema=".$_GET['idSistema'];
 	//Solo para plataforma CrossTech
 	if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-		$SIS_where .= " AND telemetria_listado.idTab=4";//CrossWeather			
+		$SIS_where .= " AND telemetria_listado.idTab=4";//CrossWeather
 	}
 	//Verifico el tipo de usuario que esta ingresando
 	if($_GET['idTipoUsuario']==1){
@@ -236,21 +239,21 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		$spreadsheet->createSheet();
 		//Llamo a la funcion
 		$arrTemporal = crear_data($set_lim, $equipo['idTelemetria'], $_GET['f_inicio'], $_GET['f_termino'] , $dbConn);
-		
+
 		/***********************************************************/
 		//Grupos de los sensores
 		for ($i = 1; $i <= $arrTemporal[0]['cantSensores']; $i++) {
 			$spreadsheet->setActiveSheetIndex($sheet)
 						->setCellValue($arrData[$i].'1', DeSanitizar($arrGru[$arrTemporal[0]['SensorGrupo_'.$i]]));
-		}  
-		 
+		}
+
 		/***********************************************************/
 		//Titulo columnas
 		$spreadsheet->setActiveSheetIndex($sheet)
 					->setCellValue('A2', 'Equipo')
 					->setCellValue('B2', 'Fecha')
 					->setCellValue('C2', 'Hora');
-					
+
 		for ($i = 1; $i <= $arrTemporal[0]['cantSensores']; $i++) {
 			$spreadsheet->setActiveSheetIndex($sheet)
 						->setCellValue($arrData[$i].'2', DeSanitizar($arrTemporal[0]['SensorNombre_'.$i]).' ('.DeSanitizar($arrUni[$arrTemporal[0]['SensorUniMed_'.$i]]).')');
@@ -258,25 +261,25 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 
 		 
 		/***********************************************************/
-		//Datos        
+		//Datos
 		$nn=3;
 		foreach ($arrTemporal as $rutas) {
-								
+
 			$spreadsheet->setActiveSheetIndex($sheet)
 						->setCellValue('A'.$nn, DeSanitizar($rutas['NombreEquipo']))
 						->setCellValue('B'.$nn, fecha_estandar($rutas['FechaSistema']))
 						->setCellValue('C'.$nn, $rutas['HoraSistema']);
-					
+
 			for ($i = 1; $i <= $arrTemporal[0]['cantSensores']; $i++) {
 				if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]<99900){$xdata=Cantidades_decimales_justos($rutas['SensorValue_'.$i]);}else{$xdata='Sin Datos';}
 				if(isset($rutas['SensorValue_'.$i])&&$rutas['SensorValue_'.$i]==0&&isset($rutas['SensorUniMed_'.$i])&&$rutas['SensorUniMed_'.$i]==2){$xdata='Sin Datos';}
 				$spreadsheet->setActiveSheetIndex($sheet)
 							->setCellValue($arrData[$i].$nn, $xdata);
 			}
-				   
+
 			$nn++;
-		   
-		} 
+
+		}
 		/***********************************************************/
 		// Rename worksheet
 		$super_titulo = 'Hoja 1';
@@ -284,7 +287,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 			$super_titulo = cortar(DeSanitizar($arrTemporal[0]['NombreEquipo']), 25);
 		}
 		$spreadsheet->getActiveSheet($sheet)->setTitle($super_titulo);
-	
+
 		$sheet++;
 	}
 

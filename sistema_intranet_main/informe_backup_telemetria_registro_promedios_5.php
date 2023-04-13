@@ -49,54 +49,58 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 /**********************************************************************/
 //Funcion para escribir datos
 function crear_data($cantsens, $filtro, $idTelemetria, $f_inicio, $f_termino, $desde, $hasta, $dbConn ) {
-	
+
 	$consql    = '';
 	$subfiltro = '';
 	for ($i = 1; $i <= $cantsens; $i++) {
 		//$subfiltro .= ' AND backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.' != 999';
-		$consql .= ',telemetria_listado.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
-		//$consql .= ',telemetria_listado.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
-		$consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
-		
-		
+		$consql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
+		//$consql .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
+		$consql .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
+
 		//desde y hasta activo
 		if(isset($desde)&&$desde!=''&&isset($hasta)&&$hasta!=''){
-			//$consql .= ',MIN(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'>='.$desde.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<='.$hasta.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0),0)) AS MedMin_'.$i;
-			//$consql .= ',MAX(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'>='.$desde.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<='.$hasta.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0),0)) AS MedMax_'.$i;
-			$consql .= ',AVG(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'>='.$desde.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<='.$hasta.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0),0)) AS MedProm_'.$i;
-			//$consql .= ',STDDEV(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'>='.$desde.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<='.$hasta.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0),0)) AS MedDesStan_'.$i;
-		//solo desde	
+			//$consql .= ',MIN(NULLIF(IF(telemetria_listado_sensores_activo.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'>='.$desde.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<='.$hasta.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0),0)) AS MedMin_'.$i;
+			//$consql .= ',MAX(NULLIF(IF(telemetria_listado_sensores_activo.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'>='.$desde.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<='.$hasta.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0),0)) AS MedMax_'.$i;
+			$consql .= ',AVG(NULLIF(IF(telemetria_listado_sensores_activo.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'>='.$desde.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<='.$hasta.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0),0)) AS MedProm_'.$i;
+			//$consql .= ',STDDEV(NULLIF(IF(telemetria_listado_sensores_activo.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'>='.$desde.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<='.$hasta.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0),0)) AS MedDesStan_'.$i;
+		//solo desde
 		}elseif(isset($desde)&&$desde!=''&&(!isset($hasta) OR $hasta=='')){
-			//$consql .= ',MIN(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'>='.$desde.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0)) AS MedMin_'.$i;
-			//$consql .= ',MAX(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'>='.$desde.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0)) AS MedMax_'.$i;
-			$consql .= ',AVG(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'>='.$desde.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0)) AS MedProm_'.$i;
-			//$consql .= ',STDDEV(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'>='.$desde.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0)) AS MedDesStan_'.$i;
-		//solo hasta	
+			//$consql .= ',MIN(NULLIF(IF(telemetria_listado_sensores_activo.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'>='.$desde.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0)) AS MedMin_'.$i;
+			//$consql .= ',MAX(NULLIF(IF(telemetria_listado_sensores_activo.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'>='.$desde.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0)) AS MedMax_'.$i;
+			$consql .= ',AVG(NULLIF(IF(telemetria_listado_sensores_activo.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'>='.$desde.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0)) AS MedProm_'.$i;
+			//$consql .= ',STDDEV(NULLIF(IF(telemetria_listado_sensores_activo.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'>='.$desde.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0)) AS MedDesStan_'.$i;
+		//solo hasta
 		}elseif(isset($hasta)&&$hasta!=''&&(!isset($desde) OR $desde=='')){
-			//$consql .= ',MIN(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<='.$hasta.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0)) AS MedMin_'.$i;
-			//$consql .= ',MAX(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<='.$hasta.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0)) AS MedMax_'.$i;
-			$consql .= ',AVG(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<='.$hasta.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0)) AS MedProm_'.$i;
-			//$consql .= ',STDDEV(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<='.$hasta.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0)) AS MedDesStan_'.$i;
+			//$consql .= ',MIN(NULLIF(IF(telemetria_listado_sensores_activo.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<='.$hasta.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0)) AS MedMin_'.$i;
+			//$consql .= ',MAX(NULLIF(IF(telemetria_listado_sensores_activo.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<='.$hasta.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0)) AS MedMax_'.$i;
+			$consql .= ',AVG(NULLIF(IF(telemetria_listado_sensores_activo.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<='.$hasta.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0)) AS MedProm_'.$i;
+			//$consql .= ',STDDEV(NULLIF(IF(telemetria_listado_sensores_activo.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<='.$hasta.',IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0),0)) AS MedDesStan_'.$i;
 		//ninguno
 		}else{
-			//$consql .= ',MIN(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0)) AS MedMin_'.$i;
-			//$consql .= ',MAX(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0)) AS MedMax_'.$i;
-			$consql .= ',AVG(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0)) AS MedProm_'.$i;
-			//$consql .= ',STDDEV(NULLIF(IF(telemetria_listado.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0)) AS MedDesStan_'.$i;
+			//$consql .= ',MIN(NULLIF(IF(telemetria_listado_sensores_activo.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0)) AS MedMin_'.$i;
+			//$consql .= ',MAX(NULLIF(IF(telemetria_listado_sensores_activo.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0)) AS MedMax_'.$i;
+			$consql .= ',AVG(NULLIF(IF(telemetria_listado_sensores_activo.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0)) AS MedProm_'.$i;
+			//$consql .= ',STDDEV(NULLIF(IF(telemetria_listado_sensores_activo.SensoresActivo_'.$i.'=1,IF(backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.'<99900,backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.',0),0),0)) AS MedDesStan_'.$i;
 		}
 	}
 
 	/*******************************************************/
 	//se consulta
 	$SIS_query = 'backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema'.$consql;
-	$SIS_join  = 'LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria';
+	$SIS_join  = '
+	LEFT JOIN `telemetria_listado`                  ON telemetria_listado.idTelemetria                   = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria   = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria    = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria   = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_activo`  ON telemetria_listado_sensores_activo.idTelemetria   = telemetria_listado.idTelemetria';
 	$SIS_where = 'idTabla!=0 '.$filtro.$subfiltro.' GROUP BY backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema';
 	$SIS_order = 'backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema ASC LIMIT 10000';
 	$arrRutas = array();
 	$arrRutas = db_select_array (false, $SIS_query, 'backup_telemetria_listado_tablarelacionada_'.$idTelemetria, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrRutas');
-		
+
 	return $arrRutas;
-	
+
 }
 
 /*******************************************************/
@@ -134,12 +138,12 @@ $arrData[2]['Name'] = "'Humedad'";
 
 //se arman datos
 foreach ($arrTemporal as $fac) {
-	
+
 	$Temperatura       = 0;
 	$Temperatura_N     = 0;
 	$Humedad           = 0;
 	$Humedad_N         = 0;
-									
+
 	for ($x = 1; $x <= $rowEquipo['cantSensores']; $x++) {
 		if($fac['SensoresGrupo_'.$x]==$_GET['idGrupo']){
 			//Que el valor medido sea distinto de 999
@@ -151,7 +155,7 @@ foreach ($arrTemporal as $fac) {
 			}
 		}
 	}
-										
+
 	if($Temperatura_N!=0){  $New_Temperatura = $Temperatura/$Temperatura_N; }else{$New_Temperatura = 0;}
 	if($Humedad_N!=0){      $New_Humedad     = $Humedad/$Humedad_N;         }else{$New_Humedad     = 0;}
 
@@ -180,7 +184,7 @@ foreach ($arrTemporal as $fac) {
 	}
 
 	//contador
-	$count++;			
+	$count++;
 }
 
 //si hay mas de 9000 registros
@@ -253,13 +257,13 @@ if(isset($_GET['idGraficos'])&&$_GET['idGraficos']==1){ ?>
 			<?php if(isset($_GET['hasta'])&&$_GET['hasta']!=''){ ?>             <input type="hidden" name="hasta"        id="hasta"       value="<?php echo $_GET['hasta']; ?>" /><?php } ?>
 
 			<button type="button" name="create_pdf" id="create_pdf" class="btn btn-danger btn-xs">Hacer PDF</button>
-					
+
 		</form>
 
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>
 		<script>
 			var node = document.getElementById('graphLinear_1');
-						
+
 			function sendDatatoSRV(img) {
 				$('#img_adj').val(img);
 				//$('#img_adj').val($('#img-out').html());

@@ -1521,22 +1521,21 @@ function widget_Resumen_GPS_equipos($titulo, $seguimiento, $idSistema, $idTipoUs
 		$SIS_where .= " AND telemetria_listado.idSistema = ".$idSistema;
 	}
 	//Verifico el tipo de usuario que esta ingresando y el id
-	$SIS_join = "";
+	$SIS_join = '';
 	if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-		$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-		$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
+		$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
+		$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 	}
 
 	//numero sensores equipo
 	$N_Maximo_Sensores = 60;
 	$subquery = '';
 	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-		$subquery .= ',SensoresNombre_'.$i;
-		$subquery .= ',SensoresUniMed_'.$i;
-		$subquery .= ',SensoresMedActual_'.$i;
-		$subquery .= ',SensoresActivo_'.$i;
+		$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+		$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+		$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+		$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 	}
-
 	$SIS_query = '
 	telemetria_listado.Nombre,
 	telemetria_listado.cantSensores,
@@ -1545,6 +1544,11 @@ function widget_Resumen_GPS_equipos($titulo, $seguimiento, $idSistema, $idTipoUs
 	telemetria_listado.id_Sensores,
 	telemetria_listado.TiempoFueraLinea,
 	telemetria_listado.NErrores'.$subquery;
+	$SIS_join .= '
+	LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_med_actual`      ON telemetria_listado_sensores_med_actual.idTelemetria     = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria';
 	$SIS_order = 'telemetria_listado.Nombre ASC';
 	$arrEquipo = array();
 	$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
@@ -1702,19 +1706,19 @@ if (isset($equipo)&&$equipo!=''&&$equipo!=0){
 //Verifico el tipo de usuario que esta ingresando y el id
 $SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema';
 if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-	$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-	$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
+	$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
+	$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 }
 
 //numero sensores equipo
 $N_Maximo_Sensores = 60;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresNombre_'.$i;
-	$subquery .= ',SensoresMedActual_'.$i;
-	$subquery .= ',SensoresGrupo_'.$i;
-	$subquery .= ',SensoresUniMed_'.$i;
-	$subquery .= ',SensoresActivo_'.$i;
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	$subquery .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 }
 
 /*****************************/
@@ -1729,6 +1733,12 @@ telemetria_listado.cantSensores,
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.NErrores,
 core_sistemas.idOpcionesGen_3'.$subquery;
+$SIS_join .= '
+LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_med_actual`      ON telemetria_listado_sensores_med_actual.idTelemetria     = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_grupo`           ON telemetria_listado_sensores_grupo.idTelemetria          = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria';
 $SIS_order = 'telemetria_listado.Nombre ASC';
 $arrEquipo = array();
 $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
@@ -3236,18 +3246,18 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
 		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-			$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-			$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
+			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
+			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
 
 		//numero sensores equipo
 		$N_Maximo_Sensores = 60;
 		$subquery = '';
 		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-			$subquery .= ',SensoresNombre_'.$i;
-			$subquery .= ',SensoresMedActual_'.$i;
-			$subquery .= ',SensoresUniMed_'.$i;
-			$subquery .= ',SensoresActivo_'.$i;
+			$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+			$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+			$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+			$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 		}
 
 		/*************************************************************/
@@ -3266,6 +3276,11 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 		telemetria_listado.GeoVelocidad,
 		telemetria_listado.Patente,
 		telemetria_listado.id_Sensores'.$subquery;
+		$SIS_join .= '
+		LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_med_actual`      ON telemetria_listado_sensores_med_actual.idTelemetria     = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria';
 		$SIS_order = 'telemetria_listado.Nombre ASC';
 		$arrEquipo = array();
 		$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
@@ -3679,18 +3694,18 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
 		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-			$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-			$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
+			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
+			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
 
 		//numero sensores equipo
 		$N_Maximo_Sensores = 60;
 		$subquery = '';
 		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-			$subquery .= ',SensoresNombre_'.$i;
-			$subquery .= ',SensoresMedActual_'.$i;
-			$subquery .= ',SensoresUniMed_'.$i;
-			$subquery .= ',SensoresActivo_'.$i;
+			$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+			$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+			$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+			$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 		}
 
 		/*************************************************************/
@@ -3705,6 +3720,11 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 		telemetria_listado.TiempoFueraLinea,
 		telemetria_listado.NErrores,
 		telemetria_listado.id_Sensores'.$subquery;
+		$SIS_join .= '
+		LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_med_actual`      ON telemetria_listado_sensores_med_actual.idTelemetria     = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria';
 		$SIS_order = 'telemetria_listado.Nombre ASC';
 		$arrEquipo = array();
 		$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
@@ -4102,18 +4122,18 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
 		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-			$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-			$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
+			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
+			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
 
 		//numero sensores equipo
 		$N_Maximo_Sensores = 60;
 		$subquery = '';
 		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-			$subquery .= ',SensoresNombre_'.$i;
-			$subquery .= ',SensoresMedActual_'.$i;
-			$subquery .= ',SensoresUniMed_'.$i;
-			$subquery .= ',SensoresActivo_'.$i;
+			$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+			$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+			$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+			$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 		}
 
 		/*************************************************************/
@@ -4132,6 +4152,11 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 		telemetria_listado.GeoVelocidad,
 		telemetria_listado.Patente,
 		telemetria_listado.id_Sensores'.$subquery;
+		$SIS_join .= '
+		LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_med_actual`      ON telemetria_listado_sensores_med_actual.idTelemetria     = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria';
 		$SIS_order = 'telemetria_listado.Nombre ASC';
 		$arrEquipo = array();
 		$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
@@ -4558,18 +4583,18 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
 		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-			$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-			$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
+			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
+			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
 
 		//numero sensores equipo
 		$N_Maximo_Sensores = 10;
 		$subquery = '';
 		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-			$subquery .= ',SensoresNombre_'.$i;
-			$subquery .= ',SensoresMedActual_'.$i;
-			$subquery .= ',SensoresUniMed_'.$i;
-			$subquery .= ',SensoresActivo_'.$i;
+			$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+			$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+			$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+			$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 		}
 
 		/*************************************************************/
@@ -4589,6 +4614,11 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 		telemetria_listado.GeoVelocidad,
 		telemetria_listado.Patente,
 		telemetria_listado.id_Sensores'.$subquery;
+		$SIS_join .= '
+		LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_med_actual`      ON telemetria_listado_sensores_med_actual.idTelemetria     = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria';
 		$SIS_order = 'telemetria_listado.Nombre ASC';
 		$arrEquipo = array();
 		$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
@@ -5208,18 +5238,18 @@ function widget_Gestion_Flota_CrossTech_Transportes_AB($titulo, $idSistema, $IDG
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
 		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-			$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-			$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
+			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
+			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
 
 		//numero sensores equipo
 		$N_Maximo_Sensores = 10;
 		$subquery = '';
 		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-			$subquery .= ',SensoresNombre_'.$i;
-			$subquery .= ',SensoresMedActual_'.$i;
-			$subquery .= ',SensoresUniMed_'.$i;
-			$subquery .= ',SensoresActivo_'.$i;
+			$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+			$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+			$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+			$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 		}
 
 		/*************************************************************/
@@ -5239,6 +5269,11 @@ function widget_Gestion_Flota_CrossTech_Transportes_AB($titulo, $idSistema, $IDG
 		telemetria_listado.GeoVelocidad,
 		telemetria_listado.Patente,
 		telemetria_listado.id_Sensores'.$subquery;
+		$SIS_join .= '
+		LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_med_actual`      ON telemetria_listado_sensores_med_actual.idTelemetria     = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria';
 		$SIS_order = 'telemetria_listado.Nombre ASC';
 		$arrEquipo = array();
 		$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
@@ -6227,18 +6262,18 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
 		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-			$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-			$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
+			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
+			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
 
 		//numero sensores equipo
 		$N_Maximo_Sensores = 10;
 		$subquery = '';
 		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-			$subquery .= ',SensoresNombre_'.$i;
-			$subquery .= ',SensoresMedActual_'.$i;
-			$subquery .= ',SensoresUniMed_'.$i;
-			$subquery .= ',SensoresActivo_'.$i;
+			$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+			$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+			$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+			$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 		}
 
 		/*************************************************************/
@@ -6259,6 +6294,11 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 		telemetria_listado.SensorActivacionValor,
 		(SELECT Helada FROM telemetria_listado_aux_equipo WHERE idTelemetria = ID ORDER BY idAuxiliar DESC LIMIT 1) AS TempProyectada
 		'.$subquery;
+		$SIS_join .= '
+		LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_med_actual`      ON telemetria_listado_sensores_med_actual.idTelemetria     = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria';
 		$SIS_order = 'telemetria_listado.Nombre ASC';
 		$arrEquipo = array();
 		$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
@@ -6692,8 +6732,8 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
 		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-			$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-			$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
+			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
+			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
 		//Solo para plataforma CrossTech
 		$SIS_where .= " AND telemetria_listado.idTab=6";//CrossCrane
@@ -6702,10 +6742,10 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 		$N_Maximo_Sensores = 72;
 		$subquery = '';
 		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-			$subquery .= ',SensoresNombre_'.$i;
-			$subquery .= ',SensoresMedActual_'.$i;
-			$subquery .= ',SensoresUniMed_'.$i;
-			$subquery .= ',SensoresActivo_'.$i;
+			$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+			$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+			$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+			$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 		}
 
 		/*************************************************************/
@@ -6730,6 +6770,11 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 		telemetria_listado.SensorActivacionValor,
 		telemetria_listado.idUsoFTP,
 		telemetria_listado.FTP_Carpeta'.$subquery;
+		$SIS_join .= '
+		LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_med_actual`      ON telemetria_listado_sensores_med_actual.idTelemetria     = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria';
 		$SIS_order = 'telemetria_listado.Nombre ASC';
 		$arrEquipo = array();
 		$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
@@ -7509,8 +7554,8 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
 		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-			$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-			$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
+			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
+			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
 		//Solo para plataforma CrossTech
 		$SIS_where .= " AND telemetria_listado.idTab=9";//CrossEnergy
@@ -7519,11 +7564,11 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 		$N_Maximo_Sensores = 72;
 		$subquery = '';
 		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-			$subquery .= ',SensoresNombre_'.$i;
-			$subquery .= ',SensoresMedActual_'.$i;
-			$subquery .= ',SensoresUniMed_'.$i;
-			$subquery .= ',SensoresActivo_'.$i;
-			$subquery .= ',SensoresGrupo_'.$i;
+			$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+			$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+			$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+			$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
+			$subquery .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
 		}
 
 		/*************************************************************/
@@ -7541,6 +7586,12 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 		telemetria_listado.NErrores,
 		telemetria_listado.NAlertas,
 		telemetria_listado.id_Sensores'.$subquery;
+		$SIS_join .= '
+		LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_med_actual`      ON telemetria_listado_sensores_med_actual.idTelemetria     = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_grupo`           ON telemetria_listado_sensores_grupo.idTelemetria          = telemetria_listado.idTelemetria';
 		$SIS_order = 'telemetria_listado.Nombre ASC';
 		$arrEquipo = array();
 		$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
@@ -9449,8 +9500,8 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
 		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-			$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-			$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
+			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
+			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
 		//Solo para plataforma CrossTech
 		$SIS_where .= " AND telemetria_listado.idTab=6";//CrossCrane
@@ -9459,10 +9510,10 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 		$N_Maximo_Sensores = 72;
 		$subquery = '';
 		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-			$subquery .= ',SensoresNombre_'.$i;
-			$subquery .= ',SensoresMedActual_'.$i;
-			$subquery .= ',SensoresUniMed_'.$i;
-			$subquery .= ',SensoresActivo_'.$i;
+			$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+			$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+			$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+			$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 		}
 
 		/*************************************************************/
@@ -9488,6 +9539,11 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 		telemetria_listado.idUsoFTP,
 		telemetria_listado.FTP_Carpeta,
 		telemetria_listado.idUbicacion'.$subquery;
+		$SIS_join .= '
+		LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_med_actual`      ON telemetria_listado_sensores_med_actual.idTelemetria     = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria';
 		$SIS_order = 'telemetria_listado.Nombre ASC';
 		$arrEquipo = array();
 		$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');

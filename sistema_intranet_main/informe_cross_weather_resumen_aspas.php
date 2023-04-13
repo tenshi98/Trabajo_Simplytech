@@ -38,26 +38,23 @@ $SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_
 $SIS_where = 'telemetria_listado.idTelemetria='.$idTelemetria;
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = "telemetria_listado_tablarelacionada_".$idTelemetria.".idTabla!=0";
 if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){
 	$SIS_where.=" AND telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
-			
+
 //numero sensores equipo
 $N_Maximo_Sensores = $rowdata['EquipoN_Sensores'];
 $consql = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-    //$consql .= ',telemetria_listado.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
-    //$consql .= ',telemetria_listado.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
-    //$consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
-    //$consql .= ',telemetria_listado.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
+    //$consql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
+    //$consql .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
+    //$consql .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
+    //$consql .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
     $consql .= ',telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$i.' AS SensorValue_'.$i;
-
 }
-
 
 /**********************************************************/
 //se consulta
@@ -80,7 +77,7 @@ $Funcionamiento  = 0;
 $horaRef_1       = '';
 $horaRef_2       = '';
 $horaRef_3       = '';
-//Se busca la temperatura real							
+//Se busca la temperatura real
 foreach($arrConsulta as $temp) {
 
 	//variables
@@ -107,9 +104,7 @@ foreach($arrConsulta as $temp) {
 
 	//si la temperatura es inferior a la temperatura actual
 	if(isset($Temperatura)&&$Temperatura<=$Temperatura_min){
-		
-		
-		
+
 		//si esta activo
 		if($Temperatura_actMaq>=$Temperatura_actConf){
 			//si hay cambio
@@ -128,7 +123,7 @@ foreach($arrConsulta as $temp) {
 				$Cubrimiento  = $Cubrimiento + $Minutos;
 				$horaRef_2    = $temp['HoraSistema'];
 			}
-		//si esta inactivo	
+		//si esta inactivo
 		}else{
 			//si hay cambio
 			if($s_act!=2){$s_act=2;$nevento++;}
@@ -151,7 +146,7 @@ foreach($arrConsulta as $temp) {
 		//se crean variables en caso de no existir
 		if(!isset($arrEvento[$nevento]['TempMinima'])){  $arrEvento[$nevento]['TempMinima']  = 1000;}
 		if(!isset($arrEvento[$nevento]['TempMaxima'])){  $arrEvento[$nevento]['TempMaxima']  = -1000;}
-			
+
 		if(!isset($arrEvento[$nevento]['FechaInicio'])){ $arrEvento[$nevento]['FechaInicio'] = $temp['FechaSistema'];}
 		if(!isset($arrEvento[$nevento]['HoraInicio'])){  $arrEvento[$nevento]['HoraInicio']  = $temp['HoraSistema'];}
 
@@ -166,17 +161,12 @@ foreach($arrConsulta as $temp) {
 		if(isset($Temperatura)&&$Temperatura>$arrEvento[$nevento]['TempMaxima']){
 			$arrEvento[$nevento]['TempMaxima'] = $Temperatura;
 		}
-		
-		
-		
+
 	}else{
 		$nevento++;
 	}
-			
-		
+
 }
-
-
 
 ?>
 
@@ -243,7 +233,7 @@ foreach($arrConsulta as $temp) {
 			foreach ($arrConsulta as $temp) {
 				//Que el valor medido sea distinto de 99900
 				if(isset($temp['SensorValue_1'])&&$temp['SensorValue_1']<99900){
-					//se arma cadena	
+					//se arma cadena
 					$Temp_1 .= "'".Fecha_estandar($temp['FechaSistema'])." - ".$temp['HoraSistema']."',";
 					if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){$arrData[1]['Value'] .= ", ".$temp['SensorValue_1'];    }else{ $arrData[1]['Value'] = $temp['SensorValue_1'];}
 					if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){$arrData[2]['Value'] .= ", ".$temp['SensorValue_11'];   }else{ $arrData[2]['Value'] = $temp['SensorValue_11'];}
@@ -255,14 +245,14 @@ foreach($arrConsulta as $temp) {
 
 			$gr_tittle = 'Informe Sensores';
 			echo GraphLinear_3('graphLinear_1', $gr_tittle, 'Fecha', 'Temperatura', 'Funcionamiento', $Temp_1, $arrData[1]['Value'], $arrData[1]['Name'], $Temp_1, $arrData[2]['Value'], $arrData[2]['Name'], 0);
-				
+
 			?>
 
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<p><span class="label label-default" style="background-color:#4285F4;">+</span> Temperatura (Grados Celsius)</p>
 				<p><span class="label label-default" style="background-color:#DB4437;">+</span> Funcionamiento (1:On - 0:Off)</p>
 
-			</div>		
+			</div>
 		</div>
 	</div>
 </div>
@@ -299,8 +289,6 @@ foreach($arrConsulta as $temp) {
 	</div>
 </div>
 
-
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -318,7 +306,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=4";//CrossWeather			
+	$z .= " AND telemetria_listado.idTab=4";//CrossWeather
 } ?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -344,9 +332,8 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x3, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x3, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
-				} ?>        
-	   
-				
+				} ?>
+
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
 				</div>

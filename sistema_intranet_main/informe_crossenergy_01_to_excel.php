@@ -127,7 +127,7 @@ $arrData[$xx] = "CT";$xx++;
 $arrData[$xx] = "CU";$xx++;
 $arrData[$xx] = "CV";$xx++;
 $arrData[$xx] = "CW";$xx++;
-$arrData[$xx] = "CX";$xx++;	
+$arrData[$xx] = "CX";$xx++;
 
 //se verifica si se ingreso la hora, es un dato optativo
 $SIS_where = '';
@@ -152,10 +152,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	//numero sensores equipo
 	$consql = '';
 	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
-		$consql .= ',telemetria_listado.SensoresNombre_'.$i.' AS SensoresNombre_'.$i;
-		$consql .= ',telemetria_listado.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
-		$consql .= ',telemetria_listado.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
-		$consql .= ',telemetria_listado.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
+		$consql .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i.' AS SensoresNombre_'.$i;
+		$consql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
+		$consql .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
+		$consql .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
 		$consql .= ',telemetria_listado_crossenergy_dia.Sensor_'.$i.' AS SensorValue_'.$i;
 	}
 
@@ -164,7 +164,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$SIS_query = '
 	telemetria_listado_crossenergy_dia.FechaSistema,
 	telemetria_listado_crossenergy_dia.HoraSistema'.$consql;
-	$SIS_join  = 'LEFT JOIN `telemetria_listado`    ON telemetria_listado.idTelemetria   = telemetria_listado_crossenergy_dia.idTelemetria';
+	$SIS_join  = '
+	LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria   = telemetria_listado_crossenergy_dia.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria    = telemetria_listado_crossenergy_dia.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria   = telemetria_listado_crossenergy_dia.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_activo`  ON telemetria_listado_sensores_activo.idTelemetria   = telemetria_listado_crossenergy_dia.idTelemetria';
 	$SIS_order = 'telemetria_listado_crossenergy_dia.FechaSistema ASC, telemetria_listado_crossenergy_dia.HoraSistema ASC LIMIT 10000';
 	$arrEquipos = array();
 	$arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado_crossenergy_dia', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos');

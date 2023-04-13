@@ -19,10 +19,10 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //Variables para filtro y paginacion
 $search = '';
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){  $location .= "&idTelemetria=".$_GET['idTelemetria'];  $search .= "&idTelemetria=".$_GET['idTelemetria'];}
-if(isset($_GET['F_inicio']) && $_GET['F_inicio']!=''){   $location .= "&F_inicio=".$_GET['F_inicio'];          $search .= "&F_inicio=".$_GET['F_inicio'];}
-if(isset($_GET['H_inicio']) && $_GET['H_inicio']!=''){   $location .= "&H_inicio=".$_GET['H_inicio'];          $search .= "&H_inicio=".$_GET['H_inicio'];}
-if(isset($_GET['F_termino']) && $_GET['F_termino']!=''){ $location .= "&F_termino=".$_GET['F_termino'];        $search .= "&F_termino=".$_GET['F_termino'];}
-if(isset($_GET['H_termino']) && $_GET['H_termino']!=''){ $location .= "&H_termino=".$_GET['H_termino'];        $search .= "&H_termino=".$_GET['H_termino'];}
+if(isset($_GET['F_inicio']) && $_GET['F_inicio']!=''){          $location .= "&F_inicio=".$_GET['F_inicio'];          $search .= "&F_inicio=".$_GET['F_inicio'];}
+if(isset($_GET['H_inicio']) && $_GET['H_inicio']!=''){          $location .= "&H_inicio=".$_GET['H_inicio'];          $search .= "&H_inicio=".$_GET['H_inicio'];}
+if(isset($_GET['F_termino']) && $_GET['F_termino']!=''){        $location .= "&F_termino=".$_GET['F_termino'];        $search .= "&F_termino=".$_GET['F_termino'];}
+if(isset($_GET['H_termino']) && $_GET['H_termino']!=''){        $location .= "&H_termino=".$_GET['H_termino'];        $search .= "&H_termino=".$_GET['H_termino'];}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -42,15 +42,24 @@ $arrGruposRev = db_select_array (false, 'idGrupo, Valor, idSupervisado', 'teleme
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
-$arrNombres = array(); 
+$arrNombres = array();
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresNombre_'.$i;
-	$subquery .= ',SensoresActivo_'.$i;
-	$subquery .= ',SensoresRevision_'.$i;
-	$subquery .= ',SensoresRevisionGrupo_'.$i;
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
+	$subquery .= ',telemetria_listado_sensores_revision.SensoresRevision_'.$i;
+	$subquery .= ',telemetria_listado_sensores_revision_grupo.SensoresRevisionGrupo_'.$i;
 }
 //Se traen todos los datos de la maquina
-$rowMaquina = db_select_data (false, 'Nombre,cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+$SIS_query = '
+telemetria_listado.Nombre,
+telemetria_listado.cantSensores'.$subquery;
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_revision`        ON telemetria_listado_sensores_revision.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_revision_grupo`  ON telemetria_listado_sensores_revision_grupo.idTelemetria = telemetria_listado.idTelemetria';
+$SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['idTelemetria'];
+$rowMaquina = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 //Armo la consulta
 $subquery = '';
@@ -65,36 +74,35 @@ for ($i = 1; $i <= $rowMaquina['cantSensores']; $i++) {
 				if($rowMaquina['SensoresRevisionGrupo_'.$i]==$sen['idGrupo']){
 					//guardo el nombre
 					$arrNombres[$i]['SensorNombre'] = $rowMaquina['SensoresNombre_'.$i];
-								
+
 					//verifico que el valor sea igual o superior al establecido
 					if(isset($_GET['Amp'])&&$_GET['Amp']!=''&&$_GET['Amp']!=0){$valor_amp=$_GET['Amp'];}else{$valor_amp=$sen['Valor'];}
 					//Consulto el nombre del sensor
-					
+
 					//Consulto el valor minimo
 					$subquery .= ',(SELECT Sensor_'.$i.'
 					FROM `telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'`
-					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.' 
+					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.'
 					ORDER BY HoraSistema ASC
 					LIMIT 1) AS ValorMinimo_'.$i.'';
 					$subquery .= ',(SELECT HoraSistema
 					FROM `telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'`
-					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.' 
+					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.'
 					ORDER BY HoraSistema ASC
 					LIMIT 1) AS HoraMinimo_'.$i.'';
 
 					//Consulto el valor maximo
 					$subquery .= ',(SELECT Sensor_'.$i.'
 					FROM `telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'`
-					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.' 
+					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.'
 					ORDER BY HoraSistema DESC
 					LIMIT 1) AS ValorMaximo_'.$i.'';
 					$subquery .= ',(SELECT HoraSistema
 					FROM `telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'`
-					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.' 
+					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.'
 					ORDER BY HoraSistema DESC
 					LIMIT 1) AS HoraMaximo_'.$i.'';
 
-				
 				}
 			}
 		}
@@ -112,7 +120,7 @@ $arrMediciones = db_select_array (false, 'Fecha AS FechaConsultada'.$subquery, '
 	<?php
 	$search .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 	$search .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
-	?>		
+	?>
 	<a target="new" href="<?php echo 'informe_telemetria_activaciones_04_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 	<a target="new" href="<?php echo 'informe_telemetria_activaciones_04_to_pdf.php?bla=bla'.$search ; ?>"   class="btn btn-sm btn-metis-3 pull-right margin_width"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Exportar a PDF</a>
 </div>
@@ -170,8 +178,7 @@ $arrMediciones = db_select_array (false, 'Fecha AS FechaConsultada'.$subquery, '
 		</div>
 
 	</div>
-</div>	
-
+</div>
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -188,7 +195,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 
- ?>
+?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -223,7 +230,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_input_number('Amperes a revisar', 'Amp', $x6, 1);
 
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
-				
 
 				?>
 

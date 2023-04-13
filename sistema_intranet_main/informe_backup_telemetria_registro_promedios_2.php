@@ -88,13 +88,14 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 	//se traen lo datos del equipo
 	$SIS_query = '
-	telemetria_listado.SensoresNombre_'.$_GET['sensorn'].' AS SensorNombre,
+	telemetria_listado_sensores_nombre.SensoresNombre_'.$_GET['sensorn'].' AS SensorNombre,
 	backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema,
 	'.$subquery.'
 	telemetria_listado_unidad_medida.Nombre AS Unimed';
 	$SIS_join  = '
-	LEFT JOIN `telemetria_listado`                ON telemetria_listado.idTelemetria            = backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria
-	LEFT JOIN `telemetria_listado_unidad_medida`  ON telemetria_listado_unidad_medida.idUniMed  = telemetria_listado.SensoresUniMed_'.$_GET['sensorn'];
+	LEFT JOIN `telemetria_listado`                  ON telemetria_listado.idTelemetria                  = backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria
+	LEFT JOIN `telemetria_listado_unidad_medida`    ON telemetria_listado_unidad_medida.idUniMed        = telemetria_listado.SensoresUniMed_'.$_GET['sensorn'].'
+	LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria  = telemetria_listado.idTelemetria';
 	$SIS_where .= ' GROUP BY backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema';
 	$SIS_order  = 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema ASC LIMIT 10000';
 	$arrEquipos = array();

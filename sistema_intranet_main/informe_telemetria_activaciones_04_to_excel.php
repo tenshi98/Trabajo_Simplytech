@@ -95,16 +95,25 @@ $arrGruposRev = db_select_array (false, 'idGrupo, Valor, idSupervisado', 'teleme
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
-$arrNombres = array(); 
+$arrNombres = array();
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresNombre_'.$i;
-	$subquery .= ',SensoresActivo_'.$i;
-	$subquery .= ',SensoresRevision_'.$i;
-	$subquery .= ',SensoresRevisionGrupo_'.$i;
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
+	$subquery .= ',telemetria_listado_sensores_revision.SensoresRevision_'.$i;
+	$subquery .= ',telemetria_listado_sensores_revision_grupo.SensoresRevisionGrupo_'.$i;
 }
 
 //Se traen todos los datos de la maquina
-$rowMaquina = db_select_data (false, 'Nombre,cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), $form_trabajo);
+$SIS_query = '
+telemetria_listado.Nombre,
+telemetria_listado.cantSensores'.$subquery;
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_revision`        ON telemetria_listado_sensores_revision.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_revision_grupo`  ON telemetria_listado_sensores_revision_grupo.idTelemetria = telemetria_listado.idTelemetria';
+$SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['idTelemetria'];
+$rowMaquina = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), $form_trabajo);
 
 //Armo la consulta
 $subquery = '';
@@ -119,32 +128,32 @@ for ($i = 1; $i <= $rowMaquina['cantSensores']; $i++) {
 				if($rowMaquina['SensoresRevisionGrupo_'.$i]==$sen['idGrupo']){
 					//guardo el nombre
 					$arrNombres[$i]['SensorNombre'] = $rowMaquina['SensoresNombre_'.$i];
-								
+
 					//verifico que el valor sea igual o superior al establecido
 					if(isset($_GET['Amp'])&&$_GET['Amp']!=''&&$_GET['Amp']!=0){$valor_amp=$_GET['Amp'];}else{$valor_amp=$sen['Valor'];}
 					//Consulto el nombre del sensor
-					
+
 					//Consulto el valor minimo
 					$subquery .= ',(SELECT Sensor_'.$i.'
 					FROM `telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'`
-					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.' 
+					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.'
 					ORDER BY HoraSistema ASC
 					LIMIT 1) AS ValorMinimo_'.$i.'';
 					$subquery .= ',(SELECT HoraSistema
 					FROM `telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'`
-					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.' 
+					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.'
 					ORDER BY HoraSistema ASC
 					LIMIT 1) AS HoraMinimo_'.$i.'';
 
 					//Consulto el valor maximo
 					$subquery .= ',(SELECT Sensor_'.$i.'
 					FROM `telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'`
-					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.' 
+					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.'
 					ORDER BY HoraSistema DESC
 					LIMIT 1) AS ValorMaximo_'.$i.'';
 					$subquery .= ',(SELECT HoraSistema
 					FROM `telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'`
-					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.' 
+					WHERE FechaSistema=FechaConsultada AND Sensor_'.$i.'>='.$valor_amp.'
 					ORDER BY HoraSistema DESC
 					LIMIT 1) AS HoraMaximo_'.$i.'';
 
@@ -185,7 +194,7 @@ for ($i = 1; $i <= $rowMaquina['cantSensores']; $i++) {
 		$x++;
 	}
 }
- 					                                     
+
 $nn=2;
 foreach ($arrMediciones as $med) {
 	//verifico si existen datos
@@ -199,7 +208,7 @@ foreach ($arrMediciones as $med) {
 
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, fecha_estandar($med['FechaConsultada']));
-        
+
         for ($i = 1; $i <= $rowMaquina['cantSensores']; $i++) {
 			if(isset($med['ValorMinimo_'.$i])){
 				$x = $i-1;
@@ -207,14 +216,13 @@ foreach ($arrMediciones as $med) {
 							->setCellValue($arrData[$x].$nn, DeSanitizar($arrNombres[$i]['SensorNombre']).' '.
 							Cantidades_decimales_justos($med['ValorMinimo_'.$i]).' a las '.$med['HoraMinimo_'.$i].' '.
 							Cantidades_decimales_justos($med['ValorMaximo_'.$i]).' a las '.$med['HoraMaximo_'.$i]
-							);						
+							);
 			}
 		}
-           
+
 		$nn++;
 	}
-}		
-							
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Resumen');

@@ -16,12 +16,12 @@ $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
 $location .= "?submit_filter=Filtrar";
-if(isset($_GET['f_inicio']) && $_GET['f_inicio']!=''){   $location .= "&f_inicio=".$_GET['f_inicio'];          $search .= "&f_inicio=".$_GET['f_inicio'];}
-if(isset($_GET['h_inicio']) && $_GET['h_inicio']!=''){   $location .= "&h_inicio=".$_GET['h_inicio'];          $search .= "&h_inicio=".$_GET['h_inicio'];}
-if(isset($_GET['f_termino']) && $_GET['f_termino']!=''){ $location .= "&f_termino=".$_GET['f_termino'];        $search .= "&f_termino=".$_GET['f_termino'];}
-if(isset($_GET['h_termino']) && $_GET['h_termino']!=''){ $location .= "&h_termino=".$_GET['h_termino'];        $search .= "&h_termino=".$_GET['h_termino'];}
+if(isset($_GET['f_inicio']) && $_GET['f_inicio']!=''){          $location .= "&f_inicio=".$_GET['f_inicio'];          $search .= "&f_inicio=".$_GET['f_inicio'];}
+if(isset($_GET['h_inicio']) && $_GET['h_inicio']!=''){          $location .= "&h_inicio=".$_GET['h_inicio'];          $search .= "&h_inicio=".$_GET['h_inicio'];}
+if(isset($_GET['f_termino']) && $_GET['f_termino']!=''){        $location .= "&f_termino=".$_GET['f_termino'];        $search .= "&f_termino=".$_GET['f_termino'];}
+if(isset($_GET['h_termino']) && $_GET['h_termino']!=''){        $location .= "&h_termino=".$_GET['h_termino'];        $search .= "&h_termino=".$_GET['h_termino'];}
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){  $location .= "&idTelemetria=".$_GET['idTelemetria'];  $search .= "&idTelemetria=".$_GET['idTelemetria'];}
-						     
+
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
@@ -44,7 +44,7 @@ if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']
 	$SIS_where_1.=" AND telemetria_listado_errores_999.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 	$SIS_where_2.=" AND telemetria_listado_error_fuera_linea.Fecha_inicio BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){  
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){
 	$SIS_where_1.=" AND telemetria_listado_errores_999.idTelemetria=".$_GET['idTelemetria'];
 	$SIS_where_2.=" AND telemetria_listado_error_fuera_linea.idTelemetria=".$_GET['idTelemetria'];
 	$SIS_where_3.=" AND telemetria_listado.idTelemetria=".$_GET['idTelemetria'];
@@ -54,12 +54,12 @@ if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){
 $N_Maximo_Sensores = 72;
 $consql = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$consql .= ',telemetria_listado.SensoresGrupo_'.$i;
-	$consql .= ',telemetria_listado.SensoresNombre_'.$i;
+	$consql .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$consql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
 }
 
 /*********************************************************/
-//consulto							
+//consulto
 $SIS_query = '
 core_sistemas.Nombre AS Sistema,
 telemetria_listado.Nombre AS EquipoNombre,
@@ -70,9 +70,11 @@ COUNT(telemetria_listado_errores_999.idErrores) AS Cuenta,
 telemetria_listado_errores_999.Descripcion,
 telemetria_listado_errores_999.Valor'.$consql;
 $SIS_join  = '
-LEFT JOIN telemetria_listado     ON telemetria_listado.idTelemetria  = telemetria_listado_errores_999.idTelemetria
-LEFT JOIN core_sistemas          ON core_sistemas.idSistema          = telemetria_listado_errores_999.idSistema
-LEFT JOIN core_telemetria_tabs   ON core_telemetria_tabs.idTab       = telemetria_listado.idTab';
+LEFT JOIN telemetria_listado                    ON telemetria_listado.idTelemetria                  = telemetria_listado_errores_999.idTelemetria
+LEFT JOIN core_sistemas                         ON core_sistemas.idSistema                          = telemetria_listado_errores_999.idSistema
+LEFT JOIN core_telemetria_tabs                  ON core_telemetria_tabs.idTab                       = telemetria_listado.idTab
+LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria  = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria   = telemetria_listado.idTelemetria';
 $SIS_order = 'core_sistemas.Nombre ASC, telemetria_listado.Nombre ASC, core_telemetria_tabs.Nombre ASC, telemetria_listado_errores_999.Sensor ASC, telemetria_listado_errores_999.Descripcion ASC, telemetria_listado_errores_999.Valor ASC';
 $SIS_where_1.= ' GROUP BY core_sistemas.Nombre,telemetria_listado.Nombre,core_telemetria_tabs.Nombre,telemetria_listado_errores_999.Sensor, telemetria_listado_errores_999.Descripcion, telemetria_listado_errores_999.Valor';
 $arrEquipos1 = array();
@@ -84,10 +86,10 @@ $SIS_query = '
 core_sistemas.Nombre AS Sistema,
 telemetria_listado.Nombre AS EquipoNombre,
 core_telemetria_tabs.Nombre AS EquipoTab,
-telemetria_listado_error_fuera_linea.Fecha_inicio, 
-telemetria_listado_error_fuera_linea.Hora_inicio, 
-telemetria_listado_error_fuera_linea.Fecha_termino, 
-telemetria_listado_error_fuera_linea.Hora_termino, 
+telemetria_listado_error_fuera_linea.Fecha_inicio,
+telemetria_listado_error_fuera_linea.Hora_inicio,
+telemetria_listado_error_fuera_linea.Fecha_termino,
+telemetria_listado_error_fuera_linea.Hora_termino,
 telemetria_listado_error_fuera_linea.Tiempo';
 $SIS_join  = '
 LEFT JOIN telemetria_listado     ON telemetria_listado.idTelemetria  = telemetria_listado_error_fuera_linea.idTelemetria
@@ -104,7 +106,7 @@ core_sistemas.Nombre AS Sistema,
 telemetria_listado.Nombre AS EquipoNombre,
 core_telemetria_tabs.Nombre AS EquipoTab,
 telemetria_listado.LastUpdateFecha,
-telemetria_listado.LastUpdateHora, 
+telemetria_listado.LastUpdateHora,
 telemetria_listado.TiempoFueraLinea';
 $SIS_join  = '
 LEFT JOIN `core_sistemas`        ON core_sistemas.idSistema      = telemetria_listado.idSistema
@@ -118,7 +120,7 @@ $arrTelemetria = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_
 //Se consultan datos
 $arrGrupos = array();
 $arrGrupos = db_select_array (false, 'idGrupo,Nombre,nColumnas', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGrupos');
-				
+
 $arrFinalGrupos = array();
 foreach ($arrGrupos as $sen) {
 	$arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];
@@ -130,7 +132,7 @@ foreach ($arrGrupos as $sen) {
 	<?php
 	$search .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 	$search .= '&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
-	?>		
+	?>
 	<a target="new" href="<?php echo 'informe_administrador_07_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
 </div>
 
@@ -269,9 +271,9 @@ foreach ($arrGrupos as $sen) {
 							</tr>
 						</thead>
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
-							<?php 
+							<?php
 							/*************************************************************/
-							//Listado de fuera de linea actuales							
+							//Listado de fuera de linea actuales
 							foreach ($arrTelemetria as $tel) {
 
 								$diaInicio   = $tel['LastUpdateFecha'];
@@ -311,7 +313,6 @@ foreach ($arrGrupos as $sen) {
 </div>
 
 
-  
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 <a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
