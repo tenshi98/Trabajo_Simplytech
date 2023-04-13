@@ -91,7 +91,7 @@ if (!empty($_POST['submit_new_pago'])){
 	//Llamamos al formulario
 	$form_trabajo= 'add_new_pago';
 	require_once 'A1XRXS_sys/xrxs_form/z_pagos_leyes_fiscales.php';
-	
+
 }
 
 

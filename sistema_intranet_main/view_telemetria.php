@@ -231,7 +231,7 @@ if(isset($rowdata['idTrabajador'])&&$rowdata['idTrabajador']!=0){
 	LEFT JOIN `sistema_salud`               ON sistema_salud.idSalud               = trabajadores_listado.idSalud';
 	$SIS_where = 'trabajadores_listado.idTrabajador ='.$rowdata['idTrabajador'];
 	$rowTrabajador = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowTrabajador');
-	
+
 }
 
 if(isset($rowdata['idBodega'])&&$rowdata['idBodega']!=0){
@@ -254,7 +254,7 @@ if(isset($rowdata['idBodega'])&&$rowdata['idBodega']!=0){
 	$SIS_order = 'core_tipo_producto.Nombre ASC, productos_listado.Nombre ASC';
 	$arrProductos = array();
 	$arrProductos = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion_existencias', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrProductos');
-	
+
 }
 
 // Se trae un listado con todas las alertas

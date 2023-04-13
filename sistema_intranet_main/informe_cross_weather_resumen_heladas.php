@@ -51,7 +51,7 @@ if(isset($_GET['fecha'])&&$_GET['fecha']!=''){
 
 	//se crea query
 	$SIS_where.= " AND (".$x_table.".TimeStamp BETWEEN '".$Fecha." ".$Hora ."' AND '".$FechaSig." ".$HoraSig."')";
-	
+
 }
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$SIS_where.= " AND ".$x_table.".idTelemetria='".$_GET['idTelemetria']."'";
@@ -153,7 +153,7 @@ foreach($arrHistorial as $hist) {
 			if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){$arrData[2]['Value'] .= ", ".$temp_predic;  }else{ $arrData[2]['Value'] = $temp_predic; }
 		
 		}
-	}	
+	}
 }
 $arrData[1]['Name'] = "'Temperatura Real'";
 $arrData[2]['Name'] = "'Temperatura Proyectada'";
@@ -403,7 +403,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$z .= " AND telemetria_listado.idTab=4";//CrossWeather			
+	$z .= " AND telemetria_listado.idTab=4";//CrossWeather
 }	 
  ?>
 

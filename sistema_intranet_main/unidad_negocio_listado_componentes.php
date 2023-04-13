@@ -134,7 +134,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	}
 	foreach ($arrPermisos as $prod) {
 		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion={$prod['idLicitacion']})";
-	}	
+	}
 }
 
 //Se filtran solo las ramas de la licitacion, no las subramas con los datos

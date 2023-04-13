@@ -43,7 +43,7 @@ if(!$resultado){
 
 	//generar log
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
+
 }
 $row_data = mysqli_fetch_assoc ($resultado);
 

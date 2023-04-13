@@ -39,7 +39,7 @@ if (isset($_GET['Ano'])&&$_GET['Ano']!=''&&isset($_GET['idMes'])&&$_GET['idMes']
 	$d1.=" AND Creacion_mes='".$_GET['idMes']."' AND Creacion_ano='".$_GET['Ano']."'";	
 	$d2.=" AND idMes='".$_GET['idMes']."' AND Ano='".$_GET['Ano']."'";
 	$data .= " ".numero_a_mes($_GET['idMes'])." de ".$_GET['Ano'];
-	
+
 }
 if (isset($_GET['fInicio'])&&$_GET['fInicio']!=''&&isset($_GET['fTermino'])&&$_GET['fTermino']!=''){
 	$d1.=" AND Creacion_fecha BETWEEN '".$_GET['fInicio']."' AND '".$_GET['fTermino']."'";

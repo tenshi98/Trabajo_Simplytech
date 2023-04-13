@@ -376,7 +376,7 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SI
 		}
 		//Documentos por pagar
 		$PermChequesPagar  = $prm_x[23] + $prm_x[24];
-		
+
 		/**********************************************************/
 		echo widget_recordatorios($idTipoUsuario,
 								$prm_x[12],$subconsulta['CuentaRecargas'],

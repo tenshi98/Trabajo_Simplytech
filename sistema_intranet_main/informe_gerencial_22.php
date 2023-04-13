@@ -122,7 +122,7 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 	$z9_3.=" AND pagos_leyes_sociales.Pago_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 	$search .="&f_inicio=".$_GET['f_inicio'];
 	$search .="&f_termino=".$_GET['f_termino'];
-	
+
 }
 /*************************************************************************************************/
 function return_query($type, $table){
@@ -810,7 +810,7 @@ foreach($arrTemporal_5 as $temp) {
 	}
 	//se suma
 	$arrTemp[5][$inc]['Total'] = $arrTemp[5][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -840,7 +840,7 @@ foreach($arrTemporal_6 as $temp) {
 	}
 	//se suma
 	$arrTemp[6][$inc]['Total'] = $arrTemp[6][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -870,7 +870,7 @@ foreach($arrTemporal_7 as $temp) {
 	}
 	//se suma
 	$arrTemp[7][$inc]['Total'] = $arrTemp[7][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -900,7 +900,7 @@ foreach($arrTemporal_8_1 as $temp) {
 	}
 	//se suma
 	$arrTemp[8][$inc]['Total'] = $arrTemp[8][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -930,7 +930,7 @@ foreach($arrTemporal_8_2 as $temp) {
 	}
 	//se suma
 	$arrTemp[9][$inc]['Total'] = $arrTemp[9][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -960,7 +960,7 @@ foreach($arrTemporal_8_3 as $temp) {
 	}
 	//se suma
 	$arrTemp[10][$inc]['Total'] = $arrTemp[10][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -990,7 +990,7 @@ foreach($arrTemporal_8_4 as $temp) {
 	}
 	//se suma
 	$arrTemp[11][$inc]['Total'] = $arrTemp[11][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -1020,7 +1020,7 @@ foreach($arrTemporal_9_1 as $temp) {
 	}
 	//se suma
 	$arrTemp[12][$inc]['Total'] = $arrTemp[12][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -1050,7 +1050,7 @@ foreach($arrTemporal_9_2 as $temp) {
 	}
 	//se suma
 	$arrTemp[13][$inc]['Total'] = $arrTemp[13][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -1080,7 +1080,7 @@ foreach($arrTemporal_9_3 as $temp) {
 	}
 	//se suma
 	$arrTemp[14][$inc]['Total'] = $arrTemp[14][$inc]['Total'] + $temp['Total'];
-	
+
 }
 
 /************************************************/

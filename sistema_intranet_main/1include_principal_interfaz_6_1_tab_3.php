@@ -11,7 +11,7 @@
 				jQuery('html, body').animate({
 					scrollTop: offsetHeight
 				}, 200);
-			} 
+			}
 		})
 		
 		

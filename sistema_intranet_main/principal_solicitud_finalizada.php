@@ -100,7 +100,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 		$arrMedTractores[$trac['idTelemetria']]['niveles']      = '';
 		$arrMedTractores[$trac['idTelemetria']]['velocidades']  = '';
 		//$arrMedTractores[$trac['idTelemetria']]['heatMapData']  = '';
-		
+
 		/***************************************/
 		$subquery = '';
 		$subquery .= ',FechaSistema';

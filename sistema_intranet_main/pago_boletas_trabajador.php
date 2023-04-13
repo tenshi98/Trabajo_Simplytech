@@ -86,7 +86,7 @@ if(isset($_SESSION['pagos_boletas_trabajadores'])){
 		if(isset($tipo['ValorReal'])&&$tipo['ValorReal']==''){
 			$Data_Pendientes++;
 		}
-	}	
+	}
 }
 					
 ?>

@@ -174,7 +174,7 @@ $spreadsheet->setActiveSheetIndex(0)
 $nn     = 3;
 
 foreach ($arrEquipos1 as $equip) {
-	
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($equip['Equipo']))
 				->setCellValue('B'.$nn, DeSanitizar($equip['Descripcion']))
@@ -183,7 +183,7 @@ foreach ($arrEquipos1 as $equip) {
 				->setCellValue('E'.$nn, Cantidades($equip['Valor_min'], 2))
 				->setCellValue('F'.$nn, Cantidades($equip['Valor_max'], 2))
 				->setCellValue('G'.$nn, DeSanitizar($equip['Unimed']));
-				
+
 	//Se suma 1
 	$nn++;
 }

@@ -124,7 +124,7 @@ if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 	$SIS_order = 'productos_listado.Nombre ASC';
 	$arrRecetas = array();
 	$arrRecetas = db_select_array (false, $SIS_query, 'productos_recetas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrRecetas');
-	
+
 }
 
 ?>

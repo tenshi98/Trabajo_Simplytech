@@ -106,7 +106,7 @@ function crear_data($limite, $idVehiculo, $f_inicio, $f_termino, $dbConn ) {
 
 	//Devuelvo
 	return $arrRutas;
-	
+
 }
 
 /**********************************************************************************************************************************/
@@ -145,10 +145,10 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 				->setCellValue('H2', 'Movimiento');
 			
 	/***********************************************************/
-	//Datos        
+	//Datos
 	$nn=3;
 	foreach ($arrTemporal as $rutas) {
-							
+
 		$spreadsheet->setActiveSheetIndex(0)
 					->setCellValue('A'.$nn, DeSanitizar($rutas['NombreEquipo']))
 					->setCellValue('B'.$nn, fecha_estandar($rutas['FechaSistema']))
@@ -160,8 +160,8 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 					->setCellValue('H'.$nn, $rutas['GeoMovimientoEquipo']);
 		   
 		$nn++;
-	   
-	} 
+
+	}
 	/***********************************************************/
 	// Rename worksheet
 	$super_titulo = 'Hoja 1';
@@ -169,8 +169,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 		$super_titulo = cortar(DeSanitizar($arrTemporal[0]['NombreEquipo']), 25);
 	}
 	$spreadsheet->getActiveSheet(0)->setTitle($super_titulo);
-		
-	
+
 //Si no se slecciono se traen todos los equipos a los cuales tiene permiso
 }else{
 	//Inicia variable
@@ -197,7 +196,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 		$spreadsheet->createSheet();
 		//Llamo a la funcion
 		$arrTemporal = crear_data($set_lim, $equipo['idVehiculo'], $_GET['f_inicio'], $_GET['f_termino'] , $dbConn);
-		
+
 		/***********************************************************/
 		//Titulo columnas
 		$spreadsheet->setActiveSheetIndex($sheet)
@@ -211,10 +210,10 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 					->setCellValue('H2', 'Movimiento');
 
 		/***********************************************************/
-		//Datos        
+		//Datos
 		$nn=3;
 		foreach ($arrTemporal as $rutas) {
-								
+
 			$spreadsheet->setActiveSheetIndex($sheet)
 						->setCellValue('A'.$nn, DeSanitizar($rutas['NombreEquipo']))
 						->setCellValue('B'.$nn, fecha_estandar($rutas['FechaSistema']))
@@ -226,8 +225,8 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 						->setCellValue('H'.$nn, $rutas['GeoMovimientoEquipo']);
 					   
 			$nn++;
-		   
-		} 
+
+		}
 		/***********************************************************/
 		// Rename worksheet
 		$super_titulo = 'Hoja 1';
@@ -235,7 +234,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 			$super_titulo = cortar(DeSanitizar($arrTemporal[0]['NombreEquipo']), 25);
 		}
 		$spreadsheet->getActiveSheet($sheet)->setTitle($super_titulo);
-	
+
 		$sheet++;
 	}
 }

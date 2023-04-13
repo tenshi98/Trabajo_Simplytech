@@ -218,8 +218,7 @@ $html = '
 	</div>
 
 	<div class="row invoice-info">';
-		
-		
+
 		//se verifica el tipo de movimiento
 		switch ($row_data['idTipo']) {
 			//Ingreso de Productos a bodega

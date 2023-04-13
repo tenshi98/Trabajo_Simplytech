@@ -248,7 +248,7 @@ $Subtotal_1 = 0;
 $Subtotal_2 = 0;
 //recorro
 foreach ($arrTemporal_1 as $tipo) {
-	
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($tipo['Tipo']))
 				->setCellValue('B'.$nn, DeSanitizar($tipo['Empresa']))
@@ -291,7 +291,7 @@ $Subtotal_1 = 0;
 $Subtotal_2 = 0;
 //recorro
 foreach ($arrTemporal_2 as $tipo) {
-	
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($tipo['Tipo']))
 				->setCellValue('B'.$nn, DeSanitizar($tipo['Empresa']))
@@ -334,7 +334,7 @@ $Subtotal_1 = 0;
 $Subtotal_2 = 0;
 //recorro
 foreach ($arrTemporal_3 as $tipo) {
-	
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, 'Liquidacion Sueldo')
 				->setCellValue('B'.$nn, DeSanitizar($tipo['TrabajadorNombre'].' '.$tipo['TrabajadorApellidoPat']))
@@ -377,7 +377,7 @@ $Subtotal_1 = 0;
 $Subtotal_2 = 0;
 //recorro
 foreach ($arrTemporal_4 as $tipo) {
-	
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, 'Boleta Honorario')
 				->setCellValue('B'.$nn, DeSanitizar($tipo['TrabajadorNombre'].' '.$tipo['TrabajadorApellidoPat']))
@@ -420,7 +420,7 @@ $Subtotal_1 = 0;
 $Subtotal_2 = 0;
 //recorro
 foreach ($arrTemporal_5 as $tipo) {
-	
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, 'Rendiciones')
 				->setCellValue('B'.$nn, DeSanitizar($tipo['TrabajadorNombre'].' '.$tipo['TrabajadorApellidoPat']))
@@ -463,7 +463,7 @@ $Subtotal_1 = 0;
 $Subtotal_2 = 0;
 //recorro
 foreach ($arrTemporal_6 as $tipo) {
-	
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, 'Formulario 29')
 				->setCellValue('B'.$nn, 'SII')
@@ -506,7 +506,7 @@ $Subtotal_1 = 0;
 $Subtotal_2 = 0;
 //recorro
 foreach ($arrTemporal_7 as $tipo) {
-	
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, 'Previred')
 				->setCellValue('B'.$nn, 'Previred')

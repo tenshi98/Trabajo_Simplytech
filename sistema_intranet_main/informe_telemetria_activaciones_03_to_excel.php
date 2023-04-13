@@ -112,7 +112,7 @@ foreach($arrConsulta as $categoria=>$permisos){
 		//Contrato Codigo
 		$Direccion          = $con['Direccion'];
 		$CodigoInterno      = $con['CodigoInterno'];
-		
+
 		/*****************************************************************/
 		//Verifico si esta dentro del mismo dia
 		if($fecha!=''&&$fecha==$con['EquipoFecha']){

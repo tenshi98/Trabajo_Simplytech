@@ -134,7 +134,7 @@ for ($i = 1; $i <= $rowpre['cantPuntos']; $i++) {
 	$consql .= ',maquinas_listado_matriz.PuntoMedAceptable_'.$i.' AS Analisis_PuntoMedAceptable_'.$i;
 	$consql .= ',maquinas_listado_matriz.PuntoMedCondenatorio_'.$i.' AS Analisis_PuntoMedCondenatorio_'.$i;
 	$consql .= ',maquinas_listado_matriz.PuntoMedAlerta_'.$i.' AS Analisis_PuntoMedAlerta_'.$i;
-	
+
 }
 
 // Se trae un listado con todos los productos

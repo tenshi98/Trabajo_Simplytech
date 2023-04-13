@@ -146,7 +146,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-	$w .= " AND telemetria_listado.idTab=4";//CrossWeather			
+	$w .= " AND telemetria_listado.idTab=4";//CrossWeather
 }
 
 ?>

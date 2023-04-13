@@ -144,7 +144,7 @@ foreach ($arrExistencias as $existencias) {
 		case 9:
 			$mes_prod[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo9'] = $mes_prod[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo9'] + $existencias['Valor'];
 			break;
-	}	
+	}
 }
 								
 $xmes = mes_actual();
@@ -292,7 +292,7 @@ foreach ($arrExistencias as $existencias) {
 		case 9:
 			$mes_ins[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo9'] = $mes_ins[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo9'] + $existencias['Valor'];
 			break;
-	}	
+	}
 }
 								
 $xmes = mes_actual();
@@ -402,7 +402,7 @@ foreach ($arrExistencias as $existencias) {
 		case 2:
 			$mes_arrie[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo2'] = $mes_arrie[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo2'] + $existencias['Valor'];
 			break;
-	}	
+	}
 }
 								
 $xmes = mes_actual();

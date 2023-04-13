@@ -799,7 +799,7 @@ foreach($arrTemporal_5 as $temp) {
 	}
 	//se suma
 	$arrTemp[5][$inc]['Total'] = $arrTemp[5][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -829,7 +829,7 @@ foreach($arrTemporal_6 as $temp) {
 	}
 	//se suma
 	$arrTemp[6][$inc]['Total'] = $arrTemp[6][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -859,7 +859,7 @@ foreach($arrTemporal_7 as $temp) {
 	}
 	//se suma
 	$arrTemp[7][$inc]['Total'] = $arrTemp[7][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -889,7 +889,7 @@ foreach($arrTemporal_8_1 as $temp) {
 	}
 	//se suma
 	$arrTemp[8][$inc]['Total'] = $arrTemp[8][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -919,7 +919,7 @@ foreach($arrTemporal_8_2 as $temp) {
 	}
 	//se suma
 	$arrTemp[9][$inc]['Total'] = $arrTemp[9][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -949,7 +949,7 @@ foreach($arrTemporal_8_3 as $temp) {
 	}
 	//se suma
 	$arrTemp[10][$inc]['Total'] = $arrTemp[10][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -979,7 +979,7 @@ foreach($arrTemporal_8_4 as $temp) {
 	}
 	//se suma
 	$arrTemp[11][$inc]['Total'] = $arrTemp[11][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -1009,7 +1009,7 @@ foreach($arrTemporal_9_1 as $temp) {
 	}
 	//se suma
 	$arrTemp[12][$inc]['Total'] = $arrTemp[12][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -1039,7 +1039,7 @@ foreach($arrTemporal_9_2 as $temp) {
 	}
 	//se suma
 	$arrTemp[13][$inc]['Total'] = $arrTemp[13][$inc]['Total'] + $temp['Total'];
-	
+
 }
 /***********************/
 $inc = 0;
@@ -1069,7 +1069,7 @@ foreach($arrTemporal_9_3 as $temp) {
 	}
 	//se suma
 	$arrTemp[14][$inc]['Total'] = $arrTemp[14][$inc]['Total'] + $temp['Total'];
-	
+
 }
 
 /************************************************/
@@ -1159,9 +1159,9 @@ if($arrTemp[1]!=false && !empty($arrTemp[1]) && $arrTemp[1]!=''){
 		$total_margen_total         = $total_margen_total + $margen_total;
 		$total_ing_total            = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($trab['ING_Telemetria'])&&$trab['ING_Telemetria']!=0){        $prc_1 = porcentaje($margen_tel/$trab['ING_Telemetria']);        }else{$prc_1 = '0 %';} 
+		if(isset($trab['ING_Telemetria'])&&$trab['ING_Telemetria']!=0){        $prc_1 = porcentaje($margen_tel/$trab['ING_Telemetria']);        }else{$prc_1 = '0 %';}
 		if(isset($trab['ING_Instalacion'])&&$trab['ING_Instalacion']!=0){      $prc_2 = porcentaje($margen_ins/$trab['ING_Instalacion']);       }else{$prc_2 = '0 %';}
-		if(isset($trab['ING_ServicioTecnico'])&&$trab['ING_ServicioTecnico']!=0){ $prc_3 = porcentaje($margen_serv/$trab['ING_ServicioTecnico']);  }else{$prc_3 = '0 %';} 
+		if(isset($trab['ING_ServicioTecnico'])&&$trab['ING_ServicioTecnico']!=0){ $prc_3 = porcentaje($margen_serv/$trab['ING_ServicioTecnico']);  }else{$prc_3 = '0 %';}
 		if(isset($ing_total)&&$ing_total!=0){                                      $prc_4 = porcentaje($margen_total/$ing_total);                   }else{$prc_4 = '0 %';} 
 							
 		$spreadsheet->setActiveSheetIndex(0)
@@ -1212,9 +1212,9 @@ if($arrTemp[2]!=false && !empty($arrTemp[2]) && $arrTemp[2]!=''){
 		$total_margen_total         = $total_margen_total + $margen_total;
 		$total_ing_total            = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($trab['ING_Telemetria'])&&$trab['ING_Telemetria']!=0){        $prc_1 = porcentaje($margen_tel/$trab['ING_Telemetria']);        }else{$prc_1 = '0 %';} 
+		if(isset($trab['ING_Telemetria'])&&$trab['ING_Telemetria']!=0){        $prc_1 = porcentaje($margen_tel/$trab['ING_Telemetria']);        }else{$prc_1 = '0 %';}
 		if(isset($trab['ING_Instalacion'])&&$trab['ING_Instalacion']!=0){      $prc_2 = porcentaje($margen_ins/$trab['ING_Instalacion']);       }else{$prc_2 = '0 %';}
-		if(isset($trab['ING_ServicioTecnico'])&&$trab['ING_ServicioTecnico']!=0){ $prc_3 = porcentaje($margen_serv/$trab['ING_ServicioTecnico']);  }else{$prc_3 = '0 %';} 
+		if(isset($trab['ING_ServicioTecnico'])&&$trab['ING_ServicioTecnico']!=0){ $prc_3 = porcentaje($margen_serv/$trab['ING_ServicioTecnico']);  }else{$prc_3 = '0 %';}
 		if(isset($ing_total)&&$ing_total!=0){                                      $prc_4 = porcentaje($margen_total/$ing_total);                   }else{$prc_4 = '0 %';} 
 							
 		$spreadsheet->setActiveSheetIndex(0)
@@ -1265,9 +1265,9 @@ if($arrTemp[3]!=false && !empty($arrTemp[3]) && $arrTemp[3]!=''){
 		$total_margen_total         = $total_margen_total + $margen_total;
 		$total_ing_total            = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($trab['ING_Telemetria'])&&$trab['ING_Telemetria']!=0){        $prc_1 = porcentaje($margen_tel/$trab['ING_Telemetria']);        }else{$prc_1 = '0 %';} 
+		if(isset($trab['ING_Telemetria'])&&$trab['ING_Telemetria']!=0){        $prc_1 = porcentaje($margen_tel/$trab['ING_Telemetria']);        }else{$prc_1 = '0 %';}
 		if(isset($trab['ING_Instalacion'])&&$trab['ING_Instalacion']!=0){      $prc_2 = porcentaje($margen_ins/$trab['ING_Instalacion']);       }else{$prc_2 = '0 %';}
-		if(isset($trab['ING_ServicioTecnico'])&&$trab['ING_ServicioTecnico']!=0){ $prc_3 = porcentaje($margen_serv/$trab['ING_ServicioTecnico']);  }else{$prc_3 = '0 %';} 
+		if(isset($trab['ING_ServicioTecnico'])&&$trab['ING_ServicioTecnico']!=0){ $prc_3 = porcentaje($margen_serv/$trab['ING_ServicioTecnico']);  }else{$prc_3 = '0 %';}
 		if(isset($ing_total)&&$ing_total!=0){                                      $prc_4 = porcentaje($margen_total/$ing_total);                   }else{$prc_4 = '0 %';} 
 							
 		$spreadsheet->setActiveSheetIndex(0)
@@ -1318,9 +1318,9 @@ if($arrTemp[4]!=false && !empty($arrTemp[4]) && $arrTemp[4]!=''){
 		$total_margen_total         = $total_margen_total + $margen_total;
 		$total_ing_total            = $total_ing_total + $ing_total;
 		//divisiones
-		if(isset($trab['ING_Telemetria'])&&$trab['ING_Telemetria']!=0){        $prc_1 = porcentaje($margen_tel/$trab['ING_Telemetria']);        }else{$prc_1 = '0 %';} 
+		if(isset($trab['ING_Telemetria'])&&$trab['ING_Telemetria']!=0){        $prc_1 = porcentaje($margen_tel/$trab['ING_Telemetria']);        }else{$prc_1 = '0 %';}
 		if(isset($trab['ING_Instalacion'])&&$trab['ING_Instalacion']!=0){      $prc_2 = porcentaje($margen_ins/$trab['ING_Instalacion']);       }else{$prc_2 = '0 %';}
-		if(isset($trab['ING_ServicioTecnico'])&&$trab['ING_ServicioTecnico']!=0){ $prc_3 = porcentaje($margen_serv/$trab['ING_ServicioTecnico']);  }else{$prc_3 = '0 %';} 
+		if(isset($trab['ING_ServicioTecnico'])&&$trab['ING_ServicioTecnico']!=0){ $prc_3 = porcentaje($margen_serv/$trab['ING_ServicioTecnico']);  }else{$prc_3 = '0 %';}
 		if(isset($ing_total)&&$ing_total!=0){                                      $prc_4 = porcentaje($margen_total/$ing_total);                   }else{$prc_4 = '0 %';} 
 							
 		$spreadsheet->setActiveSheetIndex(0)

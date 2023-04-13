@@ -121,7 +121,7 @@ $html = '
 //se imprime la imagen
 if(isset($_POST["img_adj"]) && $_POST["img_adj"]!=''){
 	$html .= '<br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>';
-	
+
 }
 
 

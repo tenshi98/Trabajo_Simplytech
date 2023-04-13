@@ -41,7 +41,7 @@ if(!$resultado){
 
 	//generar log
 	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-	
+
 }
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );

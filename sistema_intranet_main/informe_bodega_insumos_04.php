@@ -117,7 +117,7 @@ foreach ($arrExistencias as $existencias) {
 		case 9:
 			$mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo9'] = $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo9'] + $existencias['Valor'];
 			break;
-	}	
+	}
 }
 								
 $xmes = mes_actual();

@@ -138,7 +138,7 @@ if(isset($_SESSION['pago_proveedor_insumos'])){
 				$Data_Pendientes++;
 			}
 		}
-	}	
+	}
 }
 
 if(isset($_SESSION['pago_proveedor_productos'])){
@@ -158,7 +158,7 @@ if(isset($_SESSION['pago_proveedor_productos'])){
 				$Data_Pendientes++;
 			}
 		}
-	}	
+	}
 }
 
 if(isset($_SESSION['pago_proveedor_arriendo'])){
@@ -178,7 +178,7 @@ if(isset($_SESSION['pago_proveedor_arriendo'])){
 				$Data_Pendientes++;
 			}
 		}
-	}	
+	}
 }
 
 if(isset($_SESSION['pago_proveedor_servicio'])){
@@ -198,7 +198,7 @@ if(isset($_SESSION['pago_proveedor_servicio'])){
 				$Data_Pendientes++;
 			}
 		}
-	}	
+	}
 }
 
 $Form_Inputs = new Inputs();						

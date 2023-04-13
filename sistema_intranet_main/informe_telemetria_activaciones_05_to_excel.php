@@ -119,7 +119,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$CodigoInterno      = '';
 								
 		//Recorrido
-		foreach ($permisos as $con) { 
+		foreach ($permisos as $con) {
 			//Contrato Codigo
 			$Direccion          = $con['Direccion'];
 			$CodigoInterno      = $con['CodigoInterno'];

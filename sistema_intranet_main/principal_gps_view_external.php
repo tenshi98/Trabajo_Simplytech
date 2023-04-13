@@ -40,7 +40,7 @@ function conectarDB ($servidor, $usuario, $password, $base_datos) {
 if($CON_Server!=''&&$CON_Usuario!=''&&$CON_Base!=''){
 	//ejecuto conexion
 	$dbConn_2 = conectarDB($CON_Server, $CON_Usuario, $CON_Password, $CON_Base);
-				
+
 	//variables
 	$HoraSistema    = hora_actual();
 	$FechaSistema   = fecha_actual();
