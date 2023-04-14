@@ -12,9 +12,9 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 //Cargamos la ubicacion original
 $original = "informe_gerencial_11.php";
-$location = $original;  
+$location = $original;
 //Se agregan ubicaciones
-$location .='?filtro=true';	  
+$location .='?filtro=true';
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/

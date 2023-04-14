@@ -12,7 +12,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 //Cargamos la ubicacion original
 $original = "pago_masivo_cliente.php";
-$location = $original;     
+$location = $original;   
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/

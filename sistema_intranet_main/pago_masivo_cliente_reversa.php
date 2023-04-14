@@ -12,7 +12,7 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 //Cargamos la ubicacion original
 $original = "pago_masivo_cliente_reversa.php";
-$location = $original;   
+$location = $original; 
 //Se agregan ubicaciones
 $location .='?pagina='.$_GET['pagina'];
 
