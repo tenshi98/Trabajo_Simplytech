@@ -50,7 +50,7 @@ $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelaciona
 if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
 }else{
-	
+
 	/**********************************************************/
 	//Obtengo los sensores a utilizar
 	$arrOperaciones = array();
@@ -70,6 +70,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$SIS_join  = 'LEFT JOIN `telemetria_listado_sensores_nombre` ON telemetria_listado_sensores_nombre.idTelemetria = telemetria_listado.idTelemetria';
 	$SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['idTelemetria'];
 	$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 	//verifico el sensor de activacion este configurado
 	if(isset($rowdata['SensorActivacionID'])&&$rowdata['SensorActivacionID']!=''&&$rowdata['SensorActivacionID']!=0){
 		$SIS_where.=" AND Sensor_".$rowdata['SensorActivacionID']." = '".$rowdata['SensorActivacionValor']."'";
@@ -463,8 +464,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
