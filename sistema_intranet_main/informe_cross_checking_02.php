@@ -143,7 +143,7 @@ LEFT JOIN `cross_solicitud_aplicacion_listado_tractores`   ON cross_solicitud_ap
 LEFT JOIN `telemetria_listado`                             ON telemetria_listado.idTelemetria                            = cross_solicitud_aplicacion_listado_tractores.idTelemetria
 LEFT JOIN `sistema_variedades_categorias`                  ON sistema_variedades_categorias.idCategoria                  = cross_solicitud_aplicacion_listado.idCategoria
 LEFT JOIN `variedades_listado`                             ON variedades_listado.idProducto                              = cross_solicitud_aplicacion_listado.idProducto
-LEFT JOIN `telemetria_listado_sensores_nombre`             ON telemetria_listado_sensores_nombre.idTelemetria            = telemetria_listado.idTelemetria';
+LEFT JOIN `telemetria_listado_sensores_nombre`             ON telemetria_listado_sensores_nombre.idTelemetria            = cross_solicitud_aplicacion_listado_tractores.idTelemetria';
 $SIS_order = $order_by.' LIMIT '.$comienzo.', '.$cant_reg;
 $arrOTS = array();
 $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOTS');
@@ -238,8 +238,8 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {

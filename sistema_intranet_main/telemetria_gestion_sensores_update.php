@@ -33,9 +33,9 @@ if (isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresNombre_'.$i;
-	$subquery .= ',SensoresMedActual_'.$i;
-	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 
 //Se consultan datos
@@ -48,7 +48,10 @@ telemetria_listado.TiempoFueraLinea,
 telemetria_listado.GeoLatitud,
 telemetria_listado.GeoLongitud,
 telemetria_listado.NErrores'.$subquery;
-$SIS_join = '';
+$SIS_join = '
+LEFT JOIN `telemetria_listado_sensores_nombre`      ON telemetria_listado_sensores_nombre.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`      ON telemetria_listado_sensores_unimed.idTelemetria      = telemetria_listado.idTelemetria';
 $SIS_order = 'telemetria_listado.Nombre ASC';
 $arrEquipo = array();
 $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
@@ -73,13 +76,13 @@ foreach ($arrUnimed as $sen) {
 		</tr>
 	</thead>
 	<tbody role="alert" aria-live="polite" aria-relevant="all">
-		<?php foreach ($arrEquipo as $data) { 
-			
+		<?php foreach ($arrEquipo as $data) {
+
 			/**********************************************/
 			//Se resetean
 			$in_eq_alertas     = 0;
 			$in_eq_fueralinea  = 0;
-																								
+
 			/**********************************************/
 			//Fuera de linea
 			$diaInicio   = $data['LastUpdateFecha'];
@@ -98,14 +101,14 @@ foreach ($arrUnimed as $sen) {
 			if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 				$in_eq_fueralinea++;
 			}
-															
+
 			/**********************************************/
 			//NErrores
 			if(isset($data['NErrores'])&&$data['NErrores']>0){ $in_eq_alertas++; }
-															
+
 			/*******************************************************/
 			//rearmo
-			if($in_eq_alertas>0){    
+			if($in_eq_alertas>0){
 				$danger = 'warning';
 				$eq_ok  = '<a href="#" title="Con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';
 			}elseif($in_eq_fueralinea>0){
@@ -115,11 +118,11 @@ foreach ($arrUnimed as $sen) {
 				$danger = '';
 				$eq_ok  = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 			}
-									
+
 			?>
-			<tr class="odd <?php echo $danger; ?>">		
+			<tr class="odd <?php echo $danger; ?>">
 				<td><?php echo $data['Nombre']; ?></td>
-				<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>		
+				<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>
 				<td>
 					<div class="btn-group" style="width: 35px;" >
 						<a href="<?php echo 'telemetria_gestion_sensores_view_equipo.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
@@ -145,17 +148,17 @@ foreach ($arrUnimed as $sen) {
 				if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades_decimales_justos($data['SensoresMedActual_'.$i]).$unimed;}else{$xdata='Sin Datos';}
 				$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';
 			}
-			$explanation .= '</p>';	
-					
+			$explanation .= '</p>';
+
 			if($in==0){$in=1;}else{echo ',';} ?>
-			{  
+			{
 				contenido: 	"<div id='iw-container'>" +
 							"<div class='iw-title'>Datos</div>" +
 							"<div class='iw-content'>" +
 							"<?php echo $explanation; ?>" +
 							"</div>" +
 							"<div class='iw-bottom-gradient'></div>" +
-							"</div>"			 
+							"</div>"
 			}
 		<?php } ?>
 	];
@@ -173,7 +176,6 @@ foreach ($arrUnimed as $sen) {
 			onClosed:function(){ alert('onClosed: colorbox has completely closed');}
 		});
 
-				
 		//Example of preserving a JavaScript event for inline calls.
 		$("#click").click(function(){
 			$('#click').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");

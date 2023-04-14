@@ -28,67 +28,56 @@ if(isset($_SESSION['usuario']['zona']['id_Geo'])&&$_SESSION['usuario']['zona']['
 	$id_Geo = 1;//seguimiento activo
 }
 //filtro
-$z = "WHERE telemetria_listado.idEstado = 1 ";//solo equipos activos
+$SIS_where = "telemetria_listado.idEstado = 1 ";//solo equipos activos
 //solo los equipos que tengan el seguimiento activado
-$z .= " AND telemetria_listado.id_Geo = ".$id_Geo;
+$SIS_where .= " AND telemetria_listado.id_Geo = ".$id_Geo;
 //Filtro de los tab
-$z .= " AND telemetria_listado.idTab = ".$_GET['idTab'];
+$SIS_where .= " AND telemetria_listado.idTab = ".$_GET['idTab'];
 //Filtro el sistema al cual pertenece
 if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
-	$z .= " AND telemetria_listado.idSistema = ".$idSistema;
+	$SIS_where .= " AND telemetria_listado.idSistema = ".$idSistema;
 }
 //Verifico el tipo de usuario que esta ingresando y el id
-$join = "";	
+$SIS_join = '';
 if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-	$join = " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
-	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
+	$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
+	$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 }
 //filtro la zona
 if(isset($idZona)&&$idZona!=''&&$idZona!=9999){
-	$z .= " AND telemetria_listado.idZona = ".$idZona;
+	$SIS_where .= " AND telemetria_listado.idZona = ".$idZona;
 }
 
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresNombre_'.$i;
-	$subquery .= ',SensoresMedActual_'.$i;
-	$subquery .= ',SensoresUniMed_'.$i;
-	$subquery .= ',SensoresActivo_'.$i;
-}		
-//Listar los equipos
-$arrEquipo = array();
-$query = "SELECT 
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
+}
+
+/*******************************************************/
+// consulto los datos
+$SIS_query = '
 telemetria_listado.Nombre,
 telemetria_listado.LastUpdateFecha,
-telemetria_listado.LastUpdateHora, 
+telemetria_listado.LastUpdateHora,
 telemetria_listado.GeoLatitud,
 telemetria_listado.GeoLongitud,
-telemetria_listado.cantSensores, 
+telemetria_listado.cantSensores,
 telemetria_listado.GeoVelocidad,
 telemetria_listado.Patente,
-telemetria_listado.id_Sensores
-
-".$subquery."
-FROM `telemetria_listado`
-".$join."
-".$z."
-ORDER BY telemetria_listado.Nombre ASC  ";
-$resultado = mysqli_query($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrEquipo,$row );
-}
+telemetria_listado.id_Sensores'.$subquery;
+$SIS_join .= '
+LEFT JOIN `telemetria_listado_sensores_nombre`      ON telemetria_listado_sensores_nombre.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`      ON telemetria_listado_sensores_unimed.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`      ON telemetria_listado_sensores_activo.idTelemetria      = telemetria_listado.idTelemetria';
+$SIS_order = 'telemetria_listado.Nombre ASC';
+$arrEquipo = array();
+$arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
 
 /*************************************************************/
 //Se traen todas las unidades de medida
@@ -105,7 +94,7 @@ foreach ($arrUnimed as $data) {
 
 <script>
 	var HoraRefresco = '<?php echo hora_actual(); ?>';
-	
+
 	<?php
 	$GPS = 'var new_locations = [ ';
 			foreach ( $arrEquipo as $data ) {
@@ -141,8 +130,7 @@ foreach ($arrUnimed as $data) {
 				$GPS .= "], ";
 			}
 		$GPS .= '];';
-		
+
 		echo $GPS;
 	?>
 </script>
-

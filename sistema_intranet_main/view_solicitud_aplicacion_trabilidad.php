@@ -41,7 +41,7 @@ for ($i = 1; $i <= $Nsens; $i++) {
 	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Prom';
 	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Min';
 	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Max';
-	$subquery .= ',telemetria_listado.SensoresNombre_'.$i.' AS Sensor_'.$i.'_Nombre';
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i.' AS Sensor_'.$i.'_Nombre';
 }
 
 // consulto los datos
@@ -78,7 +78,8 @@ LEFT JOIN `variedades_listado`                             ON variedades_listado
 LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idCuarteles   = cross_solicitud_aplicacion_listado_tractores.idCuarteles
 LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                         = cross_solicitud_aplicacion_listado_cuarteles.idZona
 LEFT JOIN `telemetria_listado`                             ON telemetria_listado.idTelemetria                            = cross_solicitud_aplicacion_listado_tractores.idTelemetria
-LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo';
+LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo
+LEFT JOIN `telemetria_listado_sensores_nombre`             ON telemetria_listado_sensores_nombre.idTelemetria            = cross_solicitud_aplicacion_listado_tractores.idTelemetria';
 $SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idTractores ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
@@ -158,8 +159,6 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 				</div>';
 		?>
 
-	
-							
 	</div>
 
 	<div class="row" style="margin-bottom:15px;">
@@ -186,9 +185,6 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 			</table>
 		</div>
 	</div>
-	
-				
-
 
 	<div class="row" style="margin-bottom:15px;">
 		<div class="col-xs-12" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
@@ -200,20 +196,20 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 				/********************************************************************/
 				//Caudales
 				echo '
-				<script>				
+				<script>
 					google.charts.setOnLoadCallback(drawChart_caudales);
 
 					function drawChart_caudales() {
 						var data_caud = new google.visualization.DataTable();
-						data_caud.addColumn("string", "Hora"); 
+						data_caud.addColumn("string", "Hora");
 						data_caud.addColumn("number", "Caudal Derecho");
-						data_caud.addColumn("number", "Caudal Izquierdo"); 
-						
+						data_caud.addColumn("number", "Caudal Izquierdo");
+
 						data_caud.addRows([';
 							//recorro los resultados
 							foreach ($arrMediciones as $med) {
-								echo '["'.$med['HoraSistema'].'", 
-								'.Cantidades_decimales_justos($med['Sensor_1']).', 
+								echo '["'.$med['HoraSistema'].'",
+								'.Cantidades_decimales_justos($med['Sensor_1']).',
 								'.Cantidades_decimales_justos($med['Sensor_2']).'
 								],';
 							}
@@ -238,19 +234,19 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 				/********************************************************************/
 				//Nivel Estanque
 				echo '
-				<script>				
+				<script>
 					google.charts.setOnLoadCallback(drawChart_caudales);
 
 					function drawChart_caudales() {
 						var data_caud = new google.visualization.DataTable();
-						data_caud.addColumn("string", "Hora"); 
+						data_caud.addColumn("string", "Hora");
 						data_caud.addColumn("number", "Nivel Estanque");
-						
+
 						data_caud.addRows([';
 							//recorro los resultados
 							foreach ($arrMediciones as $med) {
-								echo '["'.$med['HoraSistema'].'", 
-								'.Cantidades_decimales_justos($med['Sensor_3']).', 
+								echo '["'.$med['HoraSistema'].'",
+								'.Cantidades_decimales_justos($med['Sensor_3']).',
 								],';
 							}
 							echo '
@@ -274,18 +270,18 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 				/********************************************************************/
 				//Velocidades
 				echo '
-				<script>				
+				<script>
 					google.charts.setOnLoadCallback(drawChart_velocidades);
 
 					function drawChart_velocidades() {
 						var data_vel = new google.visualization.DataTable();
-						data_vel.addColumn("string", "Hora"); 
+						data_vel.addColumn("string", "Hora");
 						data_vel.addColumn("number", "Velocidad");
-						
+
 						data_vel.addRows([';
 							//recorro los resultados
 							foreach ($arrMediciones as $med) {
-								echo '["'.$med['HoraSistema'].'", 
+								echo '["'.$med['HoraSistema'].'",
 								'.Cantidades_decimales_justos($med['GeoVelocidad']).'
 								],';
 							}
@@ -310,18 +306,18 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 				/********************************************************************/
 				//Distancias
 				echo '
-				<script>				
+				<script>
 					google.charts.setOnLoadCallback(drawChart_distancias);
 
 					function drawChart_distancias() {
 						var data_vel = new google.visualization.DataTable();
-						data_vel.addColumn("string", "Hora"); 
+						data_vel.addColumn("string", "Hora");
 						data_vel.addColumn("number", "Distancia");
-						
+
 						data_vel.addRows([';
 							//recorro los resultados
 							foreach ($arrMediciones as $med) {
-								echo '["'.$med['HoraSistema'].'", 
+								echo '["'.$med['HoraSistema'].'",
 								'.Cantidades_decimales_justos($med['GeoMovimiento']).'
 								],';
 							}
@@ -357,11 +353,11 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 			}else{
 				$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
 				<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=visualization"></script>
-											
+
 				<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 
 				<script>
-					
+
 					var myLatlng = new google.maps.LatLng(<?php echo $arrPuntos[0]['Latitud']; ?>, <?php echo $arrPuntos[0]['Longitud']; ?>);
 
 					var myOptions = {
@@ -370,8 +366,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 						mapTypeId: google.maps.MapTypeId.SATELLITE
 					};
 					map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-								
-								
+
 					//Se dibujan los puntos en base a los niveles de riego
 					/* Data points defined as a mixture of WeightedLocation and LatLng objects */
 					var heatMapData = [
@@ -392,7 +387,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 					dibuja_zona();
 					/* ************************************************************************** */
 					function dibuja_zona() {
-								
+
 						var triangleCoords = [
 							<?php
 							//Variables con la primera posicion
@@ -413,9 +408,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 							}
 							?>
 						];
-							
-								
-								
+
 						// Construct the polygon.
 						var bermudaTriangle = new google.maps.Polygon({
 							paths: triangleCoords,
@@ -433,7 +426,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 			<?php } ?>
 		</div>
 	</div>
-      
+
 </section>
 
 <?php

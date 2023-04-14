@@ -31,11 +31,10 @@ telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_
 telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.HoraSistema
 '.$consql;
 $SIS_join  = '
-LEFT JOIN `telemetria_listado`                   ON telemetria_listado.idTelemetria                   = telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTelemetria
-LEFT JOIN `telemetria_listado_sensores_grupo`    ON telemetria_listado_sensores_grupo.idTelemetria    = telemetria_listado.idTelemetria
-LEFT JOIN `telemetria_listado_sensores_nombre`   ON telemetria_listado_sensores_nombre.idTelemetria   = telemetria_listado.idTelemetria
-LEFT JOIN `telemetria_listado_sensores_unimed`   ON telemetria_listado_sensores_unimed.idTelemetria   = telemetria_listado.idTelemetria
-LEFT JOIN `telemetria_listado_sensores_activo`   ON telemetria_listado_sensores_activo.idTelemetria   = telemetria_listado.idTelemetria';
+LEFT JOIN `telemetria_listado_sensores_grupo`    ON telemetria_listado_sensores_grupo.idTelemetria    = telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_nombre`   ON telemetria_listado_sensores_nombre.idTelemetria   = telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`   ON telemetria_listado_sensores_unimed.idTelemetria   = telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`   ON telemetria_listado_sensores_activo.idTelemetria   = telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTelemetria';
 $SIS_where = ' (TimeStamp BETWEEN "'.$f_inicio.' '.$h_inicio .'" AND "'.$f_termino.' '.$h_termino.'")';
 $SIS_order = '
 telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.FechaSistema ASC,

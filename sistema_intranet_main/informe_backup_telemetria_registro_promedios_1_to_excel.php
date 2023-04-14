@@ -81,9 +81,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	'.$subquery.'
 	telemetria_listado_unidad_medida.Nombre AS Unimed';
 	$SIS_join  = '
-	LEFT JOIN `telemetria_listado`                  ON telemetria_listado.idTelemetria                  = backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria
 	LEFT JOIN `telemetria_listado_unidad_medida`    ON telemetria_listado_unidad_medida.idUniMed        = telemetria_listado.SensoresUniMed_'.$_GET['sensorn'].'
-	LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria  = telemetria_listado.idTelemetria';
+	LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria  = backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria';
 	$SIS_where .= ' GROUP BY backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema';
 	$SIS_order  = 'backup_telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema ASC LIMIT 10000';
 	$arrEquipos = array();

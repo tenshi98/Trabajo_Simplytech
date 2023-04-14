@@ -73,8 +73,8 @@ $SIS_join  = '
 LEFT JOIN telemetria_listado                    ON telemetria_listado.idTelemetria                  = telemetria_listado_errores_999.idTelemetria
 LEFT JOIN core_sistemas                         ON core_sistemas.idSistema                          = telemetria_listado_errores_999.idSistema
 LEFT JOIN core_telemetria_tabs                  ON core_telemetria_tabs.idTab                       = telemetria_listado.idTab
-LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria  = telemetria_listado.idTelemetria
-LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria   = telemetria_listado.idTelemetria';
+LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria  = telemetria_listado_errores_999.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria   = telemetria_listado_errores_999.idTelemetria';
 $SIS_order = 'core_sistemas.Nombre ASC, telemetria_listado.Nombre ASC, core_telemetria_tabs.Nombre ASC, telemetria_listado_errores_999.Sensor ASC, telemetria_listado_errores_999.Descripcion ASC, telemetria_listado_errores_999.Valor ASC';
 $SIS_where_1.= ' GROUP BY core_sistemas.Nombre,telemetria_listado.Nombre,core_telemetria_tabs.Nombre,telemetria_listado_errores_999.Sensor, telemetria_listado_errores_999.Descripcion, telemetria_listado_errores_999.Valor';
 $arrEquipos1 = array();
@@ -315,8 +315,8 @@ foreach ($arrGrupos as $sen) {
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {

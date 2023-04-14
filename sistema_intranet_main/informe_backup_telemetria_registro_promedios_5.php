@@ -89,11 +89,10 @@ function crear_data($cantsens, $filtro, $idTelemetria, $f_inicio, $f_termino, $d
 	//se consulta
 	$SIS_query = 'backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema'.$consql;
 	$SIS_join  = '
-	LEFT JOIN `telemetria_listado`                  ON telemetria_listado.idTelemetria                   = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria
-	LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria   = telemetria_listado.idTelemetria
-	LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria    = telemetria_listado.idTelemetria
-	LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria   = telemetria_listado.idTelemetria
-	LEFT JOIN `telemetria_listado_sensores_activo`  ON telemetria_listado_sensores_activo.idTelemetria   = telemetria_listado.idTelemetria';
+	LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria   = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria    = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria   = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_activo`  ON telemetria_listado_sensores_activo.idTelemetria   = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria';
 	$SIS_where = 'idTabla!=0 '.$filtro.$subfiltro.' GROUP BY backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema';
 	$SIS_order = 'backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema ASC LIMIT 10000';
 	$arrRutas = array();

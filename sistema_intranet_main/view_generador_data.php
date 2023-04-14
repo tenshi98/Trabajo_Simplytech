@@ -45,18 +45,30 @@ require_once 'core/Web.Header.Views.php';
 /**************************************************************/
 //numero sensores equipo
 $N_Maximo_Sensores = 20;
-$subquery_1 = 'Nombre,cantSensores, FechaInsGen,SensorActivacionID,
-idGrupoDespliegue,idGrupoVmonofasico,idGrupoVTrifasico,idGrupoPotencia,idGrupoEstanque';
+$subquery_1 = '
+telemetria_listado.Nombre,
+telemetria_listado.cantSensores,
+telemetria_listado.FechaInsGen,
+telemetria_listado.SensorActivacionID,
+telemetria_listado.idGrupoDespliegue,
+telemetria_listado.idGrupoVmonofasico,
+telemetria_listado.idGrupoVTrifasico,
+telemetria_listado.idGrupoPotencia,
+telemetria_listado.idGrupoEstanque';
 
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery_1 .= ',SensoresNombre_'.$i;
-	$subquery_1 .= ',SensoresGrupo_'.$i;
-	$subquery_1 .= ',SensoresMedActual_'.$i;
-	$subquery_1 .= ',SensoresActivo_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 }
-
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_nombre`     ON telemetria_listado_sensores_nombre.idTelemetria     = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_grupo`      ON telemetria_listado_sensores_grupo.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_med_actual` ON telemetria_listado_sensores_med_actual.idTelemetria = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`     ON telemetria_listado_sensores_activo.idTelemetria     = telemetria_listado.idTelemetria';
 //Obtengo los datos
-$rowdata  = db_select_data (false, $subquery_1, 'telemetria_listado', '', 'idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowdata  = db_select_data (false, $subquery_1, 'telemetria_listado', $SIS_join, 'telemetria_listado.idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 /**************************************************************/
 //Grupo Sensores

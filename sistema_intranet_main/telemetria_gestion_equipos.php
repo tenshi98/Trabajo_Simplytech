@@ -12,9 +12,9 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 //Cargamos la ubicacion original
 $original = "telemetria_gestion_equipos.php";
-$location = $original;  
+$location = $original;
 //Se agregan ubicaciones
-$location .='?filtro=true';	  
+$location .='?filtro=true';
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
@@ -46,10 +46,10 @@ if (isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresNombre_'.$i;
-	$subquery .= ',SensoresMedActual_'.$i;
-	$subquery .= ',SensoresGrupo_'.$i;
-	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	$subquery .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 
 //Se consultan datos
@@ -65,7 +65,12 @@ telemetria_listado.cantSensores,
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.NErrores,
 core_sistemas.idOpcionesGen_3'.$subquery;
-$SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema';
+$SIS_join  = '
+LEFT JOIN `core_sistemas`                           ON core_sistemas.idSistema                              = telemetria_listado.idSistema
+LEFT JOIN `telemetria_listado_sensores_nombre`      ON telemetria_listado_sensores_nombre.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_grupo`       ON telemetria_listado_sensores_grupo.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`      ON telemetria_listado_sensores_unimed.idTelemetria      = telemetria_listado.idTelemetria';
 $rowDatos = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowDatos');
 
 //Se consultan datos
@@ -109,13 +114,12 @@ foreach ($arrGrupos as $sen) {
 								</tr>
 							</thead>
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
-								<?php 
-									
+								<?php
 								/**********************************************/
 								//Se resetean
 								$in_eq_alertas     = 0;
 								$in_eq_fueralinea  = 0;
-																		
+
 								/**********************************************/
 								//Fuera de linea
 								$diaInicio   = $rowDatos['LastUpdateFecha'];
@@ -134,14 +138,14 @@ foreach ($arrGrupos as $sen) {
 								if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 									$in_eq_fueralinea++;
 								}
-									
+
 								/**********************************************/
 								//NErrores
 								if(isset($rowDatos['NErrores'])&&$rowDatos['NErrores']>0){ $in_eq_alertas++; }
-											
+
 								/*******************************************************/
 								//rearmo
-								if($in_eq_alertas>0){    
+								if($in_eq_alertas>0){
 									$danger = 'warning';
 									$eq_ok  = '<a href="#" title="Con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';
 								}elseif($in_eq_fueralinea>0){
@@ -151,20 +155,20 @@ foreach ($arrGrupos as $sen) {
 									$danger = '';
 									$eq_ok  = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 								}
-								
+
 								?>
-									
-								<tr class="odd <?php echo $danger; ?>">		
+
+								<tr class="odd <?php echo $danger; ?>">
 									<td><?php echo $rowDatos['Nombre']; ?></td>
-									<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>		
+									<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
 											<a href="<?php echo 'telemetria_gestion_equipos_view_equipo.php?view='.simpleEncode($rowDatos['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
 										</div>
 									</td>
 								</tr>
-								<tr class="odd" style="background-color: #CCCCCC;">		
-									<td>Grupo</td>	
+								<tr class="odd" style="background-color: #CCCCCC;">
+									<td>Grupo</td>
 									<td colspan="2">Mediciones</td>
 								</tr>
 
@@ -214,7 +218,7 @@ foreach ($arrGrupos as $sen) {
 									$y = 1;
 									?>
 									<tr class="odd">
-										<td><?php echo $titulo ?></td>	
+										<td><?php echo $titulo ?></td>
 										<?php foreach($items as $datos) {
 											if($y==1){
 												$columna_a .= $datos['Descripcion'].'<br/>';
@@ -235,10 +239,10 @@ foreach ($arrGrupos as $sen) {
 												$unimed_col2 = $datos['unimed'];
 												$y=1;
 											}
-										} ?> 
-										
+										} ?>
+
 										<td><?php echo $columna_a ?></td>
-										<td><?php echo $columna_b ?></td>	
+										<td><?php echo $columna_b ?></td>
 									</tr>
 
 									<?php if($rowDatos['idOpcionesGen_3']==1){ ?>
@@ -248,8 +252,7 @@ foreach ($arrGrupos as $sen) {
 											<td><?php if($ntotal_col2!=0){echo Cantidades_decimales_justos($total_col2/$ntotal_col2).$unimed_col2;} ?></td>
 										</tr>
 									<?php } ?>
-										
-										
+
 					            <?php } ?>
 							</tbody>
 						</table>
@@ -266,66 +269,49 @@ foreach ($arrGrupos as $sen) {
 					<?php } ?>
 				</div>
 			</div>
-			
-			
-			
+
 		</div>
 	</div>
 </div>
 
 <script type="text/javascript">
-function initialize() {
-	setInterval(function(){myTimer2()},10000)
-}
-function myTimer2() {
-	$('#consulta').load('telemetria_gestion_equipos_update.php<?php echo $enlace; ?>');
-} 
+	function initialize() {
+		setInterval(function(){myTimer2()},10000)
+	}
+	function myTimer2() {
+		$('#consulta').load('telemetria_gestion_equipos_update.php<?php echo $enlace; ?>');
+	}
+	initialize();
 </script>
-<script type="text/javascript">initialize();</script>
 
 
-  
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=2";
+	$filter = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=2";
 }else{
 	//filtro
-	$z = "idTelemetria=0";
+	$filter = "idTelemetria=0";
 	//Se revisan los permisos a los contratos
+	$SIS_query = 'idTelemetria';
+	$SIS_join  = '';
+	$SIS_where = 'idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_order = 'idTelemetria ASC';
 	$arrPermisos = array();
-	$query = "SELECT idTelemetria
-	FROM `usuarios_equipos_telemetria`
-	WHERE idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)){
-	array_push( $arrPermisos,$row );
-	}
+	$arrPermisos = db_select_array (false, $SIS_query, 'usuarios_equipos_telemetria', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
 	foreach ($arrPermisos as $prod) {
-		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND id_Geo=2 AND idTelemetria={$prod['idTelemetria']})";
+		$filter .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND id_Geo=2 AND idTelemetria=".$prod['idTelemetria'].")";
 	}
 	//$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=2";
-}	
+}
 
-	 
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -343,7 +329,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
+				$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $filter, '', $dbConn);
 				?>
 
 				<div class="form-group">
@@ -355,11 +341,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 		</div>
 	</div>
 </div>
-
-
-
-
-
 
 
 <?php } ?>

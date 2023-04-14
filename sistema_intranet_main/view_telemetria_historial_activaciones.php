@@ -53,10 +53,10 @@ if(isset($_GET['dia']) && $_GET['dia']!=''){    $SIS_where.=" AND telemetria_lis
 //Se arma la queri con los datos justos recibidos
 $subquery = '';
 for ($i = 1; $i <= $X_cantSensores; $i++) {
-	$subquery .= ',telemetria_listado.SensoresActivo_'.$i;
-	$subquery .= ',telemetria_listado.SensoresRevision_'.$i;
-	$subquery .= ',telemetria_listado.SensoresRevisionGrupo_'.$i;
-	$subquery .= ',telemetria_listado.SensoresNombre_'.$i;
+	$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
+	$subquery .= ',telemetria_listado_sensores_revision.SensoresRevision_'.$i;
+	$subquery .= ',telemetria_listado_sensores_revision_grupo.SensoresRevisionGrupo_'.$i;
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
 	$subquery .= ',telemetria_listado_tablarelacionada_'.$X_Puntero.'.Sensor_'.$i;
 }
 
@@ -65,7 +65,12 @@ $SIS_query = '
 telemetria_listado.Nombre AS EquipoNombre,
 telemetria_listado_tablarelacionada_'.$X_Puntero.'.FechaSistema AS EquipoFecha,
 telemetria_listado_tablarelacionada_'.$X_Puntero.'.HoraSistema AS EquipoHora'.$subquery;
-$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_tablarelacionada_'.$X_Puntero.'.idTelemetria';
+$SIS_join  = '
+LEFT JOIN `telemetria_listado`                          ON telemetria_listado.idTelemetria                           = telemetria_listado_tablarelacionada_'.$X_Puntero.'.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria           = telemetria_listado_tablarelacionada_'.$X_Puntero.'.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_revision`        ON telemetria_listado_sensores_revision.idTelemetria         = telemetria_listado_tablarelacionada_'.$X_Puntero.'.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_revision_grupo`  ON telemetria_listado_sensores_revision_grupo.idTelemetria   = telemetria_listado_tablarelacionada_'.$X_Puntero.'.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria           = telemetria_listado_tablarelacionada_'.$X_Puntero.'.idTelemetria';
 $SIS_order = 'telemetria_listado_tablarelacionada_'.$X_Puntero.'.HoraSistema ASC';
 $arrConsulta = array();
 $arrConsulta = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$X_Puntero, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrConsulta');
@@ -81,7 +86,7 @@ foreach ($arrConsulta as $con) {
 	//Reseteo Variable
 	$rev_count = 0;
 	$rev_sup   = 0;
-			 
+
 	foreach ($arrGruposRev as $sen) {
 		//Solo busco en los sensores que supervisan
 		if(isset($sen['idSupervisado'])&&$sen['idSupervisado']==1){
@@ -112,7 +117,7 @@ foreach ($arrConsulta as $con) {
 
 								//Vacio las variables
 								unset($arrTable['termino']);
-							
+
 								//Valor termino
 								$arrTable['termino'][$i]['SensorNombre'] = $con['SensoresNombre_'.$i];
 								$arrTable['termino'][$i]['SensorValor']  = $con['Sensor_'.$i];
@@ -139,8 +144,6 @@ foreach ($arrConsulta as $con) {
 		}
 	}
 }
-
-
 
 ?>
 
@@ -183,7 +186,7 @@ foreach ($arrConsulta as $con) {
 								?>
 							</td>
 						</tr>
-										   
+
 					</tbody>
 				</table>
 			</div>

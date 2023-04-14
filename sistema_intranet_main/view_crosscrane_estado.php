@@ -53,36 +53,45 @@ $margenError   = 30;
 $N_Maximo_Sensores = 50;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresNombre_'.$i;
-	$subquery .= ',SensoresGrupo_'.$i;
-	$subquery .= ',SensoresUniMed_'.$i;
-	$subquery .= ',SensoresMedActual_'.$i;
-	$subquery .= ',SensoresUso_'.$i;
-	$subquery .= ',SensoresAccionC_'.$i;
-	$subquery .= ',SensoresAccionT_'.$i;
-	$subquery .= ',SensoresAccionMedC_'.$i;
-	$subquery .= ',SensoresAccionMedT_'.$i;
-	$subquery .= ',SensoresAccionAlerta_'.$i;
-
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$subquery .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	$subquery .= ',telemetria_listado_sensores_uso.SensoresUso_'.$i;
+	$subquery .= ',telemetria_listado_sensores_accion_c.SensoresAccionC_'.$i;
+	$subquery .= ',telemetria_listado_sensores_accion_t.SensoresAccionT_'.$i;
+	$subquery .= ',telemetria_listado_sensores_accion_med_c.SensoresAccionMedC_'.$i;
+	$subquery .= ',telemetria_listado_sensores_accion_med_t.SensoresAccionMedT_'.$i;
+	$subquery .= ',telemetria_listado_sensores_accion_alerta.SensoresAccionAlerta_'.$i;
 }
 //se hace consulta
 $SIS_query = '
-Nombre,
-cantSensores, 
-LastUpdateFecha,
-LastUpdateHora,
-GeoLatitud,
-GeoLongitud,
-CrossCrane_tiempo_revision, 
-CrossCrane_grupo_amperaje, 
-CrossCrane_grupo_elevacion, 
-CrossCrane_grupo_giro, 
-CrossCrane_grupo_carro, 
-CrossCrane_grupo_voltaje 
-'.$subquery.', 
-(SELECT COUNT(idErrores) FROM `telemetria_listado_errores` WHERE idTelemetria='.$X_Puntero.' AND idLeido=0 AND Fecha BETWEEN "'.$Fecha_inicio.'" AND "'.$Fecha_fin.'" AND idTipo!="999" AND Valor<"99900" AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].') AS Alertas';						
-$SIS_join  = '';
-$SIS_where = 'idTelemetria ='.$X_Puntero;
+telemetria_listado.Nombre,
+telemetria_listado.cantSensores,
+telemetria_listado.LastUpdateFecha,
+telemetria_listado.LastUpdateHora,
+telemetria_listado.GeoLatitud,
+telemetria_listado.GeoLongitud,
+telemetria_listado.CrossCrane_tiempo_revision,
+telemetria_listado.CrossCrane_grupo_amperaje,
+telemetria_listado.CrossCrane_grupo_elevacion,
+telemetria_listado.CrossCrane_grupo_giro,
+telemetria_listado.CrossCrane_grupo_carro,
+telemetria_listado.CrossCrane_grupo_voltaje
+'.$subquery.',
+(SELECT COUNT(idErrores) FROM `telemetria_listado_errores` WHERE idTelemetria='.$X_Puntero.' AND idLeido=0 AND Fecha BETWEEN "'.$Fecha_inicio.'" AND "'.$Fecha_fin.'" AND idTipo!="999" AND Valor<"99900" AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].') AS Alertas';
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_grupo`           ON telemetria_listado_sensores_grupo.idTelemetria          = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_med_actual`      ON telemetria_listado_sensores_med_actual.idTelemetria     = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_uso`             ON telemetria_listado_sensores_uso.idTelemetria            = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_c`        ON telemetria_listado_sensores_accion_c.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_t`        ON telemetria_listado_sensores_accion_t.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_med_c`    ON telemetria_listado_sensores_accion_med_c.idTelemetria   = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_med_t`    ON telemetria_listado_sensores_accion_med_t.idTelemetria   = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_alerta`   ON telemetria_listado_sensores_accion_alerta.idTelemetria  = telemetria_listado.idTelemetria';
+$SIS_where = 'telemetria_listado.idTelemetria ='.$X_Puntero;
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
 
 /********************************************************************************************/
@@ -93,7 +102,7 @@ $H_inicio2 = restahoras('03:00:00', hora_actual());
 $H_inicio3 = restahoras('00:10:00', hora_actual());
 $F_termino = fecha_actual();
 $H_termino = hora_actual();
-		
+
 //Variable de busqueda
 if($H_inicio>$H_termino){
 	$SIS_where = "telemetria_listado_tablarelacionada_".$X_Puntero.".TimeStamp BETWEEN '".$F_inicio2." ".$H_inicio."' AND '".$F_termino." ".$H_termino."'";
@@ -139,7 +148,7 @@ $arrUnimedX = array();
 foreach ($arrUnimed as $sen) {
 	$arrUnimedX[$sen['idUniMed']]= ' '.$sen['Nombre'];	;
 }
-/********************************************************************************************/		
+/********************************************************************************************/
 if(isset($rowdata['CrossCrane_tiempo_revision'])&&$rowdata['CrossCrane_tiempo_revision']=='00:00:00'){
 	echo '<div class="col-xs-12" style="margin-top:15px;">';
 		$Alert_Text  = 'No se ha configurado el tiempo de revision';
@@ -313,7 +322,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 									$N_sobreUso++;
 								}
 							}
-								
+
 							/*****************************************/
 							//Horas
 							//si esta configurado
@@ -375,7 +384,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				}else{
 					$voltaje_prom_promedio = 0;
 				}
-						
+
 				if($voltaje_actual_cuenta!=0){
 					$voltaje_actual_promedio  = $voltaje_actual_total/$voltaje_actual_cuenta;
 					$voltaje_promedio_min_fin = $voltaje_promedio_min/$voltaje_actual_cuenta;
@@ -523,7 +532,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 				$link_Alertas .= '&f_termino='.$Fecha_fin;
 				$link_Alertas .= '&idTelemetria='.$X_Puntero;
 				$link_Alertas .= '&idLeido=0';
-				$link_Alertas .= '&submit_filter=+Filtrar';	
+				$link_Alertas .= '&submit_filter=+Filtrar';
 				//Sobre uso
 				$link_sobreuso  = 'informe_telemetria_uso_03.php';
 				$link_sobreuso .= '?idTelemetria='.$X_Puntero;
@@ -619,7 +628,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 							options_gauge_1 = {
 								min:0,
 								max:100,
-								width: 350, 
+								width: 350,
 								height: 200,
 								redFrom: <?php echo $margenError; ?>, redTo: 100,redColor:'#DC3912',
 								majorTicks: ["0","10","20","30","40", "50", "60", "70", "80", "90", "100"],
@@ -645,7 +654,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 							options_gauge_2 = {
 								min:0,
 								max:100,
-								width: 350, 
+								width: 350,
 								height: 200,
 								redFrom: <?php echo $margenError; ?>, redTo: 100,redColor:'#DC3912',
 								majorTicks: ["0","10","20","30","40", "50", "60", "70", "80", "90", "100"],
@@ -671,7 +680,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 							options_gauge_3 = {
 								min:0,
 								max:100,
-								width: 350, 
+								width: 350,
 								height: 200,
 								redFrom: <?php echo $margenError; ?>, redTo: 100,redColor:'#DC3912',
 								majorTicks: ["0","10","20","30","40", "50", "60", "70", "80", "90", "100"],
@@ -697,7 +706,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 							options_gauge_4 = {
 								min:0,
 								max:100,
-								width: 350, 
+								width: 350,
 								height: 200,
 								redFrom: <?php echo $margenError; ?>, redTo: 100,redColor:'#DC3912',
 								majorTicks: ["0","10","20","30","40", "50", "60", "70", "80", "90", "100"],
@@ -753,8 +762,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 							format4.format(data_gauge_4, 1);
 							chart_gauge_4.draw(data_gauge_4, options_gauge_4);
 						}
-								
-								
+
 					</script>
 				</div>
 
@@ -784,7 +792,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 							}else{
 								$ndata_x2 = 0;
 							}
-							
+
 							?>
 							<div class="box-body">
 								<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 value tipnoabs">
@@ -846,18 +854,17 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 					}else{
 						if(isset($_GET['ShowMap'])&&$_GET['ShowMap']=='True'){
 							$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-						
+
 							<style>
 								.my_marker {color: white;background-color: black;border: solid 1px black;font-weight: 900;padding: 4px;top: -8px;}
 								.my_marker::after {content: "";position: absolute;top: 100%;left: 50%;transform: translate(-50%, 0%);border: solid 8px transparent;border-top-color: black;}
 							</style>
-				
+
 							<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
 							<div class="row">
 								<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 							</div>
 							<script>
-							
 								/* ************************************************************************** */
 								var map;
 								var marker;
@@ -886,16 +893,13 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 													'</div>' +
 													'<div class="iw-bottom-gradient"></div>' +
 													'</div>';
-		
 
-			
 									// A new Info Window is created and set content
 									var infowindow = new google.maps.InfoWindow({
 										content: content_1,
 										maxWidth: 350
-									});	
-									
-										
+									});
+
 									marker = new google.maps.Marker({
 										position	: myLatlng,
 										map			: map,
@@ -965,7 +969,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 											$(this).css({opacity: '1'});
 										});
 									});
-													
+
 									//muestro la infowindow al inicio
 									infowindow.open(map,marker);
 
@@ -981,9 +985,6 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 
 			</div>
 
-	
-					
-		
 		</div>
 	</div>
 </div>

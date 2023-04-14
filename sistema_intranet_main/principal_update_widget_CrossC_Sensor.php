@@ -18,7 +18,6 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                      Consulta                                                                  */
 /**********************************************************************************************************************************/
 //Obtengo datos configuracion
-
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$idTelemetria = $_GET['idTelemetria'];
 	$_SESSION['usuario']['widget_CrossC']['idTelemetria'] = $_GET['idTelemetria'];
@@ -59,16 +58,21 @@ if($HoraTermino<$timeBack){
 $N_Maximo_Sensores = $cantSensores;
 $consql = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$consql .= ',SensoresNombre_'.$i;
-	$consql .= ',SensoresGrupo_'.$i;
-	$consql .= ',SensoresRevisionGrupo_'.$i;
-	$consql .= ',SensoresActivo_'.$i;
-	$consql .= ',SensoresUniMed_'.$i;
+	$consql .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$consql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+	$consql .= ',telemetria_listado_sensores_revision_grupo.SensoresRevisionGrupo_'.$i;
+	$consql .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
+	$consql .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 /*****************************/
-$SIS_query = 'idTelemetria'.$consql;
-$SIS_join  = '';
-$SIS_where = 'idTelemetria='.$idTelemetria;
+$SIS_query = '
+telemetria_listado.idTelemetria'.$consql;
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_grupo`           ON telemetria_listado_sensores_grupo.idTelemetria          = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_revision_grupo`  ON telemetria_listado_sensores_revision_grupo.idTelemetria = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria         = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria';
+$SIS_where = 'telemetria_listado.idTelemetria ='.$idTelemetria;
 $rowEquipo = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
 
 /*************************************************************/

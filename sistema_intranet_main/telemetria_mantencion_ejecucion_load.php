@@ -12,13 +12,13 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 
 //numero sensores equipo
-$N_Maximo_Sensores = 72; 
-//Traigo todos los valores	
+$N_Maximo_Sensores = 72;
+//Traigo todos los valores
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',telemetria_listado.SensoresNombre_'.$i.' AS Tel_Sensor_Nombre_'.$i;
-	$subquery .= ',telemetria_listado.SensoresMant_'.$i.' AS Tel_Sensor_Valor_'.$i;
-	$subquery .= ',telemetria_listado.SensoresTipo_'.$i.' AS Tel_Sensor_Tipo_'.$i;
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i.' AS Tel_Sensor_Nombre_'.$i;
+	$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i.' AS Tel_Sensor_Valor_'.$i;
+	$subquery .= ',telemetria_listado_sensores_tipo.SensoresTipo_'.$i.' AS Tel_Sensor_Tipo_'.$i;
 
 	$subquery .= ',telemetria_mantencion_matriz.PuntoNombre_'.$i.' AS Matriz_Punto_'.$i;
 	$subquery .= ',telemetria_mantencion_matriz.SensoresTipo_'.$i.' AS Matriz_Sensor_Tipo_'.$i;
@@ -28,62 +28,35 @@ for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 }
 
 // consulto los datos
-$query = "SELECT  
+$SIS_query = '
 telemetria_listado.Nombre AS Tel_Equipo,
 telemetria_listado.Identificador AS Tel_Identificador,
 telemetria_listado.FechaMantencionIni AS Tel_Fecha,
 telemetria_listado.HoraMantencionIni AS Tel_Hora,
 
 telemetria_mantencion_matriz.Nombre AS Matriz_Nombre,
-telemetria_mantencion_matriz.cantPuntos AS Matriz_Puntos
+telemetria_mantencion_matriz.cantPuntos AS Matriz_Puntos'.$subquery;
+$SIS_join  = '
+LEFT JOIN `telemetria_mantencion_matriz`            ON telemetria_mantencion_matriz.idMatriz                 = telemetria_listado.idMatriz
+LEFT JOIN `telemetria_listado_sensores_nombre`      ON telemetria_listado_sensores_nombre.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria   = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_tipo`        ON telemetria_listado_sensores_tipo.idTelemetria         = telemetria_listado.idTelemetria';
+$SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['verify'];
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-".$subquery."
-
-FROM `telemetria_listado`
-LEFT JOIN `telemetria_mantencion_matriz` ON telemetria_mantencion_matriz.idMatriz = telemetria_listado.idMatriz
-
-WHERE idTelemetria = ".$_GET['verify'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-//Se traen todos los tipos
-$arrTipos = array();
-$query = "SELECT 
+/*******************************************************/
+// consulto los datos
+$SIS_query = '
 telemetria_listado_sensores.idSensores,
 telemetria_listado_sensores.Nombre,
-core_sensores_funciones.Nombre AS SensorFuncion
+core_sensores_funciones.Nombre AS SensorFuncion';
+$SIS_join  = 'LEFT JOIN `core_sensores_funciones` ON core_sensores_funciones.idSensorFuncion = telemetria_listado_sensores.idSensorFuncion';
+$SIS_where = '';
+$SIS_order = 'idSensores ASC';
+$arrTipos = array();
+$arrTipos = db_select_array (false, $SIS_query, 'telemetria_listado_sensores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipos');
 
-FROM `telemetria_listado_sensores`
-LEFT JOIN `core_sensores_funciones` ON core_sensores_funciones.idSensorFuncion = telemetria_listado_sensores.idSensorFuncion
-ORDER BY idSensores ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrTipos,$row );
-}
+/*******************************************************/
 //Variable Ubicacion
 //Cargamos la ubicacion original
 $original = "telemetria_mantencion_ejecucion.php";
@@ -91,12 +64,9 @@ $location = $original;
 //Se agregan ubicaciones
 $location .='?pagina='.$_GET['pagina'];
 if(isset($_GET['Identificador']) && $_GET['Identificador']!=''){  $location .= "&Identificador=".$_GET['Identificador'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $location .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){                $location .= "&Nombre=".$_GET['Nombre'];}
 
 ?>
-
-
-
 
 	<section class="invoice">
 
@@ -140,7 +110,7 @@ if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $location .= "&Nombre
 						</tr>
 					</thead>
 					<tbody>
-						<?php 
+						<?php
 						$pass_points = 0;
 						for ($i = 1; $i <= $rowdata['Matriz_Puntos']; $i++) { ?>
 							<tr class="odd">
@@ -156,23 +126,19 @@ if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $location .= "&Nombre
 									if($rowdata['Matriz_Sensor_Valor_'.$i]<$rowdata['Tel_Sensor_Valor_'.$i]){
 										echo '<span style="color:#55BD55">Pasa</span>';
 										$pass_points++;
-									}else{		
+									}else{
 										echo '<span style="color:#FF3A00">No Pasa</span>';
 									}
 									?>
 								</td>
 							</tr>
 						<?php } ?>
-						
 
 					</tbody>
 				</table>
 
 			</div>
 		</div>
-		
-		
-		
 
 		<div class="clearfix"></div>
 
@@ -192,8 +158,5 @@ if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $location .= "&Nombre
 
 			</div>
 		</div>
-		  
+
 	</section>
-
-
-

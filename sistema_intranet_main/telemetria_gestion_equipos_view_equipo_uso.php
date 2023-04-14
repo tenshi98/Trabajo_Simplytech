@@ -24,30 +24,53 @@ if(isset($_GET['data_3'])&&isset($_GET['data_4'])&&isset($_GET['data_5'])&&isset
 		return $db_con;
 	}
 	//ejecuto conexion
-	$dbConn = conectarDB($_GET['data_3'], $_GET['data_4'], $_GET['data_5'], $_GET['data_6']);	
-		
+	$dbConn = conectarDB($_GET['data_3'], $_GET['data_4'], $_GET['data_5'], $_GET['data_6']);
+
 }
 
+/*************************************************************************/
+// consulto los datos// consulto los datos
+$SIS_query = 'Nombre,cantSensores, Direccion_img';
+$SIS_join  = '';
+$SIS_where = 'idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+/*************************************************************************/
+//Se arma la consulta
+$cadena = '';
+for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+	$cadena .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$cadena .= ',telemetria_listado_sensores_uso.SensoresUso_'.$i;
+	$cadena .= ',telemetria_listado_sensores_uso_fecha.SensoresFechaUso_'.$i;
+	$cadena .= ',telemetria_listado_sensores_accion_c.SensoresAccionC_'.$i;
+	$cadena .= ',telemetria_listado_sensores_accion_t.SensoresAccionT_'.$i;
+	$cadena .= ',telemetria_listado_sensores_accion_med_c.SensoresAccionMedC_'.$i;
+	$cadena .= ',telemetria_listado_sensores_accion_med_t.SensoresAccionMedT_'.$i;
+	$cadena .= ',telemetria_listado_sensores_accion_alerta.SensoresAccionAlerta_'.$i;
+}
 
 // consulto los datos
-$query = "SELECT Nombre,cantSensores, Direccion_img
-FROM `telemetria_listado`
-WHERE idTelemetria = ".simpleDecode($_GET['view'], fecha_actual());
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query = 'telemetria_listado.Nombre'.$cadena;
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_uso`             ON telemetria_listado_sensores_uso.idTelemetria            = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_uso_fecha`       ON telemetria_listado_sensores_uso_fecha.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_c`        ON telemetria_listado_sensores_accion_c.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_t`        ON telemetria_listado_sensores_accion_t.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_med_c`    ON telemetria_listado_sensores_accion_med_c.idTelemetria   = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_med_t`    ON telemetria_listado_sensores_accion_med_t.idTelemetria   = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_alerta`   ON telemetria_listado_sensores_accion_alerta.idTelemetria  = telemetria_listado.idTelemetria';
+$SIS_where = 'telemetria_listado.idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
+$rowMed = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
+/*************************************************************************/
+//Cuento si hay sensores activos
+$rowcount = 0;
+for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+	if(isset($rowMed['SensoresUso_'.$i])&&$rowMed['SensoresUso_'.$i]==1){
+		$rowcount++;
+	}
+}
 
 ?>
 
@@ -78,44 +101,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 						<?php
-						//Se arma la consulta
-						$aa = '';
-						for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
-							$aa .= ',SensoresNombre_'.$i;
-							$aa .= ',SensoresUso_'.$i;
-							$aa .= ',SensoresFechaUso_'.$i;
-							$aa .= ',SensoresAccionC_'.$i;
-							$aa .= ',SensoresAccionT_'.$i;
-							$aa .= ',SensoresAccionMedC_'.$i;
-							$aa .= ',SensoresAccionMedT_'.$i;
-							$aa .= ',SensoresAccionAlerta_'.$i;
-						}
-						// consulto los datos
-						$query = "SELECT Nombre
-						".$aa."
-						FROM `telemetria_listado`
-						WHERE idTelemetria = ".simpleDecode($_GET['view'], fecha_actual());
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-											
-						}
-						$rowMed = mysqli_fetch_assoc ($resultado);
-						//Cuento si hay sensores activos
-						$rowcount = 0;
-						for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
-							if(isset($rowMed['SensoresUso_'.$i])&&$rowMed['SensoresUso_'.$i]==1){
-								$rowcount++;
-							}
-						}
 						//verifico los resultados y muestro la tabla
 						if(isset($rowcount)&&$rowcount!=0){ ?>
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -124,7 +109,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 										<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Sensores Supervisados</h5>
 									</header>
 									<div class="table-responsive">
-				
+
 										<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 											<thead>
 												<tr role="row">
@@ -140,25 +125,24 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 												</tr>
 											</thead>
 											<tbody role="alert" aria-live="polite" aria-relevant="all">
-												<?php for ($i = 1; $i <= $rowdata['cantSensores']; $i++) { 
+												<?php for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 													//Se verifica si el sensor esta habilitado para la supervision
 													if(isset($rowMed['SensoresUso_'.$i])&&$rowMed['SensoresUso_'.$i]==1){ ?>
 														<tr class="odd">
 															<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>
 															<td><?php echo fecha_estandar($rowMed['SensoresFechaUso_'.$i]); ?></td>
-															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionC_'.$i]); ?></td>	
-															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionMedC_'.$i]); ?></td>	
+															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionC_'.$i]); ?></td>
+															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionMedC_'.$i]); ?></td>
 															<td><?php echo porcentaje($rowMed['SensoresAccionMedC_'.$i]/$rowMed['SensoresAccionC_'.$i]); ?></td>
-															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionT_'.$i]/3600); ?></td>	
-															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionMedT_'.$i]/3600); ?></td>	
+															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionT_'.$i]/3600); ?></td>
+															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionMedT_'.$i]/3600); ?></td>
 															<td><?php echo porcentaje($rowMed['SensoresAccionMedT_'.$i]/$rowMed['SensoresAccionT_'.$i]); ?></td>
-															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionAlerta_'.$i]); ?></td>	
+															<td><?php echo Cantidades_decimales_justos($rowMed['SensoresAccionAlerta_'.$i]); ?></td>
 														</tr>
-													<?php 	
+													<?php
 													}
 												} ?>
-														
-							 
+
 											</tbody>
 										</table>
 									</div>
@@ -177,11 +161,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				</div>
 			</div>
-			
-			
-			
-			
-			
+
         </div>
 	</div>
 </div>

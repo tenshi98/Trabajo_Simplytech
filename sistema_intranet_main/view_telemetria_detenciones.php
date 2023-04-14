@@ -37,12 +37,12 @@ if (validarNumero($_GET['view'])){
 // Se traen todos los datos de la detencion
 $SIS_query = '
 telemetria_listado_error_detenciones.idTelemetria,
-telemetria_listado_error_detenciones.Fecha, 
-telemetria_listado_error_detenciones.Hora, 
+telemetria_listado_error_detenciones.Fecha,
+telemetria_listado_error_detenciones.Hora,
 telemetria_listado_error_detenciones.Tiempo,
-telemetria_listado_error_detenciones.GeoLatitud, 
-telemetria_listado_error_detenciones.GeoLongitud, 
-telemetria_listado_error_detenciones.idTabla, 
+telemetria_listado_error_detenciones.GeoLatitud,
+telemetria_listado_error_detenciones.GeoLongitud,
+telemetria_listado_error_detenciones.idTabla,
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.cantSensores';
 $SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_detenciones.idTelemetria';
@@ -52,13 +52,16 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_error_detencio
 //Se crea cadena dependiendo de la cantidad de sensores existentes
 $subquery = '';
 for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
-	$subquery .= ',Sensor_'.$i;
-	$subquery .= ',SensoresNombre_'.$i;
-	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'].'.Sensor_'.$i;
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 // Se traen todos los datos de las mediciones
-$SIS_query = 'idTabla'.$subquery;
-$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'].'.idTelemetria';
+$SIS_query = 'telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'].'.idTabla'.$subquery;
+$SIS_join  = '
+LEFT JOIN `telemetria_listado`                  ON telemetria_listado.idTelemetria                  = telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'].'.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria  = telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'].'.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria  = telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'].'.idTelemetria';
 $SIS_where = 'telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'].'.idTabla ='.$rowdata['idTabla'];
 $rowMedicion = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$rowdata['idTelemetria'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowMedicion');
 
@@ -101,8 +104,7 @@ foreach ($arrUnimed as $sen) { $arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'
 
 			</div>
 		</div>
-		
-		
+
 	</div>
 </div>
 

@@ -24,8 +24,8 @@ if(isset($_GET['data_3'])&&isset($_GET['data_4'])&&isset($_GET['data_5'])&&isset
 		return $db_con;
 	}
 	//ejecuto conexion
-	$dbConn = conectarDB($_GET['data_3'], $_GET['data_4'], $_GET['data_5'], $_GET['data_6']);	
-		
+	$dbConn = conectarDB($_GET['data_3'], $_GET['data_4'], $_GET['data_5'], $_GET['data_6']);
+
 }
 
 // consulto los datos
@@ -55,18 +55,29 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 
 /****************************************************************/
 //Se arma la consulta
-$aa = '';
+$cadena = '';
 for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
-	$aa .= ',SensoresNombre_'.$i;
-	$aa .= ',SensoresGrupo_'.$i;
-	$aa .= ',SensoresUniMed_'.$i;
-	$aa .= ',SensoresMedActual_'.$i;
-	$aa .= ',SensoresActivo_'.$i;
+	$cadena .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$cadena .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+	$cadena .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+	$cadena .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	$cadena .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 }
 // consulto los datos
-$SIS_query = 'Nombre,id_Sensores,cantSensores,LastUpdateFecha,LastUpdateHora,GeoVelocidad'.$aa;
-$SIS_join  = '';
-$SIS_where = 'idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
+$SIS_query = '
+telemetria_listado.Nombre,
+telemetria_listado.id_Sensores,
+telemetria_listado.cantSensores,
+telemetria_listado.LastUpdateFecha,
+telemetria_listado.LastUpdateHora,
+telemetria_listado.GeoVelocidad'.$cadena;
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_nombre`      ON telemetria_listado_sensores_nombre.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_grupo`       ON telemetria_listado_sensores_grupo.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`      ON telemetria_listado_sensores_unimed.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`      ON telemetria_listado_sensores_activo.idTelemetria      = telemetria_listado.idTelemetria';
+$SIS_where = 'telemetria_listado.idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
 $rowMed = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowMed');
 
 /****************************************************************/
@@ -79,7 +90,7 @@ $unimed = array();
 foreach ($arrUnimed as $sen) {
 	$unimed[$sen['idUniMed']]['Nombre'] = $sen['Nombre'];
 }
-						
+
 /****************************************************************/
 //Se consultan datos
 $arrGrupo = array();
@@ -95,17 +106,18 @@ foreach ($arrGrupos as $sen) {
 $N_Maximo_Sensores = $rowdata['cantSensores'];
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 // Se trae un listado con todas las alertas
 $SIS_query = '
-telemetria_listado_errores_999.idErrores, 
-telemetria_listado_errores_999.Descripcion, 
-telemetria_listado_errores_999.Fecha,  
-telemetria_listado_errores_999.Hora,  
-telemetria_listado_errores_999.Valor, 
+telemetria_listado_errores_999.idErrores,
+telemetria_listado_errores_999.Descripcion,
+telemetria_listado_errores_999.Fecha,
+telemetria_listado_errores_999.Hora,
+telemetria_listado_errores_999.Valor,
 telemetria_listado_errores_999.Sensor'.$subquery;
-$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores_999.idTelemetria';
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria  = telemetria_listado_errores_999.idTelemetria';
 $SIS_where = 'telemetria_listado_errores_999.idTelemetria = '.simpleDecode($_GET['view'], fecha_actual());
 $SIS_order = 'telemetria_listado_errores_999.idErrores DESC LIMIT 20';
 $arrAlertas999 = array();
@@ -187,7 +199,6 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 							<strong>Tiempo Fuera Linea Maximo : </strong><?php echo $rowdata['TiempoFueraLinea']; ?> Horas<br/>
 						</p>
 
-						
 					</div>
 					<div class="clearfix"></div>
 
@@ -224,7 +235,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 												<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>
 												<td><?php echo $grupo[$rowMed['SensoresGrupo_'.$i]]['Nombre']; ?></td>
 												<td><?php echo fecha_estandar($rowMed['LastUpdateFecha']).' - '.$rowMed['LastUpdateHora'].' hrs'; ?></td>
-												<td><?php 
+												<td><?php
 												if(isset($rowMed['SensoresMedActual_'.$i])&&$rowMed['SensoresMedActual_'.$i]<99900){
 													echo Cantidades_decimales_justos($rowMed['SensoresMedActual_'.$i]).' '.$unimed[$rowMed['SensoresUniMed_'.$i]]['Nombre'];
 												}else{
@@ -241,8 +252,6 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 				</div>
 			<?php } ?>
 
-			
-				
 			<div class="tab-pane fade" id="flinea">
 				<div class="wmd-panel">
 					<div class="table-responsive">
@@ -260,7 +269,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 									<th>Fecha Termino</th>
 									<th>Hora Termino</th>
 									<th>Tiempo</th>
-									<th>Ubicacion</th> 
+									<th>Ubicacion</th>
 								</tr>
 							</thead>
 
@@ -281,7 +290,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 								<?php } ?>
 							</tbody>
 						</table>
-	
+
 					</div>
 				</div>
 			</div>
@@ -296,7 +305,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 									<th>Fecha</th>
 									<th>Hora</th>
 									<th>Valor</th>
-									<th>Ubicacion</th> 
+									<th>Ubicacion</th>
 								</tr>
 							</thead>
 
@@ -316,7 +325,7 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 								<?php } ?>
 							</tbody>
 						</table>
-	
+
 					</div>
 				</div>
 			</div>
@@ -343,11 +352,11 @@ $arrGPS0 = db_select_array (false, $SIS_query, 'telemetria_listado_historial_gps
 								<?php } ?>
 							</tbody>
 						</table>
-	
+
 					</div>
 				</div>
 			</div>
-			
+
         </div>
 	</div>
 </div>

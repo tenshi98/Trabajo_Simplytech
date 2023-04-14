@@ -32,8 +32,8 @@ core_ubicacion_comunas.Nombre AS Comuna,
 telemetria_listado.Direccion';
 $SIS_join  = '
 LEFT JOIN `telemetria_listado`                   ON telemetria_listado.idTelemetria                   = backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTelemetria
-LEFT JOIN `telemetria_listado_sensores_nombre`   ON telemetria_listado_sensores_nombre.idTelemetria   = telemetria_listado.idTelemetria
-LEFT JOIN `telemetria_listado_sensores_unimed`   ON telemetria_listado_sensores_unimed.idTelemetria   = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_nombre`   ON telemetria_listado_sensores_nombre.idTelemetria   = backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`   ON telemetria_listado_sensores_unimed.idTelemetria   = backup_telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTelemetria
 LEFT JOIN `telemetria_listado_unidad_medida`     ON telemetria_listado_unidad_medida.idUniMed         = telemetria_listado_sensores_unimed.SensoresUniMed_'.simpleDecode($_GET['sensorn'], fecha_actual()).'
 LEFT JOIN `core_ubicacion_ciudad`                ON core_ubicacion_ciudad.idCiudad                    = telemetria_listado.idCiudad
 LEFT JOIN `core_ubicacion_comunas`               ON core_ubicacion_comunas.idComuna                   = telemetria_listado.idComuna';

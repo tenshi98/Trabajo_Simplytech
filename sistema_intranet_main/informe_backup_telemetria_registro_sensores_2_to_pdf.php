@@ -61,10 +61,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.Sensor_'.$sensorn.' AS SensorValue,
 	telemetria_listado_unidad_medida.Nombre AS Unimed';
 	$SIS_join  = '
-	LEFT JOIN `telemetria_listado`                   ON telemetria_listado.idTelemetria                   = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria
-	LEFT JOIN `telemetria_listado_sensores_nombre`   ON telemetria_listado_sensores_nombre.idTelemetria   = telemetria_listado.idTelemetria
-	LEFT JOIN `telemetria_listado_sensores_grupo`    ON telemetria_listado_sensores_grupo.idTelemetria    = telemetria_listado.idTelemetria
-	LEFT JOIN `telemetria_listado_sensores_unimed`   ON telemetria_listado_sensores_unimed.idTelemetria   = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_nombre`   ON telemetria_listado_sensores_nombre.idTelemetria   = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_grupo`    ON telemetria_listado_sensores_grupo.idTelemetria    = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_unimed`   ON telemetria_listado_sensores_unimed.idTelemetria   = backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria
 	LEFT JOIN `telemetria_listado_unidad_medida`     ON telemetria_listado_unidad_medida.idUniMed         = telemetria_listado_sensores_unimed.SensoresUniMed_'.$sensorn;
 	$SIS_order = 'backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.FechaSistema ASC, backup_telemetria_listado_tablarelacionada_'.$idTelemetria.'.HoraSistema ASC LIMIT 10000';
 	$arrEquipos = array();

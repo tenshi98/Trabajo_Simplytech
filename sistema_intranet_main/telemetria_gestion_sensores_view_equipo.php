@@ -15,7 +15,7 @@ require_once 'core/Web.Header.Views.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 // consulto los datos
-$query = "SELECT 
+$SIS_query = '
 telemetria_listado.Nombre,
 telemetria_listado.cantSensores,
 telemetria_listado.id_Sensores,
@@ -23,28 +23,14 @@ telemetria_listado.Direccion_img,
 telemetria_listado.TiempoFueraLinea,
 core_ubicacion_ciudad.Nombre AS Ciudad,
 core_ubicacion_comunas.Nombre AS Comuna,
-telemetria_listado.Direccion
-
-FROM `telemetria_listado`
+telemetria_listado.Direccion';
+$SIS_join  = '
 LEFT JOIN `core_ubicacion_ciudad`       ON core_ubicacion_ciudad.idCiudad        = telemetria_listado.idCiudad
-LEFT JOIN `core_ubicacion_comunas`      ON core_ubicacion_comunas.idComuna       = telemetria_listado.idComuna
+LEFT JOIN `core_ubicacion_comunas`      ON core_ubicacion_comunas.idComuna       = telemetria_listado.idComuna';
+$SIS_where = 'telemetria_listado.idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-WHERE idTelemetria = ".simpleDecode($_GET['view'], fecha_actual());
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
+/*******************************************************/
 //Se traen todas las unidades de medida
 $arrUnimed = array();
 $arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrUnimed');
@@ -53,6 +39,65 @@ $arrFinalUnimed = array();
 foreach ($arrUnimed as $sen) {
 	$arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'];
 }
+
+/*******************************************************/
+if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
+
+	$subquery = '';
+	for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+		$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+		$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+		$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
+		$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	}
+	// consulto los datos
+	$SIS_query = '
+	telemetria_listado.Nombre,
+	telemetria_listado.id_Sensores,
+	telemetria_listado.LastUpdateFecha,
+	telemetria_listado.LastUpdateHora,
+	telemetria_listado.GeoVelocidad'.$subquery;
+	$SIS_join  = '
+	LEFT JOIN `telemetria_listado_sensores_nombre`      ON telemetria_listado_sensores_nombre.idTelemetria      = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_unimed`      ON telemetria_listado_sensores_unimed.idTelemetria      = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_activo`      ON telemetria_listado_sensores_activo.idTelemetria      = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria';
+	$SIS_where = 'telemetria_listado.idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
+	$rowMed = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowMed');
+
+}
+
+/*******************************************************/
+$subquery = '';
+for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+}
+// consulto los datos
+$SIS_query = '
+telemetria_listado_errores.idErrores,
+telemetria_listado_errores.Descripcion,
+telemetria_listado_errores.Fecha,
+telemetria_listado_errores.Hora,
+telemetria_listado_errores.Valor,
+telemetria_listado_errores.Valor_min,
+telemetria_listado_errores.Valor_max,
+telemetria_listado_errores.Sensor'.$subquery;
+$SIS_join  = 'LEFT JOIN `telemetria_listado_sensores_unimed` ON telemetria_listado_sensores_unimed.idTelemetria = telemetria_listado_errores.idTelemetria';
+$SIS_where = 'telemetria_listado_errores.idTelemetria = '.simpleDecode($_GET['view'], fecha_actual()).'
+AND telemetria_listado_errores.idTipo!=999
+AND telemetria_listado_errores.Valor<99900';
+$SIS_order = 'telemetria_listado_errores.idErrores DESC LIMIT 20';
+$arrAlertas = array();
+$arrAlertas = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAlertas');
+
+/*******************************************************/
+// consulto los datos
+$SIS_query = 'idFueraLinea, Fecha_inicio, Hora_inicio, Fecha_termino, Hora_termino, Tiempo';
+$SIS_join  = '';
+$SIS_where = 'idTelemetria ='.simpleDecode($_GET['view'], fecha_actual());
+$SIS_order = 'idFueraLinea DESC LIMIT 20';
+$arrFlinea = array();
+$arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera_linea', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrFlinea');
 
 ?>
 
@@ -99,8 +144,6 @@ foreach ($arrUnimed as $sen) {
 							<?php } ?>
 							<strong>Tiempo Fuera Linea Maximo : </strong><?php echo $rowdata['TiempoFueraLinea']; ?> Horas<br/>
 						</p>
-
-						
 					</div>
 					<div class="clearfix"></div>
 
@@ -110,45 +153,11 @@ foreach ($arrUnimed as $sen) {
 			<?php if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){ ?>
 				<div class="tab-pane fade" id="mediciones">
 					<div class="wmd-panel">
-						<?php
-						
-						//numero sensores equipo
-						$N_Maximo_Sensores = 72;
-						$subquery = '';
-						for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-							$subquery .= ',SensoresNombre_'.$i;
-							$subquery .= ',SensoresUniMed_'.$i;
-							$subquery .= ',SensoresActivo_'.$i;
-							$subquery .= ',SensoresMedActual_'.$i;
-						}
-						// consulto los datos
-						$query = "SELECT Nombre,id_Sensores,cantSensores,LastUpdateFecha,LastUpdateHora,
-						GeoVelocidad
-						".$subquery."
-
-						FROM `telemetria_listado`
-						WHERE idTelemetria = ".simpleDecode($_GET['view'], fecha_actual());
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-											
-						}
-						$rowMed = mysqli_fetch_assoc ($resultado);
-						
-						?>
 
 						<div class="table-responsive">
 
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.simpleDecode($_GET['view'], fecha_actual()).'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ubicacion</a>
+								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.simpleDecode($_GET['view'], fecha_actual()).'&cantSensores='.$rowdata['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ubicacion</a>
 								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_2.php?view='.simpleDecode($_GET['view'], fecha_actual()); ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Sensores</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
@@ -165,14 +174,14 @@ foreach ($arrUnimed as $sen) {
 									<tbody role="alert" aria-live="polite" aria-relevant="all">
 										<?php for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 											//solo sensores activos
-											if(isset($rowMed['SensoresActivo_'.$i])&&$rowMed['SensoresActivo_'.$i]==1){ 
+											if(isset($rowMed['SensoresActivo_'.$i])&&$rowMed['SensoresActivo_'.$i]==1){
 												$unimed = ' '.$arrFinalUnimed[$rowMed['SensoresUniMed_'.$i]];
 												?>
 												<tr class="odd">
 													<td><?php echo 's'.$i ?></td>
 													<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>
 													<td><?php echo fecha_estandar($rowMed['LastUpdateFecha']).' - '.$rowMed['LastUpdateHora'].' hrs'; ?></td>
-													<td><?php 
+													<td><?php
 													if(isset($rowMed['SensoresMedActual_'.$i])&&$rowMed['SensoresMedActual_'.$i]<99900){
 														echo Cantidades_decimales_justos($rowMed['SensoresMedActual_'.$i]).$unimed;
 													}else{
@@ -189,59 +198,9 @@ foreach ($arrUnimed as $sen) {
 					</div>
 				</div>
 			<?php } ?>
-			
 
-			
-			<div class="tab-pane fade" id="alertas">
+				<div class="tab-pane fade" id="alertas">
 					<div class="wmd-panel">
-						<?php
-						// Se trae un listado con todas las alertas
-						$arrAlertas = array();
-						$query = "SELECT  
-						telemetria_listado_errores.idErrores, 
-						telemetria_listado_errores.Descripcion, 
-						telemetria_listado_errores.Fecha,  
-						telemetria_listado_errores.Hora,  
-						telemetria_listado_errores.Valor, 
-						telemetria_listado_errores.Valor_min, 
-						telemetria_listado_errores.Valor_max,
-						telemetria_listado_errores.Sensor,
-						SensoresUniMed_1, SensoresUniMed_2, SensoresUniMed_3, SensoresUniMed_4, SensoresUniMed_5, 
-						SensoresUniMed_6, SensoresUniMed_7, SensoresUniMed_8, SensoresUniMed_9, SensoresUniMed_10, 
-						SensoresUniMed_11, SensoresUniMed_12, SensoresUniMed_13, SensoresUniMed_14, SensoresUniMed_15, 
-						SensoresUniMed_16, SensoresUniMed_17, SensoresUniMed_18, SensoresUniMed_19, SensoresUniMed_20, 
-						SensoresUniMed_21, SensoresUniMed_22, SensoresUniMed_23, SensoresUniMed_24, SensoresUniMed_25, 
-						SensoresUniMed_26, SensoresUniMed_27, SensoresUniMed_28, SensoresUniMed_29, SensoresUniMed_30, 
-						SensoresUniMed_31, SensoresUniMed_32, SensoresUniMed_33, SensoresUniMed_34, SensoresUniMed_35, 
-						SensoresUniMed_36, SensoresUniMed_37, SensoresUniMed_38, SensoresUniMed_39, SensoresUniMed_40, 
-						SensoresUniMed_41, SensoresUniMed_42, SensoresUniMed_43, SensoresUniMed_44, SensoresUniMed_45, 
-						SensoresUniMed_46, SensoresUniMed_47, SensoresUniMed_48, SensoresUniMed_49, SensoresUniMed_50
-						
-						FROM `telemetria_listado_errores`
-						LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria
-						WHERE telemetria_listado_errores.idTelemetria = ".simpleDecode($_GET['view'], fecha_actual())."
-						AND telemetria_listado_errores.idTipo!='999'
-						AND telemetria_listado_errores.Valor<'99900'
-						ORDER BY telemetria_listado_errores.idErrores DESC
-						LIMIT 20";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-											
-						}
-						while ( $row = mysqli_fetch_assoc ($resultado)){
-						array_push( $arrAlertas,$row );
-						}
-						
-						?>
 
 						<div class="table-responsive">
 
@@ -249,8 +208,7 @@ foreach ($arrUnimed as $sen) {
 								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_2.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
-							
-							
+
 							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 								<thead>
 									<tr role="row">
@@ -260,7 +218,7 @@ foreach ($arrUnimed as $sen) {
 										<th>Valor</th>
 										<th>Min</th>
 										<th>Max</th>
-										<th>Ubicacion</th> 
+										<th>Ubicacion</th>
 									</tr>
 								</thead>
 
@@ -284,39 +242,13 @@ foreach ($arrUnimed as $sen) {
 									<?php } ?>
 								</tbody>
 							</table>
-	
+
 						</div>
 					</div>
 				</div>
 
 				<div class="tab-pane fade" id="flinea">
 					<div class="wmd-panel">
-						<?php
-						// Se trae un listado con todas las fuera de linea
-						$arrFlinea = array();
-						$query = "SELECT  idFueraLinea, Fecha_inicio, Hora_inicio, Fecha_termino, Hora_termino, Tiempo
-
-						FROM `telemetria_listado_error_fuera_linea`
-						WHERE idTelemetria = ".simpleDecode($_GET['view'], fecha_actual())."
-						ORDER BY idFueraLinea DESC
-						LIMIT 20";
-						//Consulta
-						$resultado = mysqli_query ($dbConn, $query);
-						//Si ejecuto correctamente la consulta
-						if(!$resultado){
-							//Genero numero aleatorio
-							$vardata = genera_password(8,'alfanumerico');
-
-							//Guardo el error en una variable temporal
-							$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-							$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-											
-						}
-						while ( $row = mysqli_fetch_assoc ($resultado)){
-						array_push( $arrFlinea,$row );
-						}
-						?>
 
 						<div class="table-responsive">
 
@@ -324,8 +256,7 @@ foreach ($arrUnimed as $sen) {
 								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_2.php?idTelemetria='.simpleDecode($_GET['view'], fecha_actual()).'&submit_filter=Filtrar'; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Abrir Reporte</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
-							
-							
+
 							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 								<thead>
 									<tr role="row">
@@ -334,7 +265,7 @@ foreach ($arrUnimed as $sen) {
 										<th>Fecha Termino</th>
 										<th>Hora Termino</th>
 										<th>Tiempo</th>
-										<th>Ubicacion</th> 
+										<th>Ubicacion</th>
 									</tr>
 								</thead>
 
@@ -355,12 +286,11 @@ foreach ($arrUnimed as $sen) {
 									<?php } ?>
 								</tbody>
 							</table>
-	
+
 						</div>
 					</div>
 				</div>
-			
-			
+
         </div>
 	</div>
 </div>

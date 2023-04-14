@@ -126,6 +126,7 @@ function crear_data($limite, $idTelemetria, $f_inicio, $f_termino, $dbConn ) {
 	telemetria_listado_tablarelacionada_'.$idTelemetria.'.GeoDireccion AS GeoDireccionEquipo,
 	telemetria_listado_tablarelacionada_'.$idTelemetria.'.GeoMovimiento AS GeoMovimientoEquipo'.$subquery;
 	$SIS_join  = '
+	LEFT JOIN `telemetria_listado`                  ON telemetria_listado.idTelemetria                   = telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria
 	LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria   = telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria
 	LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria    = telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria
 	LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria   = telemetria_listado_tablarelacionada_'.$idTelemetria.'.idTelemetria';

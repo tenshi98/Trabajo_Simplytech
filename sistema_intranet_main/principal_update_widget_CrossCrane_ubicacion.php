@@ -55,10 +55,10 @@ $arrZonas = db_select_array (false, 'idZona, Nombre', 'telemetria_zonas', '', ''
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresNombre_'.$i;
-	$subquery .= ',SensoresMedActual_'.$i;
-	$subquery .= ',SensoresUniMed_'.$i;
-	$subquery .= ',SensoresActivo_'.$i;
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 }
 //Listar los equipos
 $SIS_query = '
@@ -83,7 +83,11 @@ telemetria_listado.idUbicacion,
 telemetria_listado.cantSensores,
 telemetria_listado.id_Sensores
 '.$subquery;
-$SIS_join  = '';
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_nombre`      ON telemetria_listado_sensores_nombre.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria   = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`      ON telemetria_listado_sensores_unimed.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`      ON telemetria_listado_sensores_activo.idTelemetria       = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idEstado = 1';            //solo equipos activos
 $SIS_where.= ' AND telemetria_listado.id_Geo = '.$id_Geo;  //solo los equipos que tengan el seguimiento activado
 $SIS_where.= ' AND telemetria_listado.idTab = 6';          //CrossCrane

@@ -14,35 +14,29 @@ require_once 'core/Web.Header.Main.php';
 /**********************************************************************************************************************************/
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
-$aa = '';
+$cadena = '';
 for ($i = 1; $i <= $_GET['cantSensores']; $i++) {
-	$aa .= ',SensoresNombre_'.$i;
-	$aa .= ',SensoresUniMed_'.$i;
-	$aa .= ',SensoresMedActual_'.$i;
-	$aa .= ',SensoresActivo_'.$i;
-}	
-	
-	
-	
-// consulto los datos
-$query = "SELECT GeoLatitud, GeoLongitud, LastUpdateFecha, LastUpdateHora,Nombre,id_Geo
-".$aa."
-FROM `telemetria_listado`
-WHERE idTelemetria = ".$_GET['view'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+	$cadena .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$cadena .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+	$cadena .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	$cadena .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 }
-$rowdata = mysqli_fetch_assoc ($resultado);
+
+// consulto los datos
+$SIS_query = '
+telemetria_listado.GeoLatitud,
+telemetria_listado.GeoLongitud,
+telemetria_listado.LastUpdateFecha,
+telemetria_listado.LastUpdateHora,
+telemetria_listado.Nombre,
+telemetria_listado.id_Geo'.$cadena;
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_nombre`      ON telemetria_listado_sensores_nombre.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`      ON telemetria_listado_sensores_unimed.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`      ON telemetria_listado_sensores_activo.idTelemetria      = telemetria_listado.idTelemetria';
+$SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['view'];
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Se traen todas las unidades de medida
 $arrUnimed = array();
@@ -60,25 +54,24 @@ foreach ($arrUnimed as $sen) {
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Equipo <?php echo $rowdata['Nombre']; ?></h5>
-				
+
 		</header>
         <div class="table-responsive">
 			<?php
 			$explanation  = '<strong>'.fecha_estandar($rowdata['LastUpdateFecha']).' - '.$rowdata['LastUpdateHora'].'</strong><br/>';
-			for ($i = 1; $i <= $_GET['cantSensores']; $i++) { 
+			for ($i = 1; $i <= $_GET['cantSensores']; $i++) {
 				//solo sensores activos
 				if(isset($rowdata['SensoresActivo_'.$i])&&$rowdata['SensoresActivo_'.$i]==1){
-					//se registra la medicion							
+					//se registra la medicion
 					if(isset($rowdata['SensoresMedActual_'.$i])&&$rowdata['SensoresMedActual_'.$i]<99900){$xdata=Cantidades_decimales_justos($rowdata['SensoresMedActual_'.$i]);}else{$xdata='Sin Datos';}
 					$explanation .= '<strong>'.$rowdata['SensoresNombre_'.$i].': </strong>'.$xdata;
 					$explanation .= ' '.$arrFinalUnimed[$rowdata['SensoresUniMed_'.$i]];
 					$explanation .= '<br/>';
 				}
 			}
-								
+
 			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)
 			?>
-			
 
         </div>
 	</div>
@@ -86,11 +79,10 @@ foreach ($arrUnimed as $sen) {
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="#" onclick="history.back()" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
-         
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

@@ -32,20 +32,32 @@ if(!empty($_GET['submit_filter'])){
 $rowdata = db_select_data (false, 'Nombre,cantSensores, Direccion_img', 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Se arma la consulta
-$aa = '';
+$cadena = '';
 for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
-	$aa .= ',SensoresNombre_'.$i;
-	$aa .= ',SensoresUso_'.$i;
-	$aa .= ',SensoresFechaUso_'.$i;
-	$aa .= ',SensoresAccionC_'.$i;
-	$aa .= ',SensoresAccionT_'.$i;
-	$aa .= ',SensoresAccionMedC_'.$i;
-	$aa .= ',SensoresAccionMedT_'.$i;
-	$aa .= ',SensoresAccionAlerta_'.$i;
-	$aa .= ',SensoresActivo_'.$i;
+	$cadena .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$cadena .= ',telemetria_listado_sensores_uso.SensoresUso_'.$i;
+	$cadena .= ',telemetria_listado_sensores_uso_fecha.SensoresFechaUso_'.$i;
+	$cadena .= ',telemetria_listado_sensores_accion_c.SensoresAccionC_'.$i;
+	$cadena .= ',telemetria_listado_sensores_accion_t.SensoresAccionT_'.$i;
+	$cadena .= ',telemetria_listado_sensores_accion_med_c.SensoresAccionMedC_'.$i;
+	$cadena .= ',telemetria_listado_sensores_accion_med_t.SensoresAccionMedT_'.$i;
+	$cadena .= ',telemetria_listado_sensores_accion_alerta.SensoresAccionAlerta_'.$i;
+	$cadena .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 }
 // consulto los datos
-$rowMed = db_select_data (false, 'Nombre'.$aa, 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowMed');
+$SIS_query = 'telemetria_listado.Nombre'.$cadena;
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_nombre`          ON telemetria_listado_sensores_nombre.idTelemetria         = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_uso`             ON telemetria_listado_sensores_uso.idTelemetria            = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_uso_fecha`       ON telemetria_listado_sensores_uso_fecha.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_c`        ON telemetria_listado_sensores_accion_c.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_t`        ON telemetria_listado_sensores_accion_t.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_med_c`    ON telemetria_listado_sensores_accion_med_c.idTelemetria   = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_med_t`    ON telemetria_listado_sensores_accion_med_t.idTelemetria   = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_accion_alerta`   ON telemetria_listado_sensores_accion_alerta.idTelemetria  = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria         = telemetria_listado.idTelemetria';
+$SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['idTelemetria'];
+$rowMed = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowMed');
 
 //Cuento si hay sensores activos
 $rowcount = 0;
@@ -118,8 +130,8 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

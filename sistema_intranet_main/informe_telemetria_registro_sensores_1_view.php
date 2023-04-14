@@ -27,6 +27,7 @@ telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_
 telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.Sensor_'.simpleDecode($_GET['sensorn'], fecha_actual()).' AS SensorValue,
 telemetria_listado_unidad_medida.Nombre AS Unimed';
 $SIS_join  = '
+LEFT JOIN `telemetria_listado`                  ON telemetria_listado.idTelemetria                   = telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTelemetria
 LEFT JOIN `telemetria_listado_sensores_nombre`  ON telemetria_listado_sensores_nombre.idTelemetria   = telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTelemetria
 LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria   = telemetria_listado_tablarelacionada_'.simpleDecode($_GET['idTelemetria'], fecha_actual()).'.idTelemetria
 LEFT JOIN `telemetria_listado_unidad_medida`    ON telemetria_listado_unidad_medida.idUniMed         = telemetria_listado_sensores_unimed.SensoresUniMed_'.simpleDecode($_GET['sensorn'], fecha_actual());

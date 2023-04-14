@@ -89,18 +89,26 @@ $Demanda_HoraTermino    = hora_actual();
 
 //numero sensores equipo
 $N_Maximo_Sensores = 20;
-$subquery_1 = 'Nombre,cantSensores';
+$subquery_1 = '
+telemetria_listado.Nombre,
+telemetria_listado.cantSensores';
 $subquery_2 = 'idTabla';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery_1 .= ',SensoresGrupo_'.$i;
-	$subquery_1 .= ',SensoresNombre_'.$i;
-	$subquery_1 .= ',SensoresMedActual_'.$i;
-	$subquery_1 .= ',SensoresActivo_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 	$subquery_2 .= ',SUM(Sensor_'.$i.') AS Med_'.$i;
 }
 
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_nombre`      ON telemetria_listado_sensores_nombre.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_grupo`       ON telemetria_listado_sensores_grupo.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`      ON telemetria_listado_sensores_activo.idTelemetria      = telemetria_listado.idTelemetria';
+
 //Obtengo los datos
-$rowdata            = db_select_data (false, $subquery_1, 'telemetria_listado', '', 'idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowdata            = db_select_data (false, $subquery_1, 'telemetria_listado', $SIS_join, 'telemetria_listado.idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 $rowConsumoMesHabil = db_select_data (false, $subquery_2, 'telemetria_listado_crossenergy_dia', '', 'idTelemetria='.$X_Puntero.' AND (TimeStamp BETWEEN "'.$Habil_FechaInicio.' '.$Habil_HoraInicio .'" AND "'.$Habil_FechaTermino.' '.$Habil_HoraTermino.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowConsumoMesHabil');
 $rowConsumoMesCurso = db_select_data (false, $subquery_2, 'telemetria_listado_crossenergy_dia', '', 'idTelemetria='.$X_Puntero.' AND (TimeStamp BETWEEN "'.$Curso_FechaInicio.' '.$Curso_HoraInicio .'" AND "'.$Curso_FechaTermino.' '.$Curso_HoraTermino.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowConsumoMesCurso');
 $n_permisos         = db_select_data (false, 'idOpcionesGen_6', 'core_sistemas','', 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
@@ -281,11 +289,9 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 			}
 			//Nombre
 			$arrData[$x]['Name'] = "'".$arrSensores[$x]['Nombre']."'";
-						
+
 		}
 	}
-
-
 
 	//variables
 	$Graphics_xData       = 'var xData = [';
@@ -324,10 +330,10 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 	$Graphics_texts      .= '];';
 	$Graphics_lineColors .= '];';
 	$Graphics_lineDash   .= '];';
-	$Graphics_lineWidth  .= '];';  
-				
-	
+	$Graphics_lineWidth  .= '];';
+
 ?>
+
 <script>
 	window.setTimeout(function () {
 	  window.location.reload();
@@ -422,9 +428,6 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 						<div class="clearfix"></div>
 						<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_crossenergy_03.php?f_inicio='.$Informes_3_FechaInicio.'&f_termino='.$Informes_3_FechaTermino.'&h_inicio='.$Informes_3_HoraInicio.'&h_termino='.$Informes_3_HoraTermino.'&idTelemetria='.$X_Puntero.'&idGrupo='.$idGrupoPotencia.'&submit_filter=Filtrar'; ?>" class="btn btn-default width100" style="margin-bottom:10px;"><i class="fa fa-plus" aria-hidden="true"></i> Ver Mas</a>
 					</div>
-					
-				
-
 
 				</div>
 
@@ -481,10 +484,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 					</div>
 
 				</div>
-				
-				
-			
-				
+
 			</div>
 			<div class="clearfix"></div>
 		</div>

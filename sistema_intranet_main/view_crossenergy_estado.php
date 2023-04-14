@@ -89,20 +89,33 @@ $Demanda_HoraTermino    = hora_actual();
 
 //numero sensores equipo
 $N_Maximo_Sensores = 20;
-$subquery_1 = 'Nombre,cantSensores,idGrupoDespliegue,idGrupoVmonofasico,idGrupoVTrifasico,idGrupoPotencia,
-idGrupoConsumoMesHabil,idGrupoConsumoMesCurso';
+$subquery_1 = '
+telemetria_listado.Nombre,
+telemetria_listado.cantSensores,
+telemetria_listado.idGrupoDespliegue,
+telemetria_listado.idGrupoVmonofasico,
+telemetria_listado.idGrupoVTrifasico,
+telemetria_listado.idGrupoPotencia,
+telemetria_listado.idGrupoConsumoMesHabil,
+telemetria_listado.idGrupoConsumoMesCurso';
 $subquery_2 = 'idTabla';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery_1 .= ',SensoresGrupo_'.$i;
-	$subquery_1 .= ',SensoresUniMed_'.$i;
-	$subquery_1 .= ',SensoresNombre_'.$i;
-	$subquery_1 .= ',SensoresMedActual_'.$i;
-	$subquery_1 .= ',SensoresActivo_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 	$subquery_2 .= ',SUM(Sensor_'.$i.') AS Med_'.$i;
 }
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_nombre`      ON telemetria_listado_sensores_nombre.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_grupo`       ON telemetria_listado_sensores_grupo.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`      ON telemetria_listado_sensores_unimed.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`      ON telemetria_listado_sensores_activo.idTelemetria      = telemetria_listado.idTelemetria';
 
 //Obtengo los datos
-$rowdata            = db_select_data (false, $subquery_1, 'telemetria_listado', '', 'idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowdata            = db_select_data (false, $subquery_1, 'telemetria_listado', $SIS_join, 'telemetria_listado.idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 $rowConsumoMesHabil = db_select_data (false, $subquery_2, 'telemetria_listado_crossenergy_dia', '', 'idTelemetria='.$X_Puntero.' AND (TimeStamp BETWEEN "'.$Habil_FechaInicio.' '.$Habil_HoraInicio .'" AND "'.$Habil_FechaTermino.' '.$Habil_HoraTermino.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowConsumoMesHabil');
 $rowConsumoMesCurso = db_select_data (false, $subquery_2, 'telemetria_listado_crossenergy_dia', '', 'idTelemetria='.$X_Puntero.' AND (TimeStamp BETWEEN "'.$Curso_FechaInicio.' '.$Curso_HoraInicio .'" AND "'.$Curso_FechaTermino.' '.$Curso_HoraTermino.'")', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowConsumoMesCurso');
 $n_permisos         = db_select_data (false, 'idOpcionesGen_6', 'core_sistemas','', 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
@@ -113,10 +126,10 @@ $SIS_where = 'idSistema ='.$_SESSION['usuario']['basic_data']['idSistema'];
 $rowSistema = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowSistema');
 
 //Grupo Sensores
-if(isset($rowdata['idGrupoDespliegue'])&&$rowdata['idGrupoDespliegue']!=''){    $idGrupoDespliegue       = $rowdata['idGrupoDespliegue'];       }else{$idGrupoDespliegue      = 106;}
-if(isset($rowdata['idGrupoVmonofasico'])&&$rowdata['idGrupoVmonofasico']!=''){  $idGrupoVmonofasico      = $rowdata['idGrupoVmonofasico'];      }else{$idGrupoVmonofasico     = 87;}
-if(isset($rowdata['idGrupoVTrifasico'])&&$rowdata['idGrupoVTrifasico']!=''){    $idGrupoVTrifasico       = $rowdata['idGrupoVTrifasico'];       }else{$idGrupoVTrifasico      = 106;}
-if(isset($rowdata['idGrupoPotencia'])&&$rowdata['idGrupoPotencia']!=''){        $idGrupoPotencia         = $rowdata['idGrupoPotencia'];         }else{$idGrupoPotencia        = 99;}
+if(isset($rowdata['idGrupoDespliegue'])&&$rowdata['idGrupoDespliegue']!=''){           $idGrupoDespliegue       = $rowdata['idGrupoDespliegue'];       }else{$idGrupoDespliegue      = 106;}
+if(isset($rowdata['idGrupoVmonofasico'])&&$rowdata['idGrupoVmonofasico']!=''){         $idGrupoVmonofasico      = $rowdata['idGrupoVmonofasico'];      }else{$idGrupoVmonofasico     = 87;}
+if(isset($rowdata['idGrupoVTrifasico'])&&$rowdata['idGrupoVTrifasico']!=''){           $idGrupoVTrifasico       = $rowdata['idGrupoVTrifasico'];       }else{$idGrupoVTrifasico      = 106;}
+if(isset($rowdata['idGrupoPotencia'])&&$rowdata['idGrupoPotencia']!=''){               $idGrupoPotencia         = $rowdata['idGrupoPotencia'];         }else{$idGrupoPotencia        = 99;}
 if(isset($rowdata['idGrupoConsumoMesHabil'])&&$rowdata['idGrupoConsumoMesHabil']!=''){ $idGrupoConsumoMesHabil  = $rowdata['idGrupoConsumoMesHabil'];  }else{$idGrupoConsumoMesHabil = 99;}
 if(isset($rowdata['idGrupoConsumoMesCurso'])&&$rowdata['idGrupoConsumoMesCurso']!=''){ $idGrupoConsumoMesCurso  = $rowdata['idGrupoConsumoMesCurso'];  }else{$idGrupoConsumoMesCurso = 99;}
 
@@ -226,9 +239,6 @@ if($Subquery_2!=''){
 	$SIS_order_2 = 'FechaSistema DESC LIMIT 2';
 }
 
-
-
-
 //Se hace consulta de los graficos
 $arrPotencia = array();
 $arrPotencia = db_select_array (false, 'FechaSistema, HoraSistema'.$Subquery.$Subquery_2, 'telemetria_listado_crossenergy_hora', '', 'idTelemetria = '.$X_Puntero.' AND (FechaSistema BETWEEN "'.$rowSistema['CrossEnergy_PeriodoInicio'].'" AND "'.$rowSistema['CrossEnergy_PeriodoTermino'].'") AND HoraSistema > "'.$rowSistema['CrossEnergy_HorarioInicio'].'" AND HoraSistema < "'.$rowSistema['CrossEnergy_HorarioTermino'].'" GROUP BY TimeStamp', $SIS_order_1, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPotencia');
@@ -311,8 +321,6 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 		}
 	}
 
-
-
 	//variables
 	$Graphics_xData       = 'var xData = [';
 	$Graphics_yData       = 'var yData = [';
@@ -359,8 +367,8 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 	$SIS_where = 'idUniMed='.$Temp_2;
 	$rowUniMed = db_select_data (false, $SIS_query, 'telemetria_listado_unidad_medida', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowUniMed');
 
-
 ?>
+
 <script>
 	window.setTimeout(function () {
 	  window.location.reload();

@@ -41,7 +41,7 @@ for ($i = 1; $i <= $Nsens; $i++) {
 	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Prom';
 	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Min';
 	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Max';
-	$subquery .= ',telemetria_listado.SensoresNombre_'.$i.' AS Sensor_'.$i.'_Nombre';
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i.' AS Sensor_'.$i.'_Nombre';
 }
 
 $SIS_query = '
@@ -77,10 +77,10 @@ LEFT JOIN `variedades_listado`                             ON variedades_listado
 LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idCuarteles   = cross_solicitud_aplicacion_listado_tractores.idCuarteles
 LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                         = cross_solicitud_aplicacion_listado_cuarteles.idZona
 LEFT JOIN `telemetria_listado`                             ON telemetria_listado.idTelemetria                            = cross_solicitud_aplicacion_listado_tractores.idTelemetria
-LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo';
+LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo
+LEFT JOIN `telemetria_listado_sensores_nombre`             ON telemetria_listado_sensores_nombre.idTelemetria            = cross_solicitud_aplicacion_listado_tractores.idTelemetria';
 $SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idTractores ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
-
 
 /***************************************/
 $subquery = '';
@@ -108,7 +108,7 @@ $arrData  = array();
 foreach ($arrMediciones as $med) {
 	//Se obtiene la fecha
 	$Temp_1 .= "'".$med['HoraSistema']."',";
-		
+
 	if(isset($arrData[1]['Value'])&&$arrData[1]['Value']!=''){$arrData[1]['Value'] .= ", ".$med['Sensor_1'];       }else{ $arrData[1]['Value'] = $med['Sensor_1'];}
 	if(isset($arrData[2]['Value'])&&$arrData[2]['Value']!=''){$arrData[2]['Value'] .= ", ".$med['Sensor_2'];       }else{ $arrData[2]['Value'] = $med['Sensor_2'];}
 	if(isset($arrData[3]['Value'])&&$arrData[3]['Value']!=''){$arrData[3]['Value'] .= ", ".$med['Sensor_3'];       }else{ $arrData[3]['Value'] = $med['Sensor_3'];}
@@ -203,9 +203,6 @@ document.getElementById("loading").style.display = "none";
 			</table>
 		</div>
 	</div>
-	
-				
-
 
 	<div class="row" style="margin-bottom:15px;">
 		<div id="charts" class="col-xs-12" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
@@ -227,7 +224,7 @@ document.getElementById("loading").style.display = "none";
 			//los tipos de linea
 			$Graphics_lineDash   = "var lineDash = ['','',];";
 			//los anchos de la linea
-			$Graphics_lineWidth  = "var lineWidth = ['','',];";	
+			$Graphics_lineWidth  = "var lineWidth = ['','',];";
 
 			$gr_tittle = 'Grafico Caudal / Homogeneidad';
 			$gr_unimed = 'Litros * Minutos';
@@ -248,7 +245,7 @@ document.getElementById("loading").style.display = "none";
 			//los tipos de linea
 			$Graphics_lineDash   = "var lineDash = ['',];";
 			//los anchos de la linea
-			$Graphics_lineWidth  = "var lineWidth = ['',];";	
+			$Graphics_lineWidth  = "var lineWidth = ['',];";
 
 			$gr_tittle = 'Grafico Nivel Estanque';
 			$gr_unimed = '% de llenado';
@@ -269,12 +266,12 @@ document.getElementById("loading").style.display = "none";
 			//los tipos de linea
 			$Graphics_lineDash   = "var lineDash = ['',];";
 			//los anchos de la linea
-			$Graphics_lineWidth  = "var lineWidth = ['',];";	
+			$Graphics_lineWidth  = "var lineWidth = ['',];";
 
 			$gr_tittle = 'Grafico Velocidades';
 			$gr_unimed = 'Km * hr';
 			echo GraphLinear_1('graphLinear_3', $gr_tittle, 'Hora', $gr_unimed, $Graphics_xData, $Graphics_yData, $Graphics_names, $Graphics_types, $Graphics_texts, $Graphics_lineColors, $Graphics_lineDash, $Graphics_lineWidth, 0); 
-					
+
 			?>
 		</div>
 	</div>
@@ -305,7 +302,7 @@ document.getElementById("loading").style.display = "none";
 	<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/dom-to-image.min.js"></script>
 	<script>
 		var node = document.getElementById('charts');
-					
+
 		function sendDatatoSRV(img) {
 			$('#img_adj').val(img);
 			//$('#img_adj').val($('#img-out').html());

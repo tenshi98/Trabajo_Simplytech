@@ -62,8 +62,8 @@ $rowdata = db_select_data (false, 'Nombre, cantSensores', 'telemetria_listado', 
 //defino los nombres de los sensores
 $subsql = '';
 for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
-    $subsql .= ',telemetria_listado.SensoresNombre_'.$i;
-    $subsql .= ',telemetria_listado.SensoresGrupo_'.$i;
+    $subsql .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+    $subsql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
 }
 
 $SIS_query = '
@@ -87,10 +87,11 @@ telemetria_listado_alarmas_perso.idEstado'.$subsql;
 $SIS_join  = '
 LEFT JOIN `telemetria_listado_alarmas_perso_tipos` ON telemetria_listado_alarmas_perso_tipos.idTipo    = telemetria_listado_alarmas_perso.idTipo
 LEFT JOIN `telemetria_listado_alarmas_perso_items` ON telemetria_listado_alarmas_perso_items.idAlarma  = telemetria_listado_alarmas_perso.idAlarma
-LEFT JOIN `telemetria_listado`                     ON telemetria_listado.idTelemetria                  = telemetria_listado_alarmas_perso.idTelemetria
 LEFT JOIN `core_telemetria_tipo_alertas`           ON core_telemetria_tipo_alertas.idTipoAlerta        = telemetria_listado_alarmas_perso.idTipoAlerta
 LEFT JOIN `telemetria_listado_unidad_medida`       ON telemetria_listado_unidad_medida.idUniMed        = telemetria_listado_alarmas_perso.idUniMed
-LEFT JOIN `core_estados`                           ON core_estados.idEstado                            = telemetria_listado_alarmas_perso.idEstado';
+LEFT JOIN `core_estados`                           ON core_estados.idEstado                            = telemetria_listado_alarmas_perso.idEstado
+LEFT JOIN `telemetria_listado_sensores_nombre`     ON telemetria_listado_sensores_nombre.idTelemetria  = telemetria_listado_alarmas_perso.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_grupo`      ON telemetria_listado_sensores_grupo.idTelemetria   = telemetria_listado_alarmas_perso.idTelemetria';
 $SIS_where = 'telemetria_listado_alarmas_perso.idTelemetria ='.$X_Puntero;
 $SIS_order = 'telemetria_listado_alarmas_perso.idEstado ASC, telemetria_listado_alarmas_perso.Nombre ASC';
 $arrAlarmas = array();
@@ -101,7 +102,6 @@ $arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupo
 
 $arrGruposEx    = array();
 foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre'];}
-
 
 ?>
 

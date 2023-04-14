@@ -34,7 +34,7 @@ for ($i = 1; $i <= $Nsens; $i++) {
 	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Prom';
 	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Min';
 	$subquery .= ',cross_solicitud_aplicacion_listado_tractores.Sensor_'.$i.'_Max';
-	$subquery .= ',telemetria_listado.SensoresNombre_'.$i.' AS Sensor_'.$i.'_Nombre';
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i.' AS Sensor_'.$i.'_Nombre';
 }
 
 $SIS_query = '
@@ -70,11 +70,10 @@ LEFT JOIN `variedades_listado`                             ON variedades_listado
 LEFT JOIN `cross_solicitud_aplicacion_listado_cuarteles`   ON cross_solicitud_aplicacion_listado_cuarteles.idCuarteles   = cross_solicitud_aplicacion_listado_tractores.idCuarteles
 LEFT JOIN `cross_predios_listado_zonas`                    ON cross_predios_listado_zonas.idZona                         = cross_solicitud_aplicacion_listado_cuarteles.idZona
 LEFT JOIN `telemetria_listado`                             ON telemetria_listado.idTelemetria                            = cross_solicitud_aplicacion_listado_tractores.idTelemetria
-LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo';
+LEFT JOIN `vehiculos_listado`                              ON vehiculos_listado.idVehiculo                               = cross_solicitud_aplicacion_listado_tractores.idVehiculo
+LEFT JOIN `telemetria_listado_sensores_nombre`             ON telemetria_listado_sensores_nombre.idTelemetria            = cross_solicitud_aplicacion_listado_tractores.idTelemetria';
 $SIS_where = 'cross_solicitud_aplicacion_listado_tractores.idTractores ='.$view;
 $row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_listado_tractores', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
-
-
 
 /********************************************************************/
 //Se define el contenido del PDF
@@ -91,7 +90,7 @@ $html .= '
 	<tbody>
 		<tr>
 			<td>
-	
+
 				<table style="text-align: left; width: 100%;"  cellpadding="0" cellspacing="0">
 					<tbody>
 						<tr class="oddrow">
@@ -148,7 +147,7 @@ $html .= '
 								<td align="right">'.Cantidades($row_data['Sensor_'.$i.'_Prom'], 1).'</td>
 							</tr>';
 						}
-						
+
 					$html .= '
 					</tbody>
 				</table>';
@@ -158,8 +157,7 @@ $html .= '
 		</tr>
 	</tbody>
 </table>';
-					
-						
+
 /**********************************************************************************************************************************/
 /*                                                          Impresion PDF                                                         */
 /**********************************************************************************************************************************/

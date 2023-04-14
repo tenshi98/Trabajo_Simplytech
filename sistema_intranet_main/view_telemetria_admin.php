@@ -103,17 +103,23 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 	//numero sensores equipo
 	$subquery = '';
 	for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
-		$subquery .= ',SensoresNombre_'.$i;
-		$subquery .= ',SensoresTipo_'.$i;
-		$subquery .= ',SensoresGrupo_'.$i;
-		$subquery .= ',SensoresUniMed_'.$i;
-		$subquery .= ',SensoresMedActual_'.$i;
-		$subquery .= ',SensoresActivo_'.$i;
+		$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+		$subquery .= ',telemetria_listado_sensores_tipo.SensoresTipo_'.$i;
+		$subquery .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+		$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+		$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+		$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 	}
 	//consulto
-	$SIS_query = 'GeoVelocidad'.$subquery;
-	$SIS_join  = '';
-	$SIS_where = 'idTelemetria ='.$X_Puntero;
+	$SIS_query = 'telemetria_listado.GeoVelocidad'.$subquery;
+	$SIS_join  = '
+	LEFT JOIN `telemetria_listado_sensores_nombre`      ON telemetria_listado_sensores_nombre.idTelemetria      = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_tipo`        ON telemetria_listado_sensores_tipo.idTelemetria        = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_grupo`       ON telemetria_listado_sensores_grupo.idTelemetria       = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_unimed`      ON telemetria_listado_sensores_unimed.idTelemetria      = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_activo`      ON telemetria_listado_sensores_activo.idTelemetria      = telemetria_listado.idTelemetria';
+	$SIS_where = 'telemetria_listado.idTelemetria ='.$X_Puntero;
 	$rowMed = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowMed');
 
 	//consulto
@@ -130,11 +136,11 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 	$arrFinalGrupos = array();
 
 	foreach ($arrSensores as $sen) { $arrFinalSensores[$sen['idSensores']] = $sen['Nombre'];}
-	foreach ($arrGrupos as $sen) {   $arrFinalGrupos[$sen['idGrupo']]      = $sen['Nombre'];}		
-	
+	foreach ($arrGrupos as $sen) {   $arrFinalGrupos[$sen['idGrupo']]      = $sen['Nombre'];}
+
 	$arrFinalSensores[0]  = 'No Asignado';
-	$arrFinalGrupos[0]    = 'No Asignado';	
-						
+	$arrFinalGrupos[0]    = 'No Asignado';
+
 }
 
 if(isset($rowdata['idTrabajador'])&&$rowdata['idTrabajador']!=0){
@@ -143,8 +149,8 @@ if(isset($rowdata['idTrabajador'])&&$rowdata['idTrabajador']!=0){
 	trabajadores_listado.Nombre,
 	trabajadores_listado.ApellidoPat,
 	trabajadores_listado.ApellidoMat,
-	trabajadores_listado.Cargo, 
-	trabajadores_listado.Fono, 
+	trabajadores_listado.Cargo,
+	trabajadores_listado.Fono,
 	trabajadores_listado.Rut,
 	trabajadores_listado.Observaciones,
 	trabajadores_listado_tipos.Nombre AS TipoTrabajador,
@@ -191,27 +197,24 @@ if(isset($rowdata['idBodega'])&&$rowdata['idBodega']!=0){
 
 }
 
+//numero sensores equipo
+$subquery = '';
+for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+}
 // Se trae un listado con todas las alertas
 $SIS_query = '
-telemetria_listado_errores.idErrores, 
-telemetria_listado_errores.Descripcion, 
-telemetria_listado_errores.Fecha,  
-telemetria_listado_errores.Hora,  
-telemetria_listado_errores.Valor, 
-telemetria_listado_errores.Valor_min, 
+telemetria_listado_errores.idErrores,
+telemetria_listado_errores.Descripcion,
+telemetria_listado_errores.Fecha,
+telemetria_listado_errores.Hora,
+telemetria_listado_errores.Valor,
+telemetria_listado_errores.Valor_min,
 telemetria_listado_errores.Valor_max,
-telemetria_listado_errores.Sensor,
-SensoresUniMed_1, SensoresUniMed_2, SensoresUniMed_3, SensoresUniMed_4, SensoresUniMed_5, 
-SensoresUniMed_6, SensoresUniMed_7, SensoresUniMed_8, SensoresUniMed_9, SensoresUniMed_10, 
-SensoresUniMed_11, SensoresUniMed_12, SensoresUniMed_13, SensoresUniMed_14, SensoresUniMed_15, 
-SensoresUniMed_16, SensoresUniMed_17, SensoresUniMed_18, SensoresUniMed_19, SensoresUniMed_20, 
-SensoresUniMed_21, SensoresUniMed_22, SensoresUniMed_23, SensoresUniMed_24, SensoresUniMed_25, 
-SensoresUniMed_26, SensoresUniMed_27, SensoresUniMed_28, SensoresUniMed_29, SensoresUniMed_30, 
-SensoresUniMed_31, SensoresUniMed_32, SensoresUniMed_33, SensoresUniMed_34, SensoresUniMed_35, 
-SensoresUniMed_36, SensoresUniMed_37, SensoresUniMed_38, SensoresUniMed_39, SensoresUniMed_40, 
-SensoresUniMed_41, SensoresUniMed_42, SensoresUniMed_43, SensoresUniMed_44, SensoresUniMed_45, 
-SensoresUniMed_46, SensoresUniMed_47, SensoresUniMed_48, SensoresUniMed_49, SensoresUniMed_50';
-$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria';
+telemetria_listado_errores.Sensor'.$subquery;
+$SIS_join  = '
+LEFT JOIN `telemetria_listado`                  ON telemetria_listado.idTelemetria                  = telemetria_listado_errores.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria  = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado_errores.idTelemetria = '.$X_Puntero.' AND telemetria_listado_errores.idTipo!=999 AND telemetria_listado_errores.Valor<99900';
 $SIS_order = 'telemetria_listado_errores.idErrores DESC LIMIT 20';
 $arrAlertas = array();
@@ -311,8 +314,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 							<strong>Hora Termino Colacion : </strong><?php echo $rowdata['Colacion_termino'].' hrs'; ?><br/>
 							<strong>Tiempo Microparadas : </strong><?php echo $rowdata['Microparada'].' hrs'; ?><br/>
 						</p>
-						
-						
+
 					</div>
 					<div class="clearfix"></div>
 
@@ -335,8 +337,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 								<?php } ?>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
-							
-							
+
 							<?php if(isset($rowdata['LimiteVelocidad'])&&$rowdata['LimiteVelocidad']!=0){ ?>
 								<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 									<thead>
@@ -348,18 +349,17 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 										</tr>
 									</thead>
 									<tbody role="alert" aria-live="polite" aria-relevant="all">
-										<tr class="odd <?php if($rowMed['GeoVelocidad'] > $rowdata['LimiteVelocidad']){echo 'danger';} ?>">		
+										<tr class="odd <?php if($rowMed['GeoVelocidad'] > $rowdata['LimiteVelocidad']){echo 'danger';} ?>">
 											<td>Velocidad</td>
 											<td><?php echo fecha_estandar($rowdata['LastUpdateFecha']).' - '.$rowdata['LastUpdateHora'].' hrs'; ?></td>
 											<td><?php echo Cantidades($rowMed['GeoVelocidad'], 0).' KM/h'; ?></td>
 											<td><?php echo Cantidades($rowdata['LimiteVelocidad'], 0).' KM/h'; ?></td>
 										</tr>
-														   
+
 									</tbody>
 								</table>
 							<?php } ?>
-							
-						
+
 							<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 								<thead>
 									<tr role="row">
@@ -378,13 +378,13 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 											$unimed = ' '.$arrFinalUnimed[$rowMed['SensoresUniMed_'.$i]];
 											$s_alert = '';
 											?>
-											<tr class="odd <?php echo $s_alert; ?>">		
+											<tr class="odd <?php echo $s_alert; ?>">
 												<td><?php echo 's'.$i ?></td>
 												<td><?php echo $rowMed['SensoresNombre_'.$i]; ?></td>
 												<td><?php echo $arrFinalSensores[$rowMed['SensoresTipo_'.$i]]; ?></td>
 												<td><?php echo $arrFinalGrupos[$rowMed['SensoresGrupo_'.$i]]; ?></td>
 												<td><?php echo fecha_estandar($rowMed['LastUpdateFecha']).' - '.$rowMed['LastUpdateHora'].' hrs'; ?></td>
-												<td><?php 
+												<td><?php
 													if(isset($rowMed['SensoresMedActual_'.$i])&&$rowMed['SensoresMedActual_'.$i]<99900){
 														echo Cantidades_decimales_justos($rowMed['SensoresMedActual_'.$i]).$unimed;
 													}else{
@@ -421,7 +421,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 								<strong>Direccion : </strong><?php echo $rowTrabajador['Direccion'].', '.$rowTrabajador['nombre_comuna'].', '.$rowTrabajador['nombre_region']; ?><br/>
 								<strong>Observaciones : </strong><?php echo $rowTrabajador['Observaciones']; ?>
 							</p>
-											
+
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Laborales</h2>
 							<p class="text-muted">
 								<strong>Tipo Trabajador : </strong><?php echo $rowTrabajador['TipoTrabajador']; ?><br/>
@@ -470,7 +470,6 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 					</div>
 				</div>
 			<?php } ?>
-			
 
 			<div class="tab-pane fade" id="alertas">
 				<div class="wmd-panel">
@@ -516,7 +515,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 								<?php } ?>
 							</tbody>
 						</table>
-	
+
 					</div>
 				</div>
 			</div>
@@ -561,12 +560,11 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 								<?php } ?>
 							</tbody>
 						</table>
-	
+
 					</div>
 				</div>
 			</div>
-			
-			
+
         </div>
 	</div>
 </div>

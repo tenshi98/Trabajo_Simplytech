@@ -28,7 +28,7 @@ $FechaSistema   = fecha_actual();
 $eq_fueralinea  = 0;
 $idTelemetria   = simpleDecode($_GET['idTelemetria'], fecha_actual());
 $google         = $_SESSION['usuario']['basic_data']['Config_IDGoogle'];
-		
+
 //datos temporales para los widgets
 $Gen_Rocio         = 0;
 $Gen_Temperatura   = 0;
@@ -39,33 +39,44 @@ $Total_Temperatura = 0;
 $Total_Humedad     = 0;
 $Total_Presion     = 0;
 $Count_Data        = 0;
-		
+
 //Variable
 $SIS_where = "telemetria_listado.idEstado = 1 ";//solo equipos activos
 //solo los equipos que tengan el seguimiento desactivado
 $SIS_where .= " AND telemetria_listado.id_Geo = 2";
 //Filtro de los tab
 $SIS_where .= " AND telemetria_listado.idTab = 4 ";//CrossWeather
-//Filtro el equipo	
+//Filtro el equipo
 if(isset($idTelemetria)&&$idTelemetria!=''&&$idTelemetria!=0){
 	$SIS_where .= " AND telemetria_listado.idTelemetria = ".$idTelemetria;
 }
-			
+
 //numero sensores equipo
 $N_Maximo_Sensores = 20;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresNombre_'.$i;
-	$subquery .= ',SensoresMedActual_'.$i;
-	$subquery .= ',SensoresUniMed_'.$i;
-	$subquery .= ',SensoresActivo_'.$i;
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 }
 
 //Listar los datos
-$SIS_query = 'Nombre,TiempoFueraLinea, LastUpdateFecha, LastUpdateHora,GeoLatitud, GeoLongitud, cantSensores, id_Sensores'.$subquery;
-$SIS_join  = '';
+$SIS_query = '
+telemetria_listado.Nombre,
+telemetria_listado.TiempoFueraLinea,
+telemetria_listado.LastUpdateFecha,
+telemetria_listado.LastUpdateHora,
+telemetria_listado.GeoLatitud,
+telemetria_listado.GeoLongitud,
+telemetria_listado.cantSensores,
+telemetria_listado.id_Sensores'.$subquery;
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_nombre`      ON telemetria_listado_sensores_nombre.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`      ON telemetria_listado_sensores_unimed.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`      ON telemetria_listado_sensores_activo.idTelemetria      = telemetria_listado.idTelemetria';
 $rowTel = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowTel');
-
 
 /*************************************************************/
 //se traen todas las zonas
@@ -85,7 +96,6 @@ foreach ($arrUnimed as $data) {
 	$arrFinalUnimed[$data['idUniMed']] = $data['Nombre'];
 }
 
-		
 /**********************************************/
 //Se resetean
 $in_eq_fueralinea  = 0;
@@ -97,7 +107,7 @@ $diaTermino  = $FechaSistema;
 $tiempo1     = $rowTel['LastUpdateHora'];
 $tiempo2     = $HoraSistema;
 $Tiempo      = horas_transcurridas($diaInicio, $diaTermino, $tiempo1, $tiempo2);
-		
+
 //Comparaciones de tiempo
 $Time_Tiempo     = horas2segundos($Tiempo);
 $Time_Tiempo_FL  = horas2segundos($rowTel['TiempoFueraLinea']);
@@ -150,7 +160,6 @@ if($in_eq_fueralinea!=0){
 
 			</div>
 			<?php
-			
 			//verifico existencia de datos
 			$Helada                       = 0;
 			$UnidadFrio                   = 0;
@@ -164,15 +173,15 @@ if($in_eq_fueralinea!=0){
 			$CrossTech_FechaDiasTempMin   = 0;
 
 			//declaracion
-			if(isset($rowAux['Helada'])&&$rowAux['Helada']!=''){                                  $Helada                       = $rowAux['Helada'];}
-			if(isset($rowAux['UnidadesFrio'])&&$rowAux['UnidadesFrio']!=''){                      $UnidadFrio                   = $rowAux['UnidadesFrio'];}
+			if(isset($rowAux['Helada'])&&$rowAux['Helada']!=''){                                         $Helada                       = $rowAux['Helada'];}
+			if(isset($rowAux['UnidadesFrio'])&&$rowAux['UnidadesFrio']!=''){                             $UnidadFrio                   = $rowAux['UnidadesFrio'];}
 			if(isset($rowAux['CrossTech_FechaUnidadFrio'])&&$rowAux['CrossTech_FechaUnidadFrio']!=''){   $CrossTech_FechaUnidadFrio    = $rowAux['CrossTech_FechaUnidadFrio'];}
-			if(isset($rowAux['HorasSobreGrados'])&&$rowAux['HorasSobreGrados']!=''){              $HoraSobre                    = $rowAux['HorasSobreGrados'];}
-			if(isset($rowAux['CrossTech_TempMax'])&&$rowAux['CrossTech_TempMax']!=''){            $CrossTech_TempMax            = cantidades($rowAux['CrossTech_TempMax'], 0);}
-			if(isset($rowAux['CrossTech_FechaTempMax'])&&$rowAux['CrossTech_FechaTempMax']!=''){  $CrossTech_FechaTempMax       = $rowAux['CrossTech_FechaTempMax'];}
-			if(isset($rowAux['Dias_acumulado'])&&$rowAux['Dias_acumulado']!=''){                  $Dias_acumulado               = cantidades($rowAux['Dias_acumulado'], 0);}
-			if(isset($rowAux['Dias_anterior'])&&$rowAux['Dias_anterior']!=''){                    $Dias_anterior                = cantidades($rowAux['Dias_anterior'], 0);}
-			if(isset($rowAux['CrossTech_DiasTempMin'])&&$rowAux['CrossTech_DiasTempMin']!=''){    $CrossTech_DiasTempMin        = cantidades($rowAux['CrossTech_DiasTempMin'], 0);}
+			if(isset($rowAux['HorasSobreGrados'])&&$rowAux['HorasSobreGrados']!=''){                     $HoraSobre                    = $rowAux['HorasSobreGrados'];}
+			if(isset($rowAux['CrossTech_TempMax'])&&$rowAux['CrossTech_TempMax']!=''){                   $CrossTech_TempMax            = cantidades($rowAux['CrossTech_TempMax'], 0);}
+			if(isset($rowAux['CrossTech_FechaTempMax'])&&$rowAux['CrossTech_FechaTempMax']!=''){         $CrossTech_FechaTempMax       = $rowAux['CrossTech_FechaTempMax'];}
+			if(isset($rowAux['Dias_acumulado'])&&$rowAux['Dias_acumulado']!=''){                         $Dias_acumulado               = cantidades($rowAux['Dias_acumulado'], 0);}
+			if(isset($rowAux['Dias_anterior'])&&$rowAux['Dias_anterior']!=''){                           $Dias_anterior                = cantidades($rowAux['Dias_anterior'], 0);}
+			if(isset($rowAux['CrossTech_DiasTempMin'])&&$rowAux['CrossTech_DiasTempMin']!=''){           $CrossTech_DiasTempMin        = cantidades($rowAux['CrossTech_DiasTempMin'], 0);}
 			if(isset($rowAux['CrossTech_FechaDiasTempMin'])&&$rowAux['CrossTech_FechaDiasTempMin']!=''){ $CrossTech_FechaDiasTempMin   = $rowAux['CrossTech_FechaDiasTempMin'];}
 
 			//Dependiendo del valor de la helada se cambia el icono y el color
@@ -183,13 +192,13 @@ if($in_eq_fueralinea!=0){
 			}elseif($Helada<0.1){
 				$helIcon = '<span style="color:#d9534f;"><i class="fa fa-thermometer-empty" aria-hidden="true"></i></span>';
 			}
-					
+
 			$GPS = '
 			<div class="">
 				<style>
 					.tipnoabs{position: initial;}
-				</style>	
-					
+				</style>
+
 				<div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
 					<div class="box box-blue box-solid ">
 						<div class="box-header with-border text-center">
@@ -258,8 +267,8 @@ if($in_eq_fueralinea!=0){
 				</div>
 
 			</div>';
-			
-			echo $GPS;		
+
+			echo $GPS;
 			?>
 
 			<div class="">
@@ -270,19 +279,19 @@ if($in_eq_fueralinea!=0){
 			<?php
 			$GPS = '
 			<script>
-			
+
 				/* ************************************************************************** */
 				//Variables globales
 				var chart_gauge_1                 = "";
 				var chart_gauge_2                 = "";
 				var chart_gauge_3                 = "";
 				var chart_gauge_4                 = "";
-				
+
 				var data_gauge_1                  = "";
 				var data_gauge_2                  = "";
 				var data_gauge_3                  = "";
 				var data_gauge_4                  = "";
-				
+
 				var options_gauge_1               = "";
 				var options_gauge_2               = "";
 				var options_gauge_3               = "";
@@ -328,7 +337,7 @@ if($in_eq_fueralinea!=0){
 					]);
 					//opciones
 					options_gauge_1 = {
-						width: 300, 
+						width: 300,
 						height: 150,
 						majorTicks: ["0","10","20","30","40", "50"],
 						minorTicks: 5,
@@ -365,7 +374,7 @@ if($in_eq_fueralinea!=0){
 					]);
 					//opciones
 					options_gauge_2 = {
-						width: 300, 
+						width: 300,
 						height: 150,
 						majorTicks: ["0","10","20","30","40", "50"],
 						minorTicks: 10,
@@ -402,7 +411,7 @@ if($in_eq_fueralinea!=0){
 					]);
 					//opciones
 					options_gauge_3 = {
-						width: 300, 
+						width: 300,
 						height: 150,
 						minorTicks: 5
 					};
@@ -436,7 +445,7 @@ if($in_eq_fueralinea!=0){
 					]);
 					//opciones
 					options_gauge_4 = {
-						width: 300, 
+						width: 300,
 						height: 150,
 						majorTicks: ["0","200","400","600","800", "1000", "1200", "1400"],
 						minorTicks: 5,
@@ -467,11 +476,9 @@ if($in_eq_fueralinea!=0){
 				/* ************************************************************************** */
 				/* ************************************************************************** */
 				/* ************************************************************************** */
-				
+
 				var map;
 				var markers = [];
-				
-				
 
 				/* ************************************************************************** */
 				function fncCenterMap(Latitud, Longitud, n_icon){
@@ -496,7 +503,7 @@ if($in_eq_fueralinea!=0){
 						mapTypeId: google.maps.MapTypeId.ROADMAP
 					};
 					map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-										
+
 					//Ubicacion de los distintos dispositivos
 					var locations = [ ';
 
@@ -539,7 +546,7 @@ if($in_eq_fueralinea!=0){
 				function setMarkers(map, locations, optc) {
 
 					var marker, i, last_latitude, last_longitude;
-					
+
 					for (i = 0; i < locations.length; i++) {
 
 						//defino ubicacion y datos
@@ -550,7 +557,7 @@ if($in_eq_fueralinea!=0){
 						//guardo las ultimas ubicaciones
 						last_latitude   = locations[i][0];
 						last_longitude  = locations[i][1];
-						
+
 						latlngset = new google.maps.LatLng(latitude, longitude);
 
 						//se crea marcador
@@ -612,27 +619,18 @@ if($in_eq_fueralinea!=0){
 					markers = [];
 				}
 
-
-				
-				
-				
-				
-				
 				/* ************************************************************************** */
 				google.maps.event.addDomListener(window, "load", initialize());
 			</script>
-				
-					
+
 			';
-			
+
 			echo $GPS;
 			?>
 
 		</div>
 	</div>
-</div>	
-
-
+</div>
 
 <?php
 //si se entrega la opcion de mostrar boton volver

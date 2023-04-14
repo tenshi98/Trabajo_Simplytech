@@ -12,9 +12,9 @@ require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 //Cargamos la ubicacion original
 $original = "telemetria_gestion_sensores.php";
-$location = $original;  
+$location = $original;
 //Se agregan ubicaciones
-$location .='?filtro=true';	  
+$location .='?filtro=true';
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
@@ -51,13 +51,14 @@ if (isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$enlace    .= "&idTelemetria=".$_GET['idTelemetria'];
 }
 
+/*******************************************************/
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresNombre_'.$i;
-	$subquery .= ',SensoresMedActual_'.$i;
-	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+	$subquery .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 
 //Se consultan datos
@@ -70,12 +71,15 @@ telemetria_listado.TiempoFueraLinea,
 telemetria_listado.GeoLatitud,
 telemetria_listado.GeoLongitud,
 telemetria_listado.NErrores'.$subquery;
-$SIS_join = '';
+$SIS_join = '
+LEFT JOIN `telemetria_listado_sensores_nombre`      ON telemetria_listado_sensores_nombre.idTelemetria      = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_unimed`      ON telemetria_listado_sensores_unimed.idTelemetria      = telemetria_listado.idTelemetria';
 $SIS_order = 'telemetria_listado.Nombre ASC';
 $arrEquipo = array();
 $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrEquipo');
 
-
+/*******************************************************/
 //Se traen todas las unidades de medida
 $arrUnimed = array();
 $arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
@@ -106,13 +110,13 @@ foreach ($arrUnimed as $sen) {
 								</tr>
 							</thead>
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
-								<?php foreach ($arrEquipo as $data) { 
-									
+								<?php foreach ($arrEquipo as $data) {
+
 									/**********************************************/
 									//Se resetean
 									$in_eq_alertas     = 0;
 									$in_eq_fueralinea  = 0;
-																								
+
 									/**********************************************/
 									//Fuera de linea
 									$diaInicio   = $data['LastUpdateFecha'];
@@ -131,24 +135,24 @@ foreach ($arrUnimed as $sen) {
 									if(($Time_Tiempo<$Time_Fake_Ini OR $Time_Tiempo>$Time_Fake_Fin)&&(($Time_Tiempo>$Time_Tiempo_FL&&$Time_Tiempo_FL!=0) OR ($Time_Tiempo>$Time_Tiempo_Max&&$Time_Tiempo_FL==0))){
 										$in_eq_fueralinea++;
 									}
-															
+
 									/**********************************************/
 									//NErrores
 									if(isset($data['NErrores'])&&$data['NErrores']>0){ $in_eq_alertas++; }
-															
+
 									/*******************************************************/
 									//rearmo
-									if($in_eq_alertas>0){    
+									if($in_eq_alertas>0){
 										$danger = 'warning';
 										$eq_ok  = '<a href="#" title="Con Alertas" class="btn btn-warning btn-sm tooltip"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></a>';
-									}elseif($in_eq_fueralinea>0){ 
+									}elseif($in_eq_fueralinea>0){
 										$danger = 'danger';
 										$eq_ok  = '<a href="#" title="Fuera de Linea" class="btn btn-danger btn-sm tooltip"><i class="fa fa-chain-broken" aria-hidden="true"></i></a>';
 									}else{
 										$danger = '';
 										$eq_ok  = '<a href="#" title="Sin Problemas" class="btn btn-success btn-sm tooltip"><i class="fa fa-check" aria-hidden="true"></i></a>';
 									}
-			
+
 									?>
 									<tr class="odd <?php echo $danger; ?>">
 										<td><?php echo $data['Nombre']; ?></td>
@@ -179,13 +183,13 @@ foreach ($arrUnimed as $sen) {
 						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
 
 						<script type="text/javascript">
-							
-							var marker;	
-							var infowindow = new google.maps.InfoWindow({  
+
+							var marker;
+							var infowindow = new google.maps.InfoWindow({
 								content: ''
 							});
 							var map;
-										
+
 							var marcadores = [
 								<?php
 								$in=0;
@@ -200,11 +204,10 @@ foreach ($arrUnimed as $sen) {
 										if(isset($data['SensoresMedActual_'.$i])&&$data['SensoresMedActual_'.$i]<99900){$xdata=Cantidades_decimales_justos($data['SensoresMedActual_'.$i]).$unimed;}else{$xdata='Sin Datos';}
 										$explanation .= $data['SensoresNombre_'.$i].' : '.$xdata.'<br/>';
 									}
-									$explanation .= '</p>';		
-									
-									
+									$explanation .= '</p>';
+
 									if($in==0){$in=1;}else{echo ',';} ?>
-									{  
+									{
 										position: {
 											lat: <?php echo $data['GeoLatitud']; ?>,
 											lng: <?php echo $data['GeoLongitud']; ?>
@@ -215,24 +218,22 @@ foreach ($arrUnimed as $sen) {
 													"<?php echo $explanation; ?>" +
 													"</div>" +
 													"<div class='iw-bottom-gradient'></div>" +
-													"</div>"				 
+													"</div>"
 									}
 								<?php } ?>
 							];
-													
-													
+
 							function initialize() {
 								var myLatlng = new google.maps.LatLng(-33.4691, -70.642);
-								var opciones = {  
+								var opciones = {
 									zoom: 12,
 									center: myLatlng,
 									mapTypeId: google.maps.MapTypeId.ROADMAP
 								};
-								var div = document.getElementById('map_canvas');  
-								map = new google.maps.Map(div, opciones);  
-								
+								var div = document.getElementById('map_canvas');
+								map = new google.maps.Map(div, opciones);
 
-								for (let i = 0, j = marcadores.length; i < j; i++) {  
+								for (let i = 0, j = marcadores.length; i < j; i++) {
 									var contenido = marcadores[i].contenido;
 									marker = new google.maps.Marker({
 										position	: new google.maps.LatLng(marcadores[i].position.lat, marcadores[i].position.lng),
@@ -252,7 +253,7 @@ foreach ($arrUnimed as $sen) {
 									//centralizo el mapa en base al ultimo dato obtenido
 									map.panTo(marker.getPosition());
 								}
-													
+
 								transMarker(10000);
 
 								// *
@@ -305,15 +306,15 @@ foreach ($arrUnimed as $sen) {
 									iwCloseBtn.mouseout(function(){
 										$(this).css({opacity: '1'});
 									});
-								});			
-													
-							} 
+								});
+
+							}
 							/* ************************************************************************** */
 							function transMarker(time) {
 								setInterval(function(){myTimer2()},time);
 							}
-												
-							var mapax = 0;	
+
+							var mapax = 0;
 							function myTimer2() {
 
 								switch(mapax) {
@@ -322,12 +323,12 @@ foreach ($arrUnimed as $sen) {
 										$('#consulta').load('telemetria_gestion_sensores_update.php<?php echo $enlace; ?>');
 										break;
 
-									//se dibujan los iconos de los buses	
+									//se dibujan los iconos de los buses
 									case 2:
 										//Los demas buses
-										for (let i = 0, j = marcadores_ex.length; i < j; i++) {  
+										for (let i = 0, j = marcadores_ex.length; i < j; i++) {
 											var contenido = marcadores_ex[i].contenido;
-											
+
 											(function(marker, contenido) {
 												google.maps.event.addListener(marker, 'click', function() {
 													infowindow.setContent(contenido);
@@ -344,7 +345,7 @@ foreach ($arrUnimed as $sen) {
 
 								mapax++;
 								if(mapax==3){mapax=1}
-							} 
+							}
 						</script>
 
 						<div id="map_canvas" style="width: 100%; height: 550px;"><script type="text/javascript">initialize();</script></div>
@@ -352,55 +353,36 @@ foreach ($arrUnimed as $sen) {
 					<?php } ?>
 				</div>
 			</div>
-			
-			
-			
+
 		</div>
 	</div>
 </div>
 
-
-
-
-  
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
-<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
-<div class="clearfix"></div>
+	<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
+	<div class="clearfix"></div>
 </div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-	$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=2";
+	$filtro = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=2";
 }else{
 	//filtro
-	$z = "idTelemetria=0";
+	$filtro = "idTelemetria=0";
 	//Se revisan los permisos a los contratos
+	$SIS_query = 'idTelemetria';
+	$SIS_join  = '';
+	$SIS_where = 'idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_order = 'idUsuario ASC';
 	$arrPermisos = array();
-	$query = "SELECT idTelemetria
-	FROM `usuarios_equipos_telemetria`
-	WHERE idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)){
-	array_push( $arrPermisos,$row );
-	}
+	$arrPermisos = db_select_array (false, $SIS_query, 'usuarios_equipos_telemetria', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
 	foreach ($arrPermisos as $prod) {
-		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND id_Geo=2 AND idTelemetria={$prod['idTelemetria']})";
+		$filtro .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND id_Geo=2 AND idTelemetria={$prod['idTelemetria']})";
 	}
-}	 
+}
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -409,10 +391,9 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Filtro de Busqueda</h5>
 		</header>
-		
+
         <div class="tab-content body">
-			
-			
+
 				<div class="wmd-panel">
 					<form class="form-horizontal" action="<?php echo $original; ?>" id="form1" name="form2" novalidate>
 						<?php
@@ -421,8 +402,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 						//se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
-						$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
-						
+						$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x1, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $filtro, '', $dbConn);
+
 						?>
 						<div class="form-group">
 							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf002; Filtrar" name="submit_filter">
@@ -432,7 +413,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				</div>
 
 			<?php widget_validator(); ?>
-			
+
         </div>
 	</div>
 </div>
