@@ -61,7 +61,7 @@ $SIS_join.= " LEFT JOIN `core_estado_encendido` ON core_estado_encendido.idEstad
 $SIS_join.= " LEFT JOIN `usuarios_listado`      ON usuarios_listado.idUsuario               = telemetria_listado_historial_encendidos.idUsuario";
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_historial_encendidos.idTelemetria ";	
-	$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_where.= ' AND usuarios_equipos_telemetria.idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'telemetria_listado_historial_encendidos.idEncendido', 'telemetria_listado_historial_encendidos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');

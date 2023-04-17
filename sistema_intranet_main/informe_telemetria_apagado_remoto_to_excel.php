@@ -44,7 +44,7 @@ $SIS_join.= " LEFT JOIN `core_estado_encendido` ON core_estado_encendido.idEstad
 $SIS_join.= " LEFT JOIN `usuarios_listado`      ON usuarios_listado.idUsuario               = telemetria_listado_historial_encendidos.idUsuario";
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_historial_encendidos.idTelemetria ";	
-	$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_where.= ' AND usuarios_equipos_telemetria.idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 /********************************************************************/
 //Se consulta
