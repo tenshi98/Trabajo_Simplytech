@@ -46,24 +46,25 @@ if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){
 	$SIS_where.= " AND telemetria_listado_errores.idTipo='".$_GET['idTipo']."'";
 }
 //Verifico el tipo de usuario que esta ingresando
-$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria';
+$SIS_join  = ' LEFT JOIN `telemetria_listado`                  ON telemetria_listado.idTelemetria                 = telemetria_listado_errores.idTelemetria';
+$SIS_join .= ' LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria = telemetria_listado_errores.idTelemetria';
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores.idTelemetria ";
-	$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_where.= ' AND usuarios_equipos_telemetria.idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 /***********************************/
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',telemetria_listado.SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 $SIS_query = '
 telemetria_listado_errores.idErrores,
-telemetria_listado_errores.Descripcion, 
-telemetria_listado_errores.Fecha, 
+telemetria_listado_errores.Descripcion,
+telemetria_listado_errores.Fecha,
 telemetria_listado_errores.Hora,
-telemetria_listado_errores.Sensor, 
+telemetria_listado_errores.Sensor,
 telemetria_listado_errores.Valor,
 telemetria_listado_errores.Valor_min,
 telemetria_listado_errores.Valor_max,
@@ -106,13 +107,13 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('E1', 'Medicion Actual')
             ->setCellValue('F1', 'Min')
             ->setCellValue('G1', 'Max')
-            ->setCellValue('H1', 'Unidad Medida');       
-        
+            ->setCellValue('H1', 'Unidad Medida');
+
 $nn=2;
-foreach ($arrErrores as $error) { 
+foreach ($arrErrores as $error) {
 	//Guardo la unidad de medida
-	$unimed = $arrFinalUnimed[$error['SensoresUniMed_'.$error['Sensor']]];		
-				
+	$unimed = $arrFinalUnimed[$error['SensoresUniMed_'.$error['Sensor']]];
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($error['NombreEquipo']))
 				->setCellValue('B'.$nn, DeSanitizar($error['Descripcion']))
@@ -124,8 +125,7 @@ foreach ($arrErrores as $error) {
 				->setCellValue('H'.$nn, DeSanitizar($unimed));
 	$nn++;
 
-} 
-						
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Resumen de Alertas');

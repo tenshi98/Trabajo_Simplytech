@@ -45,30 +45,31 @@ if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){
 	$SIS_where.=" AND backup_telemetria_listado_errores.idTipo='".$_GET['idTipo']."'";
 }
 //Verifico el tipo de usuario que esta ingresando
-$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_errores.idTelemetria';
+$SIS_join  = ' LEFT JOIN `telemetria_listado`                 ON telemetria_listado.idTelemetria                 = backup_telemetria_listado_errores.idTelemetria';
+$SIS_join .= ' LEFT JOIN `telemetria_listado_sensores_unimed` ON telemetria_listado_sensores_unimed.idTelemetria = backup_telemetria_listado_errores.idTelemetria';
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = backup_telemetria_listado_errores.idTelemetria ";
-	$SIS_where.= " AND usuarios_equipos_telemetria.idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_join .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = backup_telemetria_listado_errores.idTelemetria ';
+	$SIS_where.= ' AND usuarios_equipos_telemetria.idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 /***********************************/
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',telemetria_listado.SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 $SIS_query = '
 backup_telemetria_listado_errores.idErrores,
-backup_telemetria_listado_errores.Descripcion, 
-backup_telemetria_listado_errores.Fecha, 
+backup_telemetria_listado_errores.Descripcion,
+backup_telemetria_listado_errores.Fecha,
 backup_telemetria_listado_errores.Hora,
-backup_telemetria_listado_errores.Sensor, 
+backup_telemetria_listado_errores.Sensor,
 backup_telemetria_listado_errores.Valor,
 backup_telemetria_listado_errores.Valor_min,
 backup_telemetria_listado_errores.Valor_max,
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.id_Geo'.$subquery;
-$SIS_order = 'idErrores DESC LIMIT '.$comienzo.', '.$cant_reg;
+$SIS_order = 'backup_telemetria_listado_errores.idErrores DESC LIMIT '.$comienzo.', '.$cant_reg;
 $arrErrores = array();
 $arrErrores = db_select_array (false, $SIS_query, 'backup_telemetria_listado_errores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrErrores');
 /***********************************/
@@ -89,7 +90,7 @@ $html = '
 
 
 $html .= '
-<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">  
+<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">
 	<thead>
 		<tr>
 			<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Nombre Equipo</th>
@@ -98,7 +99,7 @@ $html .= '
 			<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Hora</th>
             <th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Medicion Actual</th>
             <th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Min</th>
-            <th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Max</th>          
+            <th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Max</th>
 		</tr>
 	</thead>
 	<tbody>';
@@ -106,7 +107,7 @@ $html .= '
 		foreach ($arrErrores as $error) {
 			//Guardo la unidad de medida
 			$unimed = ' '.$arrFinalUnimed[$error['SensoresUniMed_'.$error['Sensor']]];
-							
+
 				$html .='
 				<tr>
 					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.DeSanitizar($error['NombreEquipo']).'</td>
@@ -122,8 +123,6 @@ $html .= '
 
 $html .='</tbody>
 </table>';
-  
-
 
 /**********************************************************************************************************************************/
 /*                                                          Impresion PDF                                                         */

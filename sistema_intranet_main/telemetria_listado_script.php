@@ -172,7 +172,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',telemetria_listado.SensoresTipo_'.$i;
+	$subquery .= ',telemetria_listado_sensores_tipo.SensoresTipo_'.$i;
 }
 // consulto los datos
 $SIS_query = '
@@ -199,7 +199,8 @@ LEFT JOIN `telemetria_listado_shield`            ON telemetria_listado_shield.id
 LEFT JOIN `telemetria_listado_forma_envio`       ON telemetria_listado_forma_envio.idFormaEnvio        = telemetria_listado.idFormaEnvio
 LEFT JOIN `core_telemetria_tabs`                 ON core_telemetria_tabs.idTab                         = telemetria_listado.idTab
 LEFT JOIN `core_sistemas_opciones`        opc2   ON opc2.idOpciones                                    = telemetria_listado.id_Geo
-LEFT JOIN `core_sistemas_opciones`        opc3   ON opc3.idOpciones                                    = telemetria_listado.id_Sensores';
+LEFT JOIN `core_sistemas_opciones`        opc3   ON opc3.idOpciones                                    = telemetria_listado.id_Sensores
+LEFT JOIN `telemetria_listado_sensores_tipo`     ON telemetria_listado_sensores_tipo.idTelemetria      = telemetria_listado.idTelemetria';
 $SIS_where = 'idTelemetria ='.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query , 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
