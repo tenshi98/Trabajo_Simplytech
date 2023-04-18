@@ -99,7 +99,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){    $error['created']    = 'sucess/Dato creado correctamente';}
 if (isset($_GET['edited'])){     $error['edited']     = 'sucess/Dato editado correctamente';}
-if (isset($_GET['deleted'])){    $error['deleted']    = 'sucess/Dato borrado correctamente';}
+if (isset($_GET['deleted'])){    $error['deleted']    = 'sucess/Dato Borrado correctamente';}
 if (isset($_GET['clone_comp'])){ $error['clone_comp'] = 'sucess/Componente clonado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}

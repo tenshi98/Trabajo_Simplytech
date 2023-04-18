@@ -54,7 +54,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Envase Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Envase Modificado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Envase borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Envase Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

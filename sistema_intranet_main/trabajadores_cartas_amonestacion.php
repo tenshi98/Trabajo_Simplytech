@@ -65,7 +65,7 @@ require_once 'core/Web.Header.Main.php';
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Carta de Amonestacion Creada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Carta de Amonestacion Modificada correctamente';}
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Carta de Amonestacion borrada correctamente';}
-if (isset($_GET['delfile'])){ $error['delfile'] = 'sucess/Archivo borrado correctamente';}
+if (isset($_GET['delfile'])){ $error['delfile'] = 'sucess/Archivo Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

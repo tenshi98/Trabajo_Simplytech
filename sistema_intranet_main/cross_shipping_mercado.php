@@ -54,7 +54,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Mercado Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Mercado Modificado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Mercado borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Mercado Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

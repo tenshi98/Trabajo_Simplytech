@@ -178,7 +178,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Respaldo Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Respaldo Modificado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Respaldo borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Respaldo Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

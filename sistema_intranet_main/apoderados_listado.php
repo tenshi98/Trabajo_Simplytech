@@ -50,7 +50,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Apoderado Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Apoderado Modificado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Apoderado borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Apoderado Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -35,7 +35,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Tramos Impuesto Unico Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Tramos Impuesto Unico Modificado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tramos Impuesto Unico borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tramos Impuesto Unico Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

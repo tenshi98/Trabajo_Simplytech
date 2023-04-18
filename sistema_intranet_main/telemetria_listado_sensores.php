@@ -54,7 +54,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Tipo de Sensor Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Tipo de Sensor Modificado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tipo de Sensor borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tipo de Sensor Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

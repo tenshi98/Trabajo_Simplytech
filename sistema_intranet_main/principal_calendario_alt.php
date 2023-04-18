@@ -53,7 +53,7 @@ require_once 'core/Web.Header.Views.php';
 	//Listado de errores no manejables
 	if (isset($_GET['created'])){ $error['created'] = 'sucess/Evento Creado correctamente';}
 	if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Evento Modificado correctamente';}
-	if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Evento borrado correctamente';}
+	if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Evento Borrado correctamente';}
 	//Manejador de errores
 	if(isset($error)&&$error!=''){echo notifications_list($error);}
 	//Include de la presentacion

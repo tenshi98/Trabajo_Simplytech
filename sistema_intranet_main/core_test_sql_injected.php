@@ -25,7 +25,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Sistema creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sistema editado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sistema borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sistema Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -43,8 +43,8 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 
 				<?php
 				//se dibujan los inputs
-				$Form_Inputs = new Form_Inputs();	
-				
+				$Form_Inputs = new Form_Inputs();
+
 				/******************************************************************/
 				$Form_Inputs->form_tittle(3, 'SQL Normal');
 				if (!empty($_POST['submit_test'])){
@@ -53,8 +53,8 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 					if (!empty($_POST['password']))   $password_1  = $_POST['password'];
 
 					// consulto los datos
-					$query = "SELECT  
-					usuarios_listado.password, 
+					$query = "SELECT
+					usuarios_listado.password,
 					usuarios_listado.usuario,
 					usuarios_listado.Nombre,
 					usuarios_tipos.Nombre AS Usuario_Tipo
@@ -88,8 +88,8 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 					if (!empty($_POST['password']))   $password_2   = $_POST['password'];
 
 					// consulto los datos
-					$query = "SELECT  
-					usuarios_listado.password, 
+					$query = "SELECT
+					usuarios_listado.password,
 					usuarios_listado.usuario,
 					usuarios_listado.Nombre,
 					usuarios_tipos.Nombre AS Usuario_Tipo
@@ -111,7 +111,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 						var_dump($_POST);
 					echo '</pre>';
 				}
- 
+
 				/******************************************************************/
 				//Se verifican si existen los datos
 				$x1  = '';
@@ -119,12 +119,11 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 
 				$Form_Inputs->form_input_text('Usuario', 'usuario', $x1, 2);
 				$Form_Inputs->form_input_text('Password', 'password', $x2, 2);
-				
-			
+
 				?>
 
 				<div class="form-group">
-					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Ejecutar" name="submit_test"> 
+					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Ejecutar" name="submit_test">
 				</div>
 
 			</form>

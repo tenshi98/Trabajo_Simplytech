@@ -59,7 +59,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Experiencia creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Experiencia editado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Experiencia borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Experiencia Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

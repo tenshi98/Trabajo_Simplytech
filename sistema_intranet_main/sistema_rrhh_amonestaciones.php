@@ -53,7 +53,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Tipo de Amonestacion Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Tipo de Amonestacion Modificado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tipo de Amonestacion borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tipo de Amonestacion Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

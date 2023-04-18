@@ -59,7 +59,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Menu creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Menu editado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Menu borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Menu Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

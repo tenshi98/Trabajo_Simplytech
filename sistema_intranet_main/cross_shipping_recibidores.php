@@ -54,7 +54,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Recibidor Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Recibidor Modificado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Recibidor borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Recibidor Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

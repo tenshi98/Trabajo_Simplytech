@@ -28,10 +28,10 @@ if (isset($_GET['edited'])){     $error['edited']     = 'sucess/Orden de Trabajo
 if (isset($_GET['deleted'])){    $error['deleted']    = 'sucess/Orden de Trabajo borrada correctamente';}
 if (isset($_GET['terminated'])){ $error['terminated'] = 'sucess/Orden de Trabajo terminada correctamente';}
 if (isset($_GET['addins'])){     $error['addins']     = 'sucess/Insumo agregado correctamente';}
-if (isset($_GET['delins'])){     $error['delins']     = 'sucess/Insumo borrado correctamente';}
+if (isset($_GET['delins'])){     $error['delins']     = 'sucess/Insumo Borrado correctamente';}
 if (isset($_GET['editins'])){    $error['editins']    = 'sucess/Insumo editado correctamente';}
 if (isset($_GET['addprod'])){    $error['addprod']    = 'sucess/Producto agregado correctamente';}
-if (isset($_GET['delprod'])){    $error['delprod']    = 'sucess/Producto borrado correctamente';}
+if (isset($_GET['delprod'])){    $error['delprod']    = 'sucess/Producto Borrado correctamente';}
 if (isset($_GET['editprod'])){   $error['editprod']   = 'sucess/Producto editado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}

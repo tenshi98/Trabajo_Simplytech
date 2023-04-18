@@ -52,7 +52,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Vehiculo Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Vehiculo Modificado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Vehiculo borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Vehiculo Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

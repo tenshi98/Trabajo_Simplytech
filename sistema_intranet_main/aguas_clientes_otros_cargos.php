@@ -63,8 +63,8 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){  $error['created']  = 'sucess/Cargo creado correctamente';}
 if (isset($_GET['edited'])){   $error['edited']   = 'sucess/Cargo editado correctamente';}
-if (isset($_GET['deleted'])){  $error['deleted']  = 'sucess/Cargo borrado correctamente';}
-if (isset($_GET['del_arch'])){ $error['del_arch'] = 'sucess/Archivo borrado correctamente';}
+if (isset($_GET['deleted'])){  $error['deleted']  = 'sucess/Cargo Borrado correctamente';}
+if (isset($_GET['del_arch'])){ $error['del_arch'] = 'sucess/Archivo Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

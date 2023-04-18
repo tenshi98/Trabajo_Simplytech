@@ -53,7 +53,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Grupo Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Grupo Modificado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Grupo borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Grupo Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

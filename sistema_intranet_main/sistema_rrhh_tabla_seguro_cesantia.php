@@ -35,7 +35,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Tabla Seguro de cesantia Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Tabla Seguro de cesantia Modificado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tabla Seguro de cesantia borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tabla Seguro de cesantia Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

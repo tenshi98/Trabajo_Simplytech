@@ -60,7 +60,7 @@ require_once 'core/Web.Header.Main.php';
 if (isset($_GET['created'])){  $error['created']  = 'sucess/Etapa creada correctamente';}
 if (isset($_GET['edited'])){   $error['edited']   = 'sucess/Etapa editada correctamente';}
 if (isset($_GET['deleted'])){  $error['deleted']  = 'sucess/Etapa borrada correctamente';}
-if (isset($_GET['del_arch'])){ $error['del_arch'] = 'sucess/Archivo borrado correctamente';}
+if (isset($_GET['del_arch'])){ $error['del_arch'] = 'sucess/Archivo Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

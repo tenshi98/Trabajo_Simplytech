@@ -54,7 +54,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Material de Seguridad Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Material de Seguridad Modificado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Material de Seguridad borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Material de Seguridad Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

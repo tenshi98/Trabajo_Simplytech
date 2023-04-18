@@ -61,7 +61,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/IPC Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/IPC Modificado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/IPC borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/IPC Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

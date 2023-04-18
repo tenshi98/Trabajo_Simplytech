@@ -57,7 +57,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Turno Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Turno Modificado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Turno borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Turno Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

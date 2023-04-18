@@ -66,7 +66,7 @@ require_once 'core/Web.Header.Main.php';
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Licencia Creada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Licencia Modificada correctamente';}
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Licencia borrada correctamente';}
-if (isset($_GET['delfile'])){ $error['delfile'] = 'sucess/Archivo borrado correctamente';}
+if (isset($_GET['delfile'])){ $error['delfile'] = 'sucess/Archivo Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

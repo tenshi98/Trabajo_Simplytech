@@ -54,7 +54,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Puerto de Embarque Creado correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Puerto de Embarque Modificado correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Puerto de Embarque borrado correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Puerto de Embarque Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
