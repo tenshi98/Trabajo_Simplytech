@@ -48,9 +48,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Imagen creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Imagen editada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Imagen borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Imagen Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Imagen Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Imagen Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

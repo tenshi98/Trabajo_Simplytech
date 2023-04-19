@@ -52,8 +52,8 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Vecino creado correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Vecino editado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Vecino Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Vecino Modificado correctamente';}
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Vecino Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}

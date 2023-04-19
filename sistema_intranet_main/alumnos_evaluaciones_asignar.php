@@ -85,7 +85,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Asignacion Creada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Asignacion Modificada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Asignacion borrada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Asignacion Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

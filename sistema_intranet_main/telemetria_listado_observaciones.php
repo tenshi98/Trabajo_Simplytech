@@ -57,9 +57,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Observacion creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Observacion editada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Observacion borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Observacion Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Observacion Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Observacion Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

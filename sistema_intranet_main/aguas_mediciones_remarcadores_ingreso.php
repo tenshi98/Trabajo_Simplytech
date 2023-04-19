@@ -99,7 +99,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Medicion Creada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Medicion Modificada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Medicion borrada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Medicion Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

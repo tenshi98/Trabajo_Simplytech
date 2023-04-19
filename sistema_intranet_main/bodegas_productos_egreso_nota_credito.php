@@ -136,7 +136,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Nota de Credito Realizada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Nota de Credito Modificada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Nota de Credito borrada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Nota de Credito Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

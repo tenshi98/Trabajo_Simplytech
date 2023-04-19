@@ -92,9 +92,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Alerta creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Alerta editada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Alerta borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Alerta Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Alerta Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Alerta Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

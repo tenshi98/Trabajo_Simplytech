@@ -53,7 +53,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Salud Creada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Salud Modificada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Salud borrada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Salud Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -57,9 +57,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Definicion Operacional creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Definicion Operacional editada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Definicion Operacional borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Definicion Operacional Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Definicion Operacional Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Definicion Operacional Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

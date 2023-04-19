@@ -47,8 +47,8 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){      $error['created']      = 'sucess/Mantencion creada correctamente';}
-if (isset($_GET['del_doc_vehi'])){ $error['del_doc_vehi'] = 'sucess/Mantencion borrada correctamente';}
+if (isset($_GET['created'])){      $error['created']      = 'sucess/Mantencion Creada correctamente';}
+if (isset($_GET['del_doc_vehi'])){ $error['del_doc_vehi'] = 'sucess/Mantencion Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

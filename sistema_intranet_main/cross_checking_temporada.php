@@ -54,7 +54,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Temporada Creada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Temporada Modificada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Temporada borrada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Temporada Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

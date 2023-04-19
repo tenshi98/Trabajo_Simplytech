@@ -35,7 +35,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Carga Familiar Creada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Carga Familiar Modificada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Carga Familiar borrada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Carga Familiar Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

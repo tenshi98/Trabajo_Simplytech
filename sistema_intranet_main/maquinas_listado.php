@@ -55,9 +55,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Maquina creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Maquina editada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Maquina borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Maquina Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Maquina Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Maquina Borrada correctamente';}
 if (isset($_GET['clone'])){   $error['clone']   = 'sucess/Maquina clonada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}

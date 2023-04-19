@@ -49,8 +49,8 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Trabajador creado correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Trabajador editado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Trabajador Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Trabajador Modificado correctamente';}
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Trabajador Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}

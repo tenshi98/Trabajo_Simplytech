@@ -75,9 +75,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Geocerca creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Geocerca editada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Geocerca borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Geocerca Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Geocerca Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Geocerca Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

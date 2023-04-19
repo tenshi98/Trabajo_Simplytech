@@ -57,8 +57,8 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Fono creado correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Fono editado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Fono Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Fono Modificado correctamente';}
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Fono Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}

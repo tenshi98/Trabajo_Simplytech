@@ -53,7 +53,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Mutual de Seguridad Creada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Mutual de Seguridad Modificada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Mutual de Seguridad borrada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Mutual de Seguridad Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

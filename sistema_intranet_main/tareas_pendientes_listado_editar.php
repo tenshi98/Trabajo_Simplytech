@@ -83,12 +83,12 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['edited'])){        $error['edited']       = 'sucess/Tarea editada correctamente';}
+if (isset($_GET['edited'])){        $error['edited']       = 'sucess/Tarea Modificada correctamente';}
 if (isset($_GET['createdResp'])){   $error['createdResp']  = 'sucess/Responsable Agregado correctamente';}
 if (isset($_GET['createdTarea'])){  $error['createdTarea'] = 'sucess/Tarea Agregada correctamente';}
-if (isset($_GET['editTarea'])){     $error['editTarea']    = 'sucess/Tarea editada correctamente';}
+if (isset($_GET['editTarea'])){     $error['editTarea']    = 'sucess/Tarea Modificada correctamente';}
 if (isset($_GET['editFiles'])){     $error['editFiles']    = 'sucess/Archivo Agregado correctamente';}
-if (isset($_GET['editEstado'])){    $error['editEstado']   = 'sucess/Estado editada correctamente';}
+if (isset($_GET['editEstado'])){    $error['editEstado']   = 'sucess/Estado Modificada correctamente';}
 
 
 //Manejador de errores

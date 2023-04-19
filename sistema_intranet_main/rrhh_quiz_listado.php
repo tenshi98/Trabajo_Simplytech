@@ -75,9 +75,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Evaluacion creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Evaluacion editada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Evaluacion borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Evaluacion Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Evaluacion Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Evaluacion Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

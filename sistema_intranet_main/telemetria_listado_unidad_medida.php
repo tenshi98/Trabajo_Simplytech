@@ -48,7 +48,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Unidad Medida Creada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Unidad Medida Modificada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Unidad Medida borrada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Unidad Medida Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

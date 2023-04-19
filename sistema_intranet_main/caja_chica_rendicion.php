@@ -111,7 +111,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Rendicion Realizada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Rendicion Modificada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Rendicion borrada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Rendicion Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

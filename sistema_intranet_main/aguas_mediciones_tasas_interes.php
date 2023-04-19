@@ -56,7 +56,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Tasa de Interes Creada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Tasa de Interes Modificada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tasa de Interes borrada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tasa de Interes Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

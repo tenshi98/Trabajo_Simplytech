@@ -48,8 +48,8 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Sensor Activacion creado correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sensor Activacion editado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Sensor Activacion Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sensor Activacion Modificado correctamente';}
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sensor Activacion Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}

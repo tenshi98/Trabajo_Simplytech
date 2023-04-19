@@ -48,8 +48,8 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Firma creada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Firma borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Firma Creada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Firma Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

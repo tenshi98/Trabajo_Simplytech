@@ -57,9 +57,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Receta creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Receta editada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Receta borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Receta Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Receta Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Receta Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -47,8 +47,8 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Centro de Costo creado correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Centro de Costo editado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Centro de Costo Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Centro de Costo Modificado correctamente';}
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Centro de Costo Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}

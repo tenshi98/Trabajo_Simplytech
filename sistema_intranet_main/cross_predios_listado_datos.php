@@ -38,9 +38,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Ruta creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ruta editada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ruta borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Ruta Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ruta Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ruta Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

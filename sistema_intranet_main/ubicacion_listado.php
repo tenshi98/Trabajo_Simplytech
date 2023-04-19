@@ -47,9 +47,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Ubicacion creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ubicacion editada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ubicacion borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Ubicacion Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ubicacion Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ubicacion Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

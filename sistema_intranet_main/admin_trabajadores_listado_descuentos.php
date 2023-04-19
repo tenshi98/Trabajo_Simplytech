@@ -57,8 +57,8 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Descuento Asignado creado correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Descuento Asignado editado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Descuento Asignado Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Descuento Asignado Modificado correctamente';}
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Descuento Asignado Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}

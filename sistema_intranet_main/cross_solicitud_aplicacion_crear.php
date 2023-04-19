@@ -170,9 +170,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){     $error['created']     = 'sucess/Solicitud creada correctamente';}
-if (isset($_GET['edited'])){      $error['edited']      = 'sucess/Solicitud editada correctamente';}
-if (isset($_GET['deleted'])){     $error['deleted']     = 'sucess/Solicitud borrada correctamente';}
+if (isset($_GET['created'])){     $error['created']     = 'sucess/Solicitud Creada correctamente';}
+if (isset($_GET['edited'])){      $error['edited']      = 'sucess/Solicitud Modificada correctamente';}
+if (isset($_GET['deleted'])){     $error['deleted']     = 'sucess/Solicitud Borrada correctamente';}
 if (isset($_GET['cloned'])){      $error['cloned']      = 'sucess/Solicitud clonada correctamente';}
 if (isset($_GET['notslectjob'])){ $error['notslectjob'] = 'error/No ha seleccionado un trabajo a realizar';}
 //Manejador de errores

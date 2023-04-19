@@ -25,7 +25,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Procedimiento Creada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Procedimiento Modificada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Procedimiento borrada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Procedimiento Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 

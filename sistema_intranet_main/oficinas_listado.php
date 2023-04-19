@@ -54,9 +54,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Sala de Reuniones creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sala de Reuniones editada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sala de Reuniones borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Sala de Reuniones Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Sala de Reuniones Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Sala de Reuniones Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

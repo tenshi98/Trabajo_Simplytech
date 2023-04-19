@@ -63,8 +63,8 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){  $error['created']  = 'sucess/Evento creado correctamente';}
-if (isset($_GET['edited'])){   $error['edited']   = 'sucess/Evento editado correctamente';}
+if (isset($_GET['created'])){  $error['created']  = 'sucess/Evento Creado correctamente';}
+if (isset($_GET['edited'])){   $error['edited']   = 'sucess/Evento Modificado correctamente';}
 if (isset($_GET['deleted'])){  $error['deleted']  = 'sucess/Evento Borrado correctamente';}
 if (isset($_GET['del_arch'])){ $error['del_arch'] = 'sucess/Archivo Borrado correctamente';}
 //Manejador de errores

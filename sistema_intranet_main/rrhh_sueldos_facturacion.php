@@ -80,7 +80,7 @@ require_once 'core/Web.Header.Main.php';
 //Listado de errores no manejables
 if (isset($_GET['created'])){ $error['created'] = 'sucess/Facturacion de Sueldos Realizada correctamente';}
 if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Facturacion de Sueldos Modificada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Facturacion de Sueldos borrada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Facturacion de Sueldos Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

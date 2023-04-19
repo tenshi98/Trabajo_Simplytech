@@ -57,9 +57,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Subcuenta creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Subcuenta editada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Subcuenta borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Subcuenta Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Subcuenta Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Subcuenta Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -55,9 +55,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Camara creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Camara editada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Camara borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Camara Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Camara Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Camara Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

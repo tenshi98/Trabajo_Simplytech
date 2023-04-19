@@ -49,8 +49,8 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Pasajeros creado correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Pasajeros editado correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Pasajeros Creado correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Pasajeros Modificado correctamente';}
 if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Pasajeros Borrado correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}

@@ -56,9 +56,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Contrato creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Contrato editada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Contrato borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Contrato Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Contrato Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Contrato Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
