@@ -213,18 +213,21 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//bucle
-				$qry = '';
+				$SIS_query = '
+				telemetria_mantencion_matriz.idSistema,
+				telemetria_mantencion_matriz.idEstado,
+				telemetria_mantencion_matriz.cantPuntos';
 				for ($i = 1; $i <= 72; $i++) {
-					$qry .= ',PuntoNombre_'.$i;
-					$qry .= ',SensoresTipo_'.$i;
-					$qry .= ',SensoresValor_'.$i;
-					$qry .= ',SensoresNumero_'.$i;
+					$SIS_query .= ',telemetria_mantencion_matriz.PuntoNombre_'.$i;
+					$SIS_query .= ',telemetria_mantencion_matriz.SensoresTipo_'.$i;
+					$SIS_query .= ',telemetria_mantencion_matriz.SensoresValor_'.$i;
+					$SIS_query .= ',telemetria_mantencion_matriz.SensoresNumero_'.$i;
 
 				}
 
 				/*******************************************************************/
 				// Se traen todos los datos de la maquina
-				$rowdata = db_select_data (false, 'idSistema, idEstado, cantPuntos '.$qry, 'telemetria_mantencion_matriz', '', 'idMatriz = '.$idMatriz, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata = db_select_data (false, $SIS_query, 'telemetria_mantencion_matriz', '', 'idMatriz = '.$idMatriz, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*******************************************************************/
 				//filtros

@@ -599,14 +599,18 @@ class Form_Inputs extends Basic_Form_Inputs{
 		$N_Maximo_Sensores = 72;
 		$subquery = '';
 		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-			$subquery .= ',SensoresGrupo_'.$i;
-			$subquery .= ',SensoresActivo_'.$i;
+			$subquery .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+			$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 		}
 		// Se trae un listado de todos los registros
-		$SIS_query = 'idTelemetria, cantSensores'.$subquery;
-		$SIS_join  = '';
-		$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-		$SIS_order = 'idTelemetria ASC';
+		$SIS_query = '
+		telemetria_listado.idTelemetria,
+		telemetria_listado.cantSensores'.$subquery;
+		$SIS_join  = '
+		LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria   = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_activo`  ON telemetria_listado_sensores_activo.idTelemetria  = telemetria_listado.idTelemetria';
+		$SIS_where = 'telemetria_listado.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+		$SIS_order = 'telemetria_listado.idTelemetria ASC';
 		$arrSelect = array();
 		$arrSelect = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrSelect');
 		// Se trae un listado de todos los registros

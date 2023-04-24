@@ -71,8 +71,8 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Matriz Borrado correct
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['clone_idMatriz'])){ 
-	
+if(!empty($_GET['clone_idMatriz'])){
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -108,31 +108,14 @@ if(!empty($_GET['clone_idMatriz'])){
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['mod'])){
-//Armo cadena
-$cadena  = 'PuntoNombre_'.$_GET['mod'].' AS Nombre';
-$cadena .= ',SensoresTipo_'.$_GET['mod'].' AS Sensor';
-$cadena .= ',SensoresValor_'.$_GET['mod'].' AS Valor';
-$cadena .= ',SensoresNumero_'.$_GET['mod'].' AS SensoresNumero';
+// Se traen todos los datos de la maquina
+$SIS_query  = 'telemetria_mantencion_matriz.PuntoNombre_'.$_GET['mod'].' AS Nombre';
+$SIS_query .= ',telemetria_mantencion_matriz.SensoresTipo_'.$_GET['mod'].' AS Sensor';
+$SIS_query .= ',telemetria_mantencion_matriz.SensoresValor_'.$_GET['mod'].' AS Valor';
+$SIS_query .= ',telemetria_mantencion_matriz.SensoresNumero_'.$_GET['mod'].' AS SensoresNumero';
+$SIS_join  = '';
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_mantencion_matriz', $SIS_join, 'idMatriz = '.$_GET['idMatriz'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-// consulto los datos
-$query = "SELECT ".$cadena."
-FROM `telemetria_mantencion_matriz`
-WHERE idMatriz = ".$_GET['idMatriz'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 
-	 
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -168,69 +151,34 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 </div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-} elseif(!empty($_GET['idMatriz'])){    
+} elseif(!empty($_GET['idMatriz'])){
 
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
-$subquery = '';
+$SIS_query  = '
+telemetria_mantencion_matriz.Nombre,
+telemetria_mantencion_matriz.cantPuntos';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',PuntoNombre_'.$i;
-	$subquery .= ',SensoresTipo_'.$i;
-	$subquery .= ',SensoresValor_'.$i;
-	$subquery .= ',SensoresNumero_'.$i;
+	$SIS_query .= ',telemetria_mantencion_matriz.PuntoNombre_'.$i;
+	$SIS_query .= ',telemetria_mantencion_matriz.SensoresTipo_'.$i;
+	$SIS_query .= ',telemetria_mantencion_matriz.SensoresValor_'.$i;
+	$SIS_query .= ',telemetria_mantencion_matriz.SensoresNumero_'.$i;
 }
-// consulto los datos
-$query = "SELECT Nombre,cantPuntos
-".$subquery."
+$SIS_join  = '';
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_mantencion_matriz', $SIS_join, 'idMatriz = '.$_GET['idMatriz'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-FROM `telemetria_mantencion_matriz`
-WHERE idMatriz = ".$_GET['idMatriz'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-//Se traen todos los tipos
-$arrTipos = array();
-$query = "SELECT 
+// Se trae un listado con todos los elementos
+$SIS_query = '
 telemetria_listado_sensores.idSensores,
 telemetria_listado_sensores.Nombre,
-core_sensores_funciones.Nombre AS SensorFuncion
+core_sensores_funciones.Nombre AS SensorFuncion';
+$SIS_join  = 'LEFT JOIN `core_sensores_funciones` ON core_sensores_funciones.idSensorFuncion = telemetria_listado_sensores.idSensorFuncion';
+$SIS_where = '';
+$SIS_order = 'telemetria_listado_sensores.idSensores ASC';
+$arrTipos = array();
+$arrTipos = db_select_array (false, $SIS_query, 'telemetria_listado_sensores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipos');
 
-FROM `telemetria_listado_sensores`
-LEFT JOIN `core_sensores_funciones` ON core_sensores_funciones.idSensorFuncion = telemetria_listado_sensores.idSensorFuncion
-ORDER BY idSensores ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrTipos,$row );
-}
-
-				
 ?>
-
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -280,23 +228,11 @@ array_push( $arrTipos,$row );
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['idMatriz_2'])){
 // consulto los datos
-$query = "SELECT Nombre,cantPuntos, idSistema
-FROM `telemetria_mantencion_matriz`
-WHERE idMatriz = ".$_GET['idMatriz_2'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	?>
+$SIS_query  = 'Nombre,cantPuntos, idSistema';
+$SIS_join  = '';
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_mantencion_matriz', $SIS_join, 'idMatriz = '.$_GET['idMatriz_2'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -420,7 +356,7 @@ $cuenta_registros = db_select_nrows (false, 'idMatriz', 'telemetria_mantencion_m
 $total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
-telemetria_mantencion_matriz.idMatriz, 
+telemetria_mantencion_matriz.idMatriz,
 telemetria_mantencion_matriz.Nombre,
 telemetria_mantencion_matriz.cantPuntos,
 core_estados.Nombre AS Estado,
@@ -474,8 +410,6 @@ $arrMatriz = db_select_array (false, $SIS_query, 'telemetria_mantencion_matriz',
 	</div>
 </div>
 <div class="clearfix"></div>
-
- 
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
