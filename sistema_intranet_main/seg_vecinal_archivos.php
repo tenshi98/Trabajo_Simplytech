@@ -29,7 +29,6 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 	//Se dibuja el explorador de archivos
 	echo file_explorer(2, 'connector_seguridad_archivos', DB_SITE_MAIN_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 3);
 
-
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */
 /**********************************************************************************************************************************/

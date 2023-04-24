@@ -188,7 +188,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Pago Formulario 29.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['fecha_auto'])?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['fecha_auto']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -251,32 +251,32 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 					</tr>
 					<tr>
 						<td>Arriendos</td>
-						<td align="right"><?php echo Valores($rowArriendo['IVA_Compra'], 0)?></td>
-						<td align="right"><?php echo Valores($rowArriendo['IVA_Venta'], 0)?></td>
+						<td align="right"><?php echo Valores($rowArriendo['IVA_Compra'], 0); ?></td>
+						<td align="right"><?php echo Valores($rowArriendo['IVA_Venta'], 0); ?></td>
 						<td align="right" class="<?php if($rowArriendo['IVA_TotalSaldo']>0){echo 'color-red';}else{echo 'color-blue';} ?>"><?php echo Valores($rowArriendo['IVA_TotalSaldo'], 0); ?></td>
 						<td align="right"><?php echo Valores($rowArriendo['IVA_MontoPago'], 0); ?></td>
 						<td align="right"><?php echo Valores($rowArriendo['IVA_Diferencia'], 0); ?></td>
 					</tr>
 					<tr>
 						<td>Insumos</td>
-						<td align="right"><?php echo Valores($rowInsumo['IVA_Compra'], 0)?></td>
-						<td align="right"><?php echo Valores($rowInsumo['IVA_Venta'], 0)?></td>
+						<td align="right"><?php echo Valores($rowInsumo['IVA_Compra'], 0); ?></td>
+						<td align="right"><?php echo Valores($rowInsumo['IVA_Venta'], 0); ?></td>
 						<td align="right" class="<?php if($rowInsumo['IVA_TotalSaldo']>0){echo 'color-red';}else{echo 'color-blue';} ?>"><?php echo Valores($rowInsumo['IVA_TotalSaldo'], 0); ?></td>
 						<td align="right"><?php echo Valores($rowInsumo['IVA_MontoPago'], 0); ?></td>
 						<td align="right"><?php echo Valores($rowInsumo['IVA_Diferencia'], 0); ?></td>
 					</tr>
 					<tr>
 						<td>Productos</td>
-						<td align="right"><?php echo Valores($rowProducto['IVA_Compra'], 0)?></td>
-						<td align="right"><?php echo Valores($rowProducto['IVA_Venta'], 0)?></td>
+						<td align="right"><?php echo Valores($rowProducto['IVA_Compra'], 0); ?></td>
+						<td align="right"><?php echo Valores($rowProducto['IVA_Venta'], 0); ?></td>
 						<td align="right" class="<?php if($rowProducto['IVA_TotalSaldo']>0){echo 'color-red';}else{echo 'color-blue';} ?>"><?php echo Valores($rowProducto['IVA_TotalSaldo'], 0); ?></td>
 						<td align="right"><?php echo Valores($rowProducto['IVA_MontoPago'], 0); ?></td>
 						<td align="right"><?php echo Valores($rowProducto['IVA_Diferencia'], 0); ?></td>
 					</tr>
 					<tr>
 						<td>Servicios</td>
-						<td align="right"><?php echo Valores($rowServicio['IVA_Compra'], 0)?></td>
-						<td align="right"><?php echo Valores($rowServicio['IVA_Venta'], 0)?></td>
+						<td align="right"><?php echo Valores($rowServicio['IVA_Compra'], 0); ?></td>
+						<td align="right"><?php echo Valores($rowServicio['IVA_Venta'], 0); ?></td>
 						<td align="right" class="<?php if($rowServicio['IVA_TotalSaldo']>0){echo 'color-red';}else{echo 'color-blue';} ?>"><?php echo Valores($rowServicio['IVA_TotalSaldo'], 0); ?></td>
 						<td align="right"><?php echo Valores($rowServicio['IVA_MontoPago'], 0); ?></td>
 						<td align="right"><?php echo Valores($rowServicio['IVA_Diferencia'], 0); ?></td>
@@ -312,29 +312,29 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 					</tr>
 					<tr>
 						<td>Arriendos</td>
-						<td align="right"><?php echo Valores($rowArriendo['PPM_ValorNeto'], 0)?></td>
-						<td align="right"><?php echo Valores($rowArriendo['PPM_Saldo'], 0)?></td>
+						<td align="right"><?php echo Valores($rowArriendo['PPM_ValorNeto'], 0); ?></td>
+						<td align="right"><?php echo Valores($rowArriendo['PPM_Saldo'], 0); ?></td>
 						<td align="right"><?php echo Valores($rowArriendo['PPM_Pago'], 0); ?></td>
 						<td align="right"><?php echo Valores($rowArriendo['PPM_Diferencia'], 0); ?></td>
 					</tr>
 					<tr>
 						<td>Insumos</td>
-						<td align="right"><?php echo Valores($rowInsumo['PPM_ValorNeto'], 0)?></td>
-						<td align="right"><?php echo Valores($rowInsumo['PPM_Saldo'], 0)?></td>
+						<td align="right"><?php echo Valores($rowInsumo['PPM_ValorNeto'], 0); ?></td>
+						<td align="right"><?php echo Valores($rowInsumo['PPM_Saldo'], 0); ?></td>
 						<td align="right"><?php echo Valores($rowInsumo['PPM_Pago'], 0); ?></td>
 						<td align="right"><?php echo Valores($rowInsumo['PPM_Diferencia'], 0); ?></td>
 					</tr>
 					<tr>
 						<td>Productos</td>
-						<td align="right"><?php echo Valores($rowProducto['PPM_ValorNeto'], 0)?></td>
-						<td align="right"><?php echo Valores($rowProducto['PPM_Saldo'], 0)?></td>
+						<td align="right"><?php echo Valores($rowProducto['PPM_ValorNeto'], 0); ?></td>
+						<td align="right"><?php echo Valores($rowProducto['PPM_Saldo'], 0); ?></td>
 						<td align="right"><?php echo Valores($rowProducto['PPM_Pago'], 0); ?></td>
 						<td align="right"><?php echo Valores($rowProducto['PPM_Diferencia'], 0); ?></td>
 					</tr>
 					<tr>
 						<td>Servicios</td>
-						<td align="right"><?php echo Valores($rowServicio['PPM_ValorNeto'], 0)?></td>
-						<td align="right"><?php echo Valores($rowServicio['PPM_Saldo'], 0)?></td>
+						<td align="right"><?php echo Valores($rowServicio['PPM_ValorNeto'], 0); ?></td>
+						<td align="right"><?php echo Valores($rowServicio['PPM_Saldo'], 0); ?></td>
 						<td align="right"><?php echo Valores($rowServicio['PPM_Pago'], 0); ?></td>
 						<td align="right"><?php echo Valores($rowServicio['PPM_Diferencia'], 0); ?></td>
 					</tr>
@@ -366,7 +366,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 					</tr>
 					<tr>
 						<td>Retenciones</td>
-						<td align="right"><?php echo Valores($rowRetencion['Retencion'], 0)?></td>
+						<td align="right"><?php echo Valores($rowRetencion['Retencion'], 0); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -389,7 +389,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 					</tr>
 					<tr>
 						<td>Impuesto</td>
-						<td align="right"><?php echo Valores($rowImpuestoRenta['ImpuestoRenta'], 0)?></td>
+						<td align="right"><?php echo Valores($rowImpuestoRenta['ImpuestoRenta'], 0); ?></td>
 					</tr>
 				</tbody>
 			</table>

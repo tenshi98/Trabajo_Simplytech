@@ -423,8 +423,6 @@ $Form_Inputs = new Inputs();
     }
 </script>
 
-
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['modCentroCosto'])){
 //sistema
@@ -572,7 +570,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td><?php echo Fecha_estandar($_SESSION['productos_gasto_basicos']['Creacion_fecha'])?></td>
+						<td><?php echo Fecha_estandar($_SESSION['productos_gasto_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>

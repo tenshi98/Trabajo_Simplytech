@@ -113,7 +113,6 @@ $SIS_order = 'bodegas_servicios_facturacion.idTrabajador ASC';
 $arrTemporal_4 = array();
 $arrTemporal_4 = db_select_array (false, $SIS_query, 'bodegas_servicios_facturacion', $SIS_join, $SIS_where_4, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTemporal_4');
 
-
 /*************************************************************************************************/
 //Se crea arreglo
 $arrCreativo = array();

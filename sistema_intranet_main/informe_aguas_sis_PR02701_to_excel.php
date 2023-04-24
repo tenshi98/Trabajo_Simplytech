@@ -185,7 +185,6 @@ $spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('L'.$nn, $total2)
 			->setCellValue('M'.$nn, $clientes);
 
-
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Informe PR02701');
 

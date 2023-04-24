@@ -19,10 +19,10 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //Variables para filtro y paginacion
 $search = '';
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){  $location .= "&idTelemetria=".$_GET['idTelemetria'];  $search .= "&idTelemetria=".$_GET['idTelemetria'];}
-if(isset($_GET['F_inicio']) && $_GET['F_inicio']!=''){   $location .= "&F_inicio=".$_GET['F_inicio'];          $search .= "&F_inicio=".$_GET['F_inicio'];}
-if(isset($_GET['H_inicio']) && $_GET['H_inicio']!=''){   $location .= "&H_inicio=".$_GET['H_inicio'];          $search .= "&H_inicio=".$_GET['H_inicio'];}
-if(isset($_GET['F_termino']) && $_GET['F_termino']!=''){ $location .= "&F_termino=".$_GET['F_termino'];        $search .= "&F_termino=".$_GET['F_termino'];}
-if(isset($_GET['H_termino']) && $_GET['H_termino']!=''){ $location .= "&H_termino=".$_GET['H_termino'];        $search .= "&H_termino=".$_GET['H_termino'];}
+if(isset($_GET['F_inicio']) && $_GET['F_inicio']!=''){          $location .= "&F_inicio=".$_GET['F_inicio'];          $search .= "&F_inicio=".$_GET['F_inicio'];}
+if(isset($_GET['H_inicio']) && $_GET['H_inicio']!=''){          $location .= "&H_inicio=".$_GET['H_inicio'];          $search .= "&H_inicio=".$_GET['H_inicio'];}
+if(isset($_GET['F_termino']) && $_GET['F_termino']!=''){        $location .= "&F_termino=".$_GET['F_termino'];        $search .= "&F_termino=".$_GET['F_termino'];}
+if(isset($_GET['H_termino']) && $_GET['H_termino']!=''){        $location .= "&H_termino=".$_GET['H_termino'];        $search .= "&H_termino=".$_GET['H_termino'];}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -36,25 +36,27 @@ if(!empty($_GET['submit_filter'])){
 $arrGruposRev = array();
 $arrGruposRev = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_grupos_uso', '', 'idSupervisado=1', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrGruposRev');
 /**********************************************************/
+// consulto los datos
+$row_data = db_select_data (false, 'cantSensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //numero sensores equipo
-$N_Maximo_Sensores = 72;
-$subquery = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresRevisionGrupo_'.$i;
+$SIS_query = 'Nombre,cantSensores';
+for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
+	$SIS_query .= ',telemetria_listado_sensores_revision_grupo.SensoresRevisionGrupo_'.$i;
 }
+$SIS_join  = 'LEFT JOIN `telemetria_listado_sensores_revision_grupo`  ON telemetria_listado_sensores_revision_grupo.idTelemetria  = telemetria_listado.idTelemetria';
 // consulto los datos
-$rowdata = db_select_data (false, 'Nombre,cantSensores'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /**********************************************************/
 //Se crean las columnas
-$arrColumnas = array(); 
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+$arrColumnas = array();
+for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
 	if(isset($rowdata['SensoresRevisionGrupo_'.$i])&&$rowdata['SensoresRevisionGrupo_'.$i]!=0){
 		$arrColumnas[$rowdata['SensoresRevisionGrupo_'.$i]]['idGrupo'] = $rowdata['SensoresRevisionGrupo_'.$i];
 	}
 }
-foreach ($arrGruposRev as $sen) { 
+foreach ($arrGruposRev as $sen) {
 	if(isset($arrColumnas[$sen['idGrupo']]['idGrupo'])&&$arrColumnas[$sen['idGrupo']]['idGrupo']!=''){
 		$arrColumnas[$sen['idGrupo']]['Nombre'] = $sen['Nombre'];
 	}
@@ -81,8 +83,6 @@ $arrConsulta = db_select_array (false, 'Fecha, Horas_Sensor_activo'.$subquery, '
 
 ?>
 
-
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
@@ -94,7 +94,7 @@ $arrConsulta = db_select_array (false, 'Fecha, Horas_Sensor_activo'.$subquery, '
 					<tr role="row">
 						<th width="120">Fecha</th>
 						<th>Encendido</th>
-						<?php foreach ($arrColumnas as $col) { 
+						<?php foreach ($arrColumnas as $col) {
 							echo '<th>'.$col['Nombre'].'</th>';
 						} ?>
 
@@ -110,7 +110,7 @@ $arrConsulta = db_select_array (false, 'Fecha, Horas_Sensor_activo'.$subquery, '
 						<tr class="odd">
 							<td><?php echo fecha_estandar($con['Fecha']); ?></td>
 							<td><?php echo gmdate("H:i:s", $con['Horas_Sensor_activo']);$t_s_activo = $t_s_activo + $con['Horas_Sensor_activo']; ?></td>
-							<?php foreach ($arrColumnas as $col) { 
+							<?php foreach ($arrColumnas as $col) {
 								echo '<td>'.gmdate("H:i:s", $con['Horas_'.$col['idGrupo']]).'</td>';
 								//verifico si existe
 								if(isset($arrSuma[$col['idGrupo']])&&$arrSuma[$col['idGrupo']]!=0){
@@ -134,16 +134,12 @@ $arrConsulta = db_select_array (false, 'Fecha, Horas_Sensor_activo'.$subquery, '
 							}
 						} ?>
 					</tr>
-					                   
+
 				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
-
-	
-	
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -164,8 +160,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$w .= " AND telemetria_listado.idTab=6";//CrossCrane
 }
- 
- ?>
+
+?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">

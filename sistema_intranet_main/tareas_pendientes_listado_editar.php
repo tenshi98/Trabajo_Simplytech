@@ -90,7 +90,6 @@ if (isset($_GET['editTarea'])){     $error['editTarea']    = 'sucess/Tarea Modif
 if (isset($_GET['editFiles'])){     $error['editFiles']    = 'sucess/Archivo Agregado correctamente';}
 if (isset($_GET['editEstado'])){    $error['editEstado']   = 'sucess/Estado Modificada correctamente';}
 
-
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -259,8 +258,6 @@ $usrfil .= $responsables;
 
 ?>
 
-
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box dark">
 		<header>
@@ -364,8 +361,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 }
 
 ?>
-
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box dark">
@@ -661,12 +656,12 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td><?php echo Fecha_estandar($rowdata['f_creacion'])?></td>
+						<td><?php echo Fecha_estandar($rowdata['f_creacion']); ?></td>
 					</tr>
 					<?php if(isset($rowdata['f_termino'])&&$rowdata['f_termino']!='0000-00-00'){ ?>
 						<tr>
 							<td class="meta-head">Fecha Termino</td>
-							<td><?php echo Fecha_estandar($rowdata['f_termino'])?></td>
+							<td><?php echo Fecha_estandar($rowdata['f_termino']); ?></td>
 						</tr>
 					<?php } ?>
 				</tbody>

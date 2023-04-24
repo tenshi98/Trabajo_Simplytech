@@ -149,8 +149,6 @@ foreach ($arrTemporal_7 as $temp) {
 
 ?>
 
-
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="">
 		<div id="calendar_content" class="body">
@@ -177,8 +175,6 @@ foreach ($arrTemporal_7 as $temp) {
 		</div>
 	</div>
 </div>
-
-
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table']});</script>

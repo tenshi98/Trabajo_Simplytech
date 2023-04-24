@@ -255,7 +255,6 @@ foreach ($arrFacturacion as $fact) {
 	$nn++;
 }
 
-
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Facturacion');
 

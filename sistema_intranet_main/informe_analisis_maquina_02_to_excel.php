@@ -183,7 +183,7 @@ $spreadsheet->setActiveSheetIndex(0)
 //variables
 $nn=11;
 //arreglo
-foreach ($arrGrupo as $grupo) { 
+foreach ($arrGrupo as $grupo) {
 	//recorro los puntos
 	for ($i = 1; $i <= $rowpre['cantPuntos']; $i++) {
 		//verifico que pertenezcan al mismo grupo

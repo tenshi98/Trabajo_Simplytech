@@ -109,7 +109,6 @@ LEFT JOIN `core_sistemas_opciones` ops2      ON ops2.idOpciones                 
 $SIS_where = 'productos_listado.idProducto = '.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-
 //Se verifica el tipo de producto para traer su receta
 if(isset($rowdata['idTipoProducto'])&&$rowdata['idTipoProducto']==2){
 	// Se trae un listado con productos de la receta

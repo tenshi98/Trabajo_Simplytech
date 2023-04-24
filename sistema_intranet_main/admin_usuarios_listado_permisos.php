@@ -175,7 +175,7 @@ $arrPermisos = db_select_array (false, $SIS_query, 'core_permisos_listado', $SIS
 									<?php } ?>
 								</td>
 								<td>
-									<?php echo ' '.TituloMenu($permiso['Nombre_permiso']).' '; ?> 
+									<?php echo ' '.TituloMenu($permiso['Nombre_permiso']).' '; ?>
 									<div class="btn-group" style="width: 140px;" >
 										<?php if(isset($permiso['Habilita'])&&$permiso['Habilita']!=''){ ?><a title="<?php echo $permiso['Habilita']; ?>" class="btn btn-success btn-sm tooltip"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a><?php } ?>
 										<?php if(isset($permiso['Principal'])&&$permiso['Principal']!=''){ ?><a title="<?php echo $permiso['Principal']; ?>" class="btn btn-info btn-sm tooltip"><i class="fa fa-question-circle-o" aria-hidden="true"></i></a><?php } ?>

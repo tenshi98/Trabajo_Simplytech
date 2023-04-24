@@ -27,17 +27,22 @@ if(!empty($_GET['submit_filter'])){
 
 //numero sensores equipo
 $N_Maximo_Sensores = 20;
-$subquery_1 = 'Nombre,cantSensores';
+$subquery_1 = '
+telemetria_listado.Nombre,
+telemetria_listado.cantSensores';
 $subquery_2 = 'idTabla';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery_1 .= ',SensoresGrupo_'.$i;
-	$subquery_1 .= ',SensoresMedActual_'.$i;
-	$subquery_1 .= ',SensoresActivo_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 	$subquery_2 .= ',SUM(Sensor_'.$i.') AS Med_'.$i;
 }
-
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_grupo`       ON telemetria_listado_sensores_grupo.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`      ON telemetria_listado_sensores_activo.idTelemetria      = telemetria_listado.idTelemetria';
 //Obtengo los datos
-$rowdata = db_select_data (false, $subquery_1, 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, $subquery_1, 'telemetria_listado', $SIS_join, 'telemetria_listado.idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Temporales
 $Subquery    = '';
@@ -363,7 +368,6 @@ foreach ($arrDemanda_1 as $data) {
 $arrData_0['Name']  = "'Demanda de suministro'";
 $DataName_1           = "'1° Demanda'";
 $DataName_2           = "'2° Demanda'";
-
 
 //variables
 $Graphics_xData_0       = 'var xData = [['.$Temp_0.'],];';

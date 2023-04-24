@@ -124,8 +124,7 @@ if(!empty($_GET['addFile'])){ ?>
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
-
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['addHora'])){  
@@ -257,7 +256,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['horas_extras_mens_ing_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>

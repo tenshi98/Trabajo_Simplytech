@@ -101,7 +101,6 @@ if(isset($arrZonas[0]['Direccion'])&&$arrZonas[0]['Direccion']!=''){$Ubicacion.=
 if(isset($arrZonas[0]['Comuna'])&&$arrZonas[0]['Comuna']!=''){      $Ubicacion.=', '.$arrZonas[0]['Comuna'];}
 if(isset($arrZonas[0]['Ciudad'])&&$arrZonas[0]['Ciudad']!=''){      $Ubicacion.=', '.$arrZonas[0]['Ciudad'];}
 
-
 //Se limpian los nombres
 $Ubicacion = str_replace('Nº', '', $Ubicacion);
 $Ubicacion = str_replace('nº', '', $Ubicacion);

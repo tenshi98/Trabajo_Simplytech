@@ -27,7 +27,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'telemetria_carga_bam', $SIS_j
 		<header>
 			<h5>Calendario de Cargas por vencer</h5>
 		</header>
-				
+
 		<div id="calendar_content" class="body">
 			<div id="calendar" class="fc fc-ltr">
 

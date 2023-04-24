@@ -16,22 +16,23 @@ require_once 'core/Load.Utils.Views.php';
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 // consulto los datos
 $SIS_query = '
-backup_telemetria_listado_errores_999.Descripcion, 
-backup_telemetria_listado_errores_999.Fecha, 
-backup_telemetria_listado_errores_999.Hora, 
-backup_telemetria_listado_errores_999.Sensor, 
+backup_telemetria_listado_errores_999.Descripcion,
+backup_telemetria_listado_errores_999.Fecha,
+backup_telemetria_listado_errores_999.Hora,
+backup_telemetria_listado_errores_999.Sensor,
 backup_telemetria_listado_errores_999.Valor,
 backup_telemetria_listado_errores_999.GeoLatitud,
 backup_telemetria_listado_errores_999.GeoLongitud,
 telemetria_listado.Nombre AS NombreEquipo'.$subquery;
-$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = backup_telemetria_listado_errores_999.idTelemetria';
+$SIS_join  = '
+LEFT JOIN `telemetria_listado`               ON telemetria_listado.idTelemetria                 = backup_telemetria_listado_errores_999.idTelemetria
+LEFT JOIN telemetria_listado_sensores_unimed ON telemetria_listado_sensores_unimed.idTelemetria = backup_telemetria_listado_errores_999.idTelemetria ';
 $SIS_where = 'backup_telemetria_listado_errores_999.idErrores = '.simpleDecode($_GET['view'], fecha_actual());
 $rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_errores_999', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
-
 
 //Se traen todas las unidades de medida
 $arrUnimed = array();
@@ -58,15 +59,15 @@ require_once 'core/Web.Header.Views.php';
 			<h5>Datos del Equipo <?php echo $rowdata['NombreEquipo']; ?></h5>
 		</header>
 		<div class="table-responsive">
-			<?php 
+			<?php
 			//Guardo la unidad de medida
 			$unimed = ' '.$arrFinalUnimed[$rowdata['SensoresUniMed_'.$rowdata['Sensor']]];
 			$explanation  = '<strong>'.fecha_estandar($rowdata['Fecha']).' - '.$rowdata['Hora'].'</strong><br/>';
 			$explanation .= $rowdata['Descripcion'].'<br/>';
 			$explanation .= '<strong>Medida: </strong>'.Cantidades_decimales_justos($rowdata['Valor']).$unimed.'<br/>';
-							
-			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)?>
-				
+
+			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
+
 		</div>
 	</div>
 </div>

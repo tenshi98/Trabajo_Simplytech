@@ -96,7 +96,7 @@ if(isset($_GET['idLeido'])&&$_GET['idLeido']!=''){
 //Verifico el tipo de usuario que esta ingresando
 $SIS_join  = "LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria";
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores.idTelemetria ";	
+	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores.idTelemetria ";
 	$SIS_where.=' AND usuarios_equipos_telemetria.idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 
@@ -110,25 +110,25 @@ $total_paginas = ceil($cuenta_registros / $cant_reg);
 $N_Maximo_Sensores = 20;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 //datos a mostrar
 $SIS_query = '
 telemetria_listado_errores.idErrores,
-telemetria_listado_errores.Descripcion, 
-telemetria_listado_errores.Fecha, 
+telemetria_listado_errores.Descripcion,
+telemetria_listado_errores.Fecha,
 telemetria_listado_errores.Hora,
-telemetria_listado_errores.Sensor, 
+telemetria_listado_errores.Sensor,
 telemetria_listado_errores.Valor,
 telemetria_listado_errores.Valor_min,
 telemetria_listado_errores.Valor_max,
 telemetria_listado_errores.idTelemetria,
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.id_Geo'.$subquery;
-$SIS_order = 'idErrores DESC LIMIT '.$comienzo.', '.$cant_reg;
+$SIS_join .= ' LEFT JOIN telemetria_listado_sensores_unimed ON telemetria_listado_sensores_unimed.idTelemetria = telemetria_listado_errores.idTelemetria ';
+$SIS_order = 'telemetria_listado_errores.idErrores DESC LIMIT '.$comienzo.', '.$cant_reg;
 $arrErrores = array();
 $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
-
 
 $arrUnimed = array();
 $arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
@@ -165,7 +165,7 @@ foreach ($arrUnimed as $sen) {
                         <th>Medicion Actual</th>
                         <th>Min</th>
                         <th>Max</th>
-                        <th width="10">Acciones</th>  
+                        <th width="10">Acciones</th>
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -185,7 +185,7 @@ foreach ($arrUnimed as $sen) {
 								</div>
 							</td>
 						</tr>
-                    <?php }  ?>                    
+                    <?php }  ?>
 				</tbody>
 			</table>
 		</div>
@@ -194,11 +194,6 @@ foreach ($arrUnimed as $sen) {
 		</div>
 	</div>
 </div>
-
-
-
-	
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -219,8 +214,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 //Solo para plataforma CrossTech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$z .= " AND telemetria_listado.idTab=9";//CrossEnergy
-} 
- ?>		
+}
+?>
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -232,7 +227,6 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 
 				<?php
 				//Se verifican si existen los datos
-					
 				if(isset($f_inicio)){      $x1  = $f_inicio;      }else{$x1  = '';}
 				if(isset($f_termino)){     $x2  = $f_termino;     }else{$x2  = '';}
 				if(isset($idTelemetria)){  $x3  = $idTelemetria;  }else{$x3  = '';}

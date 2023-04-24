@@ -95,7 +95,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['Documento']?>.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha'])?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -112,7 +112,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 				Tipo Cargo: <?php echo $row_data['Tipo_trab']; ?>
 			</address>
 		</div>
-				
+
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Empresa
 			<address>
@@ -124,7 +124,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'trabajadores_descuentos_cuota
 				Email: <?php echo $row_data['SistemaOrigenEmail']; ?>
 			</address>
 		</div>
-				
+
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">';
 			<?php 		
 			if(isset($row_data['Usuario'])&&$row_data['Usuario']!=''){

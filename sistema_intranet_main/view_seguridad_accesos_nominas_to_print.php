@@ -110,7 +110,7 @@ $html ='
 				<strong>Estado:</strong> '.$row_data['Estado'].'<br/>
 			</address>
 		</div>
-				
+
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
 			Programacion
 			<address>

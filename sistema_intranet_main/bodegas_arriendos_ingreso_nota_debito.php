@@ -613,7 +613,7 @@ array_push( $arrFrecuencia,$row );
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['arriendos_ing_nd_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -746,7 +746,7 @@ array_push( $arrFrecuencia,$row );
 									$vtotal_neto = $vtotal_neto + $vtotal_IVA;
 									//se guardan los valores en variables de sesion
 									$_SESSION['arriendos_ing_nd_impuestos'][$producto['idImpuesto']]['valor'] = $vtotal_IVA;
-									
+
 									?>
 									<tr class="invoice-total" bgcolor="#f1f1f1">
 										<td colspan="4" align="right"><strong><?php echo $impto['Nombre'].' ('.Cantidades_decimales_justos($impto['Porcentaje']).'%)'; ?></strong></td>      

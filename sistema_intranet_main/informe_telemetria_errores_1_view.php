@@ -69,7 +69,7 @@ require_once 'core/Web.Header.Views.php';
 			$explanation .= '<strong>Min: </strong>'.Cantidades_decimales_justos($rowdata['Valor_min']).$unimed.'<br/>';
 			$explanation .= '<strong>Max: </strong>'.Cantidades_decimales_justos($rowdata['Valor_max']).$unimed.'<br/>';
 
-			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)?>
+			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
 
 		</div>
 	</div>

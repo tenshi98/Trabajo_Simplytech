@@ -66,7 +66,7 @@ array_push( $arrExistencias,$row );
 
 
 $mes = array();
-foreach ($arrExistencias as $existencias) { 
+foreach ($arrExistencias as $existencias) {
 	if(!isset($mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo1'])){ $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo1'] = 0;}
 	if(!isset($mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo2'])){ $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo2'] = 0;}
 	switch ($existencias['idTipo']) {
@@ -166,23 +166,23 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 								data_arr_1.addColumn({type: 'string', role: 'annotation'});
 
 								data_arr_1.addRows([
-									["<?php echo numero_a_mes_corto($grafico[1]['mes'])?>", <?php echo valores_enteros($grafico[1]['tipo1']) ?>, '<?php echo valores_enteros($grafico[1]['tipo1']) ?>'],
-									["<?php echo numero_a_mes_corto($grafico[2]['mes'])?>", <?php echo valores_enteros($grafico[2]['tipo1']) ?>, '<?php echo valores_enteros($grafico[2]['tipo1']) ?>'],
-									["<?php echo numero_a_mes_corto($grafico[3]['mes'])?>", <?php echo valores_enteros($grafico[3]['tipo1']) ?>, '<?php echo valores_enteros($grafico[3]['tipo1']) ?>'],
-									["<?php echo numero_a_mes_corto($grafico[4]['mes'])?>", <?php echo valores_enteros($grafico[4]['tipo1']) ?>, '<?php echo valores_enteros($grafico[4]['tipo1']) ?>'],
-									["<?php echo numero_a_mes_corto($grafico[5]['mes'])?>", <?php echo valores_enteros($grafico[5]['tipo1']) ?>, '<?php echo valores_enteros($grafico[5]['tipo1']) ?>'],
-									["<?php echo numero_a_mes_corto($grafico[6]['mes'])?>", <?php echo valores_enteros($grafico[6]['tipo1']) ?>, '<?php echo valores_enteros($grafico[6]['tipo1']) ?>'],
-									["<?php echo numero_a_mes_corto($grafico[7]['mes'])?>", <?php echo valores_enteros($grafico[7]['tipo1']) ?>, '<?php echo valores_enteros($grafico[7]['tipo1']) ?>'],
-									["<?php echo numero_a_mes_corto($grafico[8]['mes'])?>", <?php echo valores_enteros($grafico[8]['tipo1']) ?>, '<?php echo valores_enteros($grafico[8]['tipo1']) ?>'],
-									["<?php echo numero_a_mes_corto($grafico[9]['mes'])?>", <?php echo valores_enteros($grafico[9]['tipo1']) ?>, '<?php echo valores_enteros($grafico[9]['tipo1']) ?>'],
-									["<?php echo numero_a_mes_corto($grafico[10]['mes'])?>", <?php echo valores_enteros($grafico[10]['tipo1']) ?>, '<?php echo valores_enteros($grafico[10]['tipo1']) ?>'],
-									["<?php echo numero_a_mes_corto($grafico[11]['mes'])?>", <?php echo valores_enteros($grafico[11]['tipo1']) ?>, '<?php echo valores_enteros($grafico[11]['tipo1']) ?>'],
-									["<?php echo numero_a_mes_corto($grafico[12]['mes'])?>", <?php echo valores_enteros($grafico[12]['tipo1']) ?>, '<?php echo valores_enteros($grafico[12]['tipo1']) ?>']
+									["<?php echo numero_a_mes_corto($grafico[1]['mes']); ?>", <?php echo valores_enteros($grafico[1]['tipo1']) ?>, '<?php echo valores_enteros($grafico[1]['tipo1']) ?>'],
+									["<?php echo numero_a_mes_corto($grafico[2]['mes']); ?>", <?php echo valores_enteros($grafico[2]['tipo1']) ?>, '<?php echo valores_enteros($grafico[2]['tipo1']) ?>'],
+									["<?php echo numero_a_mes_corto($grafico[3]['mes']); ?>", <?php echo valores_enteros($grafico[3]['tipo1']) ?>, '<?php echo valores_enteros($grafico[3]['tipo1']) ?>'],
+									["<?php echo numero_a_mes_corto($grafico[4]['mes']); ?>", <?php echo valores_enteros($grafico[4]['tipo1']) ?>, '<?php echo valores_enteros($grafico[4]['tipo1']) ?>'],
+									["<?php echo numero_a_mes_corto($grafico[5]['mes']); ?>", <?php echo valores_enteros($grafico[5]['tipo1']) ?>, '<?php echo valores_enteros($grafico[5]['tipo1']) ?>'],
+									["<?php echo numero_a_mes_corto($grafico[6]['mes']); ?>", <?php echo valores_enteros($grafico[6]['tipo1']) ?>, '<?php echo valores_enteros($grafico[6]['tipo1']) ?>'],
+									["<?php echo numero_a_mes_corto($grafico[7]['mes']); ?>", <?php echo valores_enteros($grafico[7]['tipo1']) ?>, '<?php echo valores_enteros($grafico[7]['tipo1']) ?>'],
+									["<?php echo numero_a_mes_corto($grafico[8]['mes']); ?>", <?php echo valores_enteros($grafico[8]['tipo1']) ?>, '<?php echo valores_enteros($grafico[8]['tipo1']) ?>'],
+									["<?php echo numero_a_mes_corto($grafico[9]['mes']); ?>", <?php echo valores_enteros($grafico[9]['tipo1']) ?>, '<?php echo valores_enteros($grafico[9]['tipo1']) ?>'],
+									["<?php echo numero_a_mes_corto($grafico[10]['mes']); ?>", <?php echo valores_enteros($grafico[10]['tipo1']) ?>, '<?php echo valores_enteros($grafico[10]['tipo1']) ?>'],
+									["<?php echo numero_a_mes_corto($grafico[11]['mes']); ?>", <?php echo valores_enteros($grafico[11]['tipo1']) ?>, '<?php echo valores_enteros($grafico[11]['tipo1']) ?>'],
+									["<?php echo numero_a_mes_corto($grafico[12]['mes']); ?>", <?php echo valores_enteros($grafico[12]['tipo1']) ?>, '<?php echo valores_enteros($grafico[12]['tipo1']) ?>']
 			
 								]);
 
 								var options = {
-									title: 'Grafico <?php echo widget_nombre('tipo1')?>',
+									title: 'Grafico <?php echo widget_nombre('tipo1'); ?>',
 									hAxis: {title: 'Fechas'},
 									vAxis: { title: 'Valor' },
 									width: $(window).width()*0.75,
@@ -218,23 +218,23 @@ if($s_Ventas=='true'){            $s_data .= ',tipo2';}
 									data_arr_2.addColumn({type: 'string', role: 'annotation'});
 
 									data_arr_2.addRows([
-										["<?php echo numero_a_mes_corto($grafico[1]['mes'])?>", <?php echo valores_enteros($grafico[1]['tipo2']) ?>, '<?php echo valores_enteros($grafico[1]['tipo2']) ?>'],
-										["<?php echo numero_a_mes_corto($grafico[2]['mes'])?>", <?php echo valores_enteros($grafico[2]['tipo2']) ?>, '<?php echo valores_enteros($grafico[2]['tipo2']) ?>'],
-										["<?php echo numero_a_mes_corto($grafico[3]['mes'])?>", <?php echo valores_enteros($grafico[3]['tipo2']) ?>, '<?php echo valores_enteros($grafico[3]['tipo2']) ?>'],
-										["<?php echo numero_a_mes_corto($grafico[4]['mes'])?>", <?php echo valores_enteros($grafico[4]['tipo2']) ?>, '<?php echo valores_enteros($grafico[4]['tipo2']) ?>'],
-										["<?php echo numero_a_mes_corto($grafico[5]['mes'])?>", <?php echo valores_enteros($grafico[5]['tipo2']) ?>, '<?php echo valores_enteros($grafico[5]['tipo2']) ?>'],
-										["<?php echo numero_a_mes_corto($grafico[6]['mes'])?>", <?php echo valores_enteros($grafico[6]['tipo2']) ?>, '<?php echo valores_enteros($grafico[6]['tipo2']) ?>'],
-										["<?php echo numero_a_mes_corto($grafico[7]['mes'])?>", <?php echo valores_enteros($grafico[7]['tipo2']) ?>, '<?php echo valores_enteros($grafico[7]['tipo2']) ?>'],
-										["<?php echo numero_a_mes_corto($grafico[8]['mes'])?>", <?php echo valores_enteros($grafico[8]['tipo2']) ?>, '<?php echo valores_enteros($grafico[8]['tipo2']) ?>'],
-										["<?php echo numero_a_mes_corto($grafico[9]['mes'])?>", <?php echo valores_enteros($grafico[9]['tipo2']) ?>, '<?php echo valores_enteros($grafico[9]['tipo2']) ?>'],
-										["<?php echo numero_a_mes_corto($grafico[10]['mes'])?>", <?php echo valores_enteros($grafico[10]['tipo2']) ?>, '<?php echo valores_enteros($grafico[10]['tipo2']) ?>'],
-										["<?php echo numero_a_mes_corto($grafico[11]['mes'])?>", <?php echo valores_enteros($grafico[11]['tipo2']) ?>, '<?php echo valores_enteros($grafico[11]['tipo2']) ?>'],
-										["<?php echo numero_a_mes_corto($grafico[12]['mes'])?>", <?php echo valores_enteros($grafico[12]['tipo2']) ?>, '<?php echo valores_enteros($grafico[12]['tipo2']) ?>']
+										["<?php echo numero_a_mes_corto($grafico[1]['mes']); ?>", <?php echo valores_enteros($grafico[1]['tipo2']) ?>, '<?php echo valores_enteros($grafico[1]['tipo2']) ?>'],
+										["<?php echo numero_a_mes_corto($grafico[2]['mes']); ?>", <?php echo valores_enteros($grafico[2]['tipo2']) ?>, '<?php echo valores_enteros($grafico[2]['tipo2']) ?>'],
+										["<?php echo numero_a_mes_corto($grafico[3]['mes']); ?>", <?php echo valores_enteros($grafico[3]['tipo2']) ?>, '<?php echo valores_enteros($grafico[3]['tipo2']) ?>'],
+										["<?php echo numero_a_mes_corto($grafico[4]['mes']); ?>", <?php echo valores_enteros($grafico[4]['tipo2']) ?>, '<?php echo valores_enteros($grafico[4]['tipo2']) ?>'],
+										["<?php echo numero_a_mes_corto($grafico[5]['mes']); ?>", <?php echo valores_enteros($grafico[5]['tipo2']) ?>, '<?php echo valores_enteros($grafico[5]['tipo2']) ?>'],
+										["<?php echo numero_a_mes_corto($grafico[6]['mes']); ?>", <?php echo valores_enteros($grafico[6]['tipo2']) ?>, '<?php echo valores_enteros($grafico[6]['tipo2']) ?>'],
+										["<?php echo numero_a_mes_corto($grafico[7]['mes']); ?>", <?php echo valores_enteros($grafico[7]['tipo2']) ?>, '<?php echo valores_enteros($grafico[7]['tipo2']) ?>'],
+										["<?php echo numero_a_mes_corto($grafico[8]['mes']); ?>", <?php echo valores_enteros($grafico[8]['tipo2']) ?>, '<?php echo valores_enteros($grafico[8]['tipo2']) ?>'],
+										["<?php echo numero_a_mes_corto($grafico[9]['mes']); ?>", <?php echo valores_enteros($grafico[9]['tipo2']) ?>, '<?php echo valores_enteros($grafico[9]['tipo2']) ?>'],
+										["<?php echo numero_a_mes_corto($grafico[10]['mes']); ?>", <?php echo valores_enteros($grafico[10]['tipo2']) ?>, '<?php echo valores_enteros($grafico[10]['tipo2']) ?>'],
+										["<?php echo numero_a_mes_corto($grafico[11]['mes']); ?>", <?php echo valores_enteros($grafico[11]['tipo2']) ?>, '<?php echo valores_enteros($grafico[11]['tipo2']) ?>'],
+										["<?php echo numero_a_mes_corto($grafico[12]['mes']); ?>", <?php echo valores_enteros($grafico[12]['tipo2']) ?>, '<?php echo valores_enteros($grafico[12]['tipo2']) ?>']
 				
 									]);
 
 									var options = {
-										title: 'Grafico <?php echo widget_nombre('tipo2')?>',
+										title: 'Grafico <?php echo widget_nombre('tipo2'); ?>',
 										hAxis: {title: 'Fechas'},
 										vAxis: { title: 'Valor' },
 										width: $(window).width()*0.75,

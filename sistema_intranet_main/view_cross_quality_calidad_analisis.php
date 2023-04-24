@@ -343,7 +343,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['TipoAnalisis']?>.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['fecha_auto'])?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['fecha_auto']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -366,7 +366,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 				<br/>
 			</address>
 		</div>
-				
+
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Fecha Creacion
 			<address>

@@ -84,7 +84,6 @@ LEFT JOIN `core_ubicacion_comunas`   clientcomuna   ON clientcomuna.idComuna    
 $SIS_where = 'cotizacion_listado.idCotizacion ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'cotizacion_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-
 /*****************************************/
 // Se consulta
 $SIS_query = '

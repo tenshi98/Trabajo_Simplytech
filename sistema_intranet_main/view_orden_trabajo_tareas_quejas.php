@@ -64,7 +64,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_quejas', $SI
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Quejas de Ordenes de Trabajo.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowdata['FechaQueja'])?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowdata['FechaQueja']); ?></small>
 			</h2>
 		</div>
 	</div>

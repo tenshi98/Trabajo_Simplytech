@@ -129,11 +129,6 @@ $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_dete
 	</div>
 </div>
 
-
-
-	
-
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<a href="<?php echo $location ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -153,7 +148,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$z .= " AND telemetria_listado.idTab=1";//CrossChecking
 }
- ?>		
+?>
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>

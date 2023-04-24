@@ -311,8 +311,8 @@ $z2 = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z1 .= " AND usuarios_bodegas_arriendos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
- 
- ?>
+
+?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">

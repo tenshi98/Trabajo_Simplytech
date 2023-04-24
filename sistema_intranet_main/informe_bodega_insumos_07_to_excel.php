@@ -64,7 +64,7 @@ $arrExistenciasMain = db_select_array (false, $SIS_query, 'bodegas_insumos_factu
 
 /****************************************************/
 $mes = array();
-foreach ($arrExistenciasMain as $existencias) { 
+foreach ($arrExistenciasMain as $existencias) {
 	if(!isset($mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']])){ $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] = 0;}
 	
 	$mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] = $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] + $existencias['Valor'];									
@@ -127,7 +127,7 @@ $arrExistencias = db_select_array (false, $SIS_query, 'bodegas_insumos_facturaci
 
 /****************************************************/
 $mes = array();
-foreach ($arrExistencias as $existencias) { 
+foreach ($arrExistencias as $existencias) {
 	if(!isset($mes[$existencias['BodegaID']][$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']])){ $mes[$existencias['BodegaID']][$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] = 0;}
 	
 	$mes[$existencias['BodegaID']][$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] = $mes[$existencias['BodegaID']][$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] + $existencias['Valor'];									
@@ -284,7 +284,6 @@ $spreadsheet->setActiveSheetIndex($sheet)
 			->setCellValue('L'.$nn, $SubTotal_11)
 			->setCellValue('M'.$nn, $SubTotal_12)
 			->setCellValue('N'.$nn, $Total);
-
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle(cortar('Egresos de '.$rowBodega['Nombre'], 25));

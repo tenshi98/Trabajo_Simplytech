@@ -37,7 +37,6 @@ LEFT JOIN `core_oc_estado`                          ON core_oc_estado.idEstado  
 $SIS_where = 'ocompra_listado.idOcompra ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'ocompra_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-
 /*****************************************/
 //Insumos
 $SIS_query = '
@@ -208,7 +207,6 @@ $SIS_order = 'ocompra_listado_sol_rel.Type ASC';
 $arrSolMat = array();
 $arrSolMat = db_select_array (false, $SIS_query, 'ocompra_listado_sol_rel', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrSolMat');
 
-
 /*****************************************/
 // Se trae un listado con el historial
 $SIS_query = '
@@ -268,7 +266,7 @@ foreach ($arrHistorial as $doc){
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Orden de Compra <?php echo n_doc($X_Puntero , 5); ?>.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha'])?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha']); ?></small>
 			</h2>
 		</div>
 	</div>

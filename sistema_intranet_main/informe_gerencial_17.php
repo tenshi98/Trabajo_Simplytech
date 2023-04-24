@@ -40,7 +40,6 @@ if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento!=0){
 //Filtro el sistema al cual pertenece
 $SIS_where .= " AND telemetria_listado.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 
-
 //Verifico el tipo de usuario que esta ingresando y el id
 $SIS_join = "LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema";	
 if(isset($_SESSION['usuario']['basic_data']['idTipoUsuario'])&&$_SESSION['usuario']['basic_data']['idTipoUsuario']!=1&&isset($_SESSION['usuario']['basic_data']['idUsuario'])&&$_SESSION['usuario']['basic_data']['idUsuario']!=0){

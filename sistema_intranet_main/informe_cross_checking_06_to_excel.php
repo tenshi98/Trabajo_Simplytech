@@ -184,7 +184,6 @@ foreach ($arrOTS as $temp) {
 	$nn++;
 }
 
-
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Exportacion');
 

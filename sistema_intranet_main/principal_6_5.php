@@ -25,7 +25,6 @@ require_once 'core/Web.Header.Main.php';
 //variable de numero de permiso
 $x_nperm = 0;
 
-
 //CrossCheking
 $x_nperm++; $trans[$x_nperm] = "cross_solicitud_aplicacion_crear.php";          //01 - Solicitud Aplicacion - 01 Crear
 $x_nperm++; $trans[$x_nperm] = "cross_solicitud_aplicacion_ejecutar.php";       //02 - Solicitud Aplicacion - 02 Programar

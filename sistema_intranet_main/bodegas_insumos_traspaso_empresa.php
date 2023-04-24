@@ -573,7 +573,7 @@ if($valor_0!=0){
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td><?php echo Fecha_estandar($_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha'])?></td>
+						<td><?php echo Fecha_estandar($_SESSION['insumos_traspasoempresa_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>

@@ -238,7 +238,6 @@ foreach ($arrPagosClientes as $pagos) {
 	}
 }
 
-
 // Se trae un listado con todos los pagos
 $arrPagosProveedores = array();
 $query = "SELECT

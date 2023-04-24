@@ -25,9 +25,6 @@ require_once 'core/Web.Header.Main.php';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['submit_filter'])){
 
-             
-  
-
 //filtros
 $x = "WHERE maquinas_listado_matriz.idMatriz>=0";
 $y = "WHERE maquinas_listado.idMaquina>=0";
@@ -66,7 +63,6 @@ if(!$resultado){
 					
 }
 $rowpre = mysqli_fetch_assoc ($resultado);
-
 
 /*********************************************/
 //Consulta Maquina

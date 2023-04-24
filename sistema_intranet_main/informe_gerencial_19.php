@@ -47,7 +47,6 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrSistemas,$row );
 }
 
-
 //se verifica el tipo de usuario
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$x2 = "idUsuario>=0";
@@ -93,7 +92,7 @@ array_push( $arrExistencias,$row );
 	
 
 $mes_prod = array();
-foreach ($arrExistencias as $existencias) { 
+foreach ($arrExistencias as $existencias) {
 	if(!isset($mes_prod[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo1'])){ $mes_prod[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo1'] = 0;}
 	if(!isset($mes_prod[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo2'])){ $mes_prod[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo2'] = 0;}
 	if(!isset($mes_prod[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo3'])){ $mes_prod[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo3'] = 0;}
@@ -241,7 +240,7 @@ array_push( $arrExistencias,$row );
 
 
 $mes_ins = array();
-foreach ($arrExistencias as $existencias) { 
+foreach ($arrExistencias as $existencias) {
 	if(!isset($mes_ins[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo1'])){ $mes_ins[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo1'] = 0;}
 	if(!isset($mes_ins[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo2'])){ $mes_ins[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo2'] = 0;}
 	if(!isset($mes_ins[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo3'])){ $mes_ins[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo3'] = 0;}
@@ -390,7 +389,7 @@ array_push( $arrExistencias,$row );
 
 
 $mes_arrie = array();
-foreach ($arrExistencias as $existencias) { 
+foreach ($arrExistencias as $existencias) {
 	if(!isset($mes_arrie[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo1'])){ $mes_arrie[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo1'] = 0;}
 	if(!isset($mes_arrie[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo2'])){ $mes_arrie[$existencias['idSistema']][$existencias['Creacion_ano']][$existencias['Creacion_mes']]['tipo2'] = 0;}
 	switch ($existencias['idTipo']) {
@@ -471,7 +470,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 		</header>
         <div class="tab-content">
 
-			<?php 
+			<?php
 			//variable
 			$sis_count = 1;
 			//arreglo
@@ -538,23 +537,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 													data_prod_1_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 													data_prod_1_<?php echo $sis_count; ?>.addRows([
-														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo1']) ?>']
+														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo1']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo1']) ?>']
 								
 													]);
 
 													var options = {
-														title: 'Grafico <?php echo widget_nombre('tipo1')?>',
+														title: 'Grafico <?php echo widget_nombre('tipo1'); ?>',
 														hAxis: {title: 'Fechas'},
 														vAxis: { title: 'Valor' },
 														width: $(window).width()*0.75,
@@ -590,23 +589,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_prod_2_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_prod_2_<?php echo $sis_count; ?>.addRows([
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo2']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo2']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo2']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo2')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo2'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,
@@ -644,23 +643,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_prod_3_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_prod_3_<?php echo $sis_count; ?>.addRows([
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo3']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo3']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo3']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo3')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo3'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,
@@ -698,23 +697,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_prod_4_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_prod_4_<?php echo $sis_count; ?>.addRows([
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo4']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo4']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo4']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo4')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo4'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,
@@ -752,23 +751,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_prod_5_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_prod_5_<?php echo $sis_count; ?>.addRows([
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo5']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo5']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo5']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo5')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo5'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,
@@ -806,23 +805,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_prod_6_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_prod_6_<?php echo $sis_count; ?>.addRows([
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo6']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo6']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo6']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo6')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo6'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,
@@ -860,23 +859,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_prod_7_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_prod_7_<?php echo $sis_count; ?>.addRows([
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo7']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo7']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo7']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo7')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo7'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,
@@ -914,23 +913,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_prod_8_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_prod_8_<?php echo $sis_count; ?>.addRows([
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo8']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo8']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo8']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo8')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo8'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,
@@ -968,23 +967,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_prod_9_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_prod_9_<?php echo $sis_count; ?>.addRows([
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo9']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][1]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][2]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][3]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][4]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][5]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][6]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][7]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][8]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][9]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][10]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][11]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_prod[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo9']) ?>, '<?php echo valores_enteros($grafico_prod[$sistema['idSistema']][12]['tipo9']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo9')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo9'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,
@@ -1071,23 +1070,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 													data_ins_1_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 													data_ins_1_<?php echo $sis_count; ?>.addRows([
-														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo1']) ?>']
+														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo1']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo1']) ?>']
 								
 													]);
 
 													var options = {
-														title: 'Grafico <?php echo widget_nombre('tipo1')?>',
+														title: 'Grafico <?php echo widget_nombre('tipo1'); ?>',
 														hAxis: {title: 'Fechas'},
 														vAxis: { title: 'Valor' },
 														width: $(window).width()*0.75,
@@ -1123,23 +1122,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_ins_2_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_ins_2_<?php echo $sis_count; ?>.addRows([
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo2']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo2']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo2']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo2')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo2'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,
@@ -1177,23 +1176,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_ins_3_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_ins_3_<?php echo $sis_count; ?>.addRows([
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo3']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo3']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo3']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo3']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo3']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo3')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo3'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,
@@ -1231,23 +1230,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_ins_4_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_ins_4.addRows([
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo4']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo4']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo4']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo4']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo4']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo4')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo4'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,
@@ -1285,23 +1284,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_ins_5_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_ins_5_<?php echo $sis_count; ?>.addRows([
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo5']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo5']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo5']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo5']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo5']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo5')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo5'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,
@@ -1339,23 +1338,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_ins_6_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_ins_6_<?php echo $sis_count; ?>.addRows([
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo6']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo6']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo6']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo6']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo6']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo6')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo6'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,
@@ -1393,23 +1392,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_ins_7_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_ins_7_<?php echo $sis_count; ?>.addRows([
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo7']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo7']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo7']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo7']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo7']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo7')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo7'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,
@@ -1447,23 +1446,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_ins_8_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_ins_8_<?php echo $sis_count; ?>.addRows([
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo8']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo8']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo8']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo8']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo8']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo8')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo8'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,
@@ -1501,23 +1500,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_ins_9_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_ins_9_<?php echo $sis_count; ?>.addRows([
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo9']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo9']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][1]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][2]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][3]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][4]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][5]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][6]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][7]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][8]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][9]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][10]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][11]['tipo9']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_ins[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo9']) ?>, '<?php echo valores_enteros($grafico_ins[$sistema['idSistema']][12]['tipo9']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo9')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo9'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,
@@ -1596,23 +1595,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 													data_arr_1_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 													data_arr_1_<?php echo $sis_count; ?>.addRows([
-														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][1]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][1]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][2]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][2]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][3]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][3]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][4]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][4]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][5]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][5]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][6]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][6]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][7]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][7]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][8]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][8]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][9]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][9]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][10]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][10]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][11]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][11]['tipo1']) ?>'],
-														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][12]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][12]['tipo1']) ?>']
+														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][1]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][1]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][2]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][2]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][3]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][3]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][4]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][4]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][5]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][5]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][6]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][6]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][7]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][7]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][8]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][8]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][9]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][9]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][10]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][10]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][11]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][11]['tipo1']) ?>'],
+														["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][12]['tipo1']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][12]['tipo1']) ?>']
 								
 													]);
 
 													var options = {
-														title: 'Grafico <?php echo widget_nombre('tipo1')?>',
+														title: 'Grafico <?php echo widget_nombre('tipo1'); ?>',
 														hAxis: {title: 'Fechas'},
 														vAxis: { title: 'Valor' },
 														width: $(window).width()*0.75,
@@ -1648,23 +1647,23 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 														data_arr_2_<?php echo $sis_count; ?>.addColumn({type: 'string', role: 'annotation'});
 
 														data_arr_2_<?php echo $sis_count; ?>.addRows([
-															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][1]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][1]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][1]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][2]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][2]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][2]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][3]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][3]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][3]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][4]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][4]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][4]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][5]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][5]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][5]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][6]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][6]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][6]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][7]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][7]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][7]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][8]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][8]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][8]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][9]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][9]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][9]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][10]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][10]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][10]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][11]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][11]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][11]['tipo2']) ?>'],
-															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][12]['mes'])?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][12]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][12]['tipo2']) ?>']
+															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][1]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][1]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][1]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][2]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][2]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][2]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][3]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][3]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][3]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][4]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][4]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][4]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][5]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][5]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][5]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][6]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][6]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][6]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][7]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][7]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][7]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][8]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][8]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][8]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][9]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][9]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][9]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][10]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][10]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][10]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][11]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][11]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][11]['tipo2']) ?>'],
+															["<?php echo numero_a_mes_corto($grafico_arrie[$sistema['idSistema']][12]['mes']); ?>", <?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][12]['tipo2']) ?>, '<?php echo valores_enteros($grafico_arrie[$sistema['idSistema']][12]['tipo2']) ?>']
 									
 														]);
 
 														var options = {
-															title: 'Grafico <?php echo widget_nombre('tipo2')?>',
+															title: 'Grafico <?php echo widget_nombre('tipo2'); ?>',
 															hAxis: {title: 'Fechas'},
 															vAxis: { title: 'Valor' },
 															width: $(window).width()*0.75,

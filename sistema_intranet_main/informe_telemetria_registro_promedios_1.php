@@ -37,7 +37,6 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 }
 $search.="&idDetalle=".$_GET['idDetalle'];
 
-
 //verifico el numero de datos antes de hacer la consulta
 $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], '', $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'ndata_1');
 

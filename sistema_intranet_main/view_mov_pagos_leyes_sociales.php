@@ -164,7 +164,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Pago Previred.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['fecha_auto'])?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['fecha_auto']); ?></small>
 			</h2>
 		</div>
 	</div>

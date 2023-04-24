@@ -555,7 +555,7 @@ array_push( $arrRutas,$row );
 							<tr class="odd">
 								<td><?php echo $nx; ?></td>
 								<td><?php echo $rutas['direccion']; ?></td>
-								<td> 
+								<td>
 									<div class="btn-group" style="width: 70px;" >  
 										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$rutas['idUbicaciones']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=4){

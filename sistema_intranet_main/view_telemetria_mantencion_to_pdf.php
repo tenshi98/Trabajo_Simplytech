@@ -70,7 +70,6 @@ LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna   
 $SIS_where = 'telemetria_historial_mantencion.idMantencion ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'telemetria_historial_mantencion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-
 /**********************************/
 $arrOpciones = array();
 $arrOpciones = db_select_array (false, 'idOpciones, Nombre', 'core_telemetria_servicio_tecnico_opciones', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrOpciones');

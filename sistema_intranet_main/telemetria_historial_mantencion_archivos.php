@@ -143,8 +143,6 @@ array_push( $arrArchivos,$row );
 </div>
 <div class="clearfix"></div>
 
-
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>

@@ -284,7 +284,6 @@ $arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupo
 $arrUnimed = array();
 $arrUnimed = db_select_array (false, 'idUniMed,Nombre', 'telemetria_listado_unidad_medida', '', '', 'idUniMed ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrUnimed');
 
-
 //Recorro
 $arrFinalGrupos    = array();
 $arrFinalUnimed    = array();

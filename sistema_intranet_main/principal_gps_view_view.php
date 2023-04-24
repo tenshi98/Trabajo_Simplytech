@@ -49,7 +49,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			$explanation .= '<strong>Equipo: </strong>'.$rowdata['Nombre'].'<br/>';
 			$explanation .= '<strong>Velocidad: </strong>'.Cantidades($rowdata['GeoVelocidad'], 0).'/'.Cantidades($rowdata['LimiteVelocidad'], 0).' KM/h<br/>';
 					
-			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1)?>
+			echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Equipos', 'Datos', $explanation, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
 			
         </div>
 	</div>

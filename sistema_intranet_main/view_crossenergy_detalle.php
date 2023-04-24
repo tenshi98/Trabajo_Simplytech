@@ -57,27 +57,31 @@ $Demanda_HoraInicio     = hora_actual();
 $Demanda_FechaTermino   = fecha_actual();
 $Demanda_HoraTermino    = hora_actual();
 
-
 //numero sensores equipo
 $N_Maximo_Sensores = 20;
-$subquery_1 = 'Nombre,cantSensores';
+$subquery_1 = '
+telemetria_listado.Nombre,
+telemetria_listado.cantSensores';
 $subquery_2 = 'idTabla';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery_1 .= ',SensoresGrupo_'.$i;
-	$subquery_1 .= ',SensoresMedActual_'.$i;
-	$subquery_1 .= ',SensoresActivo_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	$subquery_1 .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 	$subquery_2 .= ',SUM(Sensor_'.$i.') AS Med_'.$i;
 }
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_grupo`       ON telemetria_listado_sensores_grupo.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`      ON telemetria_listado_sensores_activo.idTelemetria      = telemetria_listado.idTelemetria';
 
 //Obtengo los datos
-$rowdata            = db_select_data (false, $subquery_1, 'telemetria_listado', '', 'idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
+$rowdata            = db_select_data (false, $subquery_1, 'telemetria_listado', $SIS_join, 'telemetria_listado.idTelemetria ='.$X_Puntero, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 $n_permisos         = db_select_data (false, 'idOpcionesGen_6', 'core_sistemas','', 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
 
 $SIS_query = 'Nombre,CrossEnergy_PeriodoInicio, CrossEnergy_PeriodoTermino, CrossEnergy_HorarioInicio, CrossEnergy_HorarioTermino';
 $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_SESSION['usuario']['basic_data']['idSistema'];
 $rowSistema = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowSistema');
-
 
 //Temporales
 
@@ -107,7 +111,6 @@ $arrGraficos = db_select_array (false, 'FechaSistema, HoraSistema'.$Subquery.$Su
 
 $arrDemanda = array();
 $arrDemanda = db_select_array (false, 'FechaSistema, HoraSistema'.$Subquery.$Subquery_2, 'telemetria_listado_crossenergy_hora', '', 'idTelemetria = '.$X_Puntero.' AND (TimeStamp BETWEEN "'.$Demanda_FechaInicio.' '.$Demanda_HoraInicio .'" AND "'.$Demanda_FechaTermino.' '.$Demanda_HoraTermino.'")  GROUP BY TimeStamp', 'Total DESC LIMIT 2', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrDemanda');
-
 
 //Ordenamiento de grafico
 asort($arrGraficos);

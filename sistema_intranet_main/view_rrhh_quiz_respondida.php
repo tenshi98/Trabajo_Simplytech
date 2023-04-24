@@ -92,7 +92,6 @@ $SIS_order = 'rrhh_quiz_listado_preguntas.idCategoria ASC';
 $arrPreguntas = array();
 $arrPreguntas = db_select_array (false, $SIS_query, 'rrhh_quiz_listado_preguntas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPreguntas');
 
-
 //cuento las preguntas
 $count = 0;
 foreach ($arrPreguntas as $preg) {
@@ -216,7 +215,7 @@ foreach ($arrPreguntas as $preg) {
 							//Recorro el total de preguntas
 							for ($i = 1; $i <= $rowdata['Total_Preguntas']; $i++) {
 								/*filtrar($arrPreguntas, 'Categoria');  
-							foreach($arrPreguntas as $categoria=>$permisos){ 
+							foreach($arrPreguntas as $categoria=>$permisos){
 								echo '<tr class="odd" ><td colspan="2"  style="background-color:#DDD"><strong>'.$categoria.'</strong></td></tr>';
 								foreach ($permisos as $preg) { */
 								

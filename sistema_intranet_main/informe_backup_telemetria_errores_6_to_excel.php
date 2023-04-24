@@ -56,27 +56,27 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_where.= ' AND usuarios_equipos_telemetria.idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 
-
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 // Se trae un listado con todos los elementos
 $SIS_query = '
 backup_telemetria_listado_errores.idErrores,
-backup_telemetria_listado_errores.Descripcion, 
-backup_telemetria_listado_errores.Fecha, 
+backup_telemetria_listado_errores.Descripcion,
+backup_telemetria_listado_errores.Fecha,
 backup_telemetria_listado_errores.Hora,
-backup_telemetria_listado_errores.Sensor, 
+backup_telemetria_listado_errores.Sensor,
 backup_telemetria_listado_errores.Valor,
 backup_telemetria_listado_errores.Valor_min,
 backup_telemetria_listado_errores.Valor_max,
 backup_telemetria_listado_errores.idTelemetria,
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.id_Geo'.$subquery;
-$SIS_order = 'idErrores DESC';
+$SIS_join .= ' LEFT JOIN telemetria_listado_sensores_unimed ON telemetria_listado_sensores_unimed.idTelemetria = backup_telemetria_listado_errores.idTelemetria ';
+$SIS_order = 'backup_telemetria_listado_errores.idErrores DESC';
 $arrErrores = array();
 $arrErrores = db_select_array (false, $SIS_query, 'backup_telemetria_listado_errores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrErrores');
 
@@ -114,11 +114,11 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('E1', 'Medicion Actual')
             ->setCellValue('F1', 'Min')
             ->setCellValue('G1', 'Max')
-            ->setCellValue('H1', 'Unidad Medida');   
-                     
+            ->setCellValue('H1', 'Unidad Medida');
+
 $nn=2;
-foreach ($arrErrores as $error) { 
-				
+foreach ($arrErrores as $error) {
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($error['NombreEquipo']))
 				->setCellValue('B'.$nn, DeSanitizar($error['Descripcion']))

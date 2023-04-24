@@ -47,7 +47,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'pagos_facturas_proveedores', 
 				<a target="_blank" rel="noopener noreferrer" href="principal_datos_documentos_pago.php" class="btn btn-xs btn-default btn-line cboxElement">Configurar</a>
 			</div>
 		</header>
-				
+
 		<div id="calendar_content" class="body">
 			<div id="calendar" class="fc fc-ltr">
 

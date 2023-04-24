@@ -69,7 +69,7 @@ $Form_Inputs = new Inputs();
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h2>
 			<strong>Facturacion : </strong><?php echo numero_a_mes($rowFacturacion['Creacion_mes']).' '.$rowFacturacion['Creacion_ano'].' ('.Fecha_estandar($rowFacturacion['Creacion_fecha']).')' ?><br/>
-			<?php echo 'Desde el '.Fecha_estandar($rowFacturacion['Fecha_desde']).' hasta el '.Fecha_estandar($rowFacturacion['Fecha_hasta'])?>
+			<?php echo 'Desde el '.Fecha_estandar($rowFacturacion['Fecha_desde']).' hasta el '.Fecha_estandar($rowFacturacion['Fecha_hasta']); ?>
 		</h2>
 		<hr>
 	</div>
@@ -354,7 +354,6 @@ $SIS_join  = '';
 $SIS_where = 'idFacturacion='.$_GET['idFacturacion'];
 $rowFacturacion = db_select_data (false, $SIS_query, 'rrhh_sueldos_facturacion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'submit_filter');
 
-
 //Borro todos los datos al cargar
 unset($_SESSION['pago_rrhh_liquidaciones']);
 
@@ -374,7 +373,7 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<h2>
 			<strong>Facturacion : </strong><?php echo numero_a_mes($rowFacturacion['Creacion_mes']).' '.$rowFacturacion['Creacion_ano'].' ('.Fecha_estandar($rowFacturacion['Creacion_fecha']).')' ?><br/>
-			<?php echo 'Desde el '.Fecha_estandar($rowFacturacion['Fecha_desde']).' hasta el '.Fecha_estandar($rowFacturacion['Fecha_hasta'])?>
+			<?php echo 'Desde el '.Fecha_estandar($rowFacturacion['Fecha_desde']).' hasta el '.Fecha_estandar($rowFacturacion['Fecha_hasta']); ?>
 		</h2>
 		<hr>
 	</div>

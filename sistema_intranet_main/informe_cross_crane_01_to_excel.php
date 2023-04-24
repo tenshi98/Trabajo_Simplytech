@@ -135,7 +135,6 @@ $SIS_order = 'telemetria_listado.Nombre ASC, telemetria_listado_errores.Fecha  D
 $arrEquipos2 = array();
 $arrEquipos2 = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where_2, $SIS_order, $dbConn, 'arrEquipos2', basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipos2');
 
-
 /**********************************************************************************************************************************/
 /*                                                          Ejecucion                                                             */
 /**********************************************************************************************************************************/
@@ -215,7 +214,6 @@ $spreadsheet->getActiveSheet(0)->getStyle('A1:G'.$nn)->applyFromArray(
         )
     )
 );
-
 
 /**********************************************************************************/
 /*                                    Pagina 2                                    */ 

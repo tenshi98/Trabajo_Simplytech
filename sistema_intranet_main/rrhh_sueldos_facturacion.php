@@ -165,11 +165,11 @@ array_push( $arrArchivos,$row );
 					</tr>
 					<tr>
 						<td class="meta-head">Periodo Desde</td>
-						<td><?php echo Fecha_estandar($rowdata['Fecha_desde'])?></td>
+						<td><?php echo Fecha_estandar($rowdata['Fecha_desde']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Periodo Hasta</td>
-						<td><?php echo Fecha_estandar($rowdata['Fecha_hasta'])?></td>
+						<td><?php echo Fecha_estandar($rowdata['Fecha_hasta']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head"><strong>INDICES</strong></td>
@@ -211,11 +211,11 @@ array_push( $arrArchivos,$row );
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($rowdata['fecha_auto'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($rowdata['fecha_auto']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($rowdata['Creacion_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($rowdata['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -442,11 +442,11 @@ array_push( $arrArchivos,$row );
 					</tr>
 					<tr>
 						<td class="meta-head">Periodo Desde</td>
-						<td><?php echo Fecha_estandar($_SESSION['fact_sueldos_basicos']['Fecha_desde'])?></td>
+						<td><?php echo Fecha_estandar($_SESSION['fact_sueldos_basicos']['Fecha_desde']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Periodo Hasta</td>
-						<td><?php echo Fecha_estandar($_SESSION['fact_sueldos_basicos']['Fecha_hasta'])?></td>
+						<td><?php echo Fecha_estandar($_SESSION['fact_sueldos_basicos']['Fecha_hasta']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -454,7 +454,7 @@ array_push( $arrArchivos,$row );
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['fact_sueldos_basicos']['Creacion_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['fact_sueldos_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>

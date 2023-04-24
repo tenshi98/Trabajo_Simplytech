@@ -127,7 +127,7 @@ if(!empty($_GET['addFile'])){ ?>
 				$Form_Inputs->form_select('Tipo Foto','idArchivoTipo', $x1, 2, 'idArchivoTipo', 'Nombre', 'core_cross_shipping_archivos_tipos', 0, '', $dbConn);
 
 				$Form_Inputs->form_input_hidden('randompass', $_GET['view'], 2);
-				$Form_Inputs->form_input_hidden('CTNNombreCompañia', $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CTNNombreCompañia'], 2);	
+				$Form_Inputs->form_input_hidden('CTNNombreCompañia', $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CTNNombreCompañia'], 2);
 				?>
 
 				<div class="form-group">
@@ -282,8 +282,7 @@ if(!empty($_GET['addFile'])){ ?>
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
-
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['modBase'])){

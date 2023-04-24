@@ -905,7 +905,7 @@ $Form_Inputs = new Inputs();
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Pago</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Centro de Costo Penciones</td>
@@ -925,7 +925,7 @@ $Form_Inputs = new Inputs();
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['pagos_leyes_sociales_basicos']['fecha_auto'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']); ?></td>
 					</tr>
 				</tbody>
 			</table>

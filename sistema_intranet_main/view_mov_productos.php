@@ -437,7 +437,7 @@ if($row_data['MontoPagado']!=0){ ?>
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['TipoDoc']?>.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha'])?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha']); ?></small>
 			</h2>
 		</div>
 	</div>

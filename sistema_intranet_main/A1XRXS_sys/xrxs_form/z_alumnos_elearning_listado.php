@@ -36,7 +36,6 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idCuestionario']))  $idCuestionario   = $_POST['idCuestionario'];
 	if (!empty($_POST['idQuiz']))          $idQuiz           = $_POST['idQuiz'];
 
-
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/

@@ -534,7 +534,7 @@ $Form_Inputs = new Inputs();
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td><?php echo Fecha_estandar($_SESSION['productos_transform_basicos']['Creacion_fecha'])?></td>
+						<td><?php echo Fecha_estandar($_SESSION['productos_transform_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>

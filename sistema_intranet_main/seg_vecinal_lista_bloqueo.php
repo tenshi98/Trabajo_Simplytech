@@ -285,7 +285,7 @@ $arrBloqueo = db_select_array (false, $SIS_query, 'sistema_seguridad_bloqueo_ip'
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//paginacion
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>

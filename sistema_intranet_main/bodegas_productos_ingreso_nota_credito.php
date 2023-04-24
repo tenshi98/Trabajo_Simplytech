@@ -444,8 +444,6 @@ $Form_Inputs = new Inputs();
     }
 </script>
 
-
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['addImpuesto'])){ ?>
 
@@ -638,7 +636,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idTipo', 11, 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
-				$Form_Inputs->form_input_hidden('idDocumentos', 3, 2);	
+				$Form_Inputs->form_input_hidden('idDocumentos', 3, 2);
 				?>
 
 				<script>
@@ -766,7 +764,7 @@ $Form_Inputs = new Inputs();
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['productos_ing_nc_basicos']['Creacion_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['productos_ing_nc_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>

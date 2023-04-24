@@ -31,9 +31,6 @@ require_once 'core/Web.Header.Main.php';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['submit_filter'])){
 
-             
-  
-
 //paginador de resultados
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
@@ -158,8 +155,6 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 		</div>
 	</div>
 </div>
-
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">

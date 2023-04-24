@@ -58,7 +58,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 //Verifico el tipo de usuario que esta ingresando
 $SIS_join = "LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_error_fuera_linea.idTelemetria";
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_error_fuera_linea.idTelemetria ";	
+	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_error_fuera_linea.idTelemetria ";
 	$SIS_where.= ' AND usuarios_equipos_telemetria.idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Realizo una consulta para saber el total de elementos existentes
@@ -161,7 +161,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$z .= " AND telemetria_listado.idTab=3";//CrossTrack
 }
- ?>
+?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>

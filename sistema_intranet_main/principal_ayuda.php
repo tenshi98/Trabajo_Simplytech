@@ -34,8 +34,6 @@ require_once 'core/Web.Header.Main.php';
 	//Se dibuja el explorador de archivos
 	echo file_explorer(1, 'connector_ayuda', DB_SITE_MAIN_PATH, $_SESSION['usuario']['basic_data']['idSistema'], 1); ?>
 
-
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px; margin-top:30px">
 	<a href="principal.php" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>

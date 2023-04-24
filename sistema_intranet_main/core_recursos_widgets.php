@@ -35,7 +35,6 @@ echo widget_title('bgx-blue', 'fa-cog', 100, 'Sistema', 'Nombre', 'Editar Datos 
 echo widget_title('bgx-orange', 'fa-cog', 100, 'Sistema', 'Nombre', 'Editar Datos de Contacto');
 echo '<div class="clearfix"></div>';
 
-
 //widget_Ficha_1($bg_color, $icon, $porcentaje, $titulo, $subtitulo, $enlace, $texto_enlace, $new_tab, $iframe)
 echo widget_Ficha_1('bg-green', 'fa-usd', 100, 'Cuentas por cobrar', '25 Pendientes', 'principal_facturas_alt.php?pagina=1&idTipo=2', 'Ver Pendientes', 1, 2);
 echo widget_Ficha_1('bg-yellow', 'fa-usd', 100, 'Cuentas por cobrar', '25 Pendientes', 'principal_facturas_alt.php?pagina=1&idTipo=2', 'Ver Pendientes', 1, 2);
@@ -137,7 +136,6 @@ echo widget_Ficha_9('purple-box', 'main-box_purple-bg', 'Captain America', 45, '
 echo widget_Ficha_9('gray-box', 'main-box_gray-bg', 'Contraband', 39, 'completado', '#95a5a6', 12, 'Tareas', 1, 'Alertas', 123, 'Mensajes', $footer_extra, 'www.google.cl');
 echo '<div class="clearfix"></div>';
 
-
 /**********************************************************/
 //Variables
 $arrDatos  = array();
@@ -213,8 +211,6 @@ echo widget_Ficha_11('bgx-white', 'bgx-themefourthcolor',    'color2-themefourth
 	});
 
 </script>
-
-
 
 <?php
 /**********************************************************************************************************************************/

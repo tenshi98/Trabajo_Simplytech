@@ -319,7 +319,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 				</form>
 				<?php widget_validator(); ?>
 			</div>
-				
+
 		</div>
 
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">

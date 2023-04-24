@@ -340,7 +340,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['contab_caja_gastos_basicos']['Creacion_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>

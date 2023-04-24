@@ -20,7 +20,6 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 //obtengo los datos de la empresa
 $rowEmpresa = db_select_data (false, 'Nombre', 'core_sistemas','', 'idSistema='.$_GET['idSistema'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 
-
 //Verifico el tipo de usuario que esta ingresando
 $z = "WHERE aguas_analisis_aguas.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 //Filtros

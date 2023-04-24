@@ -56,13 +56,6 @@ $arrZonas = db_select_array (false, 'idZona, Nombre', 'vehiculos_zonas', '', '',
 /************************************************/
 //numero sensores equipo
 $N_Maximo_Sensores = 20;
-$subquery = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresMedActual_'.$i;
-	$subquery .= ',SensoresActivo_'.$i;
-	$subquery .= ',SensoresGrupo_'.$i;
-}
-//Listar los equipos
 $SIS_query = '
 telemetria_listado.idTelemetria,
 telemetria_listado.Nombre,
@@ -73,8 +66,16 @@ telemetria_listado.GeoLatitud,
 telemetria_listado.GeoLongitud,
 telemetria_listado.TiempoFueraLinea,
 telemetria_listado.NErrores,
-telemetria_listado.NAlertas'.$subquery;
-$SIS_join  = '';
+telemetria_listado.NAlertas';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$SIS_query .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+	$SIS_query .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
+	$SIS_query .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+}
+$SIS_join  = '
+LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria   = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_activo`      ON telemetria_listado_sensores_activo.idTelemetria       = telemetria_listado.idTelemetria
+LEFT JOIN `telemetria_listado_sensores_grupo`       ON telemetria_listado_sensores_grupo.idTelemetria        = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idEstado = 1';            //solo equipos activos
 $SIS_where.= ' AND telemetria_listado.id_Geo = '.$id_Geo;  //solo los equipos que tengan el seguimiento activado
 $SIS_where.= ' AND telemetria_listado.idTab = 9';          //CrossEnergy
@@ -91,7 +92,6 @@ $SIS_order = 'telemetria_listado.Nombre ASC';
 //Realizo la consulta
 $arrEquipo = array();
 $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrEquipo');
-
 
 /**************************************************************************/
 foreach ($arrEquipo as $data) {
@@ -207,7 +207,6 @@ foreach ($arrEquipo as $data) {
 
 	$nicon++;
 }
-
 
 //Cuento los totales
 $Count_Alerta      = 0;

@@ -161,7 +161,6 @@ foreach ($arrEvento as $key => $eve){
 	$nn++;
 }
 
-
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Resumen Heladas');
 

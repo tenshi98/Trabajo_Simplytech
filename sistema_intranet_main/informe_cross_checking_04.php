@@ -126,7 +126,6 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 
 filtrar($arrOTS, 'idTelemetria');
 
-
 /**********************************************************/
 // Se trae un listado con todos los elementos
 $SIS_query = '

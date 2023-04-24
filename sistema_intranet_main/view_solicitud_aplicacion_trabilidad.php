@@ -122,7 +122,7 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($row_data['NSolicitud'], 7); ?>.
-				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($row_data['f_termino'])?></small>
+				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($row_data['f_termino']); ?></small>
 			</h2>
 		</div>
 	</div>

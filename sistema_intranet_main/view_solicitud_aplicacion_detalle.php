@@ -142,7 +142,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($row_data['NSolicitud'], 5); ?>.
-				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($row_data['f_termino'])?></small>
+				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($row_data['f_termino']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -191,9 +191,9 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 					
 			</address>
 		</div>
-				
+
 		<div class="clearfix"></div>
-				
+
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			<strong>Parámetros de Aplicación</strong>
 			<address>

@@ -174,7 +174,6 @@ foreach ($arrTractores as $prod) {
 	$arrTrac[$prod['idCuarteles']][$prod['idTractores']]['Trabajador']      = $prod['Rut'].' - '.$prod['Nombre'].' '.$prod['ApellidoPat'];
 }
 
-
 //Se trae un listado con los productos	
 $arrProductos = array();
 $query = "SELECT 
@@ -252,7 +251,7 @@ array_push( $arrHistorial,$row );
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Solicitud de Aplicacion.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['f_creacion'])?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['f_creacion']); ?></small>
 			</h2>
 		</div>
 	</div>

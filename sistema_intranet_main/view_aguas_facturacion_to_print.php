@@ -148,7 +148,6 @@ LEFT JOIN `aguas_datos_valores`                     ON aguas_datos_valores.idSis
 $SIS_where = 'aguas_facturacion_listado_detalle.idFacturacionDetalle ='.$X_Puntero;
 $rowDatos = db_select_data (false, $SIS_query, 'aguas_facturacion_listado_detalle', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowDatos');
 
-
 //se verifica si existe
 if(isset($rowDatos['SII_idFacturable'])&&$rowDatos['SII_idFacturable']!=''){
 	switch ($rowDatos['SII_idFacturable']) {

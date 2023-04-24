@@ -17,7 +17,7 @@
 				<li>
 					Ultimo Acceso :<br/>
 					<small><i class="fa fa-calendar" aria-hidden="true"></i>&nbsp;
-						<?php echo fecha2NdiaMes($_SESSION['usuario']['basic_data']['FechaLogin']).' '.fecha2NombreMesCorto($_SESSION['usuario']['basic_data']['FechaLogin']).' '.Hora_estandar($_SESSION['usuario']['basic_data']['HoraLogin'])?>
+						<?php echo fecha2NdiaMes($_SESSION['usuario']['basic_data']['FechaLogin']).' '.fecha2NombreMesCorto($_SESSION['usuario']['basic_data']['FechaLogin']).' '.Hora_estandar($_SESSION['usuario']['basic_data']['HoraLogin']); ?>
 					</small>
 				</li>
 			</ul>

@@ -108,7 +108,6 @@ $SIS_order = 'telemetria_listado.idSistema ASC';
 $arrTelemetria = array();
 $arrTelemetria = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where_3, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrErrores');
 
-
 /*********************************************************/
 //Se consultan datos
 $arrGrupos = array();
@@ -200,7 +199,6 @@ $spreadsheet->getActiveSheet(0)->getStyle('A1:I'.$nn)->applyFromArray(
         )
     )
 );
-
 
 /**********************************************************************************/
 /*                                    Pagina 2                                    */

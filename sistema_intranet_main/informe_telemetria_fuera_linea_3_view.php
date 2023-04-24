@@ -45,7 +45,7 @@ require_once 'core/Web.Header.Views.php';
 
 		</header>
 		<div class="table-responsive">
-			<?php 
+			<?php
 			//Si no existe una ID se utiliza una por defecto
 			if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
 				$Alert_Text  = 'No ha ingresado Una API de Google Maps.';

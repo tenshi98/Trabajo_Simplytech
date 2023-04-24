@@ -210,8 +210,6 @@ $usrfil .= $responsables;
 
 ?>
 
-
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box dark">
 		<header>
@@ -495,7 +493,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha creacion</td>
-						<td><?php echo Fecha_estandar($_SESSION['tareas_basicos']['f_creacion'])?></td>
+						<td><?php echo Fecha_estandar($_SESSION['tareas_basicos']['f_creacion']); ?></td>
 					</tr>
 				</tbody>
 			</table>

@@ -390,7 +390,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 					</tr>
 					<tr>
 						<td class="meta-head">N° Documento</td>
-						<td><?php echo n_doc($_SESSION['caja_rend_basicos']['idFacturacionRelacionada'],8)?></td>
+						<td><?php echo n_doc($_SESSION['caja_rend_basicos']['idFacturacionRelacionada'],8); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Monto Total Documento</td>
@@ -407,7 +407,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['caja_rend_basicos']['Creacion_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['caja_rend_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>

@@ -178,7 +178,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('F_Ingreso', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('idEstadoFidelizacion', 1, 2);
-				$Form_Inputs->form_input_hidden('idEtapa', 1, 2);	
+				$Form_Inputs->form_input_hidden('idEtapa', 1, 2);
 				?>
 
 				<div class="form-group">

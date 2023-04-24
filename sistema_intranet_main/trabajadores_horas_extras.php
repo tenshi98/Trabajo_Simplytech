@@ -124,8 +124,7 @@ if(!empty($_GET['addFile'])){ ?>
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
-
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['editHora'])){  
@@ -394,11 +393,11 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					</tr>
 					<tr>
 						<td class="meta-head">Periodo Desde</td>
-						<td><?php echo Fecha_estandar($_SESSION['horas_extras_ing_basicos']['Fecha_desde'])?></td>
+						<td><?php echo Fecha_estandar($_SESSION['horas_extras_ing_basicos']['Fecha_desde']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Periodo Hasta</td>
-						<td><?php echo Fecha_estandar($_SESSION['horas_extras_ing_basicos']['Fecha_hasta'])?></td>
+						<td><?php echo Fecha_estandar($_SESSION['horas_extras_ing_basicos']['Fecha_hasta']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -406,7 +405,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['horas_extras_ing_basicos']['Creacion_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['horas_extras_ing_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>

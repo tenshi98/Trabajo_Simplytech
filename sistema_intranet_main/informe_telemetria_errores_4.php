@@ -25,9 +25,6 @@ require_once 'core/Web.Header.Main.php';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['submit_filter'])){
 
-             
-  
-
 //tomo el numero de la pagina si es que este existe
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
@@ -55,7 +52,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 //Verifico el tipo de usuario que esta ingresando
 $SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores_999.idTelemetria';
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores_999.idTelemetria ";	
+	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores_999.idTelemetria ";
 	$SIS_where.= ' AND usuarios_equipos_telemetria.idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Realizo una consulta para saber el total de elementos existentes
@@ -67,19 +64,20 @@ $total_paginas = ceil($cuenta_registros / $cant_reg);
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 // Se trae un listado con todos los elementos
 $SIS_query = '
 telemetria_listado_errores_999.idErrores,
-telemetria_listado_errores_999.Descripcion, 
-telemetria_listado_errores_999.Fecha, 
+telemetria_listado_errores_999.Descripcion,
+telemetria_listado_errores_999.Fecha,
 telemetria_listado_errores_999.Hora,
-telemetria_listado_errores_999.Sensor, 
+telemetria_listado_errores_999.Sensor,
 telemetria_listado_errores_999.Valor,
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.id_Geo'.$subquery;
-$SIS_order = 'idErrores DESC LIMIT '.$comienzo.', '.$cant_reg;
+$SIS_join .= ' LEFT JOIN telemetria_listado_sensores_unimed ON telemetria_listado_sensores_unimed.idTelemetria = telemetria_listado_errores_999.idTelemetria ';
+$SIS_order = 'telemetria_listado_errores_999.idErrores DESC LIMIT '.$comienzo.', '.$cant_reg;
 $arrErrores = array();
 $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_errores_999', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
 
@@ -104,9 +102,7 @@ foreach ($arrUnimed as $sen) {
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resultados</h5>
 			<div class="toolbar">
-				<?php 
-				
-				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
+				<?php echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
 		<div class="table-responsive">
@@ -118,7 +114,7 @@ foreach ($arrUnimed as $sen) {
 						<th>Fecha</th>
 						<th>Hora</th>
                         <th>Medicion Actual</th>
-                        <th>Ubicacion</th>  
+                        <th>Ubicacion</th>
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -138,22 +134,15 @@ foreach ($arrUnimed as $sen) {
 								</div>
 							</td>
 						</tr>
-                    <?php }  ?>                    
+                    <?php }  ?>
 				</tbody>
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
-			
-			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
+			<?php echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
 </div>
-
-
-
-	
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -185,7 +174,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 
 				<?php
 				//Se verifican si existen los datos
-					
 				if(isset($f_inicio)){      $x1  = $f_inicio;      }else{$x1  = '';}
 				if(isset($f_termino)){     $x2  = $f_termino;     }else{$x2  = '';}
 				if(isset($idTelemetria)){  $x3  = $idTelemetria;  }else{$x3  = '';}

@@ -122,7 +122,7 @@ foreach($arrHistorial as $hist2) {
 /****************************************************************************/
 $Temp_1   = '';
 $arrData  = array();
-foreach($arrHistorial as $hist) { 
+foreach($arrHistorial as $hist) {
 	//verifico que exista fecha
 	if(isset($hist['HeladaDia'])&&$hist['HeladaDia']!='0000-00-00'){
 		//variables
@@ -161,7 +161,7 @@ $arrData[2]['Name'] = "'Temperatura Proyectada'";
 $arrResumen = array();
 $arrResumen['Tiempo']     = 0;
 $arrResumen['TempMinima'] = 0;
-foreach ($arrEvento as $key => $eve){ 
+foreach ($arrEvento as $key => $eve){
 	//comparo temperaturas
 	if($arrResumen['TempMinima']>$eve['TempMinima']){                               
 		$arrResumen['TempMinima'] = $eve['TempMinima'];

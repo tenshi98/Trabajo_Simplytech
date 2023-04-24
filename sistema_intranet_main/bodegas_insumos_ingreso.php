@@ -890,7 +890,7 @@ $Form_Inputs = new Inputs();
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['insumos_ing_basicos']['Creacion_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['insumos_ing_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 					<?php if($_SESSION['insumos_ing_basicos']['idDocumentos']==2){ ?>
 						<tr>
@@ -918,13 +918,13 @@ $Form_Inputs = new Inputs();
 						<?php if(isset($_SESSION['insumos_ing_basicos']['fecha_fact_desde'])&&$_SESSION['insumos_ing_basicos']['fecha_fact_desde']!=''&&$_SESSION['insumos_ing_basicos']['fecha_fact_desde']!='0'&&$_SESSION['insumos_ing_basicos']['fecha_fact_desde']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Facturacion Desde</td>
-								<td colspan="2"><?php echo Fecha_estandar($_SESSION['insumos_ing_basicos']['fecha_fact_desde'])?></td>
+								<td colspan="2"><?php echo Fecha_estandar($_SESSION['insumos_ing_basicos']['fecha_fact_desde']); ?></td>
 							</tr>
 						<?php } ?>
 						<?php if(isset($_SESSION['insumos_ing_basicos']['fecha_fact_hasta'])&&$_SESSION['insumos_ing_basicos']['fecha_fact_hasta']!=''&&$_SESSION['insumos_ing_basicos']['fecha_fact_hasta']!='0'&&$_SESSION['insumos_ing_basicos']['fecha_fact_hasta']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Facturacion Hasta</td>
-								<td colspan="2"><?php echo Fecha_estandar($_SESSION['insumos_ing_basicos']['fecha_fact_hasta'])?></td>
+								<td colspan="2"><?php echo Fecha_estandar($_SESSION['insumos_ing_basicos']['fecha_fact_hasta']); ?></td>
 							</tr>
 						<?php } ?>
 					<?php } ?>
@@ -1194,7 +1194,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha Documento','Creacion_fecha', $x1, 2);
 
-				$Form_Inputs->form_input_hidden('idFacturacion', $_GET['id'], 2);	
+				$Form_Inputs->form_input_hidden('idFacturacion', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">

@@ -210,7 +210,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
     		<div class="invoice-title">
     			<h2>
 					Liquidacion de Remuneraciones
-					<small class="pull-right">Mes <?php echo fecha2NombreMes($rowdata['Creacion_fecha']).' de '.fecha2Ano($rowdata['Creacion_fecha'])?></small>
+					<small class="pull-right">Mes <?php echo fecha2NombreMes($rowdata['Creacion_fecha']).' de '.fecha2Ano($rowdata['Creacion_fecha']); ?></small>
     			</h2>
     			
     		</div>

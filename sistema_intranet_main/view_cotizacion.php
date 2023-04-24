@@ -184,7 +184,7 @@ foreach ($arrImpuestos as $impto) {
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Cotizacion <?php echo n_doc($X_Puntero, 5); ?>.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha'])?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -202,7 +202,7 @@ foreach ($arrImpuestos as $impto) {
 				Email: <?php echo $row_data['SistemaOrigenEmail']; ?>
 			</address>
 		</div>
-				
+
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Empresa Receptora
 			<address>

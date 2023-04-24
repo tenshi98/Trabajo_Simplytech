@@ -20,7 +20,7 @@ if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
 //Verifico el tipo de usuario que esta ingresando y el id
 $SIS_join = '';
 if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
-	$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria';	
+	$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria';
 	$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 }
 //filtro la zona

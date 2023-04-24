@@ -38,7 +38,6 @@ $SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_
 $SIS_where = 'telemetria_listado.idTelemetria='.$idTelemetria;
 $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-
 /**********************************************************/
 //Variable de busqueda
 $SIS_where = "backup_telemetria_listado_tablarelacionada_".$idTelemetria.".idTabla!=0";
@@ -293,8 +292,6 @@ foreach($arrConsulta as $temp) {
 		</div>
 	</div>
 </div>
-
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">

@@ -68,7 +68,6 @@ LEFT JOIN `core_ubicacion_comunas`  sis_or_comuna   ON sis_or_comuna.idComuna   
 $SIS_where = 'telemetria_historial_mantencion.idMantencion ='.$X_Puntero;
 $row_data = db_select_data (false, $SIS_query, 'telemetria_historial_mantencion', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'row_data');
 
-
 /**********************************/
 $arrOpciones = array();
 $arrOpciones = db_select_array (false, 'idOpciones, Nombre', 'core_telemetria_servicio_tecnico_opciones', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrOpciones');
@@ -115,7 +114,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'telemetria_historial_mantenc
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Visita Tecnica.
-				<small class="pull-right">N°: <?php echo n_doc($X_Puntero, 7)?></small>
+				<small class="pull-right">N°: <?php echo n_doc($X_Puntero, 7); ?></small>
 			</h2>
 		</div>
 	</div>

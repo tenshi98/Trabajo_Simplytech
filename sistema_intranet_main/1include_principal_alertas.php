@@ -31,7 +31,7 @@ $arrAlertas = db_select_array (false, $SIS_query, 'analisis_listado_alertas', $S
 		<header>
 			<h5>Calendario de alertas</h5>
 		</header>
-				
+
 		<div id="calendar_content" class="body">
 			<div id="calendar" class="fc fc-ltr">
 

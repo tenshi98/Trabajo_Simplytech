@@ -208,7 +208,7 @@ if($row_data['MontoPagado']!=0){ ?>
 								<tr role="row">
 									<th>Encargado</th>
 									<th>Documento</th>
-									<th>Fecha</th> 
+									<th>Fecha</th>
 									<th>Monto</th>
 								</tr>
 							</thead>
@@ -278,8 +278,6 @@ if($row_data['MontoPagado']!=0){ ?>
 		</div>
 	</div>
 <?php } ?>
-
-
 
 <div class="clearfix"></div>
 

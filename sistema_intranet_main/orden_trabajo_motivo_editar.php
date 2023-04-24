@@ -958,7 +958,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 				$Form_Inputs->form_select('Prioridad','idPrioridad', $x7, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Trabajo','idTipo', $x8, 2, 'idTipo', 'Nombre', 'core_ot_motivos_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Programada','f_programacion', $x9, 2);
-							
+
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idOT', $_GET['view'], 2);
 

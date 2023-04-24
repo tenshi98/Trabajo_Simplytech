@@ -137,7 +137,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select('Tipo Foto','idArchivoTipo', $x1, 2, 'idArchivoTipo', 'Nombre', 'core_cross_shipping_archivos_tipos', 0, '', $dbConn);
 
 				$Form_Inputs->form_input_hidden('idConsolidacion', $_GET['edit'], 2);
-				$Form_Inputs->form_input_hidden('CTNNombreCompañia', $rowConso['CTNNombreCompañia'], 2);	
+				$Form_Inputs->form_input_hidden('CTNNombreCompañia', $rowConso['CTNNombreCompañia'], 2);
 				?>
 
 				<div class="form-group">
@@ -340,8 +340,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
-
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['modBase'])){

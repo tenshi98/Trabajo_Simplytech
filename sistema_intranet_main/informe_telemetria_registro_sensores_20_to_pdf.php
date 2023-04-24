@@ -39,14 +39,20 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
 }else{
 	/****************************************************************/
-	$consql = '';
+	$consql = '
+	telemetria_listado.Nombre AS NombreEquipo,
+	telemetria_listado.cantSensores';
 	for ($i = 1; $i <= 72; $i++) {
-		$consql .= ',SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
-		$consql .= ',SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
-		$consql .= ',SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
+		$consql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
+		$consql .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
+		$consql .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
 	}
+	$SIS_join  = '
+	LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria    = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria   = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_activo`  ON telemetria_listado_sensores_activo.idTelemetria   = telemetria_listado.idTelemetria';
 	//obtengo la cantidad real de sensores
-	$rowEquipo = db_select_data (false, 'Nombre AS NombreEquipo,cantSensores'.$consql, 'telemetria_listado', '', 'idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
+	$rowEquipo = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, 'telemetria_listado.idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
 
 	//numero sensores equipo
 	$consql = '';

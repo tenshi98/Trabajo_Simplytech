@@ -577,7 +577,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td><?php echo Fecha_estandar($_SESSION['insumos_egr_basicos']['Creacion_fecha'])?></td>
+						<td><?php echo Fecha_estandar($_SESSION['insumos_egr_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>

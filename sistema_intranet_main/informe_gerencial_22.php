@@ -1786,7 +1786,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_select_depend2('Area', 'idCentroCosto',  $x3,  1,  'idCentroCosto',  'Nombre',  'centrocosto_listado',  0,   0,
 												  'Servicio', 'idLevel_1',  $x4,  1,  'idLevel_1',  'Nombre',  'centrocosto_listado_level_1',  0,   0, 
 												  'Cliente', 'idLevel_2',  $x5,  1,  'idLevel_2',  'Nombre',  'centrocosto_listado_level_2',  0,   0,
-												  $dbConn, 'form1');	
+												  $dbConn, 'form1');
 				?>
 
 				<div class="form-group">

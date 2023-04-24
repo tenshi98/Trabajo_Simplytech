@@ -1166,7 +1166,7 @@ foreach ($arrProductos as $prod) {
 				<tbody>
 					<tr>
 						<td class="meta-head">Creado</td>
-						<td><?php echo Fecha_estandar($row_data['f_creacion'])?></td>
+						<td><?php echo Fecha_estandar($row_data['f_creacion']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha inicio requerido</td>

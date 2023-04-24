@@ -670,7 +670,7 @@ $Form_Inputs = new Inputs();
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['insumos_ing_manual_basicos']['Creacion_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['insumos_ing_manual_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>

@@ -189,7 +189,6 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-
 /************************************************/
 //Accesos a los equipos de telemetria
 $trans_1 = "telemetria_listado.php";

@@ -41,24 +41,24 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_where.= ' AND usuarios_equipos_telemetria.idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 
-
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 // Se trae un listado con todos los elementos
 $SIS_query = '
 telemetria_listado_errores_999.idErrores,
-telemetria_listado_errores_999.Descripcion, 
-telemetria_listado_errores_999.Fecha, 
+telemetria_listado_errores_999.Descripcion,
+telemetria_listado_errores_999.Fecha,
 telemetria_listado_errores_999.Hora,
-telemetria_listado_errores_999.Sensor, 
+telemetria_listado_errores_999.Sensor,
 telemetria_listado_errores_999.Valor,
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.id_Geo'.$subquery;
-$SIS_order = 'idErrores DESC';
+$SIS_join .= ' LEFT JOIN telemetria_listado_sensores_unimed ON telemetria_listado_sensores_unimed.idTelemetria = telemetria_listado_errores_999.idTelemetria ';
+$SIS_order = 'telemetria_listado_errores_999.idErrores DESC';
 $arrErrores = array();
 $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_errores_999', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrErrores');
 
@@ -79,20 +79,20 @@ $html = '
 
 
 $html .= '
-<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">  
+<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">
 	<thead>
 		<tr>
 			<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">NombreEquipo</th>
 			<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Descripcion</th>
 			<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Fecha</th>
 			<th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Hora</th>
-            <th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Medicion Actual</th>         
+            <th style="font-size: 10px;border-bottom: 1px solid black;text-align:center;background-color: #c3c3c3;">Medicion Actual</th>
 		</tr>
 	</thead>
 	<tbody>';
 
 		foreach ($arrErrores as $error) {
-				$unimed = ' '.$arrFinalUnimed[$error['SensoresUniMed_'.$error['Sensor']]];			
+				$unimed = ' '.$arrFinalUnimed[$error['SensoresUniMed_'.$error['Sensor']]];
 				$html .='
 				<tr>
 					<td style="font-size: 10px;border-bottom: 1px solid black;text-align:center">'.DeSanitizar($error['NombreEquipo']).'</td>
@@ -107,7 +107,6 @@ $html .= '
 
 $html .='</tbody>
 </table>';
-  
 
 /**********************************************************************************************************************************/
 /*                                                          Impresion PDF                                                         */

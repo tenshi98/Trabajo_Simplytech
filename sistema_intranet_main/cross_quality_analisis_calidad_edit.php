@@ -924,7 +924,6 @@ LEFT JOIN `cross_quality_calidad_matriz`           ON cross_quality_calidad_matr
 $SIS_where = 'cross_quality_analisis_calidad.idAnalisis ='.$_GET['edit'];
 $row_data = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'row_data');
 
-
 /***************************************************/
 // Se trae un listado con todos los trabajadores
 $SIS_query = '

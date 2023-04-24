@@ -113,8 +113,8 @@ $z = "bodegas_productos_listado.idSistema=".$_SESSION['usuario']['basic_data']['
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_bodegas_productos.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
- 
- ?>
+
+?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">

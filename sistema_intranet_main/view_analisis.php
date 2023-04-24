@@ -196,7 +196,7 @@ foreach ($arrFlashpoint as $datos) {
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['Analisis_Nombre']?>.
-				<small class="pull-right">Fecha Reporte: <?php echo Fecha_estandar($row_data['Analisis_f_reporte'])?></small>
+				<small class="pull-right">Fecha Reporte: <?php echo Fecha_estandar($row_data['Analisis_f_reporte']); ?></small>
 			</h2>
 		</div>
 	</div>

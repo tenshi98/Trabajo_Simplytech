@@ -91,7 +91,6 @@ LEFT JOIN `core_cross_cliente`      ON core_cross_cliente.idPeriodo     = client
 $SIS_where = 'clientes_listado.idCliente ='.$X_Puntero;
 $rowdata = db_select_data (false, $SIS_query, 'clientes_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-
 /*******************************************/
 //Listado con los tabs
 $arrTabs = array();

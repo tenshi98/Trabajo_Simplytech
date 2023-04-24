@@ -25,9 +25,6 @@ require_once 'core/Web.Header.Main.php';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['submit_filter'])){
 
-             
-  
-
 //filtros
 $x = "WHERE maquinas_listado_matriz.idMatriz>=0";
 $y = "WHERE maquinas_listado.idMaquina>=0";
@@ -66,7 +63,6 @@ if(!$resultado){
 					
 }
 $rowpre = mysqli_fetch_assoc ($resultado);
-
 
 /*********************************************/
 //Consulta Maquina
@@ -638,7 +634,7 @@ array_push( $arrFlashpoint,$row );
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo $rowMaquina['Analisis_Nombre']?> <?php echo Fecha_estandar(fecha_actual())?></h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5><?php echo $rowMaquina['Analisis_Nombre']?> <?php echo Fecha_estandar(fecha_actual()); ?></h5>
 		</header>
 		<div class="table-responsive">
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
@@ -683,7 +679,7 @@ array_push( $arrFlashpoint,$row );
 </div>
 
 <div class="col-xs-12 table-responsive"  style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
-			<?php 
+			<?php
 			//variables
 			$x_count = 1;
 			//arreglo
@@ -776,8 +772,6 @@ array_push( $arrFlashpoint,$row );
 				
 
 </div>
-
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">

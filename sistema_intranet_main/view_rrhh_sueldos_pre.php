@@ -65,7 +65,7 @@ require_once 'core/Web.Header.Views.php';
     		<div class="invoice-title">
     			<h2>
 					Liquidacion de Remuneraciones
-					<small class="pull-right">Mes <?php echo fecha2NombreMes($_SESSION['fact_sueldos_basicos']['Creacion_fecha']).' de '.fecha2Ano($_SESSION['fact_sueldos_basicos']['Creacion_fecha'])?></small>
+					<small class="pull-right">Mes <?php echo fecha2NombreMes($_SESSION['fact_sueldos_basicos']['Creacion_fecha']).' de '.fecha2Ano($_SESSION['fact_sueldos_basicos']['Creacion_fecha']); ?></small>
     			</h2>
     			
     		</div>

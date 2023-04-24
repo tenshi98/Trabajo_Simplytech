@@ -275,7 +275,6 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrProductos,$row );
 }
-	
 
 //Se trae un listado con los productos	
 $arrMateriales = array();
@@ -351,7 +350,7 @@ array_push( $arrHistorial,$row );
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Solicitud de Aplicacion.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['f_creacion'])?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['f_creacion']); ?></small>
 			</h2>
 		</div>
 	</div>

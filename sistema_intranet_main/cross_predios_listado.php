@@ -140,7 +140,6 @@ $SIS_order = 'cross_predios_listado_zonas.idZona ASC, cross_predios_listado_zona
 $arrZonas = array();
 $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrZonas');
 
-
 //Se obtiene la ubicacion
 $Ubicacion = "";
 if(isset($arrZonas[0]['Direccion'])&&$arrZonas[0]['Direccion']!=''){$Ubicacion.=' '.$arrZonas[0]['Direccion'];}

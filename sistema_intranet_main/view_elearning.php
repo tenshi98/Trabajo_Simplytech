@@ -48,7 +48,6 @@ $SIS_join  = 'LEFT JOIN `core_estados` ON core_estados.idEstado = alumnos_elearn
 $SIS_where = 'alumnos_elearning_listado.idElearning ='.$X_Puntero;
 $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-
 /*****************************************************/
 // Se trae un listado con todos los elementos
 $SIS_query = '

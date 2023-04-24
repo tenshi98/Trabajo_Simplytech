@@ -20,8 +20,8 @@ $location .='?pagina='.$_GET['pagina'];
 $search = '';
 if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){      $location .= "&idEstado=".$_GET['idEstado'];      $search .= "&idEstado=".$_GET['idEstado'];}
 if(isset($_GET['cantPuntos']) && $_GET['cantPuntos']!=''){  $location .= "&cantPuntos=".$_GET['cantPuntos'];  $search .= "&cantPuntos=".$_GET['cantPuntos'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){   $location .= "&Nombre=".$_GET['Nombre'];          $search .= "&Nombre=".$_GET['Nombre'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){   $location .= "&idTipo=".$_GET['idTipo'];          $search .= "&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){          $location .= "&Nombre=".$_GET['Nombre'];          $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){          $location .= "&idTipo=".$_GET['idTipo'];          $search .= "&idTipo=".$_GET['idTipo'];}
 if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){    $location .= "&idSistema=".$_GET['idSistema'];    $search .= "&idSistema=".$_GET['idSistema'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
@@ -49,8 +49,8 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Tipo Planilla Borrado 
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['clone_idMatriz'])){ 
-	
+if(!empty($_GET['clone_idMatriz'])){
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -84,8 +84,7 @@ if(!empty($_GET['clone_idMatriz'])){
             <?php widget_validator(); ?>
 		</div>
 	</div>
-</div>	
-	
+</div>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } else {
@@ -123,8 +122,8 @@ $SIS_where = "cross_quality_proceso_matriz.idMatriz!=0";
 //Se aplican los filtros
 if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){      $SIS_where .= " AND cross_quality_proceso_matriz.idEstado=".$_GET['idEstado'];}
 if(isset($_GET['cantPuntos']) && $_GET['cantPuntos']!=''){  $SIS_where .= " AND cross_quality_proceso_matriz.cantPuntos=".$_GET['cantPuntos'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){   $SIS_where .= " AND cross_quality_proceso_matriz.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
-if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){   $SIS_where .= " AND cross_quality_proceso_matriz.idTipo=".$_GET['idTipo'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){          $SIS_where .= " AND cross_quality_proceso_matriz.Nombre LIKE '%".EstandarizarInput($_GET['Nombre'])."%'";}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){          $SIS_where .= " AND cross_quality_proceso_matriz.idTipo=".$_GET['idTipo'];}
 if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){    $SIS_where .= " AND cross_quality_proceso_matriz.idSistema=".$_GET['idSistema'];}
 
 /**********************************************************/
@@ -134,7 +133,7 @@ $cuenta_registros = db_select_nrows (false, 'idMatriz', 'cross_quality_proceso_m
 $total_paginas = ceil($cuenta_registros / $cant_reg);
 // Se trae un listado con todos los elementos
 $SIS_query = '
-cross_quality_proceso_matriz.idMatriz, 
+cross_quality_proceso_matriz.idMatriz,
 cross_quality_proceso_matriz.Nombre,
 cross_quality_proceso_matriz.cantPuntos,
 core_estados.Nombre AS Estado,

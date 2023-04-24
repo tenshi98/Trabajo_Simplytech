@@ -250,7 +250,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Programada</td>
-						<td colspan="2"><?php echo Fecha_estandar($row_data['FechaProgramada'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($row_data['FechaProgramada']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Hora Inicio</td>

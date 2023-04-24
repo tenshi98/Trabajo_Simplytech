@@ -64,7 +64,7 @@ if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){
 $SIS_join  = ' LEFT JOIN `telemetria_listado`                  ON telemetria_listado.idTelemetria                 = telemetria_listado_errores.idTelemetria';
 $SIS_join .= ' LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria = telemetria_listado_errores.idTelemetria';
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores.idTelemetria ";	
+	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores.idTelemetria ";
 	$SIS_where.=' AND usuarios_equipos_telemetria.idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 }
 //Realizo una consulta para saber el total de elementos existentes
@@ -101,7 +101,7 @@ $arrFinalUnimed = array();
 foreach ($arrUnimed as $sen) {
 	$arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'];
 }
- ?>
+?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<a target="new" href="<?php echo 'informe_telemetria_errores_2_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>

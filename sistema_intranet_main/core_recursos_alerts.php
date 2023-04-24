@@ -47,8 +47,6 @@ info_post_data(7, '<h4>Lorem ipsum dolor sit amet</h4><p>consectetur adipiscing 
 
 ?>
 
-
-
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

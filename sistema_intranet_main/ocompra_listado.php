@@ -1311,7 +1311,7 @@ $total = 0;
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td><?php echo Fecha_estandar($_SESSION['ocompra_basicos']['Creacion_fecha'])?></td>
+						<td><?php echo Fecha_estandar($_SESSION['ocompra_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -1802,7 +1802,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'ocompra_listado', $SIS_jo
 	</ul>
 	<?php if ($rowlevel['level']>=3){ ?>
 		<?php if(isset($_SESSION['ocompra_basicos']['idProveedor'])&&$_SESSION['ocompra_basicos']['idProveedor']!=''){ ?>
-			<?php 
+			<?php
 			//Verifico si viene desde una solicitud
 			$extra = '';
 			if(isset($_SESSION['ocompra_basicos']['Solicitud'])&&$_SESSION['ocompra_basicos']['Solicitud']==1){

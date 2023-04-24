@@ -80,7 +80,7 @@ foreach($arrHistorial as $hist2) {
 /****************************************************************************/
 //datos graficos
 $tabla  = '';
-foreach($arrHistorial as $hist) { 
+foreach($arrHistorial as $hist) {
 	//verifico que exista fecha
 	if(isset($hist['HeladaDia'])&&$hist['HeladaDia']!='0000-00-00'){
 		//variables
@@ -127,7 +127,7 @@ if(isset($_POST["img_adj"]) && $_POST["img_adj"]!=''){
 
 /***************************************************************************/
 $html .= '
-<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">  
+<table width="100%" border="0" cellpadding="2" cellspacing="0" style="border: 1px solid black;background-color: #ffffff;">
 	<thead>';
 		$html .='	
 		<tr>

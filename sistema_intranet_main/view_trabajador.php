@@ -127,7 +127,6 @@ LEFT JOIN `core_tipo_cuenta`                 ON core_tipo_cuenta.idTipoCuenta   
 $SIS_where = 'trabajadores_listado.idTrabajador ='.$X_Puntero;
 $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-
 // Se trae un listado con todas las cargas familiares
 $SIS_query = 'Nombre,ApellidoPat, ApellidoMat';
 $SIS_join  = '';

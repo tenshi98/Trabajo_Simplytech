@@ -125,10 +125,6 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 	</div>
 </div>
 
-	
-	
-
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<a href="<?php echo $original; ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -148,8 +144,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$w .= " AND telemetria_listado.idTab=6";//CrossCrane
 }
- 
- ?>
+
+?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">

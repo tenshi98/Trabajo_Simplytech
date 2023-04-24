@@ -79,7 +79,6 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-
 //Se crean las variables
 $nmax = 5;
 $z = '';
@@ -204,8 +203,6 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 
 
 ?>
-
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ubicacion', $rowdata['Nombre'], 'Resumen'); ?>

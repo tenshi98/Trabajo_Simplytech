@@ -81,7 +81,7 @@ $t_TotalConIva  = 0;
 $t_iva          = 0;
 $t_TotalSinIva  = 0;
 //se recorre arreglo
-foreach ($arrFacturacion as $fact) { 
+foreach ($arrFacturacion as $fact) {
 	//Se hacen los calculos
 	$consumo_mes  = $fact['DetalleCargoFijoValor'] + $fact['DetalleConsumoValor'] + $fact['DetalleRecoleccionValor'];
 	$OtrosCargos  = $fact['DetalleVisitaCorte'] + $fact['DetalleCorte1Valor'] + $fact['DetalleCorte2Valor'] + $fact['DetalleReposicion1Valor'] + $fact['DetalleReposicion2Valor'] + $fact['DetalleOtrosCargos1Valor'] + $fact['DetalleOtrosCargos2Valor'] + $fact['DetalleOtrosCargos3Valor'] + $fact['DetalleOtrosCargos4Valor'] + $fact['DetalleOtrosCargos5Valor'];

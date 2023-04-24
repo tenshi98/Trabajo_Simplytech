@@ -170,7 +170,6 @@ if(isset($_GET['idUsuarioAsignado']) && $_GET['idUsuarioAsignado']!=''){  $SIS_w
 $SIS_join  = 'LEFT JOIN `gestion_tickets_area_correos` ON gestion_tickets_area_correos.idArea = gestion_tickets.idArea';				
 $SIS_where.= " GROUP BY gestion_tickets.idTicket";
 
-
 /**********************************************************/
 //Realizo una consulta para saber el total de elementos existentes
 $cuenta_registros = db_select_nrows (false, 'gestion_tickets.idTicket', 'gestion_tickets', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'cuenta_registros');

@@ -152,7 +152,6 @@ $SIS_order = 'cross_solicitud_aplicacion_listado.NSolicitud ASC';
 $arrOTS = array();
 $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrOTS');
 
-
 /**********************************************************************************************************************************/
 /*                                                          Ejecucion                                                             */
 /**********************************************************************************************************************************/
@@ -348,7 +347,6 @@ foreach ($arrOTS as $ot) {
 	//Se suma 1
 	$nn++;
 }
-
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Exportacion');

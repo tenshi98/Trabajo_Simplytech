@@ -258,7 +258,6 @@ $spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('K'.$nn, cantidades_excel($Total_4))
 			->setCellValue('L'.$nn, cantidades_excel($Total_1+$Total_2+$Total_3+$Total_4));
 
-
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Ventas Vendedores por mes');
 

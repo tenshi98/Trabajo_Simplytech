@@ -258,7 +258,7 @@ $arrEventos = db_select_array (false, $SIS_query, 'principal_calendario_listado'
 		<header>
 			<h5>Agenda General</h5>
 		</header>
-				
+
 		<div id="calendar_content" class="body">
 			<div id="calendar" class="fc fc-ltr">
 

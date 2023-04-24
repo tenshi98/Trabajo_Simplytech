@@ -134,7 +134,6 @@ $m_table_title  .= '<th>Humedad</th>';
 $arrData[1]['Name'] = "'Temperatura'";
 $arrData[2]['Name'] = "'Humedad'";
 
-
 //se arman datos
 foreach ($arrTemporal as $fac) {
 

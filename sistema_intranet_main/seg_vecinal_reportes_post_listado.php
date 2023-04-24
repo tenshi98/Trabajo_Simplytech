@@ -81,8 +81,6 @@ $ubicacion .= '&idEventoPeligro='.$_GET['idEventoPeligro'];
 
 ?>
 
-
-
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -286,7 +284,7 @@ array_push( $arrReportes,$row );
 			$ubicacion .= '&idCreador='.$rowdata['idCreador']; ?>
 			<li><a href="<?php echo $ubicacion; ?>"><i class="fa fa-rss" aria-hidden="true"></i> Notificar Infraccion Creador Post</a></li>
 
-			<?php 
+			<?php
 			/*
 			<li role="separator" class="divider"></li>
 
@@ -574,7 +572,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//paginacion
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>

@@ -157,8 +157,6 @@ $arrObservaciones = db_select_array (false, 'telemetria_listado_observaciones.id
 </div>
 <div class="clearfix"></div>
 
-
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>

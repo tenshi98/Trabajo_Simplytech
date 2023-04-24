@@ -174,7 +174,6 @@ foreach ($arrTipo4 as $tipo) {
 
 }
 
-
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Listado de Documentos');
 

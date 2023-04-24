@@ -68,8 +68,6 @@ $rowdata = db_select_data (false, $SIS_query, 'postulantes_listado', $SIS_join, 
 
 ?>
 
-
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>

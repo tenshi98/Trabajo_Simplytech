@@ -97,7 +97,6 @@ for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
 $arrMediciones = array();
 $arrMediciones = db_select_array (false, 'idTabla'.$subquery, 'telemetria_listado_tablarelacionada_'.$row_data['idTelemetria'], '', 'idZona = '.$row_data['idZona'].' AND idSolicitud = '.$row_data['idSolicitud'], 'FechaSistema ASC, HoraSistema ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrMediciones');
 
-
 //Se traen las rutas
 $arrPuntos = array();
 $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_predios_listado_zonas_ubicaciones', '', 'idZona = '.$row_data['idZona'], 'idUbicaciones ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPuntos');
@@ -143,7 +142,7 @@ document.getElementById("loading").style.display = "none";
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Detalles Solicitud de Aplicacion N°<?php echo n_doc($row_data['NSolicitud'], 7); ?>.
-				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($row_data['f_termino'])?></small>
+				<small class="pull-right">Fecha Termino: <?php echo Fecha_estandar($row_data['f_termino']); ?></small>
 			</h2>
 		</div>
 	</div>

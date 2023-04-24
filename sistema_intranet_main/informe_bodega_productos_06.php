@@ -36,7 +36,6 @@ $z.= " AND bodegas_productos_facturacion_existencias.idBodega = ".$_GET['idBodeg
 $z.= " AND bodegas_productos_facturacion_existencias.Cantidad_ing=0 AND bodegas_productos_facturacion_existencias.Cantidad_eg!=0";
 $concepto = ' por concepto de egreso';
 
-
 /****************************************************/
 //se consulta
 $arrExistencias = array();
@@ -118,7 +117,7 @@ $rowBodega = mysqli_fetch_assoc ($resultado);
 
 /****************************************************/
 $mes = array();
-foreach ($arrExistencias as $existencias) { 
+foreach ($arrExistencias as $existencias) {
 	if(!isset($mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']])){ $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] = 0;}
 	
 	$mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] = $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] + $existencias['Valor'];									
@@ -163,18 +162,18 @@ for ($xcontador = 12; $xcontador > 0; $xcontador--) {
 					<thead>
 						<tr role="row">
 							<th>Categoria</th>
-							<th><?php echo numero_a_mes_corto($grafico[1]['mes'])?></th>
-							<th><?php echo numero_a_mes_corto($grafico[2]['mes'])?></th>
-							<th><?php echo numero_a_mes_corto($grafico[3]['mes'])?></th>
-							<th><?php echo numero_a_mes_corto($grafico[4]['mes'])?></th>
-							<th><?php echo numero_a_mes_corto($grafico[5]['mes'])?></th>
-							<th><?php echo numero_a_mes_corto($grafico[6]['mes'])?></th>
-							<th><?php echo numero_a_mes_corto($grafico[7]['mes'])?></th>
-							<th><?php echo numero_a_mes_corto($grafico[8]['mes'])?></th>
-							<th><?php echo numero_a_mes_corto($grafico[9]['mes'])?></th>
-							<th><?php echo numero_a_mes_corto($grafico[10]['mes'])?></th>
-							<th><?php echo numero_a_mes_corto($grafico[11]['mes'])?></th>
-							<th><?php echo numero_a_mes_corto($grafico[12]['mes'])?></th>
+							<th><?php echo numero_a_mes_corto($grafico[1]['mes']); ?></th>
+							<th><?php echo numero_a_mes_corto($grafico[2]['mes']); ?></th>
+							<th><?php echo numero_a_mes_corto($grafico[3]['mes']); ?></th>
+							<th><?php echo numero_a_mes_corto($grafico[4]['mes']); ?></th>
+							<th><?php echo numero_a_mes_corto($grafico[5]['mes']); ?></th>
+							<th><?php echo numero_a_mes_corto($grafico[6]['mes']); ?></th>
+							<th><?php echo numero_a_mes_corto($grafico[7]['mes']); ?></th>
+							<th><?php echo numero_a_mes_corto($grafico[8]['mes']); ?></th>
+							<th><?php echo numero_a_mes_corto($grafico[9]['mes']); ?></th>
+							<th><?php echo numero_a_mes_corto($grafico[10]['mes']); ?></th>
+							<th><?php echo numero_a_mes_corto($grafico[11]['mes']); ?></th>
+							<th><?php echo numero_a_mes_corto($grafico[12]['mes']); ?></th>
 							<th>SubTotal</th>
 						</tr>
 					</thead>
@@ -294,7 +293,7 @@ array_push( $arrBodegas,$row );
 /********************************************************/
 //recorro los meses y los guardo temporalmente
 $mes = array();
-foreach ($arrExistencias as $existencias) { 
+foreach ($arrExistencias as $existencias) {
 	if(!isset($mes[$existencias['idBodegaDestino']][$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']])){ $mes[$existencias['idBodegaDestino']][$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] = 0;}
 	
 	$mes[$existencias['idBodegaDestino']][$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] = $mes[$existencias['idBodegaDestino']][$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] + $existencias['Valor'];									
@@ -369,18 +368,18 @@ foreach ($arrBodegas as $bod) {
 						<thead>
 							<tr role="row">
 								<th>Categoria</th>
-								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][1]['mes'])?></th>
-								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][2]['mes'])?></th>
-								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][3]['mes'])?></th>
-								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][4]['mes'])?></th>
-								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][5]['mes'])?></th>
-								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][6]['mes'])?></th>
-								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][7]['mes'])?></th>
-								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][8]['mes'])?></th>
-								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][9]['mes'])?></th>
-								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][10]['mes'])?></th>
-								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][11]['mes'])?></th>
-								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][12]['mes'])?></th>
+								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][1]['mes']); ?></th>
+								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][2]['mes']); ?></th>
+								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][3]['mes']); ?></th>
+								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][4]['mes']); ?></th>
+								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][5]['mes']); ?></th>
+								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][6]['mes']); ?></th>
+								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][7]['mes']); ?></th>
+								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][8]['mes']); ?></th>
+								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][9]['mes']); ?></th>
+								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][10]['mes']); ?></th>
+								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][11]['mes']); ?></th>
+								<th><?php echo numero_a_mes_corto($grafico[$bod['idBodega']][12]['mes']); ?></th>
 								<th>SubTotal</th>
 							</tr>
 						</thead>

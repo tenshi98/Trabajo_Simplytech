@@ -19,10 +19,10 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //Variables para filtro y paginacion
 $search = '';
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){  $location .= "&idTelemetria=".$_GET['idTelemetria'];  $search .= "&idTelemetria=".$_GET['idTelemetria'];}
-if(isset($_GET['F_inicio']) && $_GET['F_inicio']!=''){   $location .= "&F_inicio=".$_GET['F_inicio'];          $search .= "&F_inicio=".$_GET['F_inicio'];}
-if(isset($_GET['H_inicio']) && $_GET['H_inicio']!=''){   $location .= "&H_inicio=".$_GET['H_inicio'];          $search .= "&H_inicio=".$_GET['H_inicio'];}
-if(isset($_GET['F_termino']) && $_GET['F_termino']!=''){ $location .= "&F_termino=".$_GET['F_termino'];        $search .= "&F_termino=".$_GET['F_termino'];}
-if(isset($_GET['H_termino']) && $_GET['H_termino']!=''){ $location .= "&H_termino=".$_GET['H_termino'];        $search .= "&H_termino=".$_GET['H_termino'];}
+if(isset($_GET['F_inicio']) && $_GET['F_inicio']!=''){          $location .= "&F_inicio=".$_GET['F_inicio'];          $search .= "&F_inicio=".$_GET['F_inicio'];}
+if(isset($_GET['H_inicio']) && $_GET['H_inicio']!=''){          $location .= "&H_inicio=".$_GET['H_inicio'];          $search .= "&H_inicio=".$_GET['H_inicio'];}
+if(isset($_GET['F_termino']) && $_GET['F_termino']!=''){        $location .= "&F_termino=".$_GET['F_termino'];        $search .= "&F_termino=".$_GET['F_termino'];}
+if(isset($_GET['H_termino']) && $_GET['H_termino']!=''){        $location .= "&H_termino=".$_GET['H_termino'];        $search .= "&H_termino=".$_GET['H_termino'];}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -40,22 +40,23 @@ $arrGruposRev = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_g
 $row_data = db_select_data (false, 'cantSensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //numero sensores equipo
-$subquery = '';
+$SIS_query = 'Nombre';
 for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
-	$subquery .= ',SensoresRevisionGrupo_'.$i;
+	$SIS_query .= ',telemetria_listado_sensores_revision_grupo.SensoresRevisionGrupo_'.$i;
 }
+$SIS_join  = 'LEFT JOIN `telemetria_listado_sensores_revision_grupo`  ON telemetria_listado_sensores_revision_grupo.idTelemetria  = telemetria_listado.idTelemetria';
 // consulto los datos
-$rowdata = db_select_data (false, 'Nombre'.$subquery, 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /**********************************************************/
 //Se crean las columnas
-$arrColumnas = array(); 
+$arrColumnas = array();
 for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
 	if(isset($rowdata['SensoresRevisionGrupo_'.$i])&&$rowdata['SensoresRevisionGrupo_'.$i]!=0){
 		$arrColumnas[$rowdata['SensoresRevisionGrupo_'.$i]]['idGrupo'] = $rowdata['SensoresRevisionGrupo_'.$i];
 	}
 }
-foreach ($arrGruposRev as $sen) { 
+foreach ($arrGruposRev as $sen) {
 	if(isset($arrColumnas[$sen['idGrupo']]['idGrupo'])&&$arrColumnas[$sen['idGrupo']]['idGrupo']!=''){
 		$arrColumnas[$sen['idGrupo']]['Nombre'] = $sen['Nombre'];
 	}
@@ -92,7 +93,7 @@ $arrConsulta = db_select_array (false, 'Fecha'.$subquery, 'telemetria_listado_hi
 				<thead>
 					<tr role="row">
 						<th width="120">Fecha</th>
-						<?php foreach ($arrColumnas as $col) { 
+						<?php foreach ($arrColumnas as $col) {
 							echo '<th>'.$col['Nombre'].'</th>';
 						} ?>
 
@@ -106,7 +107,7 @@ $arrConsulta = db_select_array (false, 'Fecha'.$subquery, 'telemetria_listado_hi
 					foreach ($arrConsulta as $con) { ?>
 						<tr class="odd">
 							<td><?php echo fecha_estandar($con['Fecha']); ?></td>
-							<?php foreach ($arrColumnas as $col) { 
+							<?php foreach ($arrColumnas as $col) {
 								echo '<td>'.gmdate("H:i:s", $con['Horas_'.$col['idGrupo']]).'</td>';
 								$arrSuma[$col['idGrupo']] = $arrSuma[$col['idGrupo']] + $con['Horas_'.$col['idGrupo']];
 							} ?>
@@ -115,20 +116,16 @@ $arrConsulta = db_select_array (false, 'Fecha'.$subquery, 'telemetria_listado_hi
 					<tr class="odd">
 						<td><strong>Total</strong></td>
 						<?php
-						foreach ($arrColumnas as $col) { 
+						foreach ($arrColumnas as $col) {
 								echo '<td><strong>'.segundos2horas($arrSuma[$col['idGrupo']]).'</strong></td>';
 						} ?>
 					</tr>
-					                   
+
 				</tbody>
 			</table>
 		</div>
 	</div>
 </div>
-
-	
-	
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">

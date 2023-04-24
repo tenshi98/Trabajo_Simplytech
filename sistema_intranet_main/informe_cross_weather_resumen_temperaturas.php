@@ -82,7 +82,7 @@ $tabla      = '';
 $Last_data  = 0;
 $Temp_1     = '';
 $arrData    = array();
-foreach($arrHistorial as $hist) { 
+foreach($arrHistorial as $hist) {
 	//verifico que exista fecha
 	if(isset($hist['HeladaDia'])&&$hist['HeladaDia']!='0000-00-00'){
 		//variables
@@ -237,8 +237,6 @@ if(isset($_GET['idGrafico'])&&$_GET['idGrafico']==1){ ?>
 		</script>
 	</div>
 <?php } ?>
-
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">

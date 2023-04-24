@@ -719,8 +719,6 @@ foreach ($arrPreguntas as $preg) {
 </div>
 <div class="clearfix"></div>
 
- 
-
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
@@ -813,7 +811,7 @@ foreach ($arrPreguntas as $preg) {
 
 						<?php 
 						filtrar($arrPreguntas, 'Categoria');
-						foreach($arrPreguntas as $categoria=>$permisos){ 
+						foreach($arrPreguntas as $categoria=>$permisos){
 							echo '<tr class="odd" ><td colspan="2"  style="background-color:#DDD"><strong>'.$categoria.'</strong></td></tr>';
 							foreach ($permisos as $preg) { ?>
 					

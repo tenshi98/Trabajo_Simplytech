@@ -93,7 +93,6 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-
 // Se trae un listado con todas las cargas familiares
 $arrUsuarios = array();
 $query = "SELECT 

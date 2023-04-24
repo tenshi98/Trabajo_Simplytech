@@ -130,7 +130,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Solicitud de Productos.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha'])?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['Creacion_fecha']); ?></small>
 			</h2>
 		</div>
 	</div>

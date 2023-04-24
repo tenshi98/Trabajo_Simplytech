@@ -115,7 +115,6 @@ $SIS_order = 'telemetria_listado.idSistema ASC';
 $arrTelemetria = array();
 $arrTelemetria = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where_3, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
 
-
 /*********************************************************/
 //Se consultan datos
 $arrGrupos = array();

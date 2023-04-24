@@ -650,7 +650,7 @@ $Form_Inputs = new Inputs();
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['servicios_egr_basicos']['Creacion_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['servicios_egr_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 					<?php if($_SESSION['servicios_egr_basicos']['idDocumentos']==2){ ?>
 						<tr>
@@ -678,13 +678,13 @@ $Form_Inputs = new Inputs();
 						<?php if(isset($_SESSION['servicios_egr_basicos']['fecha_fact_desde'])&&$_SESSION['servicios_egr_basicos']['fecha_fact_desde']!=''&&$_SESSION['servicios_egr_basicos']['fecha_fact_desde']!='0'&&$_SESSION['servicios_egr_basicos']['fecha_fact_desde']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Facturacion Desde</td>
-								<td colspan="2"><?php echo Fecha_estandar($_SESSION['servicios_egr_basicos']['fecha_fact_desde'])?></td>
+								<td colspan="2"><?php echo Fecha_estandar($_SESSION['servicios_egr_basicos']['fecha_fact_desde']); ?></td>
 							</tr>
 						<?php } ?>
 						<?php if(isset($_SESSION['servicios_egr_basicos']['fecha_fact_hasta'])&&$_SESSION['servicios_egr_basicos']['fecha_fact_hasta']!=''&&$_SESSION['servicios_egr_basicos']['fecha_fact_hasta']!='0'&&$_SESSION['servicios_egr_basicos']['fecha_fact_hasta']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Facturacion Hasta</td>
-								<td colspan="2"><?php echo Fecha_estandar($_SESSION['servicios_egr_basicos']['fecha_fact_hasta'])?></td>
+								<td colspan="2"><?php echo Fecha_estandar($_SESSION['servicios_egr_basicos']['fecha_fact_hasta']); ?></td>
 							</tr>
 						<?php } ?>
 					<?php } ?>

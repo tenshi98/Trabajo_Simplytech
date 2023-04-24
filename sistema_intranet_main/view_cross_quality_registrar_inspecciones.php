@@ -57,7 +57,6 @@ $SIS_join  = '';
 $SIS_where = 'idMatriz ='.$X_idCalidad;
 $rowdata = db_select_data (false, $SIS_query, 'cross_quality_calidad_matriz', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
-
 /***********************************************/
 //Armo cadena
 $subquery  = '';
@@ -374,7 +373,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> <?php echo $row_data['TipoAnalisis']?>.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['fecha_auto'])?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['fecha_auto']); ?></small>
 			</h2>
 		</div>
 	</div>
@@ -397,7 +396,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 				<br/>
 			</address>
 		</div>
-				
+
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
 			Fecha Creacion
 			<address>

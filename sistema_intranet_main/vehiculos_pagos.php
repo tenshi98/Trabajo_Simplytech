@@ -105,15 +105,15 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 				<br/>
 
 				<div class="pull-left">Atraso</div>
-				<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['MontoAtraso'], 0)?></small>
+				<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['MontoAtraso'], 0); ?></small>
 				<br/>
 
 				<div class="pull-left">Adelanto</div>
-				<small class="pull-right"><?php echo '(-) '.Valores($rowFacturacion['MontoAdelanto'], 0)?></small>
+				<small class="pull-right"><?php echo '(-) '.Valores($rowFacturacion['MontoAdelanto'], 0); ?></small>
 				<br/>
 
 				<div class="pull-left">Total</div>
-				<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['MontoTotal'], 0)?></small>
+				<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['MontoTotal'], 0); ?></small>
 				<br/>
 						
 					
@@ -340,15 +340,15 @@ array_push( $arrFacturaciones,$row );
 					<br/>
 
 					<div class="pull-left">Atraso</div>
-					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['MontoAtraso'], 0)?></small>
+					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['MontoAtraso'], 0); ?></small>
 					<br/>
 
 					<div class="pull-left">Adelanto</div>
-					<small class="pull-right"><?php echo '(-) '.Valores($rowFacturacion['MontoAdelanto'], 0)?></small>
+					<small class="pull-right"><?php echo '(-) '.Valores($rowFacturacion['MontoAdelanto'], 0); ?></small>
 					<br/>
 
 					<div class="pull-left">Total</div>
-					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['MontoTotal'], 0)?></small>
+					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['MontoTotal'], 0); ?></small>
 					<br/>
 						
 					

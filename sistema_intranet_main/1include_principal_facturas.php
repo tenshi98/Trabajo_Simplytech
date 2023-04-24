@@ -70,7 +70,7 @@ $arrFacturas_4 = db_select_array (false, $SIS_query, 'bodegas_servicios_facturac
 		<header>
 			<h5>Calendario de Facturas <?php if(isset($_GET['idTipo']) && $_GET['idTipo']==1){echo 'Por Pagar';}else{echo 'Por Cobrar';} ?></h5>
 		</header>
-				
+
 		<div id="calendar_content" class="body">
 			<div id="calendar" class="fc fc-ltr">
 

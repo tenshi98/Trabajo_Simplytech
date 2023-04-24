@@ -299,7 +299,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['caja_ing_basicos']['Creacion_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['caja_ing_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>

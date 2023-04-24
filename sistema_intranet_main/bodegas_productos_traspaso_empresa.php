@@ -132,7 +132,6 @@ $row_data = mysqli_fetch_assoc ($resultado);
 
 $Total_existencias = $row_data['ingreso'] - $row_data['egreso'];
 
-
 //filtro
 $zx1 = "idProducto=0";
 //Se revisan los permisos a los productos
@@ -388,8 +387,6 @@ $Form_Inputs = new Inputs();
     }
 </script>
 
-
-
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['modCentroCosto'])){
 //sistema
@@ -578,7 +575,7 @@ if($valor_0!=0){
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td><?php echo Fecha_estandar($_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha'])?></td>
+						<td><?php echo Fecha_estandar($_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>

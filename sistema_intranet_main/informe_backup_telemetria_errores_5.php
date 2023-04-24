@@ -75,21 +75,22 @@ $total_paginas = ceil($cuenta_registros / $cant_reg);
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 // Se trae un listado con todos los elementos
 $SIS_query = '
 backup_telemetria_listado_errores.idErrores,
-backup_telemetria_listado_errores.Descripcion, 
-backup_telemetria_listado_errores.Fecha, 
+backup_telemetria_listado_errores.Descripcion,
+backup_telemetria_listado_errores.Fecha,
 backup_telemetria_listado_errores.Hora,
-backup_telemetria_listado_errores.Sensor, 
+backup_telemetria_listado_errores.Sensor,
 backup_telemetria_listado_errores.Valor,
 backup_telemetria_listado_errores.Valor_min,
 backup_telemetria_listado_errores.Valor_max,
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.id_Geo'.$subquery;
-$SIS_order = 'idErrores DESC LIMIT '.$comienzo.', '.$cant_reg;
+$SIS_join .= ' LEFT JOIN telemetria_listado_sensores_unimed ON telemetria_listado_sensores_unimed.idTelemetria = backup_telemetria_listado_errores.idTelemetria ';
+$SIS_order = 'backup_telemetria_listado_errores.idErrores DESC LIMIT '.$comienzo.', '.$cant_reg;
 $arrErrores = array();
 $arrErrores = db_select_array (false, $SIS_query, 'backup_telemetria_listado_errores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
 
@@ -101,7 +102,7 @@ $arrFinalUnimed = array();
 foreach ($arrUnimed as $sen) {
 	$arrFinalUnimed[$sen['idUniMed']] = $sen['Nombre'];
 }
- ?>
+?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 clearfix">
 	<a target="new" href="<?php echo 'informe_backup_telemetria_errores_5_to_excel.php?bla=bla'.$search ; ?>" class="btn btn-sm btn-metis-2 pull-right margin_width"><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>
@@ -113,9 +114,7 @@ foreach ($arrUnimed as $sen) {
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Resultados</h5>
 			<div class="toolbar">
-				<?php 
-				
-				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
+				<?php echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>
 		</header>
 		<div class="table-responsive">
@@ -129,7 +128,7 @@ foreach ($arrUnimed as $sen) {
                         <th>Medicion Actual</th>
                         <th>Min</th>
                         <th>Max</th>
-                        <th>Ubicacion</th>  
+                        <th>Ubicacion</th>
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -151,22 +150,15 @@ foreach ($arrUnimed as $sen) {
 								</div>
 							</td>
 						</tr>
-                    <?php }  ?>                    
+                    <?php }  ?>
 				</tbody>
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
-			
-			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
+			<?php echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>
 	</div>
 </div>
-
-
-
-	
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -186,7 +178,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$z .= " AND telemetria_listado.idTab=4";//CrossWeather
 }
- ?>		
+?>
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -198,7 +190,6 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 
 				<?php
 				//Se verifican si existen los datos
-					
 				if(isset($f_inicio)){      $x1  = $f_inicio;      }else{$x1  = '';}
 				if(isset($f_termino)){     $x2  = $f_termino;     }else{$x2  = '';}
 				if(isset($idTelemetria)){  $x3  = $idTelemetria;  }else{$x3  = '';}

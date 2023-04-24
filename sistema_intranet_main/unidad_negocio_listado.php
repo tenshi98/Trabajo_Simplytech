@@ -19,8 +19,8 @@ $location .='?pagina='.$_GET['pagina'];
 //Variables para filtro y paginacion
 $search = '';
 if(isset($_GET['idCliente']) && $_GET['idCliente']!=''){   $location .= "&idCliente=".$_GET['idCliente'];    $search .= "&idCliente=".$_GET['idCliente'];}
-if(isset($_GET['Codigo']) && $_GET['Codigo']!=''){  $location .= "&Codigo=".$_GET['Codigo'];          $search .= "&Codigo=".$_GET['Codigo'];}
-if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){  $location .= "&Nombre=".$_GET['Nombre'];          $search .= "&Nombre=".$_GET['Nombre'];}
+if(isset($_GET['Codigo']) && $_GET['Codigo']!=''){         $location .= "&Codigo=".$_GET['Codigo'];          $search .= "&Codigo=".$_GET['Codigo'];}
+if(isset($_GET['Nombre']) && $_GET['Nombre']!=''){         $location .= "&Nombre=".$_GET['Nombre'];          $search .= "&Nombre=".$_GET['Nombre'];}
 /********************************************************************/
 //Verifico los permisos del usuario sobre la transaccion
 require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
@@ -62,8 +62,8 @@ if (isset($_GET['clone'])){   $error['clone']   = 'sucess/Maquina clonada correc
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['clone_idMaquina'])){ 
-	
+if(!empty($_GET['clone_idMaquina'])){
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -592,8 +592,6 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 }
 
 ?>
-
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowdata['Nombre'], 'Resumen'); ?>

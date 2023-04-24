@@ -542,8 +542,6 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 
 ?>
 
-
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Resumen'); ?>
 </div>

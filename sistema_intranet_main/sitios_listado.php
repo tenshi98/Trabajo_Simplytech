@@ -132,7 +132,6 @@ LEFT JOIN `core_estados`                       ON core_estados.idEstado   = siti
 $SIS_where = 'sitios_listado.idSitio = '.simpleDecode($_GET['id'], fecha_actual());
 $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-
 /**********************************/
 //Permisos a sistemas
 $SIS_query = '

@@ -1235,7 +1235,7 @@ $Form_Inputs = new Inputs();
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Pago</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">PPM Utilizado</td>
@@ -1263,7 +1263,7 @@ $Form_Inputs = new Inputs();
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -1294,8 +1294,8 @@ $Form_Inputs = new Inputs();
 				</tr>
 				<tr class="item-row linea_punteada">
 					<td>Arriendos</td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][1]['IVA'], 0)?></td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][2]['IVA'], 0)?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][1]['IVA'], 0); ?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][2]['IVA'], 0); ?></td>
 					<td align="right" class="<?php if($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_TotalSaldo']>0){echo 'color-red';}else{echo 'color-blue';} ?>"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_TotalSaldo'], 0); ?></td>
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_MontoPago'], 0); ?></td>
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_Diferencia'], 0); ?></td>
@@ -1307,8 +1307,8 @@ $Form_Inputs = new Inputs();
 				</tr>
 				<tr class="item-row linea_punteada">
 					<td>Insumos</td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][1]['IVA'], 0)?></td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][2]['IVA'], 0)?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][1]['IVA'], 0); ?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][2]['IVA'], 0); ?></td>
 					<td align="right" class="<?php if($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo']>0){echo 'color-red';}else{echo 'color-blue';} ?>"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo'], 0); ?></td>
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_MontoPago'], 0); ?></td>
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_Diferencia'], 0); ?></td>
@@ -1320,8 +1320,8 @@ $Form_Inputs = new Inputs();
 				</tr>
 				<tr class="item-row linea_punteada">
 					<td>Productos</td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][1]['IVA'], 0)?></td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][2]['IVA'], 0)?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][1]['IVA'], 0); ?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][2]['IVA'], 0); ?></td>
 					<td align="right" class="<?php if($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo']>0){echo 'color-red';}else{echo 'color-blue';} ?>"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo'], 0); ?></td>
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_MontoPago'], 0); ?></td>
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_Diferencia'], 0); ?></td>
@@ -1333,8 +1333,8 @@ $Form_Inputs = new Inputs();
 				</tr>
 				<tr class="item-row linea_punteada">
 					<td>Servicios</td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][1]['IVA'], 0)?></td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][2]['IVA'], 0)?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][1]['IVA'], 0); ?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][2]['IVA'], 0); ?></td>
 					<td align="right" class="<?php if($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo']>0){echo 'color-red';}else{echo 'color-blue';} ?>"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo'], 0); ?></td>
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_MontoPago'], 0); ?></td>
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_Diferencia'], 0); ?></td>
@@ -1369,10 +1369,10 @@ $Form_Inputs = new Inputs();
 				</tr>
 				<tr class="item-row linea_punteada">
 					<td>Arriendos</td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][1]['ValorNeto'], 0)?></td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Saldo'], 0)?></td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Pago'], 0)?></td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Diferencia'], 0)?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][1]['ValorNeto'], 0); ?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Saldo'], 0); ?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Pago'], 0); ?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Diferencia'], 0); ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
 							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_ppm=1'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
@@ -1381,10 +1381,10 @@ $Form_Inputs = new Inputs();
 				</tr>
 				<tr class="item-row linea_punteada">
 					<td>Insumos</td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][1]['ValorNeto'], 0)?></td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Saldo'], 0)?></td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Pago'], 0)?></td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Diferencia'], 0)?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][1]['ValorNeto'], 0); ?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Saldo'], 0); ?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Pago'], 0); ?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Diferencia'], 0); ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
 							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_ppm=2'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
@@ -1393,10 +1393,10 @@ $Form_Inputs = new Inputs();
 				</tr>
 				<tr class="item-row linea_punteada">
 					<td>Productos</td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][1]['ValorNeto'], 0)?></td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Saldo'], 0)?></td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Pago'], 0)?></td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Diferencia'], 0)?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][1]['ValorNeto'], 0); ?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Saldo'], 0); ?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Pago'], 0); ?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Diferencia'], 0); ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
 							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_ppm=3'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
@@ -1405,10 +1405,10 @@ $Form_Inputs = new Inputs();
 				</tr>
 				<tr class="item-row linea_punteada">
 					<td>Servicios</td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][1]['ValorNeto'], 0)?></td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Saldo'], 0)?></td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Pago'], 0)?></td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Diferencia'], 0)?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][1]['ValorNeto'], 0); ?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Saldo'], 0); ?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Pago'], 0); ?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Diferencia'], 0); ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
 							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_ppm=4'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
@@ -1437,7 +1437,7 @@ $Form_Inputs = new Inputs();
 				</tr>
 				<tr class="item-row linea_punteada">
 					<td>Retenciones</td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_retenciones']['Retencion'], 0)?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_retenciones']['Retencion'], 0); ?></td>
 				</tr>
 			</tbody>
 		</table>
@@ -1453,7 +1453,7 @@ $Form_Inputs = new Inputs();
 				</tr>
 				<tr class="item-row linea_punteada">
 					<td>Impuesto a la Renta</td>
-					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_trabajadores']['ImpuestoRenta'], 0)?></td>
+					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_trabajadores']['ImpuestoRenta'], 0); ?></td>
 				</tr>
 			</tbody>
 		</table>

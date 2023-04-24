@@ -210,7 +210,7 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Solicitud de Aplicacion.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['f_creacion'])?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($row_data['f_creacion']); ?></small>
 			</h2>
 		</div>
 	</div>

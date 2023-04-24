@@ -125,7 +125,6 @@ if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$
 	$z.= " AND orden_trabajo_listado_trabajos.f_termino BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 
-
 // Se trae un listado con todas las OT
 $arrOT = array();
 $query = "SELECT
@@ -234,7 +233,6 @@ if(!$resultado){
 while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrInsumos,$row );
 }
-
 
 // Se trae un listado con todos los elementos
 $arrInsumos2 = array();
@@ -413,8 +411,6 @@ array_push( $arrInsumos2,$row );
 	</div>
 </div>
 
-
-
 <div class="row">
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 		<div class="box">
@@ -482,8 +478,6 @@ array_push( $arrInsumos2,$row );
 		</div>
 	</div>
 </div>
-
-
 
 <div class="row">
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -588,7 +582,7 @@ array_push( $arrInsumos2,$row );
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<?php 
 							filtrar($arrOT2, 'idUbicacion'); 
-							foreach($arrOT2 as $ordenes=>$consumo){ 
+							foreach($arrOT2 as $ordenes=>$consumo){
 								echo '<tr class="odd" ><td colspan="5"  style="background-color:#DDD">Area : '.$consumo[0]['Area'].'</td></tr>';
 								foreach ($consumo as $consumos) {
 									$cantidad = 0;
@@ -705,7 +699,7 @@ array_push( $arrInsumos2,$row );
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
 							<?php 
 							filtrar($arrInsumos2, 'idUbicacion'); 
-							foreach($arrInsumos2 as $ordenes=>$consumo){ 
+							foreach($arrInsumos2 as $ordenes=>$consumo){
 								echo '<tr class="odd" ><td colspan="5"  style="background-color:#DDD">Area : '.$consumo[0]['Area'].'</td></tr>';
 								foreach ($consumo as $consumos) { ?>
 										<tr class="odd">

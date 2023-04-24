@@ -50,7 +50,6 @@ LEFT JOIN `core_ubicacion_comunas`   ON core_ubicacion_comunas.idComuna   = usua
 $SIS_where = 'usuarios_listado.idUsuario ='.$_SESSION['usuario']['basic_data']['idUsuario'];
 $rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-
 /**********************************/
 //Permisos asignados
 $SIS_query = '

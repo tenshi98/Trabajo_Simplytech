@@ -398,7 +398,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 				$Form_Inputs->form_input_hidden('idTipo', 13, 2);
 				$Form_Inputs->form_input_hidden('fecha_auto', fecha_actual(), 2);
-				$Form_Inputs->form_input_hidden('idDocumentos', 3, 2);	
+				$Form_Inputs->form_input_hidden('idDocumentos', 3, 2);
 				?>
 
 				<div class="form-group">
@@ -516,7 +516,6 @@ if(!$resultado){
 }
 $rowBodega = mysqli_fetch_assoc ($resultado);
 
-
 // Se trae un listado con todos los impuestos existentes
 $arrImpuestos = array();
 $query = "SELECT idImpuesto, Nombre,Porcentaje
@@ -615,7 +614,7 @@ array_push( $arrFrecuencia,$row );
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>
@@ -751,7 +750,7 @@ array_push( $arrFrecuencia,$row );
 									$vtotal_neto = $vtotal_neto + $vtotal_IVA;
 									//se guardan los valores en variables de sesion
 									$_SESSION['arriendos_egr_nc_impuestos'][$producto['idImpuesto']]['valor'] = $vtotal_IVA;
-									
+
 									?>
 									<tr class="invoice-total" bgcolor="#f1f1f1">
 										<td colspan="4" align="right"><strong><?php echo $impto['Nombre'].' ('.Cantidades_decimales_justos($impto['Porcentaje']).'%)'; ?></strong></td>      

@@ -108,7 +108,6 @@ $SIS_order = 'tareas_pendientes_listado_historial.idHistorial ASC';
 $arrHistorial = array();
 $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrHistorial');
 
-
 /*********************************************************/
 if(isset($rowdata['Cancelador'])&&$rowdata['Cancelador']!=''){ ?>
 
@@ -177,12 +176,12 @@ if((isset($_GET['editForm'])&&$_GET['editForm']='true') OR $_SESSION['usuario'][
 					<tbody>
 						<tr>
 							<td class="meta-head">Fecha Creacion</td>
-							<td><?php echo Fecha_estandar($rowdata['f_creacion'])?></td>
+							<td><?php echo Fecha_estandar($rowdata['f_creacion']); ?></td>
 						</tr>
 						<?php if(isset($rowdata['f_termino'])&&$rowdata['f_termino']!='0000-00-00'){ ?>
 							<tr>
 								<td class="meta-head">Fecha Termino</td>
-								<td><?php echo Fecha_estandar($rowdata['f_termino'])?></td>
+								<td><?php echo Fecha_estandar($rowdata['f_termino']); ?></td>
 							</tr>
 						<?php } ?>
 					</tbody>
@@ -291,8 +290,6 @@ if(isset($_GET['return'])&&$_GET['return']!=''){
 
 	<?php }
 } ?>
-
-
 
 <?php
 /**********************************************************************************************************************************/

@@ -98,7 +98,7 @@ $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_geoc
 						<th>Descripcion</th>
 						<th>Fecha</th>
 						<th>Hora</th>
-                        <th>Ubicacion</th>  
+                        <th>Ubicacion</th>
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -114,7 +114,7 @@ $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_geoc
 								</div>
 							</td>
 						</tr>
-                    <?php }  ?>                    
+                    <?php }  ?>
 				</tbody>
 			</table>
 		</div>
@@ -124,11 +124,6 @@ $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_geoc
 		</div>
 	</div>
 </div>
-
-
-
-	
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -149,7 +144,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$z .= " AND telemetria_listado.idTab=3";//CrossTrack
 }
- ?>		
+?>
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>
@@ -161,7 +156,6 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 
 				<?php
 				//Se verifican si existen los datos
-					
 				if(isset($f_inicio)){      $x1  = $f_inicio;      }else{$x1  = '';}
 				if(isset($f_termino)){     $x2  = $f_termino;     }else{$x2  = '';}
 				if(isset($idTelemetria)){  $x3  = $idTelemetria;  }else{$x3  = '';}

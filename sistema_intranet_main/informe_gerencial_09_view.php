@@ -168,7 +168,6 @@ LEFT JOIN `sistema_documentos_pago`    ON sistema_documentos_pago.idDocPago    =
 LEFT JOIN pagos_leyes_sociales         ON pagos_leyes_sociales.idFactSocial    = pagos_leyes_sociales_formas_pago.idFactSocial
 ';
 
-
 //variables
 $arrTemporal_1 = array();
 $arrTemporal_2 = array();
@@ -477,7 +476,7 @@ $total_egreso  = 0;
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($Subtotal_2, 0); ?></td><?php } ?>
 						<td></td>
 					</tr>
-					<?php ////////////////////////////////////////////////////////////////////?>  
+					<?php ////////////////////////////////////////////////////////////////////?>
 					<tr role="row" style="background-color: #d2d2d2;">
 						<th colspan="4">Total General</th>
 						<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==2)){ ?><td align="right" class="color-blue"><?php echo valores($total_ingreso, 0); ?></td><?php } ?>

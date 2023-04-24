@@ -149,7 +149,6 @@ $SIS_join  = '';
 $SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $n_permisos = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'n_permisos');
 
-
 /********************************************************************************************/
 if(isset($rowdata['CrossCrane_tiempo_revision'])&&$rowdata['CrossCrane_tiempo_revision']=='00:00:00'){
 	echo '<div class="col-xs-12" style="margin-top:15px;">';

@@ -314,7 +314,7 @@ if(!empty($_GET['addFile'])){ ?>
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Programada</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['nomina_basicos']['FechaProgramada'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['nomina_basicos']['FechaProgramada']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Hora Inicio</td>

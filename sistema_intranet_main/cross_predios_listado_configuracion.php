@@ -118,7 +118,6 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-
 //Se obtiene la ubicacion
 $Ubicacion = $rowdata['Direccion'];
 if(isset($rowdata['Comuna'])&&$rowdata['Comuna']!=''){$Ubicacion.=', '.$rowdata['Comuna'];}
@@ -674,7 +673,7 @@ array_push( $arrZonas,$row );
 							<tr class="odd">
 								<td><?php echo $nx; ?></td>
 								<td><?php echo 'lat: '.$pos['Latitud'].'<br/>lng: '.$pos['Longitud']; ?></td>
-								<td> 
+								<td>
 									<div class="btn-group" style="width: 70px;" >  
 										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&edit_puntos='.$_GET['edit_puntos'].'&mod='.$pos['idUbicaciones']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=2){
@@ -968,8 +967,6 @@ array_push( $arrZonas,$row );
 		</div>
 	</div>
 </div>
-
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">

@@ -34,7 +34,6 @@ if($CON_Server!=''&&$CON_Usuario!=''&&$CON_Base!=''){
 	$dbConn_2 = conectarDB($CON_Server, $CON_Usuario, $CON_Password, $CON_Base);
 }
 
-
 //Tipo de usuario
 $idTipoUsuario  = $_SESSION['usuario']['basic_data']['idTipoUsuario'];
 $idSistema      = $_SESSION['usuario']['basic_data']['idSistema'];
@@ -95,7 +94,6 @@ $subquery .= ",(SELECT COUNT(idCalendario) FROM principal_calendario_listado WHE
 $subquery .= ",(SELECT COUNT(idNoti) FROM principal_notificaciones_ver WHERE idEstado='1' AND idUsuario=".$idUsuario." ".$z." LIMIT 1) AS Notificacion";
 //Tickets Abiertos
 $subquery .= ",(SELECT COUNT(idTicket) FROM crosstech_gestion_tickets WHERE idEstado='1' ".$z." LIMIT 1) AS TicketsAbiertos";
-
 
 /************************************************************************************/
 //consultas anidadas, se utiliza las variables anteriores para consultar cada permiso

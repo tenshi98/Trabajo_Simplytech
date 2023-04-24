@@ -54,22 +54,23 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 // Se trae un listado con todos los elementos
 $SIS_query = '
 telemetria_listado_errores.idErrores,
-telemetria_listado_errores.Descripcion, 
-telemetria_listado_errores.Fecha, 
+telemetria_listado_errores.Descripcion,
+telemetria_listado_errores.Fecha,
 telemetria_listado_errores.Hora,
-telemetria_listado_errores.Sensor, 
+telemetria_listado_errores.Sensor,
 telemetria_listado_errores.Valor,
 telemetria_listado_errores.Valor_min,
 telemetria_listado_errores.Valor_max,
 telemetria_listado_errores.idTelemetria,
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.id_Geo'.$subquery;
-$SIS_order = 'idErrores DESC';
+$SIS_join .= ' LEFT JOIN telemetria_listado_sensores_unimed ON telemetria_listado_sensores_unimed.idTelemetria = telemetria_listado_errores.idTelemetria ';
+$SIS_order = 'telemetria_listado_errores.idErrores DESC';
 $arrErrores = array();
 $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrErrores');
 
@@ -96,7 +97,7 @@ $spreadsheet->getProperties()->setCreator("Office 2007")
 							 ->setDescription("Document for Office 2007")
 							 ->setKeywords("office 2007")
 							 ->setCategory("office 2007 result file");
-     
+
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('A1', 'Nombre Equipo')
@@ -106,11 +107,11 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('E1', 'Medicion Actual')
             ->setCellValue('F1', 'Min')
             ->setCellValue('G1', 'Max')
-            ->setCellValue('H1', 'Unidad Medida');   
-      
+            ->setCellValue('H1', 'Unidad Medida');
+
 $nn=2;
-foreach ($arrErrores as $error) { 
-				
+foreach ($arrErrores as $error) {
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($error['NombreEquipo']))
 				->setCellValue('B'.$nn, DeSanitizar($error['Descripcion']))

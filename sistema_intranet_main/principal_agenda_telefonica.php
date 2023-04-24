@@ -266,7 +266,7 @@ $search='';
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//paginador
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>

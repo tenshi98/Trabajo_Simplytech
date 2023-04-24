@@ -160,38 +160,38 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 				<?php } ?>
 				<?php if(isset($rowFacturacion['DetalleSaldoFavor'])&&$rowFacturacion['DetalleSaldoFavor']!='0'){ ?>
 					<div class="pull-left">Saldo a Favor</div>
-					<small class="pull-right"><?php echo '(-) '.Valores($rowFacturacion['DetalleSaldoFavor'], 0)?></small>
+					<small class="pull-right"><?php echo '(-) '.Valores($rowFacturacion['DetalleSaldoFavor'], 0); ?></small>
 					<br/>
 				<?php } ?>
 				<?php if(isset($rowFacturacion['DetalleSaldoAnterior'])&&$rowFacturacion['DetalleSaldoAnterior']!='0'){ ?>
 					<div class="pull-left">Saldo Anterior</div>
-					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleSaldoAnterior'], 0)?></small>
+					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleSaldoAnterior'], 0); ?></small>
 					<br/>
 				<?php } ?>
 
 				<?php if(isset($rowFacturacion['DetalleOtrosCargos1Valor'])&&$rowFacturacion['DetalleOtrosCargos1Valor']!='0'){ ?>
 					<div class="pull-left">Otros Cargos 1</div>
-					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos1Valor'], 0)?></small>
+					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos1Valor'], 0); ?></small>
 					<br/>
 				<?php } ?>
 				<?php if(isset($rowFacturacion['DetalleOtrosCargos2Valor'])&&$rowFacturacion['DetalleOtrosCargos2Valor']!='0'){ ?>
 					<div class="pull-left">Otros Cargos 2</div>
-					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos2Valor'], 0)?></small>
+					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos2Valor'], 0); ?></small>
 					<br/>
 				<?php } ?>
 				<?php if(isset($rowFacturacion['DetalleOtrosCargos3Valor'])&&$rowFacturacion['DetalleOtrosCargos3Valor']!='0'){ ?>
 					<div class="pull-left">Otros Cargos 3</div>
-					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos3Valor'], 0)?></small>
+					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos3Valor'], 0); ?></small>
 					<br/>
 				<?php } ?>
 				<?php if(isset($rowFacturacion['DetalleOtrosCargos4Valor'])&&$rowFacturacion['DetalleOtrosCargos4Valor']!='0'){ ?>
 					<div class="pull-left">Otros Cargos 4</div>
-					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos4Valor'], 0)?></small>
+					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos4Valor'], 0); ?></small>
 					<br/>
 				<?php } ?>
 				<?php if(isset($rowFacturacion['DetalleOtrosCargos5Valor'])&&$rowFacturacion['DetalleOtrosCargos5Valor']!='0'){ ?>
 					<div class="pull-left">Otros Cargos 5</div>
-					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos5Valor'], 0)?></small>
+					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos5Valor'], 0); ?></small>
 					<br/>
 				<?php } ?>
 
@@ -445,38 +445,38 @@ array_push( $arrFacturaciones,$row );
 					<?php } ?>
 					<?php if(isset($rowFacturacion['DetalleSaldoFavor'])&&$rowFacturacion['DetalleSaldoFavor']!='0'){ ?>
 						<div class="pull-left">Saldo a Favor</div>
-						<small class="pull-right"><?php echo '(-) '.Valores($rowFacturacion['DetalleSaldoFavor'], 0)?></small>
+						<small class="pull-right"><?php echo '(-) '.Valores($rowFacturacion['DetalleSaldoFavor'], 0); ?></small>
 						<br/>
 					<?php } ?>
 					<?php if(isset($rowFacturacion['DetalleSaldoAnterior'])&&$rowFacturacion['DetalleSaldoAnterior']!='0'){ ?>
 						<div class="pull-left">Saldo Anterior</div>
-						<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleSaldoAnterior'], 0)?></small>
+						<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleSaldoAnterior'], 0); ?></small>
 						<br/>
 					<?php } ?>
 
 					<?php if(isset($rowFacturacion['DetalleOtrosCargos1Valor'])&&$rowFacturacion['DetalleOtrosCargos1Valor']!='0'){ ?>
 						<div class="pull-left">Otros Cargos 1</div>
-						<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos1Valor'], 0)?></small>
+						<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos1Valor'], 0); ?></small>
 						<br/>
 					<?php } ?>
 					<?php if(isset($rowFacturacion['DetalleOtrosCargos2Valor'])&&$rowFacturacion['DetalleOtrosCargos2Valor']!='0'){ ?>
 						<div class="pull-left">Otros Cargos 2</div>
-						<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos2Valor'], 0)?></small>
+						<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos2Valor'], 0); ?></small>
 						<br/>
 					<?php } ?>
 					<?php if(isset($rowFacturacion['DetalleOtrosCargos3Valor'])&&$rowFacturacion['DetalleOtrosCargos3Valor']!='0'){ ?>
 						<div class="pull-left">Otros Cargos 3</div>
-						<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos3Valor'], 0)?></small>
+						<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos3Valor'], 0); ?></small>
 						<br/>
 					<?php } ?>
 					<?php if(isset($rowFacturacion['DetalleOtrosCargos4Valor'])&&$rowFacturacion['DetalleOtrosCargos4Valor']!='0'){ ?>
 						<div class="pull-left">Otros Cargos 4</div>
-						<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos4Valor'], 0)?></small>
+						<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos4Valor'], 0); ?></small>
 						<br/>
 					<?php } ?>
 					<?php if(isset($rowFacturacion['DetalleOtrosCargos5Valor'])&&$rowFacturacion['DetalleOtrosCargos5Valor']!='0'){ ?>
 						<div class="pull-left">Otros Cargos 5</div>
-						<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos5Valor'], 0)?></small>
+						<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['DetalleOtrosCargos5Valor'], 0); ?></small>
 						<br/>
 					<?php } ?>
 				</li>

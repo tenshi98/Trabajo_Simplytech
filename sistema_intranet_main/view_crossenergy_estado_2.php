@@ -118,7 +118,6 @@ $SIS_join  = '';
 $SIS_where = 'idSistema ='.$_SESSION['usuario']['basic_data']['idSistema'];
 $rowSistema = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowSistema');
 
-
 //Temporales
 $TempValue_1 = 0;
 $TempValue_2 = 0;
@@ -189,10 +188,8 @@ $SIS_join     = '';
 $SIS_where    = '(TimeStamp BETWEEN "'.$Grafico_FechaInicio.' '.$Grafico_HoraInicio .'" AND "'.$Grafico_FechaTermino.' '.$Grafico_HoraTermino.'")';
 $rowPotencia  = db_select_data (false, $SIS_query, 'telemetria_listado_crossenergy_hora', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowPotencia');
 
-
 //Ordenamiento de grafico
 asort($arrGraficos);
-
 
 //Temporales
 $Subquery    = '';
@@ -232,7 +229,6 @@ $Informes_4_FechaInicio    = $Demanda_FechaInicio;
 $Informes_4_HoraInicio     = $Demanda_HoraInicio;
 $Informes_4_FechaTermino   = $Demanda_FechaTermino;
 $Informes_4_HoraTermino    = $Demanda_HoraTermino;
-
 
 //sumo para sacar promedios
 $PotenciaSuma = 0;

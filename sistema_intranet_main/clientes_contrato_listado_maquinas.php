@@ -178,8 +178,8 @@ if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Dato Borrado correctam
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-if(!empty($_GET['clone_idMaquina'])){ 
-	
+if(!empty($_GET['clone_idMaquina'])){
+
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -249,33 +249,16 @@ if(!empty($_GET['clone_idMaquina'])){
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['modMatriz'])){
 //Armo cadena
-$cadena  = 'PuntoNombre_'.$_GET['modMatriz'].' AS Nombre';
-$cadena .= ',PuntoMedAceptable_'.$_GET['modMatriz'].' AS Aceptable';
-$cadena .= ',PuntoMedAlerta_'.$_GET['modMatriz'].' AS Alerta';
-$cadena .= ',PuntoMedCondenatorio_'.$_GET['modMatriz'].' AS Condenatorio';
-$cadena .= ',PuntoUniMed_'.$_GET['modMatriz'].' AS UniMed';
-$cadena .= ',PuntoidTipo_'.$_GET['modMatriz'].' AS Tipo';
-$cadena .= ',PuntoidGrupo_'.$_GET['modMatriz'].' AS Grupo';
+$SIS_query  = 'PuntoNombre_'.$_GET['modMatriz'].' AS Nombre';
+$SIS_query .= ',PuntoMedAceptable_'.$_GET['modMatriz'].' AS Aceptable';
+$SIS_query .= ',PuntoMedAlerta_'.$_GET['modMatriz'].' AS Alerta';
+$SIS_query .= ',PuntoMedCondenatorio_'.$_GET['modMatriz'].' AS Condenatorio';
+$SIS_query .= ',PuntoUniMed_'.$_GET['modMatriz'].' AS UniMed';
+$SIS_query .= ',PuntoidTipo_'.$_GET['modMatriz'].' AS Tipo';
+$SIS_query .= ',PuntoidGrupo_'.$_GET['modMatriz'].' AS Grupo';
+$SIS_join  = '';
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_join, 'idMatriz = '.$_GET['idMatriz'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-// consulto los datos
-$query = "SELECT ".$cadena."
-FROM `maquinas_listado_matriz`
-WHERE idMatriz = ".$_GET['idMatriz'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 
-	 
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -371,7 +354,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['idMatriz'])){
 // consulto los datos
-$query = "SELECT Nombre,cantPuntos,
+$SIS_query  = 'Nombre,cantPuntos,
 PuntoNombre_1,PuntoNombre_2,PuntoNombre_3,PuntoNombre_4,PuntoNombre_5,
 PuntoNombre_6,PuntoNombre_7,PuntoNombre_8,PuntoNombre_9,PuntoNombre_10,
 PuntoNombre_11,PuntoNombre_12,PuntoNombre_13,PuntoNombre_14,PuntoNombre_15,
@@ -447,28 +430,9 @@ PuntoidTipo_26,PuntoidTipo_27,PuntoidTipo_28,PuntoidTipo_29,PuntoidTipo_30,
 PuntoidTipo_31,PuntoidTipo_32,PuntoidTipo_33,PuntoidTipo_34,PuntoidTipo_35,
 PuntoidTipo_36,PuntoidTipo_37,PuntoidTipo_38,PuntoidTipo_39,PuntoidTipo_40,
 PuntoidTipo_41,PuntoidTipo_42,PuntoidTipo_43,PuntoidTipo_44,PuntoidTipo_45,
-PuntoidTipo_46,PuntoidTipo_47,PuntoidTipo_48,PuntoidTipo_49,PuntoidTipo_50
-
-
-
-FROM `maquinas_listado_matriz`
-WHERE idMatriz = ".$_GET['idMatriz'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
-
-
+PuntoidTipo_46,PuntoidTipo_47,PuntoidTipo_48,PuntoidTipo_49,PuntoidTipo_50';
+$SIS_join  = '';
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_join, 'idMatriz = '.$_GET['idMatriz'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //Se traen todas las unidades de medida
 $arrUnimed = array();
@@ -499,8 +463,6 @@ foreach ($arrGrupos as $sen) {
 }
 
 ?>
-
-
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
@@ -559,23 +521,11 @@ foreach ($arrGrupos as $sen) {
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['idMatriz_2'])){
 // consulto los datos
-$query = "SELECT Nombre,cantPuntos
-FROM `maquinas_listado_matriz`
-WHERE idMatriz = ".$_GET['idMatriz_2'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	?>
+$SIS_query  = 'Nombre,cantPuntos';
+$SIS_join  = '';
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_join, 'idMatriz = '.$_GET['idMatriz_2'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
+?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
@@ -596,7 +546,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 2, 1, 50);
 
-				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz_2'], 2);	
+				$Form_Inputs->form_input_hidden('idMatriz', $_GET['idMatriz_2'], 2);
 				?>
 
 				<div class="form-group">
@@ -650,52 +600,21 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 		</div>
 	</div>
 </div>
-	 
-	
+
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['matriz'])){
 // consulto los datos
-$query = "SELECT Nombre,idConfig_1, idConfig_2
-FROM `maquinas_listado`
-WHERE idMaquina = ".$_GET['matriz'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query  = 'Nombre,idConfig_1, idConfig_2';
+$SIS_join  = '';
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, 'idMaquina = '.$_GET['matriz'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
-// Se trae un listado de la matriz
+// Se trae un listado con todos los elementos
+$SIS_query = 'idMatriz, Nombre,cantPuntos';
+$SIS_join  = '';
+$SIS_where = 'idMaquina = '.$_GET['matriz'];
+$SIS_order = 'Nombre ASC';
 $arrMatriz = array();
-$query = "SELECT idMatriz, Nombre,cantPuntos
-FROM `maquinas_listado_matriz`
-WHERE idMaquina = ".$_GET['matriz']."
-ORDER BY Nombre ASC";
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrMatriz,$row );
-}
-
+$arrMatriz = db_select_array (false, $SIS_query, 'maquinas_listado_matriz', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMatriz');
 
 ?>
 
@@ -746,8 +665,6 @@ array_push( $arrMatriz,$row );
 	</div>
 </div>
 
-
-
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<a href="<?php echo $new_location.'&id='.$_GET['id'] ?>" class="btn btn-danger pull-right"><i class="fa fa-arrow-left" aria-hidden="true"></i> Volver</a>
@@ -762,26 +679,13 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	//filtro
 	$z = "idLicitacion=0";
 	//Se revisan los permisos a los contratos
+	$SIS_query = 'idLicitacion';
+	$SIS_join  = '';
+	$SIS_where = 'idUsuario = '.$_SESSION['usuario']['basic_data']['idUsuario'];
+	$SIS_order = 'idLicitacion ASC';
 	$arrPermisos = array();
-	$query = "SELECT idLicitacion
-	FROM `usuarios_contratos`
-	WHERE idUsuario=".$_SESSION['usuario']['basic_data']['idUsuario'];
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)){
-	array_push( $arrPermisos,$row );
-	}
+	$arrPermisos = db_select_array (false, $SIS_query, 'usuarios_contratos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
 	foreach ($arrPermisos as $prod) {
 		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion={$prod['idLicitacion']})";
 	}
@@ -878,68 +782,49 @@ $w = 'idUtilizable=1';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['edit_componente'])){
 // consulto los datos
-$query = "SELECT 
-maquinas_listado_level_".$_GET['lvl'].".Nombre,
-maquinas_listado_level_".$_GET['lvl'].".Codigo,
-maquinas_listado_level_".$_GET['lvl'].".Marca,
-maquinas_listado_level_".$_GET['lvl'].".idUtilizable,
-maquinas_listado_level_".$_GET['lvl'].".Modelo,
-maquinas_listado_level_".$_GET['lvl'].".AnoFab,
-maquinas_listado_level_".$_GET['lvl'].".Serie,
-maquinas_listado_level_".$_GET['lvl'].".idSubTipo,
-maquinas_listado_level_".$_GET['lvl'].".Saf,
-maquinas_listado_level_".$_GET['lvl'].".Numero,
-maquinas_listado_level_".$_GET['lvl'].".idProducto,
-maquinas_listado_level_".$_GET['lvl'].".Grasa_inicial,
-maquinas_listado_level_".$_GET['lvl'].".Grasa_relubricacion,
-maquinas_listado_level_".$_GET['lvl'].".Aceite,
-maquinas_listado_level_".$_GET['lvl'].".Cantidad,
-maquinas_listado_level_".$_GET['lvl'].".idUml,
-maquinas_listado_level_".$_GET['lvl'].".Frecuencia,
-maquinas_listado_level_".$_GET['lvl'].".idFrecuencia,
-sistema_productos_uml.Nombre AS UnidadMedida
-
-FROM `maquinas_listado_level_".$_GET['lvl']."`
-LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = maquinas_listado_level_".$_GET['lvl'].".idUml
-WHERE maquinas_listado_level_".$_GET['lvl'].".idLevel_".$_GET['lvl']." = ".$_GET['edit_componente'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);	 
+$SIS_query  = '
+maquinas_listado_level_'.$_GET['lvl'].'.Nombre,
+maquinas_listado_level_'.$_GET['lvl'].'.Codigo,
+maquinas_listado_level_'.$_GET['lvl'].'.Marca,
+maquinas_listado_level_'.$_GET['lvl'].'.idUtilizable,
+maquinas_listado_level_'.$_GET['lvl'].'.Modelo,
+maquinas_listado_level_'.$_GET['lvl'].'.AnoFab,
+maquinas_listado_level_'.$_GET['lvl'].'.Serie,
+maquinas_listado_level_'.$_GET['lvl'].'.idSubTipo,
+maquinas_listado_level_'.$_GET['lvl'].'.Saf,
+maquinas_listado_level_'.$_GET['lvl'].'.Numero,
+maquinas_listado_level_'.$_GET['lvl'].'.idProducto,
+maquinas_listado_level_'.$_GET['lvl'].'.Grasa_inicial,
+maquinas_listado_level_'.$_GET['lvl'].'.Grasa_relubricacion,
+maquinas_listado_level_'.$_GET['lvl'].'.Aceite,
+maquinas_listado_level_'.$_GET['lvl'].'.Cantidad,
+maquinas_listado_level_'.$_GET['lvl'].'.idUml,
+maquinas_listado_level_'.$_GET['lvl'].'.Frecuencia,
+maquinas_listado_level_'.$_GET['lvl'].'.idFrecuencia,
+sistema_productos_uml.Nombre AS UnidadMedida';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = maquinas_listado_level_'.$_GET['lvl'].'.idUml';
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_level_'.$_GET['lvl'], $SIS_join, 'maquinas_listado_level_'.$_GET['lvl'].'.idLevel_'.$_GET['lvl'].' = '.$_GET['edit_componente'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //filtro
 $zx1 = "idProducto=0";
 //Se revisan los permisos a los productos
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'idProducto ASC';
 $arrPermisos = array();
-$query = "SELECT idProducto
-FROM `core_sistemas_productos`
-WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrPermisos,$row );
-}
+$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
+$SIS_query = '
+productos_listado.idProducto,
+sistema_productos_uml.Nombre AS Unimed,
+productos_listado.idUml';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+$SIS_where = 'idEstado=1';
+$SIS_order = 'sistema_productos_uml.Nombre ASC';
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }
@@ -1003,42 +888,12 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_text('Unidad de Medida','idUml', $x18, 1);
 				$Form_Inputs->form_input_text('Frecuencia', 'Frecuencia', $x19, 1);
 				$Form_Inputs->form_select('Medida Frecuencia','idFrecuencia', $x20, 1, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
-				
-				
-				
-				
-				
-				
+
 				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idMaquina', $_GET['componente'], 2);
 				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
 
-				//Imprimo las variables
-				$arrTipo = array();
-				$query = "SELECT 
-				productos_listado.idProducto,
-				sistema_productos_uml.Nombre AS Unimed,
-				productos_listado.idUml
-				FROM `productos_listado`
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-				ORDER BY sistema_productos_uml.Nombre";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)){
-				array_push( $arrTipo,$row );
-				}
-				
+
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
@@ -1143,7 +998,7 @@ foreach ($arrPermisos as $prod) {
 							document.getElementById('div_idFrecuencia').style.display = 'none';
 
 						}
-						
+
 						let Sensores_val_2 = $("#idSubTipo").val();
 
 						//si es grasa
@@ -1450,26 +1305,24 @@ foreach ($arrPermisos as $prod) {
 //filtro
 $zx1 = "idProducto=0";
 //Se revisan los permisos a los productos
+$SIS_query = 'idProducto';
+$SIS_join  = '';
+$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+$SIS_order = 'idProducto ASC';
 $arrPermisos = array();
-$query = "SELECT idProducto
-FROM `core_sistemas_productos`
-WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrPermisos,$row );
-}
+$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+
+//Se revisan los permisos a los productos
+$SIS_query = '
+productos_listado.idProducto,
+sistema_productos_uml.Nombre AS Unimed,
+productos_listado.idUml';
+$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+$SIS_where = 'idEstado=1';
+$SIS_order = 'sistema_productos_uml.Nombre ASC';
+$arrTipo = array();
+$arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
 foreach ($arrPermisos as $prod) {
 	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
 }
@@ -1534,37 +1387,10 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_input_text('Frecuencia', 'Frecuencia', $x19, 1);
 				$Form_Inputs->form_select('Medida Frecuencia','idFrecuencia', $x20, 1, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 
-				
 				$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
 				$Form_Inputs->form_input_hidden('idMaquina', $_GET['componente'], 2);
 				$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
 
-				//Imprimo las variables
-				$arrTipo = array();
-				$query = "SELECT 
-				productos_listado.idProducto,
-				sistema_productos_uml.Nombre AS Unimed,
-				productos_listado.idUml
-				FROM `productos_listado`
-				LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-				ORDER BY sistema_productos_uml.Nombre";
-				//Consulta
-				$resultado = mysqli_query ($dbConn, $query);
-				//Si ejecuto correctamente la consulta
-				if(!$resultado){
-					//Genero numero aleatorio
-					$vardata = genera_password(8,'alfanumerico');
-									
-					//Guardo el error en una variable temporal
-					$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-					$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-									
-				}
-				while ( $row = mysqli_fetch_assoc ($resultado)){
-				array_push( $arrTipo,$row );
-				}
-				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
 					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
@@ -1608,9 +1434,7 @@ foreach ($arrPermisos as $prod) {
 					document.getElementById('div_idUml').style.display = 'none';
 					document.getElementById('div_Frecuencia').style.display = 'none';
 					document.getElementById('div_idFrecuencia').style.display = 'none';
-					
-							
-				
+
 					$("#idUtilizable").on("change", function(){
 						let TipoComp = $(this).val();
 
@@ -1829,23 +1653,10 @@ foreach ($arrPermisos as $prod) {
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['componente'])){
 // consulto los datos
-$query = "SELECT Nombre,idSistema, idConfig_1, idConfig_2
-FROM `maquinas_listado`
-WHERE idMaquina = ".$_GET['componente'];
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
-	//Genero numero aleatorio
-	$vardata = genera_password(8,'alfanumerico');
-					
-	//Guardo el error en una variable temporal
-	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
-}
-$rowdata = mysqli_fetch_assoc ($resultado);
+$SIS_query  = 'Nombre,idSistema, idConfig_1, idConfig_2';
+$SIS_join  = '';
+$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, 'idMaquina = '.$_GET['componente'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+
 
 //Se crean las variables
 $nmax = 15;
@@ -1862,7 +1673,7 @@ for ($i = 1; $i <= $nmax; $i++) {
     $z .= ',maquinas_listado_level_'.$i.'.tabla AS LVL_'.$i.'_table';
     $z .= ',maquinas_listado_level_'.$i.'.table_value AS LVL_'.$i.'_table_value';
     $z .= ',maquinas_listado_level_'.$i.'.Direccion_img AS LVL_'.$i.'_imagen ';
-		
+
     //Joins
     $xx = $i + 1;
     if($xx<=$nmax){
@@ -2675,8 +2486,6 @@ array_push( $arrMaquina,$row );
 		</div>
 	</div>
 </div>
-
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">

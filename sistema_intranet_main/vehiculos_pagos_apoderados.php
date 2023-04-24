@@ -101,7 +101,7 @@ $rowFacturacion = mysqli_fetch_assoc ($resultado);
 			<li class="list-group-item">		
 					
 				<div class="pull-left">Total</div>
-				<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['MontoPactado'], 0)?></small>
+				<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['MontoPactado'], 0); ?></small>
 				<br/>
 
 			</li>
@@ -311,7 +311,7 @@ array_push( $arrFacturaciones,$row );
 				<li class="list-group-item">		
 					
 					<div class="pull-left">Total</div>
-					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['MontoPactado'], 0)?></small>
+					<small class="pull-right"><?php echo '(+) '.Valores($rowFacturacion['MontoPactado'], 0); ?></small>
 					<br/>
 						
 					

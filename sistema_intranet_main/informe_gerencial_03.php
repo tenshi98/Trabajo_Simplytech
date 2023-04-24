@@ -66,7 +66,6 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-
 //Se crean las variables
 $nmax = 15;
 $z = '';

@@ -1931,7 +1931,6 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 	}
 }
 
-
 // Se trae un listado con todos los trabajos relacionados a la orden
 $arrTrabajo = array();
 $query = "SELECT 

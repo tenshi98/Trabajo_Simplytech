@@ -152,7 +152,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 							             $dbConn, 'form1');
 
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-				$Form_Inputs->form_input_hidden('idMantenedor', $_GET['id'], 2);	
+				$Form_Inputs->form_input_hidden('idMantenedor', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">

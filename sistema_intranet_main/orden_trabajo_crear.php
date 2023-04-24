@@ -952,7 +952,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha programada</td>
-						<td><?php echo Fecha_estandar($_SESSION['ot_basicos']['f_programacion'])?></td>
+						<td><?php echo Fecha_estandar($_SESSION['ot_basicos']['f_programacion']); ?></td>
 					</tr>
 				</tbody>
 			</table>

@@ -99,7 +99,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_number('Porcentaje', 'Porcentaje', $x2, 2);
 
-				$Form_Inputs->form_input_hidden('idImpuesto', $_GET['id'], 2);	
+				$Form_Inputs->form_input_hidden('idImpuesto', $_GET['id'], 2);
 				?>
 
 				<div class="form-group">

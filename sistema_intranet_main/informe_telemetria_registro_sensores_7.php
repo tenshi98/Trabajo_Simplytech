@@ -143,7 +143,7 @@ $z .= " AND telemetria_listado.id_Geo=1";                                       
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
- ?>
+?>
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">
 		<header>

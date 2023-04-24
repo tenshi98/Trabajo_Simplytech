@@ -36,7 +36,7 @@ $n_meses = 1;
 //Verifico el tipo de usuario que esta ingresando
 $z.=" AND vehiculos_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 if (isset($_GET['Ano'])&&$_GET['Ano']!=''&&isset($_GET['idMes'])&&$_GET['idMes']!=''){
-	$d1.=" AND Creacion_mes='".$_GET['idMes']."' AND Creacion_ano='".$_GET['Ano']."'";	
+	$d1.=" AND Creacion_mes='".$_GET['idMes']."' AND Creacion_ano='".$_GET['Ano']."'";
 	$d2.=" AND idMes='".$_GET['idMes']."' AND Ano='".$_GET['Ano']."'";
 	$data .= " ".numero_a_mes($_GET['idMes'])." de ".$_GET['Ano'];
 
@@ -165,7 +165,7 @@ array_push( $arrVehiculos,$row );
 						<td style="background-color: #ccc;">Recoleccion Planificada</td>
 
 						<td style="background-color: #ccc;">Sueldo Chofer</td>
-						<?php foreach ($arrCostos as $cost) { 
+						<?php foreach ($arrCostos as $cost) {
 							echo '<td style="background-color: #ccc;">'.$cost['Nombre'].'</td>';
 						} ?>
 						<td style="background-color: #ccc;">Total Costos</td>

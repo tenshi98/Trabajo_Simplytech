@@ -47,7 +47,6 @@ if(!$resultado){
 }
 $row_data = mysqli_fetch_assoc ($resultado);
 
-
 //Se traen las rutas
 $arrZonas = array();
 $query = "SELECT 

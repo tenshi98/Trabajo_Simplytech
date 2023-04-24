@@ -67,7 +67,7 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_reserva_oficinas', $SIS_j
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Reserva de Oficina.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowdata['Fecha'])?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowdata['Fecha']); ?></small>
 			</h2>
 		</div>
 	</div>

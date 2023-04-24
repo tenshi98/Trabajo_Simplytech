@@ -296,7 +296,7 @@ array_push( $arrReportes,$row );
 			$ubicacion .= '&idCreador='.$arrReportes[0]['ComentarioIdCliente']; ?>
 			<li><a href="<?php echo $ubicacion; ?>"><i class="fa fa-rss" aria-hidden="true"></i> Notificar Infraccion Creador Post</a></li>
 
-			<?php 
+			<?php
 			/*
 			<li role="separator" class="divider"></li>
 
@@ -590,7 +590,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 			</table>
 		</div>
 		<div class="pagrow">
-			<?php 
+			<?php
 			//paginacion
 			echo paginador_2('paginf',$total_paginas, $original, $search, $num_pag ) ?>
 		</div>

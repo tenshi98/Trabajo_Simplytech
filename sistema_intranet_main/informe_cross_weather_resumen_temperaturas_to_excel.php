@@ -89,8 +89,8 @@ foreach($arrHistorial as $hist2) {
 }
 /****************************************************************************/
 //datos graficos
-$nn     = 2; 
-foreach($arrHistorial as $hist) { 
+$nn     = 2;
+foreach($arrHistorial as $hist) {
 	//verifico que exista fecha
 	if(isset($hist['HeladaDia'])&&$hist['HeladaDia']!='0000-00-00'){
 		//variables
@@ -122,7 +122,6 @@ foreach($arrHistorial as $hist) {
 	}
 				
 }
-
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Informe Temperaturas');

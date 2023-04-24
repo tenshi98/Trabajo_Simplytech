@@ -111,7 +111,6 @@ $arrTemporal_8 = db_select_array (false, $SIS_query8, 'pagos_leyes_fiscales', ''
 $arrTemporal_9 = array();
 $arrTemporal_9 = db_select_array (false, $SIS_query9, 'pagos_leyes_sociales', '', $z9, 'Pago_mes ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTemporal_8');
 
-
 //Selecciono los equipos en arriendo
 $arrArriendos = array();
 $arrArriendos = db_select_array (false, 'idEquipo AS Ident, Nombre', 'equipos_arriendo_listado', '', 'idEstado=1', 'idEquipo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrArriendos');

@@ -133,7 +133,6 @@ $file_list = array();
 $folder_list = array();
 $total_size = 0;
 
-
 // Load icon set
 if ($options['bootstrap']['icons'] !== null) {
     try {

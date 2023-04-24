@@ -74,21 +74,21 @@ require_once '../A1XRXS_sys/xrxs_configuracion/config.php';
 							<div class="modal-footer">
 								<?php if (($options['general']['enable_highlight'])){ ?>
 								<div class="pull-<?php echo $left?>">
-									<button type="button" class="btn <?php echo $btn_highlight ?> highlight hidden"><?php echo _('Apply syntax highlighting')?></button>
+									<button type="button" class="btn <?php echo $btn_highlight ?> highlight hidden"><?php echo _('Apply syntax highlighting'); ?></button>
 								</div>
 								<?php } ?>
 								<div class="pull-<?php echo $right?>">
-									<button type="button" class="btn <?php echo $btn_default ?>" data-dismiss="modal"><?php echo _('Cerrar')?></button>
+									<button type="button" class="btn <?php echo $btn_default ?>" data-dismiss="modal"><?php echo _('Cerrar'); ?></button>
 									<?php if ($options['general']['share_button']) { ?>
 										<div class="btn-group">
-											<a href="#" class="btn <?php echo $btn_primary ?> fullview" download><?php echo _('Download')?></a>
+											<a href="#" class="btn <?php echo $btn_primary ?> fullview" download><?php echo _('Download'); ?></a>
 											<button type="button" class="btn <?php echo $btn_primary ?> dropdown-toggle" data-toggle="dropdown">
 												<span class="caret"></span>
 												<span class="sr-only">Toggle Dropdown</span>
 											</button>
 											<ul class="dropdown-menu" role="menu">
 												<?php if ($options['keys']['dropbox'] !== null ) { ?>
-													<li role="presentation"><a role="menuitem" class="save-dropbox"><?php echo $icons_dropbox._('Guardar en Dropbox')?></a></li>
+													<li role="presentation"><a role="menuitem" class="save-dropbox"><?php echo $icons_dropbox._('Guardar en Dropbox'); ?></a></li>
 													<li role="presentation" class="divider"></li>
 												<?php } ?>
 												<li role="presentation"><a role="menuitem" class="email-link"><?php echo $icons_email ?>Email</a></li>
@@ -98,7 +98,7 @@ require_once '../A1XRXS_sys/xrxs_configuracion/config.php';
 											</ul>
 										</div>
 									<?php } else { ?>
-										<a href="#" class="btn <?php echo $btn_primary ?> fullview" download><?php echo _('Descargar')?></a>
+										<a href="#" class="btn <?php echo $btn_primary ?> fullview" download><?php echo _('Descargar'); ?></a>
 									<?php } ?>
 								</div>
 							</div>

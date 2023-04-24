@@ -63,7 +63,7 @@ $rowdata = db_select_data (false, $SIS_query, 'gestion_quejas', $SIS_join, $SIS_
 		<div class="col-xs-12">
 			<h2 class="page-header">
 				<i class="fa fa-globe" aria-hidden="true"></i> Quejas Generales.
-				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowdata['FechaQueja'])?></small>
+				<small class="pull-right">Fecha Creacion: <?php echo Fecha_estandar($rowdata['FechaQueja']); ?></small>
 			</h2>
 		</div>
 	</div>

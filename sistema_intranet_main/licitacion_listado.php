@@ -113,7 +113,6 @@ $SIS_order = 'licitacion_listado_historial.idHistorial ASC';
 $arrHistorial = array();
 $arrHistorial = db_select_array (false, $SIS_query, 'licitacion_listado_historial', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrHistorial');
 
-
 /***********************************************************************************/
 //Se verifica que se utilice el itemizado
 if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
@@ -321,8 +320,6 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 
 ?>
 
-
-
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Contrato', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
@@ -464,8 +461,6 @@ if(isset($rowdata['idOpcionItem'])&&$rowdata['idOpcionItem']==1){
 		</table>
 	</div>
 <?php } ?>
-
-
 
 <div class="clearfix"></div>
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">

@@ -149,8 +149,6 @@ require_once 'core/Web.Header.Print.php';
 
 ?>
 
- 
-
 <?php if(isset($rowConso['Observacion'])&&$rowConso['Observacion']!=''){
 	if(isset($rowConso['idEstado'])&&$rowConso['idEstado']!=2){ ?>
 		<div class="col-xs-12" style="margin-top:15px;">

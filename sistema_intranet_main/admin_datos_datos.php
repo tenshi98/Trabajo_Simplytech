@@ -107,7 +107,6 @@ $SIS_join  = '';
 $SIS_where = 'usuarios_listado.idUsuario=1';
 $rowdata_x = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata_x');
 
-
 //verifico que sea un administrador
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	//Totales de los permisos que se pueden acceder

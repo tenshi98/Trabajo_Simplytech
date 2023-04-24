@@ -51,18 +51,24 @@ if($HoraTermino<$timeBack){
 	//Se consulta
 	//numero sensores equipo
 	$N_Maximo_Sensores = $cantSensores;
-	$consql = '';
+	$SIS_query = '
+	telemetria_listado.LastUpdateFecha,
+	telemetria_listado.LastUpdateHora,
+	telemetria_listado.TiempoFueraLinea';
 	for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-		$consql .= ',SensoresGrupo_'.$i;
-		$consql .= ',SensoresRevisionGrupo_'.$i;
-		$consql .= ',SensoresUniMed_'.$i;
-		$consql .= ',SensoresMedActual_'.$i;
-		$consql .= ',SensoresActivo_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_revision_grupo.SensoresRevisionGrupo_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 	}
-	/*****************************/
-	$SIS_query = 'LastUpdateFecha,LastUpdateHora,TiempoFueraLinea'.$consql;
-	$SIS_join  = '';
-	$SIS_where = 'idTelemetria='.$idTelemetria;
+	$SIS_join  = '
+	LEFT JOIN `telemetria_listado_sensores_grupo`           ON telemetria_listado_sensores_grupo.idTelemetria           = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_revision_grupo`  ON telemetria_listado_sensores_revision_grupo.idTelemetria  = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria          = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_med_actual`      ON telemetria_listado_sensores_med_actual.idTelemetria      = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria          = telemetria_listado.idTelemetria';
+	$SIS_where = 'telemetria_listado.idTelemetria='.$idTelemetria;
 	$rowEquipo = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEquipo');
 
 	//busco los grupos disponibles

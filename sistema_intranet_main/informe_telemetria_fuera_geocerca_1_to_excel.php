@@ -79,8 +79,8 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('D1', 'Hora');       
        
 $nn=2;
-foreach ($arrErrores as $error) { 
-				
+foreach ($arrErrores as $error) {
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($error['NombreEquipo']))
 				->setCellValue('B'.$nn, DeSanitizar($error['Descripcion']))
@@ -88,8 +88,7 @@ foreach ($arrErrores as $error) {
 				->setCellValue('D'.$nn, $error['Hora']);
 	$nn++;
 
-} 
-						
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Fuera de Geocerca');

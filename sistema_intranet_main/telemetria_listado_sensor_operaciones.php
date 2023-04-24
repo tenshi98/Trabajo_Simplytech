@@ -90,7 +90,6 @@ $arrGrupos = db_select_array (false, 'idGrupo,Nombre,nColumnas', 'telemetria_lis
 $arrFinalGrupos = array();
 foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen['Nombre']; $arrFinalGrupos[$sen['idGrupo']]['nColumnas'] = $sen['nColumnas']; $arrFinalGrupos[$sen['idGrupo']]['idGrupo'] = $sen['idGrupo'];}
 
-
 //los datos guardados
 $rowdata_i = db_select_data (false, 'N_Sensor, ValorActivo, RangoMinimo, RangoMaximo, idFuncion', 'telemetria_listado_definicion_operacional', '', 'idDefinicion ='.$_GET['edit'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata_i');
 

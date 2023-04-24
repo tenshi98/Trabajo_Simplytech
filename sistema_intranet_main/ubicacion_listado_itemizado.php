@@ -323,7 +323,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 					}
 				}
 			echo '</div>';
-							
+
 			echo '<div class="clearfix"></div>';
 			echo '</div>';
 		}

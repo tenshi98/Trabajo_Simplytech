@@ -208,7 +208,6 @@ $trans_35 = "cross_shipping_consolidacion.php";
 $trans_36 = "cross_shipping_consolidacion_aprobar.php";
 $trans_37 = "cross_shipping_consolidacion_aprobar_auto.php";
 
-
 /************************************/
 //realizo la consulta
 $SIS_query = '

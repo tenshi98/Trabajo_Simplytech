@@ -68,7 +68,6 @@ $SIS_order = $x_table.'.Fecha ASC';
 $arrMediciones = array();
 $arrMediciones = db_select_array (false, $SIS_query, $x_table, $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMediciones');
 
-
 //Variables
 $arrMed   = array();
 $counter  = 0;

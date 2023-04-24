@@ -71,7 +71,6 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-
 //Listado de productos
 $arrProductos = array();
 $query = "SELECT 

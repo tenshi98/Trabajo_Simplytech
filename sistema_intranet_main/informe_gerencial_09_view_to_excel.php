@@ -164,7 +164,6 @@ LEFT JOIN `sistema_documentos_pago`    ON sistema_documentos_pago.idDocPago    =
 LEFT JOIN pagos_leyes_sociales         ON pagos_leyes_sociales.idFactSocial    = pagos_leyes_sociales_formas_pago.idFactSocial
 ';
 
-
 //variables
 $arrTemporal_1 = array();
 $arrTemporal_2 = array();

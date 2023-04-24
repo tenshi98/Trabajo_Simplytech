@@ -319,7 +319,6 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-
 //Se traen las rutas
 $arrPuntos = array();
 $query = "SELECT idUbicaciones, Latitud, Longitud
@@ -492,7 +491,7 @@ array_push( $arrPuntos,$row );
 							<tr class="odd">
 								<td><?php echo $nx; ?></td>
 								<td><?php echo 'lat: '.$pos['Latitud'].'<br/>lng: '.$pos['Longitud']; ?></td>
-								<td> 
+								<td>
 									<div class="btn-group" style="width: 70px;" >  
 										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_puntos='.$_GET['edit_puntos'].'&mod='.$pos['idUbicaciones']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=2){

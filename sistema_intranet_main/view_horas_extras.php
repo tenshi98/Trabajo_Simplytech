@@ -135,11 +135,11 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 					</tr>
 					<tr>
 						<td class="meta-head">Periodo Desde</td>
-						<td><?php echo Fecha_estandar($row_data['Fecha_desde'])?></td>
+						<td><?php echo Fecha_estandar($row_data['Fecha_desde']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Periodo Hasta</td>
-						<td><?php echo Fecha_estandar($row_data['Fecha_hasta'])?></td>
+						<td><?php echo Fecha_estandar($row_data['Fecha_hasta']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Usuario Ingreso</td>
@@ -155,11 +155,11 @@ $arrHorasTotal = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Facturacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($row_data['Creacion_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($row_data['Creacion_fecha']); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Fecha Ingreso</td>
-						<td colspan="2"><?php echo Fecha_estandar($row_data['fecha_auto'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($row_data['fecha_auto']); ?></td>
 					</tr>
 				</tbody>
 			</table>

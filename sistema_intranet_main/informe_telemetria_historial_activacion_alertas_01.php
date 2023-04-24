@@ -122,7 +122,7 @@ $maqfil = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['id
 $usrfil = 'usuarios_listado.idEstado=1 AND usuarios_listado.idTipoUsuario!=1';
 //Verifico el tipo de usuario que esta ingresando
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
-	$maqfil .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];	
+	$maqfil .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 	$usrfil .= " AND usuarios_sistemas.idSistema = ".$_SESSION['usuario']['basic_data']['idSistema'];
 } 
 

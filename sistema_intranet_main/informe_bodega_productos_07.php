@@ -136,7 +136,7 @@ array_push( $arrExistenciasMain,$row );
 
 /****************************************************/
 $mes = array();
-foreach ($arrExistenciasMain as $existencias) { 
+foreach ($arrExistenciasMain as $existencias) {
 	if(!isset($mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']])){ $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] = 0;}
 	
 	$mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] = $mes[$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] + $existencias['Valor'];									
@@ -224,7 +224,7 @@ array_push( $arrExistencias,$row );
 
 /****************************************************/
 $mes = array();
-foreach ($arrExistencias as $existencias) { 
+foreach ($arrExistencias as $existencias) {
 	if(!isset($mes[$existencias['BodegaID']][$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']])){ $mes[$existencias['BodegaID']][$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] = 0;}
 	
 	$mes[$existencias['BodegaID']][$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] = $mes[$existencias['BodegaID']][$existencias['Creacion_ano']][$existencias['Creacion_mes']][$existencias['idCategoria']] + $existencias['Valor'];									
@@ -273,8 +273,6 @@ foreach ($arrBodega as $bod) {
 	</div>
 </div>
 
-
-
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table']});</script>
 	
@@ -319,18 +317,18 @@ foreach ($arrBodega as $bod) {
 									data_main.addColumn("number", "<?php echo $cat['Nombre'];  ?>");
 								<?php } ?>
 								data_main.addRows([
-									['<?php echo numero_a_mes_corto($graficoMain[1]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[1][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($graficoMain[2]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[2][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($graficoMain[3]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[3][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($graficoMain[4]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[4][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($graficoMain[5]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[5][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($graficoMain[6]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[6][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($graficoMain[7]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[7][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($graficoMain[8]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[8][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($graficoMain[9]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[9][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($graficoMain[10]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[10][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($graficoMain[11]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[11][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($graficoMain[12]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[12][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($graficoMain[1]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[1][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($graficoMain[2]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[2][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($graficoMain[3]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[3][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($graficoMain[4]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[4][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($graficoMain[5]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[5][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($graficoMain[6]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[6][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($graficoMain[7]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[7][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($graficoMain[8]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[8][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($graficoMain[9]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[9][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($graficoMain[10]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[10][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($graficoMain[11]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[11][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($graficoMain[12]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($graficoMain[12][$cat['idCategoria']]);} ?>],
 									
 								]);
       
@@ -353,18 +351,18 @@ foreach ($arrBodega as $bod) {
 							<thead>
 								<tr role="row">
 									<th>Categoria</th>
-									<th><?php echo numero_a_mes_corto($graficoMain[1]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($graficoMain[2]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($graficoMain[3]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($graficoMain[4]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($graficoMain[5]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($graficoMain[6]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($graficoMain[7]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($graficoMain[8]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($graficoMain[9]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($graficoMain[10]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($graficoMain[11]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($graficoMain[12]['mes'])?></th>
+									<th><?php echo numero_a_mes_corto($graficoMain[1]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($graficoMain[2]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($graficoMain[3]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($graficoMain[4]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($graficoMain[5]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($graficoMain[6]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($graficoMain[7]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($graficoMain[8]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($graficoMain[9]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($graficoMain[10]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($graficoMain[11]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($graficoMain[12]['mes']); ?></th>
 									<th>SubTotal</th>
 								</tr>
 							</thead>
@@ -478,18 +476,18 @@ foreach ($arrBodega as $bod) {
 									data_<?php echo $datos[0]['BodegaID']; ?>.addColumn("number", "<?php echo $cat['Nombre'];  ?>");
 								<?php } ?>
 								data_<?php echo $datos[0]['BodegaID']; ?>.addRows([
-									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][1]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][1][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][2]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][2][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][3]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][3][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][4]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][4][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][5]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][5][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][6]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][6][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][7]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][7][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][8]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][8][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][9]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][9][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][10]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][10][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][11]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][11][$cat['idCategoria']]);} ?>],
-									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][12]['mes'])?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][12][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][1]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][1][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][2]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][2][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][3]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][3][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][4]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][4][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][5]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][5][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][6]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][6][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][7]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][7][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][8]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][8][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][9]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][9][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][10]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][10][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][11]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][11][$cat['idCategoria']]);} ?>],
+									['<?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][12]['mes']); ?>'<?php foreach ($arrCategoria as $cat) {echo ','.valores_enteros($grafico[$datos[0]['BodegaID']][12][$cat['idCategoria']]);} ?>],
 									
 								]);
       
@@ -512,18 +510,18 @@ foreach ($arrBodega as $bod) {
 							<thead>
 								<tr role="row">
 									<th>Categoria</th>
-									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][1]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][2]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][3]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][4]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][5]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][6]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][7]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][8]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][9]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][10]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][11]['mes'])?></th>
-									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][12]['mes'])?></th>
+									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][1]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][2]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][3]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][4]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][5]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][6]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][7]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][8]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][9]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][10]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][11]['mes']); ?></th>
+									<th><?php echo numero_a_mes_corto($grafico[$datos[0]['BodegaID']][12]['mes']); ?></th>
 									<th>SubTotal</th>
 								</tr>
 							</thead>

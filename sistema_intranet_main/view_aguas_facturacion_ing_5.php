@@ -109,8 +109,8 @@
 								<td>Visita Corte</td>
 								<td>Afecto</td>
 								<td align="right">1</td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleVisitaCorte']/1.19), 2)?></td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleVisitaCorte']/1.19), 0)?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleVisitaCorte']/1.19), 2); ?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleVisitaCorte']/1.19), 0); ?></td>
 							</tr>
 						<?php } ?>
 						<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleCorte1Valor'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleCorte1Valor']!=0){ ?>
@@ -118,8 +118,8 @@
 								<td>Corte 1° instancia <?php echo ' ('.Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleCorte1Fecha']).')'?></td>
 								<td>Afecto</td>
 								<td align="right">1</td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleCorte1Valor']/1.19), 2)?></td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleCorte1Valor']/1.19), 0)?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleCorte1Valor']/1.19), 2); ?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleCorte1Valor']/1.19), 0); ?></td>
 							</tr>
 						<?php } ?>
 						<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleCorte2Valor'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleCorte2Valor']!=0){ ?>
@@ -127,8 +127,8 @@
 								<td>Corte 2° instancia <?php echo ' ('.Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleCorte2Fecha']).')'?></td>
 								<td>Afecto</td>
 								<td align="right">1</td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleCorte2Valor']/1.19), 2)?></td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleCorte2Valor']/1.19), 0)?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleCorte2Valor']/1.19), 2); ?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleCorte2Valor']/1.19), 0); ?></td>
 							</tr>
 						<?php } ?>
 						<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleReposicion1Valor'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleReposicion1Valor']!=0){ ?>
@@ -136,8 +136,8 @@
 								<td>Reposicion 1° instancia <?php echo ' ('.Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleReposicion1Fecha']).')'?></td>
 								<td>Afecto</td>
 								<td align="right">1</td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleReposicion1Valor']/1.19), 2)?></td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleReposicion1Valor']/1.19), 0)?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleReposicion1Valor']/1.19), 2); ?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleReposicion1Valor']/1.19), 0); ?></td>
 							</tr>
 						<?php } ?>
 						<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleReposicion2Valor'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleReposicion2Valor']!=0){ ?>
@@ -145,8 +145,8 @@
 								<td>Reposicion 2° instancia <?php echo ' ('.Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleReposicion2Fecha']).')'?></td>
 								<td>Afecto</td>
 								<td align="right">1</td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleReposicion2Valor']/1.19), 2)?></td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleReposicion2Valor']/1.19), 0)?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleReposicion2Valor']/1.19), 2); ?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleReposicion2Valor']/1.19), 0); ?></td>
 							</tr>
 						<?php } ?>
 						<tr>
@@ -158,8 +158,8 @@
 								<td>Interes Deuda</td>
 								<td>Afecto</td>
 								<td align="right">1</td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleInteresDeuda']/1.19), 2)?></td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleInteresDeuda']/1.19), 0)?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleInteresDeuda']/1.19), 2); ?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleInteresDeuda']/1.19), 0); ?></td>
 							</tr>
 						<?php } ?>
 
@@ -170,8 +170,8 @@
 								<td><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos1Texto'].' ('.Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos1Fecha']).')'; ?></td>
 								<td>Afecto</td>
 								<td align="right">1</td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos1Valor']/1.19), 2)?></td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos1Valor']/1.19), 0)?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos1Valor']/1.19), 2); ?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos1Valor']/1.19), 0); ?></td>
 							</tr>
 						<?php } 
 						//Otros Cargos 2
@@ -180,8 +180,8 @@
 								<td><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos2Texto'].' ('.Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos2Fecha']).')'; ?></td>
 								<td>Afecto</td>
 								<td align="right">1</td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos2Valor']/1.19), 2)?></td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos2Valor']/1.19), 0)?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos2Valor']/1.19), 2); ?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos2Valor']/1.19), 0); ?></td>
 							</tr>
 						<?php } 
 						//Otros Cargos 3
@@ -190,8 +190,8 @@
 								<td><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos3Texto'].' ('.Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos3Fecha']).')'; ?></td>
 								<td>Afecto</td>
 								<td align="right">1</td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos3Valor']/1.19), 2)?></td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos3Valor']/1.19), 0)?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos3Valor']/1.19), 2); ?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos3Valor']/1.19), 0); ?></td>
 							</tr>
 						<?php } 
 						//Otros Cargos 4
@@ -200,8 +200,8 @@
 								<td><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos4Texto'].' ('.Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos4Fecha']).')'; ?></td>
 								<td>Afecto</td>
 								<td align="right">1</td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos4Valor']/1.19), 2)?></td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos4Valor']/1.19), 0)?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos4Valor']/1.19), 2); ?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos4Valor']/1.19), 0); ?></td>
 							</tr>
 						<?php } 
 						//Otros Cargos 5
@@ -210,8 +210,8 @@
 								<td><?php echo $_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos5Texto'].' ('.Fecha_estandar($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos5Fecha']).')'; ?></td>
 								<td>Afecto</td>
 								<td align="right">1</td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos5Valor']/1.19), 2)?></td>
-								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos5Valor']/1.19), 0)?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos5Valor']/1.19), 2); ?></td>
+								<td align="right"><?php echo Valores(($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleOtrosCargos5Valor']/1.19), 0); ?></td>
 							</tr>
 						<?php } ?>
 						<tr>
@@ -227,8 +227,8 @@
 								<td>Saldo a Favor</td>
 								<td>Exento</td>
 								<td align="right">1</td>
-								<td align="right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleSaldoFavor'], 0)?></td>
-								<td align="right"><?php echo '(-) '.Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleSaldoFavor'], 0)?></td>
+								<td align="right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleSaldoFavor'], 0); ?></td>
+								<td align="right"><?php echo '(-) '.Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleSaldoFavor'], 0); ?></td>
 							</tr>
 						<?php } ?>
 						<?php if(isset($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleSaldoAnterior'])&&$_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleSaldoAnterior']!=0){
@@ -237,8 +237,8 @@
 								<td>Saldo Anterior</td>
 								<td>Exento</td>
 								<td align="right">1</td>
-								<td align="right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleSaldoAnterior'], 0)?></td>
-								<td align="right"><?php echo '(+) '.Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleSaldoAnterior'], 0)?></td>
+								<td align="right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleSaldoAnterior'], 0); ?></td>
+								<td align="right"><?php echo '(+) '.Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['DetalleSaldoAnterior'], 0); ?></td>
 							</tr>
 						<?php } ?>
 						
@@ -285,7 +285,7 @@
 
 							<div class="graficos">
 								<div>
-									<p class="centered">Consumo Ultimos Meses</p> 
+									<p class="centered">Consumo Ultimos Meses</p>
 									<div class="row">
 										<div class="col-xs-6">
 											<div class="pull-left"><?php echo Devolver_mes($_SESSION['Facturacion_clientes'][$X_Puntero]['GraficoMes1Fecha']); ?></div>   <small class="pull-right"><?php echo Cantidades($_SESSION['Facturacion_clientes'][$X_Puntero]['GraficoMes1Valor'], 2); ?> m3</small> <br/> 
@@ -393,35 +393,35 @@
 								
 								<br/>
 								<div class="pull-left">Cargo fijo</div>
-								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfCargoFijo'], 0)?></small>
+								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfCargoFijo'], 0); ?></small>
 
 								<br/>
 								<div class="pull-left">Metro cubico agua potable</div>
-								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfMetroAgua'], 2)?></small>
+								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfMetroAgua'], 2); ?></small>
 
 								<br/>
 								<div class="pull-left">Metro cubico recoleccion</div>
-								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfMetroRecolecion'], 2)?></small>
+								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfMetroRecolecion'], 2); ?></small>
 
 								<br/>
 								<div class="pull-left">Visita corte</div>
-								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfVisitaCorte'], 0)?></small>
+								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfVisitaCorte'], 0); ?></small>
 
 								<br/>
 								<div class="pull-left">Corte 1° instancia</div>
-								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfCorte1'], 0)?></small>
+								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfCorte1'], 0); ?></small>
 
 								<br/>
 								<div class="pull-left">Corte 2° instancia</div>
-								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfCorte2'], 0)?></small>
+								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfCorte2'], 0); ?></small>
 
 								<br/>
 								<div class="pull-left">Reposicion 1° instancia</div>
-								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfReposicion1'], 0)?></small>
+								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfReposicion1'], 0); ?></small>
 
 								<br/>
 								<div class="pull-left">Reposicion 2° instancia</div>
-								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfReposicion2'], 0)?></small>
+								<small class="pull-right"><?php echo Valores($_SESSION['Facturacion_clientes'][$X_Puntero]['AguasInfReposicion2'], 0); ?></small>
 
 							</p>
 

@@ -41,25 +41,25 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = backup_telemetria_listado_errores_999.idTelemetria ";
 	$SIS_where.= ' AND usuarios_equipos_telemetria.idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
 }
-	
 
 //numero sensores equipo
 $N_Maximo_Sensores = 72;
 $subquery = '';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresUniMed_'.$i;
+	$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
 // Se trae un listado con todos los elementos
 $SIS_query = '
 backup_telemetria_listado_errores_999.idErrores,
-backup_telemetria_listado_errores_999.Descripcion, 
-backup_telemetria_listado_errores_999.Fecha, 
+backup_telemetria_listado_errores_999.Descripcion,
+backup_telemetria_listado_errores_999.Fecha,
 backup_telemetria_listado_errores_999.Hora,
-backup_telemetria_listado_errores_999.Sensor, 
+backup_telemetria_listado_errores_999.Sensor,
 backup_telemetria_listado_errores_999.Valor,
 telemetria_listado.Nombre AS NombreEquipo,
 telemetria_listado.id_Geo'.$subquery;
-$SIS_order = 'idErrores DESC';
+$SIS_join .= ' LEFT JOIN telemetria_listado_sensores_unimed ON telemetria_listado_sensores_unimed.idTelemetria = backup_telemetria_listado_errores_999.idTelemetria ';
+$SIS_order = 'backup_telemetria_listado_errores_999.idErrores DESC';
 $arrErrores = array();
 $arrErrores = db_select_array (false, $SIS_query, 'backup_telemetria_listado_errores_999', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrErrores');
 
@@ -94,10 +94,10 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('C1', 'Fecha')
             ->setCellValue('D1', 'Hora')
             ->setCellValue('E1', 'Medicion Actual')
-            ->setCellValue('F1', 'Unidad Medida');       
-                                      
+            ->setCellValue('F1', 'Unidad Medida');
+
 $nn=2;
-foreach ($arrErrores as $error) { 
+foreach ($arrErrores as $error) {
 	//Guardo la unidad de medida
 	$unimed = $arrFinalUnimed[$error['SensoresUniMed_'.$error['Sensor']]];
 
@@ -110,8 +110,7 @@ foreach ($arrErrores as $error) {
 				->setCellValue('F'.$nn, DeSanitizar($unimed));
 	$nn++;
 
-} 
-						
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Resumen de Alertas');

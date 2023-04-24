@@ -45,11 +45,6 @@ $arrZonas = db_select_array (false, 'idZona, Nombre', 'vehiculos_zonas', '', '',
 /************************************************/
 //numero sensores equipo
 $N_Maximo_Sensores = 20;
-$subquery = '';
-for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
-	$subquery .= ',SensoresMedActual_'.$i;
-}
-//Listar los equipos
 $SIS_query = '
 telemetria_listado.idTelemetria,
 telemetria_listado.idTelemetria AS ID,
@@ -64,9 +59,11 @@ telemetria_listado.GeoErrores,
 telemetria_listado.NErrores,
 telemetria_listado.SensorActivacionID,
 telemetria_listado.SensorActivacionValor,
-(SELECT Helada FROM telemetria_listado_aux_equipo WHERE idTelemetria = ID ORDER BY idAuxiliar DESC LIMIT 1) AS TempProyectada
-'.$subquery;
-$SIS_join  = '';
+(SELECT Helada FROM telemetria_listado_aux_equipo WHERE idTelemetria = ID ORDER BY idAuxiliar DESC LIMIT 1) AS TempProyectada';
+for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+	$SIS_query .= ',telemetria_listado_sensores_med_actual.SensoresMedActual_'.$i;
+}
+$SIS_join  = 'LEFT JOIN `telemetria_listado_sensores_med_actual` ON telemetria_listado_sensores_med_actual.idTelemetria = telemetria_listado.idTelemetria';
 $SIS_where = 'telemetria_listado.idEstado = 1';                  //solo equipos activos
 $SIS_where.= ' AND telemetria_listado.id_Geo = '.$id_Geo;        //solo los equipos que tengan el seguimiento activado
 $SIS_where.= ' AND telemetria_listado.idTab = '.$_GET['idTab'];  //Filtro de los tab

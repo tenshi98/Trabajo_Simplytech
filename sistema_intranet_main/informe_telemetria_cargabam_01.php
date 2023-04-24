@@ -34,9 +34,6 @@ require_once 'core/Web.Header.Main.php';
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['submit_filter'])){
 
-             
-  
-
 //paginador de resultados
 if(isset($_GET['pagina'])){$num_pag = $_GET['pagina'];} else {$num_pag = 1;}
 //Defino la cantidad total de elementos por pagina
@@ -195,8 +192,8 @@ $w = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSiste
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
- 
- ?>
+
+?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
 	<div class="box dark">

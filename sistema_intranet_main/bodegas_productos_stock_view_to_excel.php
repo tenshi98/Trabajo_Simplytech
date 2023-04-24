@@ -90,7 +90,7 @@ $spreadsheet->setActiveSheetIndex(0)
             ->setCellValue('G5', 'Unidad de Medida');
 
 $nn=6;
-foreach ($arrProductos as $productos) { 
+foreach ($arrProductos as $productos) {
 	if(isset($productos['Proveedor'])&&$productos['Proveedor']){
 		$empresa = 'Proveedor : '.$productos['Proveedor'];
 	}else{

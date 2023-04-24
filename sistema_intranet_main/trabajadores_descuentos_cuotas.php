@@ -262,7 +262,7 @@ if (isset($_SESSION['desc_cuotas_listado'])){
 					</tr>
 					<tr>
 						<td class="meta-head">Monto</td>
-						<td align="right"><?php echo valores($_SESSION['desc_cuotas_basicos']['Monto'], 0)?></td>
+						<td align="right"><?php echo valores($_SESSION['desc_cuotas_basicos']['Monto'], 0); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">N° Cuotas</td>
@@ -278,7 +278,7 @@ if (isset($_SESSION['desc_cuotas_listado'])){
 				<tbody>
 					<tr>
 						<td class="meta-head">Fecha Creacion</td>
-						<td colspan="2"><?php echo Fecha_estandar($_SESSION['desc_cuotas_basicos']['Creacion_fecha'])?></td>
+						<td colspan="2"><?php echo Fecha_estandar($_SESSION['desc_cuotas_basicos']['Creacion_fecha']); ?></td>
 					</tr>
 				</tbody>
 			</table>
