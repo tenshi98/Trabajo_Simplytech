@@ -217,7 +217,7 @@ require_once '0_validate_user_1.php';
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
 	if(isset($Nombre) && $Nombre!=''){                                        $Nombre                    = EstandarizarInput($Nombre);}
-	if(isset($email_principal) && $email_principal!=''){                      $email_principal           = EstandarizarInput($email_principal);}
+	//if(isset($email_principal) && $email_principal!=''){                      $email_principal           = EstandarizarInput($email_principal);}
 	if(isset($Direccion) && $Direccion!=''){                                  $Direccion                 = EstandarizarInput($Direccion);}
 	if(isset($Contacto_Nombre) && $Contacto_Nombre!=''){                      $Contacto_Nombre           = EstandarizarInput($Contacto_Nombre);}
 	if(isset($Contacto_Email) && $Contacto_Email!=''){                        $Contacto_Email            = EstandarizarInput($Contacto_Email);}

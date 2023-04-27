@@ -53,7 +53,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Nombre) && $Nombre!=''){           $Nombre      = EstandarizarInput($Nombre);}
 	if(isset($Usuario) && $Usuario!=''){         $Usuario     = EstandarizarInput($Usuario);}
 	if(isset($Password) && $Password!=''){       $Password    = EstandarizarInput($Password);}
-	if(isset($email) && $email!=''){             $email       = EstandarizarInput($email);}
+	//if(isset($email) && $email!=''){             $email       = EstandarizarInput($email);}
 	if(isset($dispositivo) && $dispositivo!=''){ $dispositivo = EstandarizarInput($dispositivo);}
 
 /*******************************************************************************************************************/

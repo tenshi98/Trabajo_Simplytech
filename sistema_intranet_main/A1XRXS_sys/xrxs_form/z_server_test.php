@@ -52,9 +52,9 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($email) && $email!=''){                     $email           = EstandarizarInput($email);}
+	//if(isset($email) && $email!=''){                     $email           = EstandarizarInput($email);}
 	if(isset($texto) && $texto!=''){                     $texto           = EstandarizarInput($texto);}
-	if(isset($email_principal) && $email_principal!=''){ $email_principal = EstandarizarInput($email_principal);}
+	//if(isset($email_principal) && $email_principal!=''){ $email_principal = EstandarizarInput($email_principal);}
 	if(isset($GmailUsuario) && $GmailUsuario!=''){       $GmailUsuario    = EstandarizarInput($GmailUsuario);}
 	if(isset($GmailPassword) && $GmailPassword!=''){     $GmailPassword   = EstandarizarInput($GmailPassword);}
 

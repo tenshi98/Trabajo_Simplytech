@@ -161,7 +161,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Observaciones) && $Observaciones!=''){     $Observaciones   = EstandarizarInput($Observaciones);}
 	if(isset($ContactoPersona) && $ContactoPersona!=''){ $ContactoPersona = EstandarizarInput($ContactoPersona);}
 	if(isset($ContactoFono) && $ContactoFono!=''){       $ContactoFono    = EstandarizarInput($ContactoFono);}
-	if(isset($email) && $email!=''){                     $email           = EstandarizarInput($email);}
+	//if(isset($email) && $email!=''){                     $email           = EstandarizarInput($email);}
 
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */

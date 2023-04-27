@@ -51,8 +51,8 @@ require_once '0_validate_user_1.php';
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
 	if(isset($Nombre) && $Nombre!=''){         $Nombre     = EstandarizarInput($Nombre);}
-	if(isset($email) && $email!=''){           $email      = EstandarizarInput($email);}
-	if(isset($email_noti) && $email_noti!=''){ $email_noti = EstandarizarInput($email_noti);}
+	//if(isset($email) && $email!=''){           $email      = EstandarizarInput($email);}
+	//if(isset($email_noti) && $email_noti!=''){ $email_noti = EstandarizarInput($email_noti);}
 
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */

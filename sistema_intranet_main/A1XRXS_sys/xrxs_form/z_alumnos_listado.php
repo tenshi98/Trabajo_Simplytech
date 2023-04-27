@@ -74,7 +74,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                          Verificacion de datos erroneos                                         */
 /*******************************************************************************************************************/
-	if(isset($email) && $email!=''){                                 $email                 = EstandarizarInput($email);}
+	//if(isset($email) && $email!=''){                                 $email                 = EstandarizarInput($email);}
 	if(isset($Nombre) && $Nombre!=''){                               $Nombre                = EstandarizarInput($Nombre);}
 	if(isset($ApellidoPat) && $ApellidoPat!=''){                     $ApellidoPat           = EstandarizarInput($ApellidoPat);}
 	if(isset($ApellidoMat) && $ApellidoMat!=''){                     $ApellidoMat           = EstandarizarInput($ApellidoMat);}

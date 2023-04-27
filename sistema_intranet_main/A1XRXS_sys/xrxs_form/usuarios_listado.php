@@ -73,7 +73,7 @@ require_once '0_validate_user_1.php';
 	if(isset($password) && $password!=''){       $password    = EstandarizarInput($password);}
 	if(isset($repassword) && $repassword!=''){   $repassword  = EstandarizarInput($repassword);}
 	if(isset($oldpassword) && $oldpassword!=''){ $oldpassword = EstandarizarInput($oldpassword);}
-	if(isset($email) && $email!=''){             $email       = EstandarizarInput($email);}
+	//if(isset($email) && $email!=''){             $email       = EstandarizarInput($email);}
 	if(isset($Nombre) && $Nombre!=''){           $Nombre      = EstandarizarInput($Nombre);}
 	if(isset($Direccion) && $Direccion!=''){     $Direccion   = EstandarizarInput($Direccion);}
 

@@ -84,7 +84,7 @@ require_once '0_validate_user_1.php';
 	if(isset($ApellidoMat) && $ApellidoMat!=''){      $ApellidoMat   = EstandarizarInput($ApellidoMat);}
 	if(isset($Direccion) && $Direccion!=''){          $Direccion     = EstandarizarInput($Direccion);}
 	if(isset($Observaciones) && $Observaciones!=''){  $Observaciones = EstandarizarInput($Observaciones);}
-	if(isset($email) && $email!=''){                  $email         = EstandarizarInput($email);}
+	//if(isset($email) && $email!=''){                  $email         = EstandarizarInput($email);}
 
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
