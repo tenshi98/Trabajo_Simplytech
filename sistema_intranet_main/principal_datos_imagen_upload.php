@@ -30,7 +30,7 @@ if(isset($_POST["image"])){
 		//$resultado = @move_uploaded_file($imageName, $ruta);
 		$resultado = file_put_contents($ruta, $data);
 		if ($resultado){
-											
+
 			//Filtro para idSistema
 			$a = "Direccion_img='".$imageName."'";
 
