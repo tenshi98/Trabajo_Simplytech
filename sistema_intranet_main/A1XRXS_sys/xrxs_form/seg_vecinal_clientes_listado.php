@@ -44,7 +44,6 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idVerificado']))          $idVerificado            = $_POST['idVerificado'];
 
 	if (!empty($_POST['repassword']))            $repassword              = $_POST['repassword'];
-	if (!empty($_POST['oldpassword']))           $oldpassword             = $_POST['oldpassword'];
 
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -87,7 +86,6 @@ require_once '0_validate_user_1.php';
 			case 'idVerificado':           if(empty($idVerificado)){           $error['idVerificado']            = 'error/No ha seleccionado la verificacion';}break;
 
 			case 'repassword':             if(empty($repassword)){             $error['repassword']              = 'error/No ha ingresado la repeticion del password';}break;
-			case 'oldpassword':            if(empty($oldpassword)){            $error['oldpassword']             = 'error/No ha ingresado el password antiguo';}break;
 
 		}
 	}
@@ -105,7 +103,6 @@ require_once '0_validate_user_1.php';
 	if(isset($Giro) && $Giro!=''){                                    $Giro                  = EstandarizarInput($Giro);}
 	if(isset($password) && $password!=''){                            $password              = EstandarizarInput($password);}
 	if(isset($repassword) && $repassword!=''){                        $repassword            = EstandarizarInput($repassword);}
-	if(isset($oldpassword) && $oldpassword!=''){                      $oldpassword           = EstandarizarInput($oldpassword);}
 
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
@@ -121,10 +118,9 @@ require_once '0_validate_user_1.php';
 	if(isset($Giro)&&contar_palabras_censuradas($Giro)!=0){                                    $error['Giro']                  = 'error/Edita Giro, contiene palabras no permitidas';}
 	if(isset($password)&&contar_palabras_censuradas($password)!=0){                            $error['password']              = 'error/Edita la password, contiene palabras no permitidas';}
 	if(isset($repassword)&&contar_palabras_censuradas($repassword)!=0){                        $error['repassword']            = 'error/Edita la password, contiene palabras no permitidas';}
-	if(isset($oldpassword)&&contar_palabras_censuradas($oldpassword)!=0){                      $error['oldpassword']           = 'error/Edita la password, contiene palabras no permitidas';}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Validacion de los datos ingresados                                       */
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($email)&&!validarEmail($email)){                                 $error['email']                  = 'error/El Email ingresado no es valido';}

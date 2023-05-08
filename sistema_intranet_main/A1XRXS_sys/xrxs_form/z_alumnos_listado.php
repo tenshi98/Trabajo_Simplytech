@@ -36,6 +36,8 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['Web']))                   $Web                     = $_POST['Web'];
 	if (!empty($_POST['password']))              $password                = $_POST['password'];
 
+	if (!empty($_POST['repassword']))            $repassword              = $_POST['repassword'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -69,6 +71,8 @@ require_once '0_validate_user_1.php';
 			case 'Web':                    if(empty($Web)){                    $error['Web']                     = 'error/No ha ingresado la pagina web';}break;
 			case 'password':               if(empty($password)){               $error['password']                = 'error/No ha ingresado el password';}break;
 
+			case 'repassword':             if(empty($repassword)){             $error['repassword']              = 'error/No ha ingresado la repeticion de la clave';}break;
+
 		}
 	}
 /*******************************************************************************************************************/
@@ -83,9 +87,24 @@ require_once '0_validate_user_1.php';
 	if(isset($PersonaContacto_email) && $PersonaContacto_email!=''){ $PersonaContacto_email = EstandarizarInput($PersonaContacto_email);}
 	if(isset($Web) && $Web!=''){                                     $Web                   = EstandarizarInput($Web);}
 	if(isset($password) && $password!=''){                           $password              = EstandarizarInput($password);}
+	if(isset($repassword) && $repassword!=''){                       $repassword            = EstandarizarInput($repassword);}
 
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
+/*******************************************************************************************************************/
+	if(isset($email)&&contar_palabras_censuradas($email)!=0){                                  $error['email']                 = 'error/Edita email, contiene palabras no permitidas';}
+	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                                $error['Nombre']                = 'error/Edita Nombre,contiene palabras no permitidas';}
+	if(isset($ApellidoPat)&&contar_palabras_censuradas($ApellidoPat)!=0){                      $error['ApellidoPat']           = 'error/Edita Apellido Pat, contiene palabras no permitidas';}
+	if(isset($ApellidoMat)&&contar_palabras_censuradas($ApellidoMat)!=0){                      $error['ApellidoMat']           = 'error/Edita Apellido Mat, contiene palabras no permitidas';}
+	if(isset($Direccion)&&contar_palabras_censuradas($Direccion)!=0){                          $error['Direccion']             = 'error/Edita Direccion, contiene palabras no permitidas';}
+	if(isset($PersonaContacto)&&contar_palabras_censuradas($PersonaContacto)!=0){              $error['PersonaContacto']       = 'error/Edita Persona de Contacto, contiene palabras no permitidas';}
+	if(isset($PersonaContacto_email)&&contar_palabras_censuradas($PersonaContacto_email)!=0){  $error['PersonaContacto_email'] = 'error/Edita Persona de Contacto email, contiene palabras no permitidas';}
+	if(isset($Web)&&contar_palabras_censuradas($Web)!=0){                                      $error['Web']                   = 'error/Edita Web, contiene palabras no permitidas';}
+	if(isset($password)&&contar_palabras_censuradas($password)!=0){                            $error['password']              = 'error/Edita password, contiene palabras no permitidas';}
+	if(isset($repassword)&&contar_palabras_censuradas($repassword)!=0){                        $error['repassword']            = 'error/Edita repassword, contiene palabras no permitidas';}
+
+/*******************************************************************************************************************/
+/*                                        Validacion de los datos ingresados                                       */
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($email)&&!validarEmail($email)){                                 $error['email']                = 'error/El Email ingresado no es valido';}
@@ -100,16 +119,6 @@ require_once '0_validate_user_1.php';
 	if(isset($password)){
 		if (strpos($password, " ")){                     $error['Password1'] = 'error/La contraseña contiene espacios vacios';}
 	}
-
-	if(isset($email)&&contar_palabras_censuradas($email)!=0){                                  $error['email']                 = 'error/Edita email, contiene palabras no permitidas';}
-	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                                $error['Nombre']                = 'error/Edita Nombre,contiene palabras no permitidas';}
-	if(isset($ApellidoPat)&&contar_palabras_censuradas($ApellidoPat)!=0){                      $error['ApellidoPat']           = 'error/Edita Apellido Pat, contiene palabras no permitidas';}
-	if(isset($ApellidoMat)&&contar_palabras_censuradas($ApellidoMat)!=0){                      $error['ApellidoMat']           = 'error/Edita Apellido Mat, contiene palabras no permitidas';}
-	if(isset($Direccion)&&contar_palabras_censuradas($Direccion)!=0){                          $error['Direccion']             = 'error/Edita Direccion, contiene palabras no permitidas';}
-	if(isset($PersonaContacto)&&contar_palabras_censuradas($PersonaContacto)!=0){              $error['PersonaContacto']       = 'error/Edita Persona de Contacto, contiene palabras no permitidas';}
-	if(isset($PersonaContacto_email)&&contar_palabras_censuradas($PersonaContacto_email)!=0){  $error['PersonaContacto_email'] = 'error/Edita Persona de Contacto email, contiene palabras no permitidas';}
-	if(isset($Web)&&contar_palabras_censuradas($Web)!=0){                                      $error['Web']                   = 'error/Edita Web, contiene palabras no permitidas';}
-	if(isset($password)&&contar_palabras_censuradas($password)!=0){                            $error['password']              = 'error/Edita password, contiene palabras no permitidas';}
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */

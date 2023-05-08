@@ -17,8 +17,6 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idUsuario']))      $idUsuario      = $_POST['idUsuario'];
 	if (!empty($_POST['usuario']))        $usuario        = $_POST['usuario'];
 	if (!empty($_POST['password']))       $password       = $_POST['password'];
-	if (!empty($_POST['repassword']))     $repassword     = $_POST['repassword'];
-	if (!empty($_POST['oldpassword']))    $oldpassword    = $_POST['oldpassword'];
 	if (!empty($_POST['idTipoUsuario']))  $idTipoUsuario  = $_POST['idTipoUsuario'];
 	if (!empty($_POST['idEstado']))       $idEstado       = $_POST['idEstado'];
 	if (!empty($_POST['email']))          $email          = $_POST['email'];
@@ -31,9 +29,12 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['Direccion']))      $Direccion      = $_POST['Direccion'];
 	if (!empty($_POST['Direccion_img']))  $Direccion_img  = $_POST['Direccion_img'];
 	if (!empty($_POST['Ultimo_acceso']))  $Ultimo_acceso  = $_POST['Ultimo_acceso'];
+	if (!empty($_POST['idSistema']))      $idSistema      = $_POST['idSistema'];
+
+	if (!empty($_POST['repassword']))     $repassword     = $_POST['repassword'];
+	if (!empty($_POST['oldpassword']))    $oldpassword    = $_POST['oldpassword'];
 	if (!empty($_POST['fkinput1']))       $fkinput1       = $_POST['fkinput1'];
 	if (!empty($_POST['fkinput2']))       $fkinput2       = $_POST['fkinput2'];
-	if (!empty($_POST['idSistema']))      $idSistema      = $_POST['idSistema'];
 
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -49,8 +50,6 @@ require_once '0_validate_user_1.php';
 			case 'idUsuario':      if(empty($idUsuario)){                               $error['idUsuario']      = 'error/No ha ingresado el id';}break;
 			case 'usuario':        if(empty($usuario)&&$form_trabajo!='getpass'){       $error['usuario']        = 'error/No ha ingresado el nombre de usuario del sistema';}break;
 			case 'password':       if(empty($password)&&$form_trabajo!='getpass'){      $error['password']       = 'error/No ha ingresado una clave';}break;
-			case 'repassword':     if(empty($repassword)){                              $error['repassword']     = 'error/No ha ingresado la repeticion de la clave';}break;
-			case 'oldpassword':    if(empty($oldpassword)){                             $error['oldpassword']    = 'error/No ha ingresado su clave antigua';}break;
 			case 'idTipoUsuario':  if(empty($idTipoUsuario)){                           $error['idTipoUsuario']  = 'error/No ha seleccionado el tipo de usuario';}break;
 			case 'idEstado':       if(empty($idEstado)){                                $error['idEstado']       = 'error/No ha seleccionado el estado';}break;
 			case 'email':          if(empty($email)&&$form_trabajo!='login'){           $error['email']          = 'error/No ha ingresado el email';}break;
@@ -63,6 +62,9 @@ require_once '0_validate_user_1.php';
 			case 'Direccion':      if(empty($Direccion)){                               $error['Direccion']      = 'error/No ha ingresado la Direccion';}break;
 			case 'Direccion_img':  if(empty($Direccion_img)){                           $error['Direccion_img']  = 'error/No ha ingresado el nombre de la imagen de perfil';}break;
 			case 'Ultimo_acceso':  if(empty($Ultimo_acceso)){                           $error['Ultimo_acceso']  = 'error/No ha ingresado el ultimo acceso al sistema';}break;
+
+			case 'repassword':     if(empty($repassword)){                              $error['repassword']     = 'error/No ha ingresado la repeticion de la clave';}break;
+			case 'oldpassword':    if(empty($oldpassword)){                             $error['oldpassword']    = 'error/No ha ingresado su clave antigua';}break;
 
 		}
 	}
@@ -89,7 +91,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Direccion)&&contar_palabras_censuradas($Direccion)!=0){      $error['Direccion']   = 'error/Edita la Direccion, contiene palabras no permitidas';}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Validacion de los datos ingresados                                       */
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($email)&&!validarEmail($email)){     $error['email']    = 'error/El Email ingresado no es valido';}

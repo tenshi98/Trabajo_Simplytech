@@ -69,6 +69,8 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idTab_14']))                      $idTab_14                        = $_POST['idTab_14'];
 	if (!empty($_POST['idTab_15']))                      $idTab_15                        = $_POST['idTab_15'];
 
+	if (!empty($_POST['repassword']))                    $repassword                      = $_POST['repassword'];
+
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
 /*******************************************************************************************************************/
@@ -135,6 +137,8 @@ require_once '0_validate_user_1.php';
 			case 'idTab_14':                        if(empty($idTab_14)){                          $error['idTab_14']                           = 'error/No ha seleccionado la unidad de negocio 14';}break;
 			case 'idTab_15':                        if(empty($idTab_15)){                          $error['idTab_15']                           = 'error/No ha seleccionado la unidad de negocio 15';}break;
 
+			case 'repassword':                      if(empty($repassword)){                        $error['repassword']                         = 'error/No ha ingresado la repeticion de la clave';}break;
+
 		}
 	}
 /*******************************************************************************************************************/
@@ -150,6 +154,7 @@ require_once '0_validate_user_1.php';
 	if(isset($Web) && $Web!=''){                                                    $Web                           = EstandarizarInput($Web);}
 	if(isset($Giro) && $Giro!=''){                                                  $Giro                          = EstandarizarInput($Giro);}
 	if(isset($password) && $password!=''){                                          $password                      = EstandarizarInput($password);}
+	if(isset($repassword) && $repassword!=''){                                      $repassword                    = EstandarizarInput($repassword);}
 	if(isset($Contrato_Nombre) && $Contrato_Nombre!=''){                            $Contrato_Nombre               = EstandarizarInput($Contrato_Nombre);}
 	if(isset($Contrato_Numero) && $Contrato_Numero!=''){                            $Contrato_Numero               = EstandarizarInput($Contrato_Numero);}
 	if(isset($Contrato_Obs) && $Contrato_Obs!=''){                                  $Contrato_Obs                  = EstandarizarInput($Contrato_Obs);}
@@ -167,14 +172,15 @@ require_once '0_validate_user_1.php';
 	if(isset($PersonaContacto_Cargo)&&contar_palabras_censuradas($PersonaContacto_Cargo)!=0){                 $error['PersonaContacto_Cargo']          = 'error/Edita Persona de Contacto Cargo, contiene palabras no permitidas';}
 	if(isset($Web)&&contar_palabras_censuradas($Web)!=0){                                                     $error['Web']                            = 'error/Edita la Web, contiene palabras no permitidas';}
 	if(isset($Giro)&&contar_palabras_censuradas($Giro)!=0){                                                   $error['Giro']                           = 'error/Edita Giro, contiene palabras no permitidas';}
-	if(isset($password)&&contar_palabras_censuradas($password)!=0){                                           $error['password']                       = 'error/Edita la password, contiene palabras no permitidas';}
+	if(isset($password)&&contar_palabras_censuradas($password)!=0){                                           $error['password']                       = 'error/Edita password, contiene palabras no permitidas';}
+	if(isset($repassword)&&contar_palabras_censuradas($repassword)!=0){                                       $error['repassword']                     = 'error/Edita repassword, contiene palabras no permitidas';}
 	if(isset($Contrato_Nombre)&&contar_palabras_censuradas($Contrato_Nombre)!=0){                             $error['Contrato_Nombre']                = 'error/Edita el nombre del contrato, contiene palabras no permitidas';}
 	if(isset($Contrato_Numero)&&contar_palabras_censuradas($Contrato_Numero)!=0){                             $error['Contrato_Numero']                = 'error/Edita el numero de contrato, contiene palabras no permitidas';}
 	if(isset($Contrato_Obs)&&contar_palabras_censuradas($Contrato_Obs)!=0){                                   $error['Contrato_Obs']                   = 'error/Edita la observacion del contrato, contiene palabras no permitidas';}
 	if(isset($Contrato_Representante_Legal)&&contar_palabras_censuradas($Contrato_Representante_Legal)!=0){   $error['Contrato_Representante_Legal']   = 'error/Edita el nombre del representante legal, contiene palabras no permitidas';}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Validacion de los datos ingresados                                       */
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($email)&&!validarEmail($email)){                                 $error['email']                  = 'error/El Email ingresado no es valido';}

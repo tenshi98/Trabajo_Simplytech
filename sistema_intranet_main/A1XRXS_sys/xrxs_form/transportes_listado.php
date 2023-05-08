@@ -36,11 +36,12 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['Web']))                   $Web                     = $_POST['Web'];
 	if (!empty($_POST['Giro']))                  $Giro                    = $_POST['Giro'];
 	if (!empty($_POST['password']))              $password                = $_POST['password'];
-	if (!empty($_POST['repassword']))            $repassword              = $_POST['repassword'];
-	if (!empty($_POST['oldpassword']))           $oldpassword             = $_POST['oldpassword'];
 	if (!empty($_POST['idBanco']))               $idBanco                 = $_POST['idBanco'];
 	if (!empty($_POST['NCuentaBanco']))          $NCuentaBanco            = $_POST['NCuentaBanco'];
 	if (!empty($_POST['MailBanco']))             $MailBanco               = $_POST['MailBanco'];
+
+	if (!empty($_POST['repassword']))            $repassword              = $_POST['repassword'];
+	if (!empty($_POST['oldpassword']))           $oldpassword             = $_POST['oldpassword'];
 
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -75,11 +76,12 @@ require_once '0_validate_user_1.php';
 			case 'Web':                    if(empty($Web)){                    $error['Web']                     = 'error/No ha ingresado la pagina web';}break;
 			case 'Giro':                   if(empty($Giro)){                   $error['Giro']                    = 'error/No ha ingresado el Giro de la empresa';}break;
 			case 'password':               if(empty($password)){               $error['password']                = 'error/No ha ingresado el password';}break;
-			case 'repassword':             if(empty($repassword)){             $error['repassword']              = 'error/No ha ingresado la repeticion de la clave';}break;
-			case 'oldpassword':            if(empty($oldpassword)){            $error['oldpassword']             = 'error/No ha ingresado su clave antigua';}break;
 			case 'idBanco':                if(empty($idBanco)){                $error['idBanco']                 = 'error/No ha seleccionado el banco';}break;
 			case 'NCuentaBanco':           if(empty($NCuentaBanco)){           $error['NCuentaBanco']            = 'error/No ha ingresado el numero de cuenta de banco';}break;
 			case 'MailBanco':              if(empty($MailBanco)){              $error['MailBanco']               = 'error/No ha ingresado el email de confirmacion';}break;
+
+			case 'repassword':             if(empty($repassword)){             $error['repassword']              = 'error/No ha ingresado la repeticion de la clave';}break;
+			case 'oldpassword':            if(empty($oldpassword)){            $error['oldpassword']             = 'error/No ha ingresado su clave antigua';}break;
 
 		}
 	}
@@ -116,7 +118,7 @@ require_once '0_validate_user_1.php';
 	if(isset($MailBanco)&&contar_palabras_censuradas($MailBanco)!=0){                          $error['MailBanco']             = 'error/Edita Mail Banco, contiene palabras no permitidas';}
 
 /*******************************************************************************************************************/
-/*                                        Verificacion de los datos ingresados                                     */
+/*                                        Validacion de los datos ingresados                                       */
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
 	if(isset($email)&&!validarEmail($email)){                                 $error['email']                = 'error/El Email ingresado no es valido';}
