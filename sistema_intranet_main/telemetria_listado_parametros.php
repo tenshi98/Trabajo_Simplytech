@@ -468,7 +468,8 @@ $arrFinalGruposRev[0] = 'S/C';
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					<?php //bucle con la cantidad de sensores
+					<?php
+					//bucle con la cantidad de sensores
 					for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 						//Datos
 						if(isset($arrFinalSensores[$rowdata['SensoresTipo_'.$i]])){           $Sensores  = $arrFinalSensores[$rowdata['SensoresTipo_'.$i]];           }else{$Sensores   = '';}
