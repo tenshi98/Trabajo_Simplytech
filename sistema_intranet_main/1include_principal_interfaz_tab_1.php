@@ -524,10 +524,10 @@ echo '
 								echo '</div>';
 								/*************************************************************/
 								//Feriados
-								echo '<div class="clearfix" ></div>';
+								/*echo '<div class="clearfix" ></div>';
 								echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
 								echo widget_feriados();
-								echo '</div>';
+								echo '</div>';*/
 								/*************************************************************/
 							echo '</div>';
 						echo '</div>';
