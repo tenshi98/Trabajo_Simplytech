@@ -259,7 +259,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_post_data(1, 'Los clientes recien creados tienen la contraseña <strong>1234</strong> asignada por defecto');
+				$Form_Inputs->form_post_data(1,1,1, 'Los clientes recien creados tienen la contraseña <strong>1234</strong> asignada por defecto');
 
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_select('Tipo de Cliente','idTipo', $x1, 2, 'idTipo', 'Nombre', 'clientes_tipos', 0, '', $dbConn);

@@ -440,7 +440,7 @@ alert_post_data(2,1,1, $Alert_Text);
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_post_data(2, 'Se recomienda seleccionar un rango de a lo menos 3 dias para mostrar correctamente el grafico, un rango de 2 dias no mostrara nada en el grafico.' );
+				$Form_Inputs->form_post_data(2,1,1, 'Se recomienda seleccionar un rango de a lo menos 3 dias para mostrar correctamente el grafico, un rango de 2 dias no mostrara nada en el grafico.' );
 				$Form_Inputs->form_date('Fecha Inicio','f_inicio', $x1, 2);
 				$Form_Inputs->form_time('Hora Inicio','h_inicio', $x2, 1, 1);
 				$Form_Inputs->form_date('Fecha Termino','f_termino', $x3, 2);

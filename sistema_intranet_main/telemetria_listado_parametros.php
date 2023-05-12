@@ -177,7 +177,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 				$Form_Inputs->form_select('Estado Sensor','SensoresActivo_'.$_GET['mod'], $rowdata['Activo'], 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 
 				$Form_Inputs->form_tittle(3, 'Uso Sensor(Ciclos, Tiempo, Cumplimiento)');
-				$Form_Inputs->form_post_data(2, '<strong>Opcional:</strong> Se mide el uso del sensor y alerta bajo criterios ingresados si llega a fecha limite o a un numero de usos.' );
+				$Form_Inputs->form_post_data(2,1,1, '<strong>Opcional:</strong> Se mide el uso del sensor y alerta bajo criterios ingresados si llega a fecha limite o a un numero de usos.' );
 				$Form_Inputs->form_select('Utilizacion','SensoresUso_'.$_GET['mod'], $rowdata['Uso'], 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Cambio','SensoresFechaUso_'.$_GET['mod'], $rowdata['FechaUso'], 1);
 				$Form_Inputs->form_input_number('Ciclos Limite(Cantidad)','SensoresAccionC_'.$_GET['mod'], Cantidades_decimales_justos($rowdata['AccionC']), 1);
@@ -185,7 +185,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 				$Form_Inputs->form_select_n_auto('% Cumplimiento (1 a 100)','SensoresAccionAlerta_'.$_GET['mod'], Cantidades_decimales_justos($rowdata['AccionAlerta']), 1, 1, 100);
 
 				$Form_Inputs->form_tittle(3, 'Revision Trabajo');
-				$Form_Inputs->form_post_data(2, '<strong>Opcional:</strong> Utilizacion en los mantenimientos.' );
+				$Form_Inputs->form_post_data(2,1,1, '<strong>Opcional:</strong> Utilizacion en los mantenimientos.' );
 				$Form_Inputs->form_select('Utilizar','SensoresRevision_'.$_GET['mod'], $rowdata['Revision'], 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Grupo','SensoresRevisionGrupo_'.$_GET['mod'], $rowdata['RevisionGrupo'], 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos_uso', 'idSupervisado=1', '', $dbConn);
 

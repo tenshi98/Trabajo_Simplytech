@@ -136,7 +136,7 @@ $w.= " AND telemetria_listado.idTab=9";//CrossEnergy
 					$Form_Inputs->form_select('Grupo Amperaje Motor Bajada','CrossCrane_grupo_motor_bajada', $x9, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);
 
 					$Form_Inputs->form_tittle(3, 'CrossEnergy');
-					$Form_Inputs->form_post_data(2, '<strong>Grupos a Desplegar: </strong>Permite seleccionar los grupo de sensores a desplegar en el grafico de CrossEnergy.' );
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Grupos a Desplegar: </strong>Permite seleccionar los grupo de sensores a desplegar en el grafico de CrossEnergy.' );
 					$Form_Inputs->form_select_filter('Grupo Despliegue','idGrupoDespliegue', $x10, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);
 					$Form_Inputs->form_select_filter('Grupo V monofasico','idGrupoVmonofasico', $x11, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);
 					$Form_Inputs->form_select_filter('Grupo V Trifasico','idGrupoVTrifasico', $x12, 1, 'idGrupo', 'Nombre', 'telemetria_listado_grupos', 0, '', $dbConn);
@@ -148,11 +148,11 @@ $w.= " AND telemetria_listado.idTab=9";//CrossEnergy
 					//Si esta activo el uso del generador
 					$Form_Inputs->form_tittle(3, 'CrossCrane Gruas');
 					if(isset($rowdata['idGenerador'])&&$rowdata['idGenerador']==1){
-						$Form_Inputs->form_post_data(2, '<strong>Uso Generador: </strong>Indica si la alimentacion electrica es directa o por generador, despliega una lista de equipos de telemetria configurados con el tab de <strong>CrossE</strong>, esto genera un boton en el widget principal.' );
+						$Form_Inputs->form_post_data(2,1,1, '<strong>Uso Generador: </strong>Indica si la alimentacion electrica es directa o por generador, despliega una lista de equipos de telemetria configurados con el tab de <strong>CrossE</strong>, esto genera un boton en el widget principal.' );
 						$Form_Inputs->form_select_filter('Generador','idTelGenerador', $x17, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);
 						$Form_Inputs->form_date('Fecha Instalacion Generador','FechaInsGen', $x18, 1);
 					}
-					$Form_Inputs->form_post_data(2, '<strong>Ubicacion: </strong>Determina si el equipo esta en la planta de mantencion o en una obra.' );
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Ubicacion: </strong>Determina si el equipo esta en la planta de mantencion o en una obra.' );
 					$Form_Inputs->form_select('Ubicacion Equipo','idUbicacion', $x19, 1, 'idUbicacion', 'Nombre', 'core_telemetria_ubicaciones', 0, '', $dbConn);
 
 					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);

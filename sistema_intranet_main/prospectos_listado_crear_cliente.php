@@ -102,7 +102,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_post_data(1, 'Una vez ejecutado este informe, el prospecto pasa a estar inactivo y se crea un nuevo cliente.');
+					$Form_Inputs->form_post_data(1,1,1, 'Una vez ejecutado este informe, el prospecto pasa a estar inactivo y se crea un nuevo cliente.');
 					$Form_Inputs->form_input_text('Nombre del Contrato', 'Contrato_Nombre', $x1, 2);
 					$Form_Inputs->form_input_text('Numero o Codigo del Contrato', 'Contrato_Numero', $x2, 1);
 					$Form_Inputs->form_date('Fecha inicio Contrato','Contrato_Fecha_Ini', $x3, 2);

@@ -97,7 +97,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_post_data(2, 'Se define el horario de utilizacion de la maquina relacionada al equipo de telemetria, existen informes relacionados a esta opcion' );
+					$Form_Inputs->form_post_data(2,1,1, 'Se define el horario de utilizacion de la maquina relacionada al equipo de telemetria, existen informes relacionados a esta opcion' );
 					$Form_Inputs->form_tittle(3, 'Horario Trabajo');
 					$Form_Inputs->form_time('Hora Inicio','Jornada_inicio', $x1, 2, 2);
 					$Form_Inputs->form_time('Hora Termino','Jornada_termino', $x2, 2, 2);

@@ -93,7 +93,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_mnt_correos_list', $SI
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_post_data(2, '<strong>Tiempos de envio: </strong>Todas las notificaciones estan afectas a los tiempos de envio configurados por defecto en el sistema o en el equipo de telemetria.' );
+				$Form_Inputs->form_post_data(2,1,1, '<strong>Tiempos de envio: </strong>Todas las notificaciones estan afectas a los tiempos de envio configurados por defecto en el sistema o en el equipo de telemetria.' );
 				$Form_Inputs->form_select('Categoria','idCorreosCat', $x1, 2, 'idCorreosCat', 'Nombre', 'telemetria_mnt_correos_cat', 'idEstado=1', '', $dbConn);
 				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x2, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 
@@ -142,7 +142,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_post_data(2, '<strong>Tiempos de envio: </strong>Todas las notificaciones estan afectas a los tiempos de envio configurados por defecto en el sistema o en el equipo de telemetria.' );
+				$Form_Inputs->form_post_data(2,1,1, '<strong>Tiempos de envio: </strong>Todas las notificaciones estan afectas a los tiempos de envio configurados por defecto en el sistema o en el equipo de telemetria.' );
 				$Form_Inputs->form_select('Categoria','idCorreosCat', $x1, 2, 'idCorreosCat', 'Nombre', 'telemetria_mnt_correos_cat', 'idEstado=1', '', $dbConn);
 				$Form_Inputs->form_select_join_filter('Usuario','idUsuario', $x2, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 

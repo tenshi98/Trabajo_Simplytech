@@ -147,14 +147,14 @@ foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombr
 					if(isset($Rango_fin)){  $x2  = $Rango_fin;  }else{$x2  = Cantidades_decimales_justos($rowdata['Rango_fin']);}
 
 					//opcionales
-					$Form_Inputs->form_post_data(1, 'Rango de valores donde normalmente trabaja el sensor, en caso de que un valor sea distinto de este rango (inferior al minimo, superior al maximo) marcara una alerta personalizada');
+					$Form_Inputs->form_post_data(1,1,1, 'Rango de valores donde normalmente trabaja el sensor, en caso de que un valor sea distinto de este rango (inferior al minimo, superior al maximo) marcara una alerta personalizada');
 					$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x1, 2);
 					$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x2, 2);
 				}elseif(isset($_GET['idTipo'])&&$_GET['idTipo']!=''&&$_GET['idTipo']==6){
 					if(isset($valor_especifico)){  $x3  = $valor_especifico;  }else{$x3  = Cantidades_decimales_justos($rowdata['valor_especifico']);}
 
 					//opcionales
-					$Form_Inputs->form_post_data(1, 'El valor especifico que es considerado como error (por ejemplo 0 o 1)');
+					$Form_Inputs->form_post_data(1,1,1, 'El valor especifico que es considerado como error (por ejemplo 0 o 1)');
 					$Form_Inputs->form_input_number('Valor Especifico','valor_especifico', $x3, 2);
 
 				}
@@ -288,7 +288,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 
-				/*$Form_Inputs->form_post_data(1, 'Seleccione un Tipo Alarma');
+				/*$Form_Inputs->form_post_data(1,1,1, 'Seleccione un Tipo Alarma');
 				$Form_Inputs->form_select('Tipo Alarma','idTipo', $x4, 2, 'idTipo', 'Nombre', 'telemetria_listado_alarmas_perso_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Maximo Errores','NErroresMax', $x5, 2);
 				$Form_Inputs->form_input_number('N° Actual Errores','NErroresActual', $x6, 1);
@@ -298,13 +298,13 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 				$Form_Inputs->form_input_number('Rango Inicio','Rango_ini', $x9, 1);
 				$Form_Inputs->form_input_number('Rango Termino','Rango_fin', $x10, 1);
 
-				$Form_Inputs->form_post_data(1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 15 minutos.<br/>- <strong>Catastrofica</strong> = cada vez que ocurra.');
+				$Form_Inputs->form_post_data(1,1,1, 'Tiene relacion a como se notificaran:<br/>- <strong>Normales</strong> = cada 15 minutos.<br/>- <strong>Catastrofica</strong> = cada vez que ocurra.');
 				$Form_Inputs->form_select('Prioridad Alarma','idTipoAlerta', $x2, 2, 'idTipoAlerta', 'Nombre', 'core_telemetria_tipo_alertas', 0, '', $dbConn);
 
-				$Form_Inputs->form_post_data(1, 'Se utiliza unicamente en <strong>Informes CrossCrane - Alertas por Grua</strong> para poder agrupar los errores de voltaje.');
+				$Form_Inputs->form_post_data(1,1,1, 'Se utiliza unicamente en <strong>Informes CrossCrane - Alertas por Grua</strong> para poder agrupar los errores de voltaje.');
 				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);
 				*/
-				$Form_Inputs->form_post_data(1, 'Al desactivarla, se elimina la opcion de que la plataforma registre esta alarma');
+				$Form_Inputs->form_post_data(1,1,1, 'Al desactivarla, se elimina la opcion de que la plataforma registre esta alarma');
 				$Form_Inputs->form_select('Estado','idEstado', $x11, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);

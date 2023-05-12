@@ -123,34 +123,34 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 
 					//Solo para plataforma CrossTech
 					if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-						$Form_Inputs->form_post_data(2, '<strong>Tab: </strong>Esta opcion indica en que pestaña de la pantalla principal sera mostrado el equipo (Funcion solo disponible con la interfaz de  crosstech.)' );
+						$Form_Inputs->form_post_data(2,1,1, '<strong>Tab: </strong>Esta opcion indica en que pestaña de la pantalla principal sera mostrado el equipo (Funcion solo disponible con la interfaz de  crosstech.)' );
 						$Form_Inputs->form_select('Tab','idTab', $x6, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, '', $dbConn);
 					}
 
 					$Form_Inputs->form_tittle(3, 'Funciones');
-					$Form_Inputs->form_post_data(2, '<strong>Geolocalizacion: </strong>Uso de las funciones de gps y alertas relacionadas a este (geocercas, detenciones, ingreso a lugares prohibidos, etc.)' );
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Geolocalizacion: </strong>Uso de las funciones de gps y alertas relacionadas a este (geocercas, detenciones, ingreso a lugares prohibidos, etc.)' );
 					$Form_Inputs->form_select('Geolocalizacion','id_Geo', $x7, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 
-					$Form_Inputs->form_post_data(2, '<strong>Sensores: </strong>Uso de las funciones de Telemetria (registro de sensores, alertas, etc.)' );
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Sensores: </strong>Uso de las funciones de Telemetria (registro de sensores, alertas, etc.)' );
 					$Form_Inputs->form_select('Sensores','id_Sensores', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_select_n_auto('Cantidad de Sensores','cantSensores', $x9, 1, 1, 72);
 
-					$Form_Inputs->form_post_data(2, '<strong>Uso de Predios: </strong>Registra el ingreso y la salida de los predios configurados, para ser utilizado debe tener la opcion de Geolocalizacion activa.' );
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Uso de Predios: </strong>Registra el ingreso y la salida de los predios configurados, para ser utilizado debe tener la opcion de Geolocalizacion activa.' );
 					$Form_Inputs->form_select('Uso de Predios (Cross)','idUsoPredio', $x10, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 
-					$Form_Inputs->form_post_data(2, '<strong>Backup Tabla relacionada: </strong>Opcion de respaldo de la tabla donde se guardan los datos del equipo bajo una cierta cantidad de registros.' );
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Backup Tabla relacionada: </strong>Opcion de respaldo de la tabla donde se guardan los datos del equipo bajo una cierta cantidad de registros.' );
 					$Form_Inputs->form_select('Backup Tabla relacionada','idBackup', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_input_number('N° Registros para Backup','NregBackup', $x12, 1);
 
-					$Form_Inputs->form_post_data(2, '<strong>Uso Generador: </strong>Indica si la alimentacion electrica es directa o por generador, despliega una lista de equipos de telemetria configurados con el tab de <strong>CrossE</strong>, esto genera un boton en el widget principal, <strong>el generador se selecciona desde la pestaña Otros Datos</strong>.' );
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Uso Generador: </strong>Indica si la alimentacion electrica es directa o por generador, despliega una lista de equipos de telemetria configurados con el tab de <strong>CrossE</strong>, esto genera un boton en el widget principal, <strong>el generador se selecciona desde la pestaña Otros Datos</strong>.' );
 					$Form_Inputs->form_select('Uso Generador','idGenerador', $x13, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 
-					$Form_Inputs->form_post_data(2, '<strong>Alerta Temprana: </strong>Indica si el equipo de telemetria notificara de inmediato a los usuarios respecto a un error.' );
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Alerta Temprana: </strong>Indica si el equipo de telemetria notificara de inmediato a los usuarios respecto a un error.' );
 					$Form_Inputs->form_select('Alerta Temprana','idAlertaTemprana', $x14, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_time('Tiempo Alertas Criticas','AlertaTemprCritica', $x15, 1, 1);
 					$Form_Inputs->form_time('Tiempo Alertas Normales','AlertaTemprNormal', $x16, 1, 1);
 
-					$Form_Inputs->form_post_data(2, '<strong>Uso de Carpeta FTP: </strong>Se utiliza para los raros casos que el equipo de telemetria requiera guardar los datos en una carpeta en especifico, se utiliza para varias opciones.' );
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Uso de Carpeta FTP: </strong>Se utiliza para los raros casos que el equipo de telemetria requiera guardar los datos en una carpeta en especifico, se utiliza para varias opciones.' );
 					$Form_Inputs->form_select('Uso de Carpeta FTP','idUsoFTP', $x17, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_input_icon('Nombre Carpeta FTP', 'FTP_Carpeta', $x18, 1,'fa fa-flag');
 

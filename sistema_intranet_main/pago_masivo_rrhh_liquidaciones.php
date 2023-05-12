@@ -269,7 +269,7 @@ $Form_Inputs = new Inputs();
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select('Documento de Pago','idDocPago', $x1, 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0, '', $dbConn);
 					$Form_Inputs->form_input_number('N° Documento de Pago', 'N_DocPago', $x2, 1);
-					$Form_Inputs->form_post_data(1, 'Poner la fecha futura en el caso de cheques, depositos a plazo o situaciones especificas, para el resto, como por ejemplo efectivo, utilizar el mismo dia' );
+					$Form_Inputs->form_post_data(1,1,1, 'Poner la fecha futura en el caso de cheques, depositos a plazo o situaciones especificas, para el resto, como por ejemplo efectivo, utilizar el mismo dia' );
 					$Form_Inputs->form_date('Fecha Vencimiento','F_Pago', $x3, 2);
 
 					echo '<div class="form-group" id="div_">

@@ -93,8 +93,8 @@ if(!empty($_GET['clone_idUsuario'])){
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_post_data(1, 'Los usuarios recien creados tienen la contraseña <strong>1234</strong> asignada por defecto');
-				$Form_Inputs->form_post_data(1, 'Los usuarios recien creados perteneceran al sistema <strong>'.$_SESSION['usuario']['basic_data']['RazonSocial'].'</strong> por defecto');
+				$Form_Inputs->form_post_data(1,1,1, 'Los usuarios recien creados tienen la contraseña <strong>1234</strong> asignada por defecto');
+				$Form_Inputs->form_post_data(1,1,1, 'Los usuarios recien creados perteneceran al sistema <strong>'.$_SESSION['usuario']['basic_data']['RazonSocial'].'</strong> por defecto');
 
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_input_icon('Nombre de Usuario', 'usuario', $x1, 2,'fa fa-user');
@@ -628,8 +628,8 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_post_data(1, 'Los usuarios recien creados tienen la contraseña <strong>1234</strong> asignada por defecto');
-				$Form_Inputs->form_post_data(1, 'Los usuarios recien creados perteneceran al sistema <strong>'.$_SESSION['usuario']['basic_data']['RazonSocial'].'</strong> por defecto');
+				$Form_Inputs->form_post_data(1,1,1, 'Los usuarios recien creados tienen la contraseña <strong>1234</strong> asignada por defecto');
+				$Form_Inputs->form_post_data(1,1,1, 'Los usuarios recien creados perteneceran al sistema <strong>'.$_SESSION['usuario']['basic_data']['RazonSocial'].'</strong> por defecto');
 
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_input_icon('Nombre de Usuario', 'usuario', $x1, 2,'fa fa-user');

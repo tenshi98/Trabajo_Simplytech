@@ -409,7 +409,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_post_data(1, 'Una vez marcada la tarea como <strong>realizada</strong> no se podran hacer mas modificaciones');
+				$Form_Inputs->form_post_data(1,1,1, 'Una vez marcada la tarea como <strong>realizada</strong> no se podran hacer mas modificaciones');
 
 				$Form_Inputs->form_select('Estado Tarea','idEstadoTarea', $x1, 2, 'idEstadoTarea', 'Nombre', 'core_estado_ot_motivos_tareas', 0, '', $dbConn);
 				$Form_Inputs->form_textarea('Observacion','Observacion', $x2, 1);

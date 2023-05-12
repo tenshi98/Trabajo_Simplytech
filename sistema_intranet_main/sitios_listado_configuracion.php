@@ -105,25 +105,25 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 
-					$Form_Inputs->form_post_data(2, '<strong>Configuracion: </strong>Ajustes generales.' );
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Configuracion: </strong>Ajustes generales.' );
 					$Form_Inputs->form_input_text('Nombre Logo', 'Config_Logo_Nombre', $x1, 1);
 					$Form_Inputs->form_input_text('Nombre Archivo Logo', 'Config_Logo_Archivo', $x2, 1);
 					$Form_Inputs->form_input_text('Carpeta Raiz', 'Config_Root_Folder', $x3, 2);
 					$Form_Inputs->form_select('Estado','idEstado', $x4, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 
-					$Form_Inputs->form_post_data(2, '<strong>Elementos: </strong>Elementos existentes y necesarios.' );
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Elementos: </strong>Elementos existentes y necesarios.' );
 					$Form_Inputs->form_select('Uso Menu','Config_Menu', $x5, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_select('Uso Menu Otros','Config_MenuOtros', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_select('Uso Carousel','Config_Carousel', $x7, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_select('Uso Links Relacionados','Config_Links_Rel', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 
-					$Form_Inputs->form_post_data(2, '<strong>Mostrar elementos extras: </strong>' );
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Mostrar elementos extras: </strong>' );
 					$Form_Inputs->form_select('Mostrar Top Bar','Config_Top_Bar', $x9, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_select('Mostrar enlaces en el Footer','Config_Footer_Links', $x10, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_select('Mostrar servicios en el Footer','Config_Footer_Services', $x11, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_select('Mostrar suscripcion en el Footer','Config_Footer_Letters', $x12, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 
-					$Form_Inputs->form_post_data(2, '<strong>Contacto: </strong>Usuario y contraseña del gestor de correos del servidor.' );
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Contacto: </strong>Usuario y contraseña del gestor de correos del servidor.' );
 					$Form_Inputs->form_input_icon('Usuario SMTP', 'Config_SMTP_mailUsername', $x13, 1,'fa fa-users');
 					$Form_Inputs->form_input_icon('Contraseña del usuario SMTP', 'Config_SMTP_mailPassword', $x14, 1,'fa fa-users');
 					$Form_Inputs->form_input_icon('Host del correo SMTP', 'Config_SMTP_Host', $x15, 1,'fa fa-users');
