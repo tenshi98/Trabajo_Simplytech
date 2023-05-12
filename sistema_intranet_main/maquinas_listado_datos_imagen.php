@@ -57,7 +57,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 // consulto los datos
 $SIS_query = 'Nombre,Direccion_img, idConfig_1, idConfig_2, idConfig_3, idConfig_4';
 $SIS_join  = '';
-$SIS_where = 'idMaquina = '.$_GET['id'];
+$SIS_where = 'idMaquina = '.simpleDecode($_GET['id'], fecha_actual());
 $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
@@ -128,7 +128,7 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_multiple_upload('Seleccionar archivo','Direccion_img', 1, '"jpg", "png", "gif", "jpeg"');
 
-						$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);
+						$Form_Inputs->form_input_hidden('idMaquina', simpleDecode($_GET['id'], fecha_actual()), 2);
 						?>
 
 						<div class="form-group">

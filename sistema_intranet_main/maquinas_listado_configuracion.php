@@ -42,7 +42,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 // consulto los datos
 $SIS_query = 'Nombre,idConfig_1, idConfig_2, idConfig_3, idConfig_4';
 $SIS_join  = '';
-$SIS_where = 'idMaquina = '.$_GET['id'];
+$SIS_where = 'idMaquina = '.simpleDecode($_GET['id'], fecha_actual());
 $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
@@ -105,12 +105,19 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
+					$Form_Inputs->form_post_data(1,1,1, '<strong>Uso de Componentes: </strong>Permite definir si la maquina se divide en componentes para el uso de mantenciones y analisis');
 					$Form_Inputs->form_select('Uso de Componentes','idConfig_1', $x1, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+
+					$Form_Inputs->form_post_data(1,1,1, '<strong>Matriz de Analisis: </strong>Permite definir las distintas plantillas de analisis a utilizar, depende del uso de componentes');
 					$Form_Inputs->form_select('Uso de Matriz de Analisis','idConfig_2', $x2, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+
+					$Form_Inputs->form_post_data(1,1,1, '<strong>Uso de Clientes: </strong>Permite definir si la maquina esta relacionada directamente a un cliente');
 					$Form_Inputs->form_select('Uso de Clientes','idConfig_3', $x3, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+
+					$Form_Inputs->form_post_data(1,1,1, '<strong>Ubicaciones: </strong>Permite definir la ubicacion de la maquina dentro de una ubicacion en especifico, depende del administrador de ubicaciones');
 					$Form_Inputs->form_select('Uso de Ubicaciones','idConfig_4', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 
-					$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);
+					$Form_Inputs->form_input_hidden('idMaquina', simpleDecode($_GET['id'], fecha_actual()), 2);
 					?>
 
 					<div class="form-group">

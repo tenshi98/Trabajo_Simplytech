@@ -43,7 +43,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 $SIS_query = 'Nombre,idConfig_1, idConfig_2, idConfig_3, idConfig_4, idUbicacion, idUbicacion_lvl_1, idUbicacion_lvl_2,
 idUbicacion_lvl_3, idUbicacion_lvl_4, idUbicacion_lvl_5';
 $SIS_join  = '';
-$SIS_where = 'idMaquina ='.$_GET['id'];
+$SIS_where = 'idMaquina ='.simpleDecode($_GET['id'], fecha_actual());
 $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
@@ -116,7 +116,7 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 							                 'Nivel 5', 'idUbicacion_lvl_5',  $x6,  1,  'idLevel_5',  'Nombre',  'ubicacion_listado_level_5',  0,   0,
 							                 $dbConn, 'form1');
 
-					$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);
+					$Form_Inputs->form_input_hidden('idMaquina', simpleDecode($_GET['id'], fecha_actual()), 2);
 
 					?>
 

@@ -46,7 +46,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 // consulto los datos
 $SIS_query = 'Codigo, Nombre,Modelo, Serie, Fabricante, fincorporacion, idConfig_1, idConfig_2, idCliente, idConfig_3, idConfig_4';
 $SIS_join  = '';
-$SIS_where = 'idMaquina = '.$_GET['id'];
+$SIS_where = 'idMaquina = '.simpleDecode($_GET['id'], fecha_actual());
 $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
@@ -116,11 +116,11 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 					$Form_Inputs->form_input_text('Modelo', 'Modelo', $x3, 1);
 					$Form_Inputs->form_input_text('Serie', 'Serie', $x4, 1);
 					$Form_Inputs->form_input_text('Fabricante', 'Fabricante', $x5, 1);
-					$Form_Inputs->form_date('Fecha de Incorporacion','fincorporacion', $x6, 1);
+					$Form_Inputs->form_date('Fecha de Incorporacion Maquina','fincorporacion', $x6, 1);
 
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
-					$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);
+					$Form_Inputs->form_input_hidden('idMaquina', simpleDecode($_GET['id'], fecha_actual()), 2);
 					?>
 
 					<div class="form-group">

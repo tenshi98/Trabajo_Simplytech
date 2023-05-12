@@ -71,31 +71,9 @@ require_once '0_validate_user_1.php';
 	//formulariopara el itemizado
 	//Traspaso de valores input a variables
 	$idLevel = array();
-	if (!empty($_POST['idLevel_1']))      $idLevel[1]      = $_POST['idLevel_1'];
-	if (!empty($_POST['idLevel_2']))      $idLevel[2]      = $_POST['idLevel_2'];
-	if (!empty($_POST['idLevel_3']))      $idLevel[3]      = $_POST['idLevel_3'];
-	if (!empty($_POST['idLevel_4']))      $idLevel[4]      = $_POST['idLevel_4'];
-	if (!empty($_POST['idLevel_5']))      $idLevel[5]      = $_POST['idLevel_5'];
-	if (!empty($_POST['idLevel_6']))      $idLevel[6]      = $_POST['idLevel_6'];
-	if (!empty($_POST['idLevel_7']))      $idLevel[7]      = $_POST['idLevel_7'];
-	if (!empty($_POST['idLevel_8']))      $idLevel[8]      = $_POST['idLevel_8'];
-	if (!empty($_POST['idLevel_9']))      $idLevel[9]      = $_POST['idLevel_9'];
-	if (!empty($_POST['idLevel_10']))     $idLevel[10]     = $_POST['idLevel_10'];
-	if (!empty($_POST['idLevel_11']))     $idLevel[11]     = $_POST['idLevel_11'];
-	if (!empty($_POST['idLevel_12']))     $idLevel[12]     = $_POST['idLevel_12'];
-	if (!empty($_POST['idLevel_13']))     $idLevel[13]     = $_POST['idLevel_13'];
-	if (!empty($_POST['idLevel_14']))     $idLevel[14]     = $_POST['idLevel_14'];
-	if (!empty($_POST['idLevel_15']))     $idLevel[15]     = $_POST['idLevel_15'];
-	if (!empty($_POST['idLevel_16']))     $idLevel[16]     = $_POST['idLevel_16'];
-	if (!empty($_POST['idLevel_17']))     $idLevel[17]     = $_POST['idLevel_17'];
-	if (!empty($_POST['idLevel_18']))     $idLevel[18]     = $_POST['idLevel_18'];
-	if (!empty($_POST['idLevel_19']))     $idLevel[19]     = $_POST['idLevel_19'];
-	if (!empty($_POST['idLevel_20']))     $idLevel[20]     = $_POST['idLevel_20'];
-	if (!empty($_POST['idLevel_21']))     $idLevel[21]     = $_POST['idLevel_21'];
-	if (!empty($_POST['idLevel_22']))     $idLevel[22]     = $_POST['idLevel_22'];
-	if (!empty($_POST['idLevel_23']))     $idLevel[23]     = $_POST['idLevel_23'];
-	if (!empty($_POST['idLevel_24']))     $idLevel[24]     = $_POST['idLevel_24'];
-	if (!empty($_POST['idLevel_25']))     $idLevel[25]     = $_POST['idLevel_25'];
+	for ($i = 1; $i <= 25; $i++) {
+		if (!empty($_POST['idLevel_'.$i]))      $idLevel[$i]      = $_POST['idLevel_'.$i];
+	}
 
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -270,13 +248,12 @@ require_once '0_validate_user_1.php';
 				//Si ejecuto correctamente la consulta
 				if($ultimo_id!=0){
 					//redirijo
-					header( 'Location: '.$location.'&id='.$ultimo_id.'&created=true' );
+					header( 'Location: '.$location.'&id='.simpleEncode($ultimo_id, fecha_actual()).'&created=true' );
 					die;
 				}
 			}
 
 		break;
-
 /*******************************************************************************************************************/
 		case 'updateBasicData':
 
@@ -659,12 +636,12 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre de la imagen
-			$rowdata = db_select_data (false, 'Direccion_img', 'maquinas_listado', '', 'idMaquina = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowdata = db_select_data (false, 'Direccion_img', 'maquinas_listado', '', 'idMaquina = "'.simpleDecode($_GET['del_img'], fecha_actual()).'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
 			$SIS_data = "Direccion_img=''";
-			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.simpleDecode($_GET['del_img'], fecha_actual()).'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 
@@ -682,7 +659,7 @@ require_once '0_validate_user_1.php';
 				}
 
 				//redirijo
-				header( 'Location: '.$location.'&id='.$_GET['del_img'] );
+				header( 'Location: '.$location );
 				die;
 
 			}
@@ -695,12 +672,12 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del logo
-			$rowdata = db_select_data (false, 'FichaTecnica', 'maquinas_listado', '', 'idMaquina = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowdata = db_select_data (false, 'FichaTecnica', 'maquinas_listado', '', 'idMaquina = "'.simpleDecode($_GET['del_file'], fecha_actual()).'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
 			$SIS_data = "FichaTecnica=''";
-			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.simpleDecode($_GET['del_file'], fecha_actual()).'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 
@@ -718,7 +695,7 @@ require_once '0_validate_user_1.php';
 				}
 
 				//redirijo
-				header( 'Location: '.$location.'&id='.$_GET['del_file'] );
+				header( 'Location: '.$location );
 				die;
 
 			}
@@ -731,12 +708,12 @@ require_once '0_validate_user_1.php';
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
 			// Se obtiene el nombre del logo
-			$rowdata = db_select_data (false, 'HDS', 'maquinas_listado', '', 'idMaquina = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$rowdata = db_select_data (false, 'HDS', 'maquinas_listado', '', 'idMaquina = "'.simpleDecode($_GET['del_hds'], fecha_actual()).'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
 			//se actualizan los datos
 			$SIS_data = "HDS=''";
-			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.$_GET['del_hds'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			$resultado = db_update_data (false, $SIS_data, 'maquinas_listado', 'idMaquina = "'.simpleDecode($_GET['del_hds'], fecha_actual()).'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			//Si ejecuto correctamente la consulta
 			if($resultado==true){
 
@@ -754,7 +731,7 @@ require_once '0_validate_user_1.php';
 				}
 
 				//redirijo
-				header( 'Location: '.$location.'&id='.$_GET['del_hds'] );
+				header( 'Location: '.$location );
 				die;
 
 			}
@@ -878,7 +855,6 @@ require_once '0_validate_user_1.php';
 			}
 
 		break;
-
 /*******************************************************************************************************************/
 		case 'del_item':
 
@@ -948,7 +924,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			$idMaquina  = $_GET['id'];
+			$idMaquina  = simpleDecode($_GET['id'], fecha_actual());
 			$idEstado   = simpleDecode($_GET['estado'], fecha_actual());
 			/*******************************************************/
 			//se actualizan los datos

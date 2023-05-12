@@ -44,7 +44,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 // consulto los datos
 $SIS_query = 'Nombre,idConfig_1, idConfig_2, idConfig_3, idConfig_4, idCliente';
 $SIS_join  = '';
-$SIS_where = 'idMaquina = '.$_GET['id'];
+$SIS_where = 'idMaquina = '.simpleDecode($_GET['id'], fecha_actual());
 $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>
@@ -106,7 +106,7 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select_filter('Cliente','idCliente', $x1, 2, 'idCliente', 'Nombre', 'clientes_listado', $w, '', $dbConn);
 
-					$Form_Inputs->form_input_hidden('idMaquina', $_GET['id'], 2);
+					$Form_Inputs->form_input_hidden('idMaquina', simpleDecode($_GET['id'], fecha_actual()), 2);
 					$Form_Inputs->form_input_hidden('FakeidCliente', $rowdata['idCliente'], 2);
 
 					?>
