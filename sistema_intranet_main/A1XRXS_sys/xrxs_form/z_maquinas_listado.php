@@ -1934,1460 +1934,1461 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 		case 'clone_component':
 
-		$idLevel  = $_GET['clone_compo'];
-		$lvl      = $_GET['lvl'];
+			$idLevel  = $_GET['clone_compo'];
+			$lvl      = $_GET['lvl'];
 
-		if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){  $lv_1     = $_GET['lv_1'];  }else{$lv_1 = 0;}
-		if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){  $lv_2     = $_GET['lv_2'];  }else{$lv_2 = 0;}
-		if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){  $lv_3     = $_GET['lv_3'];  }else{$lv_3 = 0;}
-		if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){  $lv_4     = $_GET['lv_4'];  }else{$lv_4 = 0;}
-		if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){  $lv_5     = $_GET['lv_5'];  }else{$lv_5 = 0;}
-		if(isset($_GET['lv_6'])&&$_GET['lv_6']!=''){  $lv_6     = $_GET['lv_6'];  }else{$lv_6 = 0;}
-		if(isset($_GET['lv_7'])&&$_GET['lv_7']!=''){  $lv_7     = $_GET['lv_7'];  }else{$lv_7 = 0;}
-		if(isset($_GET['lv_8'])&&$_GET['lv_8']!=''){  $lv_8     = $_GET['lv_8'];  }else{$lv_8 = 0;}
-		if(isset($_GET['lv_9'])&&$_GET['lv_9']!=''){  $lv_9     = $_GET['lv_9'];  }else{$lv_9 = 0;}
-		if(isset($_GET['lv_10'])&&$_GET['lv_10']!=''){$lv_10    = $_GET['lv_10'];}else{$lv_10 = 0;}
-		if(isset($_GET['lv_11'])&&$_GET['lv_11']!=''){$lv_11    = $_GET['lv_11'];}else{$lv_11 = 0;}
-		if(isset($_GET['lv_12'])&&$_GET['lv_12']!=''){$lv_12    = $_GET['lv_12'];}else{$lv_12 = 0;}
-		if(isset($_GET['lv_13'])&&$_GET['lv_13']!=''){$lv_13    = $_GET['lv_13'];}else{$lv_13 = 0;}
-		if(isset($_GET['lv_14'])&&$_GET['lv_14']!=''){$lv_14    = $_GET['lv_14'];}else{$lv_14 = 0;}
-		if(isset($_GET['lv_15'])&&$_GET['lv_15']!=''){$lv_15    = $_GET['lv_15'];}else{$lv_15 = 0;}
-		if(isset($_GET['lv_16'])&&$_GET['lv_16']!=''){$lv_16    = $_GET['lv_16'];}else{$lv_16 = 0;}
-		if(isset($_GET['lv_17'])&&$_GET['lv_17']!=''){$lv_17    = $_GET['lv_17'];}else{$lv_17 = 0;}
-		if(isset($_GET['lv_18'])&&$_GET['lv_18']!=''){$lv_18    = $_GET['lv_18'];}else{$lv_18 = 0;}
-		if(isset($_GET['lv_19'])&&$_GET['lv_19']!=''){$lv_19    = $_GET['lv_19'];}else{$lv_19 = 0;}
-		if(isset($_GET['lv_20'])&&$_GET['lv_20']!=''){$lv_20    = $_GET['lv_20'];}else{$lv_20 = 0;}
-		if(isset($_GET['lv_21'])&&$_GET['lv_21']!=''){$lv_21    = $_GET['lv_21'];}else{$lv_21 = 0;}
-		if(isset($_GET['lv_22'])&&$_GET['lv_22']!=''){$lv_22    = $_GET['lv_22'];}else{$lv_22 = 0;}
-		if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){$lv_23    = $_GET['lv_23'];}else{$lv_23 = 0;}
-		if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){$lv_24    = $_GET['lv_24'];}else{$lv_24 = 0;}
-		if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){$lv_25    = $_GET['lv_25'];}else{$lv_25 = 0;}
+			if(isset($_GET['lv_1'])&&$_GET['lv_1']!=''){  $lv_1     = $_GET['lv_1'];  }else{$lv_1 = 0;}
+			if(isset($_GET['lv_2'])&&$_GET['lv_2']!=''){  $lv_2     = $_GET['lv_2'];  }else{$lv_2 = 0;}
+			if(isset($_GET['lv_3'])&&$_GET['lv_3']!=''){  $lv_3     = $_GET['lv_3'];  }else{$lv_3 = 0;}
+			if(isset($_GET['lv_4'])&&$_GET['lv_4']!=''){  $lv_4     = $_GET['lv_4'];  }else{$lv_4 = 0;}
+			if(isset($_GET['lv_5'])&&$_GET['lv_5']!=''){  $lv_5     = $_GET['lv_5'];  }else{$lv_5 = 0;}
+			if(isset($_GET['lv_6'])&&$_GET['lv_6']!=''){  $lv_6     = $_GET['lv_6'];  }else{$lv_6 = 0;}
+			if(isset($_GET['lv_7'])&&$_GET['lv_7']!=''){  $lv_7     = $_GET['lv_7'];  }else{$lv_7 = 0;}
+			if(isset($_GET['lv_8'])&&$_GET['lv_8']!=''){  $lv_8     = $_GET['lv_8'];  }else{$lv_8 = 0;}
+			if(isset($_GET['lv_9'])&&$_GET['lv_9']!=''){  $lv_9     = $_GET['lv_9'];  }else{$lv_9 = 0;}
+			if(isset($_GET['lv_10'])&&$_GET['lv_10']!=''){$lv_10    = $_GET['lv_10'];}else{$lv_10 = 0;}
+			if(isset($_GET['lv_11'])&&$_GET['lv_11']!=''){$lv_11    = $_GET['lv_11'];}else{$lv_11 = 0;}
+			if(isset($_GET['lv_12'])&&$_GET['lv_12']!=''){$lv_12    = $_GET['lv_12'];}else{$lv_12 = 0;}
+			if(isset($_GET['lv_13'])&&$_GET['lv_13']!=''){$lv_13    = $_GET['lv_13'];}else{$lv_13 = 0;}
+			if(isset($_GET['lv_14'])&&$_GET['lv_14']!=''){$lv_14    = $_GET['lv_14'];}else{$lv_14 = 0;}
+			if(isset($_GET['lv_15'])&&$_GET['lv_15']!=''){$lv_15    = $_GET['lv_15'];}else{$lv_15 = 0;}
+			if(isset($_GET['lv_16'])&&$_GET['lv_16']!=''){$lv_16    = $_GET['lv_16'];}else{$lv_16 = 0;}
+			if(isset($_GET['lv_17'])&&$_GET['lv_17']!=''){$lv_17    = $_GET['lv_17'];}else{$lv_17 = 0;}
+			if(isset($_GET['lv_18'])&&$_GET['lv_18']!=''){$lv_18    = $_GET['lv_18'];}else{$lv_18 = 0;}
+			if(isset($_GET['lv_19'])&&$_GET['lv_19']!=''){$lv_19    = $_GET['lv_19'];}else{$lv_19 = 0;}
+			if(isset($_GET['lv_20'])&&$_GET['lv_20']!=''){$lv_20    = $_GET['lv_20'];}else{$lv_20 = 0;}
+			if(isset($_GET['lv_21'])&&$_GET['lv_21']!=''){$lv_21    = $_GET['lv_21'];}else{$lv_21 = 0;}
+			if(isset($_GET['lv_22'])&&$_GET['lv_22']!=''){$lv_22    = $_GET['lv_22'];}else{$lv_22 = 0;}
+			if(isset($_GET['lv_23'])&&$_GET['lv_23']!=''){$lv_23    = $_GET['lv_23'];}else{$lv_23 = 0;}
+			if(isset($_GET['lv_24'])&&$_GET['lv_24']!=''){$lv_24    = $_GET['lv_24'];}else{$lv_24 = 0;}
+			if(isset($_GET['lv_25'])&&$_GET['lv_25']!=''){$lv_25    = $_GET['lv_25'];}else{$lv_25 = 0;}
 
-		/*******************************************************************/
-		//Creo todas las consultas hasta el final del arbol
-		for ($i = $lvl; $i <= 15; $i++) {
-			//creo cadena con los idLevel
-			$cadena = '';
-			for ($x = $i; $x >= 1; $x--) {
-				$cadena .= ',idLevel_'.$x;
-			}
-			$arrLVL[$i] = array();
-			$arrLVL[$i] = db_select_array (false, 'idSistema, idUtilizable, Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero, idMaquina '.$cadena, 'maquinas_listado_level_'.$i, '', 'idLevel_'.$lvl.' = '.$idLevel, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-		}
-
-		/*******************************************************************/
-		//Variables
-		$id_lvl = array();
-		//Arreglos
-		$dis_1  = $lvl;
-		$dis_2  = $lvl + 1;
-		$dis_3  = $lvl + 2;
-		$dis_4  = $lvl + 3;
-		$dis_5  = $lvl + 4;
-		$dis_6  = $lvl + 5;
-		$dis_7  = $lvl + 6;
-		$dis_8  = $lvl + 7;
-		$dis_9  = $lvl + 8;
-		$dis_10 = $lvl + 9;
-		$dis_11 = $lvl + 10;
-		$dis_12 = $lvl + 11;
-		$dis_13 = $lvl + 12;
-		$dis_14 = $lvl + 13;
-		$dis_15 = $lvl + 14;
-		$dis_16 = $lvl + 15;
-		$dis_17 = $lvl + 16;
-		$dis_18 = $lvl + 17;
-		$dis_19 = $lvl + 18;
-		$dis_20 = $lvl + 19;
-		$dis_21 = $lvl + 20;
-		$dis_22 = $lvl + 21;
-		$dis_23 = $lvl + 22;
-		$dis_24 = $lvl + 23;
-		$dis_25 = $lvl + 24;
-
-		//Consultas
-		/********************************************/
-		if(isset($arrLVL[$dis_1])){
-			foreach ($arrLVL[$dis_1] as $arreglo_1) {
-
-				//Se crea la maquina
-				$SIS_data  = "'".$arreglo_1['idSistema']."'";
-				$SIS_data .= ",'".$arreglo_1['idMaquina']."'";
-				$SIS_data .= ",'".$arreglo_1['idUtilizable']."'";
-				$SIS_data .= ",'".$arreglo_1['Codigo']."'";
-				$SIS_data .= ",'".$arreglo_1['Nombre']." (Nuevo)'";
-				$SIS_data .= ",'".$arreglo_1['Marca']."'";
-				$SIS_data .= ",'".$arreglo_1['Modelo']."'";
-				$SIS_data .= ",'".$arreglo_1['AnoFab']."'";
-				$SIS_data .= ",'".$arreglo_1['Serie']."'";
-				$SIS_data .= ",'".$arreglo_1['idLicitacion']."'";
-				$SIS_data .= ",'".$arreglo_1['tabla']."'";
-				$SIS_data .= ",'".$arreglo_1['table_value']."'";
-				$SIS_data .= ",'".$arreglo_1['Direccion_img']."'";
-				$SIS_data .= ",'".$arreglo_1['idSubTipo']."'";
-				$SIS_data .= ",'".$arreglo_1['Grasa_inicial']."'";
-				$SIS_data .= ",'".$arreglo_1['Grasa_relubricacion']."'";
-				$SIS_data .= ",'".$arreglo_1['Aceite']."'";
-				$SIS_data .= ",'".$arreglo_1['Cantidad']."'";
-				$SIS_data .= ",'".$arreglo_1['idUml']."'";
-				$SIS_data .= ",'".$arreglo_1['Frecuencia']."'";
-				$SIS_data .= ",'".$arreglo_1['idFrecuencia']."'";
-				$SIS_data .= ",'".$arreglo_1['idProducto']."'";
-				$SIS_data .= ",'".$arreglo_1['Saf']."'";
-				$SIS_data .= ",'".$arreglo_1['Numero']."'";
-
+			/*******************************************************************/
+			//Creo todas las consultas hasta el final del arbol
+			for ($i = $lvl; $i <= 15; $i++) {
+				//creo cadena con los idLevel
 				$cadena = '';
-				$x = 1;
-				if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-				if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
-
-				// inserto los datos de registro en la db
-				$SIS_columns = 'idSistema, idMaquina, idUtilizable,
-				Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
-				Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
-				idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
-				$id_lvl[$dis_1] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_1, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-				/////////////////////////////////////////////////
-				if(isset($arrLVL[$dis_2])){
-					foreach ($arrLVL[$dis_2] as $arreglo_2) {
-						//Se verifica que sea el mismo sensor
-						if($arreglo_1['idLevel_'.$dis_1]==$arreglo_2['idLevel_'.$dis_1]){
-
-							//Se crea la maquina
-							$SIS_data  = "'".$arreglo_2['idSistema']."'";
-							$SIS_data .= ",'".$arreglo_2['idMaquina']."'";
-							$SIS_data .= ",'".$arreglo_2['idUtilizable']."'";
-							$SIS_data .= ",'".$arreglo_2['Codigo']."'";
-							$SIS_data .= ",'".$arreglo_2['Nombre']."'";
-							$SIS_data .= ",'".$arreglo_2['Marca']."'";
-							$SIS_data .= ",'".$arreglo_2['Modelo']."'";
-							$SIS_data .= ",'".$arreglo_2['AnoFab']."'";
-							$SIS_data .= ",'".$arreglo_2['Serie']."'";
-							$SIS_data .= ",'".$arreglo_2['idLicitacion']."'";
-							$SIS_data .= ",'".$arreglo_2['tabla']."'";
-							$SIS_data .= ",'".$arreglo_2['table_value']."'";
-							$SIS_data .= ",'".$arreglo_2['Direccion_img']."'";
-							$SIS_data .= ",'".$arreglo_2['idSubTipo']."'";
-							$SIS_data .= ",'".$arreglo_2['Grasa_inicial']."'";
-							$SIS_data .= ",'".$arreglo_2['Grasa_relubricacion']."'";
-							$SIS_data .= ",'".$arreglo_2['Aceite']."'";
-							$SIS_data .= ",'".$arreglo_2['Cantidad']."'";
-							$SIS_data .= ",'".$arreglo_2['idUml']."'";
-							$SIS_data .= ",'".$arreglo_2['Frecuencia']."'";
-							$SIS_data .= ",'".$arreglo_2['idFrecuencia']."'";
-							$SIS_data .= ",'".$arreglo_2['idProducto']."'";
-							$SIS_data .= ",'".$arreglo_2['Saf']."'";
-							$SIS_data .= ",'".$arreglo_2['Numero']."'";
-
-							$cadena = '';
-							$x = 1;
-							if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-							if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
-
-							$x = 1;
-							if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
-							if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
-							if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
-							if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
-							if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
-							if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
-							if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
-							if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
-							if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
-							if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
-							if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
-							if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
-							if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
-							if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
-							if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
-							if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
-							if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
-							if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
-							if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
-							if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
-							if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
-							if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
-							if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
-							if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
-							if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-
-							// inserto los datos de registro en la db
-							$SIS_columns = 'idSistema, idMaquina, idUtilizable,
-							Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
-							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
-							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
-							$id_lvl[$dis_2] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_2, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-							/////////////////////////////////////////////////
-							if(isset($arrLVL[$dis_3])){
-								foreach ($arrLVL[$dis_3] as $arreglo_3) {
-									//Se verifica que sea el mismo sensor
-									if($arreglo_2['idLevel_'.$dis_2]==$arreglo_3['idLevel_'.$dis_2]){
-
-										//Se crea la maquina
-										$SIS_data  = "'".$arreglo_3['idSistema']."'";
-										$SIS_data .= ",'".$arreglo_3['idMaquina']."'";
-										$SIS_data .= ",'".$arreglo_3['idUtilizable']."'";
-										$SIS_data .= ",'".$arreglo_3['Codigo']."'";
-										$SIS_data .= ",'".$arreglo_3['Nombre']."'";
-										$SIS_data .= ",'".$arreglo_3['Marca']."'";
-										$SIS_data .= ",'".$arreglo_3['Modelo']."'";
-										$SIS_data .= ",'".$arreglo_3['AnoFab']."'";
-										$SIS_data .= ",'".$arreglo_3['Serie']."'";
-										$SIS_data .= ",'".$arreglo_3['idLicitacion']."'";
-										$SIS_data .= ",'".$arreglo_3['tabla']."'";
-										$SIS_data .= ",'".$arreglo_3['table_value']."'";
-										$SIS_data .= ",'".$arreglo_3['Direccion_img']."'";
-										$SIS_data .= ",'".$arreglo_3['idSubTipo']."'";
-										$SIS_data .= ",'".$arreglo_3['Grasa_inicial']."'";
-										$SIS_data .= ",'".$arreglo_3['Grasa_relubricacion']."'";
-										$SIS_data .= ",'".$arreglo_3['Aceite']."'";
-										$SIS_data .= ",'".$arreglo_3['Cantidad']."'";
-										$SIS_data .= ",'".$arreglo_3['idUml']."'";
-										$SIS_data .= ",'".$arreglo_3['Frecuencia']."'";
-										$SIS_data .= ",'".$arreglo_3['idFrecuencia']."'";
-										$SIS_data .= ",'".$arreglo_3['idProducto']."'";
-										$SIS_data .= ",'".$arreglo_3['Saf']."'";
-										$SIS_data .= ",'".$arreglo_3['Numero']."'";
-
-										$cadena = '';
-										$x = 1;
-										if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-										if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
-
-										$x = 1;
-										if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
-										if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
-										if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
-										if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
-										if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
-										if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
-										if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
-										if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
-										if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
-										if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
-										if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
-										if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
-										if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
-										if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
-										if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
-										if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
-										if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
-										if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
-										if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
-										if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
-										if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
-										if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
-										if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
-										if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
-										if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-
-										// inserto los datos de registro en la db
-										$SIS_columns = 'idSistema, idMaquina, idUtilizable,
-										Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
-										Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
-										idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
-										$id_lvl[$dis_3] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_3, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-										/////////////////////////////////////////////////
-										if(isset($arrLVL[$dis_4])){
-											foreach ($arrLVL[$dis_4] as $arreglo_4) {
-												//Se verifica que sea el mismo sensor
-												if($arreglo_3['idLevel_'.$dis_3]==$arreglo_4['idLevel_'.$dis_3]){
-
-													//Se crea la maquina
-													$SIS_data  = "'".$arreglo_4['idSistema']."'";
-													$SIS_data .= ",'".$arreglo_4['idMaquina']."'";
-													$SIS_data .= ",'".$arreglo_4['idUtilizable']."'";
-													$SIS_data .= ",'".$arreglo_4['Codigo']."'";
-													$SIS_data .= ",'".$arreglo_4['Nombre']."'";
-													$SIS_data .= ",'".$arreglo_4['Marca']."'";
-													$SIS_data .= ",'".$arreglo_4['Modelo']."'";
-													$SIS_data .= ",'".$arreglo_4['AnoFab']."'";
-													$SIS_data .= ",'".$arreglo_4['Serie']."'";
-													$SIS_data .= ",'".$arreglo_4['idLicitacion']."'";
-													$SIS_data .= ",'".$arreglo_4['tabla']."'";
-													$SIS_data .= ",'".$arreglo_4['table_value']."'";
-													$SIS_data .= ",'".$arreglo_4['Direccion_img']."'";
-													$SIS_data .= ",'".$arreglo_4['idSubTipo']."'";
-													$SIS_data .= ",'".$arreglo_4['Grasa_inicial']."'";
-													$SIS_data .= ",'".$arreglo_4['Grasa_relubricacion']."'";
-													$SIS_data .= ",'".$arreglo_4['Aceite']."'";
-													$SIS_data .= ",'".$arreglo_4['Cantidad']."'";
-													$SIS_data .= ",'".$arreglo_4['idUml']."'";
-													$SIS_data .= ",'".$arreglo_4['Frecuencia']."'";
-													$SIS_data .= ",'".$arreglo_4['idFrecuencia']."'";
-													$SIS_data .= ",'".$arreglo_4['idProducto']."'";
-													$SIS_data .= ",'".$arreglo_4['Saf']."'";
-													$SIS_data .= ",'".$arreglo_4['Numero']."'";
-
-													$cadena = '';
-													$x = 1;
-													if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-													if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
-
-													$x = 1;
-													if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
-													if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
-													if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
-													if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
-													if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
-													if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
-													if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
-													if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
-													if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
-													if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
-													if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
-													if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
-													if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
-													if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
-													if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
-													if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
-													if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
-													if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
-													if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
-													if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
-													if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
-													if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
-													if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
-													if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
-													if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-
-													// inserto los datos de registro en la db
-													$SIS_columns = 'idSistema, idMaquina, idUtilizable,
-													Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
-													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
-													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
-													$id_lvl[$dis_4] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_4, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-													/////////////////////////////////////////////////
-													if(isset($arrLVL[$dis_5])){
-														foreach ($arrLVL[$dis_5] as $arreglo_5) {
-															//Se verifica que sea el mismo sensor
-															if($arreglo_4['idLevel_'.$dis_4]==$arreglo_5['idLevel_'.$dis_4]){
-
-																//Se crea la maquina
-																$SIS_data  = "'".$arreglo_5['idSistema']."'";
-																$SIS_data .= ",'".$arreglo_5['idMaquina']."'";
-																$SIS_data .= ",'".$arreglo_5['idUtilizable']."'";
-																$SIS_data .= ",'".$arreglo_5['Codigo']."'";
-																$SIS_data .= ",'".$arreglo_5['Nombre']."'";
-																$SIS_data .= ",'".$arreglo_5['Marca']."'";
-																$SIS_data .= ",'".$arreglo_5['Modelo']."'";
-																$SIS_data .= ",'".$arreglo_5['AnoFab']."'";
-																$SIS_data .= ",'".$arreglo_5['Serie']."'";
-																$SIS_data .= ",'".$arreglo_5['idLicitacion']."'";
-																$SIS_data .= ",'".$arreglo_5['tabla']."'";
-																$SIS_data .= ",'".$arreglo_5['table_value']."'";
-																$SIS_data .= ",'".$arreglo_5['Direccion_img']."'";
-																$SIS_data .= ",'".$arreglo_5['idSubTipo']."'";
-																$SIS_data .= ",'".$arreglo_5['Grasa_inicial']."'";
-																$SIS_data .= ",'".$arreglo_5['Grasa_relubricacion']."'";
-																$SIS_data .= ",'".$arreglo_5['Aceite']."'";
-																$SIS_data .= ",'".$arreglo_5['Cantidad']."'";
-																$SIS_data .= ",'".$arreglo_5['idUml']."'";
-																$SIS_data .= ",'".$arreglo_5['Frecuencia']."'";
-																$SIS_data .= ",'".$arreglo_5['idFrecuencia']."'";
-																$SIS_data .= ",'".$arreglo_5['idProducto']."'";
-																$SIS_data .= ",'".$arreglo_5['Saf']."'";
-																$SIS_data .= ",'".$arreglo_5['Numero']."'";
-
-																$cadena = '';
-																$x = 1;
-																if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-																if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
-
-																$x = 1;
-																if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
-																if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
-																if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
-																if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
-																if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
-																if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
-																if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
-																if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
-																if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
-																if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
-																if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
-																if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
-																if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
-																if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
-																if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
-																if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
-																if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
-																if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
-																if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
-																if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
-																if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
-																if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
-																if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
-																if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
-																if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-
-																// inserto los datos de registro en la db
-																$SIS_columns = 'idSistema, idMaquina, idUtilizable,
-																Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
-																Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
-																idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
-																$id_lvl[$dis_5] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_5, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-																/////////////////////////////////////////////////
-																if(isset($arrLVL[$dis_6])){
-																	foreach ($arrLVL[$dis_6] as $arreglo_6) {
-																		//Se verifica que sea el mismo sensor
-																		if($arreglo_5['idLevel_'.$dis_5]==$arreglo_6['idLevel_'.$dis_5]){
-
-																			//Se crea la maquina
-																			$SIS_data  = "'".$arreglo_6['idSistema']."'";
-																			$SIS_data .= ",'".$arreglo_6['idMaquina']."'";
-																			$SIS_data .= ",'".$arreglo_6['idUtilizable']."'";
-																			$SIS_data .= ",'".$arreglo_6['Codigo']."'";
-																			$SIS_data .= ",'".$arreglo_6['Nombre']."'";
-																			$SIS_data .= ",'".$arreglo_6['Marca']."'";
-																			$SIS_data .= ",'".$arreglo_6['Modelo']."'";
-																			$SIS_data .= ",'".$arreglo_6['AnoFab']."'";
-																			$SIS_data .= ",'".$arreglo_6['Serie']."'";
-																			$SIS_data .= ",'".$arreglo_6['idLicitacion']."'";
-																			$SIS_data .= ",'".$arreglo_6['tabla']."'";
-																			$SIS_data .= ",'".$arreglo_6['table_value']."'";
-																			$SIS_data .= ",'".$arreglo_6['Direccion_img']."'";
-																			$SIS_data .= ",'".$arreglo_6['idSubTipo']."'";
-																			$SIS_data .= ",'".$arreglo_6['Grasa_inicial']."'";
-																			$SIS_data .= ",'".$arreglo_6['Grasa_relubricacion']."'";
-																			$SIS_data .= ",'".$arreglo_6['Aceite']."'";
-																			$SIS_data .= ",'".$arreglo_6['Cantidad']."'";
-																			$SIS_data .= ",'".$arreglo_6['idUml']."'";
-																			$SIS_data .= ",'".$arreglo_6['Frecuencia']."'";
-																			$SIS_data .= ",'".$arreglo_6['idFrecuencia']."'";
-																			$SIS_data .= ",'".$arreglo_6['idProducto']."'";
-																			$SIS_data .= ",'".$arreglo_6['Saf']."'";
-																			$SIS_data .= ",'".$arreglo_6['Numero']."'";
-
-																			$cadena = '';
-																			$x = 1;
-																			if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-																			if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
-
-																			$x = 1;
-																			if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
-																			if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
-																			if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
-																			if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
-																			if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
-																			if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
-																			if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
-																			if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
-																			if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
-																			if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
-																			if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
-																			if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
-																			if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
-																			if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
-																			if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
-																			if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
-																			if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
-																			if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
-																			if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
-																			if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
-																			if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
-																			if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
-																			if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
-																			if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
-																			if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-
-																			// inserto los datos de registro en la db
-																			$SIS_columns = 'idSistema, idMaquina, idUtilizable,
-																			Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
-																			Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
-																			idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
-																			$id_lvl[$dis_6] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_6, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-																			/////////////////////////////////////////////////
-																			if(isset($arrLVL[$dis_7])){
-																				foreach ($arrLVL[$dis_7] as $arreglo_7) {
-																					//Se verifica que sea el mismo sensor
-																					if($arreglo_6['idLevel_'.$dis_6]==$arreglo_7['idLevel_'.$dis_6]){
-
-																						//Se crea la maquina
-																						$SIS_data  = "'".$arreglo_7['idSistema']."'";
-																						$SIS_data .= ",'".$arreglo_7['idMaquina']."'";
-																						$SIS_data .= ",'".$arreglo_7['idUtilizable']."'";
-																						$SIS_data .= ",'".$arreglo_7['Codigo']."'";
-																						$SIS_data .= ",'".$arreglo_7['Nombre']."'";
-																						$SIS_data .= ",'".$arreglo_7['Marca']."'";
-																						$SIS_data .= ",'".$arreglo_7['Modelo']."'";
-																						$SIS_data .= ",'".$arreglo_7['AnoFab']."'";
-																						$SIS_data .= ",'".$arreglo_7['Serie']."'";
-																						$SIS_data .= ",'".$arreglo_7['idLicitacion']."'";
-																						$SIS_data .= ",'".$arreglo_7['tabla']."'";
-																						$SIS_data .= ",'".$arreglo_7['table_value']."'";
-																						$SIS_data .= ",'".$arreglo_7['Direccion_img']."'";
-																						$SIS_data .= ",'".$arreglo_7['idSubTipo']."'";
-																						$SIS_data .= ",'".$arreglo_7['Grasa_inicial']."'";
-																						$SIS_data .= ",'".$arreglo_7['Grasa_relubricacion']."'";
-																						$SIS_data .= ",'".$arreglo_7['Aceite']."'";
-																						$SIS_data .= ",'".$arreglo_7['Cantidad']."'";
-																						$SIS_data .= ",'".$arreglo_7['idUml']."'";
-																						$SIS_data .= ",'".$arreglo_7['Frecuencia']."'";
-																						$SIS_data .= ",'".$arreglo_7['idFrecuencia']."'";
-																						$SIS_data .= ",'".$arreglo_7['idProducto']."'";
-																						$SIS_data .= ",'".$arreglo_7['Saf']."'";
-																						$SIS_data .= ",'".$arreglo_7['Numero']."'";
-
-																						$cadena = '';
-																						$x = 1;
-																						if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-																						if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
-
-																						$x = 1;
-																						if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
-																						if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
-																						if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
-																						if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
-																						if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
-																						if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
-																						if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
-																						if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
-																						if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
-																						if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
-																						if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
-																						if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
-																						if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
-																						if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
-																						if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
-																						if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
-																						if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
-																						if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
-																						if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
-																						if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
-																						if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
-																						if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
-																						if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
-																						if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
-																						if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-
-																						// inserto los datos de registro en la db
-																						$SIS_columns = 'idSistema, idMaquina, idUtilizable,
-																						Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
-																						Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
-																						idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
-																						$id_lvl[$dis_7] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_7, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-																						/////////////////////////////////////////////////
-																						if(isset($arrLVL[$dis_8])){
-																							foreach ($arrLVL[$dis_8] as $arreglo_8) {
-																								//Se verifica que sea el mismo sensor
-																								if($arreglo_7['idLevel_'.$dis_7]==$arreglo_8['idLevel_'.$dis_7]){
-
-																									//Se crea la maquina
-																									$SIS_data  = "'".$arreglo_8['idSistema']."'";
-																									$SIS_data .= ",'".$arreglo_8['idMaquina']."'";
-																									$SIS_data .= ",'".$arreglo_8['idUtilizable']."'";
-																									$SIS_data .= ",'".$arreglo_8['Codigo']."'";
-																									$SIS_data .= ",'".$arreglo_8['Nombre']."'";
-																									$SIS_data .= ",'".$arreglo_8['Marca']."'";
-																									$SIS_data .= ",'".$arreglo_8['Modelo']."'";
-																									$SIS_data .= ",'".$arreglo_8['AnoFab']."'";
-																									$SIS_data .= ",'".$arreglo_8['Serie']."'";
-																									$SIS_data .= ",'".$arreglo_8['idLicitacion']."'";
-																									$SIS_data .= ",'".$arreglo_8['tabla']."'";
-																									$SIS_data .= ",'".$arreglo_8['table_value']."'";
-																									$SIS_data .= ",'".$arreglo_8['Direccion_img']."'";
-																									$SIS_data .= ",'".$arreglo_8['idSubTipo']."'";
-																									$SIS_data .= ",'".$arreglo_8['Grasa_inicial']."'";
-																									$SIS_data .= ",'".$arreglo_8['Grasa_relubricacion']."'";
-																									$SIS_data .= ",'".$arreglo_8['Aceite']."'";
-																									$SIS_data .= ",'".$arreglo_8['Cantidad']."'";
-																									$SIS_data .= ",'".$arreglo_8['idUml']."'";
-																									$SIS_data .= ",'".$arreglo_8['Frecuencia']."'";
-																									$SIS_data .= ",'".$arreglo_8['idFrecuencia']."'";
-																									$SIS_data .= ",'".$arreglo_8['idProducto']."'";
-																									$SIS_data .= ",'".$arreglo_8['Saf']."'";
-																									$SIS_data .= ",'".$arreglo_8['Numero']."'";
-
-																									$cadena = '';
-																									$x = 1;
-																									if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-																									if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
-
-																									$x = 1;
-																									if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
-																									if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
-																									if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
-																									if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
-																									if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
-																									if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
-																									if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
-																									if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
-																									if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
-																									if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
-																									if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
-																									if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
-																									if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
-																									if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
-																									if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
-																									if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
-																									if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
-																									if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
-																									if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
-																									if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
-																									if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
-																									if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
-																									if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
-																									if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
-																									if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-
-																									// inserto los datos de registro en la db
-																									$SIS_columns = 'idSistema, idMaquina, idUtilizable,
-																									Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
-																									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
-																									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
-																									$id_lvl[$dis_8] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_8, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-																									/////////////////////////////////////////////////
-																									if(isset($arrLVL[$dis_9])){
-																										foreach ($arrLVL[$dis_9] as $arreglo_9) {
-																											//Se verifica que sea el mismo sensor
-																											if($arreglo_8['idLevel_'.$dis_8]==$arreglo_9['idLevel_'.$dis_8]){
-
-																												//Se crea la maquina
-																												$SIS_data  = "'".$arreglo_9['idSistema']."'";
-																												$SIS_data .= ",'".$arreglo_9['idMaquina']."'";
-																												$SIS_data .= ",'".$arreglo_9['idUtilizable']."'";
-																												$SIS_data .= ",'".$arreglo_9['Codigo']."'";
-																												$SIS_data .= ",'".$arreglo_9['Nombre']."'";
-																												$SIS_data .= ",'".$arreglo_9['Marca']."'";
-																												$SIS_data .= ",'".$arreglo_9['Modelo']."'";
-																												$SIS_data .= ",'".$arreglo_9['AnoFab']."'";
-																												$SIS_data .= ",'".$arreglo_9['Serie']."'";
-																												$SIS_data .= ",'".$arreglo_9['idLicitacion']."'";
-																												$SIS_data .= ",'".$arreglo_9['tabla']."'";
-																												$SIS_data .= ",'".$arreglo_9['table_value']."'";
-																												$SIS_data .= ",'".$arreglo_9['Direccion_img']."'";
-																												$SIS_data .= ",'".$arreglo_9['idSubTipo']."'";
-																												$SIS_data .= ",'".$arreglo_9['Grasa_inicial']."'";
-																												$SIS_data .= ",'".$arreglo_9['Grasa_relubricacion']."'";
-																												$SIS_data .= ",'".$arreglo_9['Aceite']."'";
-																												$SIS_data .= ",'".$arreglo_9['Cantidad']."'";
-																												$SIS_data .= ",'".$arreglo_9['idUml']."'";
-																												$SIS_data .= ",'".$arreglo_9['Frecuencia']."'";
-																												$SIS_data .= ",'".$arreglo_9['idFrecuencia']."'";
-																												$SIS_data .= ",'".$arreglo_9['idProducto']."'";
-																												$SIS_data .= ",'".$arreglo_9['Saf']."'";
-																												$SIS_data .= ",'".$arreglo_9['Numero']."'";
-
-																												$cadena = '';
-																												$x = 1;
-																												if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-																												if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
-
-																												$x = 1;
-																												if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
-																												if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
-																												if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
-																												if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
-																												if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
-																												if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
-																												if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
-																												if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
-																												if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
-																												if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
-																												if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
-																												if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
-																												if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
-																												if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
-																												if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
-																												if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
-																												if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
-																												if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
-																												if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
-																												if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
-																												if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
-																												if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
-																												if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
-																												if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
-																												if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-
-																												// inserto los datos de registro en la db
-																												$SIS_columns = 'idSistema, idMaquina, idUtilizable,
-																												Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
-																												Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
-																												idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
-																												$id_lvl[$dis_9] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_9, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-																												/////////////////////////////////////////////////
-																												if(isset($arrLVL[$dis_10])){
-																													foreach ($arrLVL[$dis_10] as $arreglo_10) {
-																														//Se verifica que sea el mismo sensor
-																														if($arreglo_9['idLevel_'.$dis_9]==$arreglo_10['idLevel_'.$dis_9]){
-
-																															//Se crea la maquina
-																															$SIS_data  = "'".$arreglo_10['idSistema']."'";
-																															$SIS_data .= ",'".$arreglo_10['idMaquina']."'";
-																															$SIS_data .= ",'".$arreglo_10['idUtilizable']."'";
-																															$SIS_data .= ",'".$arreglo_10['Codigo']."'";
-																															$SIS_data .= ",'".$arreglo_10['Nombre']."'";
-																															$SIS_data .= ",'".$arreglo_10['Marca']."'";
-																															$SIS_data .= ",'".$arreglo_10['Modelo']."'";
-																															$SIS_data .= ",'".$arreglo_10['AnoFab']."'";
-																															$SIS_data .= ",'".$arreglo_10['Serie']."'";
-																															$SIS_data .= ",'".$arreglo_10['idLicitacion']."'";
-																															$SIS_data .= ",'".$arreglo_10['tabla']."'";
-																															$SIS_data .= ",'".$arreglo_10['table_value']."'";
-																															$SIS_data .= ",'".$arreglo_10['Direccion_img']."'";
-																															$SIS_data .= ",'".$arreglo_10['idSubTipo']."'";
-																															$SIS_data .= ",'".$arreglo_10['Grasa_inicial']."'";
-																															$SIS_data .= ",'".$arreglo_10['Grasa_relubricacion']."'";
-																															$SIS_data .= ",'".$arreglo_10['Aceite']."'";
-																															$SIS_data .= ",'".$arreglo_10['Cantidad']."'";
-																															$SIS_data .= ",'".$arreglo_10['idUml']."'";
-																															$SIS_data .= ",'".$arreglo_10['Frecuencia']."'";
-																															$SIS_data .= ",'".$arreglo_10['idFrecuencia']."'";
-																															$SIS_data .= ",'".$arreglo_10['idProducto']."'";
-																															$SIS_data .= ",'".$arreglo_10['Saf']."'";
-																															$SIS_data .= ",'".$arreglo_10['Numero']."'";
-
-																															$cadena = '';
-																															$x = 1;
-																															if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-																															if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
-
-																															$x = 1;
-																															if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
-																															if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
-																															if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
-																															if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
-																															if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
-																															if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
-																															if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
-																															if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
-																															if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
-																															if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
-																															if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
-																															if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
-																															if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
-																															if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
-																															if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
-																															if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
-																															if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
-																															if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
-																															if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
-																															if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
-																															if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
-																															if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
-																															if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
-																															if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
-																															if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-
-																															// inserto los datos de registro en la db
-																															$SIS_columns = 'idSistema, idMaquina, idUtilizable,
-																															Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
-																															Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
-																															idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
-																															$id_lvl[$dis_10] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_10, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-																															/////////////////////////////////////////////////
-																															if(isset($arrLVL[$dis_11])){
-																																foreach ($arrLVL[$dis_11] as $arreglo_11) {
-																																	//Se verifica que sea el mismo sensor
-																																	if($arreglo_10['idLevel_'.$dis_10]==$arreglo_11['idLevel_'.$dis_10]){
-
-																																		//Se crea la maquina
-																																		$SIS_data  = "'".$arreglo_11['idSistema']."'";
-																																		$SIS_data .= ",'".$arreglo_11['idMaquina']."'";
-																																		$SIS_data .= ",'".$arreglo_11['idUtilizable']."'";
-																																		$SIS_data .= ",'".$arreglo_11['Codigo']."'";
-																																		$SIS_data .= ",'".$arreglo_11['Nombre']."'";
-																																		$SIS_data .= ",'".$arreglo_11['Marca']."'";
-																																		$SIS_data .= ",'".$arreglo_11['Modelo']."'";
-																																		$SIS_data .= ",'".$arreglo_11['AnoFab']."'";
-																																		$SIS_data .= ",'".$arreglo_11['Serie']."'";
-																																		$SIS_data .= ",'".$arreglo_11['idLicitacion']."'";
-																																		$SIS_data .= ",'".$arreglo_11['tabla']."'";
-																																		$SIS_data .= ",'".$arreglo_11['table_value']."'";
-																																		$SIS_data .= ",'".$arreglo_11['Direccion_img']."'";
-																																		$SIS_data .= ",'".$arreglo_11['idSubTipo']."'";
-																																		$SIS_data .= ",'".$arreglo_11['Grasa_inicial']."'";
-																																		$SIS_data .= ",'".$arreglo_11['Grasa_relubricacion']."'";
-																																		$SIS_data .= ",'".$arreglo_11['Aceite']."'";
-																																		$SIS_data .= ",'".$arreglo_11['Cantidad']."'";
-																																		$SIS_data .= ",'".$arreglo_11['idUml']."'";
-																																		$SIS_data .= ",'".$arreglo_11['Frecuencia']."'";
-																																		$SIS_data .= ",'".$arreglo_11['idFrecuencia']."'";
-																																		$SIS_data .= ",'".$arreglo_11['idProducto']."'";
-																																		$SIS_data .= ",'".$arreglo_11['Saf']."'";
-																																		$SIS_data .= ",'".$arreglo_11['Numero']."'";
-
-																																		$cadena = '';
-																																		$x = 1;
-																																		if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-																																		if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
-
-																																		$x = 1;
-																																		if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
-																																		if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
-																																		if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
-																																		if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
-																																		if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
-																																		if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
-																																		if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
-																																		if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
-																																		if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
-																																		if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
-																																		if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
-																																		if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
-																																		if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
-																																		if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
-																																		if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
-																																		if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
-																																		if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
-																																		if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
-																																		if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
-																																		if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
-																																		if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
-																																		if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
-																																		if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
-																																		if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
-																																		if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-
-																																		// inserto los datos de registro en la db
-																																		$SIS_columns = 'idSistema, idMaquina, idUtilizable,
-																																		Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
-																																		Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
-																																		idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
-																																		$id_lvl[$dis_11] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_11, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-																																		/////////////////////////////////////////////////
-																																		if(isset($arrLVL[$dis_12])){
-																																			foreach ($arrLVL[$dis_12] as $arreglo_12) {
-																																				//Se verifica que sea el mismo sensor
-																																				if($arreglo_11['idLevel_'.$dis_11]==$arreglo_12['idLevel_'.$dis_11]){
-
-																																					//Se crea la maquina
-																																					$SIS_data  = "'".$arreglo_12['idSistema']."'";
-																																					$SIS_data .= ",'".$arreglo_12['idMaquina']."'";
-																																					$SIS_data .= ",'".$arreglo_12['idUtilizable']."'";
-																																					$SIS_data .= ",'".$arreglo_12['Codigo']."'";
-																																					$SIS_data .= ",'".$arreglo_12['Nombre']."'";
-																																					$SIS_data .= ",'".$arreglo_12['Marca']."'";
-																																					$SIS_data .= ",'".$arreglo_12['Modelo']."'";
-																																					$SIS_data .= ",'".$arreglo_12['AnoFab']."'";
-																																					$SIS_data .= ",'".$arreglo_12['Serie']."'";
-																																					$SIS_data .= ",'".$arreglo_12['idLicitacion']."'";
-																																					$SIS_data .= ",'".$arreglo_12['tabla']."'";
-																																					$SIS_data .= ",'".$arreglo_12['table_value']."'";
-																																					$SIS_data .= ",'".$arreglo_12['Direccion_img']."'";
-																																					$SIS_data .= ",'".$arreglo_12['idSubTipo']."'";
-																																					$SIS_data .= ",'".$arreglo_12['Grasa_inicial']."'";
-																																					$SIS_data .= ",'".$arreglo_12['Grasa_relubricacion']."'";
-																																					$SIS_data .= ",'".$arreglo_12['Aceite']."'";
-																																					$SIS_data .= ",'".$arreglo_12['Cantidad']."'";
-																																					$SIS_data .= ",'".$arreglo_12['idUml']."'";
-																																					$SIS_data .= ",'".$arreglo_12['Frecuencia']."'";
-																																					$SIS_data .= ",'".$arreglo_12['idFrecuencia']."'";
-																																					$SIS_data .= ",'".$arreglo_12['idProducto']."'";
-																																					$SIS_data .= ",'".$arreglo_12['Saf']."'";
-																																					$SIS_data .= ",'".$arreglo_12['Numero']."'";
-
-																																					$cadena = '';
-																																					$x = 1;
-																																					if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-																																					if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
-
-																																					$x = 1;
-																																					if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
-																																					if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
-																																					if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
-																																					if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
-																																					if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
-																																					if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
-																																					if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
-																																					if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
-																																					if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
-																																					if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
-																																					if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
-																																					if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
-																																					if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
-																																					if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
-																																					if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
-																																					if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
-																																					if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
-																																					if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
-																																					if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
-																																					if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
-																																					if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
-																																					if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
-																																					if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
-																																					if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
-																																					if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-
-																																					// inserto los datos de registro en la db
-																																					$SIS_columns = 'idSistema, idMaquina, idUtilizable,
-																																					Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
-																																					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
-																																					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
-																																					$id_lvl[$dis_12] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_12, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-																																					/////////////////////////////////////////////////
-																																					if(isset($arrLVL[$dis_13])){
-																																						foreach ($arrLVL[$dis_13] as $arreglo_13) {
-																																							//Se verifica que sea el mismo sensor
-																																							if($arreglo_12['idLevel_'.$dis_12]==$arreglo_13['idLevel_'.$dis_12]){
-
-																																								//Se crea la maquina
-																																								$SIS_data  = "'".$arreglo_13['idSistema']."'";
-																																								$SIS_data .= ",'".$arreglo_13['idMaquina']."'";
-																																								$SIS_data .= ",'".$arreglo_13['idUtilizable']."'";
-																																								$SIS_data .= ",'".$arreglo_13['Codigo']."'";
-																																								$SIS_data .= ",'".$arreglo_13['Nombre']."'";
-																																								$SIS_data .= ",'".$arreglo_13['Marca']."'";
-																																								$SIS_data .= ",'".$arreglo_13['Modelo']."'";
-																																								$SIS_data .= ",'".$arreglo_13['AnoFab']."'";
-																																								$SIS_data .= ",'".$arreglo_13['Serie']."'";
-																																								$SIS_data .= ",'".$arreglo_13['idLicitacion']."'";
-																																								$SIS_data .= ",'".$arreglo_13['tabla']."'";
-																																								$SIS_data .= ",'".$arreglo_13['table_value']."'";
-																																								$SIS_data .= ",'".$arreglo_13['Direccion_img']."'";
-																																								$SIS_data .= ",'".$arreglo_13['idSubTipo']."'";
-																																								$SIS_data .= ",'".$arreglo_13['Grasa_inicial']."'";
-																																								$SIS_data .= ",'".$arreglo_13['Grasa_relubricacion']."'";
-																																								$SIS_data .= ",'".$arreglo_13['Aceite']."'";
-																																								$SIS_data .= ",'".$arreglo_13['Cantidad']."'";
-																																								$SIS_data .= ",'".$arreglo_13['idUml']."'";
-																																								$SIS_data .= ",'".$arreglo_13['Frecuencia']."'";
-																																								$SIS_data .= ",'".$arreglo_13['idFrecuencia']."'";
-																																								$SIS_data .= ",'".$arreglo_13['idProducto']."'";
-																																								$SIS_data .= ",'".$arreglo_13['Saf']."'";
-																																								$SIS_data .= ",'".$arreglo_13['Numero']."'";
-
-																																								$cadena = '';
-																																								$x = 1;
-																																								if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-																																								if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
-
-																																								$x = 1;
-																																								if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
-																																								if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
-																																								if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
-																																								if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
-																																								if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
-																																								if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
-																																								if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
-																																								if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
-																																								if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
-																																								if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
-																																								if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
-																																								if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
-																																								if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
-																																								if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
-																																								if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
-																																								if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
-																																								if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
-																																								if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
-																																								if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
-																																								if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
-																																								if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
-																																								if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
-																																								if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
-																																								if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
-																																								if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-
-																																								// inserto los datos de registro en la db
-																																								$SIS_columns = 'idSistema, idMaquina, idUtilizable,
-																																								Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
-																																								Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
-																																								idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
-																																								$id_lvl[$dis_13] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_13, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-																																								/////////////////////////////////////////////////
-																																								if(isset($arrLVL[$dis_14])){
-																																									foreach ($arrLVL[$dis_14] as $arreglo_14) {
-																																										//Se verifica que sea el mismo sensor
-																																										if($arreglo_13['idLevel_'.$dis_13]==$arreglo_14['idLevel_'.$dis_13]){
-
-																																											//Se crea la maquina
-																																											$SIS_data  = "'".$arreglo_14['idSistema']."'";
-																																											$SIS_data .= ",'".$arreglo_14['idMaquina']."'";
-																																											$SIS_data .= ",'".$arreglo_14['idUtilizable']."'";
-																																											$SIS_data .= ",'".$arreglo_14['Codigo']."'";
-																																											$SIS_data .= ",'".$arreglo_14['Nombre']."'";
-																																											$SIS_data .= ",'".$arreglo_14['Marca']."'";
-																																											$SIS_data .= ",'".$arreglo_14['Modelo']."'";
-																																											$SIS_data .= ",'".$arreglo_14['AnoFab']."'";
-																																											$SIS_data .= ",'".$arreglo_14['Serie']."'";
-																																											$SIS_data .= ",'".$arreglo_14['idLicitacion']."'";
-																																											$SIS_data .= ",'".$arreglo_14['tabla']."'";
-																																											$SIS_data .= ",'".$arreglo_14['table_value']."'";
-																																											$SIS_data .= ",'".$arreglo_14['Direccion_img']."'";
-																																											$SIS_data .= ",'".$arreglo_14['idSubTipo']."'";
-																																											$SIS_data .= ",'".$arreglo_14['Grasa_inicial']."'";
-																																											$SIS_data .= ",'".$arreglo_14['Grasa_relubricacion']."'";
-																																											$SIS_data .= ",'".$arreglo_14['Aceite']."'";
-																																											$SIS_data .= ",'".$arreglo_14['Cantidad']."'";
-																																											$SIS_data .= ",'".$arreglo_14['idUml']."'";
-																																											$SIS_data .= ",'".$arreglo_14['Frecuencia']."'";
-																																											$SIS_data .= ",'".$arreglo_14['idFrecuencia']."'";
-																																											$SIS_data .= ",'".$arreglo_14['idProducto']."'";
-																																											$SIS_data .= ",'".$arreglo_14['Saf']."'";
-																																											$SIS_data .= ",'".$arreglo_14['Numero']."'";
-
-																																											$cadena = '';
-																																											$x = 1;
-																																											if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-																																											if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
-
-																																											$x = 1;
-																																											if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
-																																											if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
-																																											if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
-																																											if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
-																																											if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
-																																											if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
-																																											if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
-																																											if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
-																																											if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
-																																											if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
-																																											if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
-																																											if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
-																																											if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
-																																											if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
-																																											if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
-																																											if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
-																																											if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
-																																											if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
-																																											if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
-																																											if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
-																																											if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
-																																											if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
-																																											if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
-																																											if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
-																																											if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-
-																																											// inserto los datos de registro en la db
-																																											$SIS_columns = 'idSistema, idMaquina, idUtilizable,
-																																											Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
-																																											Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
-																																											idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
-																																											$id_lvl[$dis_14] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_14, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
-																																											/////////////////////////////////////////////////
-																																											if(isset($arrLVL[$dis_15])){
-																																												foreach ($arrLVL[$dis_15] as $arreglo_15) {
-																																													//Se verifica que sea el mismo sensor
-																																													if($arreglo_14['idLevel_'.$dis_14]==$arreglo_15['idLevel_'.$dis_14]){
-
-																																														//Se crea la maquina
-																																														$SIS_data  = "'".$arreglo_15['idSistema']."'";
-																																														$SIS_data .= ",'".$arreglo_15['idMaquina']."'";
-																																														$SIS_data .= ",'".$arreglo_15['idUtilizable']."'";
-																																														$SIS_data .= ",'".$arreglo_15['Codigo']."'";
-																																														$SIS_data .= ",'".$arreglo_15['Nombre']."'";
-																																														$SIS_data .= ",'".$arreglo_15['Marca']."'";
-																																														$SIS_data .= ",'".$arreglo_15['Modelo']."'";
-																																														$SIS_data .= ",'".$arreglo_15['AnoFab']."'";
-																																														$SIS_data .= ",'".$arreglo_15['Serie']."'";
-																																														$SIS_data .= ",'".$arreglo_15['idLicitacion']."'";
-																																														$SIS_data .= ",'".$arreglo_15['tabla']."'";
-																																														$SIS_data .= ",'".$arreglo_15['table_value']."'";
-																																														$SIS_data .= ",'".$arreglo_15['Direccion_img']."'";
-																																														$SIS_data .= ",'".$arreglo_15['idSubTipo']."'";
-																																														$SIS_data .= ",'".$arreglo_15['Grasa_inicial']."'";
-																																														$SIS_data .= ",'".$arreglo_15['Grasa_relubricacion']."'";
-																																														$SIS_data .= ",'".$arreglo_15['Aceite']."'";
-																																														$SIS_data .= ",'".$arreglo_15['Cantidad']."'";
-																																														$SIS_data .= ",'".$arreglo_15['idUml']."'";
-																																														$SIS_data .= ",'".$arreglo_15['Frecuencia']."'";
-																																														$SIS_data .= ",'".$arreglo_15['idFrecuencia']."'";
-																																														$SIS_data .= ",'".$arreglo_15['idProducto']."'";
-																																														$SIS_data .= ",'".$arreglo_15['Saf']."'";
-																																														$SIS_data .= ",'".$arreglo_15['Numero']."'";
-
-																																														$cadena = '';
-																																														$x = 1;
-																																														if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-																																														if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
-
-																																														$x = 1;
-																																														if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
-																																														if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
-																																														if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
-																																														if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
-																																														if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
-																																														if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
-																																														if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
-																																														if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
-																																														if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
-																																														if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
-																																														if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
-																																														if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
-																																														if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
-																																														if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
-																																														if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
-																																														if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
-																																														if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
-																																														if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
-																																														if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
-																																														if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
-																																														if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
-																																														if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
-																																														if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
-																																														if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
-																																														if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
-
-																																														// inserto los datos de registro en la db
-																																														$SIS_columns = 'idSistema, idMaquina, idUtilizable,
-																																														Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
-																																														Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
-																																														idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
-																																														$id_lvl[$dis_15] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_15, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
+				for ($x = $i; $x >= 1; $x--) {
+					$cadena .= ',idLevel_'.$x;
+				}
+				$arrLVL[$i] = array();
+				$arrLVL[$i] = db_select_array (false, 'idSistema, idUtilizable, Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value, Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero, idMaquina '.$cadena, 'maquinas_listado_level_'.$i, '', 'idLevel_'.$lvl.' = '.$idLevel, 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+			}
+
+			/*******************************************************************/
+			//Variables
+			$id_lvl = array();
+			//Arreglos
+			$dis_1  = $lvl;
+			$dis_2  = $lvl + 1;
+			$dis_3  = $lvl + 2;
+			$dis_4  = $lvl + 3;
+			$dis_5  = $lvl + 4;
+			$dis_6  = $lvl + 5;
+			$dis_7  = $lvl + 6;
+			$dis_8  = $lvl + 7;
+			$dis_9  = $lvl + 8;
+			$dis_10 = $lvl + 9;
+			$dis_11 = $lvl + 10;
+			$dis_12 = $lvl + 11;
+			$dis_13 = $lvl + 12;
+			$dis_14 = $lvl + 13;
+			$dis_15 = $lvl + 14;
+			$dis_16 = $lvl + 15;
+			$dis_17 = $lvl + 16;
+			$dis_18 = $lvl + 17;
+			$dis_19 = $lvl + 18;
+			$dis_20 = $lvl + 19;
+			$dis_21 = $lvl + 20;
+			$dis_22 = $lvl + 21;
+			$dis_23 = $lvl + 22;
+			$dis_24 = $lvl + 23;
+			$dis_25 = $lvl + 24;
+
+			//Consultas
+			/********************************************/
+			if(isset($arrLVL[$dis_1])){
+				foreach ($arrLVL[$dis_1] as $arreglo_1) {
+
+					//Se crea la maquina
+					$SIS_data  = "'".$arreglo_1['idSistema']."'";
+					$SIS_data .= ",'".$arreglo_1['idMaquina']."'";
+					$SIS_data .= ",'".$arreglo_1['idUtilizable']."'";
+					$SIS_data .= ",'".$arreglo_1['Codigo']."'";
+					$SIS_data .= ",'".$arreglo_1['Nombre']." (Nuevo)'";
+					$SIS_data .= ",'".$arreglo_1['Marca']."'";
+					$SIS_data .= ",'".$arreglo_1['Modelo']."'";
+					$SIS_data .= ",'".$arreglo_1['AnoFab']."'";
+					$SIS_data .= ",'".$arreglo_1['Serie']."'";
+					$SIS_data .= ",'".$arreglo_1['idLicitacion']."'";
+					$SIS_data .= ",'".$arreglo_1['tabla']."'";
+					$SIS_data .= ",'".$arreglo_1['table_value']."'";
+					$SIS_data .= ",'".$arreglo_1['Direccion_img']."'";
+					$SIS_data .= ",'".$arreglo_1['idSubTipo']."'";
+					$SIS_data .= ",'".$arreglo_1['Grasa_inicial']."'";
+					$SIS_data .= ",'".$arreglo_1['Grasa_relubricacion']."'";
+					$SIS_data .= ",'".$arreglo_1['Aceite']."'";
+					$SIS_data .= ",'".$arreglo_1['Cantidad']."'";
+					$SIS_data .= ",'".$arreglo_1['idUml']."'";
+					$SIS_data .= ",'".$arreglo_1['Frecuencia']."'";
+					$SIS_data .= ",'".$arreglo_1['idFrecuencia']."'";
+					$SIS_data .= ",'".$arreglo_1['idProducto']."'";
+					$SIS_data .= ",'".$arreglo_1['Saf']."'";
+					$SIS_data .= ",'".$arreglo_1['Numero']."'";
+
+					$cadena = '';
+					$x = 1;
+					if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+					if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_1['idLevel_'.$x]."'";$x++;}
+
+					// inserto los datos de registro en la db
+					$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+					Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+					Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
+					idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+					$id_lvl[$dis_1] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_1, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+					/////////////////////////////////////////////////
+					if(isset($arrLVL[$dis_2])){
+						foreach ($arrLVL[$dis_2] as $arreglo_2) {
+							//Se verifica que sea el mismo sensor
+							if($arreglo_1['idLevel_'.$dis_1]==$arreglo_2['idLevel_'.$dis_1]){
+
+								//Se crea la maquina
+								$SIS_data  = "'".$arreglo_2['idSistema']."'";
+								$SIS_data .= ",'".$arreglo_2['idMaquina']."'";
+								$SIS_data .= ",'".$arreglo_2['idUtilizable']."'";
+								$SIS_data .= ",'".$arreglo_2['Codigo']."'";
+								$SIS_data .= ",'".$arreglo_2['Nombre']."'";
+								$SIS_data .= ",'".$arreglo_2['Marca']."'";
+								$SIS_data .= ",'".$arreglo_2['Modelo']."'";
+								$SIS_data .= ",'".$arreglo_2['AnoFab']."'";
+								$SIS_data .= ",'".$arreglo_2['Serie']."'";
+								$SIS_data .= ",'".$arreglo_2['idLicitacion']."'";
+								$SIS_data .= ",'".$arreglo_2['tabla']."'";
+								$SIS_data .= ",'".$arreglo_2['table_value']."'";
+								$SIS_data .= ",'".$arreglo_2['Direccion_img']."'";
+								$SIS_data .= ",'".$arreglo_2['idSubTipo']."'";
+								$SIS_data .= ",'".$arreglo_2['Grasa_inicial']."'";
+								$SIS_data .= ",'".$arreglo_2['Grasa_relubricacion']."'";
+								$SIS_data .= ",'".$arreglo_2['Aceite']."'";
+								$SIS_data .= ",'".$arreglo_2['Cantidad']."'";
+								$SIS_data .= ",'".$arreglo_2['idUml']."'";
+								$SIS_data .= ",'".$arreglo_2['Frecuencia']."'";
+								$SIS_data .= ",'".$arreglo_2['idFrecuencia']."'";
+								$SIS_data .= ",'".$arreglo_2['idProducto']."'";
+								$SIS_data .= ",'".$arreglo_2['Saf']."'";
+								$SIS_data .= ",'".$arreglo_2['Numero']."'";
+
+								$cadena = '';
+								$x = 1;
+								if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+								if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_2['idLevel_'.$x]."'";$x++;}
+
+								$x = 1;
+								if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
+								if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
+								if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
+								if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
+								if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
+								if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
+								if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
+								if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
+								if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
+								if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
+								if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
+								if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
+								if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
+								if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
+								if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
+								if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
+								if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
+								if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
+								if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
+								if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
+								if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
+								if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
+								if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
+								if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
+								if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
+
+								// inserto los datos de registro en la db
+								$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+								Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+								Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
+								idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+								$id_lvl[$dis_2] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_2, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+								/////////////////////////////////////////////////
+								if(isset($arrLVL[$dis_3])){
+									foreach ($arrLVL[$dis_3] as $arreglo_3) {
+										//Se verifica que sea el mismo sensor
+										if($arreglo_2['idLevel_'.$dis_2]==$arreglo_3['idLevel_'.$dis_2]){
+
+											//Se crea la maquina
+											$SIS_data  = "'".$arreglo_3['idSistema']."'";
+											$SIS_data .= ",'".$arreglo_3['idMaquina']."'";
+											$SIS_data .= ",'".$arreglo_3['idUtilizable']."'";
+											$SIS_data .= ",'".$arreglo_3['Codigo']."'";
+											$SIS_data .= ",'".$arreglo_3['Nombre']."'";
+											$SIS_data .= ",'".$arreglo_3['Marca']."'";
+											$SIS_data .= ",'".$arreglo_3['Modelo']."'";
+											$SIS_data .= ",'".$arreglo_3['AnoFab']."'";
+											$SIS_data .= ",'".$arreglo_3['Serie']."'";
+											$SIS_data .= ",'".$arreglo_3['idLicitacion']."'";
+											$SIS_data .= ",'".$arreglo_3['tabla']."'";
+											$SIS_data .= ",'".$arreglo_3['table_value']."'";
+											$SIS_data .= ",'".$arreglo_3['Direccion_img']."'";
+											$SIS_data .= ",'".$arreglo_3['idSubTipo']."'";
+											$SIS_data .= ",'".$arreglo_3['Grasa_inicial']."'";
+											$SIS_data .= ",'".$arreglo_3['Grasa_relubricacion']."'";
+											$SIS_data .= ",'".$arreglo_3['Aceite']."'";
+											$SIS_data .= ",'".$arreglo_3['Cantidad']."'";
+											$SIS_data .= ",'".$arreglo_3['idUml']."'";
+											$SIS_data .= ",'".$arreglo_3['Frecuencia']."'";
+											$SIS_data .= ",'".$arreglo_3['idFrecuencia']."'";
+											$SIS_data .= ",'".$arreglo_3['idProducto']."'";
+											$SIS_data .= ",'".$arreglo_3['Saf']."'";
+											$SIS_data .= ",'".$arreglo_3['Numero']."'";
+
+											$cadena = '';
+											$x = 1;
+											if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+											if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_3['idLevel_'.$x]."'";$x++;}
+
+											$x = 1;
+											if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
+											if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
+											if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
+											if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
+											if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
+											if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
+											if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
+											if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
+											if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
+											if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
+											if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
+											if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
+											if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
+											if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
+											if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
+											if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
+											if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
+											if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
+											if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
+											if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
+											if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
+											if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
+											if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
+											if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
+											if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
+
+											// inserto los datos de registro en la db
+											$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+											Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+											Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
+											idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+											$id_lvl[$dis_3] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_3, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+											/////////////////////////////////////////////////
+											if(isset($arrLVL[$dis_4])){
+												foreach ($arrLVL[$dis_4] as $arreglo_4) {
+													//Se verifica que sea el mismo sensor
+													if($arreglo_3['idLevel_'.$dis_3]==$arreglo_4['idLevel_'.$dis_3]){
+
+														//Se crea la maquina
+														$SIS_data  = "'".$arreglo_4['idSistema']."'";
+														$SIS_data .= ",'".$arreglo_4['idMaquina']."'";
+														$SIS_data .= ",'".$arreglo_4['idUtilizable']."'";
+														$SIS_data .= ",'".$arreglo_4['Codigo']."'";
+														$SIS_data .= ",'".$arreglo_4['Nombre']."'";
+														$SIS_data .= ",'".$arreglo_4['Marca']."'";
+														$SIS_data .= ",'".$arreglo_4['Modelo']."'";
+														$SIS_data .= ",'".$arreglo_4['AnoFab']."'";
+														$SIS_data .= ",'".$arreglo_4['Serie']."'";
+														$SIS_data .= ",'".$arreglo_4['idLicitacion']."'";
+														$SIS_data .= ",'".$arreglo_4['tabla']."'";
+														$SIS_data .= ",'".$arreglo_4['table_value']."'";
+														$SIS_data .= ",'".$arreglo_4['Direccion_img']."'";
+														$SIS_data .= ",'".$arreglo_4['idSubTipo']."'";
+														$SIS_data .= ",'".$arreglo_4['Grasa_inicial']."'";
+														$SIS_data .= ",'".$arreglo_4['Grasa_relubricacion']."'";
+														$SIS_data .= ",'".$arreglo_4['Aceite']."'";
+														$SIS_data .= ",'".$arreglo_4['Cantidad']."'";
+														$SIS_data .= ",'".$arreglo_4['idUml']."'";
+														$SIS_data .= ",'".$arreglo_4['Frecuencia']."'";
+														$SIS_data .= ",'".$arreglo_4['idFrecuencia']."'";
+														$SIS_data .= ",'".$arreglo_4['idProducto']."'";
+														$SIS_data .= ",'".$arreglo_4['Saf']."'";
+														$SIS_data .= ",'".$arreglo_4['Numero']."'";
+
+														$cadena = '';
+														$x = 1;
+														if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+														if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_4['idLevel_'.$x]."'";$x++;}
+
+														$x = 1;
+														if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
+														if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
+														if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
+														if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
+														if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
+														if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
+														if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
+														if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
+														if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
+														if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
+														if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
+														if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
+														if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
+														if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
+														if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
+														if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
+														if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
+														if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
+														if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
+														if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
+														if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
+														if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
+														if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
+														if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
+														if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
+
+														// inserto los datos de registro en la db
+														$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+														Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+														Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
+														idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+														$id_lvl[$dis_4] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_4, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+														/////////////////////////////////////////////////
+														if(isset($arrLVL[$dis_5])){
+															foreach ($arrLVL[$dis_5] as $arreglo_5) {
+																//Se verifica que sea el mismo sensor
+																if($arreglo_4['idLevel_'.$dis_4]==$arreglo_5['idLevel_'.$dis_4]){
+
+																	//Se crea la maquina
+																	$SIS_data  = "'".$arreglo_5['idSistema']."'";
+																	$SIS_data .= ",'".$arreglo_5['idMaquina']."'";
+																	$SIS_data .= ",'".$arreglo_5['idUtilizable']."'";
+																	$SIS_data .= ",'".$arreglo_5['Codigo']."'";
+																	$SIS_data .= ",'".$arreglo_5['Nombre']."'";
+																	$SIS_data .= ",'".$arreglo_5['Marca']."'";
+																	$SIS_data .= ",'".$arreglo_5['Modelo']."'";
+																	$SIS_data .= ",'".$arreglo_5['AnoFab']."'";
+																	$SIS_data .= ",'".$arreglo_5['Serie']."'";
+																	$SIS_data .= ",'".$arreglo_5['idLicitacion']."'";
+																	$SIS_data .= ",'".$arreglo_5['tabla']."'";
+																	$SIS_data .= ",'".$arreglo_5['table_value']."'";
+																	$SIS_data .= ",'".$arreglo_5['Direccion_img']."'";
+																	$SIS_data .= ",'".$arreglo_5['idSubTipo']."'";
+																	$SIS_data .= ",'".$arreglo_5['Grasa_inicial']."'";
+																	$SIS_data .= ",'".$arreglo_5['Grasa_relubricacion']."'";
+																	$SIS_data .= ",'".$arreglo_5['Aceite']."'";
+																	$SIS_data .= ",'".$arreglo_5['Cantidad']."'";
+																	$SIS_data .= ",'".$arreglo_5['idUml']."'";
+																	$SIS_data .= ",'".$arreglo_5['Frecuencia']."'";
+																	$SIS_data .= ",'".$arreglo_5['idFrecuencia']."'";
+																	$SIS_data .= ",'".$arreglo_5['idProducto']."'";
+																	$SIS_data .= ",'".$arreglo_5['Saf']."'";
+																	$SIS_data .= ",'".$arreglo_5['Numero']."'";
+
+																	$cadena = '';
+																	$x = 1;
+																	if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+																	if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_5['idLevel_'.$x]."'";$x++;}
+
+																	$x = 1;
+																	if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
+																	if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
+																	if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
+																	if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
+																	if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
+																	if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
+																	if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
+																	if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
+																	if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
+																	if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
+																	if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
+																	if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
+																	if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
+																	if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
+																	if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
+																	if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
+																	if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
+																	if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
+																	if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
+																	if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
+																	if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
+																	if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
+																	if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
+																	if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
+																	if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
+
+																	// inserto los datos de registro en la db
+																	$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																	Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																	Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
+																	idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																	$id_lvl[$dis_5] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_5, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+																	/////////////////////////////////////////////////
+																	if(isset($arrLVL[$dis_6])){
+																		foreach ($arrLVL[$dis_6] as $arreglo_6) {
+																			//Se verifica que sea el mismo sensor
+																			if($arreglo_5['idLevel_'.$dis_5]==$arreglo_6['idLevel_'.$dis_5]){
+
+																				//Se crea la maquina
+																				$SIS_data  = "'".$arreglo_6['idSistema']."'";
+																				$SIS_data .= ",'".$arreglo_6['idMaquina']."'";
+																				$SIS_data .= ",'".$arreglo_6['idUtilizable']."'";
+																				$SIS_data .= ",'".$arreglo_6['Codigo']."'";
+																				$SIS_data .= ",'".$arreglo_6['Nombre']."'";
+																				$SIS_data .= ",'".$arreglo_6['Marca']."'";
+																				$SIS_data .= ",'".$arreglo_6['Modelo']."'";
+																				$SIS_data .= ",'".$arreglo_6['AnoFab']."'";
+																				$SIS_data .= ",'".$arreglo_6['Serie']."'";
+																				$SIS_data .= ",'".$arreglo_6['idLicitacion']."'";
+																				$SIS_data .= ",'".$arreglo_6['tabla']."'";
+																				$SIS_data .= ",'".$arreglo_6['table_value']."'";
+																				$SIS_data .= ",'".$arreglo_6['Direccion_img']."'";
+																				$SIS_data .= ",'".$arreglo_6['idSubTipo']."'";
+																				$SIS_data .= ",'".$arreglo_6['Grasa_inicial']."'";
+																				$SIS_data .= ",'".$arreglo_6['Grasa_relubricacion']."'";
+																				$SIS_data .= ",'".$arreglo_6['Aceite']."'";
+																				$SIS_data .= ",'".$arreglo_6['Cantidad']."'";
+																				$SIS_data .= ",'".$arreglo_6['idUml']."'";
+																				$SIS_data .= ",'".$arreglo_6['Frecuencia']."'";
+																				$SIS_data .= ",'".$arreglo_6['idFrecuencia']."'";
+																				$SIS_data .= ",'".$arreglo_6['idProducto']."'";
+																				$SIS_data .= ",'".$arreglo_6['Saf']."'";
+																				$SIS_data .= ",'".$arreglo_6['Numero']."'";
+
+																				$cadena = '';
+																				$x = 1;
+																				if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+																				if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_6['idLevel_'.$x]."'";$x++;}
+
+																				$x = 1;
+																				if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
+																				if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
+																				if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
+																				if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
+																				if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
+																				if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
+																				if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
+																				if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
+																				if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
+																				if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
+																				if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
+																				if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
+																				if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
+																				if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
+																				if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
+																				if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
+																				if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
+																				if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
+																				if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
+																				if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
+																				if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
+																				if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
+																				if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
+																				if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
+																				if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
+
+																				// inserto los datos de registro en la db
+																				$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																				Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																				Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
+																				idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																				$id_lvl[$dis_6] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_6, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+																				/////////////////////////////////////////////////
+																				if(isset($arrLVL[$dis_7])){
+																					foreach ($arrLVL[$dis_7] as $arreglo_7) {
+																						//Se verifica que sea el mismo sensor
+																						if($arreglo_6['idLevel_'.$dis_6]==$arreglo_7['idLevel_'.$dis_6]){
+
+																							//Se crea la maquina
+																							$SIS_data  = "'".$arreglo_7['idSistema']."'";
+																							$SIS_data .= ",'".$arreglo_7['idMaquina']."'";
+																							$SIS_data .= ",'".$arreglo_7['idUtilizable']."'";
+																							$SIS_data .= ",'".$arreglo_7['Codigo']."'";
+																							$SIS_data .= ",'".$arreglo_7['Nombre']."'";
+																							$SIS_data .= ",'".$arreglo_7['Marca']."'";
+																							$SIS_data .= ",'".$arreglo_7['Modelo']."'";
+																							$SIS_data .= ",'".$arreglo_7['AnoFab']."'";
+																							$SIS_data .= ",'".$arreglo_7['Serie']."'";
+																							$SIS_data .= ",'".$arreglo_7['idLicitacion']."'";
+																							$SIS_data .= ",'".$arreglo_7['tabla']."'";
+																							$SIS_data .= ",'".$arreglo_7['table_value']."'";
+																							$SIS_data .= ",'".$arreglo_7['Direccion_img']."'";
+																							$SIS_data .= ",'".$arreglo_7['idSubTipo']."'";
+																							$SIS_data .= ",'".$arreglo_7['Grasa_inicial']."'";
+																							$SIS_data .= ",'".$arreglo_7['Grasa_relubricacion']."'";
+																							$SIS_data .= ",'".$arreglo_7['Aceite']."'";
+																							$SIS_data .= ",'".$arreglo_7['Cantidad']."'";
+																							$SIS_data .= ",'".$arreglo_7['idUml']."'";
+																							$SIS_data .= ",'".$arreglo_7['Frecuencia']."'";
+																							$SIS_data .= ",'".$arreglo_7['idFrecuencia']."'";
+																							$SIS_data .= ",'".$arreglo_7['idProducto']."'";
+																							$SIS_data .= ",'".$arreglo_7['Saf']."'";
+																							$SIS_data .= ",'".$arreglo_7['Numero']."'";
+
+																							$cadena = '';
+																							$x = 1;
+																							if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+																							if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_7['idLevel_'.$x]."'";$x++;}
+
+																							$x = 1;
+																							if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
+																							if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
+																							if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
+																							if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
+																							if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
+																							if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
+																							if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
+																							if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
+																							if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
+																							if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
+																							if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
+																							if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
+																							if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
+																							if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
+																							if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
+																							if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
+																							if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
+																							if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
+																							if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
+																							if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
+																							if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
+																							if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
+																							if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
+																							if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
+																							if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
+
+																							// inserto los datos de registro en la db
+																							$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																							Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																							Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
+																							idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																							$id_lvl[$dis_7] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_7, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+																							/////////////////////////////////////////////////
+																							if(isset($arrLVL[$dis_8])){
+																								foreach ($arrLVL[$dis_8] as $arreglo_8) {
+																									//Se verifica que sea el mismo sensor
+																									if($arreglo_7['idLevel_'.$dis_7]==$arreglo_8['idLevel_'.$dis_7]){
+
+																										//Se crea la maquina
+																										$SIS_data  = "'".$arreglo_8['idSistema']."'";
+																										$SIS_data .= ",'".$arreglo_8['idMaquina']."'";
+																										$SIS_data .= ",'".$arreglo_8['idUtilizable']."'";
+																										$SIS_data .= ",'".$arreglo_8['Codigo']."'";
+																										$SIS_data .= ",'".$arreglo_8['Nombre']."'";
+																										$SIS_data .= ",'".$arreglo_8['Marca']."'";
+																										$SIS_data .= ",'".$arreglo_8['Modelo']."'";
+																										$SIS_data .= ",'".$arreglo_8['AnoFab']."'";
+																										$SIS_data .= ",'".$arreglo_8['Serie']."'";
+																										$SIS_data .= ",'".$arreglo_8['idLicitacion']."'";
+																										$SIS_data .= ",'".$arreglo_8['tabla']."'";
+																										$SIS_data .= ",'".$arreglo_8['table_value']."'";
+																										$SIS_data .= ",'".$arreglo_8['Direccion_img']."'";
+																										$SIS_data .= ",'".$arreglo_8['idSubTipo']."'";
+																										$SIS_data .= ",'".$arreglo_8['Grasa_inicial']."'";
+																										$SIS_data .= ",'".$arreglo_8['Grasa_relubricacion']."'";
+																										$SIS_data .= ",'".$arreglo_8['Aceite']."'";
+																										$SIS_data .= ",'".$arreglo_8['Cantidad']."'";
+																										$SIS_data .= ",'".$arreglo_8['idUml']."'";
+																										$SIS_data .= ",'".$arreglo_8['Frecuencia']."'";
+																										$SIS_data .= ",'".$arreglo_8['idFrecuencia']."'";
+																										$SIS_data .= ",'".$arreglo_8['idProducto']."'";
+																										$SIS_data .= ",'".$arreglo_8['Saf']."'";
+																										$SIS_data .= ",'".$arreglo_8['Numero']."'";
+
+																										$cadena = '';
+																										$x = 1;
+																										if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+																										if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_8['idLevel_'.$x]."'";$x++;}
+
+																										$x = 1;
+																										if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
+																										if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
+																										if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
+																										if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
+																										if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
+																										if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
+																										if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
+																										if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
+																										if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
+																										if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
+																										if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
+																										if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
+																										if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
+																										if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
+																										if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
+																										if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
+																										if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
+																										if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
+																										if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
+																										if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
+																										if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
+																										if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
+																										if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
+																										if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
+																										if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
+
+																										// inserto los datos de registro en la db
+																										$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																										Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																										Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
+																										idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																										$id_lvl[$dis_8] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_8, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+																										/////////////////////////////////////////////////
+																										if(isset($arrLVL[$dis_9])){
+																											foreach ($arrLVL[$dis_9] as $arreglo_9) {
+																												//Se verifica que sea el mismo sensor
+																												if($arreglo_8['idLevel_'.$dis_8]==$arreglo_9['idLevel_'.$dis_8]){
+
+																													//Se crea la maquina
+																													$SIS_data  = "'".$arreglo_9['idSistema']."'";
+																													$SIS_data .= ",'".$arreglo_9['idMaquina']."'";
+																													$SIS_data .= ",'".$arreglo_9['idUtilizable']."'";
+																													$SIS_data .= ",'".$arreglo_9['Codigo']."'";
+																													$SIS_data .= ",'".$arreglo_9['Nombre']."'";
+																													$SIS_data .= ",'".$arreglo_9['Marca']."'";
+																													$SIS_data .= ",'".$arreglo_9['Modelo']."'";
+																													$SIS_data .= ",'".$arreglo_9['AnoFab']."'";
+																													$SIS_data .= ",'".$arreglo_9['Serie']."'";
+																													$SIS_data .= ",'".$arreglo_9['idLicitacion']."'";
+																													$SIS_data .= ",'".$arreglo_9['tabla']."'";
+																													$SIS_data .= ",'".$arreglo_9['table_value']."'";
+																													$SIS_data .= ",'".$arreglo_9['Direccion_img']."'";
+																													$SIS_data .= ",'".$arreglo_9['idSubTipo']."'";
+																													$SIS_data .= ",'".$arreglo_9['Grasa_inicial']."'";
+																													$SIS_data .= ",'".$arreglo_9['Grasa_relubricacion']."'";
+																													$SIS_data .= ",'".$arreglo_9['Aceite']."'";
+																													$SIS_data .= ",'".$arreglo_9['Cantidad']."'";
+																													$SIS_data .= ",'".$arreglo_9['idUml']."'";
+																													$SIS_data .= ",'".$arreglo_9['Frecuencia']."'";
+																													$SIS_data .= ",'".$arreglo_9['idFrecuencia']."'";
+																													$SIS_data .= ",'".$arreglo_9['idProducto']."'";
+																													$SIS_data .= ",'".$arreglo_9['Saf']."'";
+																													$SIS_data .= ",'".$arreglo_9['Numero']."'";
+
+																													$cadena = '';
+																													$x = 1;
+																													if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+																													if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_9['idLevel_'.$x]."'";$x++;}
+
+																													$x = 1;
+																													if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
+																													if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
+																													if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
+																													if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
+																													if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
+																													if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
+																													if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
+																													if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
+																													if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
+																													if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
+																													if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
+																													if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
+																													if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
+																													if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
+																													if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
+																													if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
+																													if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
+																													if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
+																													if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
+																													if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
+																													if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
+																													if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
+																													if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
+																													if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
+																													if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
+
+																													// inserto los datos de registro en la db
+																													$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																													Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																													Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
+																													idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																													$id_lvl[$dis_9] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_9, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+																													/////////////////////////////////////////////////
+																													if(isset($arrLVL[$dis_10])){
+																														foreach ($arrLVL[$dis_10] as $arreglo_10) {
+																															//Se verifica que sea el mismo sensor
+																															if($arreglo_9['idLevel_'.$dis_9]==$arreglo_10['idLevel_'.$dis_9]){
+
+																																//Se crea la maquina
+																																$SIS_data  = "'".$arreglo_10['idSistema']."'";
+																																$SIS_data .= ",'".$arreglo_10['idMaquina']."'";
+																																$SIS_data .= ",'".$arreglo_10['idUtilizable']."'";
+																																$SIS_data .= ",'".$arreglo_10['Codigo']."'";
+																																$SIS_data .= ",'".$arreglo_10['Nombre']."'";
+																																$SIS_data .= ",'".$arreglo_10['Marca']."'";
+																																$SIS_data .= ",'".$arreglo_10['Modelo']."'";
+																																$SIS_data .= ",'".$arreglo_10['AnoFab']."'";
+																																$SIS_data .= ",'".$arreglo_10['Serie']."'";
+																																$SIS_data .= ",'".$arreglo_10['idLicitacion']."'";
+																																$SIS_data .= ",'".$arreglo_10['tabla']."'";
+																																$SIS_data .= ",'".$arreglo_10['table_value']."'";
+																																$SIS_data .= ",'".$arreglo_10['Direccion_img']."'";
+																																$SIS_data .= ",'".$arreglo_10['idSubTipo']."'";
+																																$SIS_data .= ",'".$arreglo_10['Grasa_inicial']."'";
+																																$SIS_data .= ",'".$arreglo_10['Grasa_relubricacion']."'";
+																																$SIS_data .= ",'".$arreglo_10['Aceite']."'";
+																																$SIS_data .= ",'".$arreglo_10['Cantidad']."'";
+																																$SIS_data .= ",'".$arreglo_10['idUml']."'";
+																																$SIS_data .= ",'".$arreglo_10['Frecuencia']."'";
+																																$SIS_data .= ",'".$arreglo_10['idFrecuencia']."'";
+																																$SIS_data .= ",'".$arreglo_10['idProducto']."'";
+																																$SIS_data .= ",'".$arreglo_10['Saf']."'";
+																																$SIS_data .= ",'".$arreglo_10['Numero']."'";
+
+																																$cadena = '';
+																																$x = 1;
+																																if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+																																if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_10['idLevel_'.$x]."'";$x++;}
+
+																																$x = 1;
+																																if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
+																																if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
+																																if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
+																																if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
+																																if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
+																																if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
+																																if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
+																																if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
+																																if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
+																																if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
+																																if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
+																																if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
+																																if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
+																																if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
+																																if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
+																																if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
+																																if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
+																																if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
+																																if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
+																																if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
+																																if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
+																																if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
+																																if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
+																																if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
+																																if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
+
+																																// inserto los datos de registro en la db
+																																$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																																Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																																Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
+																																idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																																$id_lvl[$dis_10] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_10, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+																																/////////////////////////////////////////////////
+																																if(isset($arrLVL[$dis_11])){
+																																	foreach ($arrLVL[$dis_11] as $arreglo_11) {
+																																		//Se verifica que sea el mismo sensor
+																																		if($arreglo_10['idLevel_'.$dis_10]==$arreglo_11['idLevel_'.$dis_10]){
+
+																																			//Se crea la maquina
+																																			$SIS_data  = "'".$arreglo_11['idSistema']."'";
+																																			$SIS_data .= ",'".$arreglo_11['idMaquina']."'";
+																																			$SIS_data .= ",'".$arreglo_11['idUtilizable']."'";
+																																			$SIS_data .= ",'".$arreglo_11['Codigo']."'";
+																																			$SIS_data .= ",'".$arreglo_11['Nombre']."'";
+																																			$SIS_data .= ",'".$arreglo_11['Marca']."'";
+																																			$SIS_data .= ",'".$arreglo_11['Modelo']."'";
+																																			$SIS_data .= ",'".$arreglo_11['AnoFab']."'";
+																																			$SIS_data .= ",'".$arreglo_11['Serie']."'";
+																																			$SIS_data .= ",'".$arreglo_11['idLicitacion']."'";
+																																			$SIS_data .= ",'".$arreglo_11['tabla']."'";
+																																			$SIS_data .= ",'".$arreglo_11['table_value']."'";
+																																			$SIS_data .= ",'".$arreglo_11['Direccion_img']."'";
+																																			$SIS_data .= ",'".$arreglo_11['idSubTipo']."'";
+																																			$SIS_data .= ",'".$arreglo_11['Grasa_inicial']."'";
+																																			$SIS_data .= ",'".$arreglo_11['Grasa_relubricacion']."'";
+																																			$SIS_data .= ",'".$arreglo_11['Aceite']."'";
+																																			$SIS_data .= ",'".$arreglo_11['Cantidad']."'";
+																																			$SIS_data .= ",'".$arreglo_11['idUml']."'";
+																																			$SIS_data .= ",'".$arreglo_11['Frecuencia']."'";
+																																			$SIS_data .= ",'".$arreglo_11['idFrecuencia']."'";
+																																			$SIS_data .= ",'".$arreglo_11['idProducto']."'";
+																																			$SIS_data .= ",'".$arreglo_11['Saf']."'";
+																																			$SIS_data .= ",'".$arreglo_11['Numero']."'";
+
+																																			$cadena = '';
+																																			$x = 1;
+																																			if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+																																			if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_11['idLevel_'.$x]."'";$x++;}
+
+																																			$x = 1;
+																																			if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
+																																			if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
+																																			if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
+																																			if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
+																																			if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
+																																			if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
+																																			if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
+																																			if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
+																																			if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
+																																			if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
+																																			if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
+																																			if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
+																																			if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
+																																			if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
+																																			if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
+																																			if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
+																																			if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
+																																			if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
+																																			if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
+																																			if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
+																																			if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
+																																			if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
+																																			if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
+																																			if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
+																																			if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
+
+																																			// inserto los datos de registro en la db
+																																			$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																																			Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																																			Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
+																																			idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																																			$id_lvl[$dis_11] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_11, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+																																			/////////////////////////////////////////////////
+																																			if(isset($arrLVL[$dis_12])){
+																																				foreach ($arrLVL[$dis_12] as $arreglo_12) {
+																																					//Se verifica que sea el mismo sensor
+																																					if($arreglo_11['idLevel_'.$dis_11]==$arreglo_12['idLevel_'.$dis_11]){
+
+																																						//Se crea la maquina
+																																						$SIS_data  = "'".$arreglo_12['idSistema']."'";
+																																						$SIS_data .= ",'".$arreglo_12['idMaquina']."'";
+																																						$SIS_data .= ",'".$arreglo_12['idUtilizable']."'";
+																																						$SIS_data .= ",'".$arreglo_12['Codigo']."'";
+																																						$SIS_data .= ",'".$arreglo_12['Nombre']."'";
+																																						$SIS_data .= ",'".$arreglo_12['Marca']."'";
+																																						$SIS_data .= ",'".$arreglo_12['Modelo']."'";
+																																						$SIS_data .= ",'".$arreglo_12['AnoFab']."'";
+																																						$SIS_data .= ",'".$arreglo_12['Serie']."'";
+																																						$SIS_data .= ",'".$arreglo_12['idLicitacion']."'";
+																																						$SIS_data .= ",'".$arreglo_12['tabla']."'";
+																																						$SIS_data .= ",'".$arreglo_12['table_value']."'";
+																																						$SIS_data .= ",'".$arreglo_12['Direccion_img']."'";
+																																						$SIS_data .= ",'".$arreglo_12['idSubTipo']."'";
+																																						$SIS_data .= ",'".$arreglo_12['Grasa_inicial']."'";
+																																						$SIS_data .= ",'".$arreglo_12['Grasa_relubricacion']."'";
+																																						$SIS_data .= ",'".$arreglo_12['Aceite']."'";
+																																						$SIS_data .= ",'".$arreglo_12['Cantidad']."'";
+																																						$SIS_data .= ",'".$arreglo_12['idUml']."'";
+																																						$SIS_data .= ",'".$arreglo_12['Frecuencia']."'";
+																																						$SIS_data .= ",'".$arreglo_12['idFrecuencia']."'";
+																																						$SIS_data .= ",'".$arreglo_12['idProducto']."'";
+																																						$SIS_data .= ",'".$arreglo_12['Saf']."'";
+																																						$SIS_data .= ",'".$arreglo_12['Numero']."'";
+
+																																						$cadena = '';
+																																						$x = 1;
+																																						if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+																																						if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_12['idLevel_'.$x]."'";$x++;}
+
+																																						$x = 1;
+																																						if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
+																																						if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
+																																						if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
+																																						if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
+																																						if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
+																																						if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
+																																						if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
+																																						if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
+																																						if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
+																																						if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
+																																						if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
+																																						if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
+																																						if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
+																																						if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
+																																						if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
+																																						if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
+																																						if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
+																																						if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
+																																						if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
+																																						if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
+																																						if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
+																																						if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
+																																						if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
+																																						if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
+																																						if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
+
+																																						// inserto los datos de registro en la db
+																																						$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																																						Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																																						Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
+																																						idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																																						$id_lvl[$dis_12] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_12, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+																																						/////////////////////////////////////////////////
+																																						if(isset($arrLVL[$dis_13])){
+																																							foreach ($arrLVL[$dis_13] as $arreglo_13) {
+																																								//Se verifica que sea el mismo sensor
+																																								if($arreglo_12['idLevel_'.$dis_12]==$arreglo_13['idLevel_'.$dis_12]){
+
+																																									//Se crea la maquina
+																																									$SIS_data  = "'".$arreglo_13['idSistema']."'";
+																																									$SIS_data .= ",'".$arreglo_13['idMaquina']."'";
+																																									$SIS_data .= ",'".$arreglo_13['idUtilizable']."'";
+																																									$SIS_data .= ",'".$arreglo_13['Codigo']."'";
+																																									$SIS_data .= ",'".$arreglo_13['Nombre']."'";
+																																									$SIS_data .= ",'".$arreglo_13['Marca']."'";
+																																									$SIS_data .= ",'".$arreglo_13['Modelo']."'";
+																																									$SIS_data .= ",'".$arreglo_13['AnoFab']."'";
+																																									$SIS_data .= ",'".$arreglo_13['Serie']."'";
+																																									$SIS_data .= ",'".$arreglo_13['idLicitacion']."'";
+																																									$SIS_data .= ",'".$arreglo_13['tabla']."'";
+																																									$SIS_data .= ",'".$arreglo_13['table_value']."'";
+																																									$SIS_data .= ",'".$arreglo_13['Direccion_img']."'";
+																																									$SIS_data .= ",'".$arreglo_13['idSubTipo']."'";
+																																									$SIS_data .= ",'".$arreglo_13['Grasa_inicial']."'";
+																																									$SIS_data .= ",'".$arreglo_13['Grasa_relubricacion']."'";
+																																									$SIS_data .= ",'".$arreglo_13['Aceite']."'";
+																																									$SIS_data .= ",'".$arreglo_13['Cantidad']."'";
+																																									$SIS_data .= ",'".$arreglo_13['idUml']."'";
+																																									$SIS_data .= ",'".$arreglo_13['Frecuencia']."'";
+																																									$SIS_data .= ",'".$arreglo_13['idFrecuencia']."'";
+																																									$SIS_data .= ",'".$arreglo_13['idProducto']."'";
+																																									$SIS_data .= ",'".$arreglo_13['Saf']."'";
+																																									$SIS_data .= ",'".$arreglo_13['Numero']."'";
+
+																																									$cadena = '';
+																																									$x = 1;
+																																									if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+																																									if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_13['idLevel_'.$x]."'";$x++;}
+
+																																									$x = 1;
+																																									if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
+																																									if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
+																																									if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
+																																									if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
+																																									if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
+																																									if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
+																																									if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
+																																									if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
+																																									if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
+																																									if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
+																																									if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
+																																									if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
+																																									if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
+																																									if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
+																																									if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
+																																									if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
+																																									if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
+																																									if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
+																																									if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
+																																									if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
+																																									if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
+																																									if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
+																																									if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
+																																									if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
+																																									if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
+
+																																									// inserto los datos de registro en la db
+																																									$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																																									Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																																									Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
+																																									idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																																									$id_lvl[$dis_13] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_13, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+																																									/////////////////////////////////////////////////
+																																									if(isset($arrLVL[$dis_14])){
+																																										foreach ($arrLVL[$dis_14] as $arreglo_14) {
+																																											//Se verifica que sea el mismo sensor
+																																											if($arreglo_13['idLevel_'.$dis_13]==$arreglo_14['idLevel_'.$dis_13]){
+
+																																												//Se crea la maquina
+																																												$SIS_data  = "'".$arreglo_14['idSistema']."'";
+																																												$SIS_data .= ",'".$arreglo_14['idMaquina']."'";
+																																												$SIS_data .= ",'".$arreglo_14['idUtilizable']."'";
+																																												$SIS_data .= ",'".$arreglo_14['Codigo']."'";
+																																												$SIS_data .= ",'".$arreglo_14['Nombre']."'";
+																																												$SIS_data .= ",'".$arreglo_14['Marca']."'";
+																																												$SIS_data .= ",'".$arreglo_14['Modelo']."'";
+																																												$SIS_data .= ",'".$arreglo_14['AnoFab']."'";
+																																												$SIS_data .= ",'".$arreglo_14['Serie']."'";
+																																												$SIS_data .= ",'".$arreglo_14['idLicitacion']."'";
+																																												$SIS_data .= ",'".$arreglo_14['tabla']."'";
+																																												$SIS_data .= ",'".$arreglo_14['table_value']."'";
+																																												$SIS_data .= ",'".$arreglo_14['Direccion_img']."'";
+																																												$SIS_data .= ",'".$arreglo_14['idSubTipo']."'";
+																																												$SIS_data .= ",'".$arreglo_14['Grasa_inicial']."'";
+																																												$SIS_data .= ",'".$arreglo_14['Grasa_relubricacion']."'";
+																																												$SIS_data .= ",'".$arreglo_14['Aceite']."'";
+																																												$SIS_data .= ",'".$arreglo_14['Cantidad']."'";
+																																												$SIS_data .= ",'".$arreglo_14['idUml']."'";
+																																												$SIS_data .= ",'".$arreglo_14['Frecuencia']."'";
+																																												$SIS_data .= ",'".$arreglo_14['idFrecuencia']."'";
+																																												$SIS_data .= ",'".$arreglo_14['idProducto']."'";
+																																												$SIS_data .= ",'".$arreglo_14['Saf']."'";
+																																												$SIS_data .= ",'".$arreglo_14['Numero']."'";
+
+																																												$cadena = '';
+																																												$x = 1;
+																																												if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+																																												if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_14['idLevel_'.$x]."'";$x++;}
+
+																																												$x = 1;
+																																												if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
+																																												if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
+																																												if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
+																																												if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
+																																												if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
+																																												if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
+																																												if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
+																																												if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
+																																												if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
+																																												if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
+																																												if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
+																																												if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
+																																												if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
+																																												if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
+																																												if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
+																																												if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
+																																												if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
+																																												if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
+																																												if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
+																																												if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
+																																												if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
+																																												if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
+																																												if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
+																																												if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
+																																												if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
+
+																																												// inserto los datos de registro en la db
+																																												$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																																												Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																																												Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
+																																												idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																																												$id_lvl[$dis_14] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_14, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+																																												/////////////////////////////////////////////////
+																																												if(isset($arrLVL[$dis_15])){
+																																													foreach ($arrLVL[$dis_15] as $arreglo_15) {
+																																														//Se verifica que sea el mismo sensor
+																																														if($arreglo_14['idLevel_'.$dis_14]==$arreglo_15['idLevel_'.$dis_14]){
+
+																																															//Se crea la maquina
+																																															$SIS_data  = "'".$arreglo_15['idSistema']."'";
+																																															$SIS_data .= ",'".$arreglo_15['idMaquina']."'";
+																																															$SIS_data .= ",'".$arreglo_15['idUtilizable']."'";
+																																															$SIS_data .= ",'".$arreglo_15['Codigo']."'";
+																																															$SIS_data .= ",'".$arreglo_15['Nombre']."'";
+																																															$SIS_data .= ",'".$arreglo_15['Marca']."'";
+																																															$SIS_data .= ",'".$arreglo_15['Modelo']."'";
+																																															$SIS_data .= ",'".$arreglo_15['AnoFab']."'";
+																																															$SIS_data .= ",'".$arreglo_15['Serie']."'";
+																																															$SIS_data .= ",'".$arreglo_15['idLicitacion']."'";
+																																															$SIS_data .= ",'".$arreglo_15['tabla']."'";
+																																															$SIS_data .= ",'".$arreglo_15['table_value']."'";
+																																															$SIS_data .= ",'".$arreglo_15['Direccion_img']."'";
+																																															$SIS_data .= ",'".$arreglo_15['idSubTipo']."'";
+																																															$SIS_data .= ",'".$arreglo_15['Grasa_inicial']."'";
+																																															$SIS_data .= ",'".$arreglo_15['Grasa_relubricacion']."'";
+																																															$SIS_data .= ",'".$arreglo_15['Aceite']."'";
+																																															$SIS_data .= ",'".$arreglo_15['Cantidad']."'";
+																																															$SIS_data .= ",'".$arreglo_15['idUml']."'";
+																																															$SIS_data .= ",'".$arreglo_15['Frecuencia']."'";
+																																															$SIS_data .= ",'".$arreglo_15['idFrecuencia']."'";
+																																															$SIS_data .= ",'".$arreglo_15['idProducto']."'";
+																																															$SIS_data .= ",'".$arreglo_15['Saf']."'";
+																																															$SIS_data .= ",'".$arreglo_15['Numero']."'";
+
+																																															$cadena = '';
+																																															$x = 1;
+																																															if($lv_1!=0&&$lvl>1){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_2!=0&&$lvl>2){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_3!=0&&$lvl>3){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_4!=0&&$lvl>4){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_5!=0&&$lvl>5){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_6!=0&&$lvl>6){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_7!=0&&$lvl>7){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_8!=0&&$lvl>8){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_9!=0&&$lvl>9){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_10!=0&&$lvl>10){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_11!=0&&$lvl>11){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_12!=0&&$lvl>12){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_13!=0&&$lvl>13){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_14!=0&&$lvl>14){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_15!=0&&$lvl>15){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_16!=0&&$lvl>16){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_17!=0&&$lvl>17){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_18!=0&&$lvl>18){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_19!=0&&$lvl>19){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_20!=0&&$lvl>20){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_21!=0&&$lvl>21){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_22!=0&&$lvl>22){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_23!=0&&$lvl>23){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_24!=0&&$lvl>24){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+																																															if($lv_25!=0&&$lvl>25){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$arreglo_15['idLevel_'.$x]."'";$x++;}
+
+																																															$x = 1;
+																																															if(isset($id_lvl[$dis_1])&&$id_lvl[$dis_1]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_1]."'";$x++;}
+																																															if(isset($id_lvl[$dis_2])&&$id_lvl[$dis_2]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_2]."'";$x++;}
+																																															if(isset($id_lvl[$dis_3])&&$id_lvl[$dis_3]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_3]."'";$x++;}
+																																															if(isset($id_lvl[$dis_4])&&$id_lvl[$dis_4]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_4]."'";$x++;}
+																																															if(isset($id_lvl[$dis_5])&&$id_lvl[$dis_5]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_5]."'";$x++;}
+																																															if(isset($id_lvl[$dis_6])&&$id_lvl[$dis_6]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_6]."'";$x++;}
+																																															if(isset($id_lvl[$dis_7])&&$id_lvl[$dis_7]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_7]."'";$x++;}
+																																															if(isset($id_lvl[$dis_8])&&$id_lvl[$dis_8]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_8]."'";$x++;}
+																																															if(isset($id_lvl[$dis_9])&&$id_lvl[$dis_9]!=''){    $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_9]."'";$x++;}
+																																															if(isset($id_lvl[$dis_10])&&$id_lvl[$dis_10]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_10]."'";$x++;}
+																																															if(isset($id_lvl[$dis_11])&&$id_lvl[$dis_11]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_11]."'";$x++;}
+																																															if(isset($id_lvl[$dis_12])&&$id_lvl[$dis_12]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_12]."'";$x++;}
+																																															if(isset($id_lvl[$dis_13])&&$id_lvl[$dis_13]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_13]."'";$x++;}
+																																															if(isset($id_lvl[$dis_14])&&$id_lvl[$dis_14]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_14]."'";$x++;}
+																																															if(isset($id_lvl[$dis_15])&&$id_lvl[$dis_15]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_15]."'";$x++;}
+																																															if(isset($id_lvl[$dis_16])&&$id_lvl[$dis_16]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_16]."'";$x++;}
+																																															if(isset($id_lvl[$dis_17])&&$id_lvl[$dis_17]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_17]."'";$x++;}
+																																															if(isset($id_lvl[$dis_18])&&$id_lvl[$dis_18]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_18]."'";$x++;}
+																																															if(isset($id_lvl[$dis_19])&&$id_lvl[$dis_19]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_19]."'";$x++;}
+																																															if(isset($id_lvl[$dis_20])&&$id_lvl[$dis_20]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_20]."'";$x++;}
+																																															if(isset($id_lvl[$dis_21])&&$id_lvl[$dis_21]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_21]."'";$x++;}
+																																															if(isset($id_lvl[$dis_22])&&$id_lvl[$dis_22]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_22]."'";$x++;}
+																																															if(isset($id_lvl[$dis_23])&&$id_lvl[$dis_23]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_23]."'";$x++;}
+																																															if(isset($id_lvl[$dis_24])&&$id_lvl[$dis_24]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_24]."'";$x++;}
+																																															if(isset($id_lvl[$dis_25])&&$id_lvl[$dis_25]!=''){  $cadena .= ',idLevel_'.$x;$SIS_data .= ",'".$id_lvl[$dis_25]."'";$x++;}
+
+																																															// inserto los datos de registro en la db
+																																															$SIS_columns = 'idSistema, idMaquina, idUtilizable,
+																																															Codigo, Nombre,Marca, Modelo, AnoFab, Serie, idLicitacion, tabla, table_value,
+																																															Direccion_img, idSubTipo, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad,
+																																															idUml, Frecuencia, idFrecuencia, idProducto, Saf, Numero '.$cadena;
+																																															$id_lvl[$dis_15] = db_insert_data (false, $SIS_columns, $SIS_data, 'maquinas_listado_level_'.$dis_15, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+
+																																														}
 																																													}
 																																												}
 																																											}
@@ -3431,13 +3432,11 @@ require_once '0_validate_user_1.php';
 					}
 				}
 			}
-		}
 
-		header( 'Location: '.$location.'&clone_comp=true' );
-		die;
+			header( 'Location: '.$location.'&clone_comp=true' );
+			die;
 
 		break;
-
 /*******************************************************************************************************************/
 		case 'clone_Matriz':
 
@@ -3637,7 +3636,6 @@ require_once '0_validate_user_1.php';
 			}
 
 		break;
-
 /*******************************************************************************************************************/
 		case 'del_img_comp':
 
