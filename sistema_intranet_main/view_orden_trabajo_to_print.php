@@ -76,7 +76,7 @@ $arrTrabajadores = db_select_array (false, $SIS_query, 'orden_trabajo_listado_re
 
 //Si la OT solo esta programada
 if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==1){
-	
+
 	/***************************************************/
 	// Se trae un listado con todos los insumos utilizados
 	$SIS_query = '
@@ -107,7 +107,7 @@ if(isset($rowdata['idEstado'])&&$rowdata['idEstado']!=''&&$rowdata['idEstado']==
 
 //Si ya esta ejecutada	
 }else{
-	
+
 	/***************************************************/
 	// Se trae un listado con todos los productos utilizados
 	$SIS_query = '

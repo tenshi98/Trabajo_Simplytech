@@ -134,7 +134,7 @@ $arrData_2   = array();
 //se arman datos
 //Si existen
 if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGraficos!=''){
-	
+
 	/******************************************************/
 	//recorro
 	$counterz = 1;

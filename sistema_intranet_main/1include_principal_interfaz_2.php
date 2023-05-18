@@ -141,7 +141,7 @@ if($n_permisos['idOpcionesGen_1']=='1' OR $idTipoUsuario==1){
 /****************************************/
 //Visualizacion de los widgets de las transacciones
 if($n_permisos['idOpcionesGen_2']=='1' OR $idTipoUsuario==1){
-	
+
 	/***************************************** PRIMERA COLUMNA *****************************************/
 	/*** Cargas por Vencer ***/
 	if($prm_x[12]=='1' OR $idTipoUsuario==1){$subquery .= ",(SELECT COUNT(idCarga) FROM telemetria_carga_bam ".$SIS_where_2." AND Semana=".semana_actual()." AND Ano=".ano_actual()." LIMIT 1) AS CuentaRecargas";}
@@ -321,9 +321,9 @@ $subconsulta = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SI
 	/*****************************************************************************************************************/
 	if($idTipoUsuario==1) {
 		//verifica la capa de desarrollo
-		$SIS_where_2hitelist = array( 'localhost', '127.0.0.1', '::1' );
+		$whitelist = array( 'localhost', '127.0.0.1', '::1' );
 		//si estoy en ambiente de desarrollo
-		if( in_array( $_SERVER['REMOTE_ADDR'], $SIS_where_2hitelist) ){
+		if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 			echo widget_superadmin($dbConn, DB_SERVER, DB_USER, DB_PASS, 'power_engine_main', DB_NAME );
 		//si estoy en ambiente de produccion
 		}else{

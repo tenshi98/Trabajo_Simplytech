@@ -87,7 +87,7 @@ $arrData[$xx] = "BF";$xx++;
 /*******************************************************************************/
 //Funcion para escribir datos
 function crear_data($limite, $idVehiculo, $f_inicio, $f_termino, $dbConn ) {
-	
+
 	/*******************************************************/
 	$SIS_query = '
 	vehiculos_listado.Nombre AS NombreEquipo,

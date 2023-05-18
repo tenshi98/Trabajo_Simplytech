@@ -47,7 +47,7 @@ $row_data = db_select_data (false, $SIS_query, 'cross_solicitud_aplicacion_lista
 
 //Verifico si existe
 if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
-	
+
 	/*****************************************/
 	// Se trae un listado con todos los elementos
 	$SIS_query = '
