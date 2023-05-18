@@ -4,10 +4,10 @@
 /*****************************************************************************************************************/
 //Nueva conexion a otra base de datos
 //verifica la capa de desarrollo
-$SIS_where_1hitelist = array( 'localhost', '127.0.0.1', '::1' );
+$whitelist = array( 'localhost', '127.0.0.1', '::1' );
 ////////////////////////////////////////////////////////////////////////////////
 //si estoy en ambiente de desarrollo
-if( in_array( $_SERVER['REMOTE_ADDR'], $SIS_where_1hitelist) ){
+if( in_array( $_SERVER['REMOTE_ADDR'], $whitelist) ){
 	$CON_Base      = 'power_engine_main';
 ////////////////////////////////////////////////////////////////////////////////
 //si estoy en ambiente de produccion
