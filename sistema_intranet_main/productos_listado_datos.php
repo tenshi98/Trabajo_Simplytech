@@ -40,7 +40,7 @@ require_once 'core/Web.Header.Main.php';
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // Se traen todos los datos del producto
-$SIS_query = 'Nombre,idTipo,idCategoria,Marca,idUml,idTipoProducto, Codigo,idTipoReceta,idOpciones_1
+$SIS_query = 'Nombre,idTipo,idCategoria,Marca,idUml,idTipoProducto, Codigo,idTipoReceta,idOpciones_1,
 idOpciones_2,IngredienteActivo, Carencia, DosisRecomendada, EfectoResidual, EfectoRetroactivo,
 CarenciaExportador, AporteNutricional';
 $SIS_join  = '';
