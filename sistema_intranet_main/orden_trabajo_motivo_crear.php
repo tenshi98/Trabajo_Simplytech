@@ -726,7 +726,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					<td colspan="5">Trabajadores Encargados</td>
 					<td><a href="<?php echo $location.'&addTrab=true' ?>" title="Agregar Trabajadores" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Trabajadores</a></td>
 				</tr>
-				<?php 
+				<?php
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($_SESSION['ot_motivo_trabajador'] as $key => $trab){ ?>
 					<tr class="item-row linea_punteada">
@@ -749,9 +749,9 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					<td colspan="5">Insumos a Utilizar</td>
 					<td><a href="<?php echo $location.'&addIns=true' ?>" title="Agregar Insumos" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Insumos</a></td>
 				</tr>
-				<?php 
+				<?php
 				//recorro el lsiatdo entregado por la base de datos
-				if(isset($_SESSION['ot_motivo_insumos'])&&$_SESSION['ot_motivo_insumos']!=''){	
+				if(isset($_SESSION['ot_motivo_insumos'])&&$_SESSION['ot_motivo_insumos']!=''){
 					foreach ($_SESSION['ot_motivo_insumos'] as $key => $insumos){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="4"><?php echo $insumos['Nombre']; ?></td>
@@ -775,7 +775,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					<td colspan="5">Productos a Utilizar</td>
 					<td><a href="<?php echo $location.'&addProd=true' ?>" title="Agregar Productos" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Productos</a></td>
 				</tr>
-				<?php 
+				<?php
 				//recorro el lsiatdo entregado por la base de datos
 				if(isset($_SESSION['ot_motivo_productos'])&&$_SESSION['ot_motivo_productos']!=''){
 					foreach ($_SESSION['ot_motivo_productos'] as $key => $productos){ ?>

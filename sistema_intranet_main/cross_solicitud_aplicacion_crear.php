@@ -1442,7 +1442,7 @@ foreach ($arrPermisos as $prod) {
 						<?php } ?>
 					</td>
 				</tr>
-				<?php 
+				<?php
 				//recorro el lsiatdo entregado por la base de datos
 				if(isset($_SESSION['sol_apli_materiales'])&&$_SESSION['sol_apli_materiales']!=''){
 					foreach ($_SESSION['sol_apli_materiales'] as $key => $material){ ?>
@@ -1478,7 +1478,7 @@ foreach ($arrPermisos as $prod) {
 						<?php } ?>
 					</td>
 				</tr>
-				<?php 
+				<?php
 				//recorro el lsiatdo entregado por la base de datos
 				if(isset($_SESSION['sol_apli_cuarteles'])&&$_SESSION['sol_apli_cuarteles']!=''){
 					foreach ($_SESSION['sol_apli_cuarteles'] as $key => $cuartel){ ?>

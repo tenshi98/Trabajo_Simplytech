@@ -563,7 +563,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
         		
-				<?php 
+				<?php
 				//variables
 				$tablamad = $_GET['addItemizado'] + 1;
 				//Se verifican si existen los datos
@@ -880,7 +880,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
         		
-				<?php 
+				<?php
 				//variables
 				$tablamad = $_GET['addItemizado_row'] + 1;
 				//Se verifican si existen los datos

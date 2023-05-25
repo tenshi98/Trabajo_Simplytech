@@ -457,7 +457,7 @@ foreach ($arrPermisos as $prod) {
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
         		
-				<?php 
+				<?php
 				//variables
 				$tablamad = $_GET['addItemizado'] + 1;
 				//Se verifican si existen los datos
@@ -971,7 +971,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 					<td colspan="5">Trabajadores Encargados</td>
 					<td><a href="<?php echo $location.'&addTrab=true' ?>" title="Agregar Trabajadores" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Trabajadores</a></td>
 				</tr>
-				<?php 
+				<?php
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($_SESSION['ot_trabajador'] as $key => $trab){ ?>
 					<tr class="item-row linea_punteada">
@@ -994,9 +994,9 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 					<td colspan="5">Insumos a Utilizar</td>
 					<td><a href="<?php echo $location.'&addIns=true' ?>" title="Agregar Insumos" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Insumos</a></td>
 				</tr>
-				<?php 
+				<?php
 				//recorro el lsiatdo entregado por la base de datos
-				if(isset($_SESSION['ot_insumos'])&&$_SESSION['ot_insumos']!=''){	
+				if(isset($_SESSION['ot_insumos'])&&$_SESSION['ot_insumos']!=''){
 					foreach ($_SESSION['ot_insumos'] as $key => $insumos){ ?>
 						<tr class="item-row linea_punteada">
 							<td class="item-name" colspan="4"><?php echo $insumos['Nombre']; ?></td>
@@ -1020,7 +1020,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig
 					<td colspan="5">Productos a Utilizar</td>
 					<td><a href="<?php echo $location.'&addProd=true' ?>" title="Agregar Productos" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Productos</a></td>
 				</tr>
-				<?php 
+				<?php
 				//recorro el lsiatdo entregado por la base de datos
 				if(isset($_SESSION['ot_productos'])&&$_SESSION['ot_productos']!=''){
 					foreach ($_SESSION['ot_productos'] as $key => $productos){ ?>

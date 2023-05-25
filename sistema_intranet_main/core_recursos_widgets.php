@@ -23,7 +23,7 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+
 //widget_title($bg_color, $icon, $porcentaje, $titulo, $subtitulo_1, $subtitulo_2)
 echo widget_title('bg-green', 'fa-cog', 100, 'Sistema', 'Nombre', 'Editar Datos de Contacto');
 echo widget_title('bg-yellow', 'fa-cog', 100, 'Sistema', 'Nombre', 'Editar Datos de Contacto');
@@ -45,8 +45,8 @@ echo widget_Ficha_1('bg-aqua', 'fa-usd', 100, 'Cuentas por cobrar', '25 Pendient
 echo widget_Ficha_1('bgx-blue', 'fa-usd', 100, 'Cuentas por cobrar', '25 Pendientes', 'principal_facturas_alt.php?pagina=1&idTipo=2', 'Ver Pendientes', 1, 2);
 echo '<div class="clearfix"></div>';
 
-											
-//widget_Ficha_2($bg_color, $icon, $number, $width, $titulo, $subtitulo, $enlace, $texto_enlace, $color_enlace, $new_tab, $iframe)	
+
+//widget_Ficha_2($bg_color, $icon, $number, $width, $titulo, $subtitulo, $enlace, $texto_enlace, $color_enlace, $new_tab, $iframe)
 echo widget_Ficha_2('box-green', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2);
 echo widget_Ficha_2('box-yellow', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2);
 echo widget_Ficha_2('box-red', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2);
@@ -55,7 +55,7 @@ echo widget_Ficha_2('box-orange', '', 25, 4, 'Cantidad Clientes', '', '', '', ''
 echo widget_Ficha_2('box-blue', '', 25, 4, 'Cantidad Clientes', '', '', '', '', 1, 2);
 echo '<div class="clearfix"></div>';
 
-//widget_Ficha_3($bg_color, $icon, $number, $titulo, $enlace, $texto_enlace, $new_tab, $iframe)						
+//widget_Ficha_3($bg_color, $icon, $number, $titulo, $enlace, $texto_enlace, $new_tab, $iframe)
 echo widget_Ficha_3('btn-primary', 'fa-user', 25, 'Clientes', 'www.google.cl?pagina=1', 'Administrar', 1, 1);
 echo widget_Ficha_3('bg-green', 'fa-user', 25, 'Clientes', 'www.google.cl?pagina=1', 'Administrar', 1, 1);
 echo widget_Ficha_3('bg-yellow', 'fa-user', 25, 'Clientes', 'www.google.cl?pagina=1', 'Administrar', 1, 1);

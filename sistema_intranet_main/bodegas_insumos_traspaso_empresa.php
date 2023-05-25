@@ -590,7 +590,7 @@ if($valor_0!=0){
 					<td colspan="5">Insumos a Traspasar</td>
 					<td><a href="<?php echo $location.'&addProd=true' ?>" title="Agregar Insumo" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Insumos</a></td>
 				</tr>
-				<?php 
+				<?php
 				//variable
 				$valor_0 = 0; 
 				//codigo

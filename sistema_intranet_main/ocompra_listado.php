@@ -1584,7 +1584,7 @@ $total = 0;
 					<th>Cantidad</th>
 					<th width="10">Acciones</th>
 				</tr>
-				<?php 
+				<?php
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($_SESSION['ocompra_sol_rel'] as $key => $producto){ ?>
 					<tr class="item-row linea_punteada">

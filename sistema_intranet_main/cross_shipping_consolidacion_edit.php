@@ -801,7 +801,7 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 					<td></td>
 				</tr>
 
-				<?php 
+				<?php
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrEstibas as $estiba){ ?>
 					<tr class="item-row linea_punteada">

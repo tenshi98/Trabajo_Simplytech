@@ -306,7 +306,6 @@ array_push( $arrVideo,$row );
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
-					
 
 					<?php foreach ($arrVideo as $video){ ?>
 						<tr>

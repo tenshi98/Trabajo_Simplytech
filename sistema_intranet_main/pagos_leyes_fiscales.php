@@ -1088,7 +1088,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn); ?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
-				<?php 
+				<?php
 				//Saldo general del bloque
 				$x0  = Valores($_SESSION['pagos_leyes_fiscales_basicos']['IVA_TotalSaldo'], 0);
 

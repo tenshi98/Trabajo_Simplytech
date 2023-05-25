@@ -583,7 +583,7 @@ if($valor_0!=0){
 					<td colspan="5">Productos a Traspasar</td>
 					<td><a href="<?php echo $location.'&addProd=true' ?>" title="Agregar Producto" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Productos</a></td>
 				</tr>
-				<?php 
+				<?php
 				//variable
 				$valor_0 = 0; 
 				//codigo

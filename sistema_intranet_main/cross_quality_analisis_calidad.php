@@ -921,7 +921,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 						<a href="<?php echo $location.'&addTrab=true' ?>" title="Agregar Trabajadores" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Trabajadores</a>
 					</td>
 				</tr>
-				<?php 
+				<?php
 				//recorro el lsiatdo entregado por la base de datos
 				if(isset($_SESSION['cross_quality_ana_cali_trabajadores'])&&$_SESSION['cross_quality_ana_cali_trabajadores']!=''){
 					foreach ($_SESSION['cross_quality_ana_cali_trabajadores'] as $key => $trabajador){ ?>
@@ -950,7 +950,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 						<a href="<?php echo $location.'&addMaquina=true' ?>" title="Agregar Maquina" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Maquina</a>
 					</td>
 				</tr>
-				<?php 
+				<?php
 				//recorro el lsiatdo entregado por la base de datos
 				if(isset($_SESSION['cross_quality_ana_cali_maquinas'])&&$_SESSION['cross_quality_ana_cali_maquinas']!=''){
 					foreach ($_SESSION['cross_quality_ana_cali_maquinas'] as $key => $maquina){ ?>
@@ -1069,7 +1069,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
-				<?php 
+				<?php
 				//Precarga datos
 				$xdata1 = ano_actual();
 				$xdata2 = $xdata1+1;

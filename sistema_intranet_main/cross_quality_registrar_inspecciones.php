@@ -1059,7 +1059,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 						<a href="<?php echo $location.'&addTrab=true' ?>" title="Agregar Trabajadores" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Trabajadores</a>
 					</td>
 				</tr>
-				<?php 
+				<?php
 				//recorro el lsiatdo entregado por la base de datos
 				if(isset($_SESSION['cross_quality_reg_insp_trabajadores'])&&$_SESSION['cross_quality_reg_insp_trabajadores']!=''){
 					foreach ($_SESSION['cross_quality_reg_insp_trabajadores'] as $key => $trabajador){ ?>
@@ -1088,7 +1088,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 						<a href="<?php echo $location.'&addMaquina=true' ?>" title="Agregar Maquina" class="btn btn-xs btn-primary tooltip" style="position: initial;"><i class="fa fa-plus" aria-hidden="true"></i> Agregar Maquina</a>
 					</td>
 				</tr>
-				<?php 
+				<?php
 				//recorro el lsiatdo entregado por la base de datos
 				if(isset($_SESSION['cross_quality_reg_insp_maquinas'])&&$_SESSION['cross_quality_reg_insp_maquinas']!=''){
 					foreach ($_SESSION['cross_quality_reg_insp_maquinas'] as $key => $maquina){ ?>
@@ -1272,7 +1272,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
-				<?php 
+				<?php
 				//Precarga datos
 				$xdata1 = ano_actual();
 				$xdata2 = $xdata1+1;

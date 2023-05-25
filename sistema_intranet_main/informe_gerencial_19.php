@@ -446,7 +446,7 @@ if($s_arri_Ventas=='true'){            $s_arri_data .= ',tipo2';}
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Sistemas</h5>
 			<ul class="nav nav-tabs pull-right">
-				<?php 
+				<?php
 				//variable
 				$sis_count = 1;
 				//arreglo

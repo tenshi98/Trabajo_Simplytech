@@ -246,7 +246,7 @@ $arrBloqueo = db_select_array (false, $SIS_query, 'sistema_seguridad_bloqueo_ip'
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Listado de IP</h5>
 			<div class="toolbar">
-				<?php 
+				<?php
 				//paginacion
 				echo paginador_2('pagsup',$total_paginas, $original, $search, $num_pag ) ?>
 			</div>

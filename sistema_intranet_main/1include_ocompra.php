@@ -452,7 +452,7 @@ foreach ($arrHistorial as $doc){
 					<th>Producto</th>
 					<th>Cantidad</th>
 				</tr>
-				<?php 
+				<?php
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrSolMat as $producto){
 					switch ($producto['Type']) {

@@ -119,7 +119,7 @@
 						<td align="right"><?php echo Valores($rowDatos['DetalleInteresDeuda'], 0); ?></td>
 					</tr>
 				<?php } ?>
-				<?php 
+				<?php
 				//Otros Cargos 1
 				if(isset($rowDatos['DetalleOtrosCargos1Valor'])&&$rowDatos['DetalleOtrosCargos1Valor']!=0){ ?>
 					<tr>
@@ -164,7 +164,7 @@
 					<td colspan="2"><strong>TOTAL VENTA</strong></td>
 					<td align="right"><strong><?php echo Valores($rowDatos['DetalleTotalVenta'], 0); ?></strong></td>
 				</tr>
-				<?php 
+				<?php
 				//variable exento
 				$Exento = 0;
 				if(isset($rowDatos['DetalleSaldoFavor'])&&$rowDatos['DetalleSaldoFavor']!=0){
