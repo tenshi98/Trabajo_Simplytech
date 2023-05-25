@@ -46,12 +46,12 @@ if(!empty($_GET['submit_filter'])){
 	maquinas_listado.Nombre AS NombreMaquina,
 	core_ot_prioridad.Nombre AS NombrePrioridad,
 	core_ot_tipos.Nombre AS NombreTipo,
-	clientes_listado.Nombre AS NombreCliente';
+	telemetria_listado.Nombre AS NombreTelemetria';
 	$SIS_join  = '
 	LEFT JOIN `maquinas_listado`     ON maquinas_listado.idMaquina      = orden_trabajo_listado.idMaquina
 	LEFT JOIN `core_ot_prioridad`    ON core_ot_prioridad.idPrioridad   = orden_trabajo_listado.idPrioridad
 	LEFT JOIN `core_ot_tipos`        ON core_ot_tipos.idTipo            = orden_trabajo_listado.idTipo
-	LEFT JOIN `clientes_listado`     ON clientes_listado.idCliente      = orden_trabajo_listado.idCliente';
+	LEFT JOIN `telemetria_listado`   ON telemetria_listado.idTelemetria = orden_trabajo_listado.idTelemetria';
 	$SIS_order = 'orden_trabajo_listado.idOT DESC';
 	$arrOTS = array();
 	$arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrOTS');
@@ -69,6 +69,7 @@ if(!empty($_GET['submit_filter'])){
 						<tr role="row">
 							<th>#</th>
 							<th>F Prog</th>
+							<th>Equipo Telemetria</th>
 							<th>Maquina</th>
 							<th>Prioridad</th>
 							<th>Tipo Trabajo</th>
@@ -81,13 +82,14 @@ if(!empty($_GET['submit_filter'])){
 							<tr class="odd">
 								<td><?php echo $ot['idOT']; ?></td>
 								<td><?php echo Fecha_estandar($ot['f_programacion']); ?></td>
-								<td><?php if(isset($ot['NombreCliente'])&&$ot['NombreCliente']!=''){echo $ot['NombreCliente'].' - '.$ot['NombreMaquina'];}else{echo $ot['NombreMaquina'];} ?></td>
+								<td><?php echo $ot['NombreTelemetria']; ?></td>
+								<td><?php echo $ot['NombreMaquina']; ?></td>
 								<td><?php echo $ot['NombrePrioridad']; ?></td>
 								<td><?php echo $ot['NombreTipo']; ?></td>
 								<td><?php echo $ot['Observaciones']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 70px;" >
-										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_orden_trabajo.php?view='.simpleEncode($ot['idOT'], fecha_actual()); ?>" title="Ver Orden de Trabajo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_orden_trabajo_telemetria.php?view='.simpleEncode($ot['idOT'], fecha_actual()); ?>" title="Ver Orden de Trabajo" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=2){ ?><a target="_blank" rel="noopener noreferrer" href="<?php echo 'orden_trabajo_telemetria_editar.php?view='.$ot['idOT'].'&ter=true'; ?>" title="Editar Orden de Trabajo" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									</div>
 								</td>
