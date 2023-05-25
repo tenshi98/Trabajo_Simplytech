@@ -121,24 +121,11 @@ if(!empty($_GET['clone_idMaquina'])){
 
 	core_estados.Nombre AS Estado,
 	ops1.Nombre AS Componentes,
-	ops2.Nombre AS Matriz,
-
-	ubicacion_listado.Nombre AS Ubicacion,
-	ubicacion_listado_level_1.Nombre AS Ubicacion_lvl_1,
-	ubicacion_listado_level_2.Nombre AS Ubicacion_lvl_2,
-	ubicacion_listado_level_3.Nombre AS Ubicacion_lvl_3,
-	ubicacion_listado_level_4.Nombre AS Ubicacion_lvl_4,
-	ubicacion_listado_level_5.Nombre AS Ubicacion_lvl_5';
+	ops2.Nombre AS Matriz';
 	$SIS_join  = '
-	LEFT JOIN `core_estados`                  ON core_estados.idEstado                 = maquinas_listado.idEstado
-	LEFT JOIN `core_sistemas_opciones` ops1   ON ops1.idOpciones                       = maquinas_listado.idConfig_1
-	LEFT JOIN `core_sistemas_opciones` ops2   ON ops2.idOpciones                       = maquinas_listado.idConfig_2
-	LEFT JOIN `ubicacion_listado`             ON ubicacion_listado.idUbicacion         = maquinas_listado.idUbicacion
-	LEFT JOIN `ubicacion_listado_level_1`     ON ubicacion_listado_level_1.idLevel_1   = maquinas_listado.idUbicacion_lvl_1
-	LEFT JOIN `ubicacion_listado_level_2`     ON ubicacion_listado_level_2.idLevel_2   = maquinas_listado.idUbicacion_lvl_2
-	LEFT JOIN `ubicacion_listado_level_3`     ON ubicacion_listado_level_3.idLevel_3   = maquinas_listado.idUbicacion_lvl_3
-	LEFT JOIN `ubicacion_listado_level_4`     ON ubicacion_listado_level_4.idLevel_4   = maquinas_listado.idUbicacion_lvl_4
-	LEFT JOIN `ubicacion_listado_level_5`     ON ubicacion_listado_level_5.idLevel_5   = maquinas_listado.idUbicacion_lvl_5';
+	LEFT JOIN `core_estados`                  ON core_estados.idEstado  = maquinas_listado.idEstado
+	LEFT JOIN `core_sistemas_opciones` ops1   ON ops1.idOpciones        = maquinas_listado.idConfig_1
+	LEFT JOIN `core_sistemas_opciones` ops2   ON ops2.idOpciones        = maquinas_listado.idConfig_2';
 	$SIS_where = 'maquinas_listado.idMaquina = '.simpleDecode($_GET['id'], fecha_actual());
 	$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
@@ -200,9 +187,7 @@ if(!empty($_GET['clone_idMaquina'])){
 				//creo la variable vacia
 				$d[$i]  = '';
 				$n[$i]  = '';
-				$c[$i]  = '';
 				$u[$i]  = '';
-				$x[$i]  = '';
 				$y[$i]  = '';
 				$m[$i]  = '';
 				$t[$i]  = '';
@@ -690,7 +675,7 @@ if(!empty($_GET['clone_idMaquina'])){
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $maq['sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 140px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_maquinas.php?view='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_maquinaria.php?view='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&nombre_maquina='.$maq['Nombre'].'&clone_idMaquina='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Clonar Maquina" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
