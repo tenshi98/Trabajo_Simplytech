@@ -151,7 +151,7 @@ $arrHijos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado_d
 					<td class="item-name"><strong>Estado</strong></td>
 					<td width="120"  style="width:120px;"><strong>Acciones</strong></td>
 				</tr>
-				<?php 
+				<?php
 				//recorro el lsiatdo entregado por la base de datos
 				foreach ($arrHijos as $hijo) {
 					if(isset($hijo['Vehiculo_1_Nombre'])&&$hijo['Vehiculo_1_Nombre']!=''){ ?>
