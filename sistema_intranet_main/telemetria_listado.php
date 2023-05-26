@@ -252,7 +252,7 @@ $arrEXOpciones[0] = 'No Asignado';
 						<?php if($rowdata['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
 						<?php } elseif($rowdata['id_Geo']==2){ ?>
-							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
+							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
@@ -327,7 +327,7 @@ $arrEXOpciones[0] = 'No Asignado';
 							<?php if(isset($rowdata['Grupo_giro'])&&$rowdata['Grupo_giro']!=0){ ?>                           <strong>Gruas - Grupo Giro: </strong><?php echo $rowdata['Grupo_giro']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Grupo_carro'])&&$rowdata['Grupo_carro']!=0){ ?>                         <strong>Gruas - Grupo Carro: </strong><?php echo $rowdata['Grupo_carro']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Grupo_voltaje'])&&$rowdata['Grupo_voltaje']!=0){ ?>                     <strong>Gruas - Grupo Voltaje: </strong><?php echo $rowdata['Grupo_voltaje']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=0){ ?>                             <strong>Gruas - Ubicacion: </strong><?php echo $rowdata['Ubicacion']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=0){ ?>                             <strong>Gruas - Ubicación: </strong><?php echo $rowdata['Ubicacion']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Grupo_motor_subida'])&&$rowdata['Grupo_motor_subida']!=0){ ?>           <strong>Ascensores - Grupo Amperaje Motor Subida: </strong><?php echo $rowdata['Grupo_motor_subida']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Grupo_motor_bajada'])&&$rowdata['Grupo_motor_bajada']!=0){ ?>           <strong>Ascensores - Grupo Amperaje Motor Bajada: </strong><?php echo $rowdata['Grupo_motor_bajada']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Grupo_Despliegue'])&&$rowdata['Grupo_Despliegue']!=0){ ?>               <strong>CrossEnergy - Grupo Despliegue: </strong><?php echo $rowdata['Grupo_Despliegue']; ?><br/><?php } ?>
@@ -340,9 +340,9 @@ $arrEXOpciones[0] = 'No Asignado';
 
 							<?php if($rowdata['id_Geo']==2){ ?>
 								<br/>
-								<strong class="color-red-dark">Ubicacion</strong><br/>
+								<strong class="color-red-dark">Ubicación</strong><br/>
 								<?php if(isset($rowdata['ZonaSinGPS'])&&$rowdata['ZonaSinGPS']!=''){ ?> <strong>Zona de Trabajo : </strong><?php echo $rowdata['ZonaSinGPS']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Direccion'])&&$rowdata['Direccion']!=''){ ?>   <strong>Direccion : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad']; ?><br/><?php } ?>
+								<?php if(isset($rowdata['Direccion'])&&$rowdata['Direccion']!=''){ ?>   <strong>Dirección : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad']; ?><br/><?php } ?>
 							<?php } ?>
 
 						</p>
@@ -645,14 +645,14 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $equip['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 140px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_telemetria.php?view='.simpleEncode($equip['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_telemetria.php?view='.simpleEncode($equip['idTelemetria'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&nombre_equipo='.$equip['Nombre'].'&clone_idTelemetria='.$equip['idTelemetria']; ?>" title="Clonar Equipo" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$equip['idTelemetria']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$equip['idTelemetria']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									//se verifica que el usuario no sea uno mismo
 									$ubicacion = $location.'&del='.simpleEncode($equip['idTelemetria'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el equipo '.$equip['Nombre'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

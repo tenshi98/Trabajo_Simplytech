@@ -40,7 +40,7 @@ if (!empty($_POST['submit'])){
 }
 //formulario para crear
 if (!empty($_POST['submit_pas_2a'])){
-	//Nueva Ubicacion
+	//Nueva Ubicación
 	$location = $original;
 	$location .='?pagina='.$_GET['pagina'];
 	//Llamamos al formulario
@@ -49,7 +49,7 @@ if (!empty($_POST['submit_pas_2a'])){
 }
 //formulario para crear
 if (!empty($_POST['submit_pas_2b'])){
-	//Nueva Ubicacion
+	//Nueva Ubicación
 	$location = $original;
 	$location .='?pagina='.$_GET['pagina'];
 	//Llamamos al formulario
@@ -608,7 +608,7 @@ $yz = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstad
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 140px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_evaluacion.php?view='.simpleEncode($usuarios['idAsignadas'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_evaluacion.php?view='.simpleEncode($usuarios['idAsignadas'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo $location.'&add='.$usuarios['idAsignadas']; ?>" title="Agregar Reintento para Reprobados" class="btn btn-primary btn-sm tooltip"><i class="fa fa-user-plus" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&editFecha='.$usuarios['idAsignadas']; ?>" title="Editar Fecha Programada" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){

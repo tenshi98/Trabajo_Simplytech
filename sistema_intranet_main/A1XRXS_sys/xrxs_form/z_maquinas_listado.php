@@ -96,10 +96,10 @@ require_once '0_validate_user_1.php';
 			case 'Fabricante':          if(empty($Fabricante)){           $error['Fabricante']            = 'error/No ha ingresado el Fabricante';}break;
 			case 'fincorporacion':      if(empty($fincorporacion)){       $error['fincorporacion']        = 'error/No ha seleccionado la bodega de productos';}break;
 			case 'Descripcion':         if(empty($Descripcion)){          $error['Descripcion']           = 'error/No ha ingresado la descripcion';}break;
-			case 'idConfig_1':          if(empty($idConfig_1)){           $error['idConfig_1']            = 'error/No ha seleccionado la opcion 1';}break;
-			case 'idConfig_2':          if(empty($idConfig_2)){           $error['idConfig_2']            = 'error/No ha seleccionado la opcion 2';}break;
-			case 'idConfig_3':          if(empty($idConfig_3)){           $error['idConfig_3']            = 'error/No ha seleccionado la opcion 3';}break;
-			case 'idConfig_4':          if(empty($idConfig_4)){           $error['idConfig_4']            = 'error/No ha seleccionado la opcion 4';}break;
+			case 'idConfig_1':          if(empty($idConfig_1)){           $error['idConfig_1']            = 'error/No ha seleccionado la opción 1';}break;
+			case 'idConfig_2':          if(empty($idConfig_2)){           $error['idConfig_2']            = 'error/No ha seleccionado la opción 2';}break;
+			case 'idConfig_3':          if(empty($idConfig_3)){           $error['idConfig_3']            = 'error/No ha seleccionado la opción 3';}break;
+			case 'idConfig_4':          if(empty($idConfig_4)){           $error['idConfig_4']            = 'error/No ha seleccionado la opción 4';}break;
 			case 'idUbicacion':         if(empty($idUbicacion)){          $error['idUbicacion']           = 'error/No ha seleccionado la ubicacion';}break;
 			case 'idUbicacion_lvl_1':   if(empty($idUbicacion_lvl_1)){    $error['idUbicacion_lvl_1']     = 'error/No ha seleccionado el nivel 1';}break;
 			case 'idUbicacion_lvl_2':   if(empty($idUbicacion_lvl_2)){    $error['idUbicacion_lvl_2']     = 'error/No ha seleccionado el nivel 2';}break;
@@ -342,12 +342,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -876,12 +876,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1086,12 +1086,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

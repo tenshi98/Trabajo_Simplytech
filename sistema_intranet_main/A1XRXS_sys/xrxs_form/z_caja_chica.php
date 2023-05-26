@@ -456,7 +456,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['caja_ing_basicos']['idUsuario']) OR $_SESSION['caja_ing_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
 				if(!isset($_SESSION['caja_ing_basicos']['idTipo']) OR $_SESSION['caja_ing_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['caja_ing_basicos']['idEstado']) OR $_SESSION['caja_ing_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha seleccionado el estado';}
-				if(!isset($_SESSION['caja_ing_basicos']['Creacion_fecha']) OR $_SESSION['caja_ing_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['caja_ing_basicos']['Creacion_fecha']) OR $_SESSION['caja_ing_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['caja_ing_basicos']['Observaciones']) OR $_SESSION['caja_ing_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['caja_ing_basicos']['Valor']) OR $_SESSION['caja_ing_basicos']['Valor']=='' ){                   $error['Valor']            = 'error/No ha ingresado el valor total del documento';}
 
@@ -1017,7 +1017,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['caja_eg_basicos']['idUsuario']) OR $_SESSION['caja_eg_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
 				if(!isset($_SESSION['caja_eg_basicos']['idTipo']) OR $_SESSION['caja_eg_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['caja_eg_basicos']['idEstado']) OR $_SESSION['caja_eg_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha seleccionado el estado';}
-				if(!isset($_SESSION['caja_eg_basicos']['Creacion_fecha']) OR $_SESSION['caja_eg_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['caja_eg_basicos']['Creacion_fecha']) OR $_SESSION['caja_eg_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['caja_eg_basicos']['idTrabajador']) OR $_SESSION['caja_eg_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el trabajador';}
 				if(!isset($_SESSION['caja_eg_basicos']['Observaciones']) OR $_SESSION['caja_eg_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['caja_eg_basicos']['Valor']) OR $_SESSION['caja_eg_basicos']['Valor']=='' ){                   $error['Valor']            = 'error/No ha ingresado el valor total del documento';}
@@ -1674,7 +1674,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['caja_rend_basicos']['idUsuario']) OR $_SESSION['caja_rend_basicos']['idUsuario']=='' ){                               $error['idUsuario']                 = 'error/No ha seleccionado el usuario';}
 				if(!isset($_SESSION['caja_rend_basicos']['idTipo']) OR $_SESSION['caja_rend_basicos']['idTipo']=='' ){                                     $error['idTipo']                    = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['caja_rend_basicos']['idEstado']) OR $_SESSION['caja_rend_basicos']['idEstado']=='' ){                                 $error['idEstado']                  = 'error/No ha seleccionado el estado';}
-				if(!isset($_SESSION['caja_rend_basicos']['Creacion_fecha']) OR $_SESSION['caja_rend_basicos']['Creacion_fecha']=='' ){                     $error['Creacion_fecha']            = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['caja_rend_basicos']['Creacion_fecha']) OR $_SESSION['caja_rend_basicos']['Creacion_fecha']=='' ){                     $error['Creacion_fecha']            = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['caja_rend_basicos']['Observaciones']) OR $_SESSION['caja_rend_basicos']['Observaciones']=='' ){                       $error['Observaciones']             = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['caja_rend_basicos']['Valor']) OR $_SESSION['caja_rend_basicos']['Valor']=='' ){                                       $error['Valor']                     = 'error/No ha ingresado el valor total del documento';}
 				if(!isset($_SESSION['caja_rend_basicos']['idFacturacionRelacionada']) OR $_SESSION['caja_rend_basicos']['idFacturacionRelacionada']=='' ){ $error['idFacturacionRelacionada']  = 'error/No ha ingresado el documento relacionado';}
@@ -2401,7 +2401,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['caja_rendida_basicos']['idUsuario']) OR $_SESSION['caja_rendida_basicos']['idUsuario']=='' ){               $error['idUsuario']       = 'error/No ha seleccionado el usuario';}
 				if(!isset($_SESSION['caja_rendida_basicos']['idTipo']) OR $_SESSION['caja_rendida_basicos']['idTipo']=='' ){                     $error['idTipo']          = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['caja_rendida_basicos']['idEstado']) OR $_SESSION['caja_rendida_basicos']['idEstado']=='' ){                 $error['idEstado']        = 'error/No ha seleccionado el estado';}
-				if(!isset($_SESSION['caja_rendida_basicos']['Creacion_fecha']) OR $_SESSION['caja_rendida_basicos']['Creacion_fecha']=='' ){     $error['Creacion_fecha']  = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['caja_rendida_basicos']['Creacion_fecha']) OR $_SESSION['caja_rendida_basicos']['Creacion_fecha']=='' ){     $error['Creacion_fecha']  = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['caja_rendida_basicos']['Observaciones']) OR $_SESSION['caja_rendida_basicos']['Observaciones']=='' ){       $error['Observaciones']   = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['caja_rendida_basicos']['Valor']) OR $_SESSION['caja_rendida_basicos']['Valor']=='' ){                       $error['Valor']           = 'error/No ha ingresado el valor total del documento';}
 				if(!isset($_SESSION['caja_rendida_basicos']['idTrabajador']) OR $_SESSION['caja_rendida_basicos']['idTrabajador']=='' ){         $error['idTrabajador']    = 'error/No ha seleccionado el trabajador';}

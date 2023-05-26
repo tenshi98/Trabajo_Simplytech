@@ -31,7 +31,7 @@ require_once '0_validate_user_1.php';
 		switch ($INT_valor) {
 			case 'idSitio':      if(empty($idSitio)){     $error['idSitio']      = 'error/No ha ingresado el id';}break;
 			case 'Nombre':       if(empty($Nombre)){      $error['Nombre']       = 'error/No ha ingresado el nombre';}break;
-			case 'Direccion':    if(empty($Direccion)){   $error['Direccion']    = 'error/No ha ingresado la direccion';}break;
+			case 'Direccion':    if(empty($Direccion)){   $error['Direccion']    = 'error/No ha ingresado la dirección';}break;
 
 		}
 	}
@@ -51,7 +51,7 @@ require_once '0_validate_user_1.php';
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	//Verifica si el mail corresponde
-	if(isset($Direccion)&&!validarURL($Direccion)){  $error['Direccion'] = 'error/La Direccion Web ingresada no es valida';}
+	if(isset($Direccion)&&!validarURL($Direccion)){  $error['Direccion'] = 'error/La Dirección Web ingresada no es valida';}
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -156,12 +156,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

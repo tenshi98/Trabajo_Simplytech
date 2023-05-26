@@ -504,7 +504,7 @@ if($in_eq_fueralinea!=0){
 					};
 					map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
-					//Ubicacion de los distintos dispositivos
+					//Ubicación de los distintos dispositivos
 					var locations = [ ';
 
 						//burbuja
@@ -633,7 +633,7 @@ if($in_eq_fueralinea!=0){
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

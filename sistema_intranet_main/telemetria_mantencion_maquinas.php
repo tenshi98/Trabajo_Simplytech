@@ -208,7 +208,7 @@ $arrTipos = db_select_array (false, $SIS_query, 'telemetria_listado_sensores', $
 						<td><?php echo $rowdata['SensoresValor_'.$i]; ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz'].'&mod='.$i; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>
@@ -457,13 +457,13 @@ $arrMatriz = db_select_array (false, $SIS_query, 'telemetria_mantencion_matriz',
 						<td><label class="label <?php if(isset($maq['idEstado'])&&$maq['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $maq['Estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 140px;" >
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idMatriz_2='.$maq['idMatriz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idMatriz_2='.$maq['idMatriz']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&nombre_matriz='.$maq['Nombre'].'&clone_idMatriz='.$maq['idMatriz']; ?>" title="Clonar Matriz" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idMatriz='.$maq['idMatriz']; ?>" title="Editar Matriz" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($maq['idMatriz'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la matriz '.$maq['Nombre'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

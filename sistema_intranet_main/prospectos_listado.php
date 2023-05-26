@@ -207,9 +207,9 @@ foreach ($arrTabs as $tab) {
 								<strong>Tipo de Prospecto : </strong><?php echo $rowdata['tipoProspecto']; ?><br/>
 								<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
 								<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-								<strong>Region : </strong><?php echo $rowdata['nombre_region']; ?><br/>
+								<strong>Región : </strong><?php echo $rowdata['nombre_region']; ?><br/>
 								<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
 								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
 								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
 							</p>
@@ -240,7 +240,7 @@ foreach ($arrTabs as $tab) {
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
 							<p class="text-muted word_break">
 								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-								<strong>Razon Social : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
+								<strong>Razón Social : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
 								<strong>Giro de la empresa: </strong><?php echo $rowdata['Giro']; ?><br/>
 								<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?><br/>
 							</p>
@@ -267,16 +267,16 @@ foreach ($arrTabs as $tab) {
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<?php
-							//se arma la direccion
+							//se arma la dirección
 							$direccion = "";
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
 							if(isset($rowdata["nombre_comuna"])&&$rowdata["nombre_comuna"]!=''){   $direccion .= ', '.$rowdata["nombre_comuna"];}
 							if(isset($rowdata["nombre_region"])&&$rowdata["nombre_region"]!=''){   $direccion .= ', '.$rowdata["nombre_region"];}
-							//se despliega mensaje en caso de no existir direccion
+							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
 								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
 							}else{
-								$Alert_Text  = 'No tiene una direccion definida';
+								$Alert_Text  = 'No tiene una dirección definida';
 								alert_post_data(4,2,2, $Alert_Text);
 							}
 						?>
@@ -342,10 +342,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 2);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 1);
 				$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x4, 1);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x7, 1,'fa fa-map');
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x8, 1,'fa fa-industry');
 				//Solo para plataforma Intranet
 				if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){
@@ -554,10 +554,10 @@ foreach ($arrTabs as $tab) {
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 1);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 1);
 				$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x4, 1);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x7, 1,'fa fa-map');
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
 				$Form_Inputs->form_select('Estado Fidelizacion','idEstadoFidelizacion', $x10, 1, 'idEstadoFidelizacion', 'Nombre', 'prospectos_estado_fidelizacion', 0, '', $dbConn);
 				$Form_Inputs->form_select('Etapa','idEtapa', $x11, 1, 'idEtapa', 'Nombre', 'prospectos_etapa', 0, '', $dbConn);
@@ -676,12 +676,12 @@ foreach ($arrTabs as $tab) {
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $prospect['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_prospecto.php?view='.simpleEncode($prospect['idProspecto'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$prospect['idProspecto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_prospecto.php?view='.simpleEncode($prospect['idProspecto'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$prospect['idProspecto']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($prospect['idProspecto'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar al prospecto '.$prospect['Nombre'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

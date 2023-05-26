@@ -103,10 +103,10 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 					$Form_Inputs->form_input_text('Nombre del Grupo Camaras', 'Nombre', $x1, 1);
 					$Form_Inputs->form_input_number_spinner('N° Camaras','N_Camaras', $x2, 0, 500, 1, 0, 1);
 					$Form_Inputs->form_select_country('Pais','idPais', $x3, 1, $dbConn);
-					$Form_Inputs->form_select_depend1('Region','idCiudad', $x4, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Región','idCiudad', $x4, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x5, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 											 $dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x6, 1,'fa fa-map');
+					$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x6, 1,'fa fa-map');
 					$Form_Inputs->form_select('Subconfiguracion','idSubconfiguracion', $x7, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_select('Tipo de Camara','idTipoCamara', $x8, 1, 'idTipoCamara', 'Nombre', 'core_tipos_camara', 0, '', $dbConn);
 					$Form_Inputs->form_input_text('Usuario', 'Config_usuario', $x9, 1);

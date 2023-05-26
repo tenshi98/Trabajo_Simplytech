@@ -62,7 +62,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowdata['Nombre'], 'Editar Ubicacion'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Unidades de Negocio', $rowdata['Nombre'], 'Editar Ubicación'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -76,7 +76,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class="active"><a href="<?php echo 'unidad_negocio_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicacion</a></li>
+						<li class="active"><a href="<?php echo 'unidad_negocio_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicación</a></li>
 						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha Tecnica</a></li>
 						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> HDS</a></li>
 						<li class=""><a href="<?php echo 'unidad_negocio_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
@@ -112,7 +112,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x1,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idCliente = '.$rowdata['idCliente'].' AND idEstado=1',   0,
+					$Form_Inputs->form_select_depend5('Ubicación', 'idUbicacion',  $x1,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idCliente = '.$rowdata['idCliente'].' AND idEstado=1',   0,
 							                 'Nivel 1', 'idUbicacion_lvl_1',  $x2,  2,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0,
 							                 'Nivel 2', 'idUbicacion_lvl_2',  $x3,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
 							                 'Nivel 3', 'idUbicacion_lvl_3',  $x4,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,

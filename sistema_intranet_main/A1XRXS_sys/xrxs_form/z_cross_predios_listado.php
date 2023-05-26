@@ -44,7 +44,7 @@ require_once '0_validate_user_1.php';
 			case 'idPais':     if(empty($idPais)){     $error['idPais']      = 'error/No ha seleccionado el Pais';}break;
 			case 'idCiudad':   if(empty($idCiudad)){   $error['idCiudad']    = 'error/No ha seleccionado la Ciudad';}break;
 			case 'idComuna':   if(empty($idComuna)){   $error['idComuna']    = 'error/No ha seleccionado la Comuna';}break;
-			case 'Direccion':  if(empty($Direccion)){  $error['Direccion']   = 'error/No ha seleccionado la Direccion';}break;
+			case 'Direccion':  if(empty($Direccion)){  $error['Direccion']   = 'error/No ha seleccionado la Dirección';}break;
 
 		}
 	}
@@ -363,12 +363,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

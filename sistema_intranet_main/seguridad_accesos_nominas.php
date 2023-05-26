@@ -301,7 +301,7 @@ if(!empty($_GET['addFile'])){ ?>
 						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
-						<td class="meta-head">Ubicacion</td>
+						<td class="meta-head">Ubicación</td>
 						<td><?php echo $_SESSION['nomina_basicos']['Ubicacion']; ?></td>
 					</tr>
 					<tr>
@@ -719,14 +719,14 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_seguridad_accesos_nominas.php?view='.simpleEncode($tipo['idAcceso'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_seguridad_accesos_nominas.php?view='.simpleEncode($tipo['idAcceso'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($tipo['FechaProgramada']==fecha_actual()){ ?>
-										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo 'seguridad_accesos_nominas_editar.php?id='.$tipo['idAcceso']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo 'seguridad_accesos_nominas_editar.php?id='.$tipo['idAcceso']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del_nomina='.simpleEncode($tipo['idAcceso'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la nomina de acceso '.$tipo['idAcceso'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

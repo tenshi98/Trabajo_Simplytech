@@ -79,7 +79,7 @@ require_once '0_validate_user_1.php';
 			case 'Observaciones':     if(empty($Observaciones)){     $error['Observaciones']    = 'error/No ha ingresado las obsercaciones';}break;
 			case 'idSistema':         if(empty($idSistema)){         $error['idSistema']        = 'error/No ha seleccionado el sistema';}break;
 			case 'idUsuario':         if(empty($idUsuario)){         $error['idUsuario']        = 'error/No ha seleccionado a un usuario';}break;
-			case 'Creacion_fecha':    if(empty($Creacion_fecha)){    $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'Creacion_fecha':    if(empty($Creacion_fecha)){    $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}break;
 			case 'idTipo':            if(empty($idTipo)){            $error['idTipo']           = 'error/No ha seleccionado un tipo';}break;
 			case 'idProducto':        if(empty($idProducto)){        $error['idProducto']       = 'error/No ha seleccionado un producto';}break;
 			case 'Number':            if(empty($Number)){            $error['Number']           = 'error/No ha ingresado un numero';}break;
@@ -101,7 +101,7 @@ require_once '0_validate_user_1.php';
 			case 'MontoPagado':       if(empty($MontoPagado)){       $error['MontoPagado']      = 'error/No ha ingresado el monto de pago';}break;
 			case 'idTrabajador':      if(empty($idTrabajador)){      $error['idTrabajador']     = 'error/No ha seleccionado un trabajador';}break;
 			case 'montoPactado':      if(empty($montoPactado)){      $error['montoPactado']     = 'error/No ha ingresado el monto pactado';}break;
-			case 'fecha_auto':        if(empty($fecha_auto)){        $error['fecha_auto']       = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'fecha_auto':        if(empty($fecha_auto)){        $error['fecha_auto']       = 'error/No ha ingresado la fecha de creación';}break;
 			case 'Nombre':            if(empty($Nombre)){            $error['Nombre']           = 'error/No ha ingresado el nombre';}break;
 			case 'vTotal':            if(empty($vTotal)){            $error['vTotal']           = 'error/No ha ingresado el valor total';}break;
 			case 'oldidProducto':     if(empty($oldidProducto)){     $error['oldidProducto']    = 'error/No ha ingresado el id antiguo';}break;
@@ -496,7 +496,7 @@ require_once '0_validate_user_1.php';
 
 			//Se comprueba las fechas
 			if($_SESSION['productos_ing_basicos']['Creacion_fecha']>$valor){
-				$error['ndata_1'] = 'error/La fecha de vencimiento es anterior a la fecha de creacion';
+				$error['ndata_1'] = 'error/La fecha de vencimiento es anterior a la fecha de creación';
 			}
 
 			//valido que no esten vacios
@@ -1018,7 +1018,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_ing_basicos']['Observaciones']) OR $_SESSION['productos_ing_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['productos_ing_basicos']['idSistema']) OR $_SESSION['productos_ing_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el id del sistema';}
 				if(!isset($_SESSION['productos_ing_basicos']['idUsuario']) OR $_SESSION['productos_ing_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['productos_ing_basicos']['Creacion_fecha']) OR $_SESSION['productos_ing_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['productos_ing_basicos']['Creacion_fecha']) OR $_SESSION['productos_ing_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['productos_ing_basicos']['idTipo']) OR $_SESSION['productos_ing_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['productos_ing_basicos']['idUsoIVA']) OR $_SESSION['productos_ing_basicos']['idUsoIVA']=='' ){             $error['idUsoIVA']         = 'error/No ha seleccionado la exencion del IVA';}
 				//compruebo que sea una factura y que tenga fecha de pago
@@ -1764,7 +1764,7 @@ require_once '0_validate_user_1.php';
 
 			//Se comprueba las fechas
 			if($_SESSION['productos_egr_basicos']['Creacion_fecha']>$valor){
-				$error['ndata_1'] = 'error/La fecha de vencimiento es anterior a la fecha de creacion';
+				$error['ndata_1'] = 'error/La fecha de vencimiento es anterior a la fecha de creación';
 			}
 
 			//valido que no esten vacios
@@ -2115,7 +2115,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_egr_basicos']['Observaciones']) OR $_SESSION['productos_egr_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['productos_egr_basicos']['idSistema']) OR $_SESSION['productos_egr_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['productos_egr_basicos']['idUsuario']) OR $_SESSION['productos_egr_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha sleccionado el usuario';}
-				if(!isset($_SESSION['productos_egr_basicos']['Creacion_fecha']) OR $_SESSION['productos_egr_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creacion';}
+				if(!isset($_SESSION['productos_egr_basicos']['Creacion_fecha']) OR $_SESSION['productos_egr_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creación';}
 				if(!isset($_SESSION['productos_egr_basicos']['idTipo']) OR $_SESSION['productos_egr_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['productos_egr_basicos']['idCliente']) OR $_SESSION['productos_egr_basicos']['idCliente']=='' ){           $error['idCliente']        = 'error/No ha seleccionado el cliente';}
 				if(!isset($_SESSION['productos_egr_basicos']['idTrabajador']) OR $_SESSION['productos_egr_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el vendedor';}
@@ -2914,7 +2914,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_gasto_basicos']['Observaciones']) OR $_SESSION['productos_gasto_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['productos_gasto_basicos']['idSistema']) OR $_SESSION['productos_gasto_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el id';}
 				if(!isset($_SESSION['productos_gasto_basicos']['idUsuario']) OR $_SESSION['productos_gasto_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['productos_gasto_basicos']['Creacion_fecha']) OR $_SESSION['productos_gasto_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['productos_gasto_basicos']['Creacion_fecha']) OR $_SESSION['productos_gasto_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['productos_gasto_basicos']['idTipo']) OR $_SESSION['productos_gasto_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al gasto de bodega';
@@ -3472,7 +3472,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_traspaso_basicos']['Observaciones']) OR $_SESSION['productos_traspaso_basicos']['Observaciones']=='' ){      $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['productos_traspaso_basicos']['idSistema']) OR $_SESSION['productos_traspaso_basicos']['idSistema']=='' ){              $error['idSistema']        = 'error/No ha seleccionado el id';}
 				if(!isset($_SESSION['productos_traspaso_basicos']['idUsuario']) OR $_SESSION['productos_traspaso_basicos']['idUsuario']=='' ){              $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['productos_traspaso_basicos']['Creacion_fecha']) OR $_SESSION['productos_traspaso_basicos']['Creacion_fecha']=='' ){    $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['productos_traspaso_basicos']['Creacion_fecha']) OR $_SESSION['productos_traspaso_basicos']['Creacion_fecha']=='' ){    $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['productos_traspaso_basicos']['idTipo']) OR $_SESSION['productos_traspaso_basicos']['idTipo']=='' ){                    $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al traspaso de bodega';
@@ -4054,7 +4054,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_transform_basicos']['Observaciones']) OR $_SESSION['productos_transform_basicos']['Observaciones']=='' ){      $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['productos_transform_basicos']['idSistema']) OR $_SESSION['productos_transform_basicos']['idSistema']=='' ){              $error['idSistema']        = 'error/No ha seleccionado el id';}
 				if(!isset($_SESSION['productos_transform_basicos']['idUsuario']) OR $_SESSION['productos_transform_basicos']['idUsuario']=='' ){              $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['productos_transform_basicos']['Creacion_fecha']) OR $_SESSION['productos_transform_basicos']['Creacion_fecha']=='' ){    $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['productos_transform_basicos']['Creacion_fecha']) OR $_SESSION['productos_transform_basicos']['Creacion_fecha']=='' ){    $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['productos_transform_basicos']['idTipo']) OR $_SESSION['productos_transform_basicos']['idTipo']=='' ){                    $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al traspaso de bodega';
@@ -4686,7 +4686,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_traspasoempresa_basicos']['Observaciones']) OR $_SESSION['productos_traspasoempresa_basicos']['Observaciones']=='' ){        $error['Observaciones']     = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['productos_traspasoempresa_basicos']['idSistema']) OR $_SESSION['productos_traspasoempresa_basicos']['idSistema']=='' ){                $error['idSistema']         = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['productos_traspasoempresa_basicos']['idUsuario']) OR $_SESSION['productos_traspasoempresa_basicos']['idUsuario']=='' ){                $error['idUsuario']         = 'error/No ha seleccionado el id usuario';}
-				if(!isset($_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']) OR $_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']=='' ){      $error['Creacion_fecha']    = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']) OR $_SESSION['productos_traspasoempresa_basicos']['Creacion_fecha']=='' ){      $error['Creacion_fecha']    = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['productos_traspasoempresa_basicos']['idTipo']) OR $_SESSION['productos_traspasoempresa_basicos']['idTipo']=='' ){                      $error['idTipo']            = 'error/No ha seleccionado el tipo';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al traspaso de bodega';
@@ -4819,7 +4819,7 @@ require_once '0_validate_user_1.php';
 					/*********************************************************************/
 					//Busco los usuarios que posean el permiso a la bodega
 					$Direccionbase = "bodegas_productos_stock.php";
-					$Notificacion  = '<div class= "btn-group" ><a href= "view_mov_productos.php?view='.simpleEncode($ultimo_id, fecha_actual()).'" title= "Ver Informacion" class= "iframe btn btn-primary btn-sm tooltip"><i class= "fa fa-list"></i></a></div>';
+					$Notificacion  = '<div class= "btn-group" ><a href= "view_mov_productos.php?view='.simpleEncode($ultimo_id, fecha_actual()).'" title= "Ver Información" class= "iframe btn btn-primary btn-sm tooltip"><i class= "fa fa-list"></i></a></div>';
 					$Notificacion .= ' Se ha realizado un traspaso de materiales desde otra empresa';
 					$Estado = '1';
 
@@ -5275,7 +5275,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_traspasomanualempresa_basicos']['Observaciones']) OR $_SESSION['productos_traspasomanualempresa_basicos']['Observaciones']=='' ){        $error['Observaciones']     = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['productos_traspasomanualempresa_basicos']['idSistema']) OR $_SESSION['productos_traspasomanualempresa_basicos']['idSistema']=='' ){                $error['idSistema']         = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']) OR $_SESSION['productos_traspasomanualempresa_basicos']['idUsuario']=='' ){                $error['idUsuario']         = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['productos_traspasomanualempresa_basicos']['Creacion_fecha']) OR $_SESSION['productos_traspasomanualempresa_basicos']['Creacion_fecha']=='' ){      $error['Creacion_fecha']    = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['productos_traspasomanualempresa_basicos']['Creacion_fecha']) OR $_SESSION['productos_traspasomanualempresa_basicos']['Creacion_fecha']=='' ){      $error['Creacion_fecha']    = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['productos_traspasomanualempresa_basicos']['idTipo']) OR $_SESSION['productos_traspasomanualempresa_basicos']['idTipo']=='' ){                      $error['idTipo']            = 'error/No ha seleccionado el tipo';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al traspaso de bodega';
@@ -5994,7 +5994,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_ing_manual_basicos']['Observaciones']) OR $_SESSION['productos_ing_manual_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['productos_ing_manual_basicos']['idSistema']) OR $_SESSION['productos_ing_manual_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['productos_ing_manual_basicos']['idUsuario']) OR $_SESSION['productos_ing_manual_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['productos_ing_manual_basicos']['Creacion_fecha']) OR $_SESSION['productos_ing_manual_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['productos_ing_manual_basicos']['Creacion_fecha']) OR $_SESSION['productos_ing_manual_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['productos_ing_manual_basicos']['idTipo']) OR $_SESSION['productos_ing_manual_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				//se verifica el uso del iva
 				if(isset($_SESSION['productos_ing_manual_basicos']['idUsoIVA'])&&$_SESSION['productos_ing_manual_basicos']['idUsoIVA']==2){
@@ -7698,7 +7698,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_ing_nc_basicos']['Observaciones']) OR $_SESSION['productos_ing_nc_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['productos_ing_nc_basicos']['idSistema']) OR $_SESSION['productos_ing_nc_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['productos_ing_nc_basicos']['idUsuario']) OR $_SESSION['productos_ing_nc_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha sleccionado el usuario';}
-				if(!isset($_SESSION['productos_ing_nc_basicos']['Creacion_fecha']) OR $_SESSION['productos_ing_nc_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creacion';}
+				if(!isset($_SESSION['productos_ing_nc_basicos']['Creacion_fecha']) OR $_SESSION['productos_ing_nc_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creación';}
 				if(!isset($_SESSION['productos_ing_nc_basicos']['idTipo']) OR $_SESSION['productos_ing_nc_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['productos_ing_nc_basicos']['idProveedor']) OR $_SESSION['productos_ing_nc_basicos']['idProveedor']=='' ){       $error['idProveedor']      = 'error/No ha seleccionado el proveedor';}
 				//se verifica el uso del iva
@@ -9183,7 +9183,7 @@ require_once '0_validate_user_1.php';
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 
-				//Se trae informacion
+				//Se trae información
 				$rowProducto = db_select_data (false, 'productos_listado.Nombre,sistema_productos_uml.Nombre AS Unimed', 'productos_listado', 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//Borro el producto
@@ -9448,7 +9448,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['productos_egr_nc_basicos']['Observaciones']) OR $_SESSION['productos_egr_nc_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['productos_egr_nc_basicos']['idSistema']) OR $_SESSION['productos_egr_nc_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['productos_egr_nc_basicos']['idUsuario']) OR $_SESSION['productos_egr_nc_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha sleccionado el usuario';}
-				if(!isset($_SESSION['productos_egr_nc_basicos']['Creacion_fecha']) OR $_SESSION['productos_egr_nc_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creacion';}
+				if(!isset($_SESSION['productos_egr_nc_basicos']['Creacion_fecha']) OR $_SESSION['productos_egr_nc_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creación';}
 				if(!isset($_SESSION['productos_egr_nc_basicos']['idTipo']) OR $_SESSION['productos_egr_nc_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['productos_egr_nc_basicos']['idCliente']) OR $_SESSION['productos_egr_nc_basicos']['idCliente']=='' ){           $error['idCliente']        = 'error/No ha seleccionado el cliente';}
 				//se verifica el uso del iva

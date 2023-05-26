@@ -229,7 +229,7 @@ $html ='<style>
                 
 				if($rowdata['f_creacion']!='0000-00-00'){
 					$html .='<tr>
-						<td class="meta-head">Fecha creacion</td>
+						<td class="meta-head">Fecha creación</td>
 						<td>'.Fecha_estandar($rowdata['f_creacion']).'</td>
 					</tr>';
 				}

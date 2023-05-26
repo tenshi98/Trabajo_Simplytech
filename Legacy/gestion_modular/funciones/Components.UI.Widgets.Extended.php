@@ -1151,7 +1151,7 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 
 										if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento==1){
 											$GPS .= '
-											//Ubicacion de los distintos dispositivos
+											//Ubicación de los distintos dispositivos
 											transMarker(10000);';
 										}elseif(isset($seguimiento)&&$seguimiento!=''&&$seguimiento==2){
 											$GPS .= 'ubiquity();';
@@ -1850,7 +1850,7 @@ function widget_Resumen_equipo($titulo_cuadro, $seguimiento, $equipo, $enlace, $
 															<td><div class="btn-group" >'.$eq_ok.'</div></td>
 															<td>
 																<div class="btn-group" style="width: 70px;" >
-																	<a href="telemetria_gestion_equipos_view_equipo.php?view='.simpleEncode($equip['idTelemetria'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+																	<a href="telemetria_gestion_equipos_view_equipo.php?view='.simpleEncode($equip['idTelemetria'], fecha_actual()).'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 																	<a href="telemetria_gestion_equipos_view_equipo_uso.php?view='.simpleEncode($equip['idTelemetria'], fecha_actual()).'" title="Ver Uso" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-wrench" aria-hidden="true"></i></a>
 																</div>
 															</td>
@@ -2178,7 +2178,7 @@ function widget_GPS_equipos_lista($titulo_cuadro, $seguimiento, $equipo, $enlace
 											<td><div class="btn-group" >'.$eq_ok.'</div></td>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a href="telemetria_gestion_flota_view_equipo_mapa.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+													<a href="telemetria_gestion_flota_view_equipo_mapa.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>';
@@ -2352,7 +2352,7 @@ function widget_GPS_lista($titulo_cuadro, $seguimiento, $equipo, $enlace,
 											<td><div class="btn-group" >'.$eq_ok.'</div></td>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a href="telemetria_gestion_flota_view_equipo_mapa.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+													<a href="telemetria_gestion_flota_view_equipo_mapa.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										</tr>';
@@ -2907,7 +2907,7 @@ function widget_superadmin($dbConn, $DB_SERVER, $DB_USER, $DB_PASS, $DB_NAME_1, 
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<div class="box superadmin_box">
 				<div class="box-header with-border">
-					<h3 class="box-title">Informacion del Sistema</h3>
+					<h3 class="box-title">Información del Sistema</h3>
 				</div>
 
 				<div class="box-body" style="padding-top:5px;">
@@ -3153,7 +3153,7 @@ function widget_Doc_relacionados($idOcompra,
 									<td>'.$tipo['Estado'].'</td>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<a href="view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											<a href="view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										</div>
 									</td>
 								</tr>';
@@ -3169,7 +3169,7 @@ function widget_Doc_relacionados($idOcompra,
 									<td>'.$tipo['Estado'].'</td>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<a href="view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											<a href="view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										</div>
 									</td>
 								</tr>';
@@ -3185,7 +3185,7 @@ function widget_Doc_relacionados($idOcompra,
 									<td>'.$tipo['Estado'].'</td>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<a href="view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											<a href="view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										</div>
 									</td>
 								</tr>';
@@ -3201,7 +3201,7 @@ function widget_Doc_relacionados($idOcompra,
 									<td>'.$tipo['Estado'].'</td>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<a href="view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											<a href="view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										</div>
 									</td>
 								</tr>';
@@ -3337,7 +3337,7 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 												<th colspan="3">
 													<div class="field">
 														<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
-															//La opcion todos
+															//La opción todos
 															$GPS .= '<option value="9999" selected="selected" >Todas las Zonas</option>';
 															foreach ( $arrZonas as $select ) {
 																$GPS .= '<option value="'.$select['idZona'].'" >'.$select['Nombre'].'</option>';
@@ -3440,7 +3440,7 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 													</td>
 													<td width="10">
 														<div class="btn-group" style="width: 35px;" >
-															<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+															<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicación" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
 														</div>
 													</td>
 												</tr>';
@@ -3472,7 +3472,7 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 
 			var map;
 			var markers = [];
-			//Ubicacion de los distintos dispositivos
+			//Ubicación de los distintos dispositivos
 			var locations = [ ';
 				foreach ( $arrEquipo as $data ) {
 					//burbuja
@@ -3779,7 +3779,7 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 												<th colspan="3">
 													<div class="field">
 														<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
-															//La opcion todos
+															//La opción todos
 															$GPS .= '<option value="9999" selected="selected" >Todas las Zonas</option>';
 															foreach ( $arrZonas as $select ) {
 																$GPS .= '<option value="'.$select['idZona'].'" >'.$select['Nombre'].'</option>';
@@ -3860,7 +3860,7 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 													</td>
 													<td width="10">
 														<div class="btn-group" style="width: 35px;" >
-															<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+															<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicación" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
 														</div>
 													</td>
 												</tr>';
@@ -3898,7 +3898,7 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 
 			var map;
 			var markers = [];
-			//Ubicacion de los distintos dispositivos
+			//Ubicación de los distintos dispositivos
 			var locations = [ ';
 				foreach ( $arrEquipo as $data ) {
 					//burbuja
@@ -4213,7 +4213,7 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 												<th colspan="3">
 													<div class="field">
 														<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
-															//La opcion todos
+															//La opción todos
 															$GPS .= '<option value="9999" selected="selected" >Todas las Zonas</option>';
 															foreach ( $arrZonas as $select ) {
 																$GPS .= '<option value="'.$select['idZona'].'" >'.$select['Nombre'].'</option>';
@@ -4316,7 +4316,7 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 													</td>
 													<td width="10">
 														<div class="btn-group" style="width: 35px;" >
-															<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+															<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicación" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
 														</div>
 													</td>
 												</tr>';
@@ -4354,7 +4354,7 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 
 			var map;
 			var markers = [];
-			//Ubicacion de los distintos dispositivos
+			//Ubicación de los distintos dispositivos
 			var locations = [ ';
 				foreach ( $arrEquipo as $data ) {
 					//burbuja
@@ -4691,7 +4691,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 												<th colspan="7">
 													<div class="field">
 														<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
-															//La opcion todos
+															//La opción todos
 															$GPS .= '<option value="9999" selected="selected" >Todas las Zonas</option>';
 															foreach ( $arrZonas as $select ) {
 																$GPS .= '<option value="'.$select['idZona'].'" >'.$select['Nombre'].'</option>';
@@ -4830,8 +4830,8 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 													$GPS .= '
 													<td width="10">
 														<div class="btn-group" style="width: 70px;" >
-															<a href="view_telemetria_registro_ruta.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
-															<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+															<a href="view_telemetria_registro_ruta.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
+															<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicación" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
 														</div>
 													</td>
 												</tr>';
@@ -4869,7 +4869,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 
 			var map;
 			var markers = [];
-			//Ubicacion de los distintos dispositivos
+			//Ubicación de los distintos dispositivos
 			var locations = [ ';
 				foreach ( $arrEquipo as $data ) {
 					//burbuja
@@ -5345,7 +5345,7 @@ function widget_Gestion_Flota_CrossTech_Transportes_AB($titulo, $idSistema, $IDG
 												<th colspan="7">
 													<div class="field">
 														<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
-															//La opcion todos
+															//La opción todos
 															$GPS .= '<option value="9999" selected="selected" >Todas las Zonas</option>';
 															foreach ( $arrZonas as $select ) {
 																$GPS .= '<option value="'.$select['idZona'].'" >'.$select['Nombre'].'</option>';
@@ -5484,8 +5484,8 @@ function widget_Gestion_Flota_CrossTech_Transportes_AB($titulo, $idSistema, $IDG
 													$GPS .= '
 													<td width="10">
 														<div class="btn-group" style="width: 70px;" >
-															<a href="view_telemetria_registro_ruta_transporte_ab.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
-															<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+															<a href="view_telemetria_registro_ruta_transporte_ab.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></a>
+															<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicación" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
 														</div>
 													</td>
 												</tr>';
@@ -5523,7 +5523,7 @@ function widget_Gestion_Flota_CrossTech_Transportes_AB($titulo, $idSistema, $IDG
 
 			var map;
 			var markers = [];
-			//Ubicacion de los distintos dispositivos
+			//Ubicación de los distintos dispositivos
 			var locations = [ ';
 				foreach ( $arrEquipo as $data ) {
 					//burbuja
@@ -6358,7 +6358,7 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 												<th colspan="8">
 													<div class="field">
 														<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
-															//La opcion todos
+															//La opción todos
 															$GPS .= '<option value="9999" selected="selected" >Todas las Zonas</option>';
 															foreach ( $arrZonas as $select ) {
 																$GPS .= '<option value="'.$select['idZona'].'" >'.$select['Nombre'].'</option>';
@@ -6473,8 +6473,8 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 													<td width="10">
 														<div class="btn-group" style="width: '.$eq_act_med.'px;" >
 															'.$eq_act_btn.'
-															<a href="view_crosstech_tel_data.php?idTelemetria='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
-															<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+															<a href="view_crosstech_tel_data.php?idTelemetria='.simpleEncode($data['idTelemetria'], fecha_actual()).'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+															<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicación" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
 														</div>
 													</td>
 												</tr>';
@@ -6545,7 +6545,7 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 				};
 				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
-				//Ubicacion de los distintos dispositivos
+				//Ubicación de los distintos dispositivos
 				var locations = [ ';
 					foreach ( $arrEquipo as $data ) {
 						//burbuja
@@ -7014,7 +7014,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 
 			/****************************************************/
 			//el resto de los botones
-			$arrGruas[$xdanger][$data['idTelemetria']]['CenterMap']             = '<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>';
+			$arrGruas[$xdanger][$data['idTelemetria']]['CenterMap']             = '<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicación" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>';
 			$arrGruas[$xdanger][$data['idTelemetria']]['informe_activaciones']  = '<li><a href="view_telemetria_uso.php?idTelemetria='.$data['idTelemetria'].'&F_inicio='.$principioMes.'&F_termino='.$FechaSistema.'&Amp=&pagina=1&submit_filter=Filtrar" class="iframe" style="white-space: normal;" ><i class="fa fa-clock-o" aria-hidden="true"></i> Uso Grua</a></li>';
 			$arrGruas[$xdanger][$data['idTelemetria']]['AlarmasPersonalizadas'] = '<li><a href="view_alertas_personalizadas.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-bell-o" aria-hidden="true"></i> Alertas Personalizadas</a></li>';
 			//si tiene un generador
@@ -7089,7 +7089,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 												<th colspan="5">
 													<div class="field">
 														<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
-															//La opcion todos
+															//La opción todos
 															$GPS .= '<option value="9999" selected="selected" >Todas las Zonas</option>';
 															foreach ( $arrZonas as $select ) {
 																$GPS .= '<option value="'.$select['idZona'].'" >'.$select['Nombre'].'</option>';
@@ -7262,7 +7262,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 
 			var map;
 			var markers = [];
-			//Ubicacion de los distintos dispositivos
+			//Ubicación de los distintos dispositivos
 			var locations = [ ';
 				foreach ( $arrEquipo as $data ) {
 					//burbuja
@@ -7729,7 +7729,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 
 			/****************************************************/
 			//el resto de los botones
-			$arrGruas[$xdanger][$data['idTelemetria']]['CenterMap']            = '<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>';
+			$arrGruas[$xdanger][$data['idTelemetria']]['CenterMap']            = '<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicación" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>';
 			//boton de alertas pendientes de ver
 			if(isset($data['NAlertas'])&&$data['NAlertas']!=''&&$data['NAlertas']!=0){
 				//Alertas
@@ -7789,7 +7789,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 												<th colspan="6">
 													<div class="field">
 														<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
-															//La opcion todos
+															//La opción todos
 															$GPS .= '<option value="9999" selected="selected" >Todas las Zonas</option>';
 															foreach ( $arrZonas as $select ) {
 																$GPS .= '<option value="'.$select['idZona'].'" >'.$select['Nombre'].'</option>';
@@ -7930,7 +7930,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 
 			var map;
 			var markers = [];
-			//Ubicacion de los distintos dispositivos
+			//Ubicación de los distintos dispositivos
 			var locations = [ ';
 				foreach ( $arrEquipo as $data ) {
 					//burbuja
@@ -9326,7 +9326,7 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 													<th colspan="7">'.TituloMenu($gruUso['Nombre']).'</th>
 													<th>
 														<div class="btn-group" style="width: 35px;" >
-															<button onClick="chngGroupUsoGraph('.$_SESSION['usuario']['widget_CrossC']['idTelemetria'].', '.$_SESSION['usuario']['widget_CrossC']['cantSensores'].', '.$gruUso['idGrupo'].')" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></button>
+															<button onClick="chngGroupUsoGraph('.$_SESSION['usuario']['widget_CrossC']['idTelemetria'].', '.$_SESSION['usuario']['widget_CrossC']['cantSensores'].', '.$gruUso['idGrupo'].')" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></button>
 														</div>
 													</th>
 												</tr>';
@@ -9376,7 +9376,7 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 														<td>'.$Hum.' %</td>
 														<td>
 															<div class="btn-group" style="width: 70px;" >
-																<button onClick="chngGroupGraph('.$_SESSION['usuario']['widget_CrossC']['idTelemetria'].', '.$_SESSION['usuario']['widget_CrossC']['cantSensores'].', '.$gruUso['idGrupo'].', '.$gru['idGrupo'].')" title="Ver Informacion" class="btn btn-metis-6 btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></button>
+																<button onClick="chngGroupGraph('.$_SESSION['usuario']['widget_CrossC']['idTelemetria'].', '.$_SESSION['usuario']['widget_CrossC']['cantSensores'].', '.$gruUso['idGrupo'].', '.$gru['idGrupo'].')" title="Ver Información" class="btn btn-metis-6 btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></button>
 															</div>
 														</td>
 													</tr>';
@@ -9800,7 +9800,7 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 
 			/****************************************************/
 			//el resto de los botones
-			$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['CenterMap']             = '<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>';
+			$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['CenterMap']             = '<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicación" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>';
 			$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['informe_activaciones']  = '<li><a href="view_telemetria_uso.php?idTelemetria='.$data['idTelemetria'].'&F_inicio='.$principioMes.'&F_termino='.$FechaSistema.'&Amp=&pagina=1&submit_filter=Filtrar" class="iframe" style="white-space: normal;" ><i class="fa fa-clock-o" aria-hidden="true"></i> Uso Grua</a></li>';
 			$arrGruas[$data['idUbicacion']][$xdanger][$data['idTelemetria']]['AlarmasPersonalizadas'] = '<li><a href="view_alertas_personalizadas.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-bell-o" aria-hidden="true"></i> Alertas Personalizadas</a></li>';
 			//si tiene un generador
@@ -9892,7 +9892,7 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 															<th colspan="5">
 																<div class="field">
 																	<select name="selectZona" id="selectZona" class="form-control" onchange="chngZona()" >';
-																		//La opcion todos
+																		//La opción todos
 																		$GPS .= '<option value="9999" selected="selected" >Todas las Zonas</option>';
 																		foreach ( $arrZonas as $select ) {
 																			$GPS .= '<option value="'.$select['idZona'].'" >'.$select['Nombre'].'</option>';
@@ -10224,7 +10224,7 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 
 			var map;
 			var markers = [];
-			//Ubicacion de los distintos dispositivos
+			//Ubicación de los distintos dispositivos
 			var locations = [ ';
 				foreach ( $arrEquipo as $data ) {
 					//Solo los que estan en obras

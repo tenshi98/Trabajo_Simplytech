@@ -52,7 +52,7 @@ require_once '0_validate_user_1.php';
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){        $error['Nombre']    = 'error/Edita Nombre,contiene palabras no permitidas';}
-	if(isset($Ubicacion)&&contar_palabras_censuradas($Ubicacion)!=0){  $error['Ubicacion'] = 'error/Edita la Ubicacion, contiene palabras no permitidas';}
+	if(isset($Ubicacion)&&contar_palabras_censuradas($Ubicacion)!=0){  $error['Ubicacion'] = 'error/Edita la Ubicación, contiene palabras no permitidas';}
 	if(isset($Capacidad)&&contar_palabras_censuradas($Capacidad)!=0){  $error['Capacidad'] = 'error/Edita la Capacidad, contiene palabras no permitidas';}
 
 /*******************************************************************************************************************/
@@ -162,12 +162,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

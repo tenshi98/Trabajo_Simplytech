@@ -77,7 +77,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class=""><a href="<?php echo 'trabajadores_listado_laboral.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-university" aria-hidden="true"></i> Informacion Laboral</a></li>
+						<li class=""><a href="<?php echo 'trabajadores_listado_laboral.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-university" aria-hidden="true"></i> Información Laboral</a></li>
 						<li class=""><a href="<?php echo 'trabajadores_listado_cargas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-user-plus" aria-hidden="true"></i> Cargas Familiares</a></li>
 						<li class=""><a href="<?php echo 'trabajadores_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 
@@ -123,10 +123,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_select('Sexo','idSexo', $x6, 2, 'idSexo', 'Nombre', 'core_sexo', 0, '', $dbConn);
 					$Form_Inputs->form_date('F Nacimiento','FNacimiento', $x7, 1);
 					$Form_Inputs->form_input_phone('Fono', 'Fono', $x8, 1);
-					$Form_Inputs->form_select_depend1('Region','idCiudad', $x9, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Región','idCiudad', $x9, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x10, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 											 $dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x11, 1,'fa fa-map');
+					$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x11, 1,'fa fa-map');
 					$Form_Inputs->form_select('Estado Civil','idEstadoCivil', $x12, 1, 'idEstadoCivil', 'Nombre', 'core_estado_civil', 0, '', $dbConn);
 					$Form_Inputs->form_input_icon('Email', 'email', $x13, 1,'fa fa-envelope-o');
 

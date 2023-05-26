@@ -90,7 +90,7 @@ $subquery .= ",(SELECT COUNT(idExistencia) FROM solicitud_listado_existencias_ot
 $subquery .= ",(SELECT COUNT(idOcompra) FROM ocompra_listado WHERE idEstado=1 ".$z." LIMIT 1) AS CuentaOC";
 //Calendario Mes
 $subquery .= ",(SELECT COUNT(idCalendario) FROM principal_calendario_listado WHERE Mes=".mes_actual()." AND Ano=".ano_actual()." ".$z." LIMIT 1) AS CuentaEventos";
-//Notificacion
+//Notificación
 $subquery .= ",(SELECT COUNT(idNoti) FROM principal_notificaciones_ver WHERE idEstado='1' AND idUsuario=".$idUsuario." ".$z." LIMIT 1) AS Notificacion";
 //Tickets Abiertos
 $subquery .= ",(SELECT COUNT(idTicket) FROM crosstech_gestion_tickets WHERE idEstado='1' ".$z." LIMIT 1) AS TicketsAbiertos";
@@ -657,7 +657,7 @@ $ing_mens_contrato = valores($ing_mens_contrato, 0);
 			$Graphics_yData       .='['.$arrData[$x]['Value'].'],';
 			//los nombres
 			$Graphics_names       .= $arrData[$x]['Name'].',';
-			//si se despliega la informacion
+			//si se despliega la información
 			$Graphics_info        .= "'',";
 			//color de la barra
 			$Graphics_markerColor .= "'',";
@@ -781,7 +781,7 @@ $ing_mens_contrato = valores($ing_mens_contrato, 0);
 				}
 				//los nombres
 				$Graphics_names       .= '"Normal",';
-				//si se despliega la informacion
+				//si se despliega la información
 				$Graphics_info        .= "'',";
 				//color de la barra
 				$Graphics_markerColor .= "'',";

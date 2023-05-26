@@ -120,7 +120,7 @@ $arrOT = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $SI
 																	$Status    = ' no Cumplida';
 																	$calcolor  = 'evcal_color6';
 																}
-																echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor.'" href="'.$ver.'&return=true">OT N° '.$evento['idOT'].$Status.'</a>';
+																echo '<a title="Ver Información" class="tooltip event_calendar '.$calcolor.'" href="'.$ver.'&return=true">OT N° '.$evento['idOT'].$Status.'</a>';
 
 															}
 														} ?>

@@ -35,7 +35,7 @@ require_once '0_validate_user_1.php';
 			case 'idRuta':          if(empty($idRuta)){          $error['idRuta']          = 'error/No ha seleccionado la ruta';}break;
 			case 'Latitud':         if(empty($Latitud)){         $error['Latitud']         = 'error/No ha ingresado la Latitud';}break;
 			case 'Longitud':        if(empty($Longitud)){        $error['Longitud']        = 'error/No ha ingresado la Longitud';}break;
-			case 'direccion':       if(empty($direccion)){       $error['direccion']       = 'error/No ha ingresado la direccion';}break;
+			case 'direccion':       if(empty($direccion)){       $error['direccion']       = 'error/No ha ingresado la dirección';}break;
 
 		}
 	}
@@ -47,7 +47,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/
-	if(isset($direccion)&&contar_palabras_censuradas($direccion)!=0){  $error['direccion'] = 'error/Edita la direccion, contiene palabras no permitidas';}
+	if(isset($direccion)&&contar_palabras_censuradas($direccion)!=0){  $error['direccion'] = 'error/Edita la dirección, contiene palabras no permitidas';}
 
 /*******************************************************************************************************************/
 /*                                            Se ejecutan las instrucciones                                        */
@@ -132,12 +132,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

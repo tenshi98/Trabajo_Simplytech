@@ -42,7 +42,7 @@ require_once '0_validate_user_1.php';
 			case 'Peso':            if(empty($Peso)){            $error['Peso']             = 'error/No ha ingresado el peso del archivo';}break;
 			case 'idMedidaPeso':    if(empty($idMedidaPeso)){    $error['idMedidaPeso']     = 'error/No ha seleccionado la medida del peso';}break;
 			case 'SitioWeb':        if(empty($SitioWeb)){        $error['SitioWeb']         = 'error/No ha ingresado el sitio web';}break;
-			case 'SitioDescarga':   if(empty($SitioDescarga)){   $error['SitioDescarga']    = 'error/No ha ingresado la direccion de descarga';}break;
+			case 'SitioDescarga':   if(empty($SitioDescarga)){   $error['SitioDescarga']    = 'error/No ha ingresado la dirección de descarga';}break;
 			case 'idCategoria':     if(empty($idCategoria)){     $error['idCategoria']      = 'error/No ha seleccionado la categoria de la aplicacion';}break;
 
 		}
@@ -176,12 +176,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

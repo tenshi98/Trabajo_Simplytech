@@ -87,6 +87,7 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['idProductos']))          $idProductos             = $_POST['idProductos'];
 	if (!empty($_POST['idAnalisis']))           $idAnalisis              = $_POST['idAnalisis'];
 	if (!empty($_POST['Observacion']))          $Observacion             = $_POST['Observacion'];
+	if (!empty($_POST['idTrabajoOT']))          $idTrabajoOT             = $_POST['idTrabajoOT'];
 
 /*******************************************************************************************************************/
 /*                                      Verificacion de los datos obligatorios                                     */
@@ -107,7 +108,7 @@ require_once '0_validate_user_1.php';
 			case 'idEstado':              if(empty($idEstado)){               $error['idEstado']                = 'error/No ha ingresado el estado';}break;
 			case 'idPrioridad':           if(empty($idPrioridad)){            $error['idPrioridad']             = 'error/No ha ingresado la prioridad';}break;
 			case 'idTipo':                if(empty($idTipo)){                 $error['idTipo']                  = 'error/No ha ingresado el tipo';}break;
-			case 'f_creacion':            if(empty($f_creacion)){             $error['f_creacion']              = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'f_creacion':            if(empty($f_creacion)){             $error['f_creacion']              = 'error/No ha ingresado la fecha de creación';}break;
 			case 'f_programacion':        if(empty($f_programacion)){         $error['f_programacion']          = 'error/No ha ingresado la fecha de programacion';}break;
 			case 'f_ejecucion':           if(empty($f_ejecucion)){            $error['f_ejecucion']             = 'error/No ha ingresado la fecha de ejecucion';}break;
 			case 'f_termino':             if(empty($f_termino)){              $error['f_termino']               = 'error/No ha ingresado la fecha de termino';}break;
@@ -169,6 +170,7 @@ require_once '0_validate_user_1.php';
 			case 'idProductos':           if(empty($idProductos)){            $error['idProductos']             = 'error/No ha seleccionado el producto';}break;
 			case 'idAnalisis':            if(empty($idAnalisis)){             $error['idAnalisis']              = 'error/No ha seleccionado el analisis';}break;
 			case 'Observacion':           if(empty($Observacion)){            $error['Observacion']             = 'error/No ha ingresado la observacion';}break;
+			case 'idTrabajoOT':           if(empty($idTrabajoOT)){            $error['idTrabajoOT']             = 'error/No ha ingresado el ID del trabajo';}break;
 
 		}
 	}
@@ -587,7 +589,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				$idInterno = $idInterno+1;
-				//Para mostrar en la creacion
+				//Para mostrar en la creación
 				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Nombre']      = $rowdata['Nombre'];
 				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Codigo']      = $rowdata['Codigo'];
 				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Producto']    = $rowdata['Producto'];
@@ -670,7 +672,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se traen todos los datos de la tarea
+			// Se traen todos los datos de la Trabajo
 			$SIS_query = '
 			licitacion_listado_level_'.$tablaitem.'.Nombre,
 			licitacion_listado_level_'.$tablaitem.'.Codigo,
@@ -789,7 +791,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['ot_basicos']['idEstado']) OR $_SESSION['ot_basicos']['idEstado']=='' ){             $error['idEstado']         = 'error/No ha ingresado el id del estado';}
 				if(!isset($_SESSION['ot_basicos']['idPrioridad']) OR $_SESSION['ot_basicos']['idPrioridad']=='' ){       $error['idPrioridad']      = 'error/No ha seleccionado la prioridad';}
 				if(!isset($_SESSION['ot_basicos']['idTipo']) OR $_SESSION['ot_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
-				if(!isset($_SESSION['ot_basicos']['f_creacion']) OR $_SESSION['ot_basicos']['f_creacion']=='' ){         $error['f_creacion']       = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['ot_basicos']['f_creacion']) OR $_SESSION['ot_basicos']['f_creacion']=='' ){         $error['f_creacion']       = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['ot_basicos']['f_programacion']) OR $_SESSION['ot_basicos']['f_programacion']=='' ){ $error['f_programacion']   = 'error/No ha ingresado la fecha de programacion';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la orden de trabajo';
@@ -1063,12 +1065,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1388,12 +1390,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1520,12 +1522,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1650,12 +1652,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1676,7 +1678,6 @@ require_once '0_validate_user_1.php';
 			}
 
 		break;
-
 /*******************************************************************************************************************/
 		case 'del_tarea_row':
 
@@ -1698,12 +1699,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1730,7 +1731,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se traen todos los datos de la tarea
+			// Se traen todos los datos de la Trabajo
 			$rowdata = db_select_data (false, 'licitacion_listado_level_'.$tablaitem.'.Nombre,licitacion_listado_level_'.$tablaitem.'.Codigo, licitacion_listado_level_'.$tablaitem.'.idTrabajo, core_licitacion_trabajos.Nombre as Trabajo', 'licitacion_listado_level_'.$tablaitem, 'LEFT JOIN `core_licitacion_trabajos` ON core_licitacion_trabajos.idTrabajo = licitacion_listado_level_'.$tablaitem.'.idTrabajo', 'idLevel_'.$tablaitem.' = '.$idItemizado, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			if(empty($error)){
@@ -1742,7 +1743,7 @@ require_once '0_validate_user_1.php';
 				if(isset($idItemizado) && $idItemizado!=''){                                             $SIS_data .= ",item_tabla_id='".$idItemizado."'";}
 				if(isset($tablaitem) && $tablaitem!=''){                                                 $SIS_data .= ",item_tabla='".$tablaitem."'";}
 
-				//Se ejecuta si se hace un cambio en el tipo de tarea
+				//Se ejecuta si se hace un cambio en el tipo de Trabajo
 				switch ($rowdata['idTrabajo']) {
 					case 1: //Analisis
 						$SIS_data .= ",Grasa_inicial=''";
@@ -1842,7 +1843,7 @@ require_once '0_validate_user_1.php';
 			if(isset($idLevel[25])&&$idLevel[25]!=''){ $id_tabla = $idLevel[25]; $tabla=25; $id_tabla_madre = $idLevel[24]; $tabla_madre=24; }
 
 			// Se traen los datos de la tabla madre
-			if(isset($id_tabla_madre)&&$id_tabla_madre!=0){
+			if((!isset($Descripcion) OR $Descripcion=='')&&isset($id_tabla_madre)&&$id_tabla_madre!=0){
 				$rowdata_m = db_select_data (false, 'idUtilizable,tabla, table_value, idLicitacion', 'maquinas_listado_level_'.$tabla_madre, '', 'idLevel_'.$tabla_madre.' = '.$id_tabla_madre, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				//se verifica que sea un componente
 				if(isset($rowdata_m['idUtilizable'])&&$rowdata_m['idUtilizable']!=3&&$rowdata_m['tabla']==0){
@@ -1890,12 +1891,15 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				$idInterno = $idInterno+1;
-				//Para mostrar en la creacion
+				//Para mostrar en la creación
 				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Nombre']      = $rowdata['Nombre'];
 				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Codigo']      = $rowdata['Codigo'];
 				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Producto']    = $rowdata['Producto'];
 				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Unimed']      = $rowdata['Unimed'];
 				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['valor_id']    = $idInterno;
+				if(isset($Descripcion)&&$Descripcion!=''){
+					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Descripcion'] = $Descripcion;
+				}
 
 				//variables vacias
 				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['data_1']       = '';
@@ -1969,7 +1973,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se traen todos los datos de la tarea
+			// Se traen todos los datos de la Trabajo
 			$rowdata = db_select_data (false, 'licitacion_listado_level_'.$tablaitem.'.Nombre,licitacion_listado_level_'.$tablaitem.'.Codigo, licitacion_listado_level_'.$tablaitem.'.idTrabajo, core_licitacion_trabajos.Nombre as Trabajo', 'licitacion_listado_level_'.$tablaitem, 'LEFT JOIN `core_licitacion_trabajos` ON core_licitacion_trabajos.idTrabajo = licitacion_listado_level_'.$tablaitem.'.idTrabajo', 'idLevel_'.$tablaitem.' = '.$idItemizado, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			if(empty($error)){
@@ -2076,39 +2080,45 @@ require_once '0_validate_user_1.php';
 				foreach ($_SESSION['ot_trabajos_temp'] as $key => $x_tabla){
 					foreach ($x_tabla as $x_id_tabla) {
 						foreach ($x_id_tabla as $x_idInterno) {
-							if(!isset($x_idInterno['idItemizado']) OR $x_idInterno['idItemizado'] == ''){   $error['idItemizado']   = 'error/No ha seleccionado un trabajo para el subcomponente';}
 							if(!isset($x_idInterno['idSubTipo']) OR $x_idInterno['idSubTipo'] == ''){       $error['idSubTipo']     = 'error/No ha seleccionado un tipo de subcomponente';}
 							if(!isset($x_idInterno['id_tabla']) OR $x_idInterno['id_tabla'] == ''){         $error['id_tabla']      = 'error/No ha seleccionado un subcomponente';}
 							if(!isset($x_idInterno['tabla']) OR $x_idInterno['tabla'] == ''){               $error['tabla']         = 'error/No ha seleccionado un subcomponente';}
+							if(!isset($x_idInterno['Descripcion']) OR $x_idInterno['Descripcion'] == ''){
+								if(!isset($x_idInterno['idItemizado']) OR $x_idInterno['idItemizado'] == ''){   $error['idItemizado']   = 'error/No ha seleccionado un trabajo para el subcomponente';}
+								//if(!isset($x_idInterno['idLicitacion']) OR $x_idInterno['idLicitacion'] == ''){ $error['idLicitacion']  = 'error/No ha seleccionado una licitacion';}
+							}
 							$n_trabajos++;
 							//variable reseteada
 							$n_grasa = 0;
-							//Se revisa por tipo de trabajo
-							if(!isset($x_idInterno['idTrabajo']) OR $x_idInterno['idTrabajo'] == ''){
-								$error['idTrabajo'] = 'error/No ha seleccionado un trabajo';
-							}else{
-								switch ($x_idInterno['idTrabajo']) {
-									case 1: //Analisis
+							//solo si no hay una descripcion ingresada
+							if(!isset($x_idInterno['Descripcion']) OR $x_idInterno['Descripcion'] == ''){
+								//Se revisa por tipo de trabajo
+								if(!isset($x_idInterno['idTrabajo']) OR $x_idInterno['idTrabajo'] == ''){
+									$error['idTrabajo'] = 'error/No ha seleccionado un trabajo';
+								}else{
+									switch ($x_idInterno['idTrabajo']) {
+										case 1: //Analisis
 
-									break;
-									case 2: //Consumo de Materiales
-										//verifico si en grasa tiene ambas cantidades guardadas
-										if(isset($x_idInterno['Grasa_inicial']) && $x_idInterno['Grasa_inicial'] != '' && $x_idInterno['Grasa_inicial'] != 0){ $n_grasa++;}
-										if(isset($x_idInterno['Grasa_relubricacion']) && $x_idInterno['Grasa_relubricacion'] != '' && $x_idInterno['Grasa_relubricacion'] != 0){ $n_grasa++;}
-										//Se verifica si lubricacion y relubricacion estan activos
-										if(isset($n_grasa)&&$n_grasa==2){
-											$error['n_grasa2'] = 'error/Un punto de trabajo tiene lubricacion y relubricacion asignado simultaneamente';
-										}
-										//Se verifica si lubricacion y relubricacion estan activos
-										if(isset($x_idInterno['idSubTipo']) && $x_idInterno['idSubTipo'] != ''&& $x_idInterno['idSubTipo'] ==1){
-											if(isset($n_grasa)&&$n_grasa==0){
-												$error['n_grasa0'] = 'error/Un punto de trabajo no tiene lubricacion o relubricacion asignado';
+										break;
+										case 2: //Consumo de Materiales
+											//verifico si en grasa tiene ambas cantidades guardadas
+											if(isset($x_idInterno['Grasa_inicial']) && $x_idInterno['Grasa_inicial'] != '' && $x_idInterno['Grasa_inicial'] != 0){ $n_grasa++;}
+											if(isset($x_idInterno['Grasa_relubricacion']) && $x_idInterno['Grasa_relubricacion'] != '' && $x_idInterno['Grasa_relubricacion'] != 0){ $n_grasa++;}
+											//Se verifica si lubricacion y relubricacion estan activos
+											if(isset($n_grasa)&&$n_grasa==2){
+												$error['n_grasa2'] = 'error/Un punto de trabajo tiene lubricacion y relubricacion asignado simultaneamente';
 											}
-										}
-									break;
-									case 3: //Observacion
+											//Se verifica si lubricacion y relubricacion estan activos
+											if(isset($x_idInterno['idSubTipo']) && $x_idInterno['idSubTipo'] != ''&& $x_idInterno['idSubTipo'] ==1){
+												if(isset($n_grasa)&&$n_grasa==0){
+													$error['n_grasa0'] = 'error/Un punto de trabajo no tiene lubricacion o relubricacion asignado';
+												}
+											}
+										break;
+										case 3: //Observacion
 
-									break;
+										break;
+									}
 								}
 							}
 						}
@@ -2127,8 +2137,15 @@ require_once '0_validate_user_1.php';
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 
+				//verifico si se envia un entero
+				if((!validarNumero($_GET['view']) OR !validaEntero($_GET['view']))&&$_GET['view']!=''){
+					$idOT = simpleDecode($_GET['view'], fecha_actual());
+				}else{
+					$idOT = $_GET['view'];
+				}
+
 				//Se traen los datos de la ot
-				$rowdata = db_select_data (false, 'idSistema, idMaquina, idUsuario, idEstado, idPrioridad, idTipo, f_creacion,f_programacion', 'orden_trabajo_listado', '', 'idOT = '.$_GET['view'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				$rowdata = db_select_data (false, 'idSistema, idMaquina, idUsuario, idEstado, idPrioridad, idTipo, f_creacion,f_programacion', 'orden_trabajo_listado', '', 'idOT = '.$idOT, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*****************************************************/
 				//Se guardan los trabajos a realizar
@@ -2137,7 +2154,7 @@ require_once '0_validate_user_1.php';
 						foreach ($x_tabla as $x_id_tabla) {
 							foreach ($x_id_tabla as $x_idInterno) {
 								//filtros
-								if(isset($_GET['view']) && $_GET['view']!=''){                                               $SIS_data  = "'".$_GET['view']."'";                          }else{$SIS_data  = "''";}
+								if(isset($idOT) && $idOT!=''){                                                               $SIS_data  = "'".$idOT."'";                                  }else{$SIS_data  = "''";}
 								if(isset($rowdata['idSistema']) && $rowdata['idSistema']!=''){                               $SIS_data .= ",'".$rowdata['idSistema']."'";                 }else{$SIS_data .= ",''";}
 								if(isset($rowdata['idMaquina']) && $rowdata['idMaquina']!=''){                               $SIS_data .= ",'".$rowdata['idMaquina']."'";                 }else{$SIS_data .= ",''";}
 								if(isset($rowdata['idUsuario']) && $rowdata['idUsuario']!=''){                               $SIS_data .= ",'".$rowdata['idUsuario']."'";                 }else{$SIS_data .= ",''";}
@@ -2167,12 +2184,13 @@ require_once '0_validate_user_1.php';
 								$SIS_data .= ",'Sin Observaciones'";
 								//Se guarda la licitacion
 								if(isset($x_idInterno['idLicitacion']) && $x_idInterno['idLicitacion']!=''){     $SIS_data .= ",'".$x_idInterno['idLicitacion']."'";  }else{$SIS_data .= ",''";}
+								if(isset($x_idInterno['Descripcion']) && $x_idInterno['Descripcion']!=''){       $SIS_data .= ",'".$x_idInterno['Descripcion']."'";   }else{$SIS_data .= ",''";}
 
 								// inserto los datos de registro en la db
 								$SIS_columns = 'idOT, idSistema, idMaquina, idUsuario, idEstado, idPrioridad,
 								idTipo, f_creacion, f_programacion, comp_tabla_id, comp_tabla, item_m_tabla_id, item_m_tabla, item_tabla_id, item_tabla,
 								idSubTipo, idTrabajo, idProducto, idUml, Grasa_inicial, Grasa_relubricacion, Aceite, Cantidad, NombreComponente, NombreTrabajo,
-								Observacion, idLicitacion';
+								Observacion, idLicitacion, Descripcion';
 								$ultimo_id2 = db_insert_data (false, $SIS_columns, $SIS_data, 'orden_trabajo_listado_trabajos', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 							}
@@ -2246,7 +2264,79 @@ require_once '0_validate_user_1.php';
 			}
 
 		break;
+/*******************************************************************************************************************/
+		case 'submit_edit_tarea':
 
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+
+			if(empty($error)){
+
+				//filtros
+				$SIS_data = "idTrabajoOT='".$idTrabajoOT."'";
+				if(isset($Descripcion) && $Descripcion!=''){  $SIS_data .= ",Descripcion='".$Descripcion."'";}
+
+				/*******************************************************/
+				//se actualizan los datos
+				$resultado = db_update_data (false, $SIS_data, 'orden_trabajo_listado_trabajos', 'idTrabajoOT = "'.$idTrabajoOT.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+					//redirijo
+					header( 'Location: '.$location.'&edittarea=true' );
+					die;
+
+				}
+
+			}
+
+		break;
+/*******************************************************************************************************************/
+		case 'del_TrabajoOT':
+
+			//Se elimina la restriccion del sql 5.7
+			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+
+			//Variable
+			$errorn = 0;
+
+			//verifico si se envia un entero
+			if((!validarNumero($_GET['del_TrabajoOT']) OR !validaEntero($_GET['del_TrabajoOT']))&&$_GET['del_TrabajoOT']!=''){
+				$indice = simpleDecode($_GET['del_TrabajoOT'], fecha_actual());
+			}else{
+				$indice = $_GET['del_TrabajoOT'];
+				//guardo el log
+				php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'Indice no codificado', '' );
+
+			}
+
+			//se verifica si es un numero lo que se recibe
+			if (!validarNumero($indice)&&$indice!=''){
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
+				$errorn++;
+			}
+			//Verifica si el numero recibido es un entero
+			if (!validaEntero($indice)&&$indice!=''){
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
+				$errorn++;
+			}
+
+			if($errorn==0){
+				//se borran los datos
+				$resultado = db_delete_data (false, 'orden_trabajo_listado_trabajos', 'idTrabajoOT = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+				//Si ejecuto correctamente la consulta
+				if($resultado==true){
+
+					//redirijo
+					header( 'Location: '.$location.'&deltarea=true' );
+					die;
+
+				}
+			}else{
+				//se valida hackeo
+				require_once '0_hacking_1.php';
+			}
+
+		break;
 /*******************************************************************************************************************/
 		case 'cerrar_ot':
 
@@ -2264,7 +2354,7 @@ require_once '0_validate_user_1.php';
 			if(!isset($rowdata['idEstado']) OR $rowdata['idEstado']=='' OR $rowdata['idEstado']==0){                               $error['idEstado']         = 'error/No ha ingresado el id del estado';}
 			if(!isset($rowdata['idPrioridad']) OR $rowdata['idPrioridad']=='' OR $rowdata['idPrioridad']==0){                      $error['idPrioridad']      = 'error/No ha seleccionado la prioridad';}
 			if(!isset($rowdata['idTipo']) OR $rowdata['idTipo']=='' OR $rowdata['idTipo']==0){                                     $error['idTipo']           = 'error/No ha seleccionado el tipo de trabajo';}
-			if(!isset($rowdata['f_creacion']) OR $rowdata['f_creacion']=='' OR $rowdata['f_creacion']=='0000-00-00'){              $error['f_creacion']       = 'error/No ha ingresado la fecha de creacion';}
+			if(!isset($rowdata['f_creacion']) OR $rowdata['f_creacion']=='' OR $rowdata['f_creacion']=='0000-00-00'){              $error['f_creacion']       = 'error/No ha ingresado la fecha de creación';}
 			if(!isset($rowdata['f_programacion']) OR $rowdata['f_programacion']=='' OR $rowdata['f_programacion']=='0000-00-00'){  $error['f_programacion']   = 'error/No ha ingresado la fecha de programacion';}
 			if(!isset($rowdata['f_termino']) OR $rowdata['f_termino']=='' OR $rowdata['f_termino']=='0000-00-00'){                 $error['f_termino']        = 'error/No ha ingresado la fecha de termino';}
 			if(!isset($rowdata['idSupervisor']) OR $rowdata['idSupervisor']=='' OR $rowdata['idSupervisor']==0){                   $error['idSupervisor']     = 'error/No ha seleccionado el supervisor';}

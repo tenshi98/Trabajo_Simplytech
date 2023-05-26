@@ -140,14 +140,14 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_facturacion', 
 						<td><?php echo Fecha_estandar($tipo['Creacion_fecha']); ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<a href="<?php echo 'view_orden_trabajo.php?view='.simpleEncode($tipo['OrdenTrabajo'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+								<a href="<?php echo 'view_orden_trabajo.php?view='.simpleEncode($tipo['OrdenTrabajo'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 							</div>
 							<?php echo n_doc($tipo['OrdenTrabajo'], 5); ?>
 						</td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

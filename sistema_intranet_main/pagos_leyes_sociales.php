@@ -420,7 +420,7 @@ input[type="date"].form-control{
 
 		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
-				<button class="btn btn-metis-1 tooltip remove_pago_afp" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+				<button class="btn btn-metis-1 tooltip remove_pago_afp" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -450,7 +450,7 @@ input[type="date"].form-control{
 
 		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
-				<button class="btn btn-metis-1 tooltip remove_pago_salud" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+				<button class="btn btn-metis-1 tooltip remove_pago_salud" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -480,7 +480,7 @@ input[type="date"].form-control{
 
 		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
-				<button class="btn btn-metis-1 tooltip remove_pago_seguridad" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+				<button class="btn btn-metis-1 tooltip remove_pago_seguridad" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -645,7 +645,7 @@ input[type="date"].form-control{
 
 		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
-				<button class="btn btn-metis-1 tooltip remove_pago_afp" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+				<button class="btn btn-metis-1 tooltip remove_pago_afp" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -675,7 +675,7 @@ input[type="date"].form-control{
 
 		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
-				<button class="btn btn-metis-1 tooltip remove_pago_salud" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+				<button class="btn btn-metis-1 tooltip remove_pago_salud" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -705,7 +705,7 @@ input[type="date"].form-control{
 
 		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
-				<button class="btn btn-metis-1 tooltip remove_pago_seguridad" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+				<button class="btn btn-metis-1 tooltip remove_pago_seguridad" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -1565,7 +1565,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_pagos_leyes_sociales.php?view='.simpleEncode($tipo['idFactSocial'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_pagos_leyes_sociales.php?view='.simpleEncode($tipo['idFactSocial'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=2&&isset($tipo['idEstadoPago'])&&$tipo['idEstadoPago']==1){ ?><a href="<?php echo $location.'&newPago='.$tipo['idFactSocial']; ?>" title="Ingresar Pagos" class="btn btn-success btn-sm tooltip"><i class="fa fa-usd" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>

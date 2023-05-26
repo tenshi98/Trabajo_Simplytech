@@ -101,7 +101,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				$Form_Inputs->form_input_text('Ubicacion', 'Ubicacion', $x2, 2);
+				$Form_Inputs->form_input_text('Ubicación', 'Ubicacion', $x2, 2);
 				$Form_Inputs->form_input_number('Capacidad','Capacidad', $x3, 2);
 				$Form_Inputs->form_select('Estado','idEstado', $x4, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 
@@ -144,7 +144,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				$Form_Inputs->form_input_text('Ubicacion', 'Ubicacion', $x2, 2);
+				$Form_Inputs->form_input_text('Ubicación', 'Ubicacion', $x2, 2);
 				$Form_Inputs->form_input_number('Capacidad','Capacidad', $x3, 2);
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -179,8 +179,8 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'nombre_desc':       $order_by = 'oficinas_listado.Nombre DESC ';        $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Nombre Descendente';break;
 		case 'estado_asc':        $order_by = 'core_estados.Nombre ASC ';             $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente';break;
 		case 'estado_desc':       $order_by = 'core_estados.Nombre DESC ';            $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
-		case 'ubicacion_asc':     $order_by = 'oficinas_listado.Ubicacion ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ubicacion Ascendente';break;
-		case 'ubicacion_desc':    $order_by = 'oficinas_listado.Ubicacion DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Ubicacion Descendente';break;
+		case 'ubicacion_asc':     $order_by = 'oficinas_listado.Ubicacion ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ubicación Ascendente';break;
+		case 'ubicacion_desc':    $order_by = 'oficinas_listado.Ubicacion DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Ubicación Descendente';break;
 		case 'capacidad_asc':     $order_by = 'oficinas_listado.Capacidad ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Capacidad Ascendente';break;
 		case 'capacidad_desc':    $order_by = 'oficinas_listado.Capacidad DESC ';     $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Capacidad Descendente';break;
 
@@ -253,7 +253,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'oficinas_listado', $SIS_join, $
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Estado','idEstado', $x1, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 1);
-				$Form_Inputs->form_input_text('Ubicacion', 'Ubicacion', $x3, 1);
+				$Form_Inputs->form_input_text('Ubicación', 'Ubicacion', $x3, 1);
 				$Form_Inputs->form_input_number('Capacidad','Capacidad', $x4, 1);
 
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
@@ -293,7 +293,7 @@ $arrUsers = db_select_array (false, $SIS_query, 'oficinas_listado', $SIS_join, $
 							</div>
 						</th>
 						<th>
-							<div class="pull-left">Ubicacion</div>
+							<div class="pull-left">Ubicación</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'&order_by=ubicacion_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&order_by=ubicacion_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
@@ -327,11 +327,11 @@ $arrUsers = db_select_array (false, $SIS_query, 'oficinas_listado', $SIS_join, $
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idOficina']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idOficina']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idOficina'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la oficina '.$usuarios['Nombre'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

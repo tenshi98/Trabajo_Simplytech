@@ -321,14 +321,14 @@ array_push( $arrReportes,$row );
 									<strong>Tipo de Peligro : </strong><?php echo $rowdata['Tipo']; ?><br/>
 									<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
 									<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-									<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+									<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
 									<strong>Descripcion : </strong><?php echo $rowdata['Descripcion']; ?><br/>
 								<?php }elseif(isset($_GET['idTipofil'])&&$_GET['idTipofil']==2){ ?>
 									<strong>Tipo de Evento : </strong><?php echo $rowdata['Tipo']; ?><br/>
 									<strong>Caracteristicas Agresor : </strong><?php echo $rowdata['DescripcionTipo']; ?><br/>
 									<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
 									<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-									<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+									<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
 									<strong>Fecha : </strong><?php echo fecha_estandar($rowdata['Fecha']); ?><br/>
 									<strong>Hora : </strong><?php echo $rowdata['Hora']; ?><br/>
 									<strong>Descripcion Situacion : </strong><?php echo $rowdata['DescripcionSituacion']; ?><br/>
@@ -336,16 +336,16 @@ array_push( $arrReportes,$row );
 							</p>
 						</div>
 						<?php
-						//Se arma la direccion
+						//Se arma la dirección
 						$direccion = "";
 						if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){   $direccion .= $rowdata["Direccion"];}
 						if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){         $direccion .= ', '.$rowdata["Comuna"];}
 						if(isset($rowdata["Ciudad"])&&$rowdata["Ciudad"]!=''){         $direccion .= ', '.$rowdata["Ciudad"];}
-						//se despliega mensaje en caso de no existir direccion
+						//se despliega mensaje en caso de no existir dirección
 						if($direccion!=''){
 							echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Evento', 'Calle', $direccion, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 19, 2);
 						}else{
-							$Alert_Text = 'No tiene una direccion definida';
+							$Alert_Text = 'No tiene una dirección definida';
 							alert_post_data(4,2,2, $Alert_Text);
 						} ?>
 					</div>
@@ -541,7 +541,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 						<th>Vecino Creador</th>
 						<th>Tipo Reporte</th>
 						<th>Tipo Evento-Peligro</th>
-						<th>Ubicacion</th>
+						<th>Ubicación</th>
 						<th>Fecha</th>
 						<th>Hora</th>
 						<th width="10">Acciones</th>
@@ -563,7 +563,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 							<td><?php echo $eve['Hora']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idEventoPeligro='.$eve['idEventoPeligro'].'&idTipofil='.$eve['idTipo']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idEventoPeligro='.$eve['idEventoPeligro'].'&idTipofil='.$eve['idTipo']; ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>

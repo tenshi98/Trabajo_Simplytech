@@ -121,7 +121,7 @@ $fecha_mesanterior = $ano.'-'.$mes_ant.'-10';
 					fecha_aviso: '<?php echo Fecha_completa_alt($rowdata['AguasInfFechaEmision']); ?>',
 					mes_anterior: '<?php echo Fecha_completa_alt($fecha_mesanterior); ?>',
 					id_cliente: '<?php echo $rowdata['ClienteIdentificador']; ?>',
-					direccion: '<?php echo $rowdata['ClienteDireccion']; ?>',
+					dirección: '<?php echo $rowdata['ClienteDireccion']; ?>',
 					monto: '<?php echo Valores($rowdata['DetalleSaldoAnterior'], 0); ?>',
 					fecha_corte: '<?php echo $dia." de ".fecha2NombreMes($rowdata['AguasInfFechaEmision']); ?>'
 				});

@@ -75,7 +75,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
-						<li class="active"><a href="<?php echo 'admin_trabajadores_listado_laboral.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-university" aria-hidden="true"></i> Informacion Laboral</a></li>
+						<li class="active"><a href="<?php echo 'admin_trabajadores_listado_laboral.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-university" aria-hidden="true"></i> Información Laboral</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_previsional.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Descuentos Previsionales</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_descuentos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Otros Descuentos Previsionales</a></li>
 						<li class=""><a href="<?php echo 'admin_trabajadores_listado_bonos_fijos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-usd" aria-hidden="true"></i> Bonos Fijos Asignados</a></li>
@@ -151,7 +151,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					$Form_Inputs->form_date('F Termino Contrato','F_Termino_Contrato', $x10, 1);
 					$Form_Inputs->form_select('Tipo de Trabajo','idTipoTrabajo', $x11, 1, 'idTipoTrabajo', 'Nombre', 'core_tipos_trabajo', 0, '', $dbConn);
 					$Form_Inputs->form_input_number_spinner('Porcentaje Trabajo Pesado','PorcentajeTrabajoPesado', $x12, 0, 10, '0.1', 1, 2);
-					$Form_Inputs->form_input_text('Ubicacion Trabajo', 'UbicacionTrabajo', $x13, 1);
+					$Form_Inputs->form_input_text('Ubicación Trabajo', 'UbicacionTrabajo', $x13, 1);
 
 					$Form_Inputs->form_tittle(3, 'Remuneraciones');
 					$Form_Inputs->form_values('Sueldo Liquido a Pago','SueldoLiquido', $x14, 1);

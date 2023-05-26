@@ -147,7 +147,7 @@ foreach ($arrOpciones as $mant) {
 							</div>
 						</th>
 						<th>
-							<div class="pull-left">Opcion</div>
+							<div class="pull-left">Opción</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'&order_by=opcion_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&order_by=opcion_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
@@ -202,7 +202,7 @@ foreach ($arrOpciones as $mant) {
 						<td><?php echo $mant['sistema']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_telemetria_mantencion.php?view='.simpleEncode($mant['idMantencion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_telemetria_mantencion.php?view='.simpleEncode($mant['idMantencion'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>
@@ -263,7 +263,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Tipo de Servicio','idServicio', $x1, 1, 'idServicio', 'Nombre', 'core_telemetria_servicio_tecnico', 0, '', $dbConn);
-				$Form_Inputs->form_checkbox_active('Selecciona una Opcion','idOpciones', $x2, 1, 'idOpciones', 'Nombre', 'core_telemetria_servicio_tecnico_opciones', 0, $dbConn);
+				$Form_Inputs->form_checkbox_active('Selecciona una Opción','idOpciones', $x2, 1, 'idOpciones', 'Nombre', 'core_telemetria_servicio_tecnico_opciones', 0, $dbConn);
 				//Verifico el tipo de usuario que esta ingresando
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x3, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);

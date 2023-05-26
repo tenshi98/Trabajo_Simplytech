@@ -103,7 +103,7 @@ array_push( $arrCamaras,$row );
 					$SIS_Config_Puerto    = $camara['Config_Puerto'];
 					$SIS_TipoCamara       = $camara['idTipoCamara'];
 
-					//se crea la direccion web
+					//se crea la dirección web
 					$direccion  = 'http://';
 					$direccion .= $SIS_Config_usuario;
 					$direccion .= ':'.$SIS_Config_Password;
@@ -120,7 +120,7 @@ array_push( $arrCamaras,$row );
 					$SIS_Config_Puerto    = $rowCamara['Config_Puerto'];
 					$SIS_TipoCamara       = $rowCamara['idTipoCamara'];
 
-					//se crea la direccion web
+					//se crea la dirección web
 					$direccion  = 'http://';
 					$direccion .= $SIS_Config_usuario;
 					$direccion .= ':'.$SIS_Config_Password;

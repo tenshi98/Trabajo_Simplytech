@@ -182,7 +182,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 					<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 						<thead>
 							<tr role="row">
-								<th colspan="3" style="text-align: center;">Identificacion</th>
+								<th colspan="3" style="text-align: center;">Identificación</th>
 								<th colspan="1" style="text-align: center;">Velocidad Tractor (Km/hr)</th>
 								<th colspan="2" style="text-align: center;">Promedio Caudales</th>
 								<th colspan="2" style="text-align: center;">Plantas</th>
@@ -255,7 +255,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 									<th colspan="20" style="text-align: center;"><strong>Monitoreo dentro de cuarteles</strong></th>
 								</tr>
 								<tr role="row">
-									<th colspan="6" style="text-align: center;">Identificacion</th>
+									<th colspan="6" style="text-align: center;">Identificación</th>
 									<th colspan="4" style="text-align: center;">Velocidad Tractor (Km/hr)</th>
 									<th colspan="2" style="text-align: center;">Promedio Caudales</th>
 									<th colspan="1" style="text-align: center;">Litros</th>
@@ -351,7 +351,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacio
 									<th colspan="14" style="text-align: center;"><strong>Monitoreo fuera de cuarteles</strong></th>
 								</tr>
 								<tr role="row">
-									<th colspan="6" style="text-align: center;">Identificacion</th>
+									<th colspan="6" style="text-align: center;">Identificación</th>
 									<th colspan="4" style="text-align: center;">Velocidad Tractor (Km/hr)</th>
 									<th colspan="1" style="text-align: center;">Distancia Recorrida(Metros)</th>
 									<th colspan="2" style="text-align: center;">Promedio Caudales</th>

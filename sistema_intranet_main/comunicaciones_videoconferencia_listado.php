@@ -427,11 +427,11 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 											}
 											//si es quien la creo, puede editarla o eliminarla
 											if(($Conferencia[0]['idUsuario']==$_SESSION['usuario']['basic_data']['idUsuario']) OR ($_SESSION['usuario']['basic_data']['idTipoUsuario']==1)){ ?>
-												<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$VideoConferencia; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$VideoConferencia; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 												<?php if ($rowlevel['level']>=4){
 													$ubicacion = $location.'&del='.simpleEncode($VideoConferencia, fecha_actual());
 													$dialogo   = '¿Realmente deseas eliminar la videoconferencia '.$Conferencia[0]['Nombre'].'?'; ?>
-													<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+													<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 												<?php } ?>
 											<?php } ?>	
 										</div>

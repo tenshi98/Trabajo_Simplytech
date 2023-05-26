@@ -443,12 +443,12 @@ $arrReserva = db_select_array (false, $SIS_query, 'gestion_reserva_oficinas', $S
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_gestion_reserva_oficinas.php?view='.simpleEncode($tipo['idReserva'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$tipo['idReserva']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_gestion_reserva_oficinas.php?view='.simpleEncode($tipo['idReserva'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$tipo['idReserva']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($tipo['idReserva'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la reserva de la oficina '.$tipo['Oficina'].' ?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

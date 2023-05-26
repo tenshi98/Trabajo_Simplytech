@@ -221,10 +221,10 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x2, 2);
-					$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Región','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										 'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');
+					$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x5, 2,'fa fa-map');
 					$Form_Inputs->form_input_icon('Rubro', 'Rubro', $x6, 1,'fa fa-sitemap');
 
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['id'], 2);

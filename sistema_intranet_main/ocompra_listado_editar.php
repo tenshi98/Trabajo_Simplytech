@@ -2063,7 +2063,7 @@ $total = 0;
 								<td class="item-name">
 									<div class="btn-group" style="width: 35px;" >
 										<?php 
-										//Ubicacion
+										//Ubicación
 										$ubicacion = $new_location;
 										$ubicacion .= '&del_solicitud='.$producto['idExistencia'];
 										$ubicacion .= '&del_sol_SolRel='.$producto['idSolRel'];
@@ -2090,7 +2090,7 @@ $total = 0;
 								<td class="item-name">
 									<div class="btn-group" style="width: 35px;" >
 										<?php 
-										//Ubicacion
+										//Ubicación
 										$ubicacion = $new_location;
 										$ubicacion .= '&del_solicitud='.$producto['idExistencia'];
 										$ubicacion .= '&del_sol_SolRel='.simpleEncode($producto['idSolRel'], fecha_actual());
@@ -2117,7 +2117,7 @@ $total = 0;
 								<td class="item-name">
 									<div class="btn-group" style="width: 35px;" >
 										<?php 
-										//Ubicacion
+										//Ubicación
 										$ubicacion = $new_location;
 										$ubicacion .= '&del_solicitud='.$producto['idExistencia'];
 										$ubicacion .= '&del_sol_SolRel='.simpleEncode($producto['idSolRel'], fecha_actual());
@@ -2144,7 +2144,7 @@ $total = 0;
 								<td class="item-name">
 									<div class="btn-group" style="width: 35px;" >
 										<?php 
-										//Ubicacion
+										//Ubicación
 										$ubicacion = $new_location;
 										$ubicacion .= '&del_solicitud='.$producto['idExistencia'];
 										$ubicacion .= '&del_sol_SolRel='.simpleEncode($producto['idSolRel'], fecha_actual());
@@ -2171,7 +2171,7 @@ $total = 0;
 								<td class="item-name">
 									<div class="btn-group" style="width: 35px;" >
 										<?php 
-										//Ubicacion
+										//Ubicación
 										$ubicacion = $new_location;
 										$ubicacion .= '&del_solicitud='.$producto['idExistencia'];
 										$ubicacion .= '&del_sol_SolRel='.simpleEncode($producto['idSolRel'], fecha_actual());

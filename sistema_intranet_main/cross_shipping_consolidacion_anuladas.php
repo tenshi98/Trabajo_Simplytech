@@ -210,7 +210,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion', $
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_cross_shipping_consolidacion.php?view='.simpleEncode($tipo['idConsolidacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_cross_shipping_consolidacion.php?view='.simpleEncode($tipo['idConsolidacion'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

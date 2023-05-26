@@ -43,7 +43,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 				<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_'.$name.'">'.$placeholder.'</label>
 				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 					<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.' >
-					<option value="" selected>Seleccione una Opcion</option>';
+					<option value="" selected>Seleccione una Opción</option>';
 					//pongo rango de +4 y -4
 					$desde = $data - 4;
 					$hasta = $data + 4;
@@ -92,7 +92,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 				<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_'.$name.'">'.$placeholder.'</label>
 				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 					<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.' >
-						<option value="" selected>Seleccione una Opcion</option>';
+						<option value="" selected>Seleccione una Opción</option>';
 						//pongo rango de +4 y -4
 						$desde = $data;
 						$hasta = $data;
@@ -150,7 +150,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">'.$placeholder.'</label>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.' >
-								<option value="" selected>Seleccione una Opcion</option>';
+								<option value="" selected>Seleccione una Opción</option>';
 								$w1 = '';
 								$w2 = '';
 								if($value==9998){
@@ -235,7 +235,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_'.$name.'">'.$placeholder.'</label>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.' >
-								<option value="" selected>Seleccione una Opcion</option>';
+								<option value="" selected>Seleccione una Opción</option>';
 
 								$selected = '';
 								if($value==9999){
@@ -486,7 +486,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">'.$placeholder.'</label>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.'>
-								<option value="" selected>Seleccione una Opcion</option>
+								<option value="" selected>Seleccione una Opción</option>
 							</select>
 						</div>
 					</div>';
@@ -498,7 +498,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 
 		foreach ($arrSelect as $select) {
 			$id_data = 'let id_data_'.$select['idTelemetria'].'=new Array(""';
-			$data    = 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opcion"';
+			$data    = 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opción"';
 			//se arma arreglo temporal
 			$arrTempGrupos = array();
 			//recorro
@@ -558,13 +558,13 @@ class Form_Inputs extends Basic_Form_Inputs{
 				}else{
 					document.'.$idForm.'.'.$name.'.length = 1;
 					document.'.$idForm.'.'.$name.'.options[0].value = "";
-					document.'.$idForm.'.'.$name.'.options[0].text  = "Seleccione una Opcion";
+					document.'.$idForm.'.'.$name.'.options[0].text  = "Seleccione una Opción";
 					document.getElementById("div_'.$name.'").style.display = "none";
 				}
 			} catch (e) {
 				document.'.$idForm.'.'.$name.'.length = 1;
 				document.'.$idForm.'.'.$name.'.options[0].value = "";
-				document.'.$idForm.'.'.$name.'.options[0].text  = "Seleccione una Opcion";
+				document.'.$idForm.'.'.$name.'.options[0].text  = "Seleccione una Opción";
 				document.getElementById("div_'.$name.'").style.display = "none";
 
 			}
@@ -628,7 +628,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">'.$placeholder.'</label>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.'>
-								<option value="" selected>Seleccione una Opcion</option>
+								<option value="" selected>Seleccione una Opción</option>
 							</select>
 						</div>
 					</div>';
@@ -640,7 +640,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 
 		foreach ($arrSelect as $select) {
 			$id_data = 'let id_data_'.$select['idTelemetria'].'=new Array(""';
-			$data    = 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opcion"';
+			$data    = 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opción"';
 			$valorx  = 0;
 			//se arma arreglo temporal
 			$arrTempGrupos = array();
@@ -712,13 +712,13 @@ class Form_Inputs extends Basic_Form_Inputs{
 				}else{
 					document.'.$idForm.'.'.$name.'.length = 1;
 					document.'.$idForm.'.'.$name.'.options[0].value = "";
-					document.'.$idForm.'.'.$name.'.options[0].text  = "Seleccione una Opcion";
+					document.'.$idForm.'.'.$name.'.options[0].text  = "Seleccione una Opción";
 					document.getElementById("div_'.$name.'").style.display = "none";
 				}
 			} catch (e) {
 				document.'.$idForm.'.'.$name.'.length = 1;
 				document.'.$idForm.'.'.$name.'.options[0].value = "";
-				document.'.$idForm.'.'.$name.'.options[0].text  = "Seleccione una Opcion";
+				document.'.$idForm.'.'.$name.'.options[0].text  = "Seleccione una Opción";
 				document.getElementById("div_'.$name.'").style.display = "none";
 
 			}
@@ -753,7 +753,7 @@ class Form_Inputs extends Basic_Form_Inputs{
 						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">'.$placeholder.'</label>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.'>
-								<option value="" selected>Seleccione una Opcion</option>
+								<option value="" selected>Seleccione una Opción</option>
 								<option value="1">Temperatura</option>
 								<option value="2">Humedad</option>
 							</select>

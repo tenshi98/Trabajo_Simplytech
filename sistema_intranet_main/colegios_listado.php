@@ -117,9 +117,9 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
 							<p class="text-muted word_break">
 								<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<strong>Region : </strong><?php echo $rowdata['nombre_region']; ?><br/>
+								<strong>Región : </strong><?php echo $rowdata['nombre_region']; ?><br/>
 								<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
 								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
 								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
 							</p>
@@ -129,16 +129,16 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<?php
-							//se arma la direccion
+							//se arma la dirección
 							$direccion = "";
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
 							if(isset($rowdata["nombre_comuna"])&&$rowdata["nombre_comuna"]!=''){   $direccion .= ', '.$rowdata["nombre_comuna"];}
 							if(isset($rowdata["nombre_region"])&&$rowdata["nombre_region"]!=''){   $direccion .= ', '.$rowdata["nombre_region"];}
-							//se despliega mensaje en caso de no existir direccion
+							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
 								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1) ;
 							}else{
-								$Alert_Text = 'No tiene una direccion definida';
+								$Alert_Text = 'No tiene una dirección definida';
 								alert_post_data(4,2,2, $Alert_Text);
 							}
 						?>
@@ -182,10 +182,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x1, 2);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x2, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x2, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x3, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x4, 1,'fa fa-map');	 
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x4, 1,'fa fa-map');	 
 				
 				
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -289,10 +289,10 @@ $arrUsers = db_select_array (false, $SIS_query, 'colegios_listado', $SIS_join, $
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x1, 1);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x2, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x2, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x3, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x4, 1,'fa fa-map');	 
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x4, 1,'fa fa-map');	 
 				
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
@@ -349,12 +349,12 @@ $arrUsers = db_select_array (false, $SIS_query, 'colegios_listado', $SIS_join, $
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_colegio.php?view='.simpleEncode($usuarios['idColegio'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idColegio']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_colegio.php?view='.simpleEncode($usuarios['idColegio'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idColegio']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idColegio'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar al Colegio '.$usuarios['Nombre'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

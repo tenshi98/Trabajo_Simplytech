@@ -268,11 +268,11 @@ $arrCategorias = db_select_array (false, $SIS_query, 'telemetria_mnt_correos_cat
 						<td><label class="label <?php if(isset($ciudad['idEstado'])&&$ciudad['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $ciudad['Estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$ciudad['idCorreosCat']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$ciudad['idCorreosCat']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($ciudad['idCorreosCat'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la categoria '.$ciudad['Nombre'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

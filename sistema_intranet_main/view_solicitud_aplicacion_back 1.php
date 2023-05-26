@@ -264,14 +264,14 @@ array_push( $arrHistorial,$row );
 					<address>
 						Empresa: '.$row_data['SistemaOrigen'].'<br/>
 						Ciudad-Comuna: '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-						Direccion: '.$row_data['SistemaOrigenDireccion'].'<br/>
+						Dirección: '.$row_data['SistemaOrigenDireccion'].'<br/>
 						Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
 						Rut: '.$row_data['SistemaOrigenRut'].'<br/>
 						Email: '.$row_data['SistemaOrigenEmail'].'
 					</address>
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-					<strong>Identificacion</strong>
+					<strong>Identificación</strong>
 					<address>
 						Predio: '.$row_data['NombrePredio'].'<br/>
 						Estado: '.$row_data['Estado'].'<br/>
@@ -376,7 +376,7 @@ array_push( $arrHistorial,$row );
 </section>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

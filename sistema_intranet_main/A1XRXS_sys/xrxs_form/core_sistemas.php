@@ -122,9 +122,9 @@ require_once '0_validate_user_1.php';
 			case 'Nombre':                             if(empty($Nombre)){                              $error['Nombre']                              = 'error/No ha ingresado el Nombre';}break;
 			case 'email_principal':                    if(!isset($email_principal)){                    $error['email_principal']                     = 'error/No ha ingresado el email';}break;
 			case 'Rut':                                if(empty($Rut)){                                 $error['Rut']                                 = 'error/No ha ingresado el Rut';}break;
-			case 'idCiudad':                           if(!isset($idCiudad)){                           $error['idCiudad']                            = 'error/No ha seleccionado la region';}break;
+			case 'idCiudad':                           if(!isset($idCiudad)){                           $error['idCiudad']                            = 'error/No ha seleccionado la región';}break;
 			case 'idComuna':                           if(!isset($idComuna)){                           $error['idComuna']                            = 'error/No ha seleccionado la comuna';}break;
-			case 'Direccion':                          if(empty($Direccion)){                           $error['Direccion']                           = 'error/No ha ingresado la direccion';}break;
+			case 'Direccion':                          if(empty($Direccion)){                           $error['Direccion']                           = 'error/No ha ingresado la dirección';}break;
 			case 'CajaChica':                          if(!isset($CajaChica)){                          $error['CajaChica']                           = 'error/No ha ingresado el Nombre monto de la caja chica';}break;
 			case 'Contacto_Nombre':                    if(!isset($Contacto_Nombre)){                    $error['Contacto_Nombre']                     = 'error/No ha ingresado el Nombre del contacto';}break;
 			case 'Contacto_Fono1':                     if(!isset($Contacto_Fono1)){                     $error['Contacto_Fono1']                      = 'error/No ha ingresado el telefono 1';}break;
@@ -147,26 +147,26 @@ require_once '0_validate_user_1.php';
 			case 'Config_Gmail_Password':              if(empty($Config_Gmail_Password)){               $error['Config_Gmail_Password']               = 'error/No ha ingresado la contraseña del usuario de gmail';}break;
 			case 'Config_WhatsappToken':               if(empty($Config_WhatsappToken)){                $error['Config_WhatsappToken']                = 'error/No ha ingresado el Whatsapp Token';}break;
 			case 'Config_WhatsappInstanceId':          if(empty($Config_WhatsappInstanceId)){           $error['Config_WhatsappInstanceId']           = 'error/No ha ingresado el Whatsapp Instance Id';}break;
-			case 'idOpcionesGen_1':                    if(empty($idOpcionesGen_1)){                     $error['idOpcionesGen_1']                     = 'error/No ha seleccionado la opcion 1';}break;
-			case 'idOpcionesGen_2':                    if(empty($idOpcionesGen_2)){                     $error['idOpcionesGen_2']                     = 'error/No ha seleccionado la opcion 2';}break;
-			case 'idOpcionesGen_3':                    if(empty($idOpcionesGen_3)){                     $error['idOpcionesGen_3']                     = 'error/No ha seleccionado la opcion 3';}break;
-			case 'idOpcionesGen_4':                    if(empty($idOpcionesGen_4)){                     $error['idOpcionesGen_4']                     = 'error/No ha seleccionado la opcion 4';}break;
-			case 'idOpcionesGen_5':                    if(empty($idOpcionesGen_5)){                     $error['idOpcionesGen_5']                     = 'error/No ha seleccionado la opcion 5';}break;
-			case 'idOpcionesGen_6':                    if(!isset($idOpcionesGen_6)){                    $error['idOpcionesGen_6']                     = 'error/No ha seleccionado la opcion 6';}break;
-			case 'idOpcionesGen_7':                    if(empty($idOpcionesGen_7)){                     $error['idOpcionesGen_7']                     = 'error/No ha seleccionado la opcion 7';}break;
-			case 'idOpcionesGen_8':                    if(empty($idOpcionesGen_8)){                     $error['idOpcionesGen_8']                     = 'error/No ha seleccionado la opcion 8';}break;
-			case 'idOpcionesGen_9':                    if(empty($idOpcionesGen_9)){                     $error['idOpcionesGen_9']                     = 'error/No ha seleccionado la opcion 9';}break;
-			case 'idOpcionesGen_10':                   if(empty($idOpcionesGen_10)){                    $error['idOpcionesGen_10']                    = 'error/No ha seleccionado la opcion 10';}break;
-			case 'idOpcionesGen_11':                   if(empty($idOpcionesGen_11)){                    $error['idOpcionesGen_11']                    = 'error/No ha seleccionado la opcion 11';}break;
-			case 'idOpcionesGen_12':                   if(empty($idOpcionesGen_12)){                    $error['idOpcionesGen_12']                    = 'error/No ha seleccionado la opcion 12';}break;
-			case 'idOpcionesGen_13':                   if(empty($idOpcionesGen_13)){                    $error['idOpcionesGen_13']                    = 'error/No ha seleccionado la opcion 13';}break;
-			case 'idOpcionesGen_14':                   if(empty($idOpcionesGen_14)){                    $error['idOpcionesGen_14']                    = 'error/No ha seleccionado la opcion 14';}break;
-			case 'idOpcionesGen_15':                   if(empty($idOpcionesGen_15)){                    $error['idOpcionesGen_15']                    = 'error/No ha seleccionado la opcion 15';}break;
-			case 'idOpcionesGen_16':                   if(empty($idOpcionesGen_16)){                    $error['idOpcionesGen_16']                    = 'error/No ha seleccionado la opcion 16';}break;
-			case 'idOpcionesGen_17':                   if(empty($idOpcionesGen_17)){                    $error['idOpcionesGen_17']                    = 'error/No ha seleccionado la opcion 17';}break;
-			case 'idOpcionesGen_18':                   if(empty($idOpcionesGen_18)){                    $error['idOpcionesGen_18']                    = 'error/No ha seleccionado la opcion 18';}break;
-			case 'idOpcionesGen_19':                   if(empty($idOpcionesGen_19)){                    $error['idOpcionesGen_19']                    = 'error/No ha seleccionado la opcion 19';}break;
-			case 'idOpcionesGen_20':                   if(empty($idOpcionesGen_20)){                    $error['idOpcionesGen_20']                    = 'error/No ha seleccionado la opcion 20';}break;
+			case 'idOpcionesGen_1':                    if(empty($idOpcionesGen_1)){                     $error['idOpcionesGen_1']                     = 'error/No ha seleccionado la opción 1';}break;
+			case 'idOpcionesGen_2':                    if(empty($idOpcionesGen_2)){                     $error['idOpcionesGen_2']                     = 'error/No ha seleccionado la opción 2';}break;
+			case 'idOpcionesGen_3':                    if(empty($idOpcionesGen_3)){                     $error['idOpcionesGen_3']                     = 'error/No ha seleccionado la opción 3';}break;
+			case 'idOpcionesGen_4':                    if(empty($idOpcionesGen_4)){                     $error['idOpcionesGen_4']                     = 'error/No ha seleccionado la opción 4';}break;
+			case 'idOpcionesGen_5':                    if(empty($idOpcionesGen_5)){                     $error['idOpcionesGen_5']                     = 'error/No ha seleccionado la opción 5';}break;
+			case 'idOpcionesGen_6':                    if(!isset($idOpcionesGen_6)){                    $error['idOpcionesGen_6']                     = 'error/No ha seleccionado la opción 6';}break;
+			case 'idOpcionesGen_7':                    if(empty($idOpcionesGen_7)){                     $error['idOpcionesGen_7']                     = 'error/No ha seleccionado la opción 7';}break;
+			case 'idOpcionesGen_8':                    if(empty($idOpcionesGen_8)){                     $error['idOpcionesGen_8']                     = 'error/No ha seleccionado la opción 8';}break;
+			case 'idOpcionesGen_9':                    if(empty($idOpcionesGen_9)){                     $error['idOpcionesGen_9']                     = 'error/No ha seleccionado la opción 9';}break;
+			case 'idOpcionesGen_10':                   if(empty($idOpcionesGen_10)){                    $error['idOpcionesGen_10']                    = 'error/No ha seleccionado la opción 10';}break;
+			case 'idOpcionesGen_11':                   if(empty($idOpcionesGen_11)){                    $error['idOpcionesGen_11']                    = 'error/No ha seleccionado la opción 11';}break;
+			case 'idOpcionesGen_12':                   if(empty($idOpcionesGen_12)){                    $error['idOpcionesGen_12']                    = 'error/No ha seleccionado la opción 12';}break;
+			case 'idOpcionesGen_13':                   if(empty($idOpcionesGen_13)){                    $error['idOpcionesGen_13']                    = 'error/No ha seleccionado la opción 13';}break;
+			case 'idOpcionesGen_14':                   if(empty($idOpcionesGen_14)){                    $error['idOpcionesGen_14']                    = 'error/No ha seleccionado la opción 14';}break;
+			case 'idOpcionesGen_15':                   if(empty($idOpcionesGen_15)){                    $error['idOpcionesGen_15']                    = 'error/No ha seleccionado la opción 15';}break;
+			case 'idOpcionesGen_16':                   if(empty($idOpcionesGen_16)){                    $error['idOpcionesGen_16']                    = 'error/No ha seleccionado la opción 16';}break;
+			case 'idOpcionesGen_17':                   if(empty($idOpcionesGen_17)){                    $error['idOpcionesGen_17']                    = 'error/No ha seleccionado la opción 17';}break;
+			case 'idOpcionesGen_18':                   if(empty($idOpcionesGen_18)){                    $error['idOpcionesGen_18']                    = 'error/No ha seleccionado la opción 18';}break;
+			case 'idOpcionesGen_19':                   if(empty($idOpcionesGen_19)){                    $error['idOpcionesGen_19']                    = 'error/No ha seleccionado la opción 19';}break;
+			case 'idOpcionesGen_20':                   if(empty($idOpcionesGen_20)){                    $error['idOpcionesGen_20']                    = 'error/No ha seleccionado la opción 20';}break;
 			case 'OT_idBodegaProd':                    if(empty($OT_idBodegaProd)){                     $error['OT_idBodegaProd']                     = 'error/No ha seleccionado la bodega de productos';}break;
 			case 'OT_idBodegaIns':                     if(empty($OT_idBodegaIns)){                      $error['OT_idBodegaIns']                      = 'error/No ha seleccionado la bodega de insumos';}break;
 			case 'Rubro':                              if(empty($Rubro)){                               $error['Rubro']                               = 'error/No ha ingresado el rubro';}break;
@@ -187,7 +187,7 @@ require_once '0_validate_user_1.php';
 			case 'CrossTech_HeladaTemp':               if(empty($CrossTech_HeladaTemp)){                $error['CrossTech_HeladaTemp']                = 'error/No ha ingresado la hora minima de notificacion de helada';}break;
 			case 'CrossTech_HeladaMailHoraIni':        if(empty($CrossTech_HeladaMailHoraIni)){         $error['CrossTech_HeladaMailHoraIni']         = 'error/No ha ingresado la hora de inicio de envio de correo';}break;
 			case 'CrossTech_HeladaMailHoraTerm':       if(empty($CrossTech_HeladaMailHoraTerm)){        $error['CrossTech_HeladaMailHoraTerm']        = 'error/No ha ingresado la hora de termino de envio de correo';}break;
-			case 'Social_idUso':                       if(empty($Social_idUso)){                        $error['Social_idUso']                        = 'error/No ha Seleccionado la opcion de mostrar widget sociales';}break;
+			case 'Social_idUso':                       if(empty($Social_idUso)){                        $error['Social_idUso']                        = 'error/No ha Seleccionado la opción de mostrar widget sociales';}break;
 			case 'Social_facebook':                    if(!isset($Social_facebook)){                    $error['Social_facebook']                     = 'error/No ha ingresado los datos de facebook';}break;
 			case 'Social_twitter':                     if(!isset($Social_twitter)){                     $error['Social_twitter']                      = 'error/No ha ingresado los datos de twitter';}break;
 			case 'Social_instagram':                   if(!isset($Social_instagram)){                   $error['Social_instagram']                    = 'error/No ha ingresado los datos de instagram';}break;
@@ -552,12 +552,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -831,12 +831,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -905,12 +905,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -979,12 +979,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1075,12 +1075,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

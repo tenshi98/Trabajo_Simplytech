@@ -225,10 +225,10 @@ $arrUsers = db_select_array (false, $SIS_query, 'prospectos_listado', $SIS_join,
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 1);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 1);
 				$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x4, 1);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x7, 1,'fa fa-map');
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
 				$Form_Inputs->form_select_join_filter('Vendedor','idUsuario', $x10, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 
@@ -303,8 +303,8 @@ $arrUsers = db_select_array (false, $SIS_query, 'prospectos_listado', $SIS_join,
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_prospecto.php?view='.simpleEncode($usuarios['idProspecto'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idProspecto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_prospecto.php?view='.simpleEncode($usuarios['idProspecto'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idProspecto']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

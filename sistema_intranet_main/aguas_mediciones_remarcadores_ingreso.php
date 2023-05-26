@@ -316,7 +316,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 						<td><strong>Cliente</strong></td>
 						<td width="15px"><strong>Medidor</strong></td>
 						<td width="15px"><strong>Remarcador</strong></td>
-						<td><strong>Direccion</strong></td>
+						<td><strong>Dirección</strong></td>
 						<td width="15px"><strong>Consumo</strong></td>
 						<td><strong>Acciones</strong></td>
 					</tr>
@@ -330,7 +330,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 							<td><?php echo cantidades_decimales_justos($datos['Consumo']); ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$_GET['id'].'&modMed='.$datos['idDatosDetalle']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$_GET['id'].'&modMed='.$datos['idDatosDetalle']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -620,7 +620,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 									<?php
 									$ubicacion = $location.'&view=true&del_cliente='.$clientes['idPoint'];
 									$dialogo   = '¿Realmente deseas eliminar la medicion de '.$clientes['Cliente'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -882,12 +882,12 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_aguas_mediciones_datos.php?view='.simpleEncode($tipo['idDatos'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$tipo['idDatos']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_aguas_mediciones_datos.php?view='.simpleEncode($tipo['idDatos'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$tipo['idDatos']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($tipo['idDatos'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la medicion '.n_doc($tipo['idDatos'], 7).'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

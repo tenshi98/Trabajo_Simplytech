@@ -49,7 +49,7 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Editar Ubicacion'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Maquinas', $rowdata['Nombre'], 'Editar Ubicación'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -69,9 +69,9 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 							<li class=""><a href="<?php echo 'maquinas_listado_datos_clientes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-users" aria-hidden="true"></i> Clientes</a></li>
 						<?php } ?>
 						<?php
-						//Uso Ubicacion
+						//Uso Ubicación
 						if(isset($rowdata['idConfig_4'])&&$rowdata['idConfig_4']==1){ ?>
-							<li class="active"><a href="<?php echo 'maquinas_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicacion</a></li>
+							<li class="active"><a href="<?php echo 'maquinas_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicación</a></li>
 						<?php } ?>
 						<li class=""><a href="<?php echo 'maquinas_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha Tecnica</a></li>
 						<li class=""><a href="<?php echo 'maquinas_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> HDS</a></li>
@@ -108,7 +108,7 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado', $SIS_join, $SI
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x1,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1',   0,
+					$Form_Inputs->form_select_depend5('Ubicación', 'idUbicacion',  $x1,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1',   0,
 							                 'Nivel 1', 'idUbicacion_lvl_1',  $x2,  2,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0,
 							                 'Nivel 2', 'idUbicacion_lvl_2',  $x3,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
 							                 'Nivel 3', 'idUbicacion_lvl_3',  $x4,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,

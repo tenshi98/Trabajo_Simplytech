@@ -374,7 +374,7 @@ $arrSolicitudes = db_select_array (false, $SIS_query, 'ocompra_listado', $SIS_jo
 						<td><?php echo Fecha_estandar($sol['Creacion_fecha']); ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&view='.$sol['idOcompra']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&view='.$sol['idOcompra']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

@@ -643,7 +643,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 											};
 											map_1 = new google.maps.Map(document.getElementById("map_canvas_x1"), myOptions1);
 
-											//Ubicacion de los distintos dispositivos
+											//Ubicación de los distintos dispositivos
 											var locations = [<?php echo $marker_loc; ?>];
 													
 											//se dibujan las zonas
@@ -828,7 +828,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 												var data       = locations[i][2];
 												var icon       = locations[i][3];
 												var marcador   = "<?php echo DB_SITE_REPO; ?>/LIB_assets/img/map-icons/3_comun_" + icon + ".png";	
-												var title      = "Informacion";	
+												var title      = "Información";	
 												
 												//guardo las ultimas ubicaciones
 												last_latitude   = locations[i][0];

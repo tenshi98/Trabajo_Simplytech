@@ -15,7 +15,7 @@
     </li>
 
     <?php
-    //Si esta activa la opcion de correo Interno
+    //Si esta activa la opción de correo Interno
 	if($_SESSION['usuario']['basic_data']['CorreoInterno']==1){ ?>
 		<li class="">
 			<a href="principal_correos.php" <?php if(isset($original)&&$original=='principal_correos.php'){echo 'class="active"';} ?>>
@@ -104,7 +104,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
 		<ul>
 			<li><a href="core_email.php">             <i class="fa fa-cogs" aria-hidden="true"></i> Configuracion Correo Interno</a></li>
 			<li><a href="core_comparacion_base.php">  <i class="fa fa-cogs" aria-hidden="true"></i> Comparacion Base Datos</a></li>
-			<li><a href="core_informacion_base.php">  <i class="fa fa-cogs" aria-hidden="true"></i> Informacion Base Datos</a></li>
+			<li><a href="core_información_base.php">  <i class="fa fa-cogs" aria-hidden="true"></i> Información Base Datos</a></li>
 		</ul>
 	</li>
 
@@ -114,7 +114,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
 			<i class="fa fa-angle-right pull-right margin_width" aria-hidden="true"></i>
 		</a>
 		<ul>
-			<li><a href="core_info_sistema.php">           <i class="fa fa-cogs" aria-hidden="true"></i> Informacion del servidor</a></li>
+			<li><a href="core_info_sistema.php">           <i class="fa fa-cogs" aria-hidden="true"></i> Información del servidor</a></li>
 			<li><a href="core_log_cambios.php?pagina=1">   <i class="fa fa-cogs" aria-hidden="true"></i> Cambios en el Sistema</a></li>
 			<li><a href="core_mantenciones.php?pagina=1">  <i class="fa fa-cogs" aria-hidden="true"></i> Mantenciones al sistema</a></li>
 			<li><a href="core_info_logs.php">              <i class="fa fa-cogs" aria-hidden="true"></i> Logs de errores</a></li>

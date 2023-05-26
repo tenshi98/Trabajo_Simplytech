@@ -121,10 +121,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 					$Form_Inputs->form_input_phone('Fono1', 'Fono1', $x7, 1);
 					$Form_Inputs->form_input_phone('Fono2', 'Fono2', $x8, 1);
 					$Form_Inputs->form_input_icon('Email', 'email', $x9, 1,'fa fa-envelope-o');
-					$Form_Inputs->form_select_depend1('Region','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Región','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x11, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 											 $dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x12, 1,'fa fa-map');
+					$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x12, 1,'fa fa-map');
 					$Form_Inputs->form_select('Estado Civil','idEstadoCivil', $x13, 1, 'idEstadoCivil', 'Nombre', 'core_estado_civil', 0, '', $dbConn);
 					$Form_Inputs->form_select('Tipo Licencia','idTipoLicencia', $x14, 2, 'idTipoLicencia', 'Nombre', 'core_tipos_licencia_conducir', 0, '', $dbConn);
 					$Form_Inputs->form_values('Pretenciones','SueldoLiquido', $x15, 1);

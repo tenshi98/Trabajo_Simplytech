@@ -238,7 +238,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 								<strong>Lugar : </strong>'.$row_data['SistemaOrigenComuna'].', '.$row_data['SistemaOrigenCiudad'].'<br/>
 								<strong>RUT : </strong>'.$row_data['RutProspecto'].'<br/>
 								<strong>Ciudad/Comuna : </strong>'.$row_data['ComunaProspecto'].'<br/>
-								<strong>Region : </strong>'.$row_data['CiudadProspecto'].'<br/>
+								<strong>Región : </strong>'.$row_data['CiudadProspecto'].'<br/>
 								<strong>Email : </strong>'.$row_data['EmailProspecto'].'<br/>
 								<strong>Cargo : </strong><br/>
 							</td>

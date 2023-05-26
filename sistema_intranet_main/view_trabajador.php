@@ -232,7 +232,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowdata['FNacimiento']); ?><br/>
 							<strong>Fono : </strong><?php echo formatPhone($rowdata['Fono']); ?><br/>
 							<strong>Email : </strong><?php echo $rowdata['email']; ?><br/>
-							<strong>Direccion : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['nombre_comuna'].', '.$rowdata['nombre_region']; ?><br/>
+							<strong>Dirección : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['nombre_comuna'].', '.$rowdata['nombre_region']; ?><br/>
 							<strong>Estado Civil: </strong><?php echo $rowdata['EstadoCivil']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
 							<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?>
@@ -282,7 +282,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 							<strong>Fecha de Contrato : </strong><?php if(isset($rowdata['FechaContrato'])&&$rowdata['FechaContrato']!='0000-00-00'){echo Fecha_estandar($rowdata['FechaContrato']);}else{echo 'Sin fecha de Contrato';} ?><br/>
 							<strong>Fecha de Inicio Contrato : </strong><?php if(isset($rowdata['F_Inicio_Contrato'])&&$rowdata['F_Inicio_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Inicio_Contrato']);}else{echo 'Sin fecha de inicio';} ?><br/>
 							<strong>Fecha de Termino Contrato : </strong><?php if(isset($rowdata['F_Termino_Contrato'])&&$rowdata['F_Termino_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Termino_Contrato']);}else{echo 'Sin fecha de termino';} ?><br/>
-							<strong>Ubicacion Trabajo : </strong><?php echo $rowdata['UbicacionTrabajo']; ?><br/>
+							<strong>Ubicación Trabajo : </strong><?php echo $rowdata['UbicacionTrabajo']; ?><br/>
 
 							<br/><span class="text-danger"><strong>Remuneraciones</strong></span><br/>
 							<?php if(isset($rowdata['idTipoContratoTrab'])){ 
@@ -489,7 +489,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 									<th># OT</th>
 									<th>Fecha</th>
 									<th>Estado</th>
-									<th>Ubicacion</th>
+									<th>Ubicación</th>
 								</tr>
 							</thead>
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -551,7 +551,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 											<td><?php echo $producto['Fecha']; ?></td>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($producto['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+													<a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($producto['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 												</div>
 												<?php echo cantidades($producto['Cantidad'], 0).' '.$producto['Uml'].' de '.$producto['Producto']; ?>
 												
@@ -576,7 +576,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 <?php } ?>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

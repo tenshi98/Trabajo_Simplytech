@@ -107,7 +107,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 			<address>
 				<strong>Usuario:</strong> <?php echo $row_data['Usuario']; ?><br/>
 				<strong>Sistema:</strong> <?php echo $row_data['Sistema']; ?><br/>
-				<strong>Ubicacion:</strong> <?php echo $row_data['Ubicacion'];
+				<strong>Ubicación:</strong> <?php echo $row_data['Ubicacion'];
 				if(isset($row_data['UbicacionLVL_1'])&&$row_data['UbicacionLVL_1']!=''){echo ' - '.$row_data['UbicacionLVL_1'];}
 				if(isset($row_data['UbicacionLVL_2'])&&$row_data['UbicacionLVL_2']!=''){echo ' - '.$row_data['UbicacionLVL_2'];}
 				if(isset($row_data['UbicacionLVL_3'])&&$row_data['UbicacionLVL_3']!=''){echo ' - '.$row_data['UbicacionLVL_3'];}
@@ -203,7 +203,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

@@ -100,7 +100,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Categoria','idCategoria', $x1, 2, 'idCategoria', 'Nombre', 'seg_vecinal_canales_categorias', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
-				$Form_Inputs->form_input_text('Direccion Web', 'Direccion', $x3, 2);
+				$Form_Inputs->form_input_text('Dirección Web', 'Dirección', $x3, 2);
 				$Form_Inputs->form_input_text('Channel ID', 'Channel_ID', $x4, 2);
 
 				$Form_Inputs->form_input_hidden('idCanal', $_GET['id'], 2);
@@ -142,7 +142,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Categoria','idCategoria', $x1, 2, 'idCategoria', 'Nombre', 'seg_vecinal_canales_categorias', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
-				$Form_Inputs->form_input_text('Direccion Web', 'Direccion', $x3, 2);
+				$Form_Inputs->form_input_text('Dirección Web', 'Dirección', $x3, 2);
 				$Form_Inputs->form_input_text('Channel ID', 'Channel_ID', $x4, 2);
 
 				?>
@@ -287,11 +287,11 @@ $arrCanales = db_select_array (false, $SIS_query, 'seg_vecinal_canales_listado',
 						<td><?php echo $cat['NombreCanal']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$cat['idCanal']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$cat['idCanal']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($cat['idCanal'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el canal '.$cat['NombreCanal'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

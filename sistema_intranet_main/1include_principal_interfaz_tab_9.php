@@ -143,7 +143,7 @@ $ultimoDiaMes   = date("d",(mktime(0,0,0,$Mes+1,1,$Ano)-1));
 																								if (fecha2NSemana($res['Fecha'])<$semanaActual&&$res['idEstado']==1) {
 																									$calcolor  = 'evcal_color6';
 																								}
-																								echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor.'" href="'.$ver.'&return=true">Res. N° '.$res['idReserva'].' ('.$res['Hora_Inicio'].' a '.$res['Hora_Termino'].')</a>';
+																								echo '<a title="Ver Información" class="tooltip event_calendar '.$calcolor.'" href="'.$ver.'&return=true">Res. N° '.$res['idReserva'].' ('.$res['Hora_Inicio'].' a '.$res['Hora_Termino'].')</a>';
 
 																							}
 																						} ?>

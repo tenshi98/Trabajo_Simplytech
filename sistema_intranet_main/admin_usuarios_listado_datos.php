@@ -86,10 +86,10 @@ $rowdata = db_select_data (false, $SIS_query, 'usuarios_listado', $SIS_join, $SI
 					$Form_Inputs->form_input_icon('Email', 'email', $x3, 2,'fa fa-envelope-o');
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 1);
 					$Form_Inputs->form_date('F Nacimiento','fNacimiento', $x5, 1);
-					$Form_Inputs->form_select_depend1('Region','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Región','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										     'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										     $dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 1,'fa fa-map');
+					$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x8, 1,'fa fa-map');
 
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idUsuario', $_GET['id'], 2);

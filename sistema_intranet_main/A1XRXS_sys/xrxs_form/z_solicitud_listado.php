@@ -48,9 +48,9 @@ require_once '0_validate_user_1.php';
 			case 'idSolicitud':       if(empty($idSolicitud)){      $error['idSolicitud']     = 'error/No ha ingresado el id';}break;
 			case 'idSistema':         if(empty($idSistema)){        $error['idSistema']       = 'error/No ha seleccionado el sistema';}break;
 			case 'idUsuario':         if(empty($idUsuario)){        $error['idUsuario']       = 'error/No ha seleccionado el usuario';}break;
-			case 'Creacion_fecha':    if(empty($Creacion_fecha)){   $error['Creacion_fecha']  = 'error/No ha ingresado la fecha de creacion';}break;
-			case 'Creacion_mes':      if(empty($Creacion_mes)){     $error['Creacion_mes']    = 'error/No ha ingresado el mes de creacion';}break;
-			case 'Creacion_ano':      if(empty($Creacion_ano)){     $error['Creacion_ano']    = 'error/No ha ingresado el año de creacion';}break;
+			case 'Creacion_fecha':    if(empty($Creacion_fecha)){   $error['Creacion_fecha']  = 'error/No ha ingresado la fecha de creación';}break;
+			case 'Creacion_mes':      if(empty($Creacion_mes)){     $error['Creacion_mes']    = 'error/No ha ingresado el mes de creación';}break;
+			case 'Creacion_ano':      if(empty($Creacion_ano)){     $error['Creacion_ano']    = 'error/No ha ingresado el año de creación';}break;
 			case 'Observaciones':     if(empty($Observaciones)){    $error['Observaciones']   = 'error/No ha ingresado la observacion';}break;
 
 			case 'idProducto':        if(empty($idProducto)){       $error['idProducto']      = 'error/No ha seleccionado el producto';}break;
@@ -564,7 +564,7 @@ require_once '0_validate_user_1.php';
 			if (isset($_SESSION['solicitud_basicos'])){
 				if(!isset($_SESSION['solicitud_basicos']['idSistema']) OR $_SESSION['solicitud_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['solicitud_basicos']['idUsuario']) OR $_SESSION['solicitud_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['solicitud_basicos']['Creacion_fecha']) OR $_SESSION['solicitud_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['solicitud_basicos']['Creacion_fecha']) OR $_SESSION['solicitud_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['solicitud_basicos']['Observaciones']) OR $_SESSION['solicitud_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la solicitud';

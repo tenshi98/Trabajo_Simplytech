@@ -201,7 +201,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 						<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
 						<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
 						<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-						<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+						<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
 					</p>
 
 					<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Sistemas Asignados</h2>

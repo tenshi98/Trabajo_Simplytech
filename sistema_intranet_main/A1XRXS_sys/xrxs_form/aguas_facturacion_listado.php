@@ -55,7 +55,7 @@ require_once '0_validate_user_1.php';
 			case 'idMes':                if(empty($idMes)){                 $error['idMes']                   = 'error/No ha ingresado el mes de facturacion';}break;
 			case 'Ano':                  if(empty($Ano)){                   $error['Ano']                     = 'error/No ha ingresado el año de facturacion';}break;
 			case 'Observaciones':        if(empty($Observaciones)){         $error['Observaciones']           = 'error/No ha ingresado la Observacion';}break;
-			case 'fCreacion':            if(empty($fCreacion)){             $error['fCreacion']               = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'fCreacion':            if(empty($fCreacion)){             $error['fCreacion']               = 'error/No ha ingresado la fecha de creación';}break;
 			case 'intAnual':             if(empty($intAnual)){              $error['intAnual']                = 'error/No ha seleccionado el tipo';}break;
 			case 'idOpcionesInteres':    if(empty($idOpcionesInteres)){     $error['idOpcionesInteres']       = 'error/No ha seleccionado el tipo de medicion';}break;
 
@@ -103,9 +103,9 @@ require_once '0_validate_user_1.php';
 			if(!isset($idSistema) OR $idSistema == ''){                  $error['idSistema']         = 'error/No ha seleccionado el Sistema';}
 			if(!isset($idUsuario) OR $idUsuario == ''){                  $error['idUsuario']         = 'error/No ha seleccionado Usuario';}
 			if(!isset($Fecha) OR $Fecha == ''){                          $error['Fecha']             = 'error/No ha ingresado la Fecha';}
-			if(!isset($fCreacion) OR $fCreacion == ''){                  $error['fCreacion']         = 'error/No ha ingresado la Fecha de creacion';}
+			if(!isset($fCreacion) OR $fCreacion == ''){                  $error['fCreacion']         = 'error/No ha ingresado la Fecha de creación';}
 			if(!isset($intAnual) OR $intAnual == ''){                    $error['intAnual']          = 'error/No ha ingresado el interes anual';}
-			if(!isset($idOpcionesInteres) OR $idOpcionesInteres == ''){  $error['idOpcionesInteres'] = 'error/No ha seleccionado la opcion de calculo de intereses';}
+			if(!isset($idOpcionesInteres) OR $idOpcionesInteres == ''){  $error['idOpcionesInteres'] = 'error/No ha seleccionado la opción de calculo de intereses';}
 			/*******************************************************************/
 
 			//Si no hay errores ejecuto el codigo
@@ -1192,12 +1192,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

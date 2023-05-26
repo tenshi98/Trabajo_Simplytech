@@ -236,8 +236,8 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 				<td width="10">
 					<div class="btn-group" style="width: <?php echo $eq_act_med; ?>px;" >
 						<?php echo $eq_act_btn; ?>
-						<a href="view_crosstech_tel_data.php?idTelemetria=<?php echo simpleEncode($data['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
-						<button onclick="fncCenterMap('<?php echo $data['GeoLatitud']; ?>', '<?php echo $data['GeoLongitud']; ?>', '<?php echo $nicon; ?>')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+						<a href="view_crosstech_tel_data.php?idTelemetria=<?php echo simpleEncode($data['idTelemetria'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+						<button onclick="fncCenterMap('<?php echo $data['GeoLatitud']; ?>', '<?php echo $data['GeoLongitud']; ?>', '<?php echo $nicon; ?>')" title="Ver Ubicación" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
 					</div>
 				</td>
 			</tr>

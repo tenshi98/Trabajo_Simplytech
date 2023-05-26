@@ -131,14 +131,14 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 					$Form_Inputs->form_input_text('Dominio', 'Domain', $x2, 1);
 
 					$Form_Inputs->form_tittle(3, 'Whatsapp');
-					$Form_Inputs->form_input_text('Titulo', 'Whatsapp_tittle', $x3, 1);
+					$Form_Inputs->form_input_text('Título', 'Whatsapp_tittle', $x3, 1);
 					$Form_Inputs->form_input_phone('Numero Whatsapp 1', 'Whatsapp_number_1', $x4, 1);
 					$Form_Inputs->form_input_phone('Numero Whatsapp 2', 'Whatsapp_number_2', $x5, 1);
 
 					//Si el carrousel esta desactivado
 					if(isset($rowdata['Config_Carousel'])&&$rowdata['Config_Carousel']==2){
 						$Form_Inputs->form_tittle(3, 'Header');
-						$Form_Inputs->form_input_text('Titulo', 'Header_Titulo', $x6, 2);
+						$Form_Inputs->form_input_text('Título', 'Header_Titulo', $x6, 2);
 						$Form_Inputs->form_input_icon('Estilo del Titulo', 'Header_TituloStyle', $x7, 1,'fa fa-file-image-o');
 						$Form_Inputs->form_textarea('Texto', 'Header_Texto', $x8, 1);
 						$Form_Inputs->form_input_icon('Estilo del Texto', 'Header_TextoStyle', $x9, 1,'fa fa-file-image-o');
@@ -152,8 +152,8 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 					$Form_Inputs->form_tittle(3, 'Contacto');
 					$Form_Inputs->form_input_text('Contacto - Titulo', 'Contact_Tittle', $x15, 1);
 					$Form_Inputs->form_textarea('Contacto - Cuerpo', 'Contact_Tittle_body', $x16, 1);
-					$Form_Inputs->form_input_icon('Direccion - Titulo', 'Contact_Address_tittle', $x17, 1,'fa fa-map');
-					$Form_Inputs->form_textarea('Direccion - Cuerpo', 'Contact_Address_body', $x18, 1);
+					$Form_Inputs->form_input_icon('Dirección - Titulo', 'Contact_Address_tittle', $x17, 1,'fa fa-map');
+					$Form_Inputs->form_textarea('Dirección - Cuerpo', 'Contact_Address_body', $x18, 1);
 					$Form_Inputs->form_input_icon('Email - Titulo', 'Contact_Email_tittle', $x19, 1,'fa fa-envelope-o');
 					$Form_Inputs->form_textarea('Email - Cuerpo', 'Contact_Email_body', $x20, 1);
 					$Form_Inputs->form_input_icon('Fono - Titulo', 'Contact_Phone_tittle', $x21, 1,'fa fa-phone');
@@ -163,7 +163,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 					$Form_Inputs->form_input_icon('Receptor - Nombre', 'Contact_Recep_name', $x25, 1,'fa fa-users');
 
 					$Form_Inputs->form_tittle(3, 'Social');
-					$Form_Inputs->form_input_text('Titulo', 'Social_Tittle', $x26, 1);
+					$Form_Inputs->form_input_text('Título', 'Social_Tittle', $x26, 1);
 					$Form_Inputs->form_input_icon('Twitter', 'Social_Twitter', $x27, 1,'fa fa-twitter');
 					$Form_Inputs->form_input_icon('Facebook', 'Social_Facebook', $x28, 1,'fa fa-facebook');
 					$Form_Inputs->form_input_icon('Instagram', 'Social_Instagram', $x29, 1,'fa fa-instagram');
@@ -171,7 +171,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado', $SIS_join, $SIS_
 					$Form_Inputs->form_input_icon('Linkedin', 'Social_Linkedin', $x31, 1,'fa fa-linkedin');
 
 					$Form_Inputs->form_tittle(3, 'Nosotros');
-					$Form_Inputs->form_input_text('Titulo', 'Nosotros_Titulo', $x32, 1);
+					$Form_Inputs->form_input_text('Título', 'Nosotros_Titulo', $x32, 1);
 					$Form_Inputs->form_input_text('Subtitulo', 'Nosotros_Subtitulo', $x33, 1);
 					$Form_Inputs->form_textarea('Texto', 'Nosotros_Texto', $x34, 1);
 					$Form_Inputs->form_input_icon('Link Video', 'Nosotros_Link', $x35, 1,'fa fa-link');

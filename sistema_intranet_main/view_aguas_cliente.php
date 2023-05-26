@@ -212,9 +212,9 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 								<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>
 								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 								<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-								<strong>Region : </strong><?php echo $rowdata['nombre_region']; ?><br/>
+								<strong>Región : </strong><?php echo $rowdata['nombre_region']; ?><br/>
 								<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
 								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
 								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
 							</p>
@@ -244,12 +244,12 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 								<strong>Arranque : </strong><?php echo $rowdata['Arranque']; ?><br/>
 								<strong>Estado : </strong><?php echo $rowdata['EstadoPago']; ?><br/>
 								<strong>Forma Facturacion : </strong><?php echo $rowdata['DocFacturable']; ?><br/>
-								<strong>Region Facturacion : </strong><?php echo $rowdata['nombre_region_fact']; ?><br/>
+								<strong>Región Facturacion : </strong><?php echo $rowdata['nombre_region_fact']; ?><br/>
 								<strong>Ciudad Facturacion : </strong><?php echo $rowdata['nombre_comuna_fact']; ?><br/>
-								<strong>Direccion Facturacion : </strong><?php echo $rowdata['DireccionFact']; ?><br/>
+								<strong>Dirección Facturacion : </strong><?php echo $rowdata['DireccionFact']; ?><br/>
 								<strong>Giro de la empresa : </strong><?php echo $rowdata['Giro']; ?><br/>
 								<strong>Rubro de la empresa : </strong><?php echo $rowdata['Rubro']; ?><br/>
-								<strong>Razon Social de la empresa : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
+								<strong>Razón Social de la empresa : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Medicion</h2>
@@ -263,7 +263,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<?php
-							//se despliega mensaje en caso de no existir direccion
+							//se despliega mensaje en caso de no existir dirección
 							if($rowdata["latitud"]!=0 && $rowdata["longitud"]!=0){
 								echo mapa_from_gps($rowdata["latitud"], $rowdata["longitud"], $rowdata['Identificador'], $rowdata['Nombre'], $rowdata['Direccion'], $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
 							}else{
@@ -401,7 +401,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 									<?php foreach ($arrFacturaciones as $fac) { ?>
 										<tr class="odd">
 											<td>
-												<a href="<?php echo 'view_aguas_facturacion.php?view='.simpleEncode($fac['idFacturacionDetalle'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" data-placement="bottom" title="Ver Informacion" data-toggle="tooltip" class="btn btn-primary btn-sm info-tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+												<a href="<?php echo 'view_aguas_facturacion.php?view='.simpleEncode($fac['idFacturacionDetalle'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" data-placement="bottom" title="Ver Información" data-toggle="tooltip" class="btn btn-primary btn-sm info-tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 												<?php echo numero_a_mes($fac['idMes']).' '.$fac['Ano']; ?>
 											</td>
 											<td align="right"><?php echo Valores($fac['DetalleTotalAPagar'], 0); ?></td>
@@ -483,7 +483,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'aguas_clientes_otros_cargos', $
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

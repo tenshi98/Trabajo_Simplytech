@@ -61,9 +61,9 @@ require_once '0_validate_user_1.php';
 			case 'idSistema':         if(empty($idSistema)){        $error['idSistema']       = 'error/No ha seleccionado el sistema';}break;
 			case 'idUsuario':         if(empty($idUsuario)){        $error['idUsuario']       = 'error/No ha seleccionado el usuario';}break;
 			case 'idProspecto':       if(empty($idProspecto)){      $error['idProspecto']     = 'error/No ha seleccionado al proveedor';}break;
-			case 'Creacion_fecha':    if(empty($Creacion_fecha)){   $error['Creacion_fecha']  = 'error/No ha ingresado la fecha de creacion';}break;
-			case 'Creacion_mes':      if(empty($Creacion_mes)){     $error['Creacion_mes']    = 'error/No ha ingresado el mes de creacion';}break;
-			case 'Creacion_ano':      if(empty($Creacion_ano)){     $error['Creacion_ano']    = 'error/No ha ingresado el año de creacion';}break;
+			case 'Creacion_fecha':    if(empty($Creacion_fecha)){   $error['Creacion_fecha']  = 'error/No ha ingresado la fecha de creación';}break;
+			case 'Creacion_mes':      if(empty($Creacion_mes)){     $error['Creacion_mes']    = 'error/No ha ingresado el mes de creación';}break;
+			case 'Creacion_ano':      if(empty($Creacion_ano)){     $error['Creacion_ano']    = 'error/No ha ingresado el año de creación';}break;
 			case 'Observaciones':     if(empty($Observaciones)){    $error['Observaciones']   = 'error/No ha ingresado la observacion';}break;
 
 			case 'idProducto':        if(empty($idProducto)){       $error['idProducto']      = 'error/No ha seleccionado el producto';}break;
@@ -82,13 +82,13 @@ require_once '0_validate_user_1.php';
 
 			case 'idExistencia':      if(empty($idExistencia)){     $error['idExistencia']    = 'error/No ha ingresado el id existencia';}break;
 			case 'idDocumento':       if(empty($idDocumento)){      $error['idDocumento']     = 'error/No ha seleccionado el documento';}break;
-			case 'Creacion_semana':   if(empty($Creacion_semana)){  $error['Creacion_semana'] = 'error/No ha ingresado la semana de creacion';}break;
+			case 'Creacion_semana':   if(empty($Creacion_semana)){  $error['Creacion_semana'] = 'error/No ha ingresado la semana de creación';}break;
 
 			case 'Observacion':       if(empty($Observacion)){      $error['Observacion']     = 'error/No ha ingresado la Observacion';}break;
 			case 'idTipo':            if(empty($idTipo)){           $error['idTipo']          = 'error/No ha ingresado el Tipo';}break;
-			case 'Creacion_hora':     if(empty($Creacion_hora)){    $error['Creacion_hora']   = 'error/No ha ingresado la hora de creacion';}break;
+			case 'Creacion_hora':     if(empty($Creacion_hora)){    $error['Creacion_hora']   = 'error/No ha ingresado la hora de creación';}break;
 			case 'idImpuesto':        if(empty($idImpuesto)){       $error['idImpuesto']      = 'error/No ha ingresado el impuesto';}break;
-			case 'fecha_auto':        if(empty($fecha_auto)){       $error['fecha_auto']      = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'fecha_auto':        if(empty($fecha_auto)){       $error['fecha_auto']      = 'error/No ha ingresado la fecha de creación';}break;
 
 		}
 	}
@@ -738,7 +738,7 @@ require_once '0_validate_user_1.php';
 			if (isset($_SESSION['cotizacion_prospectos_basicos'])){
 				if(!isset($_SESSION['cotizacion_prospectos_basicos']['idSistema']) OR $_SESSION['cotizacion_prospectos_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['cotizacion_prospectos_basicos']['idUsuario']) OR $_SESSION['cotizacion_prospectos_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']) OR $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']) OR $_SESSION['cotizacion_prospectos_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['cotizacion_prospectos_basicos']['Observaciones']) OR $_SESSION['cotizacion_prospectos_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['cotizacion_prospectos_basicos']['idProspecto']) OR $_SESSION['cotizacion_prospectos_basicos']['idProspecto']=='' ){       $error['idProspecto']      = 'error/No ha seleccionado un proveedor';}
 			}else{

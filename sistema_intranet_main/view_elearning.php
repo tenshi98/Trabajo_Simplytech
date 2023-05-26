@@ -219,7 +219,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 																<div class="col-xs-12 col-sm-11 col-md-11 col-lg-11"><?php echo $file['Cuestionario'];  ?></div>
 																<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1">
 																	<div class="btn-group" style="width: 35px;" >
-																		<a href="<?php echo 'view_quiz.php?view='.simpleEncode($file['idQuiz'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+																		<a href="<?php echo 'view_quiz.php?view='.simpleEncode($file['idQuiz'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 																	</div>
 																</div>
 															</div>
@@ -242,7 +242,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

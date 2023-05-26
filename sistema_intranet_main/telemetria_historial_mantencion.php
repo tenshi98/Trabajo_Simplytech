@@ -221,8 +221,8 @@ array_push( $arrArchivos,$row );
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Empresa Visitada</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['SistemaOrigen']; ?><br/>
-							<strong>Ubicacion : </strong><?php echo $rowdata['SistemaOrigenCiudad'].', '.$rowdata['SistemaOrigenComuna']; ?><br/>
-							<strong>Direccion : </strong><?php echo $rowdata['SistemaOrigenDireccion']; ?><br/>
+							<strong>Ubicación : </strong><?php echo $rowdata['SistemaOrigenCiudad'].', '.$rowdata['SistemaOrigenComuna']; ?><br/>
+							<strong>Dirección : </strong><?php echo $rowdata['SistemaOrigenDireccion']; ?><br/>
 							<strong>Fono Fijo : </strong><?php echo formatPhone($rowdata['SistemaOrigenFono']); ?><br/>
 							<strong>Rut : </strong><?php echo $rowdata['SistemaOrigenRut']; ?><br/>
 							<strong>Email : </strong><?php echo $rowdata['SistemaOrigenEmail']; ?><br/>
@@ -347,7 +347,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Sistema','idSistema', $x0, 2, 'idSistema', 'Nombre', 'core_sistemas',0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'core_telemetria_servicio_tecnico', 0, '', $dbConn);
-				$Form_Inputs->form_checkbox_active('Selecciona una Opcion','idOpciones', $x2, 2, 'idOpciones', 'Nombre', 'core_telemetria_servicio_tecnico_opciones', 0, $dbConn);
+				$Form_Inputs->form_checkbox_active('Selecciona una Opción','idOpciones', $x2, 2, 'idOpciones', 'Nombre', 'core_telemetria_servicio_tecnico_opciones', 0, $dbConn);
 				$Form_Inputs->form_date('Fecha Mantencion','Fecha', $x3, 2);
 				$Form_Inputs->form_time('Hora Inicio','h_Inicio', $x4, 2, 2);
 				$Form_Inputs->form_time('Hora Termino','h_Termino', $x5, 2, 2);
@@ -486,7 +486,7 @@ foreach ($arrOpciones as $mant) {
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Tipo de Servicio','idServicio', $x1, 1, 'idServicio', 'Nombre', 'core_telemetria_servicio_tecnico', 0, '', $dbConn);
-				$Form_Inputs->form_checkbox_active('Selecciona una Opcion','idOpciones', $x2, 1, 'idOpciones', 'Nombre', 'core_telemetria_servicio_tecnico_opciones', 0, $dbConn);
+				$Form_Inputs->form_checkbox_active('Selecciona una Opción','idOpciones', $x2, 1, 'idOpciones', 'Nombre', 'core_telemetria_servicio_tecnico_opciones', 0, $dbConn);
 				$Form_Inputs->form_date('Fecha Mantencion','Fecha', $x3, 1);
 				$Form_Inputs->form_select_join_filter('Tecnico','idUsuario', $x4, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				$Form_Inputs->form_select('Sistema','idSistema', $x5, 1, 'idSistema', 'Nombre', 'core_sistemas',0, '', $dbConn);
@@ -570,12 +570,12 @@ foreach ($arrOpciones as $mant) {
 						<td><?php echo $mant['sistema']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_telemetria_mantencion.php?view='.simpleEncode($mant['idMantencion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$mant['idMantencion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_telemetria_mantencion.php?view='.simpleEncode($mant['idMantencion'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$mant['idMantencion']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($mant['idMantencion'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la mantencion N° '.$mant['idMantencion'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

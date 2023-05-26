@@ -196,11 +196,11 @@ $search='';
 						<td><?php echo fecha_estandar($logs['Fecha']).' '.cortar($logs['Descripcion'], 120); ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo $location.'&id='.$logs['idLog']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&id='.$logs['idLog']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php
 								$ubicacion = $location.'&del='.simpleEncode($logs['idLog'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar el registro '.$logs['Descripcion'].'?'; ?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>

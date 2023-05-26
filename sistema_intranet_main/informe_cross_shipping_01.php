@@ -163,7 +163,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion_est
 						<th>Contenedor Nro.</th>
 						<th>Categoria - Producto</th>
 						<th>Estiba</th>
-						<th>Ubicacion</th>
+						<th>Ubicación</th>
 						<th>Posicion</th>
 						<th>Creador</th>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><th width="160">Sistema</th><?php } ?>
@@ -183,7 +183,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'cross_shipping_consolidacion_est
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_cross_shipping_consolidacion.php?view='.simpleEncode($tipo['idConsolidacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_cross_shipping_consolidacion.php?view='.simpleEncode($tipo['idConsolidacion'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>
@@ -284,7 +284,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_text('Patente Carro', 'PatenteCarro', $x20, 1);
 
 				$Form_Inputs->form_tittle(3, 'Cuerpo Parametros Evaluados');
-				$Form_Inputs->form_select('Condicion CTN','idCondicion', $x21, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);
+				$Form_Inputs->form_select('Condición CTN','idCondicion', $x21, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);
 				$Form_Inputs->form_select('Sellado Piso','idSellado', $x22, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('T° Set Point', 'TSetPoint', $x23, 1);
 				$Form_Inputs->form_input_number('T° Ventilacion', 'TVentilacion', $x24, 1);

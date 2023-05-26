@@ -449,8 +449,8 @@ $arrUsers = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join,
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_telemetria.php?view='.simpleEncode($usuarios['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&verify='.$usuarios['idTelemetria']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_telemetria.php?view='.simpleEncode($usuarios['idTelemetria'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&verify='.$usuarios['idTelemetria']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){ ?><a href="<?php echo $location.'&edit='.$usuarios['idTelemetria']; ?>" title="Cerrar Mantencion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>

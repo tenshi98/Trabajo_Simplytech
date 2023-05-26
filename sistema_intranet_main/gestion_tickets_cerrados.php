@@ -167,7 +167,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select('Area Ticket','idArea', $x2, 1, 'idArea', 'Nombre', 'crosstech_gestion_tickets_area', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo Ticket','idTipoTicket', $x3, 1, 'idTipoTicket', 'Nombre', 'core_tipo_ticket', 0, '', $dbConn);
 				$Form_Inputs->form_select('Prioridad Ticket','idPrioridad', $x4, 1, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
-				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x5, 1);
+				$Form_Inputs->form_input_text('Título', 'Titulo', $x5, 1);
 				$Form_Inputs->form_date('Fecha Creacion','FechaCreacion', $x6, 1);
 				$Form_Inputs->form_date('Fecha Cierre','FechaCierre', $x7, 1);
 				$Form_Inputs->form_select_join_filter('Usuario Cierre','idUsuarioAsignado', $x8, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
@@ -283,7 +283,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_gestion_tickets.php?view='.simpleEncode($usuarios['idTicket'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_gestion_tickets.php?view='.simpleEncode($usuarios['idTicket'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>

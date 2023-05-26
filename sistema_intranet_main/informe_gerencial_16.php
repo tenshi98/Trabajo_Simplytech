@@ -290,16 +290,16 @@ switch ($_GET['idTipoProd']) {
 								<?php
 								switch ($_GET['idTipoProd']) {
 									case 1://Arriendos
-										echo '<a href="view_mov_arriendos.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
+										echo '<a href="view_mov_arriendos.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual()).'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 										break;
 									case 2://Insumos
-										echo '<a href="view_mov_insumos.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
+										echo '<a href="view_mov_insumos.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual()).'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 										break;
 									case 3://Productos
-										echo '<a href="view_mov_productos.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
+										echo '<a href="view_mov_productos.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual()).'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 										break;
 									case 4://Servicios
-										echo '<a href="view_mov_servicios.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
+										echo '<a href="view_mov_servicios.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual()).'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 										break;
 								}
 								?>

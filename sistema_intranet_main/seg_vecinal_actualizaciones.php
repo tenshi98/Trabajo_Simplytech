@@ -249,11 +249,11 @@ $arrBloqueo = db_select_array (false, $SIS_query, 'seg_vecinal_actualizaciones',
 						<td class="word_break"><?php echo $bloqueo['Descripcion']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<a href="<?php echo $location.'&id='.$bloqueo['idLog']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&id='.$bloqueo['idLog']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php
 								$ubicacion = $location.'&del='.simpleEncode($bloqueo['idLog'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar el registro?'; ?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>

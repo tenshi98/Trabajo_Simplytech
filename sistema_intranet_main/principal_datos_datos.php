@@ -118,10 +118,10 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 					$Form_Inputs->form_input_icon('Email', 'email', $x7, 2,'fa fa-envelope-o');
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x8, 2);
 					$Form_Inputs->form_date('Fecha de Nacimiento','fNacimiento', $x9, 2);
-					$Form_Inputs->form_select_depend1('Region','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Región','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											 'Comuna','idComuna', $x11, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 											 $dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x12, 1,'fa fa-map');
+					$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x12, 1,'fa fa-map');
 					$Form_Inputs->form_input_hidden('idUsuario', $_SESSION['usuario']['basic_data']['idUsuario'], 2);
 
 					?>

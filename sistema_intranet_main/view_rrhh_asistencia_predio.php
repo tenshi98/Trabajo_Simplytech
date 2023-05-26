@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-//Informacion basica
+//Información basica
 $SIS_query = '
 trabajadores_listado.idSistema AS TrabajadoridSistema,
 trabajadores_listado.Nombre AS TrabajadorNombre,
@@ -181,7 +181,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 								marker = new google.maps.Marker({
 									position	: myLatlng,
 									map			: map,
-									title		: "Tu Ubicacion",
+									title		: "Tu Ubicación",
 									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
 
@@ -368,7 +368,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

@@ -45,7 +45,7 @@ if (!empty($_POST['submit_edit_1'])){
 }
 //formulario para editar
 if (!empty($_POST['submit_edit_2'])){
-	//Ubicacion
+	//Ubicación
 	$location .='&idMatriz='.$_GET['idMatriz'];
 	//Llamamos al formulario
 	$form_trabajo= 'update_matriz';
@@ -436,7 +436,7 @@ foreach ($arrGrupos as $data) {  $arrFinalGrupos[$data['idGrupo']] = $data['Nomb
 							<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedCondenatorio_'.$i]).' '.$unimed; }else{echo 'No Aplica';} ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idMatriz='.$_GET['idMatriz'].'&mod='.$i; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -499,8 +499,8 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 				$Form_Inputs->form_select('Tipo Nota Calidad','idNotaTipo_1', $x6, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);
 				$Form_Inputs->form_input_text('Datos a Validar', 'Validar_1', $x7, 1);
 
-				$Form_Inputs->form_select('Nota Condicion','idNota_2', $x8, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				$Form_Inputs->form_select('Tipo Nota Condicion','idNotaTipo_2', $x9, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);
+				$Form_Inputs->form_select('Nota Condición','idNota_2', $x8, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_select('Tipo Nota Condición','idNotaTipo_2', $x9, 1, 'idTipo', 'Nombre', 'core_cross_analisis_tipos', 'idTipo=2 OR idTipo=4 OR idTipo=7 OR idTipo=8 OR idTipo=9 OR idTipo=10 OR idTipo=11', '', $dbConn);
 				$Form_Inputs->form_input_text('Datos a Validar', 'Validar_2', $x10, 1);
 
 				$Form_Inputs->form_select('Calificacion','idNota_3', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
@@ -531,10 +531,10 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 						let Sensores_tipo_3= $("#idNotaTipo_3").val();
 
 						/******************************************************************/
-						//si la opcion esta activa
+						//si la opción esta activa
 						if(Sensores_val_1 == 1){
 							document.getElementById('div_idNotaTipo_1').style.display = '';				
-						//si la opcion esta inactiva
+						//si la opción esta inactiva
 						}else if(Sensores_val_1 == 2){
 							document.getElementById('div_idNotaTipo_1').style.display = 'none';
 							//Reseteo los valores a 0
@@ -546,10 +546,10 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 							document.getElementById('idNotaTipo_1').selectedIndex = 0;
 						}
 						/******************************************************************/
-						//si la opcion esta activa
+						//si la opción esta activa
 						if(Sensores_val_2 == 1){
 							document.getElementById('div_idNotaTipo_2').style.display = '';				
-						//si la opcion esta inactiva
+						//si la opción esta inactiva
 						}else if(Sensores_val_2 == 2){
 							document.getElementById('div_idNotaTipo_2').style.display = 'none';
 							//Reseteo los valores a 0
@@ -561,10 +561,10 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 							document.getElementById('idNotaTipo_2').selectedIndex = 0;
 						}
 						/******************************************************************/
-						//si la opcion esta activa
+						//si la opción esta activa
 						if(Sensores_val_3 == 1){
 							document.getElementById('div_idNotaTipo_3').style.display = '';				
-						//si la opcion esta inactiva
+						//si la opción esta inactiva
 						}else if(Sensores_val_3 == 2){
 							document.getElementById('div_idNotaTipo_3').style.display = 'none';
 							//Reseteo los valores a 0
@@ -613,10 +613,10 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 					$("#idNota_1").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected_1 = $(this).val(); //Asignamos el valor seleccionado
 
-						//si la opcion esta activa
+						//si la opción esta activa
 						if(modelSelected_1 == 1){
 							document.getElementById('div_idNotaTipo_1').style.display = '';
-						//si la opcion esta inactiva
+						//si la opción esta inactiva
 						}else if(modelSelected_1 == 2){
 							document.getElementById('div_idNotaTipo_1').style.display = 'none';
 							//Reseteo los valores a 0
@@ -632,10 +632,10 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 					$("#idNota_2").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected_2 = $(this).val(); //Asignamos el valor seleccionado
 
-						//si la opcion esta activa
+						//si la opción esta activa
 						if(modelSelected_2 == 1){
 							document.getElementById('div_idNotaTipo_2').style.display = '';
-						//si la opcion esta inactiva
+						//si la opción esta inactiva
 						}else if(modelSelected_2 == 2){
 							document.getElementById('div_idNotaTipo_2').style.display = 'none';
 							//Reseteo los valores a 0
@@ -651,10 +651,10 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 					$("#idNota_3").on("change", function(){ //se ejecuta al cambiar valor del select
 						let modelSelected_3 = $(this).val(); //Asignamos el valor seleccionado
 
-						//si la opcion esta activa
+						//si la opción esta activa
 						if(modelSelected_3 == 1){
 							document.getElementById('div_idNotaTipo_3').style.display = '';
-						//si la opcion esta inactiva
+						//si la opción esta inactiva
 						}else if(modelSelected_3 == 2){
 							document.getElementById('div_idNotaTipo_3').style.display = 'none';
 							//Reseteo los valores a 0
@@ -881,7 +881,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_proceso_matriz',
 				$Form_Inputs->form_select_n_auto('Cantidad de Puntos','cantPuntos', $x2, 1, 1, 100);
 				$Form_Inputs->form_select('Tipo Planilla','idTipo', $x3, 1, 'idTipo', 'Nombre', 'core_cross_quality_analisis_calidad', 0, '', $dbConn);
 				$Form_Inputs->form_select('Nota Calidad','idNota_1', $x4, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				$Form_Inputs->form_select('Nota Condicion','idNota_2', $x5, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
+				$Form_Inputs->form_select('Nota Condición','idNota_2', $x5, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_select('Calificacion','idNota_3', $x6, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
@@ -949,7 +949,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_proceso_matriz',
 							</div>
 						</th>
 						<th width="120">
-							<div class="pull-left">Nota Condicion</div>
+							<div class="pull-left">Nota Condición</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'&order_by=ops2_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&order_by=ops2_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>
@@ -979,13 +979,13 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_proceso_matriz',
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $maq['RazonSocial']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 140px;" >
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idMatriz_2='.$maq['idMatriz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idMatriz_2='.$maq['idMatriz']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&nombre_matriz='.$maq['Nombre'].'&clone_idMatriz='.$maq['idMatriz']; ?>" title="Clonar Tipo Planilla" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&idMatriz='.$maq['idMatriz']; ?>" title="Editar Matriz" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($maq['idMatriz'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la matriz '.$maq['Nombre'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

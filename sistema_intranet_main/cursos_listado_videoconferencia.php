@@ -323,11 +323,11 @@ array_push( $arrVideo,$row );
 
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$video['idVideoConferencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$video['idVideoConferencia']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($video['idVideoConferencia'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la videoconferencia '.$video['NombreVideo'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

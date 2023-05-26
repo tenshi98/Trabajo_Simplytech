@@ -151,7 +151,7 @@ array_push( $arrCarga,$row );
 									<?php if(isset($carga['Cuenta'])&&$carga['Cuenta']!=1){ 
 										$ubicacion = $location.'&block_ip='.simpleEncode($carga['IP_Client'], fecha_actual());
 										$dialogo   = '¿Realmente deseas bloquear la IP '.$carga['IP_Client'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Bloquear Direccion IP" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-ban" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Bloquear Dirección IP" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-ban" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>
@@ -191,7 +191,7 @@ array_push( $arrCarga,$row );
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 1);
 				$Form_Inputs->form_input_text('Usuario', 'usuario', $x2, 1);
-				$Form_Inputs->form_input_text('Direccion IP', 'IP_Client', $x3, 1);
+				$Form_Inputs->form_input_text('Dirección IP', 'IP_Client', $x3, 1);
 
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 

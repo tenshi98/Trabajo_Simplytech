@@ -139,9 +139,9 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_listado', $SIS_join, $SIS
 							<strong>Nombre: </strong><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?><br/>
 							<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-							<strong>Region : </strong><?php echo $rowdata['nombre_region']; ?><br/>
+							<strong>Región : </strong><?php echo $rowdata['nombre_region']; ?><br/>
 							<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-							<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+							<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
 							<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
 						</p>
@@ -342,10 +342,10 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				$Form_Inputs->form_input_text('Apellido Materno', 'ApellidoMat', $x4, 1);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x5, 1);
 				$Form_Inputs->form_date('Fecha Nacimiento','fNacimiento', $x6, 1);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x7, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x7, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x8, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x9, 1,'fa fa-map');
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x9, 1,'fa fa-map');
 
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
@@ -418,12 +418,12 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_alumno.php?view='.simpleEncode($usuarios['idAlumno'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idAlumno']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_alumno.php?view='.simpleEncode($usuarios['idAlumno'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idAlumno']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($usuarios['idAlumno'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar al cliente '.$usuarios['Nombre'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

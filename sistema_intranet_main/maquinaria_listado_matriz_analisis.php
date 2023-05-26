@@ -306,7 +306,7 @@ if(!empty($_GET['clone_idMatriz'])){
 								<td><?php if(isset($rowdata['PuntoidTipo_'.$i])&&$rowdata['PuntoidTipo_'.$i]==1){echo Cantidades_decimales_justos($rowdata['PuntoMedCondenatorio_'.$i]).' '.$unimed; }else{echo 'No Aplica';} ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idMatriz='.$_GET['idMatriz'].'&mod='.simpleEncode($i, fecha_actual()); ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idMatriz='.$_GET['idMatriz'].'&mod='.simpleEncode($i, fecha_actual()); ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									</div>
 								</td>
 							</tr>
@@ -488,13 +488,13 @@ if(!empty($_GET['clone_idMatriz'])){
 							<td><?php echo $maq['cantPuntos']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 140px;" >
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idMatriz_2='.simpleEncode($maq['idMatriz'], fecha_actual()); ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idMatriz_2='.simpleEncode($maq['idMatriz'], fecha_actual()); ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&clone_idMatriz='.simpleEncode($maq['idMatriz'], fecha_actual()).'&nombre_matriz='.$maq['Nombre']; ?>" title="Clonar Matriz" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idMatriz='.simpleEncode($maq['idMatriz'], fecha_actual()); ?>" title="Editar Matriz" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($maq['idMatriz'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la matriz '.$maq['Nombre'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

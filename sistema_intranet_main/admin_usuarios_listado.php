@@ -128,7 +128,7 @@ $arrSistemas = db_select_array (false, $SIS_query, 'usuarios_sistemas',$SIS_join
 							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
 							<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
 							<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-							<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?>
+							<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Sistemas Asignados</h2>
@@ -362,8 +362,8 @@ foreach ($arrSistemas as $sis) {
 
 								<td>
 									<div class="btn-group" style="width: 70px;" >
-										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_usuario.php?view='.simpleEncode($usuarios['idUsuario'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idUsuario']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_usuario.php?view='.simpleEncode($usuarios['idUsuario'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idUsuario']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									</div>
 								</td>
 							</tr>

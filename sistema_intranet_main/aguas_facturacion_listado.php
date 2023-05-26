@@ -324,7 +324,7 @@ array_push( $arrFacturacion,$row );
 						<td><strong>Identificador</strong></td>
 						<td><strong>Cliente</strong></td>
 						<td><strong>Estado</strong></td>
-						<td><strong>Direccion</strong></td>
+						<td><strong>Dirección</strong></td>
 						<td><strong>Ultimo Pago</strong></td>
 						<td><strong>Acciones</strong></td>
 					</tr>
@@ -337,7 +337,7 @@ array_push( $arrFacturacion,$row );
 							<td><?php echo Fecha_estandar($clientes['AguasInfUltimoPagoFecha']); ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'view_aguas_facturacion_ing.php?view='.simpleEncode($clientes['idCliente'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="<?php echo 'view_aguas_facturacion_ing.php?view='.simpleEncode($clientes['idCliente'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -595,11 +595,11 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo $location.'&view_facturacion='.$tipo['idFacturacion']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo $location.'&view_facturacion='.$tipo['idFacturacion']; ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($tipo['idFacturacion'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la facturacion '.n_doc($tipo['idFacturacion'], 7).'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

@@ -64,7 +64,7 @@ $arrCategorias = db_select_array (false, $SIS_query, 'principal_notificaciones_v
 //Variable de busqueda
 $search = "";
 
-//verifico si tene la opcion de no molestar
+//verifico si tene la opción de no molestar
 $NoMolestar = 0;
 foreach ($arrNotificaciones as $tipo) {
 	if(isset($tipo['NoMolestar'])&&$tipo['NoMolestar']==1){$NoMolestar++;}
@@ -111,7 +111,7 @@ echo '
 					<thead>
 						<tr role="row">
 							<th>Fecha</th>
-							<th>Notificacion</th>
+							<th>Notificación</th>
 							<th>Estado</th>
 							<th width="10">Acciones</th>
 						</tr>

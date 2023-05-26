@@ -42,8 +42,8 @@ require_once '0_validate_user_1.php';
 			case 'idAdmpm':           if(empty($idAdmpm)){           $error['idAdmpm']            = 'error/No ha ingresado el id';}break;
 			case 'id_pmcat':          if(empty($id_pmcat)){          $error['id_pmcat']           = 'error/No ha seleccionado la categoria';}break;
 			case 'Direccionweb':      if(empty($Direccionweb)){      $error['Direccionweb']       = 'error/No ha ingresado la imagen';}break;
-			case 'Direccionbase':     if(empty($Direccionbase)){     $error['Direccionbase']      = 'error/No ha ingresado la direccion web';}break;
-			case 'Nombre':            if(empty($Nombre)){            $error['Nombre']             = 'error/No ha ingresado la direccion base';}break;
+			case 'Direccionbase':     if(empty($Direccionbase)){     $error['Direccionbase']      = 'error/No ha ingresado la dirección web';}break;
+			case 'Nombre':            if(empty($Nombre)){            $error['Nombre']             = 'error/No ha ingresado la dirección base';}break;
 			case 'visualizacion':     if(empty($visualizacion)){     $error['visualizacion']      = 'error/No ha ingresado la visualizacion';}break;
 			case 'Version':           if(empty($Version)){           $error['Version']            = 'error/No ha ingresado la version';}break;
 			case 'Descripcion':       if(empty($Descripcion)){       $error['Descripcion']        = 'error/No ha ingresado una descripcion';}break;
@@ -68,8 +68,8 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
 /*******************************************************************************************************************/
-	if(isset($Direccionweb)&&contar_palabras_censuradas($Direccionweb)!=0){    $error['Direccionweb']  = 'error/Edita la Direccion web, contiene palabras no permitidas';}
-	if(isset($Direccionbase)&&contar_palabras_censuradas($Direccionbase)!=0){  $error['Direccionbase'] = 'error/Edita la Direccion base, contiene palabras no permitidas';}
+	if(isset($Direccionweb)&&contar_palabras_censuradas($Direccionweb)!=0){    $error['Direccionweb']  = 'error/Edita la Dirección web, contiene palabras no permitidas';}
+	if(isset($Direccionbase)&&contar_palabras_censuradas($Direccionbase)!=0){  $error['Direccionbase'] = 'error/Edita la Dirección base, contiene palabras no permitidas';}
 	if(isset($Nombre)&&contar_palabras_censuradas($Nombre)!=0){                $error['Nombre']        = 'error/Edita Nombre,contiene palabras no permitidas';}
 	if(isset($Descripcion)&&contar_palabras_censuradas($Descripcion)!=0){      $error['Descripcion']   = 'error/Edita la Descripcion, contiene palabras no permitidas';}
 	if(isset($Habilita)&&contar_palabras_censuradas($Habilita)!=0){            $error['Habilita']      = 'error/Edita Habilita, contiene palabras no permitidas';}
@@ -249,12 +249,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

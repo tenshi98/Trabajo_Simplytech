@@ -65,7 +65,7 @@ require_once '0_validate_user_1.php';
 			case 'Rut':                         if(empty($Rut)){                          $error['Rut']                          = 'error/No ha ingresado el rut';}break;
 			case 'idCiudad':                    if(empty($idCiudad)){                     $error['idCiudad']                     = 'error/No ha seleccionado la ciudad';}break;
 			case 'idComuna':                    if(empty($idComuna)){                     $error['idComuna']                     = 'error/No ha seleccionado la comuna';}break;
-			case 'Direccion':                   if(empty($Direccion)){                    $error['Direccion']                    = 'error/No ha ingresado la direccion';}break;
+			case 'Direccion':                   if(empty($Direccion)){                    $error['Direccion']                    = 'error/No ha ingresado la dirección';}break;
 			case 'Observaciones':               if(empty($Observaciones)){                $error['Observaciones']                = 'error/No ha ingresado la observacion';}break;
 			case 'SueldoLiquido':               if(empty($SueldoLiquido)){                $error['SueldoLiquido']                = 'error/No ha ingresado el sueldo liquido a pago';}break;
 			case 'idTipoLicencia':              if(empty($idTipoLicencia)){               $error['idTipoLicencia']               = 'error/No ha Seleccionado el tipo de licencia';}break;
@@ -248,12 +248,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

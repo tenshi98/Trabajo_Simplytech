@@ -1595,7 +1595,7 @@ $total = 0;
 						<td>
 							<div class="btn-group" style="width: 35px;" >
 								<?php
-								//Ubicacion
+								//Ubicación
 								$ubicacion = $location;
 								$ubicacion .= '&del_solicitud='.$producto['bvar'];
 								$ubicacion .= '&del_sol_type='.$producto['Type'];

@@ -98,7 +98,7 @@ $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_geoc
 						<th>Descripcion</th>
 						<th>Fecha</th>
 						<th>Hora</th>
-                        <th>Ubicacion</th>
+                        <th>Ubicación</th>
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -110,7 +110,7 @@ $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_error_geoc
 							<td><?php echo $error['Hora']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'informe_telemetria_fuera_geocerca_1_view.php?view='.simpleEncode($error['idErrores'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="<?php echo 'informe_telemetria_fuera_geocerca_1_view.php?view='.simpleEncode($error['idErrores'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>

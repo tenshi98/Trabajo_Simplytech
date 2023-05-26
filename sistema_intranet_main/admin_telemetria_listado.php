@@ -111,7 +111,7 @@ $arrFinalOpciones[0]  = 'No Asignado';
 							<li class=""><a href="<?php echo 'admin_telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Geo']==2){ ?>
-						<li class=""><a href="<?php echo 'admin_telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
+						<li class=""><a href="<?php echo 'admin_telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
@@ -154,7 +154,7 @@ $arrFinalOpciones[0]  = 'No Asignado';
 							<?php }
 							if($rowdata['id_Geo']==2){ ?>
 								<strong>Zona : </strong><?php echo $rowdata['Zona']; ?><br/>
-								<strong>Direccion : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad']; ?><br/>
 							<?php } ?>
 
 							<strong>Sensores : </strong><?php echo $rowdata['Sensores'].' ';if($rowdata['id_Sensores']==1){echo '('.$rowdata['cantSensores'].' Sensores)';} ?><br/>
@@ -350,8 +350,8 @@ $arrUsers = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join,
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_telemetria_admin.php?view='.simpleEncode($usuarios['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idTelemetria']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_telemetria_admin.php?view='.simpleEncode($usuarios['idTelemetria'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idTelemetria']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

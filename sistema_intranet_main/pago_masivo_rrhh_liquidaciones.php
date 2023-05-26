@@ -117,7 +117,7 @@ $Form_Inputs = new Inputs();
 									<tr class="odd">
 										<td>
 											<div class="btn-group" style="width: 70px;" >
-												<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_rrhh_sueldos.php?view='.simpleEncode($tipo['idFactTrab'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_rrhh_sueldos.php?view='.simpleEncode($tipo['idFactTrab'], fecha_actual()); ?>" title="Ver Información" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 												<?php if ($rowlevel['level']>=2){
 													$ubicacion = $location.'&del_liquidacion='.$tipo['idFactTrab'].'&idFacturacion='.$_GET['idFacturacion'];
 													$dialogo   = '¿Realmente deseas eliminar la liquidacion de '.$tipo['TrabajadorNombre'].'?'; ?>
@@ -144,7 +144,7 @@ $Form_Inputs = new Inputs();
 										</td>
 										<td align="right">
 											<?php if(isset($tipo['ValorPagado'])&&$tipo['ValorPagado']!=0){ ?>
-												<a onclick="delpago(<?php echo $tipo['idFactTrab']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+												<a onclick="delpago(<?php echo $tipo['idFactTrab']; ?>)"  title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 											<?php }else{ ?>
 												<a onclick="addpago(<?php echo $tipo['idFactTrab']; ?>, <?php echo $TotalPagar; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 											<?php } ?>
@@ -430,7 +430,7 @@ $arrTrabajador = db_select_array (false, 'idFactTrab,TrabajadorNombre,Trabajador
 
 										<td>
 											<div class="btn-group" style="width: 35px;" >
-												<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_rrhh_sueldos.php?view='.simpleEncode($tipo['idFactTrab'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+												<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_rrhh_sueldos.php?view='.simpleEncode($tipo['idFactTrab'], fecha_actual()); ?>" title="Ver Información" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											</div>
 										</td>
 									</tr>
@@ -575,7 +575,7 @@ $_SESSION['form_require'].=',idFacturacion';
 				$input .= '<div class="form-group" id="div_idFacturacion">
 								<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_idFacturacion">Facturacion Fecha</label>
 								<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
-									<select name="idFacturacion" id="idFacturacion" required data-placeholder="Seleccione una Opcion" class="form-control chosen-select chosendiv_idFacturacion " tabindex="2" >
+									<select name="idFacturacion" id="idFacturacion" required data-placeholder="Seleccione una Opción" class="form-control chosen-select chosendiv_idFacturacion " tabindex="2" >
 										<option value=""></option>';
 											
 											foreach ( $arrSelect as $select ) {

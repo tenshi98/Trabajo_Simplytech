@@ -345,7 +345,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				}
 				//Verifico esta activo el dato 2
 				if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
-					echo print_select($rowdata['idNotaTipo_2'], 'Nota Condicion', 'Resolucion_2', '');
+					echo print_select($rowdata['idNotaTipo_2'], 'Nota Condición', 'Resolucion_2', '');
 				}
 				//Verifico esta activo el dato 3
 				if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
@@ -522,7 +522,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				}
 				//Verifico esta activo el dato 2
 				if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
-					echo print_select($rowdata['idNotaTipo_2'], 'Nota Condicion', 'Resolucion_2', $x11);
+					echo print_select($rowdata['idNotaTipo_2'], 'Nota Condición', 'Resolucion_2', $x11);
 				}
 				//Verifico esta activo el dato 3
 				if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
@@ -682,7 +682,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				}
 				//Verifico esta activo el dato 2
 				if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
-					echo print_select($rowdata['idNotaTipo_2'], 'Nota Condicion', 'Resolucion_2', '');
+					echo print_select($rowdata['idNotaTipo_2'], 'Nota Condición', 'Resolucion_2', '');
 				}
 				//Verifico esta activo el dato 3
 				if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
@@ -860,7 +860,7 @@ $row_data = db_select_data (false, $SIS_query, 'cross_quality_analisis_calidad',
 				$Form_Inputs->form_select_depend1('Categoria','idCategoria', $x4, 2, 'idCategoria', 'Nombre', 'sistema_productos_categorias', 0, 0,
 										 'Producto','idProducto', $x5, 2, 'idProducto', 'Nombre', 'productos_listado', 'idEstado=1 AND idCalidad!=0', 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x6,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1',   0,
+				$Form_Inputs->form_select_depend5('Ubicación', 'idUbicacion',  $x6,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1',   0,
 							                 'Nivel 1', 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0,
 							                 'Nivel 2', 'idUbicacion_lvl_2',  $x8,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
 							                 'Nivel 3', 'idUbicacion_lvl_3',  $x9,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
@@ -992,7 +992,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_analisis_calid
 						<td><?php echo $row_data['ProductoCategoria'].', '.$row_data['ProductoNombre']; ?></td>
 					</tr>
 					<tr>
-						<td class="meta-head">Ubicacion</td>
+						<td class="meta-head">Ubicación</td>
 						<td>
 							<?php echo $row_data['UbicacionNombre'];
 							if(isset($row_data['UbicacionNombre_lvl_1'])&&$row_data['UbicacionNombre_lvl_1']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_1'];}

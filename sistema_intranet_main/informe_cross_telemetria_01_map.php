@@ -70,7 +70,7 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 
 	<div class="row invoice-info">
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-			<strong>Identificacion</strong>
+			<strong>Identificación</strong>
 			<address>
 				Equipo: <?php echo $arrMediciones[0]['EquipoNombre']; ?><br/>
 				Predio: <?php echo$arrMediciones[0]['PredioNombre']; ?><br/>

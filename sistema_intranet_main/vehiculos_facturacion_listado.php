@@ -444,7 +444,7 @@ $arrDatos = db_select_array (false, $SIS_query, 'vehiculos_facturacion_listado',
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $cont['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_vehiculos_facturacion_listado.php?view='.simpleEncode($cont['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_vehiculos_facturacion_listado.php?view='.simpleEncode($cont['idFacturacion'], fecha_actual()); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

@@ -121,9 +121,9 @@ $arrFacturas_1 = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturac
 																$ver = 'view_mov_arriendos.php?view='.simpleEncode($prod['idFacturacion'], fecha_actual());
 																$trabajo = 'Factura Arriendos N°'.$prod['NumDoc'];
 																if($original=="principal_arriendos_alt.php"){
-																	echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor1.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
+																	echo '<a title="Ver Información" class="tooltip event_calendar '.$calcolor1.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
 																}else{
-																	echo '<a title="Ver Informacion" class="iframe tooltip event_calendar '.$calcolor1.'" href="'.$ver.'">'.$trabajo.'</a>';
+																	echo '<a title="Ver Información" class="iframe tooltip event_calendar '.$calcolor1.'" href="'.$ver.'">'.$trabajo.'</a>';
 																}
 
 															}

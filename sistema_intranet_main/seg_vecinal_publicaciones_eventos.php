@@ -111,10 +111,10 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 				$Form_Inputs->form_select_filter('Vecino','idCliente', $x1, 2, 'idCliente', 'Nombre', 'seg_vecinal_clientes_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Evento','idTipo', $x2, 2, 'idTipo', 'Nombre', 'seg_vecinal_eventos_tipos', 0, '',$dbConn);
 				$Form_Inputs->form_textarea('Caracteristicas Agresor', 'DescripcionTipo', $x3, 2);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x4, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x4, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 												  'Comuna','idComuna', $x5, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 												  $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x6, 2,'fa fa-map');
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x6, 2,'fa fa-map');
 				$Form_Inputs->form_date('Fecha','Fecha', $x7, 2);
 				$Form_Inputs->form_time('Hora','Hora', $x8, 2, 1);
 				$Form_Inputs->form_textarea('Descripcion Situacion', 'DescripcionSituacion', $x9, 2);
@@ -222,10 +222,10 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Vecino','idCliente', $x1, 1, 'idCliente', 'Nombre', 'seg_vecinal_clientes_listado', $z, '', $dbConn);
 				$Form_Inputs->form_select('Tipo de Evento','idTipo', $x2, 1, 'idTipo', 'Nombre', 'seg_vecinal_eventos_tipos', 0, '',$dbConn);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x3, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 												  'Comuna','idComuna', $x4, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 												  $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 1,'fa fa-map');
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x5, 1,'fa fa-map');
 				$Form_Inputs->form_date('Fecha','Fecha', $x6, 1);
 				$Form_Inputs->form_time('Hora','Hora', $x7, 1, 1);
 				$Form_Inputs->form_select('Validado','idValidado', $x8, 1, 'idValidado', 'Nombre', 'core_seguridad_validacion', 0, '',$dbConn);
@@ -261,7 +261,7 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 					<tr role="row">
 						<th>Vecino</th>
 						<th>Tipo</th>
-						<th>Ubicacion</th>
+						<th>Ubicación</th>
 						<th>Fecha</th>
 						<th>Hora</th>
 						<th>Validado</th>
@@ -279,12 +279,12 @@ $z = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'].' AND idEstado
 							<td><label class="label <?php if(isset($eve['idValidado'])&&$eve['idValidado']==2){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $eve['Validacion']; ?></label></td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_seg_vecinal_evento.php?view='.simpleEncode($eve['idEvento'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$eve['idEvento']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_seg_vecinal_evento.php?view='.simpleEncode($eve['idEvento'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$eve['idEvento']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($eve['idEvento'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el evento '.$eve['Tipo'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

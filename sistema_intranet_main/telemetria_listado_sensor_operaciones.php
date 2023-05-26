@@ -118,7 +118,7 @@ $rowdata_i = db_select_data (false, 'N_Sensor, ValorActivo, RangoMinimo, RangoMa
 								<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">Sensor Activo</label>
 								<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 									<select name="N_Sensor" id="N_Sensor" class="form-control" required="">';
-										$input .= '<option value="" selected>Seleccione una Opcion</option>';
+										$input .= '<option value="" selected>Seleccione una Opción</option>';
 
 										for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 											//solo sensores activos
@@ -259,7 +259,7 @@ foreach ($arrGrupos as $sen) { $arrFinalGrupos[$sen['idGrupo']]['Nombre'] = $sen
 								<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">Sensor Activo</label>
 								<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 									<select name="N_Sensor" id="N_Sensor" class="form-control" required="">';
-										$input .= '<option value="" selected>Seleccione una Opcion</option>';
+										$input .= '<option value="" selected>Seleccione una Opción</option>';
 
 										for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 											//solo sensores activos
@@ -384,7 +384,7 @@ $arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_defini
 						<?php if($rowdata['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
 						<?php } elseif($rowdata['id_Geo']==2){ ?>
-							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
+							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
@@ -426,11 +426,11 @@ $arrOperaciones = db_select_array (false, $SIS_query, 'telemetria_listado_defini
 						<td><?php echo $oper['Funcion']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$oper['idDefinicion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$oper['idDefinicion']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($oper['idDefinicion'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la definicion de '.$rowdata['SensoresNombre_'.$oper['N_Sensor']].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

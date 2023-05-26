@@ -116,9 +116,9 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SI
 								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 								<strong>Nombre: </strong><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPaterno'].' '.$rowdata['ApellidoMaterno']; ?><br/>
 								<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowdata['fNacimiento']); ?><br/>
-								<strong>Region : </strong><?php echo $rowdata['Ciudad']; ?><br/>
+								<strong>Región : </strong><?php echo $rowdata['Ciudad']; ?><br/>
 								<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
 								<strong>Sexo : </strong><?php echo $rowdata['Sexo']; ?><br/>
 								<strong>Sueldo : </strong><?php echo $rowdata['Sueldo']; ?><br/>
 								<strong>AFP : </strong><?php echo $rowdata['AFP']; ?><br/>
@@ -130,16 +130,16 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SI
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<?php
-							//se arma la direccion
+							//se arma la dirección
 							$direccion = '';
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
 							if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){        $direccion .= ', '.$rowdata["Comuna"];}
 							if(isset($rowdata["Ciudad"])&&$rowdata["Ciudad"]!=''){        $direccion .= ', '.$rowdata["Ciudad"];}
-							//se despliega mensaje en caso de no existir direccion
+							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
 								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
 							}else{
-								$Alert_Text  = 'No tiene una direccion definida';
+								$Alert_Text  = 'No tiene una dirección definida';
 								alert_post_data(4,2,2, $Alert_Text);
 							}
 						?>
@@ -362,12 +362,12 @@ $arrUsers = db_select_array (false, $SIS_query, 'personas_listado', $SIS_join, $
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_personas.php?view='.simpleEncode($usuarios['idPersona'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idPersona']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_personas.php?view='.simpleEncode($usuarios['idPersona'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idPersona']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($usuarios['idPersona'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar a la persona '.$usuarios['Nombre'].' '.$usuarios['ApellidoPaterno'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

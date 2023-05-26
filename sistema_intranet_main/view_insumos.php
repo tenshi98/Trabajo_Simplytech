@@ -268,7 +268,7 @@ foreach ($arrPromedioProd as $productos) {
 								<tr class="odd">
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($productos['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											<a href="<?php echo 'view_mov_insumos.php?view='.simpleEncode($productos['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										</div>
 										<?php echo $productos['TipoMovimiento']; ?>
 									</td>
@@ -291,7 +291,7 @@ foreach ($arrPromedioProd as $productos) {
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

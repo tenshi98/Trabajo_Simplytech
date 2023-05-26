@@ -171,7 +171,7 @@ array_push( $arrCarga,$row );
 									//redireccion
 									$ubicacion = $location.'&del=true';
 									$dialogo   = '¿Realmente deseas eliminar el bloqueo?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>
@@ -213,7 +213,7 @@ array_push( $arrCarga,$row );
 				$Form_Inputs->form_date('Fecha','Fecha', $x1, 1);
 				$Form_Inputs->form_input_text('Usuario', 'usuario', $x2, 1);
 				$Form_Inputs->form_input_text('Email', 'email', $x3, 1);
-				$Form_Inputs->form_input_text('Direccion IP', 'IP_Client', $x4, 1);
+				$Form_Inputs->form_input_text('Dirección IP', 'IP_Client', $x4, 1);
 
 				$Form_Inputs->form_input_hidden('pagina', 1, 2);
 

@@ -413,7 +413,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 							<?php if(isset($rowdata['Grupo_giro'])&&$rowdata['Grupo_giro']!=0){ ?>                           <strong>Gruas - Grupo Giro: </strong><?php echo $rowdata['Grupo_giro']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Grupo_carro'])&&$rowdata['Grupo_carro']!=0){ ?>                         <strong>Gruas - Grupo Carro: </strong><?php echo $rowdata['Grupo_carro']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Grupo_voltaje'])&&$rowdata['Grupo_voltaje']!=0){ ?>                     <strong>Gruas - Grupo Voltaje: </strong><?php echo $rowdata['Grupo_voltaje']; ?><br/><?php } ?>
-							<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=0){ ?>                             <strong>Gruas - Ubicacion: </strong><?php echo $rowdata['Ubicacion']; ?><br/><?php } ?>
+							<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=0){ ?>                             <strong>Gruas - Ubicación: </strong><?php echo $rowdata['Ubicacion']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Grupo_motor_subida'])&&$rowdata['Grupo_motor_subida']!=0){ ?>           <strong>Ascensores - Grupo Amperaje Motor Subida: </strong><?php echo $rowdata['Grupo_motor_subida']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Grupo_motor_bajada'])&&$rowdata['Grupo_motor_bajada']!=0){ ?>           <strong>Ascensores - Grupo Amperaje Motor Bajada: </strong><?php echo $rowdata['Grupo_motor_bajada']; ?><br/><?php } ?>
 							<?php if(isset($rowdata['Grupo_Despliegue'])&&$rowdata['Grupo_Despliegue']!=0){ ?>               <strong>CrossEnergy - Grupo Despliegue: </strong><?php echo $rowdata['Grupo_Despliegue']; ?><br/><?php } ?>
@@ -426,9 +426,9 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 
 							<?php if($rowdata['id_Geo']==2){ ?>
 								<br/>
-								<strong class="color-red-dark">Ubicacion</strong><br/>
+								<strong class="color-red-dark">Ubicación</strong><br/>
 								<?php if(isset($rowdata['ZonaSinGPS'])&&$rowdata['ZonaSinGPS']!=''){ ?> <strong>Zona de Trabajo : </strong><?php echo $rowdata['ZonaSinGPS']; ?><br/><?php } ?>
-								<?php if(isset($rowdata['Direccion'])&&$rowdata['Direccion']!=''){ ?>   <strong>Direccion : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad']; ?><br/><?php } ?>
+								<?php if(isset($rowdata['Direccion'])&&$rowdata['Direccion']!=''){ ?>   <strong>Dirección : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad']; ?><br/><?php } ?>
 							<?php } ?>
 						</p>
 
@@ -478,11 +478,11 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
 								<?php if(isset($rowdata['id_Geo'])&&$rowdata['id_Geo']!=''&&$rowdata['id_Geo']==1){ ?>
-									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_flota_view_equipo_mediciones.php?view='.$X_Puntero.'&cantSensores='.$rowdata['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ultima Ubicacion</a>
+									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_flota_view_equipo_mediciones.php?view='.$X_Puntero.'&cantSensores='.$rowdata['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ultima Ubicación</a>
 									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_1.php?view='.$X_Puntero; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Sensores</a>
 									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_velocidad.php?view='.$X_Puntero; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Velocidades</a>
 								<?php }elseif(isset($rowdata['id_Geo'])&&$rowdata['id_Geo']!=''&&$rowdata['id_Geo']==2){ ?>
-									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.$X_Puntero.'&cantSensores='.$rowdata['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ultima Ubicacion</a>
+									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.$X_Puntero.'&cantSensores='.$rowdata['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ultima Ubicación</a>
 									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_2.php?view='.$X_Puntero; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Sensores</a>
 								<?php } ?>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
@@ -568,7 +568,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 								<strong>Nombre : </strong><?php echo $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat']; ?><br/>
 								<strong>Fono : </strong><?php echo formatPhone($rowTrabajador['Fono']); ?><br/>
 								<strong>Rut : </strong><?php echo $rowTrabajador['Rut']; ?><br/>
-								<strong>Direccion : </strong><?php echo $rowTrabajador['Direccion'].', '.$rowTrabajador['nombre_comuna'].', '.$rowTrabajador['nombre_region']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowTrabajador['Direccion'].', '.$rowTrabajador['nombre_comuna'].', '.$rowTrabajador['nombre_region']; ?><br/>
 								<strong>Observaciones : </strong><?php echo $rowTrabajador['Observaciones']; ?>
 							</p>
 
@@ -638,7 +638,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 									<th>Valor</th>
 									<th>Min</th>
 									<th>Max</th>
-									<?php if($rowdata['id_Geo']==1){ ?><th>Ubicacion</th><?php } ?>
+									<?php if($rowdata['id_Geo']==1){ ?><th>Ubicación</th><?php } ?>
 								</tr>
 							</thead>
 
@@ -656,7 +656,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 										<?php if($rowdata['id_Geo']==1){ ?>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'_view.php?view='.$error['idErrores'].'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+													<a href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'_view.php?view='.$error['idErrores'].'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										<?php } ?>
@@ -686,7 +686,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 									<th>Fecha Termino</th>
 									<th>Hora Termino</th>
 									<th>Tiempo</th>
-									<?php if($rowdata['id_Geo']==1){ ?><th>Ubicacion</th><?php } ?>
+									<?php if($rowdata['id_Geo']==1){ ?><th>Ubicación</th><?php } ?>
 								</tr>
 							</thead>
 
@@ -701,7 +701,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 										<?php if($rowdata['id_Geo']==1){ ?>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'_view.php?view='.$error['idFueraLinea'].'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+													<a href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'_view.php?view='.$error['idFueraLinea'].'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										<?php } ?>
@@ -764,7 +764,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 										<td><?php echo $mant['Equipo']; ?></td>
 										<td>
 											<div class="btn-group" style="width: 35px;" >
-												<a href="<?php echo 'view_telemetria_mantencion.php?view='.simpleEncode($mant['idMantencion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+												<a href="<?php echo 'view_telemetria_mantencion.php?view='.simpleEncode($mant['idMantencion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 											</div>
 										</td>
 									</tr>
@@ -781,7 +781,7 @@ $arrMantenciones = db_select_array (false, $SIS_query, 'telemetria_historial_man
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

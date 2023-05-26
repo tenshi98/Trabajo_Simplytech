@@ -47,9 +47,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Notificacion Creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Notificacion Modificada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Notificacion Borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Notificación Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Notificación Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Notificación Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -143,7 +143,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Crear Notificacion</h5>
+			<h5>Crear Notificación</h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
@@ -157,8 +157,8 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_join_filter('Usuario Receptor','idUsrReceptor', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
-				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x2, 2);
-				$Form_Inputs->form_textarea('Notificacion','Notificacion', $x3, 2);
+				$Form_Inputs->form_input_text('Título', 'Titulo', $x2, 2);
+				$Form_Inputs->form_textarea('Notificación','Notificacion', $x3, 2);
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -240,7 +240,7 @@ $arrNotificaciones = db_select_array (false, $SIS_query, 'principal_notificacion
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Notificacion</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width fmrbtn" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Notificación</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -257,8 +257,8 @@ $arrNotificaciones = db_select_array (false, $SIS_query, 'principal_notificacion
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_join_filter('Usuario Receptor','idUsrReceptor', $x1, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
-				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x2, 1);
-				$Form_Inputs->form_textarea('Notificacion','Notificacion', $x3, 1);
+				$Form_Inputs->form_input_text('Título', 'Titulo', $x2, 1);
+				$Form_Inputs->form_textarea('Notificación','Notificacion', $x3, 1);
 
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
@@ -314,12 +314,12 @@ $arrNotificaciones = db_select_array (false, $SIS_query, 'principal_notificacion
 						<td><?php echo $noti['Titulo']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_notificacion.php?view='.simpleEncode($noti['idNotificaciones'], '123333'); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_notificacion.php?view='.simpleEncode($noti['idNotificaciones'], '123333'); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&detalle='.$noti['idNotificaciones']; ?>" title="Ver detalle leidos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($noti['idNotificaciones'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la notificacion '.$noti['Titulo'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

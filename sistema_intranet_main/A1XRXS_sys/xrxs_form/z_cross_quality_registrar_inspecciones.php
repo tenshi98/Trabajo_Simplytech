@@ -74,8 +74,8 @@ require_once '0_validate_user_1.php';
 			case 'idAnalisis':         if(empty($idAnalisis)){         $error['idAnalisis']         = 'error/No ha ingresado el id';}break;
 			case 'idSistema':          if(empty($idSistema)){          $error['idSistema']          = 'error/No ha seleccionado el sistema';}break;
 			case 'idUsuario':          if(empty($idUsuario)){          $error['idUsuario']          = 'error/No ha seleccionado a un usuario';}break;
-			case 'fecha_auto':         if(empty($fecha_auto)){         $error['fecha_auto']         = 'error/No ha ingresado la fecha de creacion';}break;
-			case 'Creacion_fecha':     if(empty($Creacion_fecha)){     $error['Creacion_fecha']     = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'fecha_auto':         if(empty($fecha_auto)){         $error['fecha_auto']         = 'error/No ha ingresado la fecha de creación';}break;
+			case 'Creacion_fecha':     if(empty($Creacion_fecha)){     $error['Creacion_fecha']     = 'error/No ha ingresado la fecha de creación';}break;
 			case 'idTipo':             if(empty($idTipo)){             $error['idTipo']             = 'error/No ha seleccionado un tipo';}break;
 			case 'Temporada':          if(empty($Temporada)){          $error['Temporada']          = 'error/No ha seleccionado la temporada';}break;
 			case 'idCategoria':        if(empty($idCategoria)){        $error['idCategoria']        = 'error/No ha seleccionado la categoria';}break;
@@ -192,42 +192,42 @@ require_once '0_validate_user_1.php';
 					$rowCategoria = db_select_data (false, 'Nombre', 'sistema_variedades_categorias', '', 'idCategoria = '.$idCategoria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
-				// Se trae la informacion del producto
+				// Se trae la información del producto
 				if(isset($idProducto)&&$idProducto!=''){
 					$rowProducto = db_select_data (false, 'Nombre', 'variedades_listado', '', 'idProducto = '.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
-				// Se trae la informacion de la ubicacion
+				// Se trae la información de la ubicacion
 				if(isset($idUbicacion)&&$idUbicacion!=''){
 					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado', '', 'idUbicacion = '.$idUbicacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
-				// Se trae la informacion de la ubicacion lvl 1
+				// Se trae la información de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_1)&&$idUbicacion_lvl_1!=''){
 					$rowUbicacionLVL_1 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_1', '', 'idLevel_1 = '.$idUbicacion_lvl_1, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
-				// Se trae la informacion de la ubicacion lvl 1
+				// Se trae la información de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_2)&&$idUbicacion_lvl_2!=''){
 					$rowUbicacionLVL_2 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_2', '', 'idLevel_2 = '.$idUbicacion_lvl_2, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
-				// Se trae la informacion de la ubicacion lvl 1
+				// Se trae la información de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_3)&&$idUbicacion_lvl_3!=''){
 					$rowUbicacionLVL_3 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_3', '', 'idLevel_3 = '.$idUbicacion_lvl_3, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
-				// Se trae la informacion de la ubicacion lvl 1
+				// Se trae la información de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_4)&&$idUbicacion_lvl_4!=''){
 					$rowUbicacionLVL_4 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_4', '', 'idLevel_4 = '.$idUbicacion_lvl_4, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
-				// Se trae la informacion de la ubicacion lvl 1
+				// Se trae la información de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_5)&&$idUbicacion_lvl_5!=''){
 					$rowUbicacionLVL_5 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_5', '', 'idLevel_5 = '.$idUbicacion_lvl_5, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
-				// Se trae la informacion del producto
+				// Se trae la información del producto
 				if(isset($idCategoria)&&$idCategoria!=''&&isset($idTipo)&&$idTipo!=''&&isset($idSistema)&&$idSistema!=''){
 					$rowMatrizCali = db_select_data (false, 'cross_quality_calidad_matriz.cantPuntos, sistema_variedades_categorias_matriz_calidad.idMatriz', 'sistema_variedades_categorias_matriz_calidad', 'LEFT JOIN `cross_quality_calidad_matriz` ON cross_quality_calidad_matriz.idMatriz = sistema_variedades_categorias_matriz_calidad.idMatriz', 'sistema_variedades_categorias_matriz_calidad.idCategoria = '.$idCategoria.' AND sistema_variedades_categorias_matriz_calidad.idProceso = '.$idTipo.' AND sistema_variedades_categorias_matriz_calidad.idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
@@ -339,42 +339,42 @@ require_once '0_validate_user_1.php';
 					$rowCategoria = db_select_data (false, 'Nombre', 'sistema_variedades_categorias', '', 'idCategoria = '.$idCategoria, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
-				// Se trae la informacion del producto
+				// Se trae la información del producto
 				if(isset($idProducto)&&$idProducto!=''){
 					$rowProducto = db_select_data (false, 'Nombre', 'variedades_listado', '', 'idProducto = '.$idProducto, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
-				// Se trae la informacion de la ubicacion
+				// Se trae la información de la ubicacion
 				if(isset($idUbicacion)&&$idUbicacion!=''){
 					$rowUbicacion = db_select_data (false, 'Nombre', 'ubicacion_listado', '', 'idUbicacion = '.$idUbicacion, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
-				// Se trae la informacion de la ubicacion lvl 1
+				// Se trae la información de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_1)&&$idUbicacion_lvl_1!=''){
 					$rowUbicacionLVL_1 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_1', '', 'idLevel_1 = '.$idUbicacion_lvl_1, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
-				// Se trae la informacion de la ubicacion lvl 1
+				// Se trae la información de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_2)&&$idUbicacion_lvl_2!=''){
 					$rowUbicacionLVL_2 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_2', '', 'idLevel_2 = '.$idUbicacion_lvl_2, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
-				// Se trae la informacion de la ubicacion lvl 1
+				// Se trae la información de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_3)&&$idUbicacion_lvl_3!=''){
 					$rowUbicacionLVL_3 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_3', '', 'idLevel_3 = '.$idUbicacion_lvl_3, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
-				// Se trae la informacion de la ubicacion lvl 1
+				// Se trae la información de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_4)&&$idUbicacion_lvl_4!=''){
 					$rowUbicacionLVL_4 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_4', '', 'idLevel_4 = '.$idUbicacion_lvl_4, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
-				// Se trae la informacion de la ubicacion lvl 1
+				// Se trae la información de la ubicacion lvl 1
 				if(isset($idUbicacion_lvl_5)&&$idUbicacion_lvl_5!=''){
 					$rowUbicacionLVL_5 = db_select_data (false, 'Nombre', 'ubicacion_listado_level_5', '', 'idLevel_5 = '.$idUbicacion_lvl_5, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*********************************************/
-				// Se trae la informacion del producto
+				// Se trae la información del producto
 				if(isset($idCategoria)&&$idCategoria!=''&&isset($idTipo)&&$idTipo!=''&&isset($idSistema)&&$idSistema!=''){
 					$rowMatrizCali = db_select_data (false, 'cross_quality_calidad_matriz.cantPuntos, sistema_variedades_categorias_matriz_calidad.idMatriz', 'sistema_variedades_categorias_matriz_calidad', 'LEFT JOIN `cross_quality_calidad_matriz` ON cross_quality_calidad_matriz.idMatriz = sistema_variedades_categorias_matriz_calidad.idMatriz', 'sistema_variedades_categorias_matriz_calidad.idCategoria = '.$idCategoria.' AND sistema_variedades_categorias_matriz_calidad.idProceso = '.$idTipo.' AND sistema_variedades_categorias_matriz_calidad.idSistema = '.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
@@ -663,7 +663,7 @@ require_once '0_validate_user_1.php';
 				}
 				//envio mensaje de error
 				if($sxcount==0){
-					$error['sxcount']     = 'error/El valor ingresado no corresponde a las validaciones disponibles en Nota Condicion';
+					$error['sxcount']     = 'error/El valor ingresado no corresponde a las validaciones disponibles en Nota Condición';
 				}
 
 			}
@@ -787,7 +787,7 @@ require_once '0_validate_user_1.php';
 				}
 				//envio mensaje de error
 				if($sxcount==0){
-					$error['sxcount']     = 'error/El valor ingresado no corresponde a las validaciones disponibles en Nota Condicion';
+					$error['sxcount']     = 'error/El valor ingresado no corresponde a las validaciones disponibles en Nota Condición';
 				}
 
 			}
@@ -874,7 +874,7 @@ require_once '0_validate_user_1.php';
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['cross_quality_reg_insp_basicos'])){
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) OR $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) OR $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idTipo']) OR $_SESSION['cross_quality_reg_insp_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Temporada']) OR $_SESSION['cross_quality_reg_insp_basicos']['Temporada']=='' ){           $error['Temporada']        = 'error/No ha seleccionado la Temporada';}
 				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idCategoria']) OR $_SESSION['cross_quality_reg_insp_basicos']['idCategoria']=='' ){       $error['idCategoria']      = 'error/No ha seleccionado la categoria del producto';}
@@ -883,7 +883,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Observaciones']) OR $_SESSION['cross_quality_reg_insp_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idSistema']) OR $_SESSION['cross_quality_reg_insp_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idUsuario']) OR $_SESSION['cross_quality_reg_insp_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']) OR $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']) OR $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha de creación';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al ingreso de datos';
 			}
@@ -1283,12 +1283,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1393,12 +1393,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1549,12 +1549,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1697,12 +1697,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1738,7 +1738,7 @@ require_once '0_validate_user_1.php';
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['cross_quality_reg_insp_basicos'])){
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) OR $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']) OR $_SESSION['cross_quality_reg_insp_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idTipo']) OR $_SESSION['cross_quality_reg_insp_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Temporada']) OR $_SESSION['cross_quality_reg_insp_basicos']['Temporada']=='' ){           $error['Temporada']        = 'error/No ha seleccionado la Temporada';}
 				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idCategoria']) OR $_SESSION['cross_quality_reg_insp_basicos']['idCategoria']=='' ){       $error['idCategoria']      = 'error/No ha seleccionado la categoria del producto';}
@@ -1747,7 +1747,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['Observaciones']) OR $_SESSION['cross_quality_reg_insp_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idSistema']) OR $_SESSION['cross_quality_reg_insp_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['idUsuario']) OR $_SESSION['cross_quality_reg_insp_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']) OR $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']) OR $_SESSION['cross_quality_reg_insp_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha de creación';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al ingreso de datos';
 			}

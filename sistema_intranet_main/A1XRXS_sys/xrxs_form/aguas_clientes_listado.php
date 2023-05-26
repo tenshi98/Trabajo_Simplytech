@@ -72,7 +72,7 @@ require_once '0_validate_user_1.php';
 			case 'Nombre':                 if(empty($Nombre)){                 $error['Nombre']                  = 'error/No ha ingresado el Nombre de Fantasia';}break;
 			case 'Rut':                    if(empty($Rut)){                    $error['Rut']                     = 'error/No ha ingresado el Rut';}break;
 			case 'fNacimiento':            if(empty($fNacimiento)){            $error['fNacimiento']             = 'error/No ha ingresado la fecha de nacimiento';}break;
-			case 'Direccion':              if(empty($Direccion)){              $error['Direccion']               = 'error/No ha ingresado la direccion';}break;
+			case 'Direccion':              if(empty($Direccion)){              $error['Direccion']               = 'error/No ha ingresado la dirección';}break;
 			case 'Fono1':                  if(empty($Fono1)){                  $error['Fono1']                   = 'error/No ha ingresado el telefono';}break;
 			case 'Fono2':                  if(empty($Fono2)){                  $error['Fono2']                   = 'error/No ha ingresado el telefono';}break;
 			case 'idCiudad':               if(empty($idCiudad)){               $error['idCiudad']                = 'error/No ha seleccionado la ciudad';}break;
@@ -94,7 +94,7 @@ require_once '0_validate_user_1.php';
 			case 'longitud':               if(empty($longitud)){               $error['longitud']                = 'error/No ha ingresado la longitud';}break;
 			case 'idCiudadFact':           if(empty($idCiudadFact)){           $error['idCiudadFact']            = 'error/No ha seleccionado la ciudad';}break;
 			case 'idComunaFact':           if(empty($idComunaFact)){           $error['idComunaFact']            = 'error/No ha seleccionado la comuna';}break;
-			case 'DireccionFact':          if(empty($DireccionFact)){          $error['DireccionFact']           = 'error/No ha ingresado la direccion';}break;
+			case 'DireccionFact':          if(empty($DireccionFact)){          $error['DireccionFact']           = 'error/No ha ingresado la dirección';}break;
 			case 'RazonSocial':            if(empty($RazonSocial)){            $error['RazonSocial']             = 'error/No ha ingresado la razon social';}break;
 			case 'idSector':               if(empty($idSector)){               $error['idSector']                = 'error/No ha seleccionado el sector';}break;
 			case 'idPuntoMuestreo':        if(empty($idPuntoMuestreo)){        $error['idPuntoMuestreo']         = 'error/No ha seleccionado el punto de muestreo';}break;
@@ -134,7 +134,7 @@ require_once '0_validate_user_1.php';
 	if(isset($PersonaContacto_email)&&contar_palabras_censuradas($PersonaContacto_email)!=0){  $error['PersonaContacto_email'] = 'error/Edita Persona de Contacto email, contiene palabras no permitidas';}
 	if(isset($Web)&&contar_palabras_censuradas($Web)!=0){                                      $error['Web']                   = 'error/Edita Web, contiene palabras no permitidas';}
 	if(isset($Giro)&&contar_palabras_censuradas($Giro)!=0){                                    $error['Giro']                  = 'error/Edita Giro, contiene palabras no permitidas';}
-	if(isset($DireccionFact)&&contar_palabras_censuradas($DireccionFact)!=0){                  $error['DireccionFact']         = 'error/Edita Direccion Facturacion, contiene palabras no permitidas';}
+	if(isset($DireccionFact)&&contar_palabras_censuradas($DireccionFact)!=0){                  $error['DireccionFact']         = 'error/Edita Dirección Facturacion, contiene palabras no permitidas';}
 	if(isset($RazonSocial)&&contar_palabras_censuradas($RazonSocial)!=0){                      $error['RazonSocial']           = 'error/Edita RazonSocial, contiene palabras no permitidas';}
 
 /*******************************************************************************************************************/
@@ -343,12 +343,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

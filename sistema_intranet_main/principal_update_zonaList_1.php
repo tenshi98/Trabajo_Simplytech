@@ -180,7 +180,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 				</td>
 				<td width="10">
 					<div class="btn-group" style="width: 35px;" >
-						<button onclick="fncCenterMap('<?php echo $data['GeoLatitud']; ?>', '<?php echo $data['GeoLongitud']; ?>', '<?php echo $nicon; ?>')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
+						<button onclick="fncCenterMap('<?php echo $data['GeoLatitud']; ?>', '<?php echo $data['GeoLongitud']; ?>', '<?php echo $nicon; ?>')" title="Ver Ubicación" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>
 					</div>
 				</td>
 			</tr>

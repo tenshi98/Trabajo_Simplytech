@@ -70,8 +70,8 @@ require_once '0_validate_user_1.php';
 			case 'idAnalisis':         if(empty($idAnalisis)){         $error['idAnalisis']         = 'error/No ha ingresado el id';}break;
 			case 'idSistema':          if(empty($idSistema)){          $error['idSistema']          = 'error/No ha seleccionado el sistema';}break;
 			case 'idUsuario':          if(empty($idUsuario)){          $error['idUsuario']          = 'error/No ha seleccionado a un usuario';}break;
-			case 'fecha_auto':         if(empty($fecha_auto)){         $error['fecha_auto']         = 'error/No ha ingresado la fecha de creacion';}break;
-			case 'Creacion_fecha':     if(empty($Creacion_fecha)){     $error['Creacion_fecha']     = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'fecha_auto':         if(empty($fecha_auto)){         $error['fecha_auto']         = 'error/No ha ingresado la fecha de creación';}break;
+			case 'Creacion_fecha':     if(empty($Creacion_fecha)){     $error['Creacion_fecha']     = 'error/No ha ingresado la fecha de creación';}break;
 			case 'idTipo':             if(empty($idTipo)){             $error['idTipo']             = 'error/No ha seleccionado un tipo';}break;
 			case 'Temporada':          if(empty($Temporada)){          $error['Temporada']          = 'error/No ha seleccionado la temporada';}break;
 			case 'idCategoria':        if(empty($idCategoria)){        $error['idCategoria']        = 'error/No ha seleccionado la categoria';}break;
@@ -724,7 +724,7 @@ require_once '0_validate_user_1.php';
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['cross_quality_ana_cali_basicos'])){
-				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['Creacion_fecha']) OR $_SESSION['cross_quality_ana_cali_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['Creacion_fecha']) OR $_SESSION['cross_quality_ana_cali_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['idTipo']) OR $_SESSION['cross_quality_ana_cali_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['Temporada']) OR $_SESSION['cross_quality_ana_cali_basicos']['Temporada']=='' ){           $error['Temporada']        = 'error/No ha seleccionado la Temporada';}
 				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['idCategoria']) OR $_SESSION['cross_quality_ana_cali_basicos']['idCategoria']=='' ){       $error['idCategoria']      = 'error/No ha seleccionado la categoria del producto';}
@@ -733,7 +733,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['Observaciones']) OR $_SESSION['cross_quality_ana_cali_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['idSistema']) OR $_SESSION['cross_quality_ana_cali_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['idUsuario']) OR $_SESSION['cross_quality_ana_cali_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']) OR $_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']) OR $_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha de creación';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al ingreso de datos';
 			}
@@ -1217,12 +1217,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1327,12 +1327,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1483,12 +1483,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1631,12 +1631,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1672,7 +1672,7 @@ require_once '0_validate_user_1.php';
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['cross_quality_ana_cali_basicos'])){
-				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['Creacion_fecha']) OR $_SESSION['cross_quality_ana_cali_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['Creacion_fecha']) OR $_SESSION['cross_quality_ana_cali_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['idTipo']) OR $_SESSION['cross_quality_ana_cali_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['Temporada']) OR $_SESSION['cross_quality_ana_cali_basicos']['Temporada']=='' ){           $error['Temporada']        = 'error/No ha seleccionado la Temporada';}
 				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['idCategoria']) OR $_SESSION['cross_quality_ana_cali_basicos']['idCategoria']=='' ){       $error['idCategoria']      = 'error/No ha seleccionado la categoria del producto';}
@@ -1681,7 +1681,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['Observaciones']) OR $_SESSION['cross_quality_ana_cali_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['idSistema']) OR $_SESSION['cross_quality_ana_cali_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['idUsuario']) OR $_SESSION['cross_quality_ana_cali_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
-				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']) OR $_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']) OR $_SESSION['cross_quality_ana_cali_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha de creación';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados al ingreso de datos';
 			}

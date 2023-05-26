@@ -201,7 +201,7 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 						<div class="table-responsive">
 
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
-								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.simpleDecode($_GET['view'], fecha_actual()).'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ubicacion</a>
+								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.simpleDecode($_GET['view'], fecha_actual()).'&cantSensores='.$rowMed['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ubicación</a>
 								<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_2.php?view='.simpleDecode($_GET['view'], fecha_actual()); ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Sensores</a>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
 							</div>
@@ -260,7 +260,7 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 									<th>Valor</th>
 									<th>Min</th>
 									<th>Max</th>
-									<th>Ubicacion</th>
+									<th>Ubicación</th>
 								</tr>
 							</thead>
 
@@ -275,7 +275,7 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 										<td><?php echo Cantidades_decimales_justos($error['Valor_max']).' '.$unimed[$error['SensoresUniMed_'.$error['Sensor']]]['Nombre']; ?></td>
 										<td>
 											<div class="btn-group" style="width: 35px;" >
-												<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_2_view.php?view='.$error['idErrores']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+												<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_errores_2_view.php?view='.$error['idErrores']; ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 											</div>
 										</td>
 									</tr>
@@ -304,7 +304,7 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 									<th>Fecha Termino</th>
 									<th>Hora Termino</th>
 									<th>Tiempo</th>
-									<th>Ubicacion</th>
+									<th>Ubicación</th>
 								</tr>
 							</thead>
 
@@ -318,7 +318,7 @@ $arrFlinea = db_select_array (false, 'idFueraLinea, Fecha_inicio, Hora_inicio, F
 										<td><?php echo $error['Tiempo'].' hrs'; ?></td>
 										<td>
 											<div class="btn-group" style="width: 35px;" >
-												<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_2_view.php?view='.$error['idFueraLinea']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+												<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_fuera_linea_2_view.php?view='.$error['idFueraLinea']; ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 											</div>
 										</td>
 									</tr>

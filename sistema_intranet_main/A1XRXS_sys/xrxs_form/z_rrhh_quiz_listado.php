@@ -64,13 +64,13 @@ require_once '0_validate_user_1.php';
 
 			case 'idPregunta':        if(empty($idPregunta)){        $error['idPregunta']         = 'error/No ha ingresado la id de la pregunta';}break;
 			case 'idTipo':            if(empty($idTipo)){            $error['idTipo']             = 'error/No ha seleccionado el tipo de pregunta';}break;
-			case 'Opcion_1':          if(!isset($Opcion_1)){         $error['Opcion_1']           = 'error/No ha ingresado la opcion 1';}break;
-			case 'Opcion_2':          if(!isset($Opcion_2)){         $error['Opcion_2']           = 'error/No ha ingresado la opcion 2';}break;
-			case 'Opcion_3':          if(!isset($Opcion_3)){         $error['Opcion_3']           = 'error/No ha ingresado la opcion 3';}break;
-			case 'Opcion_4':          if(!isset($Opcion_4)){         $error['Opcion_4']           = 'error/No ha ingresado la opcion 4';}break;
-			case 'Opcion_5':          if(!isset($Opcion_5)){         $error['Opcion_5']           = 'error/No ha ingresado la opcion 5';}break;
-			case 'Opcion_6':          if(!isset($Opcion_6)){         $error['Opcion_6']           = 'error/No ha ingresado la opcion 6';}break;
-			case 'OpcionCorrecta':    if(!isset($OpcionCorrecta)){   $error['OpcionCorrecta']     = 'error/No ha ingresado la opcion correcta';}break;
+			case 'Opcion_1':          if(!isset($Opcion_1)){         $error['Opcion_1']           = 'error/No ha ingresado la opción 1';}break;
+			case 'Opcion_2':          if(!isset($Opcion_2)){         $error['Opcion_2']           = 'error/No ha ingresado la opción 2';}break;
+			case 'Opcion_3':          if(!isset($Opcion_3)){         $error['Opcion_3']           = 'error/No ha ingresado la opción 3';}break;
+			case 'Opcion_4':          if(!isset($Opcion_4)){         $error['Opcion_4']           = 'error/No ha ingresado la opción 4';}break;
+			case 'Opcion_5':          if(!isset($Opcion_5)){         $error['Opcion_5']           = 'error/No ha ingresado la opción 5';}break;
+			case 'Opcion_6':          if(!isset($Opcion_6)){         $error['Opcion_6']           = 'error/No ha ingresado la opción 6';}break;
+			case 'OpcionCorrecta':    if(!isset($OpcionCorrecta)){   $error['OpcionCorrecta']     = 'error/No ha ingresado la opción correcta';}break;
 			case 'idCategoria':       if(empty($idCategoria)){       $error['idCategoria']        = 'error/No ha seleccionado la categoria';}break;
 
 		}
@@ -201,12 +201,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -320,12 +320,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

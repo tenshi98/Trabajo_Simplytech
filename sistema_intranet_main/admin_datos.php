@@ -214,7 +214,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 								<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
 								<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
 								<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?>
 							</p>
 
@@ -267,16 +267,16 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<?php
-							//se arma la direccion
+							//se arma la dirección
 							$direccion = "";
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
 							if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){        $direccion .= ', '.$rowdata["Comuna"];}
 							if(isset($rowdata["Ciudad"])&&$rowdata["Ciudad"]!=''){        $direccion .= ', '.$rowdata["Ciudad"];}
-							//se despliega mensaje en caso de no existir direccion
+							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
 								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
 							}else{
-								$Alert_Text = '<strong>No tiene una direccion definida</strong>';
+								$Alert_Text = '<strong>No tiene una dirección definida</strong>';
 								alert_post_data(4,2,2, $Alert_Text);
 							}
 						?>

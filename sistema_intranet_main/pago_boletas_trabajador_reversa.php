@@ -120,7 +120,7 @@ array_push( $arrBoletas,$row );
 										<?php if ($rowlevel['level']>=4){
 											$ubicacion = $location.'&submit_filter=Filtrar&del_idPago='.simpleEncode($productos[0]['idPago'], fecha_actual()).'&idFacturacion='.simpleEncode($productos[0]['idFacturacion'], fecha_actual());
 											$dialogo   = '¿Realmente deseas eliminar el pago '.$productos[0]['DocumentoPago'].' '.$menu.'?'; ?>
-											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-exchange" aria-hidden="true"></i></a>
+											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-exchange" aria-hidden="true"></i></a>
 										<?php } ?>
 									</div>
 								</td>
@@ -132,7 +132,7 @@ array_push( $arrBoletas,$row );
 									<td align="right"><?php echo valores($tipo['DocumentoMontoPagado'], 0); ?></td>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<a href="view_boleta_honorarios.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											<a href="view_boleta_honorarios.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Información" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										</div>
 									</td>
 								</tr>

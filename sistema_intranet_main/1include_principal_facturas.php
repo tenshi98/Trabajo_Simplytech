@@ -154,9 +154,9 @@ $arrFacturas_4 = db_select_array (false, $SIS_query, 'bodegas_servicios_facturac
 																	$maincolor = $calcolor2;
 																}
 																if($original=="principal_facturas_alt.php"){
-																	echo '<a title="Ver Informacion" class="tooltip event_calendar '.$maincolor.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
+																	echo '<a title="Ver Información" class="tooltip event_calendar '.$maincolor.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
 																}else{
-																	echo '<a title="Ver Informacion" class="iframe tooltip event_calendar '.$maincolor.'" href="'.$ver.'">'.$trabajo.'</a>';
+																	echo '<a title="Ver Información" class="iframe tooltip event_calendar '.$maincolor.'" href="'.$ver.'">'.$trabajo.'</a>';
 																}
 																	
 															}
@@ -174,9 +174,9 @@ $arrFacturas_4 = db_select_array (false, $SIS_query, 'bodegas_servicios_facturac
 																	$maincolor = $calcolor2;
 																}
 																if($original=="principal_facturas_alt.php"){
-																	echo '<a title="Ver Informacion" class="tooltip event_calendar '.$maincolor.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';	
+																	echo '<a title="Ver Información" class="tooltip event_calendar '.$maincolor.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';	
 																}else{
-																	echo '<a title="Ver Informacion" class="iframe tooltip event_calendar '.$maincolor.'" href="'.$ver.'">'.$trabajo.'</a>';	
+																	echo '<a title="Ver Información" class="iframe tooltip event_calendar '.$maincolor.'" href="'.$ver.'">'.$trabajo.'</a>';	
 																}
 															}
 														}
@@ -193,9 +193,9 @@ $arrFacturas_4 = db_select_array (false, $SIS_query, 'bodegas_servicios_facturac
 																	$maincolor = $calcolor2;
 																}
 																if($original=="principal_facturas_alt.php"){
-																	echo '<a title="Ver Informacion" class="tooltip event_calendar '.$maincolor.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';	
+																	echo '<a title="Ver Información" class="tooltip event_calendar '.$maincolor.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';	
 																}else{
-																	echo '<a title="Ver Informacion" class="iframe tooltip event_calendar '.$maincolor.'" href="'.$ver.'">'.$trabajo.'</a>';	
+																	echo '<a title="Ver Información" class="iframe tooltip event_calendar '.$maincolor.'" href="'.$ver.'">'.$trabajo.'</a>';	
 																}
 															}
 														}
@@ -212,9 +212,9 @@ $arrFacturas_4 = db_select_array (false, $SIS_query, 'bodegas_servicios_facturac
 																	$maincolor = $calcolor2;
 																}
 																if($original=="principal_facturas_alt.php"){
-																	echo '<a title="Ver Informacion" class="tooltip event_calendar '.$maincolor.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';	
+																	echo '<a title="Ver Información" class="tooltip event_calendar '.$maincolor.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';	
 																}else{
-																	echo '<a title="Ver Informacion" class="iframe tooltip event_calendar '.$maincolor.'" href="'.$ver.'">'.$trabajo.'</a>';	
+																	echo '<a title="Ver Información" class="iframe tooltip event_calendar '.$maincolor.'" href="'.$ver.'">'.$trabajo.'</a>';	
 																}
 															}
 														}

@@ -64,14 +64,14 @@ require_once '0_validate_user_1.php';
 			case 'PuntoUniMed':         if(empty($PuntoUniMed)){          $error['PuntoUniMed']           = 'error/No ha seleccionado la unidad de medida';}break;
 			case 'PuntoidGrupo':        if(empty($PuntoidGrupo)){         $error['PuntoidGrupo']          = 'error/No ha seleccionado el grupo';}break;
 			case 'idNota_1':            if(empty($idNota_1)){             $error['idNota_1']              = 'error/No ha seleccionado la Nota Calidad';}break;
-			case 'idNota_2':            if(empty($idNota_2)){             $error['idNota_2']              = 'error/No ha seleccionado la Nota Condicion';}break;
+			case 'idNota_2':            if(empty($idNota_2)){             $error['idNota_2']              = 'error/No ha seleccionado la Nota Condición';}break;
 			case 'idNota_3':            if(empty($idNota_3)){             $error['idNota_3']              = 'error/No ha seleccionado la Calificacion';}break;
 			case 'idNotaTipo_1':        if(empty($idNotaTipo_1)){         $error['idNotaTipo_1']          = 'error/No ha seleccionado el tipo de Nota Calidad';}break;
-			case 'idNotaTipo_2':        if(empty($idNotaTipo_2)){         $error['idNotaTipo_2']          = 'error/No ha seleccionado el tipo de Nota Condicion';}break;
+			case 'idNotaTipo_2':        if(empty($idNotaTipo_2)){         $error['idNotaTipo_2']          = 'error/No ha seleccionado el tipo de Nota Condición';}break;
 			case 'idNotaTipo_3':        if(empty($idNotaTipo_3)){         $error['idNotaTipo_3']          = 'error/No ha seleccionado el tipo de Calificacion';}break;
 			case 'Validar':             if(empty($Validar)){              $error['Validar']               = 'error/No ha ingresado los datos para validar';}break;
 			case 'Validar_1':           if(empty($Validar_1)){            $error['Validar_1']             = 'error/No ha ingresado los datos para validar de Nota Calidad';}break;
-			case 'Validar_2':           if(empty($Validar_2)){            $error['Validar_2']             = 'error/No ha ingresado los datos para validar de Nota Condicion';}break;
+			case 'Validar_2':           if(empty($Validar_2)){            $error['Validar_2']             = 'error/No ha ingresado los datos para validar de Nota Condición';}break;
 			case 'Validar_3':           if(empty($Validar_3)){            $error['Validar_3']             = 'error/No ha ingresado los datos para validar de Calificacion';}break;
 
 		}
@@ -214,12 +214,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

@@ -100,10 +100,10 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 					$Form_Inputs->form_tittle(3, 'Datos Basicos');
 					$Form_Inputs->form_input_text('Nombres', 'Nombre', $x1, 2);
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x2, 2);
-					$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Región','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										 'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');
+					$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x5, 2,'fa fa-map');
 					$Form_Inputs->form_input_icon('Rubro', 'Rubro', $x6, 1,'fa fa-sitemap');
 
 					$Form_Inputs->form_tittle(3, 'Datos de Representacion');

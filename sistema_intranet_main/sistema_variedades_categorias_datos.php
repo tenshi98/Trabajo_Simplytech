@@ -24,7 +24,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 /**********************************************************************************************************************************/
 //formulario para editar
 if (!empty($_POST['submit_edit'])){
-	//Nueva Ubicacion
+	//Nueva Ubicación
 	$location .='&id='.$_GET['id'];
 	//Llamamos al formulario
 	$form_trabajo= 'update';

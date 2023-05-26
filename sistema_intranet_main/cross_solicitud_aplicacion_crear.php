@@ -833,7 +833,7 @@ array_push( $arrCuenta2,$row );
 				<div class="input-group">
 					<?php $Form_Inputs->input_disabled('text', 'Dist Hileras', 'escribeme5', 0, 1); ?>
 					<div class="input-group-btn">
-						<button class="btn btn-metis-1 tooltip remove_cuartel" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+						<button class="btn btn-metis-1 tooltip remove_cuartel" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 					</div>
 				</div>
 			</div>
@@ -867,7 +867,7 @@ array_push( $arrCuenta2,$row );
 				<div class="input-group">
 					<?php $Form_Inputs->input_hold('text','Objetivo','Objetivo[]', '', 1); ?>
 					<div class="input-group-btn">
-						<button class="btn btn-metis-1 tooltip remove_producto" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+						<button class="btn btn-metis-1 tooltip remove_producto" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 					</div>
 				</div>
 			</div>
@@ -895,7 +895,7 @@ array_push( $arrCuenta2,$row );
 				<div class="input-group">
 					<?php $Form_Inputs->select('Trabajador Asignado','idTrabajador[]', 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $m,'', $dbConn); ?>
 					<div class="input-group-btn">
-						<button class="btn btn-metis-1 tooltip remove_tractor" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+						<button class="btn btn-metis-1 tooltip remove_tractor" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 					</div>
 				</div>
 			</div>
@@ -909,7 +909,7 @@ array_push( $arrCuenta2,$row );
 				<div class="input-group">
 					<?php $Form_Inputs->select('Material de Seguridad','idMatSeguridad[]', 2, 'idMatSeguridad', 'Nombre', 'cross_checking_materiales_seguridad', 'idEstado=1','', $dbConn); ?>
 					<div class="input-group-btn">
-						<button class="btn btn-metis-1 tooltip remove_material" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+						<button class="btn btn-metis-1 tooltip remove_material" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 					</div>
 				</div>
 			</div>
@@ -1776,7 +1776,7 @@ array_push( $arrCuenta2,$row );
 				<div class="input-group">
 					<?php $Form_Inputs->input_disabled('text', 'Dist Hileras', 'escribeme5', 0, 1); ?>
 					<div class="input-group-btn">
-						<button class="btn btn-metis-1 tooltip remove_cuartel" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+						<button class="btn btn-metis-1 tooltip remove_cuartel" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 					</div>
 				</div>
 			</div>
@@ -1810,7 +1810,7 @@ array_push( $arrCuenta2,$row );
 				<div class="input-group">
 					<?php $Form_Inputs->input_hold('text','Objetivo','Objetivo[]', '', 1); ?>
 					<div class="input-group-btn">
-						<button class="btn btn-metis-1 tooltip remove_producto" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+						<button class="btn btn-metis-1 tooltip remove_producto" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 					</div>
 				</div>
 			</div>
@@ -1838,7 +1838,7 @@ array_push( $arrCuenta2,$row );
 				<div class="input-group">
 					<?php $Form_Inputs->select('Trabajador Asignado','idTrabajador[]', 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $m,'', $dbConn); ?>
 					<div class="input-group-btn">
-						<button class="btn btn-metis-1 tooltip remove_tractor" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+						<button class="btn btn-metis-1 tooltip remove_tractor" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 					</div>
 				</div>
 			</div>
@@ -1852,7 +1852,7 @@ array_push( $arrCuenta2,$row );
 				<div class="input-group">
 					<?php $Form_Inputs->select('Material de Seguridad','idMatSeguridad[]', 2, 'idMatSeguridad', 'Nombre', 'cross_checking_materiales_seguridad', 'idEstado=1','', $dbConn); ?>
 					<div class="input-group-btn">
-						<button class="btn btn-metis-1 tooltip remove_material" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+						<button class="btn btn-metis-1 tooltip remove_material" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 					</div>
 				</div>
 			</div>
@@ -2465,7 +2465,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del_Solicitud='.simpleEncode($ot['idSolicitud'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el registro de la Solicitud  '.n_doc($ot['idSolicitud'], 5).'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

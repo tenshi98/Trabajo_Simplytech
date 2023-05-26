@@ -54,7 +54,7 @@ require_once '0_validate_user_1.php';
 			case 'idEstado':                  if(empty($idEstado)){               $error['idEstado']                = 'error/No ha ingresado el estado';}break;
 			case 'idPrioridad':               if(empty($idPrioridad)){            $error['idPrioridad']             = 'error/No ha ingresado la prioridad';}break;
 			case 'idTipo':                    if(empty($idTipo)){                 $error['idTipo']                  = 'error/No ha ingresado el tipo';}break;
-			case 'f_creacion':                if(empty($f_creacion)){             $error['f_creacion']              = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'f_creacion':                if(empty($f_creacion)){             $error['f_creacion']              = 'error/No ha ingresado la fecha de creación';}break;
 			case 'Nombre':                    if(empty($Nombre)){                 $error['Nombre']                  = 'error/No ha ingresado el nombre de la tarea';}break;
 			case 'f_termino':                 if(empty($f_termino)){              $error['f_termino']               = 'error/No ha ingresado la fecha de termino';}break;
 			case 'Observaciones':             if(empty($Observaciones)){          $error['Observaciones']           = 'error/No ha ingresado la observacion';}break;
@@ -65,7 +65,7 @@ require_once '0_validate_user_1.php';
 			case 'idResponsable':             if(empty($idResponsable)){          $error['idResponsable']           = 'error/No ha seleccionado un responsable';}break;
 			case 'Observacion':               if(empty($Observacion)){            $error['Observacion']             = 'error/No ha ingresado la Observacion';}break;
 			case 'idHistorial':               if(empty($idHistorial)){            $error['idHistorial']             = 'error/No ha seleccionado el historial';}break;
-			case 'Creacion_fecha':            if(empty($Creacion_fecha)){         $error['Creacion_fecha']          = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'Creacion_fecha':            if(empty($Creacion_fecha)){         $error['Creacion_fecha']          = 'error/No ha ingresado la fecha de creación';}break;
 			case 'idTrabajoTareas':           if(empty($idTrabajoTareas)){        $error['idTrabajoTareas']         = 'error/No ha seleccionado la tarea';}break;
 			case 'idEstadoTarea':             if(empty($idEstadoTarea)){          $error['idEstadoTarea']           = 'error/No ha seleccionado el estado de la tarea';}break;
 			case 'idAdjunto':                 if(empty($idAdjunto)){              $error['idAdjunto']               = 'error/No ha seleccionado el archivo adjunto';}break;
@@ -331,7 +331,7 @@ require_once '0_validate_user_1.php';
 				/**********************************************/
 				//Recorro los cuarteles
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					//Para mostrar en la creacion
+					//Para mostrar en la creación
 					$_SESSION['tareas_responsables'][$idResponsable[$j1]]['idResponsable'] = $idResponsable[$j1];
 					$_SESSION['tareas_responsables'][$idResponsable[$j1]]['Responsables']  = $arrUsers[$idResponsable[$j1]]['Nombre'];
 				}
@@ -429,7 +429,7 @@ require_once '0_validate_user_1.php';
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					//sumo 1
 					$idInterno = $idInterno+1;
-					//Para mostrar en la creacion
+					//Para mostrar en la creación
 					$_SESSION['tareas_tareas'][$idInterno]['idInterno']     = $idInterno;
 					$_SESSION['tareas_tareas'][$idInterno]['idResponsable'] = $idResponsable[$j1];
 					$_SESSION['tareas_tareas'][$idInterno]['Responsables']  = $arrUsers[$idResponsable[$j1]]['Nombre'];
@@ -602,7 +602,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['tareas_basicos']['idEstado']) OR $_SESSION['tareas_basicos']['idEstado']=='' ){            $error['idEstado']       = 'error/No ha ingresado el estado';}
 				if(!isset($_SESSION['tareas_basicos']['idPrioridad']) OR $_SESSION['tareas_basicos']['idPrioridad']=='' ){      $error['idPrioridad']    = 'error/No ha ingresado la prioridad';}
 				if(!isset($_SESSION['tareas_basicos']['idTipo']) OR $_SESSION['tareas_basicos']['idTipo']=='' ){                $error['idTipo']         = 'error/No ha ingresado el tipo';}
-				if(!isset($_SESSION['tareas_basicos']['f_creacion']) OR $_SESSION['tareas_basicos']['f_creacion']=='' ){        $error['f_creacion']     = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['tareas_basicos']['f_creacion']) OR $_SESSION['tareas_basicos']['f_creacion']=='' ){        $error['f_creacion']     = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['tareas_basicos']['Nombre']) OR $_SESSION['tareas_basicos']['Nombre']=='' ){                $error['Nombre']         = 'error/No ha ingresado el nombre';}
 				if(!isset($_SESSION['tareas_basicos']['Observaciones']) OR $_SESSION['tareas_basicos']['Observaciones']=='' ){  $error['Observaciones']  = 'error/No ha ingresado la observacion';}
 			}else{
@@ -755,12 +755,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -890,7 +890,7 @@ require_once '0_validate_user_1.php';
 					if(isset($idEstado) && $idEstado != '' && $idEstado != $rowdata['idEstado']){                                              $Observacion .= '<br/> - Cambio de estado';}
 					if(isset($idPrioridad) && $idPrioridad != '' && $idPrioridad != $rowdata['idPrioridad']){                                  $Observacion .= '<br/> - Cambio de prioridad';}
 					if(isset($idTipo) && $idTipo != '' && $idTipo != $rowdata['idTipo']){                                                      $Observacion .= '<br/> - Cambio de tipo';}
-					if(isset($f_creacion) && $f_creacion != '' && $f_creacion != $rowdata['f_creacion']){                                      $Observacion .= '<br/> - Cambio de la fecha de creacion (de '.$rowdata['f_creacion'].' a '.$f_creacion.')';}
+					if(isset($f_creacion) && $f_creacion != '' && $f_creacion != $rowdata['f_creacion']){                                      $Observacion .= '<br/> - Cambio de la fecha de creación (de '.$rowdata['f_creacion'].' a '.$f_creacion.')';}
 					if(isset($Nombre) && $Nombre != '' && $Nombre != $rowdata['Nombre']){                                                      $Observacion .= '<br/> - Cambio de Tarea (de '.$rowdata['Nombre'].' a '.$Nombre.')';}
 					if(isset($f_termino) && $f_termino != '' && $f_termino != $rowdata['f_termino']){                                          $Observacion .= '<br/> - Cambio de fecha de termino (de '.$rowdata['f_termino'].' a '.$f_termino.')';}
 					if(isset($Observaciones) && $Observaciones != '' && $Observaciones != $rowdata['Observaciones']){                          $Observacion .= '<br/> - Cambio de la observacion (de '.$rowdata['Observaciones'].' a '.$Observaciones.')';}

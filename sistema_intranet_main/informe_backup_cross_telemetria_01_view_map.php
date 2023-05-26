@@ -103,7 +103,7 @@ $rowdata = db_select_data (false, $SIS_query, 'backup_telemetria_listado_tablare
 						var marker = new google.maps.Marker({
 							position	: factory,
 							map			: map,
-							title		: "Direccion",
+							title		: "Dirección",
 							animation 	: google.maps.Animation.DROP,
 							icon      	: "<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_red.png"
 						});

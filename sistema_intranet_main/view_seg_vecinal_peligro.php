@@ -121,7 +121,7 @@ foreach ($arrArchivos as $zona) {
 								<strong>Tipo de Peligro : </strong><?php echo $rowdata['Tipo']; ?><br/>
 								<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
 								<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
 								<strong>Descripcion : </strong><?php echo $rowdata['Descripcion']; ?><br/>
 								<strong>Estado : </strong><label class="label <?php if(isset($rowdata['idEstado'])&&$rowdata['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $rowdata['Estado']; ?></label><br/>
 
@@ -140,16 +140,16 @@ foreach ($arrArchivos as $zona) {
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<?php
-							//se arma la direccion
+							//se arma la dirección
 							$direccion = "";
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){   $direccion .= $rowdata["Direccion"];}
 							if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){         $direccion .= ', '.$rowdata["Comuna"];}
 							if(isset($rowdata["Ciudad"])&&$rowdata["Ciudad"]!=''){         $direccion .= ', '.$rowdata["Ciudad"];}
-							//se despliega mensaje en caso de no existir direccion
+							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
 								echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Zona de Peligro', 'Calle', $direccion, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 19, 2);
 							}else{
-								$Alert_Text = 'No tiene una direccion definida';
+								$Alert_Text = 'No tiene una dirección definida';
 								alert_post_data(4,2,2, $Alert_Text);
 							}
 						?>
@@ -221,7 +221,7 @@ foreach ($arrArchivos as $zona) {
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

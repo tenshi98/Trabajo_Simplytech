@@ -127,7 +127,7 @@ $html .= '
 							<td style="vertical-align: top; width:80%;" colspan="3">'.$row_data['SistemaOrigen'].'</td>
 						</tr>
 						<tr>
-							<td style="vertical-align: top; width:20%;background-color:#DDD;">Ubicacion</td>
+							<td style="vertical-align: top; width:20%;background-color:#DDD;">Ubicación</td>
 							<td style="vertical-align: top; width:80%;" colspan="3">'.$row_data['SistemaOrigenDireccion'].', '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'</td>
 						</tr>
 						<tr>

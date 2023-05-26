@@ -258,16 +258,16 @@ $total_egreso  = 0;
 									<?php
 									switch ($tipo['idTipo']) {
 										case 1://Factura Insumos
-											echo '<a href="view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
+											echo '<a href="view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 											break;
 										case 2://Factura Productos
-											echo '<a href="view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
+											echo '<a href="view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 											break;
 										case 3://Factura Servicios
-											echo '<a href="view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
+											echo '<a href="view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 											break;
 										case 4://Factura Arriendos
-											echo '<a href="view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
+											echo '<a href="view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 											break;
 									}
 									?>
@@ -303,16 +303,16 @@ $total_egreso  = 0;
 									<?php
 									switch ($tipo['idTipo']) {
 										case 1://Factura Insumos
-											echo '<a href="view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
+											echo '<a href="view_mov_insumos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 											break;
 										case 2://Factura Productos
-											echo '<a href="view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
+											echo '<a href="view_mov_productos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 											break;
 										case 3://Factura Servicios
-											echo '<a href="view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
+											echo '<a href="view_mov_servicios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 											break;
 										case 4://Factura Arriendos
-											echo '<a href="view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
+											echo '<a href="view_mov_arriendos.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 											break;
 									}
 									?>
@@ -345,7 +345,7 @@ $total_egreso  = 0;
 							<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($tipo['MontoPagado'], 0); $total_egreso = $total_egreso + $tipo['MontoPagado'];$Subtotal_2 = $Subtotal_2 + $tipo['MontoPagado']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="view_rrhh_sueldos.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="view_rrhh_sueldos.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -375,7 +375,7 @@ $total_egreso  = 0;
 							<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($tipo['MontoPagado'], 0); $total_egreso = $total_egreso + $tipo['MontoPagado'];$Subtotal_2 = $Subtotal_2 + $tipo['MontoPagado']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="view_boleta_honorarios.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="view_boleta_honorarios.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -405,7 +405,7 @@ $total_egreso  = 0;
 							<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($tipo['MontoPagado'], 0); $total_egreso = $total_egreso + $tipo['MontoPagado'];$Subtotal_2 = $Subtotal_2 + $tipo['MontoPagado']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="view_mov_contab_caja_gastos.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="view_mov_contab_caja_gastos.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -435,7 +435,7 @@ $total_egreso  = 0;
 							<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($tipo['MontoPagado'], 0); $total_egreso = $total_egreso + $tipo['MontoPagado'];$Subtotal_2 = $Subtotal_2 + $tipo['MontoPagado']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="view_mov_pagos_leyes_fiscales.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="view_mov_pagos_leyes_fiscales.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>
@@ -465,7 +465,7 @@ $total_egreso  = 0;
 							<?php if(isset($_GET['type'])&&($_GET['type']==1 OR $_GET['type']==3)){ ?><td align="right" class="color-red"><?php echo valores($tipo['MontoPagado'], 0); $total_egreso = $total_egreso + $tipo['MontoPagado'];$Subtotal_2 = $Subtotal_2 + $tipo['MontoPagado']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="view_mov_pagos_leyes_sociales.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="view_mov_pagos_leyes_sociales.php?view=<?php echo simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>&return=<?php echo basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>

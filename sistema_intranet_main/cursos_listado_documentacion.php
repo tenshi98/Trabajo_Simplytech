@@ -204,7 +204,7 @@ array_push( $arrArchivos,$row );
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $new_location.'&delFile='.simpleEncode($ciudad['idDocumentacion'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el archivo '.$ciudad['File'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

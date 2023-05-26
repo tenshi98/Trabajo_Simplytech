@@ -13,7 +13,7 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Type.php';
 /*                                          Se llaman a las partes de los formularios                                             */
 /**********************************************************************************************************************************/
 //Cargamos la ubicacion original
-$original = "core_informacion_base.php";
+$original = "core_información_base.php";
 $location = $original;
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */

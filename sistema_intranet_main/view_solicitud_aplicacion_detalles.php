@@ -149,7 +149,7 @@ document.getElementById("loading").style.display = "none";
 
 	<div class="row invoice-info">
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-			<strong>Identificacion</strong>
+			<strong>Identificación</strong>
 			<address>
 				Predio: <?php echo $row_data['PredioNombre']; ?><br/>
 				Especie: <?php echo $row_data['VariedadCat']; ?><br/>
@@ -335,7 +335,7 @@ document.getElementById("loading").style.display = "none";
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

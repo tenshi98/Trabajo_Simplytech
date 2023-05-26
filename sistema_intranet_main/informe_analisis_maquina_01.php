@@ -642,7 +642,7 @@ array_push( $arrFlashpoint,$row );
 						Modelo: '.$rowMaquina['MaquinaModelo'].'<br/>
 						Serie: '.$rowMaquina['MaquinaSerie'].'<br/>
 						Fabricante: '.$rowMaquina['MaquinaFabricante'].'<br/>
-						Ubicacion: '.$rowMaquina['MaquinaUbicacion'];
+						Ubicación: '.$rowMaquina['MaquinaUbicacion'];
 						if(isset($rowMaquina['MaquinaUbicacion_lvl_1'])&&$rowMaquina['MaquinaUbicacion_lvl_1']!=''){
 							echo ' - '.$rowMaquina['MaquinaUbicacion_lvl_1'];
 						}

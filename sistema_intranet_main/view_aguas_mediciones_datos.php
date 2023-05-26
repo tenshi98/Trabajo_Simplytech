@@ -150,7 +150,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 						<td><strong>Cliente</strong></td>
 						<td width="15px"><strong>Medidor</strong></td>
 						<td width="15px"><strong>Remarcador</strong></td>
-						<td><strong>Direccion</strong></td>
+						<td><strong>Dirección</strong></td>
 						<td width="15px"><strong>Consumo</strong></td>
 					</tr>
 					<?php foreach ($arrDatosCorrectos as $datos) { ?>
@@ -189,7 +189,7 @@ $arrDatosCorrectos = db_select_array (false, $SIS_query, 'aguas_mediciones_datos
 	
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

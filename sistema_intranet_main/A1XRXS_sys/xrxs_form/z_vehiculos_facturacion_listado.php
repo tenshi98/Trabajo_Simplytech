@@ -52,7 +52,7 @@ require_once '0_validate_user_1.php';
 			case 'idMes':                  if(empty($idMes)){                    $error['idMes']                  = 'error/No ha ingresado el mes';}break;
 			case 'Ano':                    if(empty($Ano)){                      $error['Ano']                    = 'error/No ha seleccionado el Ano';}break;
 			case 'Observaciones':          if(empty($Observaciones)){            $error['Observaciones']          = 'error/No ha ingresado la observacion';}break;
-			case 'fCreacion':              if(empty($fCreacion)){                $error['fCreacion']              = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'fCreacion':              if(empty($fCreacion)){                $error['fCreacion']              = 'error/No ha ingresado la fecha de creación';}break;
 			case 'idFacturacionDetalle':   if(empty($idFacturacionDetalle)){     $error['idFacturacionDetalle']   = 'error/No ha ingresado la id del detalle';}break;
 			case 'idCliente':              if(empty($idCliente)){                $error['idCliente']              = 'error/No ha ingresado el cliente';}break;
 			case 'SII_NDoc':               if(empty($SII_NDoc)){                 $error['SII_NDoc']               = 'error/No ha ingresado el numero de documento';}break;
@@ -286,7 +286,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['vehiculos_basicos']['idUsuario']) OR $_SESSION['vehiculos_basicos']['idUsuario']=='' ){           $error['idUsuario']    = 'error/No ha seleccionado el usuario';}
 				if(!isset($_SESSION['vehiculos_basicos']['Fecha']) OR $_SESSION['vehiculos_basicos']['Fecha']=='' ){                   $error['Fecha']        = 'error/No ha ingresado una fecha';}
 				if(!isset($_SESSION['vehiculos_basicos']['Observaciones']) OR $_SESSION['vehiculos_basicos']['Observaciones']=='' ){   $error['idUsuario']    = 'error/No ha ingresado una observacion';}
-				if(!isset($_SESSION['vehiculos_basicos']['fCreacion']) OR $_SESSION['vehiculos_basicos']['fCreacion']=='' ){           $error['fCreacion']    = 'error/No ha ingresado una fecha de creacion';}
+				if(!isset($_SESSION['vehiculos_basicos']['fCreacion']) OR $_SESSION['vehiculos_basicos']['fCreacion']=='' ){           $error['fCreacion']    = 'error/No ha ingresado una fecha de creación';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la facturacion';
 			}

@@ -75,7 +75,7 @@ $w.= " AND telemetria_listado.idTab=9";//CrossEnergy
 						<?php if($rowdata['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
 						<?php } elseif($rowdata['id_Geo']==2){ ?>
-							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
+							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
@@ -152,8 +152,8 @@ $w.= " AND telemetria_listado.idTab=9";//CrossEnergy
 						$Form_Inputs->form_select_filter('Generador','idTelGenerador', $x17, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $w, '', $dbConn);
 						$Form_Inputs->form_date('Fecha Instalacion Generador','FechaInsGen', $x18, 1);
 					}
-					$Form_Inputs->form_post_data(2,1,1, '<strong>Ubicacion: </strong>Determina si el equipo esta en la planta de mantencion o en una obra.' );
-					$Form_Inputs->form_select('Ubicacion Equipo','idUbicacion', $x19, 1, 'idUbicacion', 'Nombre', 'core_telemetria_ubicaciones', 0, '', $dbConn);
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Ubicación: </strong>Determina si el equipo esta en la planta de mantencion o en una obra.' );
+					$Form_Inputs->form_select('Ubicación Equipo','idUbicacion', $x19, 1, 'idUbicacion', 'Nombre', 'core_telemetria_ubicaciones', 0, '', $dbConn);
 
 					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
 					?>

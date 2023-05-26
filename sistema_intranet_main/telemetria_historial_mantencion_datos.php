@@ -122,7 +122,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select_filter('Sistema','idSistema', $x0, 2, 'idSistema', 'Nombre', 'core_sistemas',0, '', $dbConn);
 					$Form_Inputs->form_select('Tipo de Servicio','idServicio', $x1, 2, 'idServicio', 'Nombre', 'core_telemetria_servicio_tecnico', 0, '', $dbConn);
-					$Form_Inputs->form_checkbox_active('Selecciona una Opcion','idOpciones', $x2, 2, 'idOpciones', 'Nombre', 'core_telemetria_servicio_tecnico_opciones', 0, $dbConn);
+					$Form_Inputs->form_checkbox_active('Selecciona una Opción','idOpciones', $x2, 2, 'idOpciones', 'Nombre', 'core_telemetria_servicio_tecnico_opciones', 0, $dbConn);
 					$Form_Inputs->form_date('Fecha Mantencion','Fecha', $x3, 2);
 					$Form_Inputs->form_time('Hora Inicio','h_Inicio', $x4, 2, 2);
 					$Form_Inputs->form_time('Hora Termino','h_Termino', $x5, 2, 2);

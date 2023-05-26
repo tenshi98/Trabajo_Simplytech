@@ -131,7 +131,7 @@ $arrGeocerca = db_select_array (false, 'telemetria_listado_geocercas.idGeocerca,
 						<?php if($rowdata['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
 						<?php } elseif($rowdata['id_Geo']==2){ ?>
-							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
+							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
@@ -165,7 +165,7 @@ $arrGeocerca = db_select_array (false, 'telemetria_listado_geocercas.idGeocerca,
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del_geocerca='.simpleEncode($geo['idGeocerca'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la geocerca '.$geo['Geocerca'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

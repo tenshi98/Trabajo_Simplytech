@@ -241,7 +241,7 @@ if(!empty($_GET['clone'])){  ?>
 											'Nivel 24','idLevel_24',$x24 ,1,'idLevel_24','Nombre','maquinas_listado_level_24',0,0,
 											'Nivel 25','idLevel_24',$x25 ,1,'idLevel_24','Nombre','maquinas_listado_level_24',0,0,
 											$dbConn, 'form1');
-					$Form_Inputs->form_textarea('Descripcion Tarea','Descripcion', $x6, 2);
+					$Form_Inputs->form_textarea('Descripcion Tarea','Descripcion', $x26, 2);
 
 
 					?>
@@ -1079,7 +1079,7 @@ if(!empty($_GET['clone'])){  ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del_ot='.simpleEncode($ot['idOT'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el registro de la OT  '.n_doc($ot['idOT'], 5).'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

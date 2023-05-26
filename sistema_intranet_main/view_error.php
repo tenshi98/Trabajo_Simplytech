@@ -74,7 +74,7 @@ $rowdata = db_select_data (false, $SIS_query, 'error_log', $SIS_join, $SIS_where
         
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

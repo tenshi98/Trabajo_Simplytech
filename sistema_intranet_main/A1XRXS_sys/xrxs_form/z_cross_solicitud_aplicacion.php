@@ -111,7 +111,7 @@ require_once '0_validate_user_1.php';
 			case 'idEstadoFen':           if(empty($idEstadoFen)){            $error['idEstadoFen']             = 'error/No ha ingresado el tipo';}break;
 			case 'idCategoria':           if(empty($idCategoria)){            $error['idCategoria']             = 'error/No ha seleccionado la Especie';}break;
 			case 'idProducto':            if(empty($idProducto)){             $error['idProducto']              = 'error/No ha seleccionado la variedad';}break;
-			case 'f_creacion':            if(empty($f_creacion)){             $error['f_creacion']              = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'f_creacion':            if(empty($f_creacion)){             $error['f_creacion']              = 'error/No ha ingresado la fecha de creación';}break;
 			case 'f_programacion':        if(empty($f_programacion)){         $error['f_programacion']          = 'error/No ha ingresado la fecha de programacion';}break;
 			case 'f_programacion_fin':    if(empty($f_programacion_fin)){     $error['f_programacion_fin']      = 'error/No ha ingresado la fecha de termino de programacion';}break;
 			case 'f_ejecucion':           if(empty($f_ejecucion)){            $error['f_ejecucion']             = 'error/No ha ingresado la fecha de ejecucion';}break;
@@ -145,7 +145,7 @@ require_once '0_validate_user_1.php';
 			case 'HumTempMax':            if(!isset($HumTempMax)){            $error['HumTempMax']              = 'error/No ha ingresado el parametro de humedad bajo temperatura maxima';}break;
 			case 'idPrioridad':           if(empty($idPrioridad)){            $error['idPrioridad']             = 'error/No ha seleccionado la prioridad';}break;
 			case 'Observacion':           if(empty($Observacion)){            $error['Observacion']             = 'error/No ha ingresado la observacion';}break;
-			case 'Creacion_fecha':        if(empty($Creacion_fecha)){         $error['Creacion_fecha']          = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'Creacion_fecha':        if(empty($Creacion_fecha)){         $error['Creacion_fecha']          = 'error/No ha ingresado la fecha de creación';}break;
 			case 'idDosificador':         if(empty($idDosificador)){          $error['idDosificador']           = 'error/No ha seleccionado al dosificador';}break;
 			case 'NSolicitud':            if(empty($NSolicitud)){             $error['NSolicitud']              = 'error/No ha ingresado el numero de solicitud';}break;
 			case 'NSolicitudOld':         if(empty($NSolicitudOld)){          $error['NSolicitudOld']           = 'error/No ha ingresado el numero de solicitud';}break;
@@ -518,7 +518,7 @@ require_once '0_validate_user_1.php';
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					//variable interna
 					$nmc1 = $j1 + 1;
-					//Para mostrar en la creacion
+					//Para mostrar en la creación
 					$_SESSION['sol_apli_cuarteles'][$nmc1]['idZona']          = $idZona[$j1];
 					$_SESSION['sol_apli_cuarteles'][$nmc1]['Mojamiento']      = Cantidades_decimales_justos($Mojamiento);
 					$_SESSION['sol_apli_cuarteles'][$nmc1]['VelTractor']      = Cantidades_decimales_justos($VelTractor);
@@ -537,7 +537,7 @@ require_once '0_validate_user_1.php';
 					for($j2 = 0; $j2 < $ndata_2; $j2++){
 						//variable interna
 						$nmc2 = $j2 + 1;
-						//Para mostrar en la creacion
+						//Para mostrar en la creación
 						$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['idVehiculo']    = $idVehiculo[$j2];
 						$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['idTelemetria']  = $idTelemetria[$j2];
 						$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['idTrabajador']  = $idTrabajador[$j2];
@@ -552,7 +552,7 @@ require_once '0_validate_user_1.php';
 					for($j3 = 0; $j3 < $ndata_3; $j3++){
 						//variable interna
 						$nmc3 = $j3 + 1;
-						//Para mostrar en la creacion
+						//Para mostrar en la creación
 						$_SESSION['sol_apli_productos'][$nmc1][$nmc3]['idProducto']        = $idProducto[$j3];
 						$_SESSION['sol_apli_productos'][$nmc1][$nmc3]['DosisAplicar']      = $DosisAplicar[$j3];
 						$_SESSION['sol_apli_productos'][$nmc1][$nmc3]['Objetivo']          = $Objetivo[$j3];
@@ -575,7 +575,7 @@ require_once '0_validate_user_1.php';
 				for($j4 = 0; $j4 < $ndata_4; $j4++){
 					//variable interna
 					$nmc4 = $j4 + 1;
-					//Para mostrar en la creacion
+					//Para mostrar en la creación
 					$_SESSION['sol_apli_materiales'][$nmc4]['idMatSeguridad']  = $idMatSeguridad[$j4];
 					$_SESSION['sol_apli_materiales'][$nmc4]['Nombre']          = $arrMat[$idMatSeguridad[$j4]]['Nombre'];
 					$_SESSION['sol_apli_materiales'][$nmc4]['Codigo']          = $arrMat[$idMatSeguridad[$j4]]['Codigo'];
@@ -930,7 +930,7 @@ require_once '0_validate_user_1.php';
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
 					//variable interna
 					$nmc1 = $j1 + 1;
-					//Para mostrar en la creacion
+					//Para mostrar en la creación
 					$_SESSION['sol_apli_cuarteles'][$nmc1]['idZona']          = $idZona[$j1];
 					$_SESSION['sol_apli_cuarteles'][$nmc1]['Mojamiento']      = Cantidades_decimales_justos($Mojamiento);
 					$_SESSION['sol_apli_cuarteles'][$nmc1]['VelTractor']      = Cantidades_decimales_justos($VelTractor);
@@ -949,7 +949,7 @@ require_once '0_validate_user_1.php';
 					for($j2 = 0; $j2 < $ndata_2; $j2++){
 						//variable interna
 						$nmc2 = $j2 + 1;
-						//Para mostrar en la creacion
+						//Para mostrar en la creación
 						$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['idVehiculo']    = $idVehiculo[$j2];
 						$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['idTelemetria']  = $idTelemetria[$j2];
 						$_SESSION['sol_apli_tractores'][$nmc1][$nmc2]['idTrabajador']  = $idTrabajador[$j2];
@@ -964,7 +964,7 @@ require_once '0_validate_user_1.php';
 					for($j3 = 0; $j3 < $ndata_3; $j3++){
 						//variable interna
 						$nmc3 = $j3 + 1;
-						//Para mostrar en la creacion
+						//Para mostrar en la creación
 						$_SESSION['sol_apli_productos'][$nmc1][$nmc3]['idProducto']        = $idProducto[$j3];
 						$_SESSION['sol_apli_productos'][$nmc1][$nmc3]['DosisAplicar']      = $DosisAplicar[$j3];
 						$_SESSION['sol_apli_productos'][$nmc1][$nmc3]['Objetivo']          = $Objetivo[$j3];
@@ -988,7 +988,7 @@ require_once '0_validate_user_1.php';
 				for($j4 = 0; $j4 < $ndata_4; $j4++){
 					//variable interna
 					$nmc4 = $j4 + 1;
-					//Para mostrar en la creacion
+					//Para mostrar en la creación
 					$_SESSION['sol_apli_materiales'][$nmc4]['idMatSeguridad']  = $idMatSeguridad[$j4];
 					$_SESSION['sol_apli_materiales'][$nmc4]['Nombre']          = $arrMat[$idMatSeguridad[$j4]]['Nombre'];
 					$_SESSION['sol_apli_materiales'][$nmc4]['Codigo']          = $arrMat[$idMatSeguridad[$j4]]['Codigo'];
@@ -1027,7 +1027,7 @@ require_once '0_validate_user_1.php';
 				$rowCuart = db_select_data (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, 'cross_predios_listado_zonas.idZona = "'.$idZona.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/***************************************************/
-				//Para mostrar en la creacion
+				//Para mostrar en la creación
 				$_SESSION['sol_apli_cuarteles'][$idInterno]['idZona']           = $idZona;
 				$_SESSION['sol_apli_cuarteles'][$idInterno]['CuartelNombre']    = $rowCuart['Cuartel'];
 				$_SESSION['sol_apli_cuarteles'][$idInterno]['CuartelEspecie']   = $rowCuart['Especie'];
@@ -1088,7 +1088,7 @@ require_once '0_validate_user_1.php';
 				$rowMaterial = db_select_data (false, 'Nombre,Codigo', 'cross_checking_materiales_seguridad', '', 'idMatSeguridad = "'.$idMatSeguridad.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/**********************************************/
-				//Para mostrar en la creacion
+				//Para mostrar en la creación
 				$_SESSION['sol_apli_materiales'][$idInterno]['idMatSeguridad']  = $idMatSeguridad;
 				$_SESSION['sol_apli_materiales'][$idInterno]['Nombre']          = $rowMaterial['Nombre'];
 				$_SESSION['sol_apli_materiales'][$idInterno]['Codigo']          = $rowMaterial['Codigo'];
@@ -1157,7 +1157,7 @@ require_once '0_validate_user_1.php';
 
 				/**********************************************/
 				$idInterno2 = $idInterno2+1;
-				//Para mostrar en la creacion
+				//Para mostrar en la creación
 				$_SESSION['sol_apli_tractores'][$idInterno][$idInterno2]['idVehiculo']    = $idVehiculo;
 				$_SESSION['sol_apli_tractores'][$idInterno][$idInterno2]['idTelemetria']  = $idTelemetria;
 				$_SESSION['sol_apli_tractores'][$idInterno][$idInterno2]['idTrabajador']  = $idTrabajador;
@@ -1210,7 +1210,7 @@ require_once '0_validate_user_1.php';
 				$rowTrabajadores = db_select_data (false, 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', '', 'idTrabajador = "'.$idTrabajador.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/**********************************************/
-				//Para mostrar en la creacion
+				//Para mostrar en la creación
 				$_SESSION['sol_apli_tractores'][$idInterno][$idInterno2]['idVehiculo']    = $idVehiculo;
 				$_SESSION['sol_apli_tractores'][$idInterno][$idInterno2]['idTelemetria']  = $idTelemetria;
 				$_SESSION['sol_apli_tractores'][$idInterno][$idInterno2]['idTrabajador']  = $idTrabajador;
@@ -1281,7 +1281,7 @@ require_once '0_validate_user_1.php';
 
 				/**********************************************/
 				$idInterno3 = $idInterno3+1;
-				//Para mostrar en la creacion
+				//Para mostrar en la creación
 				$_SESSION['sol_apli_productos'][$idInterno][$idInterno3]['idProducto']        = $idProducto;
 				$_SESSION['sol_apli_productos'][$idInterno][$idInterno3]['DosisAplicar']      = $DosisAplicar;
 				$_SESSION['sol_apli_productos'][$idInterno][$idInterno3]['Objetivo']          = $Objetivo;
@@ -1334,7 +1334,7 @@ require_once '0_validate_user_1.php';
 				$rowProductos = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, 'productos_listado.idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/**********************************************/
-				//Para mostrar en la creacion
+				//Para mostrar en la creación
 				$_SESSION['sol_apli_productos'][$idInterno][$idInterno3]['idProducto']        = $idProducto;
 				$_SESSION['sol_apli_productos'][$idInterno][$idInterno3]['DosisAplicar']      = $DosisAplicar;
 				$_SESSION['sol_apli_productos'][$idInterno][$idInterno3]['Objetivo']          = $Objetivo;
@@ -1389,7 +1389,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['sol_apli_basicos']['idSistema']) OR $_SESSION['sol_apli_basicos']['idSistema']=='' ){                     $error['idSistema']            = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['sol_apli_basicos']['idUsuario']) OR $_SESSION['sol_apli_basicos']['idUsuario']=='' ){                     $error['idUsuario']            = 'error/No ha seleccionado el usuario';}
 				if(!isset($_SESSION['sol_apli_basicos']['idEstado']) OR $_SESSION['sol_apli_basicos']['idEstado']=='' ){                       $error['idEstado']             = 'error/No ha seleccionado el estado';}
-				if(!isset($_SESSION['sol_apli_basicos']['f_creacion']) OR $_SESSION['sol_apli_basicos']['f_creacion']=='' ){                   $error['f_creacion']           = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['sol_apli_basicos']['f_creacion']) OR $_SESSION['sol_apli_basicos']['f_creacion']=='' ){                   $error['f_creacion']           = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['sol_apli_basicos']['Observaciones']) OR $_SESSION['sol_apli_basicos']['Observaciones']=='' ){             $error['Observaciones']        = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['sol_apli_basicos']['horaProg']) OR $_SESSION['sol_apli_basicos']['horaProg']=='' ){                       $error['horaProg']             = 'error/No ha ingresado la hora inicio programada';}
 				if(!isset($_SESSION['sol_apli_basicos']['horaProg_fin']) OR $_SESSION['sol_apli_basicos']['horaProg_fin']=='' ){               $error['horaProg_fin']         = 'error/No ha ingresado la hora termino programada';}
@@ -1669,14 +1669,14 @@ require_once '0_validate_user_1.php';
 							$rmail = tareas_envio_correo($correo['EmpresaCorreo'], $correo['EmpresaNombre'],
 														 $correo['UsuarioEmail'], $correo['UsuarioNombre'],
 														 '', '',
-														 'Notificacion creacion de Consolidacion',
+														 'Notificación creación de Consolidacion',
 														 $xbody,'',
 														 '',
 														 1,
 														 $correo['Gmail_Usuario'],
 														 $correo['Gmail_Password']);
 							//se guarda el log
-							log_response(1, $rmail, $correo['UsuarioEmail'].' (Asunto:Notificacion creacion de Consolidacion)');
+							log_response(1, $rmail, $correo['UsuarioEmail'].' (Asunto:Notificación creación de Consolidacion)');
 						}
 
 						/*****************************************************/
@@ -1715,12 +1715,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -2038,7 +2038,7 @@ require_once '0_validate_user_1.php';
 									$rmail = tareas_envio_correo($correo['EmpresaCorreo'], $correo['EmpresaNombre'],
 																 $correo['UsuarioEmail'], $correo['UsuarioNombre'],
 																 '', '',
-																 'Notificacion Solicitud '.n_doc($idSolicitud, 5),
+																 'Notificación Solicitud '.n_doc($idSolicitud, 5),
 																 $xbody2,'',
 																 '',
 																 1,
@@ -2049,7 +2049,7 @@ require_once '0_validate_user_1.php';
 									if ($rmail!=1) {
 										php_error_log($_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo, '', 'En el envio de la notificacion:'.$rmail, '' );
 									}else {
-										log_response(1, $rmail, $correo['UsuarioEmail'].' (Asunto:Notificacion Solicitud '.n_doc($idSolicitud, 5).')');
+										log_response(1, $rmail, $correo['UsuarioEmail'].' (Asunto:Notificación Solicitud '.n_doc($idSolicitud, 5).')');
 									}
 								}
 
@@ -2090,14 +2090,14 @@ require_once '0_validate_user_1.php';
 							/*$rmail = tareas_envio_correo($correo['EmpresaCorreo'], $correo['EmpresaNombre'],
 														 $correo['UsuarioEmail'], $correo['UsuarioNombre'],
 														 '', '',
-														 'Notificacion Solicitud '.n_doc($idSolicitud, 5),
+														 'Notificación Solicitud '.n_doc($idSolicitud, 5),
 														 $xbody,'',
 														 '',
 														 1,
 														 $correo['Gmail_Usuario'],
 														 $correo['Gmail_Password']);
                             //se guarda el log
-							log_response(1, $rmail, $correo['UsuarioEmail'].' (Asunto:Notificacion Solicitud '.n_doc($idSolicitud, 5).')');
+							log_response(1, $rmail, $correo['UsuarioEmail'].' (Asunto:Notificación Solicitud '.n_doc($idSolicitud, 5).')');
 							*
 							//Envio del mensaje
 							if ($rmail!=1) {
@@ -2487,12 +2487,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -2595,12 +2595,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -2679,12 +2679,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -2789,12 +2789,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -2866,12 +2866,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -3147,14 +3147,14 @@ require_once '0_validate_user_1.php';
 							$rmail = tareas_envio_correo($correo['EmpresaCorreo'], $correo['EmpresaNombre'],
 														 $correo['UsuarioEmail'], $correo['UsuarioNombre'],
 														 '', '',
-														 'Notificacion creacion de Consolidacion',
+														 'Notificación creación de Consolidacion',
 														 $xbody,'',
 														 '',
 														 1,
 														 $correo['Gmail_Usuario'],
 														 $correo['Gmail_Password']);
 							//se guarda el log
-							log_response(1, $rmail, $correo['UsuarioEmail'].' (Asunto:Notificacion creacion de Consolidacion)');
+							log_response(1, $rmail, $correo['UsuarioEmail'].' (Asunto:Notificación creación de Consolidacion)');
 						}
 
 						header( 'Location: '.$location.'&cloned=true' );

@@ -90,7 +90,7 @@ require_once '0_validate_user_1.php';
 			case 'idFacturacion':         if(empty($idFacturacion)){        $error['idFacturacion']        = 'error/No ha seleccionado la facturacion';}break;
 			case 'idCliente':             if(empty($idCliente)){            $error['idCliente']            = 'error/No ha seleccionado el cliente';}break;
 			case 'idTrabajador':          if(empty($idTrabajador)){         $error['idTrabajador']         = 'error/No ha seleccionado el trabajador';}break;
-			case 'fecha_auto':            if(empty($fecha_auto)){           $error['fecha_auto']           = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'fecha_auto':            if(empty($fecha_auto)){           $error['fecha_auto']           = 'error/No ha ingresado la fecha de creación';}break;
 			case 'idBodega':              if(empty($idBodega)){             $error['idBodega']             = 'error/No ha seleccionado la bodega';}break;
 			case 'Devolucion_fecha':      if(empty($Devolucion_fecha)){     $error['Devolucion_fecha']     = 'error/No ha ingresado la devolucion';}break;
 			case 'Nombre':                if(empty($Nombre)){               $error['Nombre']               = 'error/No ha ingresado el nombre';}break;
@@ -492,7 +492,7 @@ require_once '0_validate_user_1.php';
 
 			//Se comprueba las fechas
 			if($_SESSION['arriendos_ing_basicos']['Creacion_fecha']>$valor){
-				$error['ndata_1'] = 'error/La fecha de vencimiento es anterior a la fecha de creacion';
+				$error['ndata_1'] = 'error/La fecha de vencimiento es anterior a la fecha de creación';
 			}
 
 			//valido que no esten vacios
@@ -1708,7 +1708,7 @@ require_once '0_validate_user_1.php';
 
 			//Se comprueba las fechas
 			if($_SESSION['arriendos_egr_basicos']['Creacion_fecha']>$valor){
-				$error['ndata_1'] = 'error/La fecha de vencimiento es anterior a la fecha de creacion';
+				$error['ndata_1'] = 'error/La fecha de vencimiento es anterior a la fecha de creación';
 			}
 
 			//valido que no esten vacios
@@ -2003,7 +2003,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['arriendos_egr_basicos']['Observaciones']) OR $_SESSION['arriendos_egr_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['arriendos_egr_basicos']['idSistema']) OR $_SESSION['arriendos_egr_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['arriendos_egr_basicos']['idUsuario']) OR $_SESSION['arriendos_egr_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha sleccionado el usuario';}
-				if(!isset($_SESSION['arriendos_egr_basicos']['Creacion_fecha']) OR $_SESSION['arriendos_egr_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creacion';}
+				if(!isset($_SESSION['arriendos_egr_basicos']['Creacion_fecha']) OR $_SESSION['arriendos_egr_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creación';}
 				if(!isset($_SESSION['arriendos_egr_basicos']['idTipo']) OR $_SESSION['arriendos_egr_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['arriendos_egr_basicos']['idCliente']) OR $_SESSION['arriendos_egr_basicos']['idCliente']=='' ){           $error['idCliente']        = 'error/No ha seleccionado el cliente';}
 				if(!isset($_SESSION['arriendos_egr_basicos']['idTrabajador']) OR $_SESSION['arriendos_egr_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el vendedor';}
@@ -3425,7 +3425,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['arriendos_ing_nc_basicos']['Observaciones']) OR $_SESSION['arriendos_ing_nc_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['arriendos_ing_nc_basicos']['idSistema']) OR $_SESSION['arriendos_ing_nc_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['arriendos_ing_nc_basicos']['idUsuario']) OR $_SESSION['arriendos_ing_nc_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha sleccionado el usuario';}
-				if(!isset($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']) OR $_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creacion';}
+				if(!isset($_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']) OR $_SESSION['arriendos_ing_nc_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creación';}
 				if(!isset($_SESSION['arriendos_ing_nc_basicos']['idTipo']) OR $_SESSION['arriendos_ing_nc_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['arriendos_ing_nc_basicos']['idProveedor']) OR $_SESSION['arriendos_ing_nc_basicos']['idProveedor']=='' ){       $error['idProveedor']      = 'error/No ha seleccionado el cliente';}
 				//compruebo que sea una factura y que tenga fecha de pago
@@ -4748,7 +4748,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['arriendos_egr_nc_basicos']['Observaciones']) OR $_SESSION['arriendos_egr_nc_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['arriendos_egr_nc_basicos']['idSistema']) OR $_SESSION['arriendos_egr_nc_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['arriendos_egr_nc_basicos']['idUsuario']) OR $_SESSION['arriendos_egr_nc_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha sleccionado el usuario';}
-				if(!isset($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']) OR $_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creacion';}
+				if(!isset($_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']) OR $_SESSION['arriendos_egr_nc_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado una fecha de creación';}
 				if(!isset($_SESSION['arriendos_egr_nc_basicos']['idTipo']) OR $_SESSION['arriendos_egr_nc_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo';}
 				if(!isset($_SESSION['arriendos_egr_nc_basicos']['idCliente']) OR $_SESSION['arriendos_egr_nc_basicos']['idCliente']=='' ){           $error['idCliente']        = 'error/No ha seleccionado el cliente';}
 				//compruebo que sea una factura y que tenga fecha de pago

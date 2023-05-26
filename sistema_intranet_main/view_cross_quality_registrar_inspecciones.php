@@ -226,9 +226,9 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 			if(isset($rowdata['idNota_1'])&&$rowdata['idNota_1']==1){
 				echo '<strong>Nota Calidad: </strong>'.$rowMuestras['Resolucion_1'].'<br/>';
 			}
-			//Nota Condicion
+			//Nota Condición
 			if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
-				echo '<strong>Nota Condicion: </strong>'.$rowMuestras['Resolucion_2'].'<br/>';
+				echo '<strong>Nota Condición: </strong>'.$rowMuestras['Resolucion_2'].'<br/>';
 			}
 			//Calificacion
 			if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
@@ -385,7 +385,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 			<address>
 				<strong>Producto</strong><br/>
 				<?php echo $row_data['ProductoCategoria'].', '.$row_data['ProductoNombre']; ?><br/>
-				Ubicacion: <?php echo $row_data['UbicacionNombre']; ?>
+				Ubicación: <?php echo $row_data['UbicacionNombre']; ?>
 				<?php	
 					if(isset($row_data['UbicacionNombre_lvl_1'])&&$row_data['UbicacionNombre_lvl_1']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_1'];}
 					if(isset($row_data['UbicacionNombre_lvl_2'])&&$row_data['UbicacionNombre_lvl_2']!=''){echo ' - '.$row_data['UbicacionNombre_lvl_2'];}
@@ -457,7 +457,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 								<td><?php echo $muestra['lote']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<a href="<?php echo 'view_cross_quality_registrar_inspecciones.php?view='.$_GET['view'].'&viewMuestra='.simpleEncode($muestra['idMuestras'], fecha_actual()).'&cantPuntos='.simpleEncode($row_data['Producto_cantPuntos'], fecha_actual()).'&idCalidad='.simpleEncode($row_data['Producto_idCalidad'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+										<a href="<?php echo 'view_cross_quality_registrar_inspecciones.php?view='.$_GET['view'].'&viewMuestra='.simpleEncode($muestra['idMuestras'], fecha_actual()).'&cantPuntos='.simpleEncode($row_data['Producto_cantPuntos'], fecha_actual()).'&idCalidad='.simpleEncode($row_data['Producto_idCalidad'], fecha_actual()); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 									</div>
 								</td>
 							</tr>
@@ -520,7 +520,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

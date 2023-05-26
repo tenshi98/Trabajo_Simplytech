@@ -96,7 +96,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 if(!empty($_GET['addFile'])){
 /*****************************************************/
-// Se trae la informacion del producto
+// Se trae la información del producto
 $query = "SELECT CTNNombreCompañia
 FROM `cross_shipping_consolidacion`
 WHERE idConsolidacion = ".$_GET['edit'];
@@ -153,7 +153,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['cloneEstiba'])){
 /*****************************************************/
-// Se trae la informacion del producto
+// Se trae la información del producto
 $query = "SELECT idEstiba, idEstibaUbicacion, idPosicion, idEnvase, NPallet, 
 Temperatura, idTermografo, NSerieSensor
 
@@ -199,7 +199,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
-										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0,
+										 'Ubicación','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
@@ -224,7 +224,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['editEstiba'])){
 /*****************************************************/
-// Se trae la informacion del producto
+// Se trae la información del producto
 $query = "SELECT idEstiba, idEstibaUbicacion, idPosicion, idEnvase, NPallet, 
 Temperatura, idTermografo, NSerieSensor
 
@@ -270,7 +270,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
-										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0,
+										 'Ubicación','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
@@ -319,7 +319,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
-										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0,
+										 'Ubicación','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
@@ -348,7 +348,7 @@ $rowEstiba = mysqli_fetch_assoc ($resultado);
 $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1";
 $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /*****************************************************/
-// Se trae la informacion del producto
+// Se trae la información del producto
 $query = "SELECT Creacion_fecha,CTNNombreCompañia,FechaInicioEmbarque,HoraInicioCarga,FechaTerminoEmbarque,
 HoraTerminoCarga,CantidadCajas,ChoferNombreRut,PatenteCamion,PatenteCarro,TSetPoint,TVentilacion,TAmbiente,
 NumeroSello,idInspector,Observaciones,Observacion,Aprobacion_Fecha,Aprobacion_Hora,idSistema,idUsuario,
@@ -444,7 +444,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_text('Patente Carro', 'PatenteCarro', $x21, 1);
 
 				$Form_Inputs->form_tittle(3, 'Cuerpo Parametros Evaluados');
-				$Form_Inputs->form_select('Condicion CTN','idCondicion', $x22, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);
+				$Form_Inputs->form_select('Condición CTN','idCondicion', $x22, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);
 				$Form_Inputs->form_select('Sellado Piso','idSellado', $x23, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('T° Set Point', 'TSetPoint', $x24, 1);
 				$Form_Inputs->form_input_number('T° Ventilacion', 'TVentilacion', $x25, 1);
@@ -477,7 +477,7 @@ $rowConso = mysqli_fetch_assoc ($resultado);
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['edit'])){
 /************************************************************/
-// Se trae la informacion del producto
+// Se trae la información del producto
 $query = "SELECT 
 cross_shipping_consolidacion.idEstado,
 cross_shipping_consolidacion.Creacion_fecha,
@@ -741,7 +741,7 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 						
 					<tr><td class="meta-head" colspan="4"><strong>Cuerpo Parametros Evaluados</strong></td></tr>
 					<tr>
-						<td class="meta-head">Condicion CTN</td>
+						<td class="meta-head">Condición CTN</td>
 						<td><?php if(isset($rowConso['Condicion'])&&$rowConso['Condicion']!=''){echo $rowConso['Condicion'];}else{echo 'Sin Datos';} ?></td>
 						<td class="meta-head">Sellado Piso</td>
 						<td><?php if(isset($rowConso['Sellado'])&&$rowConso['Sellado']!=''){echo $rowConso['Sellado'];}else{echo 'Sin Datos';} ?></td>
@@ -791,7 +791,7 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 				</tr>
 				<tr class="item-row fact_tittle">
 					<td>Estiba</td>
-					<td>Ubicacion</td>
+					<td>Ubicación</td>
 					<td>Posicion</td>
 					<td>Envase</td>
 					<td>Nro. De Pallet</td>
@@ -815,7 +815,7 @@ if(isset($rowConso['idEstado'])&&$rowConso['idEstado']==3){ ?>
 						<td class="item-name"><?php echo $estiba['NSerieSensor']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<a href="<?php echo $new_location.'&edit='.$_GET['edit'].'&cloneEstiba='.$estiba['idEstibaListado']; ?>" title="Clonar Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a>
+								<a href="<?php echo $new_location.'&edit='.$_GET['edit'].'&cloneEstiba='.$estiba['idEstibaListado']; ?>" title="Clonar Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a>
 								<a href="<?php echo $new_location.'&edit='.$_GET['edit'].'&editEstiba='.$estiba['idEstibaListado']; ?>" title="Editar Registro" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php
 								$ubicacion = $new_location.'&edit='.$_GET['edit'].'&del_estiba='.simpleEncode($estiba['idEstibaListado'], fecha_actual());

@@ -188,12 +188,12 @@ require_once '0_validate_user_1.php';
 					$rowCategoria = db_select_data (false, 'Nombre', 'sistema_variedades_categorias', '', 'idCategoria = "'.$idCategoria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/************************************************************/
-				// Se trae la informacion del producto
+				// Se trae la información del producto
 				if(isset($idProducto)&&$idProducto!=''){
 					$rowProd = db_select_data (false, 'Nombre', 'variedades_listado', '', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/************************************************************/
-				//Condicion CTN
+				//Condición CTN
 				if(isset($idCondicion)&&$idCondicion!=''){
 					$rowCondicionCTN = db_select_data (false, 'Nombre', 'core_cross_shipping_consolidacion_condicion', '', 'idCondicion = "'.$idCondicion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
@@ -403,12 +403,12 @@ require_once '0_validate_user_1.php';
 					$rowCategoria = db_select_data (false, 'Nombre', 'sistema_variedades_categorias', '', 'idCategoria = "'.$idCategoria.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/************************************************************/
-				// Se trae la informacion del producto
+				// Se trae la información del producto
 				if(isset($idProducto)&&$idProducto!=''){
 					$rowProd = db_select_data (false, 'Nombre', 'variedades_listado', '', 'idProducto = "'.$idProducto.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/************************************************************/
-				//Condicion CTN
+				//Condición CTN
 				if(isset($idCondicion)&&$idCondicion!=''){
 					$rowCondicionCTN = db_select_data (false, 'Nombre', 'core_cross_shipping_consolidacion_condicion', '', 'idCondicion = "'.$idCondicion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
@@ -729,7 +729,7 @@ require_once '0_validate_user_1.php';
 					$rowEstiba = db_select_data (false, 'Nombre', 'core_estibas', '', 'idEstiba = "'.$idEstiba.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*************************************/
-				// tomo los datos de la Estiba Ubicacion
+				// tomo los datos de la Estiba Ubicación
 				if(isset($idEstibaUbicacion)&&$idEstibaUbicacion!=''){
 					$rowEstibaUbicacion = db_select_data (false, 'Nombre', 'core_estibas_ubicacion', '', 'idEstibaUbicacion = "'.$idEstibaUbicacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
@@ -795,7 +795,7 @@ require_once '0_validate_user_1.php';
 					$rowEstiba = db_select_data (false, 'Nombre', 'core_estibas', '', 'idEstiba = "'.$idEstiba.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
 				/*************************************/
-				// tomo los datos de la Estiba Ubicacion
+				// tomo los datos de la Estiba Ubicación
 				if(isset($idEstibaUbicacion)&&$idEstibaUbicacion!=''){
 					$rowEstibaUbicacion = db_select_data (false, 'Nombre', 'core_estibas_ubicacion', '', 'idEstibaUbicacion = "'.$idEstibaUbicacion.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 				}
@@ -893,7 +893,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['ChoferNombreRut']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['ChoferNombreRut']=='Sin Datos' ){             $error['ChoferNombreRut']        = 'error/No ha ingresado el Conductor';}
 				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCamion']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCamion']=='Sin Datos' ){                 $error['PatenteCamion']          = 'error/No ha ingresado la Patente Camion';}
 				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCarro']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['PatenteCarro']=='Sin Datos' ){                   $error['PatenteCarro']           = 'error/No ha ingresado la Patente Carro';}
-				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCondicion']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCondicion']=='Sin Datos' ){                     $error['idCondicion']            = 'error/No ha seleccionado la Condicion CTN';}
+				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCondicion']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idCondicion']=='Sin Datos' ){                     $error['idCondicion']            = 'error/No ha seleccionado la Condición CTN';}
 				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSellado']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['idSellado']=='Sin Datos' ){                         $error['idSellado']              = 'error/No ha seleccionado el Sellado Piso';}
 				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TSetPoint']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TSetPoint']=='Sin Datos' ){                         $error['TSetPoint']              = 'error/No ha ingresado la T° Set Point';}
 				if(!isset($_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TAmbiente']) OR $_SESSION['cross_shipping_consolidacion_basicos'][$randompass]['TAmbiente']=='Sin Datos' ){                         $error['TAmbiente']              = 'error/No ha ingresado la T° Ambiente';}
@@ -1058,7 +1058,7 @@ require_once '0_validate_user_1.php';
 						/*******************/
 						//Mensaje
 						$xbody = '
-						<h3>Notificacion creacion de Consolidacion</h3>
+						<h3>Notificación creación de Consolidacion</h3>
 						<p>Una nueva consolidacion ha sido creada, esta queda en espera de aprobacion</p>
 						<p><strong>Planta Consolidacion :</strong>'.$PlantaDespacho.'</p>
 						<p><strong>Fecha del informe :</strong>'.fecha_estandar($Creacion_fecha).'</p>
@@ -1076,14 +1076,14 @@ require_once '0_validate_user_1.php';
 						$rmail = tareas_envio_correo($correo['SistemaEmail'], $correo['SistemaNombre'],
 													 $correo['UsuarioEmail'], $correo['UsuarioNombre'],
 													 '', '',
-													 'Notificacion creacion de Consolidacion',
+													 'Notificación creación de Consolidacion',
 													 $xbody,'',
 													 '',
 													 1,
 													 $correo['Gmail_Usuario'],
 													 $correo['Gmail_Password']);
 						//se guarda el log
-						log_response(1, $rmail, $correo['UsuarioEmail'].' (Asunto:Notificacion creacion de Consolidacion)');
+						log_response(1, $rmail, $correo['UsuarioEmail'].' (Asunto:Notificación creación de Consolidacion)');
 					}
 
 					/*********************************************************************/
@@ -1211,7 +1211,7 @@ require_once '0_validate_user_1.php';
 					$arrCorreos = db_select_array (false, 'sistema_cross_email_aprobados.email AS Email, core_sistemas.Nombre AS SistemaNombre,core_sistemas.Contacto_Email AS SistemaEmail, core_sistemas.Config_Gmail_Usuario AS Gmail_Usuario, core_sistemas.Config_Gmail_Password AS Gmail_Password', 'sistema_cross_email_aprobados', 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = sistema_cross_email_aprobados.idSistema', 'sistema_cross_email_aprobados.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'], 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					/************************************************************/
-					// Se trae la informacion del producto
+					// Se trae la información del producto
 					$SIS_query = '
 					cross_shipping_plantas.Nombre AS PlantaNombre,
 					cross_shipping_plantas.Codigo AS PlantaCodigo,
@@ -1243,7 +1243,7 @@ require_once '0_validate_user_1.php';
 						/*******************/
 						//Mensaje
 						$xbody = '
-						<h3>Notificacion aprobacion de Consolidacion</h3>
+						<h3>Notificación aprobación de Consolidacion</h3>
 						<p>Una nueva consolidacion ha sido aprobada</p>
 						<p><strong>Planta Consolidacion :</strong>'.$rowConso['PlantaCodigo'].' - '.$rowConso['PlantaNombre'].'</p>
 						<p><strong>Fecha del informe :</strong>'.fecha_estandar($rowConso['Creacion_fecha']).'</p>
@@ -1261,14 +1261,14 @@ require_once '0_validate_user_1.php';
 						$rmail = tareas_envio_correo($correo['SistemaEmail'], $correo['SistemaNombre'],
 													 $correo['Email'], $correo['Email'],
 													 '', '',
-													 'Notificacion aprobacion de Consolidacion',
+													 'Notificación aprobación de Consolidacion',
 													 $xbody,'',
 													 '',
 													 1,
 													 $correo['Gmail_Usuario'],
 													 $correo['Gmail_Password']);
                         //se guarda el log
-						log_response(1, $rmail, $correo['Email'].' (Asunto:Notificacion aprobacion de Consolidacion)');
+						log_response(1, $rmail, $correo['Email'].' (Asunto:Notificación aprobación de Consolidacion)');
 
                         //Envio del mensaje
 						if ($rmail!=1) {
@@ -1515,12 +1515,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1661,12 +1661,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1743,12 +1743,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

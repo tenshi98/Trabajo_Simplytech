@@ -64,7 +64,7 @@ $rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $
 			<ul class="nav nav-tabs pull-right">
 				<li class=""><a href="<?php echo 'apoderados_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class=""><a href="<?php echo 'apoderados_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<li class="active"><a href="<?php echo 'apoderados_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicacion</a></li>
+				<li class="active"><a href="<?php echo 'apoderados_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicación</a></li>
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
@@ -127,7 +127,7 @@ $rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $
 									draggable	: true,
 									position	: myLatlng,
 									map			: map,
-									title		: "Tu Ubicacion",
+									title		: "Tu Ubicación",
 									animation 	:google.maps.Animation.DROP,
 									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
@@ -167,7 +167,7 @@ $rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $
 						?>
 
 						<div class="form-group">
-							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Ubicacion" name="submit">
+							<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Ubicación" name="submit">
 						</div>
 
 					</form>

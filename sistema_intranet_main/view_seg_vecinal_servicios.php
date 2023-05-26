@@ -80,9 +80,9 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_servicios_listado', $
 							<p class="text-muted word_break">
 								<strong>Tipo : </strong><?php echo $rowdata['Tipo']; ?><br/>
 								<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>
-								<strong>Region : </strong><?php echo $rowdata['Ciudad']; ?><br/>
+								<strong>Región : </strong><?php echo $rowdata['Ciudad']; ?><br/>
 								<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Contacto</h2>
@@ -105,16 +105,16 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_servicios_listado', $
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<?php
-							//se arma la direccion
+							//se arma la dirección
 							$direccion = "";
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
 							if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){        $direccion .= ', '.$rowdata["Comuna"];}
 							if(isset($rowdata["Ciudad"])&&$rowdata["Ciudad"]!=''){        $direccion .= ', '.$rowdata["Ciudad"];}
-							//se despliega mensaje en caso de no existir direccion
+							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
 								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
 							}else{
-								$Alert_Text  = 'No tiene una direccion definida';
+								$Alert_Text  = 'No tiene una dirección definida';
 								alert_post_data(4,2,2, $Alert_Text);
 							}
 						?>
@@ -156,7 +156,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seg_vecinal_servicios_listado', $
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

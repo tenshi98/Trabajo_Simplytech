@@ -39,9 +39,9 @@ require_once '0_validate_user_1.php';
 			case 'idTipo':          if(empty($idTipo)){            $error['idTipo']             = 'error/No ha seleccionado el tipo';}break;
 			case 'idUsuario':       if(empty($idUsuario)){         $error['idUsuario']          = 'error/No ha seleccionado el usuario';}break;
 			case 'idVehiculo':      if(empty($idVehiculo)){        $error['idVehiculo']         = 'error/No ha seleccionado el vehiculo';}break;
-			case 'Creacion_fecha':  if(empty($Creacion_fecha)){    $error['Creacion_fecha']     = 'error/No ha ingresado la fecha de creacion';}break;
-			case 'Creacion_mes':    if(empty($Creacion_mes)){      $error['Creacion_mes']       = 'error/No ha ingresado el mes de creacion';}break;
-			case 'Creacion_ano':    if(empty($Creacion_ano)){      $error['Creacion_ano']       = 'error/No ha ingresado el año de creacion';}break;
+			case 'Creacion_fecha':  if(empty($Creacion_fecha)){    $error['Creacion_fecha']     = 'error/No ha ingresado la fecha de creación';}break;
+			case 'Creacion_mes':    if(empty($Creacion_mes)){      $error['Creacion_mes']       = 'error/No ha ingresado el mes de creación';}break;
+			case 'Creacion_ano':    if(empty($Creacion_ano)){      $error['Creacion_ano']       = 'error/No ha ingresado el año de creación';}break;
 			case 'Valor':           if(empty($Valor)){             $error['Valor']              = 'error/No ha ingresado el valor';}break;
 			case 'Observaciones':   if(empty($Observaciones)){     $error['Observaciones']      = 'error/No ha ingresado la observacion';}break;
 
@@ -154,12 +154,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

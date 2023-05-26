@@ -178,7 +178,7 @@ foreach ($arrUnimed as $sen) {
 							<td><?php echo Cantidades_decimales_justos($error['Valor_max']).$arrUnimedX[$error['SensoresUniMed_'.$error['Sensor']]]; ?></td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<a href="<?php echo 'informe_telemetria_errores_6_view.php?view='.simpleEncode($error['idErrores'], fecha_actual()); ?>" title="Ver Ubicacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="<?php echo 'informe_telemetria_errores_6_view.php?view='.simpleEncode($error['idErrores'], fecha_actual()); ?>" title="Ver Ubicación" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 									<a href="<?php echo $location.'&idErrores='.$error['idErrores'].'&idTelemetriaMarc='.$error['idTelemetria']; ?>" title="Marcar como leido" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 
 									<?php
@@ -192,7 +192,7 @@ foreach ($arrUnimed as $sen) {
 										$fecha_desde = restarDias($error['Fecha'],1);
 									}
 
-									//direccion
+									//dirección
 									$subloc  = 'informe_telemetria_historial_operaciones_01.php';
 									$subloc .= '?idTelemetria='.$error['idTelemetria'];
 									$subloc .= '&fecha_desde='.$fecha_desde;

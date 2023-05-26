@@ -446,7 +446,7 @@ $widget = '
 												<th colspan="7">'.TituloMenu($gruUso['Nombre']).'</th>
 												<th>
 													<div class="btn-group" style="width: 35px;" >
-														<button onClick="chngGroupUsoGraph('.$_SESSION['usuario']['widget_CrossC']['idTelemetria'].', '.$_SESSION['usuario']['widget_CrossC']['cantSensores'].', '.$gruUso['idGrupo'].')" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></button>
+														<button onClick="chngGroupUsoGraph('.$_SESSION['usuario']['widget_CrossC']['idTelemetria'].', '.$_SESSION['usuario']['widget_CrossC']['cantSensores'].', '.$gruUso['idGrupo'].')" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></button>
 													</div>
 												</th>
 											</tr>';
@@ -496,7 +496,7 @@ $widget = '
 													<td>'.$Hum.' %</td>
 													<td>
 														<div class="btn-group" style="width: 70px;" >
-															<button onClick="chngGroupGraph('.$_SESSION['usuario']['widget_CrossC']['idTelemetria'].', '.$_SESSION['usuario']['widget_CrossC']['cantSensores'].', '.$gruUso['idGrupo'].', '.$gru['idGrupo'].')" title="Ver Informacion" class="btn btn-metis-6 btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></button>
+															<button onClick="chngGroupGraph('.$_SESSION['usuario']['widget_CrossC']['idTelemetria'].', '.$_SESSION['usuario']['widget_CrossC']['cantSensores'].', '.$gruUso['idGrupo'].', '.$gru['idGrupo'].')" title="Ver Información" class="btn btn-metis-6 btn-sm tooltip"><i class="fa fa-line-chart" aria-hidden="true"></i></button>
 														</div>
 													</td>
 												</tr>';

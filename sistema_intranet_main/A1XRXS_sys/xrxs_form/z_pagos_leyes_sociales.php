@@ -77,7 +77,7 @@ require_once '0_validate_user_1.php';
 			case 'SEGURIDAD_F_Pago':           if(empty($SEGURIDAD_F_Pago)){           $error['SEGURIDAD_F_Pago']                   = 'error/No ha ingresado la fecha de vencimiento';}break;
 			case 'SEGURIDAD_Monto':            if(empty($SEGURIDAD_Monto)){            $error['SEGURIDAD_Monto']                    = 'error/No ha ingresado el monto pagado';}break;
 
-			case 'Creacion_fecha':             if(empty($Creacion_fecha)){             $error['Creacion_fecha']               = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'Creacion_fecha':             if(empty($Creacion_fecha)){             $error['Creacion_fecha']               = 'error/No ha ingresado la fecha de creación';}break;
 
 		}
 	}
@@ -620,7 +620,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']) OR $_SESSION['pagos_leyes_sociales_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}
 				if(!isset($_SESSION['pagos_leyes_sociales_basicos']['Periodo_Ano']) OR $_SESSION['pagos_leyes_sociales_basicos']['Periodo_Ano']=='' ){       $error['Periodo_Ano']      = 'error/No ha ingresado el año del periodo de pago';}
 				if(!isset($_SESSION['pagos_leyes_sociales_basicos']['Periodo_Mes']) OR $_SESSION['pagos_leyes_sociales_basicos']['Periodo_Mes']=='' ){       $error['Periodo_Mes']      = 'error/No ha ingresado el mes del periodo de pago';}
-				if(!isset($_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha']) OR $_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha']=='' ){         $error['Pago_fecha']       = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha']) OR $_SESSION['pagos_leyes_sociales_basicos']['Pago_fecha']=='' ){         $error['Pago_fecha']       = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['pagos_leyes_sociales_basicos']['Observaciones']) OR $_SESSION['pagos_leyes_sociales_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['pagos_leyes_sociales_basicos']['AFP_CC']) OR $_SESSION['pagos_leyes_sociales_basicos']['AFP_CC']=='' ){                 $error['AFP_CC']           = 'error/No ha ingresado el Centro de Costo IVA utilizado';}
 				if(!isset($_SESSION['pagos_leyes_sociales_basicos']['SALUD_CC']) OR $_SESSION['pagos_leyes_sociales_basicos']['SALUD_CC']=='' ){             $error['SALUD_CC']         = 'error/No ha ingresado el Centro de Costo PPM utilizado';}

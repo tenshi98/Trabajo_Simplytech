@@ -149,7 +149,7 @@ array_push( $arrAmonestacion,$row );
 						<td align="right"><?php echo valores($amon['Valor_Pago'], 0); ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'?id='.$amon['idTablaCarga']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'?id='.$amon['idTablaCarga']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

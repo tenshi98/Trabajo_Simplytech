@@ -97,7 +97,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 		<meta name="viewport"              content="width=device-width, initial-scale=1">
 		<meta http-equiv="Content-Type"    content="text/html; charset=UTF-8">
 
-		<!-- Informacion del sitio-->
+		<!-- Información del sitio-->
 		<title>Imprimir</title>
 		<meta name="description"           content="">
 		<meta name="author"                content="">

@@ -44,7 +44,7 @@ require_once '0_validate_user_1.php';
 			case 'idEstado':               if(empty($idEstado)){               $error['idEstado']                = 'error/No ha seleccionado el Estado';}break;
 			case 'email':                  if(empty($email)){                  $error['email']                   = 'error/No ha ingresado el email';}break;
 			case 'Nombre':                 if(empty($Nombre)){                 $error['Nombre']                  = 'error/No ha ingresado el Nombre de Fantasia';}break;
-			case 'Direccion':              if(empty($Direccion)){              $error['Direccion']               = 'error/No ha ingresado la direccion';}break;
+			case 'Direccion':              if(empty($Direccion)){              $error['Direccion']               = 'error/No ha ingresado la dirección';}break;
 			case 'Fono1':                  if(empty($Fono1)){                  $error['Fono1']                   = 'error/No ha ingresado el telefono';}break;
 			case 'Fono2':                  if(empty($Fono2)){                  $error['Fono2']                   = 'error/No ha ingresado el telefono';}break;
 			case 'idCiudad':               if(empty($idCiudad)){               $error['idCiudad']                = 'error/No ha seleccionado la ciudad';}break;
@@ -110,7 +110,7 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			//Consulto la latitud y la longitud
 			if(isset($idCiudad) && $idCiudad != ''&&isset($idComuna) && $idComuna != ''&&isset($Direccion) && $Direccion!=''){
-				//variable con la direccion
+				//variable con la dirección
 				$address = '';
 				if(isset($idCiudad) && $idCiudad!=''){
 					$rowdata = db_select_data (false, 'Nombre', 'core_ubicacion_ciudad', '', 'idCiudad = "'.$idCiudad.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -129,13 +129,13 @@ require_once '0_validate_user_1.php';
 						$GeoLatitud  = $geocodeData[0];
 						$GeoLongitud = $geocodeData[1];
 					} else {
-						$error['ndata_4'] = 'error/Detalles de la direccion incorrectos!';
+						$error['ndata_4'] = 'error/Detalles de la dirección incorrectos!';
 					}
 				}else{
-					$error['ndata_4'] = 'error/Sin direccion ingresada';
+					$error['ndata_4'] = 'error/Sin dirección ingresada';
 				}
 			}else{
-				$error['ndata_4'] = 'error/Sin direccion ingresada';
+				$error['ndata_4'] = 'error/Sin dirección ingresada';
 			}
 
 			//Si no hay errores ejecuto el codigo
@@ -199,7 +199,7 @@ require_once '0_validate_user_1.php';
 			/*******************************************************************/
 			//Consulto la latitud y la longitud
 			if(isset($idCiudad) && $idCiudad != ''&&isset($idComuna) && $idComuna != ''&&isset($Direccion) && $Direccion!=''){
-				//variable con la direccion
+				//variable con la dirección
 				$address = '';
 				if(isset($idCiudad) && $idCiudad!=''){
 					$rowdata = db_select_data (false, 'Nombre', 'core_ubicacion_ciudad', '', 'idCiudad = "'.$idCiudad.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -218,13 +218,13 @@ require_once '0_validate_user_1.php';
 						$GeoLatitud  = $geocodeData[0];
 						$GeoLongitud = $geocodeData[1];
 					} else {
-						$error['ndata_4'] = 'error/Detalles de la direccion incorrectos!';
+						$error['ndata_4'] = 'error/Detalles de la dirección incorrectos!';
 					}
 				}else{
-					$error['ndata_4'] = 'error/Sin direccion ingresada';
+					$error['ndata_4'] = 'error/Sin dirección ingresada';
 				}
 			}else{
-				$error['ndata_4'] = 'error/Sin direccion ingresada';
+				$error['ndata_4'] = 'error/Sin dirección ingresada';
 			}
 
 			//Si no hay errores ejecuto el codigo
@@ -280,12 +280,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

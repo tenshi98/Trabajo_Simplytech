@@ -100,9 +100,9 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'laboratorio_observacion
 								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 								<strong>Fecha de Ingreso : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
 								<strong>Pais : </strong><img src="<?php echo DB_SITE_REPO.'/LIB_assets/img/flags/'.strtolower($rowdata['Flag']).'.png'; ?>" alt="flag" height="11" width="16"> <?php echo $rowdata['Pais']; ?><br/>
-								<strong>Region : </strong><?php echo $rowdata['nombre_region']; ?><br/>
+								<strong>Región : </strong><?php echo $rowdata['nombre_region']; ?><br/>
 								<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
 								<strong>Giro de la empresa: </strong><?php echo $rowdata['Giro']; ?><br/>
 								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
 								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
@@ -123,16 +123,16 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'laboratorio_observacion
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<?php
-							//se arma la direccion
+							//se arma la dirección
 							$direccion = "";
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
 							if(isset($rowdata["nombre_comuna"])&&$rowdata["nombre_comuna"]!=''){   $direccion .= ', '.$rowdata["nombre_comuna"];}
 							if(isset($rowdata["nombre_region"])&&$rowdata["nombre_region"]!=''){   $direccion .= ', '.$rowdata["nombre_region"];}
-							//se despliega mensaje en caso de no existir direccion
+							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
 								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
 							}else{
-								$Alert_Text  = 'No tiene una direccion definida';
+								$Alert_Text  = 'No tiene una dirección definida';
 								alert_post_data(4,2,2, $Alert_Text);
 							}
 						?>
@@ -174,7 +174,7 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'laboratorio_observacion
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

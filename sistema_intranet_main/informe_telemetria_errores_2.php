@@ -127,7 +127,7 @@ foreach ($arrUnimed as $sen) {
                         <th>Medicion Actual</th>
                         <th>Min</th>
                         <th>Max</th>
-                        <th>Ubicacion</th>
+                        <th>Ubicación</th>
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -145,7 +145,7 @@ foreach ($arrUnimed as $sen) {
 							<td><?php echo Cantidades_decimales_justos($error['Valor_max']).$unimed; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'informe_telemetria_errores_2_view.php?view='.simpleEncode($error['idErrores'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="<?php echo 'informe_telemetria_errores_2_view.php?view='.simpleEncode($error['idErrores'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>

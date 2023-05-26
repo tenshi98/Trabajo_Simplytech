@@ -214,8 +214,8 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 			Empresa Relacionada
 			<address>
 				<strong>Nombre: </strong><?php echo $row_data['SistemaOrigen']; ?><br/>
-				<strong>Ubicacion: </strong><?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
-				<strong>Direccion: </strong><?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
+				<strong>Ubicación: </strong><?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
+				<strong>Dirección: </strong><?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
 				<strong>Fono: </strong><?php echo formatPhone($row_data['SistemaOrigenFono']); ?><br/>
 				<strong>Rut: </strong><?php echo $row_data['SistemaOrigenRut']; ?><br/>
 				<strong>Email: </strong><?php echo $row_data['SistemaOrigenEmail']; ?><br/>
@@ -706,7 +706,7 @@ if(isset($row_data['IMPRENT_CC_Nombre'])&&$row_data['IMPRENT_CC_Nombre']!=''){
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

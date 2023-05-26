@@ -260,7 +260,7 @@ $usrfil .= $responsables;
 					}
 					?>
 					<div class="input-group-btn">
-						<button class="btn btn-metis-1 tooltip remove_tarea" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+						<button class="btn btn-metis-1 tooltip remove_tarea" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 					</div>
 				</div>
 			</div>
@@ -356,7 +356,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 					}
 					?>
 					<div class="input-group-btn">
-						<button class="btn btn-metis-1 tooltip remove_responsable" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+						<button class="btn btn-metis-1 tooltip remove_responsable" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 					</div>
 				</div>
 			</div>
@@ -492,7 +492,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 			<table id="meta" class="otdata2">
 				<tbody>
 					<tr>
-						<td class="meta-head">Fecha creacion</td>
+						<td class="meta-head">Fecha creación</td>
 						<td><?php echo Fecha_estandar($_SESSION['tareas_basicos']['f_creacion']); ?></td>
 					</tr>
 				</tbody>
@@ -845,7 +845,7 @@ $arrTareas = db_select_array (false, $SIS_query, 'tareas_pendientes_listado', $S
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&delete_tarea='.simpleEncode($ot['idTareas'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar la tarea '.$ot['Nombre'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

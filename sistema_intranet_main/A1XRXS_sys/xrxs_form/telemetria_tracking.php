@@ -45,7 +45,7 @@ require_once '0_validate_user_1.php';
 			case 'h_termino':      if(empty($h_termino)){      $error['h_termino']      = 'error/No ha ingresado la hora de termino';}break;
 			case 'idTelemetria':   if(empty($idTelemetria)){   $error['idTelemetria']   = 'error/No ha seleccionado el equipo de telemetria';}break;
 			case 'idGrupo':        if(empty($idGrupo)){        $error['idGrupo']        = 'error/No ha seleccionado el grupo';}break;
-			case 'idGrafico':      if(empty($idGrafico)){      $error['idGrafico']      = 'error/No ha seleccionado la opcion de graficos';}break;
+			case 'idGrafico':      if(empty($idGrafico)){      $error['idGrafico']      = 'error/No ha seleccionado la opción de graficos';}break;
 			case 'idEstado':       if(empty($idEstado)){       $error['idEstado']       = 'error/No ha seleccionado el estado';}break;
 			case 'Observacion':    if(empty($Observacion)){    $error['Observacion']    = 'error/No ha ingresado la observacion';}break;
 
@@ -156,12 +156,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

@@ -174,7 +174,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 			<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 				<thead>
 					<tr role="row">
-						<th colspan="7" style="text-align: center;">Identificacion</th>
+						<th colspan="7" style="text-align: center;">Identificación</th>
 						<th colspan="4" style="text-align: center;">Velocidad Tractores (Km/hr)</th>
 						<th colspan="4" style="text-align: center;">Sensores</th>
 						<th width="10"></th>

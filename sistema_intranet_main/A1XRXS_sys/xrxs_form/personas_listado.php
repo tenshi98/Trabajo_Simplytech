@@ -49,7 +49,7 @@ require_once '0_validate_user_1.php';
 			case 'idSexo':            if(empty($idSexo)){            $error['idSexo']           = 'error/No ha seleccionado el sexo';}break;
 			case 'idCiudad':          if(empty($idCiudad)){          $error['idCiudad']         = 'error/No ha seleccionado la ciudad';}break;
 			case 'idComuna':          if(empty($idComuna)){          $error['idComuna']         = 'error/No ha seleccionado la comuna';}break;
-			case 'Direccion':         if(empty($Direccion)){         $error['Direccion']        = 'error/No ha ingresado la direccion';}break;
+			case 'Direccion':         if(empty($Direccion)){         $error['Direccion']        = 'error/No ha ingresado la dirección';}break;
 			case 'Sueldo':            if(empty($Sueldo)){            $error['Sueldo']           = 'error/No ha ingresado el sueldo';}break;
 			case 'idAFP':             if(empty($idAFP)){             $error['idAFP']            = 'error/No ha ingresado la AFP';}break;
 
@@ -205,12 +205,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

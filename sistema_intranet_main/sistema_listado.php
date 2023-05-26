@@ -258,7 +258,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 								<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
 								<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
 								<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?>
 							</p>
 
@@ -296,16 +296,16 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<?php
-							//se arma la direccion
+							//se arma la dirección
 							$direccion = "";
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){  $direccion .= $rowdata["Direccion"];}
 							if(isset($rowdata["Comuna"])&&$rowdata["Comuna"]!=''){        $direccion .= ', '.$rowdata["Comuna"];}
 							if(isset($rowdata["Ciudad"])&&$rowdata["Ciudad"]!=''){        $direccion .= ', '.$rowdata["Ciudad"];}
-							//se despliega mensaje en caso de no existir direccion
+							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
 								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
 							}else{
-								$Alert_Text  = 'No tiene una direccion definida';
+								$Alert_Text  = 'No tiene una dirección definida';
 								alert_post_data(4,2,2, $Alert_Text);
 							}
 						?>
@@ -351,10 +351,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x1, 2);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x2, 1);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x3, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										 'Comuna','idComuna', $x4, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 1,'fa fa-map');
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x5, 1,'fa fa-map');
 
 				$Form_Inputs->form_input_hidden('Config_idTheme', 1, 2);
 				$Form_Inputs->form_input_hidden('idOpcionesGen_1', 1, 2);
@@ -523,12 +523,12 @@ $arrUsers = db_select_array (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_
 						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $usuarios['estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_sistema.php?view='.simpleEncode($usuarios['idSistema'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idSistema']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_sistema.php?view='.simpleEncode($usuarios['idSistema'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idSistema']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idSistema'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar al cliente '.$usuarios['Nombre'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

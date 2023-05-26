@@ -89,22 +89,22 @@ require_once '0_validate_user_1.php';
 			/************************************************************/
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice1)&&$indice1!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice1 ('.$indice1.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice1 ('.$indice1.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice1)&&$indice1!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice1 ('.$indice1.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice1 ('.$indice1.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice2)&&$indice2!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice2 ('.$indice2.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice2 ('.$indice2.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice2)&&$indice2!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice2 ('.$indice2.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice2 ('.$indice2.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

@@ -230,7 +230,7 @@ table .title{background: #222; text-align: center; color: white; font: bold 15px
 								<strong>Lugar : </strong>'.$row_data['SistemaOrigenComuna'].', '.$row_data['SistemaOrigenCiudad'].'<br/>
 								<strong>RUT : </strong>'.$row_data['RutCliente'].'<br/>
 								<strong>Ciudad/Comuna : </strong>'.$row_data['ComunaCliente'].'<br/>
-								<strong>Region : </strong>'.$row_data['CiudadCliente'].'<br/>
+								<strong>Región : </strong>'.$row_data['CiudadCliente'].'<br/>
 								<strong>Email : </strong>'.$row_data['EmailCliente'].'<br/>
 								<strong>Cargo : </strong><br/>
 							</td>

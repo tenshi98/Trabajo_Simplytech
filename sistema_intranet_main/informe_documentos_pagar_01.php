@@ -171,7 +171,7 @@ array_push( $arrCheques,$row );
 												$ver = 'view_mov_arriendos.php?view='.simpleEncode($cheques['idFacturacion'], fecha_actual());
 											break;
 										}
-										echo '<a href="'.$ver.'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
+										echo '<a href="'.$ver.'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 											
 										?>
 

@@ -110,7 +110,7 @@ $arrCargas = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SI
 							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_estandar($rowdata['FNacimiento']); ?><br/>
 							<strong>Fono : </strong><?php echo formatPhone($rowdata['Fono1']); ?><br/>
 							<strong>Fono : </strong><?php echo formatPhone($rowdata['Fono2']); ?><br/>
-							<strong>Direccion : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['nombre_comuna'].', '.$rowdata['nombre_region']; ?><br/>
+							<strong>Dirección : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['nombre_comuna'].', '.$rowdata['nombre_region']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?><br/>
 							<strong>Sistema : </strong><?php echo $rowdata['Sistema']; ?><br/>
 							<strong>Fecha de Inicio Contrato : </strong><?php if(isset($rowdata['F_Inicio_Contrato'])&&$rowdata['F_Inicio_Contrato']!='0000-00-00'){echo Fecha_estandar($rowdata['F_Inicio_Contrato']);}else{echo 'Sin fecha de inicio';} ?><br/>
@@ -168,8 +168,8 @@ $arrCargas = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SI
 							} ?>
 						</p>
 
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Ubicacion</h2>
-						<?php echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Direccion', 'Calle', $rowdata['Direccion'], $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Ubicación</h2>
+						<?php echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Dirección', 'Calle', $rowdata['Direccion'], $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1); ?>
 											
 					</div>
 					<div class="clearfix"></div>
@@ -181,7 +181,7 @@ $arrCargas = db_select_array (false, $SIS_query, 'apoderados_listado_hijos', $SI
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

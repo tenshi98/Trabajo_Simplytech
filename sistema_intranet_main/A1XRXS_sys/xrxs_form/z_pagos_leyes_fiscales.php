@@ -124,7 +124,7 @@ require_once '0_validate_user_1.php';
 			//case 'PPM_Total_deuda':            if(empty($PPM_Total_deuda)){            $error['PPM_Total_deuda']              = 'error/No ha ingresado el PPM total';}break;
 			//case 'RET_Total_deuda':            if(empty($RET_Total_deuda)){            $error['RET_Total_deuda']              = 'error/No ha ingresado la retencion total';}break;
 			//case 'IMPRENT_Total_deuda':        if(empty($IMPRENT_Total_deuda)){        $error['IMPRENT_Total_deuda']          = 'error/No ha ingresado el impuesto a la renta total';}break;
-			case 'Creacion_fecha':             if(empty($Creacion_fecha)){             $error['Creacion_fecha']               = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'Creacion_fecha':             if(empty($Creacion_fecha)){             $error['Creacion_fecha']               = 'error/No ha ingresado la fecha de creación';}break;
 
 		}
 	}
@@ -1723,7 +1723,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']) OR $_SESSION['pagos_leyes_fiscales_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}
 				if(!isset($_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Ano']) OR $_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Ano']=='' ){       $error['Periodo_Ano']      = 'error/No ha ingresado el año del periodo de pago';}
 				if(!isset($_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Mes']) OR $_SESSION['pagos_leyes_fiscales_basicos']['Periodo_Mes']=='' ){       $error['Periodo_Mes']      = 'error/No ha ingresado el mes del periodo de pago';}
-				if(!isset($_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha']) OR $_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha']=='' ){         $error['Pago_fecha']       = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha']) OR $_SESSION['pagos_leyes_fiscales_basicos']['Pago_fecha']=='' ){         $error['Pago_fecha']       = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['pagos_leyes_fiscales_basicos']['Observaciones']) OR $_SESSION['pagos_leyes_fiscales_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['pagos_leyes_fiscales_basicos']['Porcentaje_PPM']) OR $_SESSION['pagos_leyes_fiscales_basicos']['Porcentaje_PPM']=='' ){ $error['Porcentaje_PPM']   = 'error/No ha ingresado el porcentaje PPM utilizado';}
 				if(!isset($_SESSION['pagos_leyes_fiscales_basicos']['IVA_CC']) OR $_SESSION['pagos_leyes_fiscales_basicos']['IVA_CC']=='' ){                 $error['IVA_CC']           = 'error/No ha ingresado el Centro de Costo IVA utilizado';}

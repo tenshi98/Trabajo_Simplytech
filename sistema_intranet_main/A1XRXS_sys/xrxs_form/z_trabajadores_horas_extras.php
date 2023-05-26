@@ -62,7 +62,7 @@ require_once '0_validate_user_1.php';
 			case 'idSistema':       if(empty($idSistema)){        $error['idSistema']        = 'error/No ha ingresado el numero de documento';}break;
 			case 'idUsuario':       if(empty($idUsuario)){        $error['idUsuario']        = 'error/No ha seleccionado el usuario';}break;
 			case 'fecha_auto':      if(empty($fecha_auto)){       $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}break;
-			case 'Creacion_fecha':  if(empty($Creacion_fecha)){   $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'Creacion_fecha':  if(empty($Creacion_fecha)){   $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}break;
 			case 'Fecha_desde':     if(empty($Fecha_desde)){      $error['Fecha_desde']      = 'error/No ha ingresado la fecha desde';}break;
 			case 'Fecha_hasta':     if(empty($Fecha_hasta)){      $error['Fecha_hasta']      = 'error/No ha ingresado la fecha hasta';}break;
 			case 'Observaciones':   if(empty($Observaciones)){    $error['Observaciones']    = 'error/No ha ingresado la observacion';}break;
@@ -603,7 +603,7 @@ require_once '0_validate_user_1.php';
 			//verificacion de errores
 			//Datos basicos
 			if (isset($_SESSION['horas_extras_ing_basicos'])){
-				if(!isset($_SESSION['horas_extras_ing_basicos']['Creacion_fecha']) OR $_SESSION['horas_extras_ing_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creacion';}
+				if(!isset($_SESSION['horas_extras_ing_basicos']['Creacion_fecha']) OR $_SESSION['horas_extras_ing_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creación';}
 				if(!isset($_SESSION['horas_extras_ing_basicos']['Fecha_desde']) OR $_SESSION['horas_extras_ing_basicos']['Fecha_desde']=='' ){       $error['Fecha_desde']      = 'error/No ha seleccionado la fecha de inicio';}
 				if(!isset($_SESSION['horas_extras_ing_basicos']['Fecha_hasta']) OR $_SESSION['horas_extras_ing_basicos']['Fecha_hasta']=='' ){       $error['Fecha_hasta']      = 'error/No ha seleccionado la fecha de termino';}
 				if(!isset($_SESSION['horas_extras_ing_basicos']['idSistema']) OR $_SESSION['horas_extras_ing_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}

@@ -314,7 +314,7 @@ foreach ($arrEquipo as $data) {
 
 	/****************************************************/
 	//el resto de los botones
-	$arrGruas[$xdanger][$data['idTelemetria']]['CenterMap']             = '<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicacion" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>';
+	$arrGruas[$xdanger][$data['idTelemetria']]['CenterMap']             = '<button onclick="fncCenterMap(\''.$data['GeoLatitud'].'\', \''.$data['GeoLongitud'].'\', \''.$nicon.'\')" title="Ver Ubicación" class="btn btn-default btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></button>';
 	$arrGruas[$xdanger][$data['idTelemetria']]['informe_activaciones']  = '<li><a href="view_telemetria_uso.php?idTelemetria='.$data['idTelemetria'].'&F_inicio='.$principioMes.'&F_termino='.$FechaSistema.'&Amp=&pagina=1&submit_filter=Filtrar" class="iframe" style="white-space: normal;" ><i class="fa fa-clock-o" aria-hidden="true"></i> Uso Grua</a></li>';
 	$arrGruas[$xdanger][$data['idTelemetria']]['AlarmasPersonalizadas'] = '<li><a href="view_alertas_personalizadas.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()).'" class="iframe" style="white-space: normal;"><i class="fa fa-bell-o" aria-hidden="true"></i> Alertas Personalizadas</a></li>';
 	//si tiene un generador

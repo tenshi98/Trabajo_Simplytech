@@ -216,7 +216,7 @@ array_push( $arrPuntos,$row );
 									draggable	: true,
 									position	: myLatlng,
 									map			: map,
-									title		: "Tu Ubicacion",
+									title		: "Tu Ubicación",
 									animation 	:google.maps.Animation.DROP,
 									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
@@ -491,7 +491,7 @@ array_push( $arrZonas,$row );
 									draggable	: true,
 									position	: myLatlng,
 									map			: map,
-									title		: "Tu Ubicacion",
+									title		: "Tu Ubicación",
 									animation 	:google.maps.Animation.DROP,
 									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
@@ -661,7 +661,7 @@ array_push( $arrZonas,$row );
 						<thead>
 						<tr role="row">
 							<th>Orden</th>
-							<th>Ubicacion</th>
+							<th>Ubicación</th>
 							<th width="10">Acciones</th>
 						</tr>
 						</thead>
@@ -675,11 +675,11 @@ array_push( $arrZonas,$row );
 								<td><?php echo 'lat: '.$pos['Latitud'].'<br/>lng: '.$pos['Longitud']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 70px;" >  
-										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&edit_puntos='.$_GET['edit_puntos'].'&mod='.$pos['idUbicaciones']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&edit_puntos='.$_GET['edit_puntos'].'&mod='.$pos['idUbicaciones']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=2){
 											$ubicacion = $new_location.'&edit_puntos='.$_GET['edit_puntos'].'&del_punto='.simpleEncode($pos['idUbicaciones'], fecha_actual());
 											$dialogo   = '¿Realmente deseas eliminar el dato?'; ?>
-											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 										<?php } ?>
 									</div>
 								</td>
@@ -949,14 +949,14 @@ array_push( $arrZonas,$row );
 						<td><?php echo $zona['CuartelDistanciaHileras']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 140px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_zona.php?view='.simpleEncode($zona['idZona'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_zona.php?view='.simpleEncode($zona['idZona'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&edit_puntos='.$zona['idZona']; ?>" title="Editar Puntos" class="btn btn-success btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&edit_zona='.$zona['idZona']; ?>" title="Editar Informacion Basica" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&edit_zona='.$zona['idZona']; ?>" title="Editar Información Basica" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									//se verifica que el usuario no sea uno mismo
 									$ubicacion = $new_location.'&del_zona='.simpleEncode($zona['idZona'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el cuartel '.$zona['CuartelNombre'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

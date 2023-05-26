@@ -537,7 +537,7 @@ if(!empty($_GET['clone_idMaquina'])){
 			echo '</ul>';
 		}
 
-	//fin de la condicion
+	//fin de la condición
 	}
 
 	?>
@@ -563,9 +563,9 @@ if(!empty($_GET['clone_idMaquina'])){
 								<li class=""><a href="<?php echo 'maquinas_listado_datos_clientes.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-users" aria-hidden="true"></i> Clientes</a></li>
 							<?php } ?>
 							<?php
-							//Uso Ubicacion
+							//Uso Ubicación
 							if(isset($rowdata['idConfig_4'])&&$rowdata['idConfig_4']==1){ ?>
-								<li class=""><a href="<?php echo 'maquinas_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicacion</a></li>
+								<li class=""><a href="<?php echo 'maquinas_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicación</a></li>
 							<?php } ?>
 							<li class=""><a href="<?php echo 'maquinas_listado_datos_ficha.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Ficha Tecnica</a></li>
 							<li class=""><a href="<?php echo 'maquinas_listado_datos_hds.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-calendar-check-o" aria-hidden="true"></i> HDS</a></li>
@@ -616,7 +616,7 @@ if(!empty($_GET['clone_idMaquina'])){
 								<?php
 								//Dependencia Clientes
 								if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
-									<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=''){echo '<strong>Ubicacion : </strong>'.$rowdata['Ubicacion'];} ?>
+									<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=''){echo '<strong>Ubicación : </strong>'.$rowdata['Ubicacion'];} ?>
 									<?php if(isset($rowdata['Ubicacion_lvl_1'])&&$rowdata['Ubicacion_lvl_1']!=''){echo ' - '.$rowdata['Ubicacion_lvl_1'];} ?>
 									<?php if(isset($rowdata['Ubicacion_lvl_2'])&&$rowdata['Ubicacion_lvl_2']!=''){echo ' - '.$rowdata['Ubicacion_lvl_2'];} ?>
 									<?php if(isset($rowdata['Ubicacion_lvl_3'])&&$rowdata['Ubicacion_lvl_3']!=''){echo ' - '.$rowdata['Ubicacion_lvl_3'];} ?>
@@ -630,7 +630,7 @@ if(!empty($_GET['clone_idMaquina'])){
 								<strong>Componentes : </strong><?php echo $rowdata['Componentes']; ?><br/>
 								<strong>Matriz de Analisis: </strong><?php echo $rowdata['Matriz']; ?><br/>
 								<strong>Dependencia Cliente: </strong><?php echo $rowdata['DependenciaCliente']; ?><br/>
-								<strong>Uso Ubicacion: </strong><?php echo $rowdata['UsoUbicacion']; ?>
+								<strong>Uso Ubicación: </strong><?php echo $rowdata['UsoUbicacion']; ?>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripcion</h2>
@@ -759,7 +759,7 @@ if(!empty($_GET['clone_idMaquina'])){
 					$Form_Inputs->form_input_hidden('idConfig_1', 2, 2); //Uso Componentes - No
 					$Form_Inputs->form_input_hidden('idConfig_2', 2, 2); //Uso Matriz - No
 					$Form_Inputs->form_input_hidden('idConfig_3', 2, 2); //Dependencia Cliente - No
-					$Form_Inputs->form_input_hidden('idConfig_4', 2, 2); //Uso Ubicacion - No
+					$Form_Inputs->form_input_hidden('idConfig_4', 2, 2); //Uso Ubicación - No
 
 					?>
 
@@ -937,13 +937,13 @@ if(!empty($_GET['clone_idMaquina'])){
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $maq['sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 140px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_maquinas.php?view='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_maquinas.php?view='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&nombre_maquina='.$maq['Nombre'].'&clone_idMaquina='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Clonar Maquina" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($maq['idMaquina'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el registro '.$maq['Nombre'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

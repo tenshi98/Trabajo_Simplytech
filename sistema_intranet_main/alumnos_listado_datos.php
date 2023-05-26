@@ -102,10 +102,10 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 					$Form_Inputs->form_input_text('Apellido Materno', 'ApellidoMat', $x4, 1);
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x5, 2);
 					$Form_Inputs->form_date('Fecha Nacimiento','fNacimiento', $x6, 1);
-					$Form_Inputs->form_select_depend1('Region','idCiudad', $x7, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Región','idCiudad', $x7, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x8, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 											 $dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x9, 1,'fa fa-map');
+					$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x9, 1,'fa fa-map');
 
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 					$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);

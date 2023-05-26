@@ -412,7 +412,7 @@ alert_post_data(2,1,1, $Alert_Text);
 				$Form_Inputs->form_select_tel_group('Grupos','idGrupo', 'idTelemetria', 'form1', 2, $dbConn);
 				$Form_Inputs->form_select('Mostrar Graficos','idGrafico', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 
-				$Form_Inputs->form_post_data(2,1,1, '<strong>Opcional:</strong> Esta opcion solo mostrara los datos que esten dentro del rango minimo y maximo, ignorando el resto.' );
+				$Form_Inputs->form_post_data(2,1,1, '<strong>Opcional:</strong> Esta opción solo mostrara los datos que esten dentro del rango minimo y maximo, ignorando el resto.' );
 				$Form_Inputs->form_input_number('Rango Voltaje Minimo','RangoMinimo', $x9, 1);
 				$Form_Inputs->form_input_number('Rango Voltaje Maximo','RangoMaximo', $x10, 1);
 

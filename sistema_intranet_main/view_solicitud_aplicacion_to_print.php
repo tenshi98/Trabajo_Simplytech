@@ -223,13 +223,13 @@ $arrMateriales = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion
 				Rut: <?php echo $row_data['SistemaOrigenRut']; ?><br/>
 				Empresa: <?php echo $row_data['SistemaOrigen']; ?><br/>
 				Ciudad-Comuna: <?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
-				Direccion: <?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
+				Dirección: <?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
 				Fono: <?php echo formatPhone($row_data['SistemaOrigenFono']); ?><br/>
 				Email: <?php echo $row_data['SistemaOrigenEmail']; ?>
 			</address>
 		</div>
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-			<strong>Identificacion</strong>
+			<strong>Identificación</strong>
 			<address>
 				Predio: <?php echo $row_data['NombrePredio']; ?><br/>
 				Estado: <?php echo $row_data['Estado']; ?><br/>

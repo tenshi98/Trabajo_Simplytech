@@ -192,7 +192,7 @@ foreach ($arrUnimed as $sen) {
 										$fecha_desde = restarDias($error['Fecha'],1);
 									}
 
-									//direccion
+									//dirección
 									$subloc  = 'informe_telemetria_historial_operaciones_01.php';
 									$subloc .= '?idTelemetria='.$error['idTelemetria'];
 									$subloc .= '&fecha_desde='.$fecha_desde;

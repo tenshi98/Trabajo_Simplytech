@@ -71,7 +71,7 @@ require_once '0_validate_user_1.php';
 			case 'Ano':                  if(empty($Ano)){                   $error['Ano']                     = 'error/No ha ingresado el año de facturacion';}break;
 			case 'Nombre':               if(empty($Nombre)){                $error['Nombre']                  = 'error/No ha ingresado el nombre de la facturacion';}break;
 			case 'Observaciones':        if(empty($Observaciones)){         $error['Observaciones']           = 'error/No ha ingresado la Observacion';}break;
-			case 'fCreacion':            if(empty($fCreacion)){             $error['fCreacion']               = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'fCreacion':            if(empty($fCreacion)){             $error['fCreacion']               = 'error/No ha ingresado la fecha de creación';}break;
 			case 'idTipo':               if(empty($idTipo)){                $error['idTipo']                  = 'error/No ha seleccionado el tipo';}break;
 			case 'idTipoMedicion':       if(empty($idTipoMedicion)){        $error['idTipoMedicion']          = 'error/No ha seleccionado el tipo de medicion';}break;
 			case 'idMarcadoresUsado':    if(empty($idMarcadoresUsado)){     $error['idMarcadoresUsado']       = 'error/No ha seleccionado el Tipo de marcador usado';}break;
@@ -641,12 +641,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

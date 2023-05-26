@@ -71,7 +71,7 @@ $row_data = db_select_data (false, $SIS_query, 'principal_notificaciones_listado
 	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
-			<h5>Notificacion</h5>
+			<h5>Notificación</h5>
 		</header>
         <div class="tab-content">
 
@@ -147,7 +147,7 @@ $row_data = db_select_data (false, $SIS_query, 'principal_notificaciones_listado
 
 	
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

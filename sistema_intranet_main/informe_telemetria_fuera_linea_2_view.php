@@ -104,14 +104,14 @@ require_once 'core/Web.Header.Views.php';
 						var marker_1 = new google.maps.Marker({
 							position	: factory_1,
 							map			: map,
-							title		: "Direccion",
+							title		: "Dirección",
 							animation 	: google.maps.Animation.DROP,
 							icon      	: "<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_red.png"
 						});
 						var marker_2 = new google.maps.Marker({
 							position	: factory_2,
 							map			: map,
-							title		: "Direccion",
+							title		: "Dirección",
 							animation 	: google.maps.Animation.DROP,
 							icon      	: "<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_green.png"
 						});

@@ -235,7 +235,7 @@ foreach ($arrGrupos as $sen) {    $arrFinalGrupos[$sen['idGrupo']] = $sen['Nombr
 							</td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo'].'&editItem='.$alarmas['idItem']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo'].'&editItem='.$alarmas['idItem']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -304,7 +304,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_alarmas_perso'
 				$Form_Inputs->form_post_data(1,1,1, 'Se utiliza unicamente en <strong>Informes CrossCrane - Alertas por Grua</strong> para poder agrupar los errores de voltaje.');
 				$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);
 				*/
-				$Form_Inputs->form_post_data(1,1,1, 'Al desactivarla, se elimina la opcion de que la plataforma registre esta alarma');
+				$Form_Inputs->form_post_data(1,1,1, 'Al desactivarla, se elimina la opción de que la plataforma registre esta alarma');
 				$Form_Inputs->form_select('Estado','idEstado', $x11, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 
 				$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
@@ -484,7 +484,7 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 							<li class="active"><a href="<?php echo 'admin_telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Geo']==2){ ?>
-						<li class=""><a href="<?php echo 'admin_telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
+						<li class=""><a href="<?php echo 'admin_telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>

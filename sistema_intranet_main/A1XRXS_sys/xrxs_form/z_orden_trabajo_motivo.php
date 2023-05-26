@@ -107,7 +107,7 @@ require_once '0_validate_user_1.php';
 			case 'idEstado':                  if(empty($idEstado)){               $error['idEstado']                = 'error/No ha ingresado el estado';}break;
 			case 'idPrioridad':               if(empty($idPrioridad)){            $error['idPrioridad']             = 'error/No ha ingresado la prioridad';}break;
 			case 'idTipo':                    if(empty($idTipo)){                 $error['idTipo']                  = 'error/No ha ingresado el tipo';}break;
-			case 'f_creacion':                if(empty($f_creacion)){             $error['f_creacion']              = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'f_creacion':                if(empty($f_creacion)){             $error['f_creacion']              = 'error/No ha ingresado la fecha de creación';}break;
 			case 'f_programacion':            if(empty($f_programacion)){         $error['f_programacion']          = 'error/No ha ingresado la fecha de programacion';}break;
 			case 'f_programacion_Dia':        if(empty($f_programacion_Dia)){     $error['f_programacion_Dia']      = 'error/No ha ingresado el dia de la fecha de programacion';}break;
 			case 'f_programacion_Semana':     if(empty($f_programacion_Semana)){  $error['f_programacion_Semana']   = 'error/No ha ingresado la semana de la fecha de programacion';}break;
@@ -645,7 +645,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['ot_motivo_basicos']['idEstado']) OR $_SESSION['ot_motivo_basicos']['idEstado']=='' ){                    $error['idEstado']           = 'error/No ha ingresado el id del estado';}
 				if(!isset($_SESSION['ot_motivo_basicos']['idPrioridad']) OR $_SESSION['ot_motivo_basicos']['idPrioridad']=='' ){              $error['idPrioridad']        = 'error/No ha seleccionado la prioridad';}
 				if(!isset($_SESSION['ot_motivo_basicos']['idTipo']) OR $_SESSION['ot_motivo_basicos']['idTipo']=='' ){                        $error['idTipo']             = 'error/No ha seleccionado el tipo de trabajo';}
-				if(!isset($_SESSION['ot_motivo_basicos']['f_creacion']) OR $_SESSION['ot_motivo_basicos']['f_creacion']=='' ){                $error['f_creacion']         = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['ot_motivo_basicos']['f_creacion']) OR $_SESSION['ot_motivo_basicos']['f_creacion']=='' ){                $error['f_creacion']         = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['ot_motivo_basicos']['f_programacion']) OR $_SESSION['ot_motivo_basicos']['f_programacion']=='' ){        $error['f_programacion']     = 'error/No ha ingresado la fecha de programacion';}
 			}else{
 				$error['basicos'] = 'error/No tiene datos basicos asignados a la orden de trabajo';
@@ -931,12 +931,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1494,12 +1494,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1696,12 +1696,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1897,12 +1897,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -2476,12 +2476,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -2773,12 +2773,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

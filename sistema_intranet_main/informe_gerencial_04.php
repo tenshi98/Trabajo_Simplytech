@@ -166,7 +166,7 @@ $TotalGeneral = 0;
 								echo '<td align="right">'.valores($Total, 0).'</td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<a target="_blank" rel="noopener noreferrer" href="informe_gerencial_06.php'.$search.'" title="Ver Informacion" class="btn btn-primary btn-sm info-tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+										<a target="_blank" rel="noopener noreferrer" href="informe_gerencial_06.php'.$search.'" title="Ver Información" class="btn btn-primary btn-sm info-tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 									</div>
 								</td>
 							</tr>';

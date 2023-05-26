@@ -92,7 +92,7 @@ $arrErrores = db_select_array (false, $SIS_query, 'vehiculos_listado_error_deten
 						<th>Fecha</th>
 						<th>Hora</th>
 						<th>Tiempo Detenido</th>
-						<th>Ubicacion</th>
+						<th>Ubicación</th>
 					</tr>
 				</thead>
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -104,7 +104,7 @@ $arrErrores = db_select_array (false, $SIS_query, 'vehiculos_listado_error_deten
 							<td><?php echo $error['Tiempo'].' hrs'; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<a href="<?php echo 'view_vehiculos_detenciones.php?view='.simpleEncode($error['idDetencion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="<?php echo 'view_vehiculos_detenciones.php?view='.simpleEncode($error['idDetencion'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						</tr>

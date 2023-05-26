@@ -159,7 +159,7 @@ foreach ($arrUnimed as $sen) {
 										<td><div class="btn-group" ><?php echo $eq_ok; ?></div></td>
 										<td>
 											<div class="btn-group" style="width: 35px;" >
-												<a href="<?php echo 'telemetria_gestion_sensores_view_equipo.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
+												<a href="<?php echo 'telemetria_gestion_sensores_view_equipo.php?view='.simpleEncode($data['idTelemetria'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
 											</div>
 										</td>
 									</tr>

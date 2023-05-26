@@ -45,7 +45,7 @@ require_once '0_validate_user_1.php';
 			case 'idTipo':          if(empty($idTipo)){           $error['idTipo']           = 'error/No ha seleccionado el tipo';}break;
 			case 'idTrabajador':    if(empty($idTrabajador)){     $error['idTrabajador']     = 'error/No ha seleccionado el trabajador';}break;
 			case 'fecha_auto':      if(empty($fecha_auto)){       $error['fecha_auto']       = 'error/No ha ingresado la fecha auto';}break;
-			case 'Creacion_fecha':  if(empty($Creacion_fecha)){   $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'Creacion_fecha':  if(empty($Creacion_fecha)){   $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}break;
 			case 'Observaciones':   if(empty($Observaciones)){    $error['Observaciones']    = 'error/No ha ingresado la observacion';}break;
 			case 'Monto':           if(empty($Monto)){            $error['Monto']            = 'error/No ha ingresado el monto';}break;
 			case 'N_Cuotas':        if(empty($N_Cuotas)){         $error['N_Cuotas']         = 'error/No ha seleccionado el numero de cuotas';}break;
@@ -435,7 +435,7 @@ require_once '0_validate_user_1.php';
 			//Datos basicos
 			if (isset($_SESSION['desc_cuotas_basicos'])){
 				if(!isset($_SESSION['desc_cuotas_basicos']['idTrabajador']) OR $_SESSION['desc_cuotas_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el trabajador';}
-				if(!isset($_SESSION['desc_cuotas_basicos']['Creacion_fecha']) OR $_SESSION['desc_cuotas_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creacion';}
+				if(!isset($_SESSION['desc_cuotas_basicos']['Creacion_fecha']) OR $_SESSION['desc_cuotas_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creación';}
 				if(!isset($_SESSION['desc_cuotas_basicos']['idTipo']) OR $_SESSION['desc_cuotas_basicos']['idTipo']=='' ){                 $error['idTipo']           = 'error/No ha seleccionado el tipo de boleta';}
 				if(!isset($_SESSION['desc_cuotas_basicos']['Monto']) OR $_SESSION['desc_cuotas_basicos']['Monto']=='' ){                   $error['Monto']            = 'error/No ha ingresado el Monto total de las cuotas';}
 				if(!isset($_SESSION['desc_cuotas_basicos']['N_Cuotas']) OR $_SESSION['desc_cuotas_basicos']['N_Cuotas']=='' ){             $error['N_Cuotas']         = 'error/No ha ingresado el numero total de cuotas';}

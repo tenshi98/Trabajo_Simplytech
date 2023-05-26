@@ -258,11 +258,11 @@ array_push( $arrProductos,$row );
 							<td><?php echo $subprocesos['Sistema']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<a href="<?php echo $new_location.'&edit='.$subprocesos['idEmbalaje']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+									<a href="<?php echo $new_location.'&edit='.$subprocesos['idEmbalaje']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 									<?php
 										$ubicacion = $new_location.'&del='.simpleEncode($subprocesos['idEmbalaje'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el dato '.$subprocesos['Embalaje'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>	
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>	
 								</div>
 							</td>
 						</tr>

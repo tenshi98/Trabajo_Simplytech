@@ -98,10 +98,10 @@ $rowdata = db_select_data (false, $SIS_query, 'personas_listado', $SIS_join, $SI
 					$Form_Inputs->form_input_text('Apellido Materno', 'ApellidoMaterno', $x4, 2);
 					$Form_Inputs->form_date('Fecha Nacimiento','fNacimiento', $x5, 1);
 					$Form_Inputs->form_select('Sexo','idSexo', $x6, 2, 'idSexo', 'Nombre', 'core_sexo', 0, '', $dbConn);
-					$Form_Inputs->form_select_depend1('Region','idCiudad', $x7, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Región','idCiudad', $x7, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x8, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 											 $dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x9, 1,'fa fa-map');
+					$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x9, 1,'fa fa-map');
 					$Form_Inputs->form_values('Sueldo','Sueldo', $x10, 1);
 					$Form_Inputs->form_select('AFP','idAFP', $x11, 1, 'idAFP', 'Nombre', 'sistema_afp', 'idEstado=1', '', $dbConn);
 

@@ -102,7 +102,7 @@ require_once '0_validate_user_1.php';
 			case 'N_Documento':                 if(empty($N_Documento)){                  $error['N_Documento']                  = 'error/No ha ingresado el numero de documento';}break;
 			case 'idCiudad':                    if(empty($idCiudad)){                     $error['idCiudad']                     = 'error/No ha seleccionado la ciudad';}break;
 			case 'idComuna':                    if(empty($idComuna)){                     $error['idComuna']                     = 'error/No ha seleccionado la comuna';}break;
-			case 'Direccion':                   if(empty($Direccion)){                    $error['Direccion']                    = 'error/No ha ingresado la direccion';}break;
+			case 'Direccion':                   if(empty($Direccion)){                    $error['Direccion']                    = 'error/No ha ingresado la dirección';}break;
 			case 'Observaciones':               if(empty($Observaciones)){                $error['Observaciones']                = 'error/No ha ingresado la observacion';}break;
 			case 'idLicitacion':                if(empty($idLicitacion)){                 $error['idLicitacion']                 = 'error/No ha seleccionado el proyecto';}break;
 			case 'FechaContrato':               if(empty($FechaContrato)){                $error['FechaContrato']                = 'error/No ha ingresado la fecha de Contrato';}break;
@@ -140,7 +140,7 @@ require_once '0_validate_user_1.php';
 			case 'idTipoTrabajo':               if(empty($idTipoTrabajo)){                $error['idTipoTrabajo']                = 'error/No ha seleccionado el tipo de trabajo';}break;
 			case 'PorcentajeTrabajoPesado':     if(empty($PorcentajeTrabajoPesado)){      $error['PorcentajeTrabajoPesado']      = 'error/No ha ingresado el porcentaje de trabajo pesado';}break;
 			case 'idMutual':                    if(empty($idMutual)){                     $error['idMutual']                     = 'error/No ha seleccionado la mutual de seguridad';}break;
-			case 'idCotizacionSaludExtra':      if(empty($idCotizacionSaludExtra)){       $error['idCotizacionSaludExtra']       = 'error/No ha seleccionado la opcion de cotizacion extra';}break;
+			case 'idCotizacionSaludExtra':      if(empty($idCotizacionSaludExtra)){       $error['idCotizacionSaludExtra']       = 'error/No ha seleccionado la opción de cotizacion extra';}break;
 			case 'PorcCotSaludExtra':           if(empty($PorcCotSaludExtra)){            $error['PorcCotSaludExtra']            = 'error/No ha ingresado el porcentaje de cotizacion extra';}break;
 			case 'MontoCotSaludExtra':          if(empty($MontoCotSaludExtra)){           $error['MontoCotSaludExtra']           = 'error/No ha ingresado el porcentaje de cotizacion extra';}break;
 			case 'idBanco':                     if(empty($idBanco)){                      $error['idBanco']                      = 'error/No ha seleccionado el banco';}break;
@@ -411,12 +411,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

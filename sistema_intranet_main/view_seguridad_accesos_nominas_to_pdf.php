@@ -107,7 +107,7 @@ $html .= '
 								Datos Basicos<br/>
 								<strong>Usuario:</strong> '.$row_data['Usuario'].'<br/>
 								<strong>Sistema:</strong> '.$row_data['Sistema'].'<br/>
-								<strong>Ubicacion:</strong> ';
+								<strong>Ubicación:</strong> ';
 								$html .= $row_data['Ubicacion'];
 								if(isset($row_data['UbicacionLVL_1'])&&$row_data['UbicacionLVL_1']!=''){$html .= ' - '.$row_data['UbicacionLVL_1'];}
 								if(isset($row_data['UbicacionLVL_2'])&&$row_data['UbicacionLVL_2']!=''){$html .= ' - '.$row_data['UbicacionLVL_2'];}

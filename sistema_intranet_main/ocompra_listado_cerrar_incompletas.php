@@ -603,7 +603,7 @@ array_push( $arrBoletasEmp,$row );
 							<td>
 								<div class="btn-group" style="width: 70px;" >
 									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($productos['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.$search.'&type=1&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.$search.'&type=1&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -619,7 +619,7 @@ array_push( $arrBoletasEmp,$row );
 							<td>
 								<div class="btn-group" style="width: 70px;" >
 									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($productos['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.$search.'&type=2&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.$search.'&type=2&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -635,7 +635,7 @@ array_push( $arrBoletasEmp,$row );
 							<td>
 								<div class="btn-group" style="width: 70px;" >
 									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($productos['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.$search.'&type=3&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.$search.'&type=3&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -651,7 +651,7 @@ array_push( $arrBoletasEmp,$row );
 							<td>
 								<div class="btn-group" style="width: 70px;" >
 									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($productos['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.$search.'&type=4&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.$search.'&type=4&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -667,7 +667,7 @@ array_push( $arrBoletasEmp,$row );
 							<td>
 								<div class="btn-group" style="width: 70px;" >
 									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($productos['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.$search.'&type=5&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.$search.'&type=5&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>
@@ -683,7 +683,7 @@ array_push( $arrBoletasEmp,$row );
 							<td>
 								<div class="btn-group" style="width: 70px;" >
 									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_ocompra.php?view='.simpleEncode($productos['idOcompra'], fecha_actual()); ?>" title="Ver Orden" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.$search.'&type=6&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.$search.'&type=6&idOcompraTi='.$productos['idOcompra'].'&id='.$productos['idExistencia']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>

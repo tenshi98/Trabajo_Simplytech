@@ -52,9 +52,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Notificacion Creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Notificacion Modificada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Notificacion Borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Notificación Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Notificación Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Notificación Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -134,7 +134,7 @@ foreach ($arrNotificaciones as $noti) {
 				if(isset($_GET['rango_b']) && $_GET['rango_b'] != '')  {            $Form_Inputs->form_input_hidden('rango_b', $_GET['rango_b'], 2);}     
 				if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != '')  {          $Form_Inputs->form_input_hidden('idCiudad', $_GET['idCiudad'], 2);}            
 				if(isset($_GET['idComuna']) && $_GET['idComuna'] != '')  {          $Form_Inputs->form_input_hidden('idComuna', $_GET['idComuna'], 2);}           
-				if(isset($_GET['Direccion']) && $_GET['Direccion'] != '')  {        $Form_Inputs->form_input_hidden('Direccion', $_GET['Direccion'], 2);}     
+				if(isset($_GET['Direccion']) && $_GET['Direccion'] != '')  {        $Form_Inputs->form_input_hidden('Dirección', $_GET['Direccion'], 2);}     
 				if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {        $Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);}     
 				
 				?>
@@ -209,10 +209,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 1);
 				$Form_Inputs->form_date('F Nacimiento inicio','rango_a', $x3, 1);
 				$Form_Inputs->form_date('F Nacimiento termino','rango_b', $x4, 1);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										 'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										  $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x7, 1,'fa fa-map');
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -323,11 +323,11 @@ $arrNotificaciones = db_select_array (false, $SIS_query, 'comunicaciones_interna
 							<td><?php echo $noti['Asunto']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_correos_masivos.php?view='.simpleEncode($noti['idEmail'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_correos_masivos.php?view='.simpleEncode($noti['idEmail'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($noti['idEmail'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el correo masivo?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

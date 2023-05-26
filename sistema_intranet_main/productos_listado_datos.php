@@ -161,7 +161,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 									//lo vacio
 									document.getElementById('idTipoReceta').length = 1
 									document.getElementById('idTipoReceta').options[0].value = "0"
-									document.getElementById('idTipoReceta').options[0].text = "Seleccione una Opcion"
+									document.getElementById('idTipoReceta').options[0].text = "Seleccione una Opción"
 								
 								//Producto Terminado	
 								}else if(modelSelected == 2){
@@ -170,7 +170,7 @@ $rowdata = db_select_data (false, $SIS_query, 'productos_listado', $SIS_join, $S
 									//lo vacio
 									document.getElementById('idTipoReceta').length = 3
 									document.getElementById('idTipoReceta').options[0].value = "0"
-									document.getElementById('idTipoReceta').options[0].text = "Seleccione una Opcion"
+									document.getElementById('idTipoReceta').options[0].text = "Seleccione una Opción"
 									document.getElementById('idTipoReceta').options[1].value = "1"
 									document.getElementById('idTipoReceta').options[1].text = "Por Porcentaje total"
 									document.getElementById('idTipoReceta').options[2].value = "2"

@@ -462,7 +462,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 		}
 		echo '</ul>';
 	}
-//fin de la condicion
+//fin de la condición
 }
 
 ?>
@@ -502,7 +502,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							<?php
 							//Dependencia Clientes
 							if(isset($rowdata['idConfig_3'])&&$rowdata['idConfig_3']==1){ ?>
-								<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=''){echo '<strong>Ubicacion : </strong>'.$rowdata['Ubicacion'];} ?>
+								<?php if(isset($rowdata['Ubicacion'])&&$rowdata['Ubicacion']!=''){echo '<strong>Ubicación : </strong>'.$rowdata['Ubicacion'];} ?>
 								<?php if(isset($rowdata['Ubicacion_lvl_1'])&&$rowdata['Ubicacion_lvl_1']!=''){echo ' - '.$rowdata['Ubicacion_lvl_1'];} ?>
 								<?php if(isset($rowdata['Ubicacion_lvl_2'])&&$rowdata['Ubicacion_lvl_2']!=''){echo ' - '.$rowdata['Ubicacion_lvl_2'];} ?>
 								<?php if(isset($rowdata['Ubicacion_lvl_3'])&&$rowdata['Ubicacion_lvl_3']!=''){echo ' - '.$rowdata['Ubicacion_lvl_3'];} ?>
@@ -516,7 +516,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							<strong>Componentes : </strong><?php echo $rowdata['Componentes']; ?><br/>
 							<strong>Matriz de Analisis: </strong><?php echo $rowdata['Matriz']; ?><br/>
 							<strong>Dependencia Cliente: </strong><?php echo $rowdata['DependenciaCliente']; ?><br/>
-							<strong>Uso Ubicacion: </strong><?php echo $rowdata['UsoUbicacion']; ?>
+							<strong>Uso Ubicación: </strong><?php echo $rowdata['UsoUbicacion']; ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripcion</h2>
@@ -588,7 +588,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

@@ -498,7 +498,7 @@ input[type="date"].form-control{
 
 		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
-				<button class="btn btn-metis-1 tooltip remove_pago_iva" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+				<button class="btn btn-metis-1 tooltip remove_pago_iva" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -528,7 +528,7 @@ input[type="date"].form-control{
 
 		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
-				<button class="btn btn-metis-1 tooltip remove_pago_ppm" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+				<button class="btn btn-metis-1 tooltip remove_pago_ppm" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -558,7 +558,7 @@ input[type="date"].form-control{
 
 		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
-				<button class="btn btn-metis-1 tooltip remove_pago_ret" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+				<button class="btn btn-metis-1 tooltip remove_pago_ret" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -588,7 +588,7 @@ input[type="date"].form-control{
 
 		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
-				<button class="btn btn-metis-1 tooltip remove_pago_impuesto_renta" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+				<button class="btn btn-metis-1 tooltip remove_pago_impuesto_renta" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -781,7 +781,7 @@ input[type="date"].form-control{
 
 		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
-				<button class="btn btn-metis-1 tooltip remove_pago_iva" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+				<button class="btn btn-metis-1 tooltip remove_pago_iva" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -811,7 +811,7 @@ input[type="date"].form-control{
 
 		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
-				<button class="btn btn-metis-1 tooltip remove_pago_ppm" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+				<button class="btn btn-metis-1 tooltip remove_pago_ppm" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -841,7 +841,7 @@ input[type="date"].form-control{
 
 		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
-				<button class="btn btn-metis-1 tooltip remove_pago_ret" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+				<button class="btn btn-metis-1 tooltip remove_pago_ret" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -871,7 +871,7 @@ input[type="date"].form-control{
 
 		<div class="col-xs-12 col-sm-1 col-md-1 col-lg-1 nopadding">
 			<div class="form-group">
-				<button class="btn btn-metis-1 tooltip remove_pago_impuesto_renta" type="button" title="Borrar Informacion" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
+				<button class="btn btn-metis-1 tooltip remove_pago_impuesto_renta" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 			</div>
 		</div>
 		<div class="clearfix"></div>
@@ -1301,7 +1301,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_Diferencia'], 0); ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_TotalSaldo']>0){ ?><a href="<?php echo $location.'&edit_iva=1'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['IVA_TotalSaldo']>0){ ?><a href="<?php echo $location.'&edit_iva=1'; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
 				</tr>
@@ -1314,7 +1314,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_Diferencia'], 0); ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo']>0){ ?><a href="<?php echo $location.'&edit_iva=2'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['IVA_TotalSaldo']>0){ ?><a href="<?php echo $location.'&edit_iva=2'; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
 				</tr>
@@ -1327,7 +1327,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_Diferencia'], 0); ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo']>0){ ?><a href="<?php echo $location.'&edit_iva=3'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['IVA_TotalSaldo']>0){ ?><a href="<?php echo $location.'&edit_iva=3'; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
 				</tr>
@@ -1340,7 +1340,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_Diferencia'], 0); ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo']>0){ ?><a href="<?php echo $location.'&edit_iva=4'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2&&$_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['IVA_TotalSaldo']>0){ ?><a href="<?php echo $location.'&edit_iva=4'; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
 				</tr> 
@@ -1375,7 +1375,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_arriendos'][3]['PPM_Diferencia'], 0); ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_ppm=1'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_ppm=1'; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
 				</tr>
@@ -1387,7 +1387,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_insumos'][3]['PPM_Diferencia'], 0); ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_ppm=2'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_ppm=2'; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
 				</tr>
@@ -1399,7 +1399,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_productos'][3]['PPM_Diferencia'], 0); ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_ppm=3'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_ppm=3'; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
 				</tr>
@@ -1411,7 +1411,7 @@ $Form_Inputs = new Inputs();
 					<td align="right"><?php echo Valores($_SESSION['pagos_leyes_fiscales_pagos_servicios'][3]['PPM_Diferencia'], 0); ?></td>
 					<td>
 						<div class="btn-group" style="width: 35px;" >
-							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_ppm=4'; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+							<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_ppm=4'; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 						</div>
 					</td>
 				</tr> 
@@ -1936,7 +1936,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_pagos_leyes_fiscales.php?view='.simpleEncode($tipo['idFactFiscal'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_mov_pagos_leyes_fiscales.php?view='.simpleEncode($tipo['idFactFiscal'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=2&&isset($tipo['idEstadoPago'])&&$tipo['idEstadoPago']==1){ ?><a href="<?php echo $location.'&newPago='.$tipo['idFactFiscal']; ?>" title="Ingresar Pagos" class="btn btn-success btn-sm tooltip"><i class="fa fa-usd" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>

@@ -153,9 +153,9 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_joi
 								<strong>Nombre: </strong><?php echo $rowdata['Nombre']; ?><br/>
 								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 								<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-								<strong>Region : </strong><?php echo $rowdata['nombre_region']; ?><br/>
+								<strong>Región : </strong><?php echo $rowdata['nombre_region']; ?><br/>
 								<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
 								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
 								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
 							</p>
@@ -185,12 +185,12 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_joi
 								<strong>Arranque : </strong><?php echo $rowdata['Arranque']; ?><br/>
 								<strong>Estado : </strong><?php echo $rowdata['EstadoPago']; ?><br/>
 								<strong>Forma Facturacion : </strong><?php echo $rowdata['DocFacturable']; ?><br/>
-								<strong>Region Facturacion : </strong><?php echo $rowdata['nombre_region_fact']; ?><br/>
+								<strong>Región Facturacion : </strong><?php echo $rowdata['nombre_region_fact']; ?><br/>
 								<strong>Ciudad Facturacion : </strong><?php echo $rowdata['nombre_comuna_fact']; ?><br/>
-								<strong>Direccion Facturacion : </strong><?php echo $rowdata['DireccionFact']; ?><br/>
+								<strong>Dirección Facturacion : </strong><?php echo $rowdata['DireccionFact']; ?><br/>
 								<strong>Giro de la empresa : </strong><?php echo $rowdata['Giro']; ?><br/>
 								<strong>Rubro de la empresa : </strong><?php echo $rowdata['Rubro']; ?><br/>
-								<strong>Razon Social de la empresa : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
+								<strong>Razón Social de la empresa : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
 							</p>
 
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos de Medicion</h2>
@@ -204,7 +204,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_joi
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<?php
-							//se despliega mensaje en caso de no existir direccion
+							//se despliega mensaje en caso de no existir dirección
 							if($rowdata["latitud"]!=0 && $rowdata["longitud"]!=0){
 								echo mapa_from_gps($rowdata["latitud"], $rowdata["longitud"], $rowdata['Identificador'], $rowdata['Nombre'], $rowdata['Direccion'], $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
 							}else{
@@ -261,10 +261,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 				$Form_Inputs->form_tittle(3, 'Datos Opcionales');
 				$Form_Inputs->form_date('Fecha Ingreso Sistema','fNacimiento', $x4, 1);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x7, 1,'fa fa-map');
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x8, 1,'fa fa-industry');
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -462,12 +462,12 @@ $arrUsers = db_select_array (false, $SIS_query, 'aguas_clientes_listado', $SIS_j
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_aguas_cliente.php?view='.simpleEncode($usuarios['idCliente'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idCliente']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_aguas_cliente.php?view='.simpleEncode($usuarios['idCliente'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idCliente']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idCliente'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar al cliente '.$usuarios['Nombre'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

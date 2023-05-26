@@ -371,11 +371,11 @@ $arrInasHoras = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_f
 								<?php
 								//mientras no haya sido utilizado se puede modificar y borrar el dato
 								if(isset($plan['idUso'])&&$plan['idUso']==1){ ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$plan['idServicios']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$plan['idServicios']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($plan['idServicios'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el Turno de '.$plan['TrabApellidoPat'].' '.$plan['TrabApellidoMat'].' '.$plan['TrabNombre'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								<?php } ?>
 							</div>

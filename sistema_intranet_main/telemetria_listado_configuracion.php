@@ -70,7 +70,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 						<?php if($rowdata['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
 						<?php } elseif($rowdata['id_Geo']==2){ ?>
-							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
+							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
@@ -123,7 +123,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 
 					//Solo para plataforma CrossTech
 					if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
-						$Form_Inputs->form_post_data(2,1,1, '<strong>Tab: </strong>Esta opcion indica en que pestaña de la pantalla principal sera mostrado el equipo (Funcion solo disponible con la interfaz de  crosstech.)' );
+						$Form_Inputs->form_post_data(2,1,1, '<strong>Tab: </strong>Esta opción indica en que pestaña de la pantalla principal sera mostrado el equipo (Funcion solo disponible con la interfaz de  crosstech.)' );
 						$Form_Inputs->form_select('Tab','idTab', $x6, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, '', $dbConn);
 					}
 
@@ -135,10 +135,10 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 					$Form_Inputs->form_select('Sensores','id_Sensores', $x8, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_select_n_auto('Cantidad de Sensores','cantSensores', $x9, 1, 1, 72);
 
-					$Form_Inputs->form_post_data(2,1,1, '<strong>Uso de Predios: </strong>Registra el ingreso y la salida de los predios configurados, para ser utilizado debe tener la opcion de Geolocalizacion activa.' );
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Uso de Predios: </strong>Registra el ingreso y la salida de los predios configurados, para ser utilizado debe tener la opción de Geolocalizacion activa.' );
 					$Form_Inputs->form_select('Uso de Predios (Cross)','idUsoPredio', $x10, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 
-					$Form_Inputs->form_post_data(2,1,1, '<strong>Backup Tabla relacionada: </strong>Opcion de respaldo de la tabla donde se guardan los datos del equipo bajo una cierta cantidad de registros.' );
+					$Form_Inputs->form_post_data(2,1,1, '<strong>Backup Tabla relacionada: </strong>Opción de respaldo de la tabla donde se guardan los datos del equipo bajo una cierta cantidad de registros.' );
 					$Form_Inputs->form_select('Backup Tabla relacionada','idBackup', $x11, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_input_number('N° Registros para Backup','NregBackup', $x12, 1);
 

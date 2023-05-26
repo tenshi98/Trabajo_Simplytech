@@ -152,7 +152,7 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 									draggable	: true,
 									position	: myLatlng,
 									map			: map,
-									title		: "Tu Ubicacion",
+									title		: "Tu Ubicación",
 									animation 	: google.maps.Animation.DROP,
 									icon      	: "<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
@@ -171,7 +171,7 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 
 							}
 							/* ************************************************************************** */	
-							//devuelve la direccion
+							//devuelve la dirección
 							function codeLatLng(lat,lng, div) {
 								geocoder = new google.maps.Geocoder();
 								var latlng = new google.maps.LatLng(lat, lng);
@@ -204,7 +204,7 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', $rowUbicacion['Latitud']);
 						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', $rowUbicacion['Longitud']);
-						$Form_Inputs->form_input_disabled( 'Direccion', 'direccion_fake', $rowUbicacion['direccion']);
+						$Form_Inputs->form_input_disabled( 'Dirección', 'direccion_fake', $rowUbicacion['direccion']);
 
 						$Form_Inputs->form_input_hidden('Latitud', $rowUbicacion['Latitud'], 2);
 						$Form_Inputs->form_input_hidden('Longitud', $rowUbicacion['Longitud'], 2);
@@ -324,7 +324,7 @@ array_push( $arrRutas,$row );
 									draggable	: true,
 									position	: myLatlng,
 									map			: map,
-									title		: "Tu Ubicacion",
+									title		: "Tu Ubicación",
 									animation 	:google.maps.Animation.DROP,
 									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
@@ -422,7 +422,7 @@ array_push( $arrRutas,$row );
 										lng: <?php echo $pos['Longitud']; ?>
 									  },
 									  contenido: 	"<div id='iw-container'>" +
-													"<div class='iw-title'>Direccion</div>" +
+													"<div class='iw-title'>Dirección</div>" +
 													"<div class='iw-content'>" +
 													"<div class='iw-subTitle'>Calle</div>" +
 													"<p><?php echo $pos['direccion']; ?></p>" +
@@ -525,7 +525,7 @@ array_push( $arrRutas,$row );
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_input_disabled( 'Latitud', 'Latitud_fake', '');
 						$Form_Inputs->form_input_disabled( 'Longitud', 'Longitud_fake', '');
-						$Form_Inputs->form_input_disabled( 'Direccion', 'direccion_fake', '');
+						$Form_Inputs->form_input_disabled( 'Dirección', 'direccion_fake', '');
 
 						$Form_Inputs->form_input_hidden('Latitud', 0, 2);
 						$Form_Inputs->form_input_hidden('Longitud', 0, 2);
@@ -557,11 +557,11 @@ array_push( $arrRutas,$row );
 								<td><?php echo $rutas['direccion']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 70px;" >  
-										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$rutas['idUbicaciones']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$rutas['idUbicaciones']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=4){
 											$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($rutas['idUbicaciones'], fecha_actual());
 											$dialogo   = '¿Realmente deseas eliminar el dato '.$rutas['direccion'].'?'; ?>
-											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 										<?php } ?>
 									</div>
 								</td>

@@ -57,9 +57,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Ubicacion Creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ubicacion Modificada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ubicacion Borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Ubicación Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ubicación Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ubicación Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -341,7 +341,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ubicacion', $rowdata['Nombre'], 'Itemizado'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ubicación', $rowdata['Nombre'], 'Itemizado'); ?>
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-8">
 		<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&idSistema='.$rowdata['idSistema'].'&new=true&lvl=1'; ?>" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Rama</a><?php } ?>
 	</div>

@@ -496,7 +496,7 @@ array_push( $arrArchivos,$row );
 									<?php
 									$ubicacion = $location.'&view=true&del_trab='.$producto['idTrabajador'];
 									$dialogo   = '¿Realmente deseas eliminar la facturacion de '.$producto['TrabajadorNombre'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								</div>
 							</td>
 						<tr>

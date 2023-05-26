@@ -327,7 +327,7 @@ array_push( $arrGrupo,$row );
 				}
 				//Verifico esta activo el dato 2
 				if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
-					echo print_select($rowdata['idNotaTipo_2'], 'Nota Condicion', 'Resolucion_2', '', $rowdata['Validar_2']);
+					echo print_select($rowdata['idNotaTipo_2'], 'Nota Condición', 'Resolucion_2', '', $rowdata['Validar_2']);
 				}
 				//Verifico esta activo el dato 3
 				if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
@@ -546,7 +546,7 @@ foreach ($arrPermisos as $prod) {
 				}
 				//Verifico esta activo el dato 2
 				if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
-					echo print_select($rowdata['idNotaTipo_2'], 'Nota Condicion', 'Resolucion_2', $_SESSION['cross_quality_reg_insp_muestras'][$_GET['editMuestra']]['Resolucion_2'], $rowdata['Validar_2']);
+					echo print_select($rowdata['idNotaTipo_2'], 'Nota Condición', 'Resolucion_2', $_SESSION['cross_quality_reg_insp_muestras'][$_GET['editMuestra']]['Resolucion_2'], $rowdata['Validar_2']);
 				}
 				//Verifico esta activo el dato 3
 				if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
@@ -761,7 +761,7 @@ foreach ($arrPermisos as $prod) {
 				}
 				//Verifico esta activo el dato 2
 				if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
-					echo print_select($rowdata['idNotaTipo_2'], 'Nota Condicion', 'Resolucion_2', '', $rowdata['Validar_2']);
+					echo print_select($rowdata['idNotaTipo_2'], 'Nota Condición', 'Resolucion_2', '', $rowdata['Validar_2']);
 				}
 				//Verifico esta activo el dato 3
 				if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
@@ -948,7 +948,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x4, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', $zx1, 0,
 										 'Variedad','idProducto', $x5, 2, 'idProducto', 'Nombre', 'variedades_listado', $zx2, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x6,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  $z,   0,
+				$Form_Inputs->form_select_depend5('Ubicación', 'idUbicacion',  $x6,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  $z,   0,
 							                 'Nivel 1', 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0,
 							                 'Nivel 2', 'idUbicacion_lvl_2',  $x8,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
 							                 'Nivel 3', 'idUbicacion_lvl_3',  $x9,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
@@ -1017,7 +1017,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 						<td><?php echo $_SESSION['cross_quality_reg_insp_basicos']['Producto']; ?></td>
 					</tr>
 					<tr>
-						<td class="meta-head">Ubicacion</td>
+						<td class="meta-head">Ubicación</td>
 						<td>
 							<?php echo $_SESSION['cross_quality_reg_insp_basicos']['Ubicacion'];
 							if(isset($_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_1'])&&$_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_1']!=''){echo $_SESSION['cross_quality_reg_insp_basicos']['UbicacionLVL_1'];}
@@ -1300,7 +1300,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x4, 2, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', $zx1, 0,
 										 'Variedad','idProducto', $x5, 2, 'idProducto', 'Nombre', 'variedades_listado', $zx2, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x6,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  $z,   0,
+				$Form_Inputs->form_select_depend5('Ubicación', 'idUbicacion',  $x6,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  $z,   0,
 							                 'Nivel 1', 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0,
 							                 'Nivel 2', 'idUbicacion_lvl_2',  $x8,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
 							                 'Nivel 3', 'idUbicacion_lvl_3',  $x9,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
@@ -1487,7 +1487,7 @@ foreach ($arrProductos as $prod) { $zx2 .= " OR (idEstado=1 AND idProducto={$pro
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x4, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', $zx1, 0,
 										 'Variedad','idProducto', $x5, 1, 'idProducto', 'Nombre', 'variedades_listado', $zx2, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x6,  1,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1',   0,
+				$Form_Inputs->form_select_depend5('Ubicación', 'idUbicacion',  $x6,  1,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1',   0,
 											 'Nivel 1', 'idUbicacion_lvl_1',  $x7,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0,
 							                 'Nivel 2', 'idUbicacion_lvl_2',  $x8,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
 							                 'Nivel 3', 'idUbicacion_lvl_3',  $x9,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
@@ -1590,7 +1590,7 @@ foreach ($arrProductos as $prod) { $zx2 .= " OR (idEstado=1 AND idProducto={$pro
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_cross_quality_registrar_inspecciones.php?view='.simpleEncode($tipo['idAnalisis'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_cross_quality_registrar_inspecciones.php?view='.simpleEncode($tipo['idAnalisis'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo 'cross_quality_registrar_inspecciones_edit.php?edit='.$tipo['idAnalisis']; ?>" title="Editar Inspeccion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>

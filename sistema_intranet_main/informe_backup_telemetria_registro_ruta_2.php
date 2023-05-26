@@ -361,7 +361,7 @@ alert_post_data(2,1,1, $Alert_Text);
 				}else{
 					$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x5, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 				}
-				$Form_Inputs->form_post_data(1,1,1, '<strong>Solo aplicaciones: </strong>Esta opcion se utiliza para mostrar solo las rutas realizadas mientras estaba haciendo una aplicacion (Opcion Si), o toda la ruta que realizo, incluyendo cuando solo se estaba movilizando (Opcion No)');
+				$Form_Inputs->form_post_data(1,1,1, '<strong>Solo aplicaciones: </strong>Esta opción se utiliza para mostrar solo las rutas realizadas mientras estaba haciendo una aplicacion (Opción Si), o toda la ruta que realizo, incluyendo cuando solo se estaba movilizando (Opción No)');
 				$Form_Inputs->form_select('Solo aplicaciones','idOpciones', $x6, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 
 				?>

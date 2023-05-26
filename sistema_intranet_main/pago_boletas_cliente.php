@@ -141,7 +141,7 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 								<tr class="odd">
 									<td>
 										<div class="btn-group" style="width: 70px;" >
-											<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_boleta_honorarios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+											<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_boleta_honorarios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Información" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 											<?php if ($rowlevel['level']>=2){
 												$ubicacion = $location.'&del_boleta='.$tipo['idFacturacion'];
 												$dialogo   = '¿Realmente deseas eliminar la Boleta N° '.$tipo['N_Doc'].'?'; ?>
@@ -168,7 +168,7 @@ if(isset($_SESSION['pagos_boletas_clientes'])){
 									</td>
 									<td align="right">
 										<?php if(isset($tipo['ValorReal'])&&$tipo['ValorReal']!=''){ ?>
-											<a onclick="delpago(<?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+											<a onclick="delpago(<?php echo $tipo['idFacturacion']; ?>)"  title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 										<?php }else{ ?>
 											<a onclick="addpago(<?php echo $tipo['idFacturacion']; ?>, <?php echo $total; ?>)"  title="Asignar datos" class="btn btn-primary btn-sm tooltip"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
 										<?php } ?>
@@ -511,7 +511,7 @@ array_push( $arrBoletas,$row );
 								<td align="right"><?php echo valores($tipo['ValorTotal']-($tipo['MontoPagado']), 0); ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_boleta_honorarios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_boleta_honorarios.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Información" class="btn btn-primary btn-sm iframe tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									</div>
 								</td>
 							</tr>

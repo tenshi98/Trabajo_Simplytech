@@ -97,7 +97,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				$Form_Inputs->form_input_text('Direccion Web', 'Direccion', $x2, 2);
+				$Form_Inputs->form_input_text('Dirección Web', 'Dirección', $x2, 2);
 
 				$Form_Inputs->form_input_hidden('idSitio', $_GET['id'], 2);
 				?>
@@ -135,7 +135,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
-				$Form_Inputs->form_input_text('Direccion Web', 'Direccion', $x2, 2);
+				$Form_Inputs->form_input_text('Dirección Web', 'Dirección', $x2, 2);
 
 				?>
 
@@ -265,11 +265,11 @@ $arrCanales = db_select_array (false, $SIS_query, 'seg_vecinal_sitios_listado', 
 						<td><?php echo $cat['NombreCanal']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$cat['idSitio']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$cat['idSitio']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($cat['idSitio'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el sitio '.$cat['NombreCanal'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

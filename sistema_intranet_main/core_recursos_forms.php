@@ -143,7 +143,7 @@ require_once 'core/Web.Header.Main.php';
 				
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Informacion');
+				$Form_Inputs->form_tittle(3, 'Información');
 				$Form_Inputs->form_post_data(1,1,1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt' );
 				$Form_Inputs->form_post_data(2,1,1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt' );
 				$Form_Inputs->form_post_data(3,1,1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt' );

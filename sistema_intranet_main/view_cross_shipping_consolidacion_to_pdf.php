@@ -36,7 +36,7 @@ if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&simpleDecode($_GET['idSist
 	$rowEmpresa = db_select_data (false, 'Config_imgLogo, idOpcionesGen_5', 'core_sistemas','', 'idSistema ='.simpleDecode($_GET['idSistema'], fecha_actual()), $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowEmpresa');
 }
 /********************************************************************/
-// Se trae la informacion del producto
+// Se trae la información del producto
 $SIS_query = '
 cross_shipping_consolidacion.Creacion_fecha,
 cross_shipping_consolidacion.CTNNombreCompañia,
@@ -253,7 +253,7 @@ $html .= '
 
 						<tr><td colspan="4" rowspan="1" style="vertical-align: top;background-color:#DDD"><strong>Cuerpo Parametros Evaluados</strong></td></tr>
 						<tr>
-							<td style="vertical-align: top; width:20%;background-color:#DDD;">Condicion CTN</td>
+							<td style="vertical-align: top; width:20%;background-color:#DDD;">Condición CTN</td>
 							<td style="vertical-align: top; width:30%;">'.$rowConso['Condicion'].'</td>
 							<td style="vertical-align: top; width:20%;background-color:#DDD;">Sellado Piso</td>
 							<td style="vertical-align: top; width:30%;">'.$rowConso['Sellado'].'</td>
@@ -296,7 +296,7 @@ $html .= '
 										</thead>
 										<tbody>
 											<tr>
-												<td style="vertical-align: top;">Ubicacion</td>
+												<td style="vertical-align: top;">Ubicación</td>
 												<td style="vertical-align: top;">Posicion</td>
 												<td style="vertical-align: top;">Envase</td>
 												<td style="vertical-align: top;">Nro. De Pallet</td>

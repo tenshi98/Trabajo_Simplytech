@@ -294,7 +294,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 							<?php }
 							if($rowdata['id_Geo']==2){ ?>
 								<strong>Zona : </strong><?php echo $rowdata['Zona']; ?><br/>
-								<strong>Direccion : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowdata['Direccion'].', '.$rowdata['Comuna'].', '.$rowdata['Ciudad']; ?><br/>
 							<?php } ?>
 							<strong>Sensores : </strong><?php echo $rowdata['Sensores'].' ';if($rowdata['id_Sensores']==1){echo '('.$rowdata['cantSensores'].' Sensores)';} ?><br/>
 							<strong>Tiempo Fuera Linea Maximo : </strong><?php echo $rowdata['TiempoFueraLinea']; ?> Horas<br/>
@@ -328,11 +328,11 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 
 							<div class="form-group" style="padding-top:10px;padding-bottom:10px;">
 								<?php if(isset($rowdata['id_Geo'])&&$rowdata['id_Geo']!=''&&$rowdata['id_Geo']==1){ ?>
-									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_flota_view_equipo_mediciones.php?view='.$X_Puntero.'&cantSensores='.$rowdata['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ultima Ubicacion</a>
+									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_flota_view_equipo_mediciones.php?view='.$X_Puntero.'&cantSensores='.$rowdata['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ultima Ubicación</a>
 									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_1.php?view='.$X_Puntero; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Sensores</a>
 									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_velocidad.php?view='.$X_Puntero; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Velocidades</a>
 								<?php }elseif(isset($rowdata['id_Geo'])&&$rowdata['id_Geo']!=''&&$rowdata['id_Geo']==2){ ?>
-									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.$X_Puntero.'&cantSensores='.$rowdata['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ultima Ubicacion</a>
+									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'telemetria_gestion_sensores_view_equipo_mediciones.php?view='.$X_Puntero.'&cantSensores='.$rowdata['cantSensores']; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Ver Ultima Ubicación</a>
 									<a target="_blank" rel="noopener noreferrer" href="<?php echo 'informe_telemetria_registro_sensores_2.php?view='.$X_Puntero; ?>" class="btn btn-default pull-right margin_width fmrbtn" >Informe Medicion Sensores</a>
 								<?php } ?>
 								<div style="padding-bottom:10px;padding-top:10px;"></div>
@@ -418,7 +418,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 								<strong>Nombre : </strong><?php echo $rowTrabajador['Nombre'].' '.$rowTrabajador['ApellidoPat'].' '.$rowTrabajador['ApellidoMat']; ?><br/>
 								<strong>Fono : </strong><?php echo formatPhone($rowTrabajador['Fono']); ?><br/>
 								<strong>Rut : </strong><?php echo $rowTrabajador['Rut']; ?><br/>
-								<strong>Direccion : </strong><?php echo $rowTrabajador['Direccion'].', '.$rowTrabajador['nombre_comuna'].', '.$rowTrabajador['nombre_region']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowTrabajador['Direccion'].', '.$rowTrabajador['nombre_comuna'].', '.$rowTrabajador['nombre_region']; ?><br/>
 								<strong>Observaciones : </strong><?php echo $rowTrabajador['Observaciones']; ?>
 							</p>
 
@@ -489,7 +489,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 									<th>Valor</th>
 									<th>Min</th>
 									<th>Max</th>
-									<?php if($rowdata['id_Geo']==1){ ?><th>Ubicacion</th><?php } ?>
+									<?php if($rowdata['id_Geo']==1){ ?><th>Ubicación</th><?php } ?>
 								</tr>
 							</thead>
 
@@ -507,7 +507,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 										<?php if($rowdata['id_Geo']==1){ ?>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'_view.php?view='.$error['idErrores'].'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+													<a href="<?php echo 'informe_telemetria_errores_'.$rowdata['id_Geo'].'_view.php?view='.$error['idErrores'].'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										<?php } ?>
@@ -537,7 +537,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 									<th>Fecha Termino</th>
 									<th>Hora Termino</th>
 									<th>Tiempo</th>
-									<?php if($rowdata['id_Geo']==1){ ?><th>Ubicacion</th><?php } ?>
+									<?php if($rowdata['id_Geo']==1){ ?><th>Ubicación</th><?php } ?>
 								</tr>
 							</thead>
 
@@ -552,7 +552,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 										<?php if($rowdata['id_Geo']==1){ ?>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'_view.php?view='.$error['idFueraLinea'].'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+													<a href="<?php echo 'informe_telemetria_fuera_linea_'.$rowdata['id_Geo'].'_view.php?view='.$error['idFueraLinea'].'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 												</div>
 											</td>
 										<?php } ?>
@@ -570,7 +570,7 @@ $arrFlinea = db_select_array (false, $SIS_query, 'telemetria_listado_error_fuera
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

@@ -46,7 +46,7 @@ require_once '0_validate_user_1.php';
 			case 'idTipo':                if(empty($idTipo)){                 $error['idTipo']                 = 'error/No ha seleccionado el tipo de evento';}break;
 			case 'idCiudad':              if(empty($idCiudad)){               $error['idCiudad']               = 'error/No ha seleccionado la ciudad';}break;
 			case 'idComuna':              if(empty($idComuna)){               $error['idComuna']               = 'error/No ha seleccionado la comuna';}break;
-			case 'Direccion':             if(empty($Direccion)){              $error['Direccion']              = 'error/No ha ingresado el Direccion';}break;
+			case 'Direccion':             if(empty($Direccion)){              $error['Direccion']              = 'error/No ha ingresado el Dirección';}break;
 			case 'GeoLatitud':            if(empty($GeoLatitud)){             $error['GeoLatitud']             = 'error/No ha ingresado la latitud';}break;
 			case 'GeoLongitud':           if(empty($GeoLongitud)){            $error['GeoLongitud']            = 'error/No ha ingresado la longitud';}break;
 			case 'Fecha':                 if(empty($Fecha)){                  $error['Fecha']                  = 'error/No ha ingresado la fecha del evento';}break;
@@ -142,12 +142,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

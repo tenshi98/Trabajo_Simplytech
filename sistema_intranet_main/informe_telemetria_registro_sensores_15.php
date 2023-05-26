@@ -225,8 +225,8 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'equipo_desc':        $order_by = 'telemetria_listado.Nombre DESC ';          $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Equipo Descendente';break;
 		case 'grupo_asc':          $order_by = 'telemetria_listado_grupos.Nombre ASC ';    $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Grupo Ascendente'; break;
 		case 'grupo_desc':         $order_by = 'telemetria_listado_grupos.Nombre DESC ';   $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Grupo Descendente';break;
-		case 'grafico_asc':        $order_by = 'core_sistemas_opciones.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Opcion Grafico Ascendente'; break;
-		case 'grafico_desc':       $order_by = 'core_sistemas_opciones.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Opcion Grafico Descendente';break;
+		case 'grafico_asc':        $order_by = 'core_sistemas_opciones.Nombre ASC ';       $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Opción Grafico Ascendente'; break;
+		case 'grafico_desc':       $order_by = 'core_sistemas_opciones.Nombre DESC ';      $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Opción Grafico Descendente';break;
 		case 'estado_asc':         $order_by = 'core_estados.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Estado Ascendente'; break;
 		case 'estado_desc':        $order_by = 'core_estados.Nombre DESC ';                $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Estado Descendente';break;
 		case 'observacion_asc':    $order_by = 'telemetria_tracking.idTracking ASC ';      $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Observacion Ascendente'; break;
@@ -466,12 +466,12 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 								if(isset($cat['idEstado']) && $cat['idEstado']!=''){    $Filtrar .= "&idEstado=".$cat['idEstado'];}
 
 								?>
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'informe_telemetria_registro_sensores_12.php?submit_filter=Filtrar'.$Filtrar; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$cat['idTracking']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'informe_telemetria_registro_sensores_12.php?submit_filter=Filtrar'.$Filtrar; ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$cat['idTracking']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($cat['idTracking'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el tracking del equipo '.$cat['equipo'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

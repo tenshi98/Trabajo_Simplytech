@@ -540,12 +540,12 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 								echo '
 								<td>
 									<div class="btn-group" style="width: 70px;" >
-										<a href="'.$location.'&editHora=true&nSem='.$nSem.$cadena.$subcadena.'" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+										<a href="'.$location.'&editHora=true&nSem='.$nSem.$cadena.$subcadena.'" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 									';
 									//se verifica que el usuario no sea uno mismo
 									$ubicacion = $location.'&del_horas=true&nSem='.$nSem.$subcadena;
 									$dialogo   = '¿Realmente deseas eliminar el registro de la semana?';
-									echo '<a onClick="dialogBox(\''.$ubicacion.'\', \''.$dialogo.'\')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									echo '<a onClick="dialogBox(\''.$ubicacion.'\', \''.$dialogo.'\')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 
 									</div>
 								</td>';
@@ -836,7 +836,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'trabajadores_horas_extras_factur
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_horas_extras.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_horas_extras.php?view='.simpleEncode($tipo['idFacturacion'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>

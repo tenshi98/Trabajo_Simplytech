@@ -55,8 +55,8 @@ require_once '0_validate_user_1.php';
 			case 'LinkNombre':     if(empty($LinkNombre)){    $error['LinkNombre']    = 'error/No ha ingresado el nombre del enlace';}break;
 			case 'LinkStyle':      if(empty($LinkStyle)){     $error['LinkStyle']     = 'error/No ha ingresado el estilo del enlace';}break;
 			case 'LinkURL':        if(empty($LinkURL)){       $error['LinkURL']       = 'error/No ha ingresado la URL del enlace';}break;
-			case 'idNewTab':       if(empty($idNewTab)){      $error['idNewTab']      = 'error/No ha seleccionado la opcion de nuevo tab';}break;
-			case 'idPopup':        if(empty($idPopup)){       $error['idPopup']       = 'error/No ha seleccionado la opcion de popup';}break;
+			case 'idNewTab':       if(empty($idNewTab)){      $error['idNewTab']      = 'error/No ha seleccionado la opción de nuevo tab';}break;
+			case 'idPopup':        if(empty($idPopup)){       $error['idPopup']       = 'error/No ha seleccionado la opción de popup';}break;
 			case 'idEstado':       if(empty($idEstado)){      $error['idEstado']      = 'error/No ha seleccionado el estado';}break;
 			case 'idPosicion':     if(empty($idPosicion)){    $error['idPosicion']    = 'error/No ha seleccionado la posicion';}break;
 			case 'Imagen':         if(empty($Imagen)){        $error['Imagen']        = 'error/No ha ingresado la imagen de fondo';}break;
@@ -220,12 +220,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

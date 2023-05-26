@@ -61,7 +61,7 @@ require_once '0_validate_user_1.php';
 			case 'id_Geo':           if(empty($id_Geo)){            $error['id_Geo']           = 'error/No ha seleccionado la geolocalizacion';}break;
 			case 'id_Sensores':      if(empty($id_Sensores)){       $error['id_Sensores']      = 'error/No ha seleccionado el uso de sensores';}break;
 			case 'cantSensores':     if(empty($cantSensores)){      $error['cantSensores']     = 'error/No ha ingresado la cantidad de sensores';}break;
-			case 'idAPNListado':     if(empty($idAPNListado)){      $error['idAPNListado']     = 'error/No ha ingresado la direccion APN';}break;
+			case 'idAPNListado':     if(empty($idAPNListado)){      $error['idAPNListado']     = 'error/No ha ingresado la dirección APN';}break;
 			case 'idPuertoSerial':   if(empty($idPuertoSerial)){    $error['idPuertoSerial']   = 'error/No ha seleccionado el puerto serial';}break;
 			case 'pinMode':          if(empty($pinMode)){           $error['pinMode']          = 'error/No ha ingresado el pinMode';}break;
 			case 'idModificado':     if(empty($idModificado)){      $error['idModificado']     = 'error/No ha seleccionado si el script esta modificado';}break;
@@ -259,12 +259,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

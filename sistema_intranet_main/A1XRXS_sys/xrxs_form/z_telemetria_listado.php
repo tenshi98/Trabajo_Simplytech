@@ -145,12 +145,12 @@ require_once '0_validate_user_1.php';
 			case 'NumSerie':                          if(empty($NumSerie)){                          $error['NumSerie']                      = 'error/No ha ingresado el Numero de Serie';}break;
 			case 'idCiudad':                          if(empty($idCiudad)){                          $error['idCiudad']                      = 'error/No ha seleccionado la ciudad';}break;
 			case 'idComuna':                          if(empty($idComuna)){                          $error['idComuna']                      = 'error/No ha seleccionado la comuna';}break;
-			case 'Direccion':                         if(empty($Direccion)){                         $error['Direccion']                     = 'error/No ha ingresado la direccion';}break;
+			case 'Direccion':                         if(empty($Direccion)){                         $error['Direccion']                     = 'error/No ha ingresado la dirección';}break;
 			case 'GeoLatitud':                        if(empty($GeoLatitud)){                        $error['GeoLatitud']                    = 'error/No ha ingresado la latitud';}break;
 			case 'GeoLongitud':                       if(empty($GeoLongitud)){                       $error['GeoLongitud']                   = 'error/No ha ingresado la longitud';}break;
 			case 'GeoErrores':                        if(empty($GeoErrores)){                        $error['GeoErrores']                    = 'error/No ha ingresado los errores';}break;
 			case 'GeoVelocidad':                      if(empty($GeoVelocidad)){                      $error['GeoVelocidad']                  = 'error/No ha ingresado la velocidad';}break;
-			case 'GeoDireccion':                      if(empty($GeoDireccion)){                      $error['GeoDireccion']                  = 'error/No ha ingresado la direccion';}break;
+			case 'GeoDireccion':                      if(empty($GeoDireccion)){                      $error['GeoDireccion']                  = 'error/No ha ingresado la dirección';}break;
 			case 'GeoMovimiento':                     if(empty($GeoMovimiento)){                     $error['GeoMovimiento']                 = 'error/No ha ingresado el movimiento';}break;
 			case 'GeoTiempoDetencion':                if(empty($GeoTiempoDetencion)){                $error['GeoTiempoDetencion']            = 'error/No ha ingresado el tiempo de detencion';}break;
 			case 'LastUpdateFecha':                   if(empty($LastUpdateFecha)){                   $error['LastUpdateFecha']               = 'error/No ha ingresado la fecha de actualizacion';}break;
@@ -161,7 +161,7 @@ require_once '0_validate_user_1.php';
 			case 'idDispositivo':                     if(empty($idDispositivo)){                     $error['idDispositivo']                 = 'error/No ha seleccionado el dispositivo';}break;
 			case 'idShield':                          if(!isset($idShield)){                         $error['idShield']                      = 'error/No ha seleccionado la placa shield';}break;
 			case 'idFormaEnvio':                      if(!isset($idFormaEnvio)){                     $error['idFormaEnvio']                  = 'error/No ha seleccionado una forma de envio';}break;
-			case 'idGenerador':                       if(!isset($idGenerador)){                      $error['idGenerador']                   = 'error/No ha seleccionado la opcion de uso de generador';}break;
+			case 'idGenerador':                       if(!isset($idGenerador)){                      $error['idGenerador']                   = 'error/No ha seleccionado la opción de uso de generador';}break;
 			case 'idTelGenerador':                    if(!isset($idTelGenerador)){                   $error['idTelGenerador']                = 'error/No ha seleccionado el generador';}break;
 			case 'FechaInsGen':                       if(!isset($FechaInsGen)){                      $error['FechaInsGen']                   = 'error/No ha ingresado la fecha de instalacion del generacion';}break;
 			case 'Sim_Num_Tel':                       if(empty($Sim_Num_Tel)){                       $error['Sim_Num_Tel']                   = 'error/No ha ingresado el numero telefonico de la SIM';}break;
@@ -696,12 +696,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -1433,14 +1433,14 @@ require_once '0_validate_user_1.php';
 							if(!is_writable('upload/equipo_tel_'.$idTelemetria.'.json')){
 								//Contenido del archivo
 								$content = '{"sensor": "'.$idEstadoEncendido.'"}';
-								//creacion del archivo
+								//creación del archivo
 								file_put_contents('upload/equipo_tel_'.$idTelemetria.'.json', $content, FILE_APPEND | LOCK_EX);
 							}else{
 								//Elimino el archivo
 								unlink('upload/equipo_tel_'.$idTelemetria.'.json');
 								//Contenido del archivo
 								$content = '{"sensor": "'.$idEstadoEncendido.'"}';
-								//creacion del archivo
+								//creación del archivo
 								file_put_contents('upload/equipo_tel_'.$idTelemetria.'.json', $content, FILE_APPEND | LOCK_EX);	
 							}
 						}catch(Exception $e) {
@@ -1514,12 +1514,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

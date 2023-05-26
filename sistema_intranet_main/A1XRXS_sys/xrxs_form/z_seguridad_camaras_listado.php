@@ -51,13 +51,13 @@ require_once '0_validate_user_1.php';
 			case 'idPais':              if(empty($idPais)){              $error['idPais']               = 'error/No ha seleccionado el Pais';}break;
 			case 'idCiudad':            if(empty($idCiudad)){            $error['idCiudad']             = 'error/No ha seleccionado la Ciudad';}break;
 			case 'idComuna':            if(empty($idComuna)){            $error['idComuna']             = 'error/No ha seleccionado la Comuna';}break;
-			case 'Direccion':           if(empty($Direccion)){           $error['Direccion']            = 'error/No ha seleccionado la Direccion';}break;
+			case 'Direccion':           if(empty($Direccion)){           $error['Direccion']            = 'error/No ha seleccionado la Dirección';}break;
 			case 'N_Camaras':           if(empty($N_Camaras)){           $error['N_Camaras']            = 'error/No ha ingresado el numero de camaras';}break;
 			case 'idSubconfiguracion':  if(empty($idSubconfiguracion)){  $error['idSubconfiguracion']   = 'error/No ha seleccionado si existe subconfiguracion';}break;
 			case 'idTipoCamara':        if(empty($idTipoCamara)){        $error['idTipoCamara']         = 'error/No ha seleccionado el tipo de camara';}break;
 			case 'Config_usuario':      if(empty($Config_usuario)){      $error['Config_usuario']       = 'error/No ha ingresado el usuario';}break;
 			case 'Config_Password':     if(empty($Config_Password)){     $error['Config_Password']      = 'error/No ha ingresado el password';}break;
-			case 'Config_IP':           if(empty($Config_IP)){           $error['Config_IP']            = 'error/No ha ingresado la direccion web o la IP';}break;
+			case 'Config_IP':           if(empty($Config_IP)){           $error['Config_IP']            = 'error/No ha ingresado la dirección web o la IP';}break;
 			case 'Config_Puerto':       if(empty($Config_Puerto)){       $error['Config_Puerto']        = 'error/No ha ingresado el puerto de comunicacion';}break;
 			case 'Config_Web':          if(empty($Config_Web)){          $error['Config_Web']           = 'error/No ha ingresado la pagina de acceso directo';}break;
 			case 'idCanal':             if(empty($idCanal)){             $error['idCanal']              = 'error/No ha seleccionado la camara';}break;
@@ -232,12 +232,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -391,12 +391,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

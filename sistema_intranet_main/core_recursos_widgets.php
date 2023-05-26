@@ -92,12 +92,12 @@ echo widget_Ficha_5('bg-black', 'fa-cog', 'Sistema', 'Nombre', 'www.google.cl', 
 echo '<div class="clearfix"></div>';
 
 //widget_Ficha_6($link, $bg_color, $icon, $titulo, $subtitulo, $linktext)
-echo widget_Ficha_6('www.google.cl', 'circle_dark-blue', 'fa-users', 'Usuarios', 265, 'Mas informacion');
-echo widget_Ficha_6('www.google.cl', 'circle_green', 'fa-money', 'Usuarios', 265, 'Mas informacion');
-echo widget_Ficha_6('www.google.cl', 'circle_orange', 'fa-bell', 'Usuarios', 265, 'Mas informacion');
-echo widget_Ficha_6('www.google.cl', 'circle_blue', 'fa-tasks', 'Usuarios', 265, 'Mas informacion');
-echo widget_Ficha_6('www.google.cl', 'circle_red', 'fa-shopping-cart', 'Usuarios', 265, 'Mas informacion');
-echo widget_Ficha_6('www.google.cl', 'circle_purple', 'fa-comments', 'Usuarios', 265, 'Mas informacion');
+echo widget_Ficha_6('www.google.cl', 'circle_dark-blue', 'fa-users', 'Usuarios', 265, 'Más información');
+echo widget_Ficha_6('www.google.cl', 'circle_green', 'fa-money', 'Usuarios', 265, 'Más información');
+echo widget_Ficha_6('www.google.cl', 'circle_orange', 'fa-bell', 'Usuarios', 265, 'Más información');
+echo widget_Ficha_6('www.google.cl', 'circle_blue', 'fa-tasks', 'Usuarios', 265, 'Más información');
+echo widget_Ficha_6('www.google.cl', 'circle_red', 'fa-shopping-cart', 'Usuarios', 265, 'Más información');
+echo widget_Ficha_6('www.google.cl', 'circle_purple', 'fa-comments', 'Usuarios', 265, 'Más información');
 echo '<div class="clearfix"></div>';
 
 //widget_Ficha_7($icon, $bg_color, $titulo, $value)

@@ -110,7 +110,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_body', $SIS_join, 
 				$Form_Inputs->form_input_icon('Estilo del Icono', 'IconoStyle', $x3, 1,'fa fa-file-image-o');
 
 				$Form_Inputs->form_post_data(2,1,1, 'Titulo del Body (Opcional).' );
-				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x4, 1);
+				$Form_Inputs->form_input_text('Título', 'Titulo', $x4, 1);
 				$Form_Inputs->form_input_icon('Estilo del Titulo', 'TituloStyle', $x5, 1,'fa fa-file-image-o');
 
 				$Form_Inputs->form_post_data(2,1,1, 'Texto del Body (Opcional).' );
@@ -184,7 +184,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_icon('Estilo del Icono', 'IconoStyle', $x3, 1,'fa fa-file-image-o');
 
 				$Form_Inputs->form_post_data(2,1,1, 'Titulo del Body (Opcional).' );
-				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x4, 1);
+				$Form_Inputs->form_input_text('Título', 'Titulo', $x4, 1);
 				$Form_Inputs->form_input_icon('Estilo del Titulo', 'TituloStyle', $x5, 1,'fa fa-file-image-o');
 
 				$Form_Inputs->form_post_data(2,1,1, 'Texto del Body (Opcional).' );
@@ -296,11 +296,11 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 								<td><label class="label <?php if(isset($tipos['idEstado'])&&$tipos['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $tipos['Estado']; ?></label></td>
 								<td>
 									<div class="btn-group" style="width: 70px;" >
-										<a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$tipos['idBody']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+										<a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$tipos['idBody']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 										<?php
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($tipos['idBody'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el body '.$tipos['Titulo'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									</div>
 								</td>
 							</tr>

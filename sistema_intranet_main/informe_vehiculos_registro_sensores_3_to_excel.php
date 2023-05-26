@@ -141,7 +141,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 				->setCellValue('D2', 'Latitud')
 				->setCellValue('E2', 'Longitud')
 				->setCellValue('F2', 'Velocidad')
-				->setCellValue('G2', 'Direccion')
+				->setCellValue('G2', 'Dirección')
 				->setCellValue('H2', 'Movimiento');
 			
 	/***********************************************************/
@@ -206,7 +206,7 @@ if(isset($_GET['idVehiculo'])&&$_GET['idVehiculo']!=''){
 					->setCellValue('D2', 'Latitud')
 					->setCellValue('E2', 'Longitud')
 					->setCellValue('F2', 'Velocidad')
-					->setCellValue('G2', 'Direccion')
+					->setCellValue('G2', 'Dirección')
 					->setCellValue('H2', 'Movimiento');
 
 		/***********************************************************/

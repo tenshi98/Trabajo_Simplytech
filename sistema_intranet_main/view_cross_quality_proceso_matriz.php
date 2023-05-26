@@ -203,9 +203,9 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 												if(isset($rowdata['idNota_1'])&&$rowdata['idNota_1']==1){
 													echo '<strong>Nota Calidad </strong><br/>';
 												}
-												//Nota Condicion
+												//Nota Condición
 												if(isset($rowdata['idNota_2'])&&$rowdata['idNota_2']==1){
-													echo '<strong>Nota Condicion </strong><br/>';
+													echo '<strong>Nota Condición </strong><br/>';
 												}
 												//Calificacion
 												if(isset($rowdata['idNota_3'])&&$rowdata['idNota_3']==1){
@@ -232,7 +232,7 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

@@ -131,7 +131,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_script', $SIS_
 				$Form_Inputs->form_input_disabled('Sensores','fake_emp', $rowdata['Sensores']);
 				$Form_Inputs->form_input_disabled('Cantidad Sensores','fake_emp', $rowdata['cantSensores']);
 				//INPUTS
-				$Form_Inputs->form_select('Direccion APN','idAPNListado', $x1, 2, 'idAPNListado', 'Nombre', 'telemetria_listado_script_apn_listado', 0, '', $dbConn);
+				$Form_Inputs->form_select('Dirección APN','idAPNListado', $x1, 2, 'idAPNListado', 'Nombre', 'telemetria_listado_script_apn_listado', 0, '', $dbConn);
 				$Form_Inputs->form_select('Puerto Serial','idPuertoSerial', $x2, 2, 'idPuertoSerial', 'Nombre', 'telemetria_listado_script_puerto_serial', 0, '', $dbConn);
 				$Form_Inputs->form_input_number_spinner('pinMode','pinMode', $x3, 0, 70, '1', 0, 2);
 				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x4, 2);
@@ -232,7 +232,7 @@ $rowdata = db_select_data (false, $SIS_query , 'telemetria_listado', $SIS_join, 
 				$Form_Inputs->form_input_disabled('Sensores','fake_emp', $rowdata['Sensores']);
 				$Form_Inputs->form_input_disabled('Cantidad Sensores','fake_emp', $rowdata['cantSensores']);
 				//INPUTS
-				$Form_Inputs->form_select('Direccion APN','idAPNListado', $x1, 2, 'idAPNListado', 'Nombre', 'telemetria_listado_script_apn_listado', 0, '', $dbConn);
+				$Form_Inputs->form_select('Dirección APN','idAPNListado', $x1, 2, 'idAPNListado', 'Nombre', 'telemetria_listado_script_apn_listado', 0, '', $dbConn);
 				$Form_Inputs->form_select('Puerto Serial','idPuertoSerial', $x2, 2, 'idPuertoSerial', 'Nombre', 'telemetria_listado_script_puerto_serial', 0, '', $dbConn);
 				$Form_Inputs->form_input_number_spinner('pinMode','pinMode', $x3, 0, 70, '1', 0, 2);
 				$Form_Inputs->form_textarea('Observaciones', 'Observacion', $x4, 2);
@@ -315,7 +315,7 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 						<?php if($rowdata['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
 						<?php } elseif($rowdata['id_Geo']==2){ ?>
-							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
+							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
@@ -359,12 +359,12 @@ $arrScripts = db_select_array (false, $SIS_query, 'telemetria_listado_script', $
 							</td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_telemetria_script.php?view='.simpleEncode($script['idScript'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$script['idScript']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_telemetria_script.php?view='.simpleEncode($script['idScript'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$script['idScript']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($script['idScript'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la observacion del usuario '.$script['nombre_usuario'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

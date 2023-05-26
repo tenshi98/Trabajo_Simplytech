@@ -211,7 +211,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 						<th>Control de</th>
 						<th>Especie</th>
 						<th>Consumo de Agua</th>
-						<th>Condicion Climatica C°</th>
+						<th>Condición Climatica C°</th>
 						<th>Viento KM</th>
 						<th>Lavado de maquinaria</th>
 						<th>Caldo sobrante</th>
@@ -300,7 +300,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_listad
 							<td><strong>Control de</strong></td>
 							<td><strong>Especie</strong></td>
 							<td><strong>Consumo de Agua</strong></td>
-							<td><strong>Condicion Climatica C°</strong></td>
+							<td><strong>Condición Climatica C°</strong></td>
 							<td><strong>Viento KM</strong></td>
 							<td><strong>Lavado de maquinaria</strong></td>
 							<td><strong>Caldo sobrante</strong></td>

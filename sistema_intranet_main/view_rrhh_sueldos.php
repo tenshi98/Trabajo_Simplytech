@@ -34,7 +34,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-//Informacion basica
+//Información basica
 $SIS_query = 'fecha_auto, Creacion_fecha, Fecha_desde, Fecha_hasta, Observaciones,UF, UTM, IMM, 
 TopeImpAFP, TopeImpIPS, TopeSegCesantia, TopeAPVMensual, TopeDepConv,idTrabajador,idTipoContratoTrab,
 TipoContratoTrab,horas_pactadas,Gratificacion,TrabajadorNombre,TrabajadorRut,TrabajadorEmail,
@@ -517,7 +517,7 @@ if(isset($rowdata['MontoPagado'])&&$rowdata['MontoPagado']!=0){ ?>
 
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

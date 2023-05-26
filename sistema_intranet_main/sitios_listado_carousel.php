@@ -100,7 +100,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_carousel', $SIS_jo
 				$Form_Inputs->form_select_n_auto('Posicion','idPosicion', $x1, 2, 1, 100 );
 				$Form_Inputs->form_input_icon('Imagen', 'Imagen', $x2, 2,'fa fa-file-image-o');
 
-				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x3, 1);
+				$Form_Inputs->form_input_text('Título', 'Titulo', $x3, 1);
 				$Form_Inputs->form_input_icon('Estilo del Titulo', 'TituloStyle', $x4, 1,'fa fa-file-image-o');
 
 				$Form_Inputs->form_input_text('Subtitulo', 'Subtitulo', $x5, 1);
@@ -156,7 +156,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_select_n_auto('Posicion','idPosicion', $x1, 2, 1, 100 );
 				$Form_Inputs->form_input_icon('Imagen', 'Imagen', $x2, 2,'fa fa-file-image-o');
 
-				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x3, 1);
+				$Form_Inputs->form_input_text('Título', 'Titulo', $x3, 1);
 				$Form_Inputs->form_input_icon('Estilo del Titulo', 'TituloStyle', $x4, 1,'fa fa-file-image-o');
 
 				$Form_Inputs->form_input_text('Subtitulo', 'Subtitulo', $x5, 1);
@@ -255,11 +255,11 @@ $arrCarousel = db_select_array (false, $SIS_query, 'sitios_listado_carousel', $S
 							<td><label class="label <?php if(isset($menu['idEstado'])&&$menu['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $menu['Estado']; ?></label></td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$menu['idCarousel']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$menu['idCarousel']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=3){
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($menu['idCarousel'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el Carousel '.$menu['Imagen'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

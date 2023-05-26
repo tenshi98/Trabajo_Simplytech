@@ -104,7 +104,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_idSistema">Visibilidad</label>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 						<select name="idUsuario" id="idUsuario" class="form-control" required="">
-							<option value="" selected="">Seleccione una Opcion</option>
+							<option value="" selected="">Seleccione una Opción</option>
 							<option '.$zx.' value="'.$_SESSION['usuario']['basic_data']['idUsuario'].'">Solo yo</option>
 							<option '.$zy.' value="9999">Todos</option>
 						</select>
@@ -164,7 +164,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_idSistema">Visibilidad</label>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 						<select name="idUsuario" id="idUsuario" class="form-control" required="">
-							<option value="" selected="">Seleccione una Opcion</option>
+							<option value="" selected="">Seleccione una Opción</option>
 							<option '.$zx.' value="'.$_SESSION['usuario']['basic_data']['idUsuario'].'">Solo yo</option>
 							<option '.$zy.' value="9999">Todos</option>
 						</select>
@@ -252,11 +252,11 @@ $search='';
 						<td>
 							<div class="btn-group" style="width: 70px;" >
 								<?php if($cont['idUsuario']!=9999){ ?>
-									<a href="<?php echo $location.'&id='.$cont['idAgenda']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+									<a href="<?php echo $location.'&id='.$cont['idAgenda']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php
 									$ubicacion = $location.'&del='.simpleEncode($cont['idAgenda'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el contacto '.$cont['Nombre'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

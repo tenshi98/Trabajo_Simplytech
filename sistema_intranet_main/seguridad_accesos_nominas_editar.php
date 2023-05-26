@@ -327,7 +327,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 						<td><?php echo $row_data['Sistema']; ?></td>
 					</tr>
 					<tr>
-						<td class="meta-head">Ubicacion</td>
+						<td class="meta-head">Ubicación</td>
 						<td>
 							<?php 
 								echo $row_data['Ubicacion'];

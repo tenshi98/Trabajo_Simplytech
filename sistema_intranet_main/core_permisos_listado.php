@@ -102,8 +102,8 @@ mysqli_free_result($resultado);
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Categorias','id_pmcat', $x1, 2, 'id_pmcat', 'Nombre', 'core_permisos_categorias', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
-				$Form_Inputs->form_input_icon('Direccion base', 'Direccionbase', $x3, 2,'fa fa-internet-explorer');
-				$Form_Inputs->form_input_icon('Direccion web', 'Direccionweb', $x4, 2,'fa fa-internet-explorer');
+				$Form_Inputs->form_input_icon('Dirección base', 'Direccionbase', $x3, 2,'fa fa-internet-explorer');
+				$Form_Inputs->form_input_icon('Dirección web', 'Direccionweb', $x4, 2,'fa fa-internet-explorer');
 				$Form_Inputs->form_visualizacion('Visualizacion','visualizacion', $x5, 2, 'idSistema', 'Nombre', 'core_sistemas',0, $dbConn);
 				$Form_Inputs->form_input_number('Version del Archivo', 'Version', $x6, 2);
 				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x7, 2);
@@ -160,8 +160,8 @@ mysqli_free_result($resultado);
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_filter('Categorias','id_pmcat', $x1, 2, 'id_pmcat', 'Nombre', 'core_permisos_categorias', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
-				$Form_Inputs->form_input_icon('Direccion base', 'Direccionbase', $x3, 2,'fa fa-internet-explorer');
-				$Form_Inputs->form_input_icon('Direccion web', 'Direccionweb', $x4, 2,'fa fa-internet-explorer');
+				$Form_Inputs->form_input_icon('Dirección base', 'Direccionbase', $x3, 2,'fa fa-internet-explorer');
+				$Form_Inputs->form_input_icon('Dirección web', 'Direccionweb', $x4, 2,'fa fa-internet-explorer');
 				$Form_Inputs->form_visualizacion('Visualizacion','visualizacion', $x5, 2, 'idSistema', 'Nombre', 'core_sistemas',0, $dbConn);
 				$Form_Inputs->form_input_number('Version del Archivo', 'Version', $x6, 2);
 				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x7, 2);
@@ -237,7 +237,7 @@ array_push( $arrPermisos,$row );
 						<th>Nombre</th>
 						<th>Version</th>
 						<th>Nivel</th>
-						<th>Direccion Web</th>
+						<th>Dirección Web</th>
 						<th>Visualizacion</th>
 						<th width="10">Acciones</th>
 					</tr>
@@ -266,11 +266,11 @@ array_push( $arrPermisos,$row );
 							</td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<a href="<?php echo $location.'&id='.$subcategorias['idAdmpm']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+									<a href="<?php echo $location.'&id='.$subcategorias['idAdmpm']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 									<?php
 										$ubicacion = $location.'&del='.simpleEncode($subcategorias['idAdmpm'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el permiso '.$subcategorias['Nombre'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>	
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>	
 								</div>
 							</td>
 						</tr>

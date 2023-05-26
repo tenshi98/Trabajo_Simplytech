@@ -53,7 +53,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos Direccion'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Equipo', $rowdata['Nombre'], 'Editar Datos Dirección'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -72,7 +72,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 							<li class=""><a href="<?php echo 'admin_telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Geo']==2){ ?>
-						<li class="active"><a href="<?php echo 'admin_telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
+						<li class="active"><a href="<?php echo 'admin_telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
@@ -112,7 +112,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 						?>
 						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=places"></script>
 
-						<input id="pac-input" class="pac-controls" type="text" placeholder="Buscar Direccion">
+						<input id="pac-input" class="pac-controls" type="text" placeholder="Buscar Dirección">
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						
 
@@ -135,7 +135,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 									draggable	: true,
 									position	: myLatlng,
 									map			: map,
-									title		: "Tu Ubicacion",
+									title		: "Tu Ubicación",
 									animation 	:google.maps.Animation.DROP,
 									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_orange.png"
 								});
@@ -226,12 +226,12 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 						//se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
 						$Form_Inputs->form_select('Zona','idZona', $x0, 1, 'idZona', 'Nombre', 'telemetria_zonas', 0, '', $dbConn);
-						$Form_Inputs->form_select_depend1('Region','idCiudad', $x1, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+						$Form_Inputs->form_select_depend1('Región','idCiudad', $x1, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 												'Comuna','idComuna', $x2, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 												 $dbConn, 'form1');
 
 						//se dibujan los inputs
-						$Form_Inputs->form_input_icon('Direccion', 'Direccion', $rowdata['Direccion'], 1,'fa fa-map');
+						$Form_Inputs->form_input_icon('Dirección', 'Direccion', $rowdata['Direccion'], 1,'fa fa-map');
 						$Form_Inputs->form_input_disabled('Latitud', 'Latitud_fake', $rowdata['GeoLatitud']);
 						$Form_Inputs->form_input_disabled('Longitud', 'Longitud_fake', $rowdata['GeoLongitud']);
 						

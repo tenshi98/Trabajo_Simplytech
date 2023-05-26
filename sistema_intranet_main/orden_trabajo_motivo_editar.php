@@ -948,7 +948,7 @@ $rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x1,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1 AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'],   0,
+				$Form_Inputs->form_select_depend5('Ubicación', 'idUbicacion',  $x1,  2,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1 AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'],   0,
 												  'Nivel 1', 'idUbicacion_lvl_1',  $x2,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
 												  'Nivel 2', 'idUbicacion_lvl_2',  $x3,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
 												  'Nivel 3', 'idUbicacion_lvl_3',  $x4,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
@@ -1145,7 +1145,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
-						<td class="meta-head">Ubicacion</td>
+						<td class="meta-head">Ubicación</td>
 						<td>
 							<?php echo $rowdata['Ubicacion'];
 							if(isset($rowdata['UbicacionLVL_1'])&&$rowdata['UbicacionLVL_1']!=''){echo ' - '.$rowdata['UbicacionLVL_1'];}
@@ -1176,7 +1176,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listad
 
 					<?php if($rowdata['f_creacion']!='0000-00-00'){ ?>
 						<tr>
-							<td class="meta-head">Fecha creacion</td>
+							<td class="meta-head">Fecha creación</td>
 							<td><?php if($rowdata['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_creacion']);} ?></td>
 						</tr>
 					<?php } ?>

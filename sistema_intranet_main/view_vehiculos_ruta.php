@@ -136,7 +136,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'vehiculos_rutas_ubicaciones', $
 									lng: <?php echo $pos['Longitud']; ?>
 								  },
 								  contenido: 	"<div id='iw-container'>" +
-												"<div class='iw-title'>Direccion</div>" +
+												"<div class='iw-title'>Dirección</div>" +
 												"<div class='iw-content'>" +
 												"<div class='iw-subTitle'>Calle</div>" +
 												"<p><?php echo $pos['direccion']; ?></p>" +
@@ -228,7 +228,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'vehiculos_rutas_ubicaciones', $
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

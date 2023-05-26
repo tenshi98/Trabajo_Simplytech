@@ -273,8 +273,8 @@ $arrBody = db_select_array (false, $SIS_query, 'sitios_listado_body', $SIS_join,
 						<p class="text-muted">
 							<strong>Contacto - Titulo : </strong><?php echo $rowdata['Contact_Tittle']; ?><br/>
 							<strong>Contacto - Cuerpo : </strong><?php echo $rowdata['Contact_Tittle_body']; ?><br/>
-							<strong>Direccion - Titulo : </strong><?php echo $rowdata['Contact_Address_tittle']; ?><br/>
-							<strong>Direccion - Cuerpo : </strong><?php echo $rowdata['Contact_Address_body']; ?><br/>
+							<strong>Dirección - Titulo : </strong><?php echo $rowdata['Contact_Address_tittle']; ?><br/>
+							<strong>Dirección - Cuerpo : </strong><?php echo $rowdata['Contact_Address_body']; ?><br/>
 							<strong>Email - Titulo : </strong><?php echo $rowdata['Contact_Email_tittle']; ?><br/>
 							<strong>Email - Cuerpo : </strong><?php echo $rowdata['Contact_Email_body']; ?><br/>
 							<strong>Fono - Titulo : </strong><?php echo $rowdata['Contact_Phone_tittle']; ?><br/>
@@ -623,12 +623,12 @@ $arrSitio = db_select_array (false, $SIS_query, 'sitios_listado', $SIS_join, $SI
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $trab['RazonSocial']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_sitio.php?view='.simpleEncode($trab['idSitio'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.simpleEncode($trab['idSitio'], fecha_actual()); ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_sitio.php?view='.simpleEncode($trab['idSitio'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.simpleEncode($trab['idSitio'], fecha_actual()); ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($trab['idSitio'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el sitio '.$trab['Nombre'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

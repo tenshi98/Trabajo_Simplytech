@@ -83,7 +83,7 @@ if(!$resultado){
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
-//informacion
+//información
 echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
 $Alert_Text  = 'Pone el cursor del mouse sobre el marcador  <img src="'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_blue.png" alt="marcador" width="33" height="44">  y arrastralo hasta la posicion correcta';
 alert_post_data(1,3,3, $Alert_Text);
@@ -123,7 +123,7 @@ echo '</div>';
 						?>
 						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=places"></script>
 
-						<input id="pac-input" class="pac-controls" type="text" placeholder="Buscar Direccion">
+						<input id="pac-input" class="pac-controls" type="text" placeholder="Buscar Dirección">
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						
 
@@ -146,7 +146,7 @@ echo '</div>';
 									draggable	: true,
 									position	: myLatlng,
 									map			: map,
-									title		: "Tu Ubicacion",
+									title		: "Tu Ubicación",
 									animation 	:google.maps.Animation.DROP,
 									icon      	:"<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_blue.png"
 								});
@@ -211,7 +211,7 @@ echo '</div>';
 						<?php
 						//Se dibujan los inputs
 						$Form_Inputs = new Form_Inputs();
-						$Form_Inputs->form_input_icon('Direccion', 'Direccion_fake', $rowdata['Direccion'], 1,'fa fa-map');
+						$Form_Inputs->form_input_icon('Dirección', 'Direccion_fake', $rowdata['Direccion'], 1,'fa fa-map');
 						$Form_Inputs->form_input_disabled('Latitud', 'Latitud_fake', $rowdata['GeoLatitud']);
 						$Form_Inputs->form_input_disabled('Longitud', 'Longitud_fake', $rowdata['GeoLongitud']);
 						
@@ -293,10 +293,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_select('Tipo de Servicio','idTipo', $x1, 2, 'idTipo', 'Nombre', 'seg_vecinal_servicios_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 2);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 												  'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 												  $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x5, 2,'fa fa-map');
 				$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x6, 2, 2);
 				$Form_Inputs->form_time('Hora Termino','HoraTermino', $x7, 2, 2);
 
@@ -355,10 +355,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_tittle(3, 'Datos Basicos');
 				$Form_Inputs->form_select('Tipo de Servicio','idTipo', $x1, 2, 'idTipo', 'Nombre', 'seg_vecinal_servicios_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 2);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 												  'Comuna','idComuna', $x4, 2, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 												  $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 2,'fa fa-map');
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x5, 2,'fa fa-map');
 				$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x6, 2, 2);
 				$Form_Inputs->form_time('Hora Termino','HoraTermino', $x7, 2, 2);
 
@@ -462,10 +462,10 @@ $arrUsers = db_select_array (false, $SIS_query, 'seg_vecinal_servicios_listado',
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select('Tipo de Servicio','idTipo', $x1, 1, 'idTipo', 'Nombre', 'seg_vecinal_servicios_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 1);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x3, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x4, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 1,'fa fa-map');	 
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x5, 1,'fa fa-map');	 
 				
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);
 				?>
@@ -520,13 +520,13 @@ $arrUsers = db_select_array (false, $SIS_query, 'seg_vecinal_servicios_listado',
 						<td><?php echo $usuarios['Nombre']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 140px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_seg_vecinal_servicios.php?view='.simpleEncode($usuarios['idServicio'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idServicio']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_seg_vecinal_servicios.php?view='.simpleEncode($usuarios['idServicio'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idServicio']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&map='.$usuarios['idServicio']; ?>" title="Corregir Mapa" class="btn btn-success btn-sm tooltip"><i class="fa fa-map-marker" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idServicio'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar al Servicio '.$usuarios['Nombre'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

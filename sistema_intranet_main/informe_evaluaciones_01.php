@@ -148,7 +148,7 @@ foreach ($arrTemporal as $temp) {
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="#netos" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Generales</a></li>
-				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Informacion Alumnos</a></li>
+				<li class=""><a href="#totales" data-toggle="tab"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Información Alumnos</a></li>
 			</ul>
 		</header>
         <div class="tab-content">

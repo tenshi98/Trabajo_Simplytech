@@ -88,7 +88,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A1', 'Equipo')
 				->setCellValue('B1', 'Codigo Interno')
-				->setCellValue('C1', 'Direccion')
+				->setCellValue('C1', 'Dirección')
 				->setCellValue('D1', 'Fecha')
 				->setCellValue('E1', 'Hora Inicio')
 				->setCellValue('F1', 'Hora Termino')

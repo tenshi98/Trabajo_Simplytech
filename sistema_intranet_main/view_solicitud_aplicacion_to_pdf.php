@@ -232,12 +232,12 @@ $html .= '
 								Rut: '.$row_data['SistemaOrigenRut'].'<br/>
 								Empresa: '.$row_data['SistemaOrigen'].'<br/>
 								Ciudad-Comuna: '.$row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna'].'<br/>
-								Direccion: '.$row_data['SistemaOrigenDireccion'].'<br/>
+								Dirección: '.$row_data['SistemaOrigenDireccion'].'<br/>
 								Fono: '.formatPhone($row_data['SistemaOrigenFono']).'<br/>
 								Email: '.$row_data['SistemaOrigenEmail'].'
 							</td>
 							<td style="vertical-align: top;width:33%;">
-								<strong>Identificacion</strong><br/>
+								<strong>Identificación</strong><br/>
 								Predio: '.$row_data['NombrePredio'].'<br/>
 								Estado: '.$row_data['Estado'].'<br/>
 								Temporada: '.$row_data['TemporadaCodigo'].' '.$row_data['TemporadaNombre'].'<br/>

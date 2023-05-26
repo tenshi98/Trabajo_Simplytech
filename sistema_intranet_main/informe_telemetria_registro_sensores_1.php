@@ -103,7 +103,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			$m_table .= '<td>'.Cantidades($fac['SensorValue'], 2).' '.$fac['Unimed'].'</td>';
 			$m_table .= '<td>
 				<div class="btn-group" style="width: 35px;" >
-					<a href="informe_telemetria_registro_sensores_1_view.php?idTelemetria='.simpleEncode($_GET['idTelemetria'], fecha_actual()).'&sensorn='.simpleEncode($_GET['sensorn'], fecha_actual()).'&view='.simpleEncode($fac['idTabla'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+					<a href="informe_telemetria_registro_sensores_1_view.php?idTelemetria='.simpleEncode($_GET['idTelemetria'], fecha_actual()).'&sensorn='.simpleEncode($_GET['sensorn'], fecha_actual()).'&view='.simpleEncode($fac['idTabla'], fecha_actual()).'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 				</div>
 			</td>';
 			$m_table .= '</tr>';
@@ -269,7 +269,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<th>Fecha</th>
 							<th>Hora</th>
 							<?php echo $m_table_title; ?>
-							<th width="90">Ubicacion</th>
+							<th width="90">Ubicación</th>
 						</tr>
 					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">

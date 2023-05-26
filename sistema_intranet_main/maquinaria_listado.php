@@ -512,7 +512,7 @@ if(!empty($_GET['clone_idMaquina'])){
 					$Form_Inputs->form_input_hidden('idConfig_1', 2, 2); //Uso Componentes - No
 					$Form_Inputs->form_input_hidden('idConfig_2', 2, 2); //Uso Matriz - No
 					$Form_Inputs->form_input_hidden('idConfig_3', 2, 2); //Dependencia Cliente - No
-					$Form_Inputs->form_input_hidden('idConfig_4', 2, 2); //Uso Ubicacion - No
+					$Form_Inputs->form_input_hidden('idConfig_4', 2, 2); //Uso Ubicación - No
 
 					?>
 
@@ -675,13 +675,13 @@ if(!empty($_GET['clone_idMaquina'])){
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $maq['sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 140px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_maquinaria.php?view='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_maquinaria.php?view='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&nombre_maquina='.$maq['Nombre'].'&clone_idMaquina='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Clonar Maquina" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.simpleEncode($maq['idMaquina'], fecha_actual()); ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($maq['idMaquina'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el registro '.$maq['Nombre'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

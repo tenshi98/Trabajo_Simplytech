@@ -57,7 +57,7 @@ $arrTipos = array();
 $arrTipos = db_select_array (false, $SIS_query, 'telemetria_listado_sensores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipos');
 
 /*******************************************************/
-//Variable Ubicacion
+//Variable Ubicación
 //Cargamos la ubicacion original
 $original = "telemetria_mantencion_ejecucion.php";
 $location = $original;

@@ -62,7 +62,7 @@ require_once '0_validate_user_1.php';
 			case 'idSistema':       if(empty($idSistema)){        $error['idSistema']        = 'error/No ha ingresado el numero de documento';}break;
 			case 'idUsuario':       if(empty($idUsuario)){        $error['idUsuario']        = 'error/No ha seleccionado la bodega';}break;
 			case 'idTipo':          if(empty($idTipo)){           $error['idTipo']           = 'error/No ha ingresado las obsercaciones';}break;
-			case 'Creacion_fecha':  if(empty($Creacion_fecha)){   $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'Creacion_fecha':  if(empty($Creacion_fecha)){   $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}break;
 			case 'N_Doc':           if(empty($N_Doc)){            $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}break;
 			case 'Observaciones':   if(empty($Observaciones)){    $error['Observaciones']    = 'error/No ha ingresado la observacion';}break;
 			case 'idTrabajador':    if(empty($idTrabajador)){     $error['idTrabajador']     = 'error/No ha seleccionado el trabajador';}break;
@@ -666,7 +666,7 @@ require_once '0_validate_user_1.php';
 			if (isset($_SESSION['boleta_ing_basicos'])){
 				if(!isset($_SESSION['boleta_ing_basicos']['idTrabajador']) OR $_SESSION['boleta_ing_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el trabajador';}
 				if(!isset($_SESSION['boleta_ing_basicos']['N_Doc']) OR $_SESSION['boleta_ing_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
-				if(!isset($_SESSION['boleta_ing_basicos']['Creacion_fecha']) OR $_SESSION['boleta_ing_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creacion';}
+				if(!isset($_SESSION['boleta_ing_basicos']['Creacion_fecha']) OR $_SESSION['boleta_ing_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creación';}
 				if(!isset($_SESSION['boleta_ing_basicos']['Observaciones']) OR $_SESSION['boleta_ing_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['boleta_ing_basicos']['idSistema']) OR $_SESSION['boleta_ing_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['boleta_ing_basicos']['idUsuario']) OR $_SESSION['boleta_ing_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
@@ -1225,7 +1225,7 @@ require_once '0_validate_user_1.php';
 			if (isset($_SESSION['boleta_eg_basicos'])){
 				if(!isset($_SESSION['boleta_eg_basicos']['idCliente']) OR $_SESSION['boleta_eg_basicos']['idCliente']=='' ){           $error['idCliente']        = 'error/No ha seleccionado el Cliente';}
 				if(!isset($_SESSION['boleta_eg_basicos']['N_Doc']) OR $_SESSION['boleta_eg_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
-				if(!isset($_SESSION['boleta_eg_basicos']['Creacion_fecha']) OR $_SESSION['boleta_eg_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creacion';}
+				if(!isset($_SESSION['boleta_eg_basicos']['Creacion_fecha']) OR $_SESSION['boleta_eg_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creación';}
 				if(!isset($_SESSION['boleta_eg_basicos']['Observaciones']) OR $_SESSION['boleta_eg_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['boleta_eg_basicos']['idSistema']) OR $_SESSION['boleta_eg_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['boleta_eg_basicos']['idUsuario']) OR $_SESSION['boleta_eg_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
@@ -1850,7 +1850,7 @@ require_once '0_validate_user_1.php';
 			if (isset($_SESSION['boleta_ing_prov_basicos'])){
 				if(!isset($_SESSION['boleta_ing_prov_basicos']['idProveedor']) OR $_SESSION['boleta_ing_prov_basicos']['idProveedor']=='' ){       $error['idProveedor']      = 'error/No ha seleccionado el proveedor';}
 				if(!isset($_SESSION['boleta_ing_prov_basicos']['N_Doc']) OR $_SESSION['boleta_ing_prov_basicos']['N_Doc']=='' ){                   $error['N_Doc']            = 'error/No ha ingresado el numero de documento';}
-				if(!isset($_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']) OR $_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creacion';}
+				if(!isset($_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']) OR $_SESSION['boleta_ing_prov_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha seleccionado la fecha de creación';}
 				if(!isset($_SESSION['boleta_ing_prov_basicos']['Observaciones']) OR $_SESSION['boleta_ing_prov_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['boleta_ing_prov_basicos']['idSistema']) OR $_SESSION['boleta_ing_prov_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el sistema';}
 				if(!isset($_SESSION['boleta_ing_prov_basicos']['idUsuario']) OR $_SESSION['boleta_ing_prov_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
@@ -2040,12 +2040,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

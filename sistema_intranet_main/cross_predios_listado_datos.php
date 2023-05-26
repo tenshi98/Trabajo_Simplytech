@@ -94,10 +94,10 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_text('Nombre del Predio', 'Nombre', $x1, 2);
 					$Form_Inputs->form_select_country('Pais','idPais', $x2, 1, $dbConn);
-					$Form_Inputs->form_select_depend1('Region','idCiudad', $x3, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Región','idCiudad', $x3, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x4, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 											 $dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x5, 1,'fa fa-map'); 
+					$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x5, 1,'fa fa-map'); 
 					
 					
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

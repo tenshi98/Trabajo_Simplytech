@@ -223,7 +223,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 						<td><?php echo $row_data['Sistema']; ?></td>
 					</tr>
 					<tr>
-						<td class="meta-head">Ubicacion</td>
+						<td class="meta-head">Ubicación</td>
 						<td>
 							<?php 
 								echo $row_data['Ubicacion'];
@@ -585,8 +585,8 @@ $arrTipo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas', $SIS
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_seguridad_accesos_nominas.php?view='.simpleEncode($tipo['idAcceso'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$tipo['idAcceso']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>	
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_seguridad_accesos_nominas.php?view='.simpleEncode($tipo['idAcceso'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$tipo['idAcceso']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>	
 								</div>
 							</td>
 						</tr>

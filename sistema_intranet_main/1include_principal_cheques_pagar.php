@@ -125,36 +125,36 @@ $arrEventos = db_select_array (false, $SIS_query, 'pagos_facturas_proveedores', 
 																	case 1:
 																		$ver = 'view_mov_insumos.php?view='.simpleEncode($evento['idFacturacion'], fecha_actual());
 																		if($original=="principal_cheques_pagar_alt.php"){
-																			echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor1.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
+																			echo '<a title="Ver Información" class="tooltip event_calendar '.$calcolor1.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
 																		}else{
-																			echo '<a title="Ver Informacion" class="iframe tooltip event_calendar '.$calcolor1.'" href="'.$ver.'">'.$trabajo.'</a>';
+																			echo '<a title="Ver Información" class="iframe tooltip event_calendar '.$calcolor1.'" href="'.$ver.'">'.$trabajo.'</a>';
 																		}
 																		break;
 																	//Factura Productos
 																	case 2:
 																		$ver = 'view_mov_productos.php?view='.simpleEncode($evento['idFacturacion'], fecha_actual());
 																		if($original=="principal_cheques_pagar_alt.php"){
-																			echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor2.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
+																			echo '<a title="Ver Información" class="tooltip event_calendar '.$calcolor2.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
 																		}else{
-																			echo '<a title="Ver Informacion" class="iframe tooltip event_calendar '.$calcolor2.'" href="'.$ver.'">'.$trabajo.'</a>';
+																			echo '<a title="Ver Información" class="iframe tooltip event_calendar '.$calcolor2.'" href="'.$ver.'">'.$trabajo.'</a>';
 																		}
 																		break;
 																	//Factura Servicios
 																	case 3:
 																		$ver = 'view_mov_servicios.php?view='.simpleEncode($evento['idFacturacion'], fecha_actual());
 																		if($original=="principal_cheques_pagar_alt.php"){
-																			echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor3.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
+																			echo '<a title="Ver Información" class="tooltip event_calendar '.$calcolor3.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
 																		}else{
-																			echo '<a title="Ver Informacion" class="iframe tooltip event_calendar '.$calcolor3.'" href="'.$ver.'">'.$trabajo.'</a>';
+																			echo '<a title="Ver Información" class="iframe tooltip event_calendar '.$calcolor3.'" href="'.$ver.'">'.$trabajo.'</a>';
 																		}
 																		break;
 																	//Factura Arriendos
 																	case 4:
 																		$ver = 'view_mov_arriendos.php?view='.simpleEncode($evento['idFacturacion'], fecha_actual());
 																		if($original=="principal_cheques_pagar_alt.php"){
-																			echo '<a title="Ver Informacion" class="tooltip event_calendar '.$calcolor4.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
+																			echo '<a title="Ver Información" class="tooltip event_calendar '.$calcolor4.'" href="'.$ver.'&return=true">'.$trabajo.'</a>';
 																		}else{
-																			echo '<a title="Ver Informacion" class="iframe tooltip event_calendar '.$calcolor4.'" href="'.$ver.'">'.$trabajo.'</a>';
+																			echo '<a title="Ver Información" class="iframe tooltip event_calendar '.$calcolor4.'" href="'.$ver.'">'.$trabajo.'</a>';
 																		}
 																		break;
 																}

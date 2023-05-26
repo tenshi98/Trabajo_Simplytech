@@ -105,7 +105,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_input_rut('Rut', 'Rut', $x1, 2);
-					$Form_Inputs->form_input_text('Razon Social', 'RazonSocial', $x2, 2);
+					$Form_Inputs->form_input_text('Razón Social', 'RazonSocial', $x2, 2);
 					$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x3, 1,'fa fa-industry');
 					$Form_Inputs->form_select_filter('Rubro','idRubro', $x4, 1, 'idRubro', 'Codigo,Nombre', 'core_rubros', 0, '', $dbConn);
 

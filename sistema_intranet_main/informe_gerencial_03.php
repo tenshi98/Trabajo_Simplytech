@@ -508,7 +508,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 			echo '<td align="right">';
 			if(isset($ConsumosOC[$value['lvl']][$value['id']]['Valor'])&&$ConsumosOC[$value['lvl']][$value['id']]['Valor']!=''){
 				echo valores($ConsumosOC[$value['lvl']][$value['id']]['Valor'], 0).' ';
-				echo '<a target="_blank" rel="noopener noreferrer" href="informe_gerencial_03_oc.php?lvl='.$value['lvl'].'&id='.$value['id'].'&idEstado=1" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
+				echo '<a target="_blank" rel="noopener noreferrer" href="informe_gerencial_03_oc.php?lvl='.$value['lvl'].'&id='.$value['id'].'&idEstado=1" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 				//$_SESSION['garb']['xxx2'] = $_SESSION['garb']['xxx2'] + $ConsumosOC[$value['lvl']][$value['id']]['Valor'];
 			}
 			echo '</td>';
@@ -517,7 +517,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 			echo '<td align="right">';
 			if(isset($ConsumosOCApro[$value['lvl']][$value['id']]['Valor'])&&$ConsumosOCApro[$value['lvl']][$value['id']]['Valor']!=''){
 				echo valores($ConsumosOCApro[$value['lvl']][$value['id']]['Valor'], 0).' ';
-				echo '<a target="_blank" rel="noopener noreferrer" href="informe_gerencial_03_oc.php?lvl='.$value['lvl'].'&id='.$value['id'].'&idEstado=3" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
+				echo '<a target="_blank" rel="noopener noreferrer" href="informe_gerencial_03_oc.php?lvl='.$value['lvl'].'&id='.$value['id'].'&idEstado=3" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 				//$_SESSION['garb']['xxx3'] = $_SESSION['garb']['xxx3'] + $ConsumosOCApro[$value['lvl']][$value['id']]['Valor'];
 			}
 			echo '</td>';
@@ -534,7 +534,7 @@ function arrayToUL(array $array, array $OTRealizadas, array $UML, $nmax){
 			echo '<td align="right">';
 			if(isset($ComprasApro[$value['lvl']][$value['id']]['Valor'])&&$ComprasApro[$value['lvl']][$value['id']]['Valor']!=''){
 				echo valores($ComprasApro[$value['lvl']][$value['id']]['Valor'], 0).' ';
-				echo '<a target="_blank" rel="noopener noreferrer" href="informe_gerencial_03_fact.php?lvl='.$value['lvl'].'&id='.$value['id'].'&idEstado=3" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
+				echo '<a target="_blank" rel="noopener noreferrer" href="informe_gerencial_03_fact.php?lvl='.$value['lvl'].'&id='.$value['id'].'&idEstado=3" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>';
 				//$_SESSION['garb']['xxx4'] = $_SESSION['garb']['xxx4'] + $ComprasApro[$value['lvl']][$value['id']]['Valor'];
 			}
 			echo '</td>';

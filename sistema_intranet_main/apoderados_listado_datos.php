@@ -64,7 +64,7 @@ $rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $
 			<ul class="nav nav-tabs pull-right">
 				<li class=""><a href="<?php echo 'apoderados_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 				<li class="active"><a href="<?php echo 'apoderados_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
-				<li class=""><a href="<?php echo 'apoderados_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicacion</a></li>
+				<li class=""><a href="<?php echo 'apoderados_listado_ubicacion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-o" aria-hidden="true"></i> Ubicación</a></li>
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 					<ul class="dropdown-menu" role="menu">
@@ -117,10 +117,10 @@ $rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $
 					$Form_Inputs->form_date('F. Nacimiento','FNacimiento', $x5, 1);
 					$Form_Inputs->form_input_phone('Fono', 'Fono1', $x6, 1);
 					$Form_Inputs->form_input_phone('Fono', 'Fono2', $x7, 1);
-					$Form_Inputs->form_select_depend1('Region','idCiudad', $x8, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+					$Form_Inputs->form_select_depend1('Región','idCiudad', $x8, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x9, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 											 $dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x10, 1,'fa fa-map');
+					$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x10, 1,'fa fa-map');
 					$Form_Inputs->form_date('F. Inicio Contrato','F_Inicio_Contrato', $x11, 1);
 					$Form_Inputs->form_date('F. Termino Contrato','F_Termino_Contrato', $x12, 1);
 

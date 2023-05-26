@@ -192,7 +192,7 @@ array_push( $arrRutas,$row );
 									lng: <?php echo $pos['Longitud']; ?>
 								  },
 								  contenido: 	"<div id='iw-container'>" +
-												"<div class='iw-title'>Direccion</div>" +
+												"<div class='iw-title'>Dirección</div>" +
 												"<div class='iw-content'>" +
 												"<div class='iw-subTitle'>Calle</div>" +
 												"<p><?php echo $pos['direccion']; ?></p>" +
@@ -451,13 +451,13 @@ $arrUsers = db_select_array (false, $SIS_query, 'vehiculos_rutas', $SIS_join, $S
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_vehiculos_ruta.php?view='.simpleEncode($usuarios['idRuta'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idRuta']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_vehiculos_ruta.php?view='.simpleEncode($usuarios['idRuta'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idRuta']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									//se verifica que el usuario no sea uno mismo
 									$ubicacion = $location.'&del='.simpleEncode($usuarios['idRuta'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el equipo '.$usuarios['Nombre'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

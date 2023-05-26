@@ -339,12 +339,12 @@ foreach ($arrCamaras as $zona) {
 							<td><label class="label <?php if(isset($zona['idEstado'])&&$zona['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $zona['estado']; ?></label></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&edit_camara='.$zona['idCanal']; ?>" title="Editar Informacion Basica" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&edit_camara='.$zona['idCanal']; ?>" title="Editar Información Basica" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										//se verifica que el usuario no sea uno mismo
 										$ubicacion = $new_location.'&idCamara='.$zona['idCamara'].'&del_camara='.simpleEncode($zona['idCanal'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la camara '.$zona['Nombre'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

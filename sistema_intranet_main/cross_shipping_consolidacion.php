@@ -165,7 +165,7 @@ if(!empty($_GET['addFile'])){ ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
-										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0,
+										 'Ubicación','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
@@ -212,7 +212,7 @@ if(!empty($_GET['addFile'])){ ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
-										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0,
+										 'Ubicación','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
@@ -261,7 +261,7 @@ if(!empty($_GET['addFile'])){ ?>
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_select_depend1('Estiba','idEstiba', $x1, 2, 'idEstiba', 'Nombre', 'core_estibas', 0, 0,
-										 'Ubicacion','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0,
+										 'Ubicación','idEstibaUbicacion', $x2, 2, 'idEstibaUbicacion', 'Nombre', 'core_estibas_ubicacion', 0, 0,
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select('Posicion','idPosicion', $x3, 2, 'idPosicion', 'Nombre', 'core_cross_shipping_consolidacion_posicion', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Envase','idEnvase', $x4, 1, 'idEnvase', 'Codigo,Nombre', 'cross_shipping_envase', 0, '', $dbConn);
@@ -362,7 +362,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_text('Patente Carro', 'PatenteCarro', $x21, 1);
 
 				$Form_Inputs->form_tittle(3, 'Cuerpo Parametros Evaluados');
-				$Form_Inputs->form_select('Condicion CTN','idCondicion', $x22, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);
+				$Form_Inputs->form_select('Condición CTN','idCondicion', $x22, 1, 'idCondicion', 'Nombre', 'core_cross_shipping_consolidacion_condicion', 0, '', $dbConn);
 				$Form_Inputs->form_select('Sellado Piso','idSellado', $x23, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('T° Set Point', 'TSetPoint', $x24, 1);
 				$Form_Inputs->form_input_number('T° Ventilacion', 'TVentilacion', $x25, 1);
@@ -509,7 +509,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 						
 					<tr><td class="meta-head" colspan="4"><strong>Cuerpo Parametros Evaluados</strong></td></tr>
 					<tr>
-						<td class="meta-head">Condicion CTN</td>
+						<td class="meta-head">Condición CTN</td>
 						<td><?php echo $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['CondicionCTN']; ?></td>
 						<td class="meta-head">Sellado Piso</td>
 						<td><?php echo $_SESSION['cross_shipping_consolidacion_basicos'][$_GET['view']]['Sellado']; ?></td>
@@ -559,7 +559,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				</tr>
 				<tr class="item-row fact_tittle">
 					<td>Estiba</td>
-					<td>Ubicacion</td>
+					<td>Ubicación</td>
 					<td>Posicion</td>
 					<td>Envase</td>
 					<td>Nro. De Pallet</td>
@@ -584,7 +584,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 							<td class="item-name"><?php echo $producto['NSerieSensor']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<a href="<?php echo $location.'&view='.$_GET['view'].'&cloneEstiba='.$producto['idInterno']; ?>" title="Clonar Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a>
+									<a href="<?php echo $location.'&view='.$_GET['view'].'&cloneEstiba='.$producto['idInterno']; ?>" title="Clonar Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a>
 									<a href="<?php echo $location.'&view='.$_GET['view'].'&editEstiba='.$producto['idInterno']; ?>" title="Editar Registro" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 									<?php
 									$ubicacion = $location.'&view='.$_GET['view'].'&del_estiba='.$producto['idInterno'];
@@ -889,12 +889,12 @@ if(isset($pasa)&&$pasa!=0){ ?>
 							<td><?php echo $tipo['ProdMuestra']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo $location.'&cloneConsolidacion='.$tipo['randompass']; ?>" title="Clonar Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&view='.$tipo['randompass']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo $location.'&cloneConsolidacion='.$tipo['randompass']; ?>" title="Clonar Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&view='.$tipo['randompass']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&clear_all='.$tipo['randompass'];
 										$dialogo   = '¿Realmente deseas eliminar el ingreso de '.$tipo['CTNNombreCompañia'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>
@@ -963,7 +963,7 @@ if(isset($pasa)&&$pasa!=0){ ?>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 70px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_cross_shipping_consolidacion.php?view='.simpleEncode($tipo['idConsolidacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_cross_shipping_consolidacion.php?view='.simpleEncode($tipo['idConsolidacion'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=2){ ?><a target="new" href="<?php echo 'cross_shipping_consolidacion_edit.php?edit='.$tipo['idConsolidacion']; ?>" title="Editar Consolidacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>

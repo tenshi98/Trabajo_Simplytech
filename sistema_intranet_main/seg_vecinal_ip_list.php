@@ -96,7 +96,7 @@ $arrIpRelacionadas = db_select_array (false, $SIS_query, 'seg_vecinal_clientes_l
 				<thead>
 					<tr role="row">
 						<th>Relacion</th>
-						<th width="160">Direccion IP</th>
+						<th width="160">Dirección IP</th>
 						<th width="100">Bloqueado</th>
 						<th width="10">Acciones</th>
 					</tr>
@@ -113,7 +113,7 @@ $arrIpRelacionadas = db_select_array (false, $SIS_query, 'seg_vecinal_clientes_l
 										$ubicacion = $location.'&block_ip='.simpleEncode($tipo['IP_Client'], fecha_actual());
 										$ubicacion.='&Relacion='.simpleEncode('del vecino '.$tipo['Relacion'], fecha_actual());
 										$dialogo   = '¿Realmente deseas bloquear la IP '.$tipo['IP_Client'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Bloquear Direccion IP" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-ban" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Bloquear Dirección IP" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-ban" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

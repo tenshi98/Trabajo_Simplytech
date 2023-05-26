@@ -70,7 +70,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 							<li class=""><a href="<?php echo 'admin_telemetria_listado_alarmas_perso.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bullhorn" aria-hidden="true"></i> Alarmas Personalizadas</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Geo']==2){ ?>
-						<li class=""><a href="<?php echo 'admin_telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
+						<li class=""><a href="<?php echo 'admin_telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 						<li class=""><a href="<?php echo 'admin_telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
@@ -97,7 +97,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_post_data(2,1,1, 'Se define el horario de utilizacion de la maquina relacionada al equipo de telemetria, existen informes relacionados a esta opcion' );
+					$Form_Inputs->form_post_data(2,1,1, 'Se define el horario de utilizacion de la maquina relacionada al equipo de telemetria, existen informes relacionados a esta opción' );
 					$Form_Inputs->form_tittle(3, 'Horario Trabajo');
 					$Form_Inputs->form_time('Hora Inicio','Jornada_inicio', $x1, 2, 2);
 					$Form_Inputs->form_time('Hora Termino','Jornada_termino', $x2, 2, 2);

@@ -89,7 +89,7 @@ $rowdata = db_select_data (false, $SIS_query, 'principal_calendario_listado', $S
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha del Evento','Fecha', $x1, 2);
-				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x2, 2);
+				$Form_Inputs->form_input_text('Título', 'Titulo', $x2, 2);
 				$Form_Inputs->form_ckeditor('Detalle','Cuerpo', $x3, 2, 2);
 				$Form_Inputs->form_post_data(2,1,1, '<strong>Tipo de evento: </strong>En el caso de que sea un evento publico, todos pueden verlo, en caso de que no sea un evento publico, solo podra verlo quien lo creo.' );
 				$Form_Inputs->form_select('Es un evento Publico','idOpciones', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
@@ -206,7 +206,7 @@ if(isset($rowlevel['level'])&&$rowlevel['level']!=''){
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_date('Fecha del Evento','Fecha', $x1, 2);
-				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x2, 2);
+				$Form_Inputs->form_input_text('Título', 'Titulo', $x2, 2);
 				$Form_Inputs->form_ckeditor('Detalle','Cuerpo', $x3, 2, 2);
 				$Form_Inputs->form_post_data(2,1,1, '<strong>Tipo de evento: </strong>En el caso de que sea un evento publico, todos pueden verlo, en caso de que no sea un evento publico, solo podra verlo quien lo creo.' );
 				$Form_Inputs->form_select('Es un evento Publico','idOpciones', $x4, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);

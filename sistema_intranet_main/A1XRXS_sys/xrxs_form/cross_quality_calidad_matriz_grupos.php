@@ -31,7 +31,7 @@ require_once '0_validate_user_1.php';
 		switch ($INT_valor) {
 			case 'idGrupo':   if(empty($idGrupo)){    $error['idGrupo']     = 'error/No ha ingresado el id';}break;
 			case 'Nombre':    if(empty($Nombre)){     $error['Nombre']      = 'error/No ha ingresado el nombre';}break;
-			case 'Totales':   if(empty($Totales)){    $error['Totales']     = 'error/No ha ingresado la opcion de Totales';}break;
+			case 'Totales':   if(empty($Totales)){    $error['Totales']     = 'error/No ha ingresado la opción de Totales';}break;
 
 		}
 	}
@@ -148,12 +148,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

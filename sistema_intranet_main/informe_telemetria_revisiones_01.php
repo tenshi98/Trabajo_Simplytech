@@ -121,7 +121,7 @@ $rowEquipo = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join,
 							<td><div class="btn-group" ><?php echo $eq_ok ?></div></td>		
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<a href="<?php echo 'telemetria_gestion_equipos_view_equipo.php?view='.simpleEncode($rowEquipo['idTelemetria'], fecha_actual()) ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+									<a href="<?php echo 'telemetria_gestion_equipos_view_equipo.php?view='.simpleEncode($rowEquipo['idTelemetria'], fecha_actual()) ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 									<a href="<?php echo 'telemetria_gestion_equipos_view_equipo_uso.php?view='.simpleEncode($rowEquipo['idTelemetria'], fecha_actual()) ?>" title="Ver Uso" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-wrench" aria-hidden="true"></i></a>
 								</div>
 							</td>

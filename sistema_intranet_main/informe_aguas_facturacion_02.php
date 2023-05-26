@@ -86,7 +86,7 @@ array_push( $arrFacturaciones,$row );
 							<td>
 								<?php if ($rowlevel['level']>=1){ ?>
 									<div class="btn-group" style="width: 35px;" >
-										<a href="<?php echo 'view_aguas_facturacion.php?view='.simpleEncode($fac['idFacturacionDetalle'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+										<a href="<?php echo 'view_aguas_facturacion.php?view='.simpleEncode($fac['idFacturacionDetalle'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 									</div>
 								<?php } ?>
 								<?php echo numero_a_mes($fac['idMes']).' '.$fac['Ano']; ?>

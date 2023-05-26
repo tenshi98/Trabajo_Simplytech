@@ -151,7 +151,7 @@ foreach ($arrTemporal as $temp) {
 	<div class="box">
 		<header>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#totales" data-toggle="tab"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Informacion Alumno</a></li>          
+				<li class="active"><a href="#totales" data-toggle="tab"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Información Alumno</a></li>          
 				<li class=""><a href="#netos" data-toggle="tab"><i class="fa fa-line-chart" aria-hidden="true"></i> Graficos Generales</a></li>
 			</ul>
 		</header>
@@ -190,7 +190,7 @@ foreach ($arrTemporal as $temp) {
 								<td><?php echo $eva['Evaluacion']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_quiz_respondida.php?view='.simpleEncode($eva['idQuizRealizadas'], fecha_actual()).'&idQuiz='.simpleEncode($eva['idQuiz'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_quiz_respondida.php?view='.simpleEncode($eva['idQuizRealizadas'], fecha_actual()).'&idQuiz='.simpleEncode($eva['idQuiz'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									</div>
 								</td>
 							</tr>
@@ -262,7 +262,7 @@ foreach ($arrTemporal as $temp) {
 								<td><?php echo $eva['Reintentado']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_quiz_respondida.php?view='.simpleEncode($eva['idQuizRealizadas'], fecha_actual()).'&idQuiz='.simpleEncode($eva['idQuiz'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_quiz_respondida.php?view='.simpleEncode($eva['idQuizRealizadas'], fecha_actual()).'&idQuiz='.simpleEncode($eva['idQuiz'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									</div>
 								</td>
 							</tr>

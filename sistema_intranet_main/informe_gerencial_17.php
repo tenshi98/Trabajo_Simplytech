@@ -143,7 +143,7 @@ $GPS .= '<link rel="stylesheet" href="'.DB_SITE_REPO.'/LIBS_js/modal/colorbox.cs
 									<td><div class="btn-group" >'.$eq_ok.'</div></td>		
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<a href="telemetria_gestion_equipos_view_equipo.php?view='.simpleEncode($equip['idTelemetria'], fecha_actual()).'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											<a href="telemetria_gestion_equipos_view_equipo.php?view='.simpleEncode($equip['idTelemetria'], fecha_actual()).'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										</div>
 									</td>
 								</tr>';

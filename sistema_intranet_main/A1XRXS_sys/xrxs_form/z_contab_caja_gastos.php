@@ -551,7 +551,7 @@ require_once '0_validate_user_1.php';
 				if(!isset($_SESSION['contab_caja_gastos_basicos']['idSistema']) OR $_SESSION['contab_caja_gastos_basicos']['idSistema']=='' ){           $error['idSistema']        = 'error/No ha seleccionado el id del sistema';}
 				if(!isset($_SESSION['contab_caja_gastos_basicos']['idUsuario']) OR $_SESSION['contab_caja_gastos_basicos']['idUsuario']=='' ){           $error['idUsuario']        = 'error/No ha seleccionado el usuario';}
 				if(!isset($_SESSION['contab_caja_gastos_basicos']['fecha_auto']) OR $_SESSION['contab_caja_gastos_basicos']['fecha_auto']=='' ){         $error['fecha_auto']       = 'error/No ha ingresado la fecha automatica';}
-				if(!isset($_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']) OR $_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creacion';}
+				if(!isset($_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']) OR $_SESSION['contab_caja_gastos_basicos']['Creacion_fecha']=='' ){ $error['Creacion_fecha']   = 'error/No ha ingresado la fecha de creación';}
 				if(!isset($_SESSION['contab_caja_gastos_basicos']['Observaciones']) OR $_SESSION['contab_caja_gastos_basicos']['Observaciones']=='' ){   $error['Observaciones']    = 'error/No ha ingresado la observacion';}
 				if(!isset($_SESSION['contab_caja_gastos_basicos']['idTrabajador']) OR $_SESSION['contab_caja_gastos_basicos']['idTrabajador']=='' ){     $error['idTrabajador']     = 'error/No ha seleccionado el trabajador';}
 				if(!isset($_SESSION['contab_caja_gastos_basicos']['Valor']) OR $_SESSION['contab_caja_gastos_basicos']['Valor']=='' ){                   $error['Valor']            = 'error/No ha ingresado el valor total del documento';}

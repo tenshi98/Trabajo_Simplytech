@@ -106,10 +106,10 @@ if(!empty($_GET['clone_idUsuario'])){
 				$Form_Inputs->form_input_icon('Email', 'email', $x6, 2,'fa fa-envelope-o');
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x7, 1);
 				$Form_Inputs->form_date('F Nacimiento','fNacimiento', $x8, 1);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x9, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x9, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										 'Comuna','idComuna', $x10, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x11, 1,'fa fa-map');
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x11, 1,'fa fa-map');
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -426,7 +426,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
 							<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
 							<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-							<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?>
+							<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Sistemas Asignados</h2>
@@ -641,10 +641,10 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_input_icon('Email', 'email', $x6, 2,'fa fa-envelope-o');
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x7, 1);
 				$Form_Inputs->form_date('F Nacimiento','fNacimiento', $x8, 1);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x10, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										 'Comuna','idComuna', $x11, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x11, 1,'fa fa-map');
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x11, 1,'fa fa-map');
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -878,15 +878,15 @@ foreach ($arrSistemas as $sis) {
 
 								<td>
 									<div class="btn-group" style="width: 140px;" >
-										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_usuario.php?view='.simpleEncode($usuarios['idUsuario'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_usuario.php?view='.simpleEncode($usuarios['idUsuario'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&nombre_usuario='.$usuarios['Nombre'].'&clone_idUsuario='.$usuarios['idUsuario']; ?>" title="Clonar Usuario" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
-										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idUsuario']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idUsuario']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=4){
 											//se verifica que el usuario no sea uno mismo
 											if($usuarios['idUsuario']!=$_SESSION['usuario']['basic_data']['idUsuario']){
 												$ubicacion = $location.'&del='.simpleEncode($usuarios['idUsuario'], fecha_actual());
 												$dialogo   = '¿Realmente deseas eliminar al usuario '.$usuarios['Nombre'].'?'; ?>
-												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 										<?php }
 										} ?>
 									</div>

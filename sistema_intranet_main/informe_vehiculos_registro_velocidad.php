@@ -135,7 +135,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<th>Hora</th>
 							<th>Velocidad</th>
 							<th>Limite Velocidad</th>
-							<th width="90">Ubicacion</th>
+							<th width="90">Ubicación</th>
 						</tr>
 					</thead>
 
@@ -148,7 +148,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								<td><?php echo Cantidades($rutas['LimiteVelocidad'], 0).' KM/h'; ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<a href="<?php echo 'informe_vehiculos_registro_velocidad_view.php?idVehiculo='.simpleEncode($_GET['idVehiculo'], fecha_actual()).'&view='.simpleEncode($rutas['idTabla'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+										<a href="<?php echo 'informe_vehiculos_registro_velocidad_view.php?idVehiculo='.simpleEncode($_GET['idVehiculo'], fecha_actual()).'&view='.simpleEncode($rutas['idTabla'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 									</div>
 								</td>
 							</tr>

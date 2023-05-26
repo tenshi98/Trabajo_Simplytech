@@ -114,7 +114,7 @@ $spreadsheet->getProperties()->setCreator($rowEmpresa['Nombre'])
 //Titulo columnas
 $spreadsheet->setActiveSheetIndex(0)
 			->setCellValue('A1', 'Nombre Cliente')
-            ->setCellValue('B1', 'Direccion')
+            ->setCellValue('B1', 'Dirección')
             ->setCellValue('C1', 'Identificador')
             ->setCellValue('D1', 'Comuna')
             ->setCellValue('E1', 'Fecha Vencimiento')

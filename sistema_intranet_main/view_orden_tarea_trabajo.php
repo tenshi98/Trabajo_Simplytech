@@ -250,7 +250,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 							<td class="meta-head"></td>
 						</tr>
 						<tr>
-							<td class="meta-head">Ubicacion</td>
+							<td class="meta-head">Ubicación</td>
 							<td>
 								<?php echo $rowdata['Ubicacion'];
 								if(isset($rowdata['UbicacionLVL_1'])&&$rowdata['UbicacionLVL_1']!=''){echo ' - '.$rowdata['UbicacionLVL_1'];}
@@ -280,7 +280,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 
 						<?php if($rowdata['f_creacion']!='0000-00-00'){ ?>
 							<tr>
-								<td class="meta-head">Fecha creacion</td>
+								<td class="meta-head">Fecha creación</td>
 								<td><?php if($rowdata['f_creacion']!='0000-00-00'){echo Fecha_estandar($rowdata['f_creacion']);} ?></td>
 							</tr>
 						<?php } ?>
@@ -494,7 +494,7 @@ if(isset($rowdata['CancelUsuario'])&&$rowdata['CancelUsuario']!=''){ ?>
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

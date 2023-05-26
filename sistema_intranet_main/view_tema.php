@@ -191,7 +191,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 								<thead>
 									<tr role="row">
 										<th width="60">ID</th>
-										<th>Nombre Region</th>
+										<th>Nombre Región</th>
 										<th>Nombre Comuna</th>
 										<th width="10">Acciones</th>
 									</tr>
@@ -204,11 +204,11 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 										<td><?php echo $comunas['nombre_comuna']; ?></td>
 										<td>
 											<div class="btn-group" style="width: 70px;" >
-												<a href="#" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+												<a href="#" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 												<?php
 												$ubicacion = '';
 												$dialogo   = '¿Realmente deseas eliminar la comuna de '.$comunas['nombre_comuna'].'?'; ?>
-												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+												<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 
 											</div>
 										</td>

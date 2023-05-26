@@ -258,7 +258,7 @@ $arrMatriz = db_select_array (false, $SIS_query, 'cross_quality_calidad_matriz',
 							<td><?php echo $maq['RazonSocial']; ?></td>
 							<td>
 								<div class="btn-group" style="width: 70px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_cross_quality_calidad_matriz.php?view='.simpleEncode($maq['idMatriz'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_cross_quality_calidad_matriz.php?view='.simpleEncode($maq['idMatriz'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&nombre_matriz='.$maq['Nombre'].'&clone_idMatriz='.$maq['idMatriz']; ?>" title="Clonar Tipo Planilla" class="btn btn-primary btn-sm tooltip"><i class="fa fa-files-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>

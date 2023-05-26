@@ -107,7 +107,7 @@ array_push( $arrProductos,$row );
 					<tr class="odd">
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($productos['idFacturacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+								<a href="<?php echo 'view_mov_productos.php?view='.simpleEncode($productos['idFacturacion'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 							</div>
 							<?php echo $productos['TipoMovimiento']; ?>
 						</td>
@@ -211,7 +211,7 @@ array_push( $arrProductos,$row );
 						<td><?php echo Cantidades_decimales_justos($stock_actual) ?> <?php echo $productos['UnidadMedida']; ?></td>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo $location.'&idBodega='.$_GET['idBodega'].'&view='.$productos['idProducto']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo $location.'&idBodega='.$_GET['idBodega'].'&view='.$productos['idProducto']; ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>
@@ -321,7 +321,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_productos_listado', $SIS
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['RazonSocial']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo $location.'&idBodega='.$tipo['idBodega']; ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo $location.'&idBodega='.$tipo['idBodega']; ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 							</div>
 						</td>
 					</tr>

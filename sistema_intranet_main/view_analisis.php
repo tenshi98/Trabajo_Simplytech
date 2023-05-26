@@ -246,7 +246,7 @@ foreach ($arrFlashpoint as $datos) {
 						Modelo: '.$row_data['MaquinaModelo'].'<br/>
 						Serie: '.$row_data['MaquinaSerie'].'<br/>
 						Fabricante: '.$row_data['MaquinaFabricante'].'<br/>
-						Ubicacion: '.$row_data['MaquinaUbicacion'];
+						Ubicación: '.$row_data['MaquinaUbicacion'];
 						if(isset($row_data['MaquinaUbicacion_lvl_1'])&&$row_data['MaquinaUbicacion_lvl_1']!=''){
 							echo ' - '.$row_data['MaquinaUbicacion_lvl_1'];
 						}
@@ -436,7 +436,7 @@ foreach ($arrFlashpoint as $datos) {
 </section>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

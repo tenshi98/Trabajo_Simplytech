@@ -354,7 +354,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 								//lo vacio
 								document.getElementById('idTipoReceta').length = 1
 								document.getElementById('idTipoReceta').options[0].value = "0"
-								document.getElementById('idTipoReceta').options[0].text = "Seleccione una Opcion"
+								document.getElementById('idTipoReceta').options[0].text = "Seleccione una Opción"
 							
 							//Producto Terminado	
 							} else if(modelSelected == 2){
@@ -363,7 +363,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 								//lo vacio
 								document.getElementById('idTipoReceta').length = 3
 								document.getElementById('idTipoReceta').options[0].value = "0"
-								document.getElementById('idTipoReceta').options[0].text = "Seleccione una Opcion"
+								document.getElementById('idTipoReceta').options[0].text = "Seleccione una Opción"
 								document.getElementById('idTipoReceta').options[1].value = "1"
 								document.getElementById('idTipoReceta').options[1].text = "Por Porcentaje total"
 								document.getElementById('idTipoReceta').options[2].value = "2"
@@ -639,12 +639,12 @@ $arrProductos = db_select_array (false, $SIS_query, 'productos_listado', $SIS_jo
 						<td><label class="label <?php if(isset($prod['idEstado'])&&$prod['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $prod['Estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_productos.php?view='.simpleEncode($prod['idProducto'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$prod['idProducto']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_productos.php?view='.simpleEncode($prod['idProducto'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$prod['idProducto']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del='.simpleEncode($prod['idProducto'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el Producto '.$prod['NombreProd'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

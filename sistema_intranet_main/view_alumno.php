@@ -110,9 +110,9 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'alumnos_observaciones',
 							<strong>Nombre: </strong><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?><br/>
 							<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
 							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-							<strong>Region : </strong><?php echo $rowdata['nombre_region']; ?><br/>
+							<strong>Región : </strong><?php echo $rowdata['nombre_region']; ?><br/>
 							<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-							<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+							<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
 							<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
 							<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
 						</p>
@@ -171,7 +171,7 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'alumnos_observaciones',
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

@@ -66,8 +66,8 @@ if(isset($_GET['order_by'])&&$_GET['order_by']!=''){
 		case 'id_desc':            $order_by = 'orden_trabajo_tareas_listado.idOT DESC ';           $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> ID Descendente';break;
 		case 'fprog_asc':          $order_by = 'orden_trabajo_tareas_listado.f_programacion ASC ';  $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Fecha Programacion Ascendente';break;
 		case 'fprog_desc':         $order_by = 'orden_trabajo_tareas_listado.f_programacion DESC '; $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Fecha Programacion Descendente';break;
-		case 'ubicacion_asc':      $order_by = 'ubicacion_listado.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ubicacion Ascendente'; break;
-		case 'ubicacion_desc':     $order_by = 'ubicacion_listado.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Ubicacion Descendente';break;
+		case 'ubicacion_asc':      $order_by = 'ubicacion_listado.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Ubicación Ascendente'; break;
+		case 'ubicacion_desc':     $order_by = 'ubicacion_listado.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Ubicación Descendente';break;
 		case 'prioridad_asc':      $order_by = 'core_ot_prioridad.Nombre ASC ';                     $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Prioridad Ascendente';break;
 		case 'prioridad_desc':     $order_by = 'core_ot_prioridad.Nombre DESC ';                    $bread_order = '<i class="fa fa-sort-alpha-desc" aria-hidden="true"></i> Prioridad Descendente';break;
 		case 'tipotrab_asc':       $order_by = 'core_ot_motivos_tipos.Nombre ASC ';                 $bread_order = '<i class="fa fa-sort-alpha-asc" aria-hidden="true"></i> Tipo Trabajo Ascendente'; break;
@@ -163,7 +163,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_number('OT','idOT', $x1, 1);
 				$Form_Inputs->form_date('Fecha Programada','f_programacion', $x2, 1);
-				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x3,  1,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1 AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'],   0,
+				$Form_Inputs->form_select_depend5('Ubicación', 'idUbicacion',  $x3,  1,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1 AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'],   0,
 												  'Nivel 1', 'idUbicacion_lvl_1',  $x4,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
 												  'Nivel 2', 'idUbicacion_lvl_2',  $x5,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
 												  'Nivel 3', 'idUbicacion_lvl_3',  $x6,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
@@ -218,7 +218,7 @@ $arrOTS = db_select_array (false, $SIS_query, 'orden_trabajo_tareas_listado', $S
 							</div>
 						</th>
 						<th>
-							<div class="pull-left">Ubicacion</div>
+							<div class="pull-left">Ubicación</div>
 							<div class="btn-group pull-right" style="width: 50px;" >
 								<a href="<?php echo $location.'&order_by=ubicacion_asc'; ?>" title="Ascendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-asc" aria-hidden="true"></i></a>
 								<a href="<?php echo $location.'&order_by=ubicacion_desc'; ?>" title="Descendente" class="btn btn-default btn-xs tooltip"><i class="fa fa-sort-alpha-desc" aria-hidden="true"></i></a>

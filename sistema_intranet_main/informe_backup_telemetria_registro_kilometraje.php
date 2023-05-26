@@ -154,7 +154,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							<th>Hora</th>
 							<th>Velocidad</th>
 							<th>Kilometros Recorridos</th>
-							<th>Ubicacion</th>
+							<th>Ubicación</th>
 						</tr>
 					</thead>
 					<tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -166,7 +166,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								<td><?php echo Cantidades($rutas['GeoMovimiento'], 4).' KM'; ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<a href="<?php echo 'informe_backup_telemetria_registro_kilometraje_view.php?idTelemetria='.simpleEncode($_GET['idTelemetria'], fecha_actual()).'&view='.simpleEncode($rutas['idTabla'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+										<a href="<?php echo 'informe_backup_telemetria_registro_kilometraje_view.php?idTelemetria='.simpleEncode($_GET['idTelemetria'], fecha_actual()).'&view='.simpleEncode($rutas['idTabla'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 									</div>
 								</td>
 							</tr>

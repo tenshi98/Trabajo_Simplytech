@@ -155,13 +155,13 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 				Rut: <?php echo $row_data['SistemaOrigenRut']; ?><br/>
 				Empresa: <?php echo $row_data['SistemaOrigen']; ?><br/>
 				Ciudad-Comuna: <?php echo $row_data['SistemaOrigenCiudad'].', '.$row_data['SistemaOrigenComuna']; ?><br/>
-				Direccion: <?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
+				Dirección: <?php echo $row_data['SistemaOrigenDireccion']; ?><br/>
 				Fono: <?php echo formatPhone($row_data['SistemaOrigenFono']); ?><br/>
 				Email: <?php echo $row_data['SistemaOrigenEmail']; ?>
 			</address>
 		</div>
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-			<strong>Identificacion</strong>
+			<strong>Identificación</strong>
 			<address>
 				Predio: <?php echo $row_data['NombrePredio']; ?><br/>
 				Estado: <?php echo $row_data['Estado']; ?><br/>
@@ -224,7 +224,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 				<table class="table">
 					<tbody>
 						<tr role="row">
-							<th colspan="7" style="text-align: center;">Identificacion</th>
+							<th colspan="7" style="text-align: center;">Identificación</th>
 							<th colspan="1" style="text-align: center;">Velocidad Tractor (Km/hr)</th>
 							<th colspan="1" style="text-align: center;">Distancia Recorrida(Metros)</th>
 							<th colspan="2" style="text-align: center;">Promedio Caudales</th>
@@ -313,7 +313,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 									</td>
 									<td>
 										<div class="btn-group" style="width: 35px;" >
-											<a href="<?php echo 'view_solicitud_aplicacion_detalle_tractores.php?idSolicitud='.$_GET['view'].'&idZona='.simpleEncode($cuartel['idZona'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											<a href="<?php echo 'view_solicitud_aplicacion_detalle_tractores.php?idSolicitud='.$_GET['view'].'&idZona='.simpleEncode($cuartel['idZona'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
 										</div>
 									</td>
 									
@@ -333,7 +333,7 @@ $arrCuarteles = db_select_array (false, $SIS_query, 'cross_solicitud_aplicacion_
 </section>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

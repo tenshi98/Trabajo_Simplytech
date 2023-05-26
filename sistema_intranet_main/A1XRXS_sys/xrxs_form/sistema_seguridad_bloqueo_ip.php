@@ -34,7 +34,7 @@ require_once '0_validate_user_1.php';
 			case 'idBloqueo':  if(empty($idBloqueo)){  $error['idBloqueo']  = 'error/No ha ingresado el id';}break;
 			case 'Fecha':      if(empty($Fecha)){      $error['Fecha']      = 'error/No ha ingresado la fecha';}break;
 			case 'Hora':       if(empty($Hora)){       $error['Hora']       = 'error/No ha ingresado la hora';}break;
-			case 'IP_Client':  if(empty($IP_Client)){  $error['IP_Client']  = 'error/No ha ingresado la direccion IP';}break;
+			case 'IP_Client':  if(empty($IP_Client)){  $error['IP_Client']  = 'error/No ha ingresado la dirección IP';}break;
 			case 'Motivo':     if(empty($Motivo)){     $error['Motivo']     = 'error/No ha ingresado el Motivo';}break;
 
 		}
@@ -68,7 +68,7 @@ require_once '0_validate_user_1.php';
 				$ndata_1 = db_select_nrows (false, 'idBloqueo', 'sistema_seguridad_bloqueo_ip', '', "IP_Client='".$IP_Client."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
-			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Direccion IP ya existe en el sistema';}
+			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Dirección IP ya existe en el sistema';}
 			/*******************************************************************/
 
 			//Si no hay errores ejecuto el codigo
@@ -107,7 +107,7 @@ require_once '0_validate_user_1.php';
 				$ndata_1 = db_select_nrows (false, 'idBloqueo', 'sistema_seguridad_bloqueo_ip', '', "IP_Client='".$IP_Client."' AND idBloqueo!='".$idBloqueo."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
-			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Direccion IP ya existe en el sistema';}
+			if($ndata_1 > 0) {$error['ndata_1'] = 'error/El Dirección IP ya existe en el sistema';}
 			/*******************************************************************/
 
 			//Si no hay errores ejecuto el codigo
@@ -154,12 +154,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

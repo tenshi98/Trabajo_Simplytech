@@ -120,7 +120,7 @@ filtrar($arrOTS, 'idTelemetria');
 									<th colspan="20" style="text-align: center;"><strong>Monitoreo dentro de cuarteles</strong></th>
 								</tr>
 								<tr role="row">
-									<th colspan="6" style="text-align: center;">Identificacion</th>
+									<th colspan="6" style="text-align: center;">Identificación</th>
 									<th colspan="4" style="text-align: center;">Velocidad Tractor (Km/hr)</th>
 									<th colspan="2" style="text-align: center;">Promedio Caudales</th>
 									<th colspan="2" style="text-align: center;">Nivel Estanque</th>
@@ -184,7 +184,7 @@ filtrar($arrOTS, 'idTelemetria');
 									<th colspan="14" style="text-align: center;"><strong>Monitoreo fuera de cuarteles</strong></th>
 								</tr>
 								<tr role="row">
-									<th colspan="6" style="text-align: center;">Identificacion</th>
+									<th colspan="6" style="text-align: center;">Identificación</th>
 									<th colspan="4" style="text-align: center;">Velocidad Tractor (Km/hr)</th>
 									<th colspan="1" style="text-align: center;">Distancia Recorrida(Metros)</th>
 									<th colspan="2" style="text-align: center;">Suma Caudales</th>
@@ -244,7 +244,7 @@ filtrar($arrOTS, 'idTelemetria');
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

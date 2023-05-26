@@ -83,7 +83,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a target="_blank" rel="noopener noreferrer" href="informe_telemetria_errores_'.simpleDecode($_GET['seguimiento'], fecha_actual()).'.php?submit_filter=Filtrar'.$extra_data.'&idTelemetria='.$data['idTelemetria'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
+													<a target="_blank" rel="noopener noreferrer" href="informe_telemetria_errores_'.simpleDecode($_GET['seguimiento'], fecha_actual()).'.php?submit_filter=Filtrar'.$extra_data.'&idTelemetria='.$data['idTelemetria'].'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
 												</div>
 											</td>
 										</tr>
@@ -115,7 +115,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a target="_blank" rel="noopener noreferrer" href="informe_telemetria_fuera_linea_'.simpleDecode($_GET['seguimiento'], fecha_actual()).'.php?submit_filter=Filtrar'.$extra_data.'&idTelemetria='.$data['idTelemetria'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
+													<a target="_blank" rel="noopener noreferrer" href="informe_telemetria_fuera_linea_'.simpleDecode($_GET['seguimiento'], fecha_actual()).'.php?submit_filter=Filtrar'.$extra_data.'&idTelemetria='.$data['idTelemetria'].'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
 												</div>
 											</td>
 										</tr>
@@ -183,7 +183,7 @@ $arrEquipo = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join
 											<td>'.fecha_estandar($data['LastUpdateFecha']).' a las '.$data['LastUpdateHora'].' hrs</td>
 											<td>
 												<div class="btn-group" style="width: 35px;" >
-													<a target="_blank" rel="noopener noreferrer" href="principal_gps_view_view.php?view='.$data['idTelemetria'].'" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
+													<a target="_blank" rel="noopener noreferrer" href="principal_gps_view_view.php?view='.$data['idTelemetria'].'" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>						
 												</div>
 											</td>
 										</tr>

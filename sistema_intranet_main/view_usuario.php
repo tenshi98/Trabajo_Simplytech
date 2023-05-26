@@ -187,7 +187,7 @@ $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', 
 							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
 							<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
 							<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-							<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?>
+							<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?>
 						</p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Sistemas Asignados</h2>
@@ -400,7 +400,7 @@ $arrDocumento = db_select_array (false, $SIS_query, 'usuarios_documentos_pago', 
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

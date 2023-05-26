@@ -113,10 +113,10 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 					$Form_Inputs = new Form_Inputs();
 					$Form_Inputs->form_select('Uso de widget Sociales','Social_idUso', $x1, 2, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
 					$Form_Inputs->form_input_icon('Facebook - ID de la pagina', 'Social_facebook', $x2, 1,'fa fa-facebook');
-					$Form_Inputs->form_input_icon('Twitter - Direccion Web', 'Social_twitter', $x3, 1,'fa fa-twitter');
+					$Form_Inputs->form_input_icon('Twitter - Dirección Web', 'Social_twitter', $x3, 1,'fa fa-twitter');
 					//$Form_Inputs->form_input_icon('Instagram', 'Social_instagram', $x4, 1,'fa fa-instagram');
 					$Form_Inputs->form_input_icon('Linkedin - Identificador', 'Social_linkedin', $x5, 1,'fa fa-linkedin');
-					$Form_Inputs->form_input_icon('Rss - Direccion Feed', 'Social_rss', $x6, 1,'fa fa-rss');
+					$Form_Inputs->form_input_icon('Rss - Dirección Feed', 'Social_rss', $x6, 1,'fa fa-rss');
 					//$Form_Inputs->form_input_icon('ApiKey (Youtube)', 'Social_youtube', $x7, 1,'fa fa-youtube');
 					//$Form_Inputs->form_input_icon('ApiKey (Tumblr)', 'Social_tumblr', $x8, 1,'fa fa-tumblr');
 

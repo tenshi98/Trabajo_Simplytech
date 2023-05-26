@@ -219,11 +219,11 @@ $arrLinks = db_select_array (false, $SIS_query, 'sitios_listado_links', $SIS_joi
 							<td><label class="label <?php if(isset($menu['idEstado'])&&$menu['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $menu['Estado']; ?></label></td>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$menu['idLinks']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&edit='.$menu['idLinks']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=3){
 										$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($menu['idLinks'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el enlace '.$menu['Nombre'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

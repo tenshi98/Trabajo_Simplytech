@@ -47,9 +47,9 @@ require_once 'core/Web.Header.Main.php';
 /*                                                   ejecucion de logica                                                          */
 /**********************************************************************************************************************************/
 //Listado de errores no manejables
-if (isset($_GET['created'])){ $error['created'] = 'sucess/Ubicacion Creada correctamente';}
-if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ubicacion Modificada correctamente';}
-if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ubicacion Borrada correctamente';}
+if (isset($_GET['created'])){ $error['created'] = 'sucess/Ubicación Creada correctamente';}
+if (isset($_GET['edited'])){  $error['edited']  = 'sucess/Ubicación Modificada correctamente';}
+if (isset($_GET['deleted'])){ $error['deleted'] = 'sucess/Ubicación Borrada correctamente';}
 //Manejador de errores
 if(isset($error)&&$error!=''){echo notifications_list($error);}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -205,7 +205,7 @@ function arrayToUL(array $array, $lv, $rowlevel,$location, $nmax)
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ubicacion', $rowdata['Nombre'], 'Resumen'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Ubicación', $rowdata['Nombre'], 'Resumen'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -275,7 +275,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Crear Ubicacion</h5>
+			<h5>Crear Ubicación</h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
@@ -370,7 +370,7 @@ $arrArea = db_select_array (false, $SIS_query, 'ubicacion_listado', $SIS_join, $
 		<?php } ?>
 	</ul>
 
-	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Ubicacion</a><?php } ?>
+	<?php if ($rowlevel['level']>=3){ ?><a href="<?php echo $location; ?>&new=true" class="btn btn-default pull-right margin_width" ><i class="fa fa-file-o" aria-hidden="true"></i> Crear Ubicación</a><?php } ?>
 
 </div>
 <div class="clearfix"></div>
@@ -407,7 +407,7 @@ $arrArea = db_select_array (false, $SIS_query, 'ubicacion_listado', $SIS_join, $
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 	<div class="box">
 		<header>
-			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ubicacion</h5>
+			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Ubicación</h5>
 			<div class="toolbar">
 				<?php
 				//Se llama al paginador
@@ -444,12 +444,12 @@ $arrArea = db_select_array (false, $SIS_query, 'ubicacion_listado', $SIS_join, $
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $area['sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_ubicacion.php?view='.simpleEncode($area['idUbicacion'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$area['idUbicacion']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_ubicacion.php?view='.simpleEncode($area['idUbicacion'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$area['idUbicacion']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($area['idUbicacion'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el registro '.$area['Nombre'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

@@ -149,7 +149,7 @@ $html .= '
 				<address>
 					<strong>Producto</strong><br/>
 					'.$row_data['ProductoCategoria'].', '.$row_data['ProductoNombre'].'<br/>
-					Ubicacion: '.$row_data['UbicacionNombre'];
+					Ubicación: '.$row_data['UbicacionNombre'];
 					if(isset($row_data['UbicacionNombre_lvl_1'])&&$row_data['UbicacionNombre_lvl_1']!=''){$html .= ' - '.$row_data['UbicacionNombre_lvl_1'];}
 					if(isset($row_data['UbicacionNombre_lvl_2'])&&$row_data['UbicacionNombre_lvl_2']!=''){$html .= ' - '.$row_data['UbicacionNombre_lvl_2'];}
 					if(isset($row_data['UbicacionNombre_lvl_3'])&&$row_data['UbicacionNombre_lvl_3']!=''){$html .= ' - '.$row_data['UbicacionNombre_lvl_3'];}

@@ -178,7 +178,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 				->setCellValue('D2', 'Latitud')
 				->setCellValue('E2', 'Longitud')
 				->setCellValue('F2', 'Velocidad')
-				->setCellValue('G2', 'Direccion')
+				->setCellValue('G2', 'Dirección')
 				->setCellValue('H2', 'Movimiento');
 
 	for ($i = 6; $i <= $arrTemporal[0]['cantSensores']; $i++) {
@@ -269,7 +269,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 					->setCellValue('D2', 'Latitud')
 					->setCellValue('E2', 'Longitud')
 					->setCellValue('F2', 'Velocidad')
-					->setCellValue('G2', 'Direccion')
+					->setCellValue('G2', 'Dirección')
 					->setCellValue('H2', 'Movimiento');
 
 		for ($i = 6; $i <= $arrTemporal[0]['cantSensores']; $i++) {

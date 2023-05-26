@@ -145,7 +145,7 @@ if(!empty($_GET['editItem'])){
 							<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">Sensor</label>
 							<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 								<select name="Sensor_N" id="Sensor_N" class="form-control" required="">
-									<option value="" selected>Seleccione una Opcion</option>';
+									<option value="" selected>Seleccione una Opción</option>';
 
 									for ($i = 1; $i <= $rowSensores['cantSensores']; $i++) {
 										//solo sensores activos
@@ -269,7 +269,7 @@ if(!empty($_GET['editItem'])){
 							<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">Sensor</label>
 							<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 								<select name="Sensor_N" id="Sensor_N" class="form-control" required="">
-									<option value="" selected>Seleccione una Opcion</option>';
+									<option value="" selected>Seleccione una Opción</option>';
 
 									for ($i = 1; $i <= $rowSensores['cantSensores']; $i++) {
 										//solo sensores activos
@@ -412,7 +412,7 @@ if(!empty($_GET['editItem'])){
 								</td>
 								<td>
 									<div class="btn-group" style="width: 70px;" >
-										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo'].'&editItem='.$alarmas['idItem']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&nombre_equipo='.$_GET['nombre_equipo'].'&listItems='.$_GET['listItems'].'&idTipo='.$_GET['idTipo'].'&editItem='.$alarmas['idItem']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=4){
 											//se verifica que el usuario no sea uno mismo
 											$ubicacion = $new_location.'&delAlarma_item='.simpleEncode($alarmas['idItem'], fecha_actual());
@@ -420,7 +420,7 @@ if(!empty($_GET['editItem'])){
 											$ubicacion.='&listItems='.$_GET['listItems'];
 											$ubicacion.='&idTipo='.$_GET['idTipo'];
 											$dialogo   = '¿Realmente deseas eliminar el item '.$grupo.$rowSensores['SensoresNombre_'.$alarmas['Sensor_N']].'?'; ?>
-											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+											<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 										<?php } ?>
 									</div>
 								</td>
@@ -493,7 +493,7 @@ if(!empty($_GET['editItem'])){
 					$Form_Inputs->form_post_data(1,1,1, 'Se utiliza unicamente en <strong>Informes CrossCrane - Alertas por Grua</strong> para poder agrupar los errores de voltaje.');
 					$Form_Inputs->form_select('Unidad de Medida','idUniMed', $x3, 1, 'idUniMed', 'Nombre', 'telemetria_listado_unidad_medida', 0, '', $dbConn);
 
-					$Form_Inputs->form_post_data(1,1,1, 'Al desactivarla, se elimina la opcion de que la plataforma registre esta alarma');
+					$Form_Inputs->form_post_data(1,1,1, 'Al desactivarla, se elimina la opción de que la plataforma registre esta alarma');
 					$Form_Inputs->form_select('Estado','idEstado', $x13, 2, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 
 					$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
@@ -926,7 +926,7 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 						<?php if($rowdata['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
 						<?php } elseif($rowdata['id_Geo']==2){ ?>
-							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
+							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
@@ -1039,7 +1039,7 @@ foreach ($arrGrupos as $sen) {    $arrGruposEx[$sen['idGrupo']] = $sen['Nombre']
 										//se verifica que el usuario no sea uno mismo
 										$ubicacion = $new_location.'&delAlarma='.simpleEncode($tipo, fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar la alarma personalizada '.$alarmas[0]['Nombre'].'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

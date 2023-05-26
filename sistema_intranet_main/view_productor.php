@@ -106,9 +106,9 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'productores_observacion
 								<strong>Codigo: </strong><?php echo $rowdata['Codigo']; ?><br/>
 								<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
 								<strong>Fecha de Ingreso Sistema : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
-								<strong>Region : </strong><?php echo $rowdata['nombre_region']; ?><br/>
+								<strong>Región : </strong><?php echo $rowdata['nombre_region']; ?><br/>
 								<strong>Comuna : </strong><?php echo $rowdata['nombre_comuna']; ?><br/>
-								<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?><br/>
+								<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?><br/>
 								<strong>Sistema Relacionado : </strong><?php echo $rowdata['sistema']; ?><br/>
 								<strong>Estado : </strong><?php echo $rowdata['estado']; ?>
 							</p>
@@ -116,7 +116,7 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'productores_observacion
 							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Comerciales</h2>
 							<p class="text-muted word_break">
 								<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>
-								<strong>Razon Social : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
+								<strong>Razón Social : </strong><?php echo $rowdata['RazonSocial']; ?><br/>
 								<strong>Giro de la empresa: </strong><?php echo $rowdata['Giro']; ?><br/>
 								<strong>Rubro : </strong><?php echo $rowdata['Rubro']; ?><br/>
 							</p>
@@ -143,16 +143,16 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'productores_observacion
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row">
 						<?php
-							//se arma la direccion
+							//se arma la dirección
 							$direccion = "";
 							if(isset($rowdata["Direccion"])&&$rowdata["Direccion"]!=''){           $direccion .= $rowdata["Direccion"];}
 							if(isset($rowdata["nombre_comuna"])&&$rowdata["nombre_comuna"]!=''){   $direccion .= ', '.$rowdata["nombre_comuna"];}
 							if(isset($rowdata["nombre_region"])&&$rowdata["nombre_region"]!=''){   $direccion .= ', '.$rowdata["nombre_region"];}
-							//se despliega mensaje en caso de no existir direccion
+							//se despliega mensaje en caso de no existir dirección
 							if($direccion!=''){
 								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
 							}else{
-								$Alert_Text  = 'No tiene una direccion definida';
+								$Alert_Text  = 'No tiene una dirección definida';
 								alert_post_data(4,2,2, $Alert_Text);
 							}
 						?>
@@ -194,7 +194,7 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'productores_observacion
 </div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

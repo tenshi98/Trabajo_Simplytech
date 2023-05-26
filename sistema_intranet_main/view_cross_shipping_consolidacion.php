@@ -40,7 +40,7 @@ if (validarNumero($_GET['view'])){
 	$X_Puntero = simpleDecode($_GET['view'], fecha_actual());
 }
 /**************************************************************/
-// Se trae la informacion del producto
+// Se trae la información del producto
 $SIS_query = '
 cross_shipping_consolidacion.Creacion_fecha,
 cross_shipping_consolidacion.CTNNombreCompañia,
@@ -271,7 +271,7 @@ $zz .= '&view='.$_GET['view'];
 						
 					<tr><td class="meta-head" colspan="4"><strong>Cuerpo Parametros Evaluados</strong></td></tr>
 					<tr>
-						<td class="meta-head">Condicion CTN</td>
+						<td class="meta-head">Condición CTN</td>
 						<td><?php if(isset($rowConso['Condicion'])&&$rowConso['Condicion']!=''){echo $rowConso['Condicion'];}else{echo 'Sin Datos';} ?></td>
 						<td class="meta-head">Sellado Piso</td>
 						<td><?php if(isset($rowConso['Sellado'])&&$rowConso['Sellado']!=''){echo $rowConso['Sellado'];}else{echo 'Sin Datos';} ?></td>
@@ -321,7 +321,7 @@ $zz .= '&view='.$_GET['view'];
 									<tbody>
 
 										<tr class="item-row fact_tittle">
-											<td>Ubicacion</td>
+											<td>Ubicación</td>
 											<td>Posicion</td>
 											<td>Envase</td>
 											<td>Nro. De Pallet</td>
@@ -408,7 +408,7 @@ $zz .= '&view='.$_GET['view'];
 <div class="clearfix"></div>
 
 <?php
-//si se entrega la opcion de mostrar boton volver
+//si se entrega la opción de mostrar boton volver
 if(isset($_GET['return'])&&$_GET['return']!=''){
 	//para las versiones antiguas
 	if($_GET['return']=='true'){ ?>

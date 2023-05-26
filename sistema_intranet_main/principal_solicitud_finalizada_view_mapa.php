@@ -249,7 +249,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 						});
 						heatmap.setMap(map_2);
 
-						//Ubicacion de los distintos dispositivos
+						//Ubicación de los distintos dispositivos
 						var locations = [<?php echo $marker_loc; ?>];
 
 						//marcadores
@@ -395,7 +395,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 							var data       = locations[i][2];
 							var icon       = locations[i][3];
 							var marcador   = "<?php echo DB_SITE_REPO; ?>/LIB_assets/img/map-icons/3_comun_" + icon + ".png";	
-							var title      = "Informacion";	
+							var title      = "Información";	
 							
 							//guardo las ultimas ubicaciones
 							last_latitude   = locations[i][0];

@@ -108,13 +108,13 @@ array_push( $arrProveedores,$row );
 					<tr role="row">
 						<th>Tipo de Proveedor</th>
 						<th>Nombre</th>
-						<th>Razon Social</th>
+						<th>Razón Social</th>
 						<th>Rut</th>
 						<th>Fecha de Ingreso Sistema</th>
 						<th>Pais</th>
-						<th>Region</th>
+						<th>Región</th>
 						<th>Comuna</th>
-						<th>Direccion</th>
+						<th>Dirección</th>
 						<th>Sistema Relacionado</th>
 						<th>Estado</th>
 						<th>Giro de la empresa</th>
@@ -199,10 +199,10 @@ array_push( $arrProveedores,$row );
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 1);
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x3, 1);
 				$Form_Inputs->form_date('F Ingreso Sistema','fNacimiento', $x4, 1);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x5, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x6, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x7, 1,'fa fa-map');
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x7, 1,'fa fa-map');
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
 
 				?>

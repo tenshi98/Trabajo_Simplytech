@@ -265,13 +265,13 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_text('Pregunta', 'Nombre', $x2, 2);
 				$Form_Inputs->form_select('Tipo de Pregunta','idTipo', $x3, 2, 'idTipo', 'Nombre', 'rrhh_quiz_tipo', 'idTipo!=2', '', $dbConn);
 
-				$Form_Inputs->form_input_text('Opcion 1', 'Opcion_1', $x4, 1);
-				$Form_Inputs->form_input_text('Opcion 2', 'Opcion_2', $x5, 1);
-				$Form_Inputs->form_input_text('Opcion 3', 'Opcion_3', $x6, 1);
-				$Form_Inputs->form_input_text('Opcion 4', 'Opcion_4', $x7, 1);
-				$Form_Inputs->form_input_text('Opcion 5', 'Opcion_5', $x8, 1);
-				$Form_Inputs->form_input_text('Opcion 6', 'Opcion_6', $x9, 1);
-				$Form_Inputs->form_select_n_auto('Opcion Correcta','OpcionCorrecta', $x10, 1, 1, 6);
+				$Form_Inputs->form_input_text('Opción 1', 'Opcion_1', $x4, 1);
+				$Form_Inputs->form_input_text('Opción 2', 'Opcion_2', $x5, 1);
+				$Form_Inputs->form_input_text('Opción 3', 'Opcion_3', $x6, 1);
+				$Form_Inputs->form_input_text('Opción 4', 'Opcion_4', $x7, 1);
+				$Form_Inputs->form_input_text('Opción 5', 'Opcion_5', $x8, 1);
+				$Form_Inputs->form_input_text('Opción 6', 'Opcion_6', $x9, 1);
+				$Form_Inputs->form_select_n_auto('Opción Correcta','OpcionCorrecta', $x10, 1, 1, 6);
 				$Form_Inputs->form_input_hidden('idQuiz', $_GET['id_quiz'], 2);
 
 				?>
@@ -306,7 +306,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								//lo vacio
 								document.getElementById('OpcionCorrecta').length = 1
 								document.getElementById('OpcionCorrecta').options[0].value = ""
-								document.getElementById('OpcionCorrecta').options[0].text = "Seleccione una Opcion"
+								document.getElementById('OpcionCorrecta').options[0].text = "Seleccione una Opción"
 								//Le indico la cantidad de opciones a mostrar
 								for ( i = 1; i <= 6; i += 1 ) {
 									option = document.createElement('option');
@@ -337,7 +337,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								//lo vacio
 								document.getElementById('OpcionCorrecta').length = 1
 								document.getElementById('OpcionCorrecta').options[0].value = ""
-								document.getElementById('OpcionCorrecta').options[0].text = "Seleccione una Opcion"
+								document.getElementById('OpcionCorrecta').options[0].text = "Seleccione una Opción"
 								//Le indico la cantidad de opciones a mostrar
 								for ( i = 1; i <= 2; i += 1 ) {
 									option = document.createElement('option');
@@ -435,13 +435,13 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_input_text('Pregunta', 'Nombre', $x2, 2);
 				$Form_Inputs->form_select('Tipo de Pregunta','idTipo', $x3, 2, 'idTipo', 'Nombre', 'rrhh_quiz_tipo', 'idTipo!=2', '', $dbConn);
 
-				$Form_Inputs->form_input_text('Opcion 1', 'Opcion_1', $x4, 1);
-				$Form_Inputs->form_input_text('Opcion 2', 'Opcion_2', $x5, 1);
-				$Form_Inputs->form_input_text('Opcion 3', 'Opcion_3', $x6, 1);
-				$Form_Inputs->form_input_text('Opcion 4', 'Opcion_4', $x7, 1);
-				$Form_Inputs->form_input_text('Opcion 5', 'Opcion_5', $x8, 1);
-				$Form_Inputs->form_input_text('Opcion 6', 'Opcion_6', $x9, 1);
-				$Form_Inputs->form_select_n_auto('Opcion Correcta','OpcionCorrecta', $x10, 1, 1, 6);
+				$Form_Inputs->form_input_text('Opción 1', 'Opcion_1', $x4, 1);
+				$Form_Inputs->form_input_text('Opción 2', 'Opcion_2', $x5, 1);
+				$Form_Inputs->form_input_text('Opción 3', 'Opcion_3', $x6, 1);
+				$Form_Inputs->form_input_text('Opción 4', 'Opcion_4', $x7, 1);
+				$Form_Inputs->form_input_text('Opción 5', 'Opcion_5', $x8, 1);
+				$Form_Inputs->form_input_text('Opción 6', 'Opcion_6', $x9, 1);
+				$Form_Inputs->form_select_n_auto('Opción Correcta','OpcionCorrecta', $x10, 1, 1, 6);
 				$Form_Inputs->form_input_hidden('idQuiz', $_GET['id_quiz'], 2);
 				$Form_Inputs->form_input_hidden('idPregunta', $_GET['editPreg'], 2);
 
@@ -533,7 +533,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								//lo vacio
 								document.getElementById('OpcionCorrecta').length = 1
 								document.getElementById('OpcionCorrecta').options[0].value = ""
-								document.getElementById('OpcionCorrecta').options[0].text = "Seleccione una Opcion"
+								document.getElementById('OpcionCorrecta').options[0].text = "Seleccione una Opción"
 								//Le indico la cantidad de opciones a mostrar
 								for ( i = 1; i <= 6; i += 1 ) {
 									option = document.createElement('option');
@@ -564,7 +564,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 								//lo vacio
 								document.getElementById('OpcionCorrecta').length = 1
 								document.getElementById('OpcionCorrecta').options[0].value = ""
-								document.getElementById('OpcionCorrecta').options[0].text = "Seleccione una Opcion"
+								document.getElementById('OpcionCorrecta').options[0].text = "Seleccione una Opción"
 								//Le indico la cantidad de opciones a mostrar
 								for ( i = 1; i <= 2; i += 1 ) {
 									option = document.createElement('option');
@@ -1081,12 +1081,12 @@ $arrUsers = db_select_array (false, $SIS_query, 'rrhh_quiz_listado', $SIS_join, 
 						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $usuarios['Estado']; ?></label></td>
 						<td>
 							<div class="btn-group widthtd120" >
-								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_rrhh_quiz.php?view='.simpleEncode($usuarios['idQuiz'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id_quiz='.$usuarios['idQuiz']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_rrhh_quiz.php?view='.simpleEncode($usuarios['idQuiz'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+								<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id_quiz='.$usuarios['idQuiz']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								<?php if ($rowlevel['level']>=4){
 									$ubicacion = $location.'&del_quiz='.simpleEncode($usuarios['idQuiz'], fecha_actual());
 									$dialogo   = '¿Realmente deseas eliminar el Punto '.$usuarios['Nombre'].'?'; ?>
-									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+									<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 								<?php } ?>
 							</div>
 						</td>

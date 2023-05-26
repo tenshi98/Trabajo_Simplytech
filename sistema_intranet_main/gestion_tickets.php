@@ -110,7 +110,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				$Form_Inputs->form_select('Area Ticket','idArea', $x1, 2, 'idArea', 'Nombre', 'gestion_tickets_area', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo Ticket','idTipoTicket', $x2, 2, 'idTipoTicket', 'Nombre', 'core_tipo_ticket', 0, '', $dbConn);
 				$Form_Inputs->form_select('Prioridad Ticket','idPrioridad', $x3, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
-				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x4, 2);
+				$Form_Inputs->form_input_text('Título', 'Titulo', $x4, 2);
 				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x5, 2);
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -158,7 +158,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_select('Area Ticket','idArea', $x1, 2, 'idArea', 'Nombre', 'gestion_tickets_area', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo Ticket','idTipoTicket', $x2, 2, 'idTipoTicket', 'Nombre', 'core_tipo_ticket', 0, '', $dbConn);
 				$Form_Inputs->form_select('Prioridad Ticket','idPrioridad', $x3, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
-				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x4, 2);
+				$Form_Inputs->form_input_text('Título', 'Titulo', $x4, 2);
 				$Form_Inputs->form_textarea('Descripcion','Descripcion', $x5, 2);
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -312,7 +312,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select('Area Ticket','idArea', $x3, 1, 'idArea', 'Nombre', 'gestion_tickets_area', 0, '', $dbConn);
 				$Form_Inputs->form_select('Tipo Ticket','idTipoTicket', $x4, 1, 'idTipoTicket', 'Nombre', 'core_tipo_ticket', 0, '', $dbConn);
 				$Form_Inputs->form_select('Prioridad Ticket','idPrioridad', $x5, 1, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
-				$Form_Inputs->form_input_text('Titulo', 'Titulo', $x6, 1);
+				$Form_Inputs->form_input_text('Título', 'Titulo', $x6, 1);
 				$Form_Inputs->form_date('Fecha Creacion','FechaCreacion', $x7, 1);
 				$Form_Inputs->form_date('Fecha Cierre','FechaCierre', $x8, 1);
 
@@ -427,12 +427,12 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 							<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $usuarios['Sistema']; ?></td><?php } ?>
 							<td>
 								<div class="btn-group" style="width: 105px;" >
-									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_gestion_tickets.php?view='.simpleEncode($usuarios['idTicket'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idTicket']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_gestion_tickets.php?view='.simpleEncode($usuarios['idTicket'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&id='.$usuarios['idTicket']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 									<?php if ($rowlevel['level']>=4){
 										$ubicacion = $location.'&del='.simpleEncode($usuarios['idTicket'], fecha_actual());
 										$dialogo   = '¿Realmente deseas eliminar el ticket N°'. n_doc($usuarios['idTicket'], 8).'?'; ?>
-										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									<?php } ?>
 								</div>
 							</td>

@@ -99,10 +99,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_input_icon('Email', 'email', $x3, 1,'fa fa-envelope-o');
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x4, 1);
 				$Form_Inputs->form_date('Fecha de Nacimiento','fNacimiento', $x5, 1);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x6, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										 'Comuna','idComuna', $x7, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 1,'fa fa-map');
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x8, 1,'fa fa-map');
 
 				$Form_Inputs->form_input_hidden('idUsuario', $_GET['id'], 2);
 				?>
@@ -154,10 +154,10 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 				$Form_Inputs->form_input_icon('Email', 'email', $x6, 1,'fa fa-envelope-o');
 				$Form_Inputs->form_input_rut('Rut', 'Rut', $x7, 1);
 				$Form_Inputs->form_date('Fecha de Nacimiento','fNacimiento', $x8, 1);
-				$Form_Inputs->form_select_depend1('Region','idCiudad', $x9, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
+				$Form_Inputs->form_select_depend1('Región','idCiudad', $x9, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										 'Comuna','idComuna', $x10, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 										 $dbConn, 'form1');
-				$Form_Inputs->form_input_icon('Direccion', 'Direccion', $x8, 1,'fa fa-map');
+				$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x8, 1,'fa fa-map');
 
 				$Form_Inputs->form_input_hidden('idEstado', 1, 2);
 				$Form_Inputs->form_input_hidden('idTipoUsuario', 1, 2);
@@ -274,7 +274,7 @@ array_push( $arrAccess,$row );
 							<strong>Fecha de Nacimiento : </strong><?php echo Fecha_completa($rowdata['fNacimiento']); ?><br/>
 							<strong>Ciudad : </strong><?php echo $rowdata['Ciudad']; ?><br/>
 							<strong>Comuna : </strong><?php echo $rowdata['Comuna']; ?><br/>
-							<strong>Direccion : </strong><?php echo $rowdata['Direccion']; ?>
+							<strong>Dirección : </strong><?php echo $rowdata['Direccion']; ?>
 						</p>
 					</div>
 					<div class="clearfix"></div>
@@ -391,12 +391,12 @@ $search='';
 						<td><label class="label <?php if(isset($usuarios['idEstado'])&&$usuarios['idEstado']==1){echo 'label-success';}else{echo 'label-danger';} ?>"><?php echo $usuarios['estado']; ?></label></td>
 						<td>
 							<div class="btn-group" style="width: 105px;" >
-								<a href="<?php echo $location.'&view='.$usuarios['idUsuario']; ?>" title="Ver Informacion" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
-								<a href="<?php echo $location.'&id='.$usuarios['idUsuario']; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&view='.$usuarios['idUsuario']; ?>" title="Ver Información" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+								<a href="<?php echo $location.'&id='.$usuarios['idUsuario']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
 								<?php
 								$ubicacion = $location.'&del='.simpleEncode($usuarios['idUsuario'], fecha_actual());
 								$dialogo   = '¿Realmente deseas eliminar el registro '.$usuarios['Nombre'].'?'; ?>
-								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Informacion" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+								<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Información" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 							</div>
 						</td>
 					</tr>

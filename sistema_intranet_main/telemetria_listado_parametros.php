@@ -88,7 +88,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 					<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4" id="label_SensorActivacionID">Sensor de Activacion</label>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
 						<select name="SensorActivacionID" id="SensorActivacionID" class="form-control" required >
-							<option value="" selected>Seleccione una Opcion</option>';
+							<option value="" selected>Seleccione una Opción</option>';
 							for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 								$selected = '';
 								if($i==$rowdata['SensorActivacionID']){
@@ -401,7 +401,7 @@ $arrFinalGruposRev[0] = 'S/C';
 						<?php if($rowdata['id_Geo']==1){ ?>
 							<li class=""><a href="<?php echo 'telemetria_listado_gps.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-marker" aria-hidden="true"></i> Datos GPS</a></li>
 						<?php } elseif($rowdata['id_Geo']==2){ ?>
-							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Direccion</a></li>
+							<li class=""><a href="<?php echo 'telemetria_listado_direccion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-map-signs" aria-hidden="true"></i> Dirección</a></li>
 						<?php } ?>
 						<?php if($rowdata['id_Sensores']==1){ ?>
 							<li class="active"><a href="<?php echo 'telemetria_listado_parametros.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Sensores</a></li>
@@ -492,7 +492,7 @@ $arrFinalGruposRev[0] = 'S/C';
 							<td><?php echo '<span style="color:#'.$Color.'">'.$Estado.'</span>'; ?></td>
 							<td>
 								<div class="btn-group" style="width: 35px;" >
-									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$i; ?>" title="Editar Informacion" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
+									<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$i; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 								</div>
 							</td>
 						</tr>

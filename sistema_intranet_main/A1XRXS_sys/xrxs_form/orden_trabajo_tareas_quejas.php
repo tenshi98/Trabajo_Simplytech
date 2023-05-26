@@ -45,7 +45,7 @@ require_once '0_validate_user_1.php';
 			case 'NombreQueja':       if(empty($NombreQueja)){        $error['NombreQueja']        = 'error/No ha ingresado la persona de la queja';}break;
 			case 'idTipoQueja':       if(empty($idTipoQueja)){        $error['idTipoQueja']        = 'error/No ha seleccionado el tipo de queja';}break;
 			case 'Observaciones':     if(empty($Observaciones)){      $error['Observaciones']      = 'error/No ha ingresado la Observacion';}break;
-			case 'FechaQueja':        if(empty($FechaQueja)){         $error['FechaQueja']         = 'error/No ha ingresado la fecha de creacion';}break;
+			case 'FechaQueja':        if(empty($FechaQueja)){         $error['FechaQueja']         = 'error/No ha ingresado la fecha de creación';}break;
 
 		}
 	}
@@ -180,12 +180,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

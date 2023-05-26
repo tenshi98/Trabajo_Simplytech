@@ -99,8 +99,8 @@ require_once '0_validate_user_1.php';
 			case 'Header_idPopup':           if(empty($Header_idPopup)){             $error['Header_idPopup']             = 'error/No ha seleccionado si el enlace se abre en un popup';}break;
 			case 'Contact_Tittle':           if(empty($Contact_Tittle)){             $error['Contact_Tittle']             = 'error/No ha ingresado el titulo del header';}break;
 			case 'Contact_Tittle_body':      if(empty($Contact_Tittle_body)){        $error['Contact_Tittle_body']        = 'error/No ha ingresado el texto del titulo del bloque de contacto';}break;
-			case 'Contact_Address_tittle':   if(empty($Contact_Address_tittle)){     $error['Contact_Address_tittle']     = 'error/No ha ingresado el titulo de la direccion';}break;
-			case 'Contact_Address_body':     if(empty($Contact_Address_body)){       $error['Contact_Address_body']       = 'error/No ha ingresado el cuerpo de la direccion';}break;
+			case 'Contact_Address_tittle':   if(empty($Contact_Address_tittle)){     $error['Contact_Address_tittle']     = 'error/No ha ingresado el titulo de la dirección';}break;
+			case 'Contact_Address_body':     if(empty($Contact_Address_body)){       $error['Contact_Address_body']       = 'error/No ha ingresado el cuerpo de la dirección';}break;
 			case 'Contact_Email_tittle':     if(empty($Contact_Email_tittle)){       $error['Contact_Email_tittle']       = 'error/No ha ingresado el titulo del email';}break;
 			case 'Contact_Email_body':       if(empty($Contact_Email_body)){         $error['Contact_Email_body']         = 'error/No ha ingresado el cuerpo del email';}break;
 			case 'Contact_Phone_tittle':     if(empty($Contact_Phone_tittle)){       $error['Contact_Phone_tittle']       = 'error/No ha ingresado el titulo del telefono';}break;
@@ -109,22 +109,22 @@ require_once '0_validate_user_1.php';
 			case 'Contact_Recep_mail':       if(empty($Contact_Recep_mail)){         $error['Contact_Recep_mail']         = 'error/No ha ingresado el email del receptor';}break;
 			case 'Contact_Recep_name':       if(empty($Contact_Recep_name)){         $error['Contact_Recep_name']         = 'error/No ha ingresado el nombre del receptor';}break;
 			case 'Social_Tittle':            if(empty($Social_Tittle)){              $error['Social_Tittle']              = 'error/No ha ingresado el titulo del bloque social';}break;
-			case 'Social_Twitter':           if(empty($Social_Twitter)){             $error['Social_Twitter']             = 'error/No ha ingresado la direccion de Twitter';}break;
-			case 'Social_Facebook':          if(empty($Social_Facebook)){            $error['Social_Facebook']            = 'error/No ha ingresado la direccion de Facebook';}break;
-			case 'Social_Instagram':         if(empty($Social_Instagram)){           $error['Social_Instagram']           = 'error/No ha ingresado la direccion de Instagram';}break;
-			case 'Social_Googleplus':        if(empty($Social_Googleplus)){          $error['Social_Googleplus']          = 'error/No ha ingresado la direccion de Googleplus';}break;
-			case 'Social_Linkedin':          if(empty($Social_Linkedin)){            $error['Social_Linkedin']            = 'error/No ha ingresado la direccion de Linkedin';}break;
-			case 'Config_Logo_Nombre':       if(empty($Config_Logo_Nombre)){         $error['Config_Logo_Nombre']         = 'error/No ha ingresado la opcion del nombre del logo';}break;
-			case 'Config_Logo_Archivo':      if(empty($Config_Logo_Archivo)){        $error['Config_Logo_Archivo']        = 'error/No ha ingresado la opcion del nombre del archivo del logo';}break;
-			case 'Config_Root_Folder':       if(empty($Config_Root_Folder)){         $error['Config_Root_Folder']         = 'error/No ha ingresado la opcion del nombre de la carpeta raiz';}break;
-			case 'Config_Menu':              if(empty($Config_Menu)){                $error['Config_Menu']                = 'error/No ha seleccionado la opcion del menu';}break;
-			case 'Config_MenuOtros':         if(empty($Config_MenuOtros)){           $error['Config_MenuOtros']           = 'error/No ha seleccionado la opcion de menu otros';}break;
-			case 'Config_Carousel':          if(empty($Config_Carousel)){            $error['Config_Carousel']            = 'error/No ha seleccionado la opcion de carousel';}break;
-			case 'Config_Links_Rel':         if(empty($Config_Links_Rel)){           $error['Config_Links_Rel']           = 'error/No ha seleccionado la opcion de links relacionados';}break;
-			case 'Config_Top_Bar':           if(empty($Config_Top_Bar)){             $error['Config_Top_Bar']             = 'error/No ha seleccionado la opcion de top bar';}break;
-			case 'Config_Footer_Links':      if(empty($Config_Footer_Links)){        $error['Config_Footer_Links']        = 'error/No ha seleccionado la opcion de visualizacion de enlaces en el footer';}break;
-			case 'Config_Footer_Services':   if(empty($Config_Footer_Services)){     $error['Config_Footer_Services']     = 'error/No ha seleccionado la opcion de visualizacion de servicios en el footer';}break;
-			case 'Config_Footer_Letters':    if(empty($Config_Footer_Letters)){      $error['Config_Footer_Letters']      = 'error/No ha seleccionado la opcion de visualizacion de suscripcion en el footer';}break;
+			case 'Social_Twitter':           if(empty($Social_Twitter)){             $error['Social_Twitter']             = 'error/No ha ingresado la dirección de Twitter';}break;
+			case 'Social_Facebook':          if(empty($Social_Facebook)){            $error['Social_Facebook']            = 'error/No ha ingresado la dirección de Facebook';}break;
+			case 'Social_Instagram':         if(empty($Social_Instagram)){           $error['Social_Instagram']           = 'error/No ha ingresado la dirección de Instagram';}break;
+			case 'Social_Googleplus':        if(empty($Social_Googleplus)){          $error['Social_Googleplus']          = 'error/No ha ingresado la dirección de Googleplus';}break;
+			case 'Social_Linkedin':          if(empty($Social_Linkedin)){            $error['Social_Linkedin']            = 'error/No ha ingresado la dirección de Linkedin';}break;
+			case 'Config_Logo_Nombre':       if(empty($Config_Logo_Nombre)){         $error['Config_Logo_Nombre']         = 'error/No ha ingresado la opción del nombre del logo';}break;
+			case 'Config_Logo_Archivo':      if(empty($Config_Logo_Archivo)){        $error['Config_Logo_Archivo']        = 'error/No ha ingresado la opción del nombre del archivo del logo';}break;
+			case 'Config_Root_Folder':       if(empty($Config_Root_Folder)){         $error['Config_Root_Folder']         = 'error/No ha ingresado la opción del nombre de la carpeta raiz';}break;
+			case 'Config_Menu':              if(empty($Config_Menu)){                $error['Config_Menu']                = 'error/No ha seleccionado la opción del menu';}break;
+			case 'Config_MenuOtros':         if(empty($Config_MenuOtros)){           $error['Config_MenuOtros']           = 'error/No ha seleccionado la opción de menu otros';}break;
+			case 'Config_Carousel':          if(empty($Config_Carousel)){            $error['Config_Carousel']            = 'error/No ha seleccionado la opción de carousel';}break;
+			case 'Config_Links_Rel':         if(empty($Config_Links_Rel)){           $error['Config_Links_Rel']           = 'error/No ha seleccionado la opción de links relacionados';}break;
+			case 'Config_Top_Bar':           if(empty($Config_Top_Bar)){             $error['Config_Top_Bar']             = 'error/No ha seleccionado la opción de top bar';}break;
+			case 'Config_Footer_Links':      if(empty($Config_Footer_Links)){        $error['Config_Footer_Links']        = 'error/No ha seleccionado la opción de visualizacion de enlaces en el footer';}break;
+			case 'Config_Footer_Services':   if(empty($Config_Footer_Services)){     $error['Config_Footer_Services']     = 'error/No ha seleccionado la opción de visualizacion de servicios en el footer';}break;
+			case 'Config_Footer_Letters':    if(empty($Config_Footer_Letters)){      $error['Config_Footer_Letters']      = 'error/No ha seleccionado la opción de visualizacion de suscripcion en el footer';}break;
 			case 'Config_SMTP_mailUsername': if(empty($Config_SMTP_mailUsername)){   $error['Config_SMTP_mailUsername']   = 'error/No ha ingresado el usuario SMTP';}break;
 			case 'Config_SMTP_mailPassword': if(empty($Config_SMTP_mailPassword)){   $error['Config_SMTP_mailPassword']   = 'error/No ha ingresado la contraseña del usuario SMTP';}break;
 			case 'Config_SMTP_Host':         if(empty($Config_SMTP_Host)){           $error['Config_SMTP_Host']           = 'error/No ha ingresado el host del correo SMTP';}break;
@@ -408,12 +408,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

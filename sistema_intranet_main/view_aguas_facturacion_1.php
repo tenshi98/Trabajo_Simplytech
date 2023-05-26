@@ -30,7 +30,7 @@
 						<p>
 							<?php if(isset($rowDatos['ClienteRut'])&&$rowDatos['ClienteRut']!=''){             echo 'R.U.T.: '.$rowDatos['ClienteRut'].'<br/>';} ?>
 							<?php if(isset($rowDatos['ClienteGiro'])&&$rowDatos['ClienteGiro']!=''){           echo 'Rubro: '.$rowDatos['ClienteGiro'].'<br/>';} ?>
-							<?php if(isset($rowDatos['ClienteDireccionFact'])&&$rowDatos['ClienteDireccionFact']!=''){echo 'Direccion: '.$rowDatos['ClienteDireccionFact'].'<br/>';} ?>
+							<?php if(isset($rowDatos['ClienteDireccionFact'])&&$rowDatos['ClienteDireccionFact']!=''){echo 'Dirección: '.$rowDatos['ClienteDireccionFact'].'<br/>';} ?>
 							<?php if(isset($rowDatos['ClienteComunaFact'])&&$rowDatos['ClienteComunaFact']!=''){      echo 'Comuna: '.$rowDatos['ClienteComunaFact'].'<br/>';} ?>
 							<?php if(isset($rowDatos['ClienteFono1'])&&$rowDatos['ClienteFono1']!=''){         echo 'Telefono Fijo: '.formatPhone($rowDatos['ClienteFono1']).'<br/>';} ?>
 							<?php if(isset($rowDatos['ClienteFono2'])&&$rowDatos['ClienteFono2']!=''){         echo 'Telefono Movil: '.formatPhone($rowDatos['ClienteFono2']).'<br/>';} ?>

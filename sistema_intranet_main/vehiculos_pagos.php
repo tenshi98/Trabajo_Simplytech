@@ -316,7 +316,7 @@ array_push( $arrFacturaciones,$row );
 								<td align="right"><?php echo  Valores($fac['MontoTotal'], 0); ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
-										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.simpleEncode($fac['idFacturacionDetalle'], fecha_actual()); ?>" title="Ver Informacion" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
+										<?php if ($rowlevel['level']>=1){ ?><a href="<?php echo 'view_vehiculos_facturacion_listado_detalle.php?view='.simpleEncode($fac['idFacturacionDetalle'], fecha_actual()); ?>" title="Ver Información" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a><?php } ?>
 									</div>
 								</td>
 							</tr>

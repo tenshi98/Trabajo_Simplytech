@@ -94,7 +94,7 @@ require_once '0_validate_user_1.php';
 			case 'idCliente':           if(empty($idCliente)){            $error['idCliente']             = 'error/No ha seleccionado el cliente';}break;
 			case 'idTipoLicitacion':    if(empty($idTipoLicitacion)){     $error['idTipoLicitacion']      = 'error/No ha seleccionado el tipo de contrato';}break;
 			case 'ValorMensual':        if(!isset($ValorMensual)){        $error['ValorMensual']          = 'error/No ha ingresado el valor mensual';}break;
-			case 'idOpcionItem':        if(empty($idOpcionItem)){         $error['idOpcionItem']          = 'error/No ha seleccionado la opcion de mostrar itemizado';}break;
+			case 'idOpcionItem':        if(empty($idOpcionItem)){         $error['idOpcionItem']          = 'error/No ha seleccionado la opción de mostrar itemizado';}break;
 
 			case 'idUtilizable':        if(empty($idUtilizable)){         $error['idUtilizable']          = 'error/No ha seleccionado si es utilizable';}break;
 			case 'idFrecuencia':        if(!isset($idFrecuencia)){        $error['idFrecuencia']          = 'error/No ha seleccionado la unidad de medida';}break;
@@ -275,7 +275,7 @@ require_once '0_validate_user_1.php';
 					if(isset($idCliente) && $idCliente != $rowdata['idCliente']){                      $hist_Observacion .= '-Se cambia el cliente<br/>';}
 					if(isset($idTipoLicitacion) && $idTipoLicitacion != $rowdata['idTipoLicitacion']){ $hist_Observacion .= '-Se cambia el Tipo de Contrato<br/>';}
 					if(isset($ValorMensual) && $ValorMensual != $rowdata['ValorMensual']){             $hist_Observacion .= '-Se cambia el valor mensual del contrato<br/>';}
-					if(isset($idOpcionItem) && $idOpcionItem != $rowdata['idOpcionItem']){             $hist_Observacion .= '-Se cambia la opcion de telemetria<br/>';}
+					if(isset($idOpcionItem) && $idOpcionItem != $rowdata['idOpcionItem']){             $hist_Observacion .= '-Se cambia la opción de telemetria<br/>';}
 
 					/*****************************************************/
 					//se guarda el registro
@@ -321,12 +321,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 
@@ -526,12 +526,12 @@ require_once '0_validate_user_1.php';
 
 			//se verifica si es un numero lo que se recibe
 			if (!validarNumero($indice)&&$indice!=''){
-				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero';
+				$error['validarNumero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero';
 				$errorn++;
 			}
 			//Verifica si el numero recibido es un entero
 			if (!validaEntero($indice)&&$indice!=''){
-				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opcion DEL  no es un numero entero';
+				$error['validaEntero'] = 'error/El valor ingresado en $indice ('.$indice.') en la opción DEL  no es un numero entero';
 				$errorn++;
 			}
 

@@ -184,7 +184,7 @@ array_push( $arrOTS,$row );
 					<tr role="row">
 						<th>#</th>
 						<th>F Prog</th>
-						<th>Ubicacion</th>
+						<th>Ubicación</th>
 						<th>Prioridad</th>
 						<th>Tipo Trabajo</th>
 						<th width="10">Acciones</th>
@@ -255,7 +255,7 @@ array_push( $arrOTS,$row );
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
 				$Form_Inputs->form_input_number('OT','idOT', $x0, 1);
-				$Form_Inputs->form_select_depend5('Ubicacion', 'idUbicacion',  $x1,  1,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1 AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'],   0,
+				$Form_Inputs->form_select_depend5('Ubicación', 'idUbicacion',  $x1,  1,  'idUbicacion',  'Nombre',  'ubicacion_listado',  'idEstado=1 AND idSistema='.$_SESSION['usuario']['basic_data']['idSistema'],   0,
 												  'Nivel 1', 'idUbicacion_lvl_1',  $x2,  1,  'idLevel_1',  'Nombre',  'ubicacion_listado_level_1',  0,   0, 
 												  'Nivel 2', 'idUbicacion_lvl_2',  $x3,  1,  'idLevel_2',  'Nombre',  'ubicacion_listado_level_2',  0,   0,
 												  'Nivel 3', 'idUbicacion_lvl_3',  $x4,  1,  'idLevel_3',  'Nombre',  'ubicacion_listado_level_3',  0,   0,
