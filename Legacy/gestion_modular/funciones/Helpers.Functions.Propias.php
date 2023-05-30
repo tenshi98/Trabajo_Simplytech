@@ -220,13 +220,9 @@ function prod_print_venta($idBodega, $dato, $tabla1, $tabla2, $input_select, $in
 
 	$cadena .= '<script>';
 	foreach ($arrTipo as $tipo) {
-		$cadena .= 'let uml_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
-	}
-	foreach ($arrTipo as $tipo) {
-		$cadena .= 'let valor_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['Valorizacion']).'";';
-	}
-	foreach ($arrTipo as $tipo) {
 		$Total_existencias = $tipo['ingreso'] - $tipo['egreso'];
+		$cadena .= 'let uml_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
+		$cadena .= 'let valor_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['Valorizacion']).'";';
 		$cadena .= 'let existencia_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($Total_existencias).'";';
 	}
 	$cadena .= '</script>';
