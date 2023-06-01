@@ -121,7 +121,7 @@ if(!empty($_GET['addTrabajo'])){
 
 		//Se recorre
 		foreach ($arrPermisos as $prod) {
-			$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion={$prod['idLicitacion']})";
+			$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion=".$prod['idLicitacion'].")";
 		}
 
 	}
@@ -253,7 +253,7 @@ if(!empty($_GET['addTrabajo'])){
 
 	//Se recorre
 	foreach ($arrPermisos as $prod) {
-		$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+		$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 	}
 
 	/*******************************************************/
@@ -853,7 +853,7 @@ if(!empty($_GET['addTrabajo'])){
 	//Recorro
 	$zx1 = "idProducto=0";
 	foreach ($arrPermisos as $prod) {
-		$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+		$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 	}
 
 	?>

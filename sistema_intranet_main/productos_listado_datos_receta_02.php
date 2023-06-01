@@ -185,7 +185,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 $zx1 = "idProducto=0";
 //recorro
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idTipoProducto=1 AND idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx1 .= " OR (idTipoProducto=1 AND idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }	 
 ?>
 

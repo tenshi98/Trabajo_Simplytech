@@ -316,7 +316,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }	 
 ?>
 
@@ -602,7 +602,7 @@ foreach ($arrPermisos as $prod) {
 	$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
 
 	//Verifico el tipo de usuario que esta ingresando
-	$z="idMaquina={$rowdata['idMaquina']}";
+	$z="idMaquina=".$rowdata['idMaquina'];
 
 	?>
 
@@ -882,7 +882,7 @@ foreach ($arrPermisos as $prod) {
 	$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
 	//Recorro
 	foreach ($arrPermisos as $prod) {
-		$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+		$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 	}
 
 	?>
@@ -987,7 +987,7 @@ foreach ($arrPermisos as $prod) {
 	$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
 	//Recorro
 	foreach ($arrPermisos as $prod) {
-		$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+		$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 	}
 
 	?>
@@ -1079,7 +1079,7 @@ foreach ($arrPermisos as $prod) {
 	$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
 	//Recorro
 	foreach ($arrPermisos as $prod) {
-		$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+		$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 	}
 
 	?>
@@ -1184,7 +1184,7 @@ foreach ($arrPermisos as $prod) {
 	$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
 	//Recorro
 	foreach ($arrPermisos as $prod) {
-		$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+		$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 	}
 
 	?>

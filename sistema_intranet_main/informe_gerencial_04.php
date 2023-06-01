@@ -162,7 +162,7 @@ $TotalGeneral = 0;
 									}
 									echo '</td>';
 								}
-								$search .="&idProveedor={$prod['idProveedor']}";
+								$search .="&idProveedor=".$prod['idProveedor'];
 								echo '<td align="right">'.valores($Total, 0).'</td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >

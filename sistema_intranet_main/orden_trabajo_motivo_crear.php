@@ -247,7 +247,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	array_push( $arrPermisos,$row );
 	}
 	foreach ($arrPermisos as $prod) {
-		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion={$prod['idLicitacion']})";
+		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion=".$prod['idLicitacion'].")";
 	}
 }
 
@@ -366,7 +366,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }	 
 ?>
 
@@ -477,7 +477,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
-	$zx2 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx2 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }
 	 
 ?>

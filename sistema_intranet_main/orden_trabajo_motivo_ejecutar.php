@@ -261,7 +261,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	//filtro
 	$z = "idLicitacion=0";
 	foreach ($arrPermisos as $prod) {
-		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion={$prod['idLicitacion']})";
+		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion=".$prod['idLicitacion'].")";
 	}
 }
 
@@ -387,7 +387,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	//filtro
 	$z = "idLicitacion=0";
 	foreach ($arrPermisos as $prod) {
-		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion={$prod['idLicitacion']})";
+		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion=".$prod['idLicitacion'].")";
 	}
 }
 
@@ -448,7 +448,7 @@ $arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $S
 //filtro
 $SIS_where = "idProducto=0";
 foreach ($arrPermisos as $prod) {
-	$SIS_where .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$SIS_where .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }
 
 //Imprimo las variables
@@ -613,7 +613,7 @@ $arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_insumos', $SIS
 //filtro
 $SIS_where = "idProducto=0";
 foreach ($arrPermisos as $prod) {
-	$SIS_where .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$SIS_where .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }
 
 //Imprimo las variables

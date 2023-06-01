@@ -118,7 +118,7 @@ for ($i = 1; $i <= $rowdata['cantPuntos']; $i++) {
 // consulto los datos
 $query = "SELECT ".$cadena."
 FROM `maquinas_listado_matriz`
-WHERE idMatriz = {$rowdata['idMatriz']}";
+WHERE idMatriz = ".$rowdata['idMatriz'];
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);
 //Si ejecuto correctamente la consulta
@@ -181,7 +181,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }
 
 ?>
@@ -396,7 +396,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }
 
 ?>

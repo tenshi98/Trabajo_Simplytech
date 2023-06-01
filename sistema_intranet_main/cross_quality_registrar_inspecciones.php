@@ -427,7 +427,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idTipo={$prod['idTipo']})";
+	$zx1 .= " OR (idTipo=".$prod['idTipo'].")";
 }
 
 ?>
@@ -646,7 +646,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idTipo={$prod['idTipo']})";
+	$zx1 .= " OR (idTipo=".$prod['idTipo'].")";
 }
 
 ?>
@@ -881,7 +881,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idCategoria={$prod['idCategoria']})";
+	$zx1 .= " OR (idCategoria=".$prod['idCategoria'].")";
 }
 /************************************/
 //Se revisan los permisos a las variantes
@@ -906,7 +906,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
-	$zx2 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx2 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }
 
 //verifico que sea un administrador
@@ -1231,7 +1231,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idCategoria={$prod['idCategoria']})";
+	$zx1 .= " OR (idCategoria=".$prod['idCategoria'].")";
 }
 /************************************/
 //Se revisan los permisos a las variantes
@@ -1256,7 +1256,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
-	$zx2 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx2 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }
 //verifico que sea un administrador
 $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
@@ -1431,8 +1431,8 @@ $arrCategorias = db_select_array (false, 'idCategoria', 'core_sistemas_variedade
 $arrProductos  = array();
 $arrProductos  = db_select_array (false, 'idProducto', 'core_sistemas_variedades_listado', '', $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrProductos');
 
-foreach ($arrCategorias as $prod) {$zx1 .= " OR (idCategoria={$prod['idCategoria']})";}
-foreach ($arrProductos as $prod) { $zx2 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";}
+foreach ($arrCategorias as $prod) {$zx1 .= " OR (idCategoria=".$prod['idCategoria'].")";}
+foreach ($arrProductos as $prod) { $zx2 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";}
 
 ?>
 

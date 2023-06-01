@@ -83,7 +83,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 $arrRutas = array();
 $query = "SELECT idUbicaciones, Latitud, Longitud, direccion
 FROM `vehiculos_rutas_ubicaciones`
-WHERE idRuta = {$rowdata['idRuta']}
+WHERE idRuta = ".$rowdata['idRuta']."
 ORDER BY idUbicaciones ASC";
 //Consulta
 $resultado = mysqli_query ($dbConn, $query);

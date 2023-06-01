@@ -360,7 +360,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
-	$zx2 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx2 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }
 	
 ?>
@@ -434,7 +434,7 @@ while ( $row = mysqli_fetch_assoc ($resultado)){
 array_push( $arrPermisos,$row );
 }
 foreach ($arrPermisos as $prod) {
-	$zx2 .= " OR (insumos_listado.idEstado=1 AND insumos_listado.idProducto={$prod['idProducto']})";
+	$zx2 .= " OR (insumos_listado.idEstado=1 AND insumos_listado.idProducto=".$prod['idProducto'].")";
 }
 
 $Form_Inputs = new Inputs();

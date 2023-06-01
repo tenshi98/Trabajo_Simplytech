@@ -131,7 +131,7 @@ $arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_insumos', $SIS
 //filtro
 $zx2 = "idProducto=0";
 foreach ($arrPermisos as $prod) {
-	$zx2 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx2 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }	 
 ?>
 
@@ -179,7 +179,7 @@ $arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $S
 //filtro
 $zx1 = "idProducto=0";
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }	 
 ?>
 
@@ -343,7 +343,7 @@ $arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $S
 //filtro
 $zx1 = "idProducto=0";
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idTipoProducto=2 AND idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx1 .= " OR (idTipoProducto=2 AND idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }	 
 ?>
 

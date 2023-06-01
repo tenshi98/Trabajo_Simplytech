@@ -858,10 +858,10 @@ $arrPermisos2 = db_select_array (false, $SIS_query, 'core_sistemas_variedades_li
 $zx1 = "idCategoria=0";
 $zx2 = "idProducto=0";
 foreach ($arrPermisos1 as $prod) {
-	$zx1 .= " OR (idCategoria={$prod['idCategoria']})";
+	$zx1 .= " OR (idCategoria=".$prod['idCategoria'].")";
 }
 foreach ($arrPermisos2 as $prod) {
-	$zx2 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx2 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }
 
 //verifico que sea un administrador

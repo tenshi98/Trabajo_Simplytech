@@ -687,7 +687,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$arrPermisos = db_select_array (false, $SIS_query, 'usuarios_contratos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
 
 	foreach ($arrPermisos as $prod) {
-		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion={$prod['idLicitacion']})";
+		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND idAprobado=2 AND idLicitacion=".$prod['idLicitacion'].")";
 	}
 
 }
@@ -826,7 +826,7 @@ $arrTipo = array();
 $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }
 
 ?>
@@ -1324,7 +1324,7 @@ $arrTipo = array();
 $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
 
 foreach ($arrPermisos as $prod) {
-	$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+	$zx1 .= " OR (idEstado=1 AND idProducto=".$prod['idProducto'].")";
 }
 
 ?>

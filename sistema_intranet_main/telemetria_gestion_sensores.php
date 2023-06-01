@@ -380,7 +380,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	$arrPermisos = db_select_array (false, $SIS_query, 'usuarios_equipos_telemetria', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
 
 	foreach ($arrPermisos as $prod) {
-		$filtro .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND id_Geo=2 AND idTelemetria={$prod['idTelemetria']})";
+		$filtro .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND id_Geo=2 AND idTelemetria=".$prod['idTelemetria'].")";
 	}
 }
 ?>

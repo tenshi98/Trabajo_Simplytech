@@ -490,7 +490,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 	array_push( $arrPermisos,$row );
 	}
 	foreach ($arrPermisos as $prod) {
-		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND id_Geo=2 AND idTelemetria={$prod['idTelemetria']})";
+		$z .= " OR (idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1 AND id_Geo=2 AND idTelemetria=".$prod['idTelemetria'].")";
 	}
 	//$z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND id_Geo=1";
 }	 
