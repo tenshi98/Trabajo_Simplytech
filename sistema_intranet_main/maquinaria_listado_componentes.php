@@ -107,55 +107,10 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['edit'])){
 	/*******************************************************/
 	// consulto los datos
-	$SIS_query = '
-	maquinas_listado_level_'.$_GET['lvl'].'.Nombre,
-	maquinas_listado_level_'.$_GET['lvl'].'.idUtilizable,
-	maquinas_listado_level_'.$_GET['lvl'].'.Modelo,
-	maquinas_listado_level_'.$_GET['lvl'].'.AnoFab,
-	maquinas_listado_level_'.$_GET['lvl'].'.Serie,
-	maquinas_listado_level_'.$_GET['lvl'].'.idSubTipo,
-	maquinas_listado_level_'.$_GET['lvl'].'.Saf,
-	maquinas_listado_level_'.$_GET['lvl'].'.Numero,
-	maquinas_listado_level_'.$_GET['lvl'].'.idProducto,
-	maquinas_listado_level_'.$_GET['lvl'].'.Grasa_inicial,
-	maquinas_listado_level_'.$_GET['lvl'].'.Grasa_relubricacion,
-	maquinas_listado_level_'.$_GET['lvl'].'.Aceite,
-	maquinas_listado_level_'.$_GET['lvl'].'.Cantidad,
-	maquinas_listado_level_'.$_GET['lvl'].'.idUml,
-	maquinas_listado_level_'.$_GET['lvl'].'.Frecuencia,
-	maquinas_listado_level_'.$_GET['lvl'].'.idFrecuencia,
-	sistema_productos_uml.Nombre AS UnidadMedida';
-	$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = maquinas_listado_level_'.$_GET['lvl'].'.idUml';
-	$SIS_where = 'maquinas_listado_level_'.$_GET['lvl'].'.idLevel_'.$_GET['lvl'].' = '.$_GET['edit'];
-	$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_level_'.$_GET['lvl'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
-
-	//filtro
-	$zx1 = "idProducto=0";
-	/*******************************************************/
-	// consulto los datos
-	$SIS_query = 'idProducto';
+	$SIS_query = 'Nombre,idUtilizable';
 	$SIS_join  = '';
-	$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-	$SIS_order = 0;
-	$arrPermisos = array();
-	$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
-
-	//Se recorre
-	foreach ($arrPermisos as $prod) {
-		$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
-	}
-
-	/*******************************************************/
-	// consulto los datos
-	$SIS_query = '
-	productos_listado.idProducto,
-	sistema_productos_uml.Nombre AS Unimed,
-	productos_listado.idUml';
-	$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
-	$SIS_where = '';
-	$SIS_order = 'sistema_productos_uml.Nombre ASC';
-	$arrTipo = array();
-	$arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+	$SIS_where = 'idLevel_'.$_GET['lvl'].' = '.$_GET['edit'];
+	$rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_level_'.$_GET['lvl'], $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 	?>
 
@@ -172,11 +127,6 @@ if(!empty($_GET['edit'])){
 					//Se verifican si existen los datos
 					if(isset($Nombre)){               $x1  = $Nombre;                 }else{$x1  = $rowdata['Nombre'];}
 					if(isset($idUtilizable)){         $x4  = $idUtilizable;           }else{$x4  = $rowdata['idUtilizable'];}
-					//Si es componente
-					//Si es subcomponente
-					if(isset($idSubTipo)){            $x11 = $idSubTipo;              }else{$x11 = $rowdata['idSubTipo'];}
-					if(isset($Frecuencia)){           $x19 = $Frecuencia;             }else{$x19 = $rowdata['Frecuencia'];}
-					if(isset($idFrecuencia)){         $x20 = $idFrecuencia;           }else{$x20 = $rowdata['idFrecuencia'];}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -189,137 +139,12 @@ if(!empty($_GET['edit'])){
 					$s_data.= '</ul>';
 					$Form_Inputs->form_post_data(1,1,1, $s_data);
 					$Form_Inputs->form_select('Componente','idUtilizable', $x4, 2, 'idUtilizable', 'Nombre', 'core_maquinas_tipo_componente', 0, '', $dbConn);
-					//Si es subcomponente
-					$Form_Inputs->form_select('Tareas Relacionadas','idSubTipo', $x11, 2, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, '', $dbConn);
-					$Form_Inputs->form_input_text('Frecuencia', 'Frecuencia', $x19, 1);
-					$Form_Inputs->form_select('Medida Frecuencia','idFrecuencia', $x20, 1, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idMaquina', simpleDecode($_GET['id'], fecha_actual()), 2);
 					$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
 
 					?>
-
-					<script>
-						/**********************************************************************/
-						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-
-							//Se ocultan todos los input
-							document.getElementById('div_idSubTipo').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = 'none';
-							document.getElementById('div_idFrecuencia').style.display = 'none';
-
-							let Sensores_val_1= $("#idUtilizable").val();
-
-							//si es No Usable
-							if(Sensores_val_1 == 1){
-								document.getElementById('div_idSubTipo').style.display = 'none';
-								document.getElementById('div_Frecuencia').style.display = 'none';
-								document.getElementById('div_idFrecuencia').style.display = 'none';
-
-							//si es Componente
-							} else if(Sensores_val_1 == 2){
-								document.getElementById('div_idSubTipo').style.display = 'none';
-								document.getElementById('div_Frecuencia').style.display = 'none';
-								document.getElementById('div_idFrecuencia').style.display = 'none';
-
-							//si es Subcomponente
-							} else if(Sensores_val_1 == 3){
-								document.getElementById('div_idSubTipo').style.display = '';
-								document.getElementById('div_Frecuencia').style.display = 'none';
-								document.getElementById('div_idFrecuencia').style.display = 'none';
-
-							}
-
-							let Sensores_val_2= $("#idSubTipo").val();
-
-							//si es grasa
-							if(Sensores_val_2 == 1){
-								document.getElementById('div_Frecuencia').style.display = '';
-								document.getElementById('div_idFrecuencia').style.display = '';
-
-							//si es aceite
-							} else if(Sensores_val_2 == 2){
-								document.getElementById('div_Frecuencia').style.display = '';
-								document.getElementById('div_idFrecuencia').style.display = '';
-
-							//si es normal
-							} else if(Sensores_val_2 == 3){
-								document.getElementById('div_Frecuencia').style.display = '';
-								document.getElementById('div_idFrecuencia').style.display = '';
-							//si es otro
-							} else if(Sensores_val_2 == 4){
-								document.getElementById('div_Frecuencia').style.display = '';
-								document.getElementById('div_idFrecuencia').style.display = '';
-							}
-
-						});
-
-						/**********************************************************************/
-
-						$("#idUtilizable").on("change", function(){
-							let TipoComp = $(this).val();
-
-							//si es No Usable
-							if(TipoComp == 1){
-								document.getElementById('div_idSubTipo').style.display = 'none';
-								document.getElementById('div_Frecuencia').style.display = 'none';
-								document.getElementById('div_idFrecuencia').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('Frecuencia').value = "0";
-								document.getElementById('idFrecuencia').selectedIndex = 0;
-
-							//si es Componente
-							} else if(TipoComp == 2){
-								document.getElementById('div_idSubTipo').style.display = 'none';
-								document.getElementById('div_Frecuencia').style.display = 'none';
-								document.getElementById('div_idFrecuencia').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('Frecuencia').value = "0";
-								document.getElementById('idFrecuencia').selectedIndex = 0;
-
-							//si es Subcomponente
-							} else if(TipoComp == 3){
-								document.getElementById('div_idSubTipo').style.display = '';
-								document.getElementById('div_Frecuencia').style.display = 'none';
-								document.getElementById('div_idFrecuencia').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('Frecuencia').value = "0";
-								document.getElementById('idFrecuencia').selectedIndex = 0;
-
-							}
-						});
-
-						$("#idSubTipo").on("change", function(){ //se ejecuta al cambiar valor del select
-							let modelSelected = $(this).val(); //Asignamos el valor seleccionado
-
-							//si es grasa
-							if(modelSelected == 1){
-								document.getElementById('div_Frecuencia').style.display = '';
-								document.getElementById('div_idFrecuencia').style.display = '';
-
-							//si es aceite
-							} else if(modelSelected == 2){
-								document.getElementById('div_Frecuencia').style.display = '';
-								document.getElementById('div_idFrecuencia').style.display = '';
-
-							//si es normal
-							} else if(modelSelected == 3){
-								document.getElementById('div_Frecuencia').style.display = '';
-								document.getElementById('div_idFrecuencia').style.display = '';
-							//si es otro
-							} else if(modelSelected == 4){
-								document.getElementById('div_Frecuencia').style.display = '';
-								document.getElementById('div_idFrecuencia').style.display = '';
-							//el resto
-							} else {
-								document.getElementById('div_Frecuencia').style.display = 'none';
-								document.getElementById('div_idFrecuencia').style.display = 'none';
-							}
-
-						});
-
-					</script>
 
 					<div class="form-group">
 
@@ -449,33 +274,6 @@ if(!empty($_GET['edit'])){
 }elseif(!empty($_GET['new'])){
 	//valido los permisos
 	validaPermisoUser($rowlevel['level'], 3, $dbConn);
-	/*******************************************************/
-	// consulto los datos
-	$SIS_query = 'idProducto';
-	$SIS_join  = '';
-	$SIS_where = 'idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
-	$SIS_order = 0;
-	$arrPermisos = array();
-	$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
-
-	/*******************************************************/
-	// consulto los datos
-	$SIS_query = '
-	productos_listado.idProducto,
-	sistema_productos_uml.Nombre AS Unimed,
-	productos_listado.idUml';
-	$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
-	$SIS_where = '';
-	$SIS_order = 'sistema_productos_uml.Nombre ASC';
-	$arrTipo = array();
-	$arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
-
-	/*******************************************************/
-	//Recorro
-	$zx1 = "idProducto=0";
-	foreach ($arrPermisos as $prod) {
-		$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
-	}
 
 	?>
 
@@ -492,10 +290,6 @@ if(!empty($_GET['edit'])){
 					//Se verifican si existen los datos
 					if(isset($Nombre)){               $x1  = $Nombre;                 }else{$x1  = '';}
 					if(isset($idUtilizable)){         $x4  = $idUtilizable;           }else{$x4  = '';}
-					//Si es subcomponente
-					if(isset($idSubTipo)){            $x11 = $idSubTipo;              }else{$x11 = '';}
-					if(isset($Frecuencia)){           $x19 = $Frecuencia;             }else{$x19 = '';}
-					if(isset($idFrecuencia)){         $x20 = $idFrecuencia;           }else{$x20 = '';}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -508,83 +302,12 @@ if(!empty($_GET['edit'])){
 					$s_data.= '</ul>';
 					$Form_Inputs->form_post_data(1,1,1, $s_data);
 					$Form_Inputs->form_select('Componente','idUtilizable', $x4, 2, 'idUtilizable', 'Nombre', 'core_maquinas_tipo_componente', 0, '', $dbConn);
-					//Si es subcomponente
-					$Form_Inputs->form_select('Tareas Relacionadas','idSubTipo', $x11, 1, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, '', $dbConn);
-					$Form_Inputs->form_input_text('Frecuencia', 'Frecuencia', $x19, 1);
-					$Form_Inputs->form_select('Medida Frecuencia','idFrecuencia', $x20, 1, 'idFrecuencia', 'Nombre', 'core_tiempo_frecuencia', 0, '', $dbConn);
 
 					$Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);
 					$Form_Inputs->form_input_hidden('idMaquina', simpleDecode($_GET['id'], fecha_actual()), 2);
 					$Form_Inputs->form_input_hidden('lvl', $_GET['lvl'], 2);
 
 					?>
-
-					<script>
-						//Se ocultan todos los input
-						document.getElementById('div_idSubTipo').style.display = 'none';
-						document.getElementById('div_Frecuencia').style.display = 'none';
-						document.getElementById('div_idFrecuencia').style.display = 'none';
-
-						$("#idUtilizable").on("change", function(){
-							let TipoComp = $(this).val();
-
-							//si es No Usable
-							if(TipoComp == 1){
-								document.getElementById('div_idSubTipo').style.display = 'none';
-								document.getElementById('div_Frecuencia').style.display = 'none';
-								document.getElementById('div_idFrecuencia').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('Frecuencia').value = "0";
-								document.getElementById('idFrecuencia').selectedIndex = 0;
-
-							//si es Componente
-							} else if(TipoComp == 2){
-								document.getElementById('div_idSubTipo').style.display = 'none';
-								document.getElementById('div_Frecuencia').style.display = 'none';
-								document.getElementById('div_idFrecuencia').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('Frecuencia').value = "0";
-								document.getElementById('idFrecuencia').selectedIndex = 0;
-
-							//si es Subcomponente
-							} else if(TipoComp == 3){
-								document.getElementById('div_idSubTipo').style.display = '';
-								document.getElementById('div_Frecuencia').style.display = 'none';
-								document.getElementById('div_idFrecuencia').style.display = 'none';
-
-							}
-						});
-
-						$("#idSubTipo").on("change", function(){ //se ejecuta al cambiar valor del select
-							let modelSelected = $(this).val(); //Asignamos el valor seleccionado
-
-							//si es grasa
-							if(modelSelected == 1){
-								document.getElementById('div_Frecuencia').style.display = '';
-								document.getElementById('div_idFrecuencia').style.display = '';
-
-							//si es aceite
-							} else if(modelSelected == 2){
-								document.getElementById('div_Frecuencia').style.display = '';
-								document.getElementById('div_idFrecuencia').style.display = '';
-
-							//si es normal
-							} else if(modelSelected == 3){
-								document.getElementById('div_Frecuencia').style.display = '';
-								document.getElementById('div_idFrecuencia').style.display = '';
-							//si es otro
-							} else if(modelSelected == 4){
-								document.getElementById('div_Frecuencia').style.display = '';
-								document.getElementById('div_idFrecuencia').style.display = '';
-							//el resto
-							} else {
-								document.getElementById('div_Frecuencia').style.display = 'none';
-								document.getElementById('div_idFrecuencia').style.display = 'none';
-							}
-
-						});
-
-					</script>
 
 					<div class="form-group">
 
