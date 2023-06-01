@@ -143,9 +143,9 @@ if(!empty($_GET['submit_filter'])){
 					$Form_Inputs = new Form_Inputs();
 					//Verifico el tipo de usuario que esta ingresando
 					if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-						$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x0, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
+						$Form_Inputs->form_select_filter('Equipo de Telemetria','idTelemetria', $x0, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 					}else{
-						$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x0, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
+						$Form_Inputs->form_select_join_filter('Equipo de Telemetria','idTelemetria', $x0, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 					}
 					$Form_Inputs->form_select_filter('Maquina','idMaquina', $x1, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, '', $dbConn);
 					$Form_Inputs->form_select('Prioridad','idPrioridad', $x2, 1, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);

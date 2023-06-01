@@ -158,7 +158,7 @@ if(!empty($_GET['edit_trabajo'])){
 	$idOT        = simpleDecode($_GET['view'], fecha_actual());
 	$idTrabajoOT = simpleDecode($_GET['edit_trabajo'], fecha_actual());
 	//Se traen los datos de la ot
-	$SIS_query = 'idMaquina, comp_tabla_id, comp_tabla, NombreComponente, Descripcion';
+	$SIS_query = 'idMaquina, comp_tabla_id, comp_tabla, NombreComponente, idSubTipo, Descripcion';
 	$SIS_join  = '';
 	$SIS_where = 'idTrabajoOT ='.$idTrabajoOT;
 	$rowdata = db_select_data (false, $SIS_query, 'orden_trabajo_listado_trabajos', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowdata');
@@ -212,7 +212,8 @@ if(!empty($_GET['edit_trabajo'])){
 					if(isset($idLevel_23)){       $x23  = $idLevel_23;      }elseif(isset($rowMaquina['idLevel_23'])&&$rowMaquina['idLevel_23']!=''){ $x23  = $rowMaquina['idLevel_23'];    }else{$x23  = '';}
 					if(isset($idLevel_24)){       $x24  = $idLevel_24;      }elseif(isset($rowMaquina['idLevel_24'])&&$rowMaquina['idLevel_24']!=''){ $x24  = $rowMaquina['idLevel_24'];    }else{$x24  = '';}
 					if(isset($idLevel_25)){       $x25  = $idLevel_25;      }elseif(isset($rowMaquina['idLevel_25'])&&$rowMaquina['idLevel_25']!=''){ $x25  = $rowMaquina['idLevel_25'];    }else{$x25  = '';}*/
-					if(isset($Descripcion)){      $x26  = $Descripcion;     }elseif(isset($rowdata['Descripcion'])&&$rowdata['Descripcion']!=''){     $x26  = $rowdata['Descripcion'];      }else{$x26  = '';}
+					if(isset($idSubTipo)){        $x26  = $idSubTipo;       }elseif(isset($rowdata['idSubTipo'])&&$rowdata['idSubTipo']!=''){         $x26  = $rowdata['idSubTipo'];        }else{$x26  = '';}
+					if(isset($Descripcion)){      $x27  = $Descripcion;     }elseif(isset($rowdata['Descripcion'])&&$rowdata['Descripcion']!=''){     $x27  = $rowdata['Descripcion'];      }else{$x27  = '';}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -242,7 +243,8 @@ if(!empty($_GET['edit_trabajo'])){
 											'Nivel 24','idLevel_24',$x24 ,1,'idLevel_24','Nombre','maquinas_listado_level_24',0,0,
 											'Nivel 25','idLevel_24',$x24 ,1,'idLevel_24','Nombre','maquinas_listado_level_24',0,0,
 											$dbConn, 'form1');*/
-					$Form_Inputs->form_textarea('Descripcion Trabajo','Descripcion', $x26, 2);
+					$Form_Inputs->form_select('Tareas Relacionadas','idSubTipo', $x26, 2, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, '', $dbConn);
+					$Form_Inputs->form_textarea('Descripcion Trabajo','Descripcion', $x27, 2);
 
 
 					$Form_Inputs->form_input_hidden('idTrabajoOT', $idTrabajoOT, 2);
@@ -312,7 +314,8 @@ if(!empty($_GET['edit_trabajo'])){
 					if(isset($idLevel_23)){       $x23  = $idLevel_23;      }else{$x23  = '';}
 					if(isset($idLevel_24)){       $x24  = $idLevel_24;      }else{$x24  = '';}
 					if(isset($idLevel_25)){       $x25  = $idLevel_25;      }else{$x25  = '';}
-					if(isset($Descripcion)){      $x26  = $Descripcion;     }else{$x26  = '';}
+					if(isset($idSubTipo)){        $x26  = $idSubTipo;       }else{$x26  = '';}
+					if(isset($Descripcion)){      $x27  = $Descripcion;     }else{$x27  = '';}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -342,6 +345,7 @@ if(!empty($_GET['edit_trabajo'])){
 											'Nivel 24','idLevel_24',$x24 ,1,'idLevel_24','Nombre','maquinas_listado_level_24',0,0,
 											'Nivel 25','idLevel_24',$x24 ,1,'idLevel_24','Nombre','maquinas_listado_level_24',0,0,
 											$dbConn, 'form1');
+					$Form_Inputs->form_select('Tareas Relacionadas','idSubTipo', $x26, 2, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, '', $dbConn);
 					$Form_Inputs->form_textarea('Descripcion Trabajo','Descripcion', $x26, 2);
 
 					/*$Form_Inputs->form_input_hidden('idOT',$idOT, 2);
@@ -1001,10 +1005,14 @@ if(!empty($_GET['edit_trabajo'])){
 
 	/***************************************************/
 	// Se trae un listado con todos los trabajos relacionados a la orden
-	$SIS_query = 'idTrabajoOT,NombreComponente,Descripcion';
-	$SIS_join  = '';
-	$SIS_where = 'idOT ='.$idOT;
-	$SIS_order = 'NombreComponente ASC, Descripcion ASC';
+	$SIS_query = '
+	orden_trabajo_listado_trabajos.idTrabajoOT,
+	orden_trabajo_listado_trabajos.NombreComponente,
+	orden_trabajo_listado_trabajos.Descripcion,
+	core_maquinas_tipo.Nombre AS SubTipo';
+	$SIS_join  = 'LEFT JOIN `core_maquinas_tipo` ON core_maquinas_tipo.idSubTipo = orden_trabajo_listado_trabajos.idSubTipo';
+	$SIS_where = 'orden_trabajo_listado_trabajos.idOT ='.$idOT;
+	$SIS_order = 'orden_trabajo_listado_trabajos.NombreComponente ASC, orden_trabajo_listado_trabajos.Descripcion ASC';
 	$arrTrabajo = array();
 	$arrTrabajo = db_select_array (false, $SIS_query, 'orden_trabajo_listado_trabajos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTrabajo');
 
@@ -1233,7 +1241,8 @@ if(!empty($_GET['edit_trabajo'])){
 						<?php foreach ($arrTrabajo as $trab) {  ?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="2"><?php echo $trab['NombreComponente']; ?></td>
-								<td class="item-name" colspan="3"><?php echo $trab['Descripcion']; ?></td>
+								<td class="item-name" colspan="1"><?php echo $trab['SubTipo']; ?></td>
+								<td class="item-name" colspan="2"><?php echo $trab['Descripcion']; ?></td>
 								<td>
 									<div class="btn-group" style="width: 70px;" >
 										<?php //Si la OT solo esta programada

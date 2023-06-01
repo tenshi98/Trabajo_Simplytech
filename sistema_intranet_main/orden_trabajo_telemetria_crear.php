@@ -18,9 +18,9 @@ $location .='?pagina='.$_GET['pagina'];
 /********************************************************************/
 //Variables para filtro y paginacion
 $search = '';
-if(isset($_GET['idMaquina']) && $_GET['idMaquina']!=''){     $location .= "&idMaquina=".$_GET['idMaquina'];            $search .= "&idMaquina=".$_GET['idMaquina'];}
-if(isset($_GET['idPrioridad']) && $_GET['idPrioridad']!=''){ $location .= "&idPrioridad=".$_GET['idPrioridad'];        $search .= "&idPrioridad=".$_GET['idPrioridad'];}
-if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){           $location .= "&idTipo=".$_GET['idTipo'];                  $search .= "&idTipo=".$_GET['idTipo'];}
+if(isset($_GET['idMaquina']) && $_GET['idMaquina']!=''){            $location .= "&idMaquina=".$_GET['idMaquina'];            $search .= "&idMaquina=".$_GET['idMaquina'];}
+if(isset($_GET['idPrioridad']) && $_GET['idPrioridad']!=''){        $location .= "&idPrioridad=".$_GET['idPrioridad'];        $search .= "&idPrioridad=".$_GET['idPrioridad'];}
+if(isset($_GET['idTipo']) && $_GET['idTipo']!=''){                  $location .= "&idTipo=".$_GET['idTipo'];                  $search .= "&idTipo=".$_GET['idTipo'];}
 if(isset($_GET['f_programacion']) && $_GET['f_programacion']!=''){  $location .= "&f_programacion=".$_GET['f_programacion'];  $search .= "&f_programacion=".$_GET['f_programacion'];}
 if(isset($_GET['idTrabajador']) && $_GET['idTrabajador']!=''){      $location .= "&idTrabajador=".$_GET['idTrabajador'];      $search .= "&idTrabajador=".$_GET['idTrabajador'];}
 /********************************************************************/
@@ -211,7 +211,8 @@ if(!empty($_GET['clone'])){  ?>
 					if(isset($idLevel_23)){       $x23  = $idLevel_23;      }else{$x23  = '';}
 					if(isset($idLevel_24)){       $x24  = $idLevel_24;      }else{$x24  = '';}
 					if(isset($idLevel_25)){       $x25  = $idLevel_25;      }else{$x25  = '';}
-					if(isset($Descripcion)){      $x26  = $Descripcion;     }else{$x26  = '';}
+					if(isset($idSubTipo)){        $x26  = $idSubTipo;       }else{$x26  = '';}
+					if(isset($Descripcion)){      $x27  = $Descripcion;     }else{$x27  = '';}
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
@@ -241,7 +242,8 @@ if(!empty($_GET['clone'])){  ?>
 											'Nivel 24','idLevel_24',$x24 ,1,'idLevel_24','Nombre','maquinas_listado_level_24',0,0,
 											'Nivel 25','idLevel_24',$x25 ,1,'idLevel_24','Nombre','maquinas_listado_level_24',0,0,
 											$dbConn, 'form1');
-					$Form_Inputs->form_textarea('Descripcion Tarea','Descripcion', $x26, 2);
+					$Form_Inputs->form_select('Tareas Relacionadas','idSubTipo', $x26, 2, 'idSubTipo', 'Nombre', 'core_maquinas_tipo', 0, '', $dbConn);
+					$Form_Inputs->form_textarea('Descripcion Tarea','Descripcion', $x27, 2);
 
 
 					?>
@@ -259,32 +261,28 @@ if(!empty($_GET['clone'])){  ?>
 
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['addProd'])){
-	//filtro
-	$zx1 = "idProducto=0";
 	//Se revisan los permisos a los productos
+	$SIS_query = 'idProducto';
+	$SIS_join  = '';
+	$SIS_where = 'idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'];
+	$SIS_order = 'idProducto ASC';
 	$arrPermisos = array();
-	$query = "SELECT idProducto
-	FROM `core_sistemas_productos`
-	WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)){
-	array_push( $arrPermisos,$row );
-	}
+	$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_productos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+	//filtro
+	$SIS_where = "idProducto=0";
+	//Recorro los permisos
 	foreach ($arrPermisos as $prod) {
-		$zx1 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
-	}	 
+		$SIS_where .= ' OR (idEstado=1 AND idProducto='.$prod['idProducto'].')';
+	}
+	//Se revisan los permisos a los productos
+	$SIS_query = '
+	productos_listado.idProducto,
+	sistema_productos_uml.Nombre AS Unimed';
+	$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml';
+	$SIS_order = 'sistema_productos_uml.Nombre ASC';
+	$arrTipo = array();
+	$arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -303,7 +301,7 @@ if(!empty($_GET['clone'])){  ?>
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $zx1, '', $dbConn);
+					$Form_Inputs->form_select_filter('Producto','idProducto', $x1, 2, 'idProducto', 'Nombre', 'productos_listado', $SIS_where, '', $dbConn);
 					$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 
 					echo '<div class="form-group" id="div_">
@@ -313,49 +311,24 @@ if(!empty($_GET['clone'])){  ?>
 						</div>
 					</div>';
 
-					//Imprimo las variables
-					$arrTipo = array();
-					$query = "SELECT 
-					productos_listado.idProducto,
-					sistema_productos_uml.Nombre AS Unimed
-					FROM `productos_listado`
-					LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = productos_listado.idUml
-					WHERE ".$zx1."
-					ORDER BY sistema_productos_uml.Nombre";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					while ( $row = mysqli_fetch_assoc ($resultado)){
-					array_push( $arrTipo,$row );
-					}
-					
-					echo '<script>';
-					foreach ($arrTipo as $tipo) {
-						echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
-					}
 					?>
-					</script>
+
 
 					<script>
-					document.getElementById("idProducto").onchange = function() {myFunction()};
-
-					function myFunction() {
-						let Componente = document.getElementById("idProducto").value;
-						if (Componente != "") {
-							//escribo dentro del input
-							document.getElementById("escribeme").value = eval("id_data_" + Componente);
+						<?php
+						foreach ($arrTipo as $tipo) {
+							echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 						}
-					}
+						?>
+						document.getElementById("idProducto").onchange = function() {myFunction()};
+
+						function myFunction() {
+							let Componente = document.getElementById("idProducto").value;
+							if (Componente != "") {
+								//escribo dentro del input
+								document.getElementById("escribeme").value = eval("id_data_" + Componente);
+							}
+						}
 					</script>
 
 					<div class="form-group">
@@ -370,33 +343,28 @@ if(!empty($_GET['clone'])){  ?>
 	</div>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['addIns'])){
-	//filtro
-	$zx2 = "idProducto=0";
 	//Se revisan los permisos a los productos
+	$SIS_query = 'idProducto';
+	$SIS_join  = '';
+	$SIS_where = 'idSistema = '.$_SESSION['usuario']['basic_data']['idSistema'];
+	$SIS_order = 'idProducto ASC';
 	$arrPermisos = array();
-	$query = "SELECT idProducto
-	FROM `core_sistemas_insumos`
-	WHERE idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-	//Consulta
-	$resultado = mysqli_query ($dbConn, $query);
-	//Si ejecuto correctamente la consulta
-	if(!$resultado){
-		//Genero numero aleatorio
-		$vardata = genera_password(8,'alfanumerico');
-						
-		//Guardo el error en una variable temporal
-		$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-		$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-						
-	}
-	while ( $row = mysqli_fetch_assoc ($resultado)){
-	array_push( $arrPermisos,$row );
-	}
+	$arrPermisos = db_select_array (false, $SIS_query, 'core_sistemas_insumos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrPermisos');
+	//filtro
+	$SIS_where = "idProducto=0";
+	//Recorro los permisos
 	foreach ($arrPermisos as $prod) {
-		$zx2 .= " OR (idEstado=1 AND idProducto={$prod['idProducto']})";
+		$SIS_where .= ' OR (idEstado=1 AND idProducto='.$prod['idProducto'].')';
 	}
-		
+	//Se revisan los permisos a los productos
+	$SIS_query = '
+	insumos_listado.idProducto,
+	sistema_productos_uml.Nombre AS Unimed';
+	$SIS_join  = 'LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml';
+	$SIS_order = 'sistema_productos_uml.Nombre ASC';
+	$arrTipo = array();
+	$arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrTipo');
+
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
@@ -415,7 +383,7 @@ if(!empty($_GET['clone'])){  ?>
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $zx2, '', $dbConn);
+					$Form_Inputs->form_select_filter('Insumo','idProducto', $x1, 2, 'idProducto', 'Nombre', 'insumos_listado', $SIS_where, '', $dbConn);
 					$Form_Inputs->form_input_number('Cantidad', 'Cantidad', $x2, 2);
 
 					echo '<div class="form-group" id="div_">
@@ -425,49 +393,23 @@ if(!empty($_GET['clone'])){  ?>
 						</div>
 					</div>';
 
-					//Imprimo las variables
-					$arrTipo = array();
-					$query = "SELECT 
-					insumos_listado.idProducto,
-					sistema_productos_uml.Nombre AS Unimed
-					FROM `insumos_listado`
-					LEFT JOIN `sistema_productos_uml` ON sistema_productos_uml.idUml = insumos_listado.idUml
-					WHERE ".$zx2."
-					ORDER BY sistema_productos_uml.Nombre";
-					//Consulta
-					$resultado = mysqli_query ($dbConn, $query);
-					//Si ejecuto correctamente la consulta
-					if(!$resultado){
-						//Genero numero aleatorio
-						$vardata = genera_password(8,'alfanumerico');
-										
-						//Guardo el error en una variable temporal
-						$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
-						$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-										
-					}
-					while ( $row = mysqli_fetch_assoc ($resultado)){
-					array_push( $arrTipo,$row );
-					}
-					
-					echo '<script>';
-					foreach ($arrTipo as $tipo) {
-						echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
-					}
 					?>
-					</script>
 
 					<script>
-					document.getElementById("idProducto").onchange = function() {myFunction()};
-
-					function myFunction() {
-						let Componente = document.getElementById("idProducto").value;
-						if (Componente != "") {
-							//escribo dentro del input
-							document.getElementById("escribeme").value = eval("id_data_" + Componente);
+						<?php
+						foreach ($arrTipo as $tipo) {
+							echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 						}
-					}
+						?>
+						document.getElementById("idProducto").onchange = function() {myFunction()};
+
+						function myFunction() {
+							let Componente = document.getElementById("idProducto").value;
+							if (Componente != "") {
+								//escribo dentro del input
+								document.getElementById("escribeme").value = eval("id_data_" + Componente);
+							}
+						}
 					</script>
 
 					<div class="form-group">
@@ -556,9 +498,9 @@ if(!empty($_GET['clone'])){  ?>
 					$Form_Inputs = new Form_Inputs();
 					//Verifico el tipo de usuario que esta ingresando
 					if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-						$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x0, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
+						$Form_Inputs->form_select_filter('Equipo de Telemetria','idTelemetria', $x0, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 					}else{
-						$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x0, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
+						$Form_Inputs->form_select_join_filter('Equipo de Telemetria','idTelemetria', $x0, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 					}
 					$Form_Inputs->form_select_filter('Maquina','idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $w, '', $dbConn);
 					$Form_Inputs->form_select('Prioridad','idPrioridad', $x2, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
@@ -753,7 +695,11 @@ if(!empty($_GET['clone'])){  ?>
 												echo $x_idInterno['Nombre'];
 											echo '</td>';
 
-											echo '<td class="item-name" colspan="3">';
+											echo '<td class="item-name" colspan="1">';
+												echo $x_idInterno['SubTipo'];
+											echo '</td>';
+
+											echo '<td class="item-name" colspan="2">';
 												echo $x_idInterno['Descripcion'];
 											echo '</td>';
 
@@ -826,9 +772,9 @@ if(!empty($_GET['clone'])){  ?>
 					$Form_Inputs = new Form_Inputs();
 					//Verifico el tipo de usuario que esta ingresando
 					if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-						$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x0, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
+						$Form_Inputs->form_select_filter('Equipo de Telemetria','idTelemetria', $x0, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 					}else{
-						$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x0, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
+						$Form_Inputs->form_select_join_filter('Equipo de Telemetria','idTelemetria', $x0, 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 					}
 					$Form_Inputs->form_select_filter('Maquina','idMaquina', $x1, 2, 'idMaquina', 'Nombre', 'maquinas_listado', $w, '', $dbConn);
 					$Form_Inputs->form_select('Prioridad','idPrioridad', $x2, 2, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);
@@ -978,9 +924,9 @@ if(!empty($_GET['clone'])){  ?>
 					$Form_Inputs = new Form_Inputs();
 					//Verifico el tipo de usuario que esta ingresando
 					if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-						$Form_Inputs->form_select_filter('Equipo','idTelemetria', $x0, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
+						$Form_Inputs->form_select_filter('Equipo de Telemetria','idTelemetria', $x0, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', $z, '', $dbConn);
 					}else{
-						$Form_Inputs->form_select_join_filter('Equipo','idTelemetria', $x0, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
+						$Form_Inputs->form_select_join_filter('Equipo de Telemetria','idTelemetria', $x0, 1, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $z, $dbConn);
 					}
 					$Form_Inputs->form_select_filter('Maquina','idMaquina', $x1, 1, 'idMaquina', 'Nombre', 'maquinas_listado', $w, '', $dbConn);
 					$Form_Inputs->form_select('Prioridad','idPrioridad', $x2, 1, 'idPrioridad', 'Nombre', 'core_ot_prioridad', 0, '', $dbConn);

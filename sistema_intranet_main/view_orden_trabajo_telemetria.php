@@ -107,10 +107,13 @@ $arrProductos = db_select_array (false, $SIS_query, 'orden_trabajo_listado_produ
 
 /***************************************************/
 // Se trae un listado con todos los trabajos relacionados a la orden
-$SIS_query = 'NombreComponente,Descripcion';
-$SIS_join  = '';
-$SIS_where = 'idOT ='.$X_Puntero;
-$SIS_order = 'NombreComponente ASC, Descripcion ASC';
+$SIS_query = '
+orden_trabajo_listado_trabajos.NombreComponente,
+orden_trabajo_listado_trabajos.Descripcion,
+core_maquinas_tipo.Nombre AS SubTipo';
+$SIS_join  = 'LEFT JOIN `core_maquinas_tipo` ON core_maquinas_tipo.idSubTipo = orden_trabajo_listado_trabajos.idSubTipo';
+$SIS_where = 'orden_trabajo_listado_trabajos.idOT ='.$X_Puntero;
+$SIS_order = 'orden_trabajo_listado_trabajos.NombreComponente ASC, orden_trabajo_listado_trabajos.Descripcion ASC';
 $arrTrabajo = array();
 $arrTrabajo = db_select_array (false, $SIS_query, 'orden_trabajo_listado_trabajos', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTrabajo');
 
@@ -258,7 +261,8 @@ $arrTrabajo = db_select_array (false, $SIS_query, 'orden_trabajo_listado_trabajo
 						<?php foreach ($arrTrabajo as $trab) {  ?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="2"><?php echo $trab['NombreComponente']; ?></td>
-								<td class="item-name" colspan="4"><?php echo $trab['Descripcion']; ?></td>
+								<td class="item-name" colspan="1"><?php echo $trab['SubTipo']; ?></td>
+								<td class="item-name" colspan="3"><?php echo $trab['Descripcion']; ?></td>
 							</tr>
 						<?php } ?>
 						<tr id="hiderow"><td colspan="6"></td></tr>
