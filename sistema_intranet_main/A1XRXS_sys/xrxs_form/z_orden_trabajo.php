@@ -404,6 +404,13 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
+			/*******************************************************************/
+			//Se verifica si el dato existe
+			if(isset($_SESSION['ot_trabajador'][$idTrabajador]['idTrabajador'])&&$_SESSION['ot_trabajador'][$idTrabajador]['idTrabajador']!=''){
+				$error['ndata_1'] = 'error/El Trabajador seleccionado ya existe';
+			}
+			/*******************************************************************/
+
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 
@@ -441,6 +448,13 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
+			/*******************************************************************/
+			//Se verifica si el dato existe
+			if(isset($_SESSION['ot_insumos'][$idProducto]['idProducto'])&&$_SESSION['ot_insumos'][$idProducto]['idProducto']!=''){
+				$error['ndata_1'] = 'error/El Insumo seleccionado ya existe';
+			}
+			/*******************************************************************/
+
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
 
@@ -476,6 +490,13 @@ require_once '0_validate_user_1.php';
 
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
+
+			/*******************************************************************/
+			//Se verifica si el dato existe
+			if(isset($_SESSION['ot_productos'][$idProducto]['idProducto'])&&$_SESSION['ot_productos'][$idProducto]['idProducto']!=''){
+				$error['ndata_1'] = 'error/El Producto seleccionado ya existe';
+			}
+			/*******************************************************************/
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){
@@ -546,7 +567,6 @@ require_once '0_validate_user_1.php';
 				if(isset($rowdata_m['idUtilizable'])&&$rowdata_m['idUtilizable']!=3&&$rowdata_m['tabla']==0){
 					$error['tabla'] = 'error/El dato seleccionado no posee tareas asignadas';
 				}
-
 			}
 
 			// Se traen todos los datos de la maquina
@@ -622,7 +642,16 @@ require_once '0_validate_user_1.php';
 				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Aceite']               = $rowdata['Aceite'];
 				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['Cantidad']             = $rowdata['Cantidad'];
 				//idSubTipo
-				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idSubTipo']   = $rowdata['idSubTipo'];
+				if(isset($idSubTipo)&&$idSubTipo!=''){
+					//consulto
+					$rowSubTipo = db_select_data (false, 'Nombre', 'core_maquinas_tipo', '', 'idSubTipo='.$idSubTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//guardo
+					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idSubTipo'] = $idSubTipo;
+					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['SubTipo']   = $rowSubTipo['Nombre'];
+				}else{
+					$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idSubTipo']   = $rowdata['idSubTipo'];
+				}
+
 				//Licitacion relacionada
 				$_SESSION['ot_trabajos'][$tabla][$id_tabla][$idInterno]['idLicitacion']   = $rowdata_m['idLicitacion'];
 
@@ -1924,7 +1953,16 @@ require_once '0_validate_user_1.php';
 				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Aceite']               = $rowdata['Aceite'];
 				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['Cantidad']             = $rowdata['Cantidad'];
 				//idSubTipo
-				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idSubTipo']   = $rowdata['idSubTipo'];
+				if(isset($idSubTipo)&&$idSubTipo!=''){
+					//consulto
+					$rowSubTipo = db_select_data (false, 'Nombre', 'core_maquinas_tipo', '', 'idSubTipo='.$idSubTipo, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					//guardo
+					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idSubTipo'] = $idSubTipo;
+					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['SubTipo']   = $rowSubTipo['Nombre'];
+				}else{
+					$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idSubTipo'] = $rowdata['idSubTipo'];
+				}
+
 				//Licitacion
 				$_SESSION['ot_trabajos_temp'][$tabla][$id_tabla][$idInterno]['idLicitacion']   = $rowdata_m['idLicitacion'];
 
@@ -2274,6 +2312,7 @@ require_once '0_validate_user_1.php';
 
 				//filtros
 				$SIS_data = "idTrabajoOT='".$idTrabajoOT."'";
+				if(isset($idSubTipo) && $idSubTipo!=''){      $SIS_data .= ",idSubTipo='".$idSubTipo."'";}
 				if(isset($Descripcion) && $Descripcion!=''){  $SIS_data .= ",Descripcion='".$Descripcion."'";}
 
 				/*******************************************************/
