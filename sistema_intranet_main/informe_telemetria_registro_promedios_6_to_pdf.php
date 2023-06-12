@@ -52,7 +52,7 @@ function crear_data($INT_cantsens, $INT_filtro, $INT_idTelemetria, $INT_f_inicio
 		//$subfiltro .= ' AND telemetria_listado_tablarelacionada_'.$INT_idTelemetria.'.Sensor_'.$i.' != 999';
 		$consql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
 		//$consql .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i.' AS SensorNombre_'.$i;
-		$consql .= ',telemetria_listado.telemetria_listado_sensores_unimed'.$i.' AS SensoresUniMed_'.$i;
+		$consql .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
 
 		//desde y hasta activo
 		if(isset($INT_desde)&&$INT_desde!=''&&isset($INT_hasta)&&$INT_hasta!=''){
