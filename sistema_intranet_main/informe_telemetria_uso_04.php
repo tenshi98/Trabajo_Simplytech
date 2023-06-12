@@ -40,13 +40,15 @@ $arrGruposRev = db_select_array (false, 'idGrupo, Nombre', 'telemetria_listado_g
 $row_data = db_select_data (false, 'cantSensores', 'telemetria_listado', '', 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 //numero sensores equipo
-$SIS_query = 'Nombre,cantSensores';
+$SIS_query = '
+telemetria_listado.Nombre,
+telemetria_listado.cantSensores';
 for ($i = 1; $i <= $row_data['cantSensores']; $i++) {
 	$SIS_query .= ',telemetria_listado_sensores_revision_grupo.SensoresRevisionGrupo_'.$i;
 }
 $SIS_join  = 'LEFT JOIN `telemetria_listado_sensores_revision_grupo`  ON telemetria_listado_sensores_revision_grupo.idTelemetria  = telemetria_listado.idTelemetria';
 // consulto los datos
-$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, 'idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
+$rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, 'telemetria_listado.idTelemetria ='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 /**********************************************************/
 //Se crean las columnas

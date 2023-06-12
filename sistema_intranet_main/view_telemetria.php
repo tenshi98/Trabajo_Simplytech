@@ -178,7 +178,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 		$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
 	}
 	//consulto
-	$SIS_query = 'GeoVelocidad'.$subquery;
+	$SIS_query = 'telemetria_listado.GeoVelocidad'.$subquery;
 	$SIS_join  = '
 	LEFT JOIN `telemetria_listado_sensores_nombre`      ON telemetria_listado_sensores_nombre.idTelemetria      = telemetria_listado.idTelemetria
 	LEFT JOIN `telemetria_listado_sensores_tipo`        ON telemetria_listado_sensores_tipo.idTelemetria        = telemetria_listado.idTelemetria
@@ -186,7 +186,7 @@ if(isset($rowdata['id_Sensores'])&&$rowdata['id_Sensores']==1){
 	LEFT JOIN `telemetria_listado_sensores_unimed`      ON telemetria_listado_sensores_unimed.idTelemetria      = telemetria_listado.idTelemetria
 	LEFT JOIN `telemetria_listado_sensores_med_actual`  ON telemetria_listado_sensores_med_actual.idTelemetria  = telemetria_listado.idTelemetria
 	LEFT JOIN `telemetria_listado_sensores_activo`      ON telemetria_listado_sensores_activo.idTelemetria      = telemetria_listado.idTelemetria';
-	$SIS_where = 'idTelemetria ='.$X_Puntero;
+	$SIS_where = 'telemetria_listado.idTelemetria ='.$X_Puntero;
 	$rowMed = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'rowMed');
 
 	//consulto

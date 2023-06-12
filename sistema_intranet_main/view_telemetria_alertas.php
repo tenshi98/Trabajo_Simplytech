@@ -100,7 +100,8 @@ if(isset($_GET['submit_filter'])&&$_GET['submit_filter']!=''){
 	$search .= '&submit_filter='.$_GET['submit_filter'];
 }
 //Verifico el tipo de usuario que esta ingresando
-$SIS_join  = 'LEFT JOIN `telemetria_listado` ON telemetria_listado.idTelemetria = telemetria_listado_errores.idTelemetria';
+$SIS_join  = ' LEFT JOIN `telemetria_listado`                 ON telemetria_listado.idTelemetria                 = telemetria_listado_errores.idTelemetria';
+$SIS_join .= ' LEFT JOIN `telemetria_listado_sensores_unimed` ON telemetria_listado_sensores_unimed.idTelemetria = telemetria_listado.idTelemetria';
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$SIS_join .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado_errores.idTelemetria ";
 	$SIS_where.= ' AND usuarios_equipos_telemetria.idUsuario='.$_SESSION['usuario']['basic_data']['idUsuario'];
@@ -127,7 +128,6 @@ telemetria_listado.id_Geo';
 for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
 	$SIS_query .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
 }
-$SIS_join  = 'LEFT JOIN `telemetria_listado_sensores_unimed` ON telemetria_listado_sensores_unimed.idTelemetria = telemetria_listado.idTelemetria';
 $SIS_order = 'telemetria_listado_errores.idErrores DESC LIMIT '.$comienzo.', '.$cant_reg;
 $arrErrores = array();
 $arrErrores = db_select_array (false, $SIS_query, 'telemetria_listado_errores', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrErrores');
