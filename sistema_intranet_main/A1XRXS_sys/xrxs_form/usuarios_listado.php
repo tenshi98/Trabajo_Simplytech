@@ -1180,14 +1180,14 @@ require_once '0_validate_user_1.php';
 						$_SESSION['usuario']['basic_data']['idUsuario']          = $rowUser['idUsuario'];
 						$_SESSION['usuario']['basic_data']['password']           = $rowUser['password'];
 						$_SESSION['usuario']['basic_data']['usuario']            = $rowUser['usuario'];
-						$_SESSION['usuario']['basic_data']['Nombre']             = $rowUser['Nombre'];
+						$_SESSION['usuario']['basic_data']['Nombre']             = DeSanitizar($rowUser['Nombre']);
 						$_SESSION['usuario']['basic_data']['Direccion_img']      = $rowUser['Direccion_img'];
 						$_SESSION['usuario']['basic_data']['idTipoUsuario']      = $rowUser['idTipoUsuario'];
-						$_SESSION['usuario']['basic_data']['Usuario_Tipo']       = $rowUser['Usuario_Tipo'];
+						$_SESSION['usuario']['basic_data']['Usuario_Tipo']       = DeSanitizar($rowUser['Usuario_Tipo']);
 						$_SESSION['usuario']['basic_data']['COunt']              = $rowUser['COunt'];
-						$_SESSION['usuario']['basic_data']['Region']             = $rowUser['nombre_region'];
+						$_SESSION['usuario']['basic_data']['Region']             = DeSanitizar($rowUser['nombre_region']);
 						$_SESSION['usuario']['basic_data']['Pronostico']         = $rowUser['nombre_pronostico'];
-						$_SESSION['usuario']['basic_data']['Comuna']             = $rowUser['nombre_comuna'];
+						$_SESSION['usuario']['basic_data']['Comuna']             = DeSanitizar($rowUser['nombre_comuna']);
 
 						//Verifico si existen datos
 						if(isset($rowAcceso['Fecha'])&&$rowAcceso['Fecha']!=''){$_SESSION['usuario']['basic_data']['FechaLogin'] = $rowAcceso['Fecha']; }else{$_SESSION['usuario']['basic_data']['FechaLogin'] = fecha_actual();}
@@ -1338,7 +1338,7 @@ require_once '0_validate_user_1.php';
 								$_SESSION['usuario']['basic_data']['Config_idTheme']     = $rowSistema['Config_idTheme'];
 								$_SESSION['usuario']['basic_data']['Config_imgLogo']     = $rowSistema['Config_imgLogo'];
 								$_SESSION['usuario']['basic_data']['Config_IDGoogle']    = $rowSistema['Config_IDGoogle'];
-								$_SESSION['usuario']['basic_data']['RazonSocial']        = $rowSistema['RazonSocial'];
+								$_SESSION['usuario']['basic_data']['RazonSocial']        = DeSanitizar($rowSistema['RazonSocial']);
 								$_SESSION['usuario']['basic_data']['ConfigRam']          = $rowSistema['ConfigRam'];
 								$_SESSION['usuario']['basic_data']['ConfigTime']         = $rowSistema['ConfigTime'];
 								$_SESSION['usuario']['basic_data']['CorreoInterno']      = $rowSistema['idOpcionesGen_8'];
@@ -1577,7 +1577,7 @@ require_once '0_validate_user_1.php';
 					$_SESSION['usuario']['basic_data']['Config_idTheme']     = $rowSistema['Config_idTheme'];
 					$_SESSION['usuario']['basic_data']['Config_imgLogo']     = $rowSistema['Config_imgLogo'];
 					$_SESSION['usuario']['basic_data']['Config_IDGoogle']    = $rowSistema['Config_IDGoogle'];
-					$_SESSION['usuario']['basic_data']['RazonSocial']        = $rowSistema['RazonSocial'];
+					$_SESSION['usuario']['basic_data']['RazonSocial']        = DeSanitizar($rowSistema['RazonSocial']);
 					$_SESSION['usuario']['basic_data']['ConfigRam']          = $rowSistema['ConfigRam'];
 					$_SESSION['usuario']['basic_data']['ConfigTime']         = $rowSistema['ConfigTime'];
 					$_SESSION['usuario']['basic_data']['CorreoInterno']      = $rowSistema['idOpcionesGen_8'];
@@ -2851,14 +2851,14 @@ require_once '0_validate_user_1.php';
 							$_SESSION['usuario']['basic_data']['idUsuario']          = $rowUser['idUsuario'];
 							$_SESSION['usuario']['basic_data']['password']           = $rowUser['password'];
 							$_SESSION['usuario']['basic_data']['usuario']            = $rowUser['usuario'];
-							$_SESSION['usuario']['basic_data']['Nombre']             = $rowUser['Nombre'];
+							$_SESSION['usuario']['basic_data']['Nombre']             = DeSanitizar($rowUser['Nombre']);
 							$_SESSION['usuario']['basic_data']['Direccion_img']      = $rowUser['Direccion_img'];
 							$_SESSION['usuario']['basic_data']['idTipoUsuario']      = $rowUser['idTipoUsuario'];
-							$_SESSION['usuario']['basic_data']['Usuario_Tipo']       = $rowUser['Usuario_Tipo'];
+							$_SESSION['usuario']['basic_data']['Usuario_Tipo']       = DeSanitizar($rowUser['Usuario_Tipo']);
 							$_SESSION['usuario']['basic_data']['COunt']              = $rowUser['COunt'];
-							$_SESSION['usuario']['basic_data']['Region']             = $rowUser['nombre_region'];
+							$_SESSION['usuario']['basic_data']['Region']             = DeSanitizar($rowUser['nombre_region']);
 							$_SESSION['usuario']['basic_data']['Pronostico']         = $rowUser['nombre_pronostico'];
-							$_SESSION['usuario']['basic_data']['Comuna']             = $rowUser['nombre_comuna'];
+							$_SESSION['usuario']['basic_data']['Comuna']             = DeSanitizar($rowUser['nombre_comuna']);
 
 							//Verifico si existen datos
 							if(isset($rowAcceso['Fecha'])&&$rowAcceso['Fecha']!=''){$_SESSION['usuario']['basic_data']['FechaLogin'] = $rowAcceso['Fecha']; }else{$_SESSION['usuario']['basic_data']['FechaLogin'] = fecha_actual();}
@@ -2942,7 +2942,7 @@ require_once '0_validate_user_1.php';
 									$_SESSION['usuario']['basic_data']['Config_idTheme']     = $rowSistema['Config_idTheme'];
 									$_SESSION['usuario']['basic_data']['Config_imgLogo']     = $rowSistema['Config_imgLogo'];
 									$_SESSION['usuario']['basic_data']['Config_IDGoogle']    = $rowSistema['Config_IDGoogle'];
-									$_SESSION['usuario']['basic_data']['RazonSocial']        = $rowSistema['RazonSocial'];
+									$_SESSION['usuario']['basic_data']['RazonSocial']        = DeSanitizar($rowSistema['RazonSocial']);
 									$_SESSION['usuario']['basic_data']['ConfigRam']          = $rowSistema['ConfigRam'];
 									$_SESSION['usuario']['basic_data']['ConfigTime']         = $rowSistema['ConfigTime'];
 									$_SESSION['usuario']['basic_data']['CorreoInterno']      = $rowSistema['idOpcionesGen_8'];
