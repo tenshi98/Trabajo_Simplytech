@@ -60,7 +60,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	//obtengo el nombre de los sensores
 	$subquery = '';
 	foreach ($arrOperaciones as $oper) {
-		$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$i;
+		$subquery .= ',telemetria_listado_sensores_nombre.SensoresNombre_'.$oper['N_Sensor'];
 	}
 	//Consultas
 	$SIS_query = '
