@@ -215,7 +215,7 @@ foreach ($arrNotificaciones as $noti) {
 				if(isset($_GET['rango_b']) && $_GET['rango_b'] != '')  {            $Form_Inputs->form_input_hidden('rango_b', $_GET['rango_b'], 2);}     
 				if(isset($_GET['idCiudad']) && $_GET['idCiudad'] != '')  {          $Form_Inputs->form_input_hidden('idCiudad', $_GET['idCiudad'], 2);}            
 				if(isset($_GET['idComuna']) && $_GET['idComuna'] != '')  {          $Form_Inputs->form_input_hidden('idComuna', $_GET['idComuna'], 2);}           
-				if(isset($_GET['Direccion']) && $_GET['Direccion'] != '')  {        $Form_Inputs->form_input_hidden('Dirección', $_GET['Direccion'], 2);}     
+				if(isset($_GET['Direccion']) && $_GET['Direccion'] != '')  {        $Form_Inputs->form_input_hidden('Direccion', $_GET['Direccion'], 2);}     
 				if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {        $Form_Inputs->form_input_hidden('idSistema', $_GET['idSistema'], 2);}     
 				
 				?>
