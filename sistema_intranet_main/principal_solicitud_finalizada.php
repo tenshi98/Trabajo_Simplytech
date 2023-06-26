@@ -305,7 +305,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 				<form class="form-horizontal" id="form1" name="form1" action="<?php echo $location; ?>" autocomplete="off" novalidate>
 					<div class="field">
 						<div class="input-group">
-							<input type="text" class="form-control" placeholder="N° Solicitud" name="NSolicitud" id="NSolicitud" required="" onkeypress="return soloNumerosNaturales_NSolicitud(event)" value="<?php echo $row_data['NSolicitud']; ?>">
+							<input type="text" class="form-control" placeholder="N° Solicitud" name="NSolicitud" id="NSolicitud" required="" onkeydown="return soloNumerosNaturales_NSolicitud(event)" value="<?php echo $row_data['NSolicitud']; ?>">
 							<input type="hidden" name="idEstado" id="idEstado" value="3" required="">
 							<span class="input-group-btn">
 								<div class="btn-group" style="width: 140px;" >
