@@ -230,7 +230,7 @@ LEFT JOIN `cross_predios_listado_zonas`    ON cross_predios_listado_zonas.idZona
 LEFT JOIN `cross_predios_listado`          ON cross_predios_listado.idPredio               = cross_predios_listado_zonas.idPredio
 LEFT JOIN `core_estado_asistencia_predio`  ON core_estado_asistencia_predio.idEstado       = trabajadores_asistencias_predios.idEstado';
 
-$SIS_order  = 'trabajadores_asistencias_predios.Fecha DESC, trabajadores_asistencias_predios.Hora DESC, trabajadores_asistencias_predios.idTrabajador ASC LIMIT '.$comienzo.', '.$cant_reg;;
+$SIS_order  = 'trabajadores_asistencias_predios.Fecha DESC, trabajadores_asistencias_predios.Hora DESC, trabajadores_asistencias_predios.idTrabajador ASC LIMIT '.$comienzo.', '.$cant_reg;
 $arrAsistencias = array();
 $arrAsistencias = db_select_array (false, $SIS_query, 'trabajadores_asistencias_predios', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrAsistencias');
 

@@ -15,7 +15,7 @@ $n_permisos = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS
 <style>
 .nav-tabs.nav-center > li > a {color: #333 !important;}
 .nav-tabs.nav-center > li > a:hover, .nav-tabs > li > a:focus {color: #fff !important;background-color: #2E2424;}
-.nav-tabs.nav-center > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {border: 1px solid #ddd;border-bottom: 1px solid #fff;;}
+.nav-tabs.nav-center > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {border: 1px solid #ddd;border-bottom: 1px solid #fff;}
 .nav-center > li {float:none;display:inline-block;zoom:1;}
 .nav-center {text-align:center;}
 </style>
