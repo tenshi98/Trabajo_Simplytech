@@ -26,7 +26,7 @@ function notifications_list($errores){
 	if (!empty($errores)) {
 		foreach ($errores as $mensaje) {
 			list($tipo, $error) = explode("/", $mensaje);
-			$despliegue .= '<p><img src="'.DB_SITE_REPO.'/Legacy/gestion_modular/img/icon_'.$tipo.'.png" height="24" width="24">  '.$error.'</p>';
+			$despliegue .= '<p><img src="'.DB_SITE_REPO.'/Legacy/gestion_modular/img/icon_'.$tipo.'.png" style="width: 24px;height: 24px;">  '.$error.'</p>';
 		}
 	}
 
