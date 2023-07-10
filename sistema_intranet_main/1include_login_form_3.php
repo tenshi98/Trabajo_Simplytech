@@ -38,6 +38,13 @@
 						<h1 class="text-center text-info">Iniciar sesión</h1>
 						<p class="text-center color-gray-light">Ingrese su nombre de usuario y contraseña para acceder</p>
 						<?php
+						/******************************************/
+						//Muestro los accesos erroneos
+						if(isset($NAccesos)&&$NAccesos!=''){
+							alert_post_data(4,1,1, $NAccesos.' Accesos erroneos de 5 disponibles');
+						}
+
+						/******************************************/
 						//Se verifican si existen los datos
 						if(isset($usuario)){    $x1  = $usuario;   }else{$x1  = '';}
 						if(isset($password)){   $x2  = $password;  }else{$x2  = '';}
