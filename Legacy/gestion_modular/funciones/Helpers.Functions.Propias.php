@@ -319,7 +319,8 @@ function TituloMenu( $Nombre ) {
 /*******************************************************************************************************************/
 //Permite verificar si se trata de ingresar a un sitio a la fuerza
 function checkbrute($usuario, $email, $IP_Client, $table, $dbConn) {
-    // Obtiene el timestamp del tiempo actual.
+    /**********************************************************************/
+	// Obtiene el timestamp del tiempo actual.
     $now = time();
 
     // Todos los intentos de inicio de sesión se cuentan desde las 2 horas anteriores.
@@ -328,24 +329,23 @@ function checkbrute($usuario, $email, $IP_Client, $table, $dbConn) {
 	//variables vacias
 	$num_rows = 0;
 
+	/**********************************************************************/
 	//Consulto si el usuario ha tratado de ingresar en reiteradas ocaciones
-	if(isset($usuario)&&$usuario!=''&&$num_rows==0){
-		$rowSis = db_select_nrows (false, 'idAcceso', $table, '', 'usuario = "'.$usuario.'" AND Time > "'.$valid_attempts.'"', $dbConn, 'rowSis', basename($_SERVER["REQUEST_URI"], ".php"), 'rowSis');
-		$num_rows   = $num_rows + $rowSis;
+	if($num_rows==0&&isset($usuario)&&$usuario!=''){
+		$num_rows = db_select_nrows (false, 'idAcceso', $table, '', 'usuario = "'.$usuario.'" AND Time > "'.$valid_attempts.'"', $dbConn, 'rowSis', basename($_SERVER["REQUEST_URI"], ".php"), 'rowSis');
 	}
 
 	//Consulto si el ip ha tratado de ingresar en reiteradas ocaciones
-	if(isset($IP_Client)&&$IP_Client!=''&&$num_rows==0){
-		$rowSis = db_select_nrows (false, 'idAcceso', $table, '', 'IP_Client = "'.$IP_Client.'" AND Time > "'.$valid_attempts.'"', $dbConn, 'rowSis', basename($_SERVER["REQUEST_URI"], ".php"), 'rowSis');
-		$num_rows   = $num_rows + $rowSis;
+	if($num_rows==0&&isset($IP_Client)&&$IP_Client!=''){
+		$num_rows = db_select_nrows (false, 'idAcceso', $table, '', 'IP_Client = "'.$IP_Client.'" AND Time > "'.$valid_attempts.'"', $dbConn, 'rowSis', basename($_SERVER["REQUEST_URI"], ".php"), 'rowSis');
 	}
 
 	//Consulto si el ip ha tratado de ingresar en reiteradas ocaciones
-	if(isset($email)&&$email!=''&&$num_rows==0){
-		$rowSis = db_select_nrows (false, 'idAcceso', $table, '', 'email = "'.$email.'" AND Time > "'.$valid_attempts.'"', $dbConn, 'rowSis', basename($_SERVER["REQUEST_URI"], ".php"), 'rowSis');
-		$num_rows   = $num_rows + $rowSis;
+	if($num_rows==0&&isset($email)&&$email!=''){
+		$num_rows = db_select_nrows (false, 'idAcceso', $table, '', 'email = "'.$email.'" AND Time > "'.$valid_attempts.'"', $dbConn, 'rowSis', basename($_SERVER["REQUEST_URI"], ".php"), 'rowSis');
 	}
 
+	/**********************************************************************/
     // Si ha habido más de 5 intentos de inicio de sesión fallidos.
     if ($num_rows > 5) {
         return true;
