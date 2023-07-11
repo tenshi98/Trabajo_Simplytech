@@ -104,7 +104,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="<?php echo 'colegios_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
-				<li class=""><a href="<?php echo 'colegios_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'colegios_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 				<li class=""><a href="<?php echo 'colegios_listado_estado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-power-off" aria-hidden="true"></i> Estado</a></li>
 			</ul>
 		</header>
@@ -114,7 +114,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 							<p class="text-muted word_break">
 								<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
 								<strong>Región : </strong><?php echo $rowdata['nombre_region']; ?><br/>
@@ -180,7 +180,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x1, 2);
 				$Form_Inputs->form_select_depend1('Región','idCiudad', $x2, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 										'Comuna','idComuna', $x3, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,

@@ -96,7 +96,7 @@ if(!empty($_GET['clone_idUsuario'])){
 				$Form_Inputs->form_post_data(1,1,1, 'Los usuarios recien creados tienen la contraseña <strong>1234</strong> asignada por defecto');
 				$Form_Inputs->form_post_data(1,1,1, 'Los usuarios recien creados perteneceran al sistema <strong>'.$_SESSION['usuario']['basic_data']['RazonSocial'].'</strong> por defecto');
 
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_input_icon('Nombre de Usuario', 'usuario', $x1, 2,'fa fa-user');
 				$Form_Inputs->form_select('Tipo de usuario','idTipoUsuario', $x3, 2, 'idTipoUsuario', 'Nombre', 'usuarios_tipos', 'idTipoUsuario!=1', '', $dbConn);
 
@@ -364,7 +364,7 @@ $x_permisos_6 = $prm_x[59] + $prm_x[60];
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="<?php echo 'usuarios_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
-				<li class=""><a href="<?php echo 'usuarios_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'usuarios_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 				<li class=""><a href="<?php echo 'usuarios_listado_permisos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-sliders" aria-hidden="true"></i> Permisos</a></li>
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
@@ -631,7 +631,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				$Form_Inputs->form_post_data(1,1,1, 'Los usuarios recien creados tienen la contraseña <strong>1234</strong> asignada por defecto');
 				$Form_Inputs->form_post_data(1,1,1, 'Los usuarios recien creados perteneceran al sistema <strong>'.$_SESSION['usuario']['basic_data']['RazonSocial'].'</strong> por defecto');
 
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_input_icon('Nombre de Usuario', 'usuario', $x1, 2,'fa fa-user');
 				$Form_Inputs->form_select('Tipo de usuario','idTipoUsuario', $x3, 2, 'idTipoUsuario', 'Nombre', 'usuarios_tipos', 'idTipoUsuario!=1', '', $dbConn);
 

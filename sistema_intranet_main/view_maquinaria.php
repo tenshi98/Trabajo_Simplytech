@@ -264,7 +264,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
 							<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>

@@ -841,7 +841,7 @@ $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 				switch ($row_data['idEstado']) {
 					//Solicitada
 					case 1:
-						$Form_Inputs->form_tittle(3, 'Datos Basicos');
+						$Form_Inputs->form_tittle(3, 'Datos Básicos');
 						$Form_Inputs->form_values('Numero de solicitud','NSolicitud', $x26, 2);
 						$Form_Inputs->form_select('Prioridad','idPrioridad', $x0, 2, 'idPrioridad', 'Nombre', 'core_cross_prioridad', 0, '', $dbConn);
 						$Form_Inputs->form_select_filter('Predio','idPredio', $x1, 2, 'idPredio', 'Nombre', 'cross_predios_listado', $z, '', $dbConn);
@@ -867,7 +867,7 @@ $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 						break;
 					//Programada
 					case 2:
-						$Form_Inputs->form_tittle(3, 'Datos Basicos');
+						$Form_Inputs->form_tittle(3, 'Datos Básicos');
 						$Form_Inputs->form_select_filter('Temporada','idTemporada', $x2, 2, 'idTemporada', 'Codigo,Nombre', 'cross_checking_temporada', $y, '', $dbConn);
 						$Form_Inputs->form_select_filter('Estado Fenológico','idEstadoFen', $x3, 2, 'idEstadoFen', 'Codigo,Nombre', 'cross_checking_estado_fenologico', $y, '', $dbConn);
 						$Form_Inputs->form_date('Fecha inicio programación','f_ejecucion', $x8, 2);
@@ -880,7 +880,7 @@ $m = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 						break;
 					//Ejecutada
 					case 3:
-						$Form_Inputs->form_tittle(3, 'Datos Basicos');
+						$Form_Inputs->form_tittle(3, 'Datos Básicos');
 						$Form_Inputs->form_date('Fecha inicio cierre','f_termino', $x10, 2);
 						$Form_Inputs->form_time('Hora inicio cierre','horaTermino', $x11, 2, 1);
 						$Form_Inputs->form_date('Fecha termino cierre','f_termino_fin', $x22, 2);
@@ -1091,7 +1091,7 @@ foreach ($arrProductos as $prod) {
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Básicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Prioridad</td>

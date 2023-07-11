@@ -62,7 +62,7 @@ $rowdata = db_select_data (false, $SIS_query, 'colegios_listado', $SIS_join, $SI
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Colegio</h5>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 			</ul>
 		</header>
         <div class="tab-content">
@@ -71,7 +71,7 @@ $rowdata = db_select_data (false, $SIS_query, 'colegios_listado', $SIS_join, $SI
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 							<p class="text-muted word_break">
 								<strong>Nombre Fantasia: </strong><?php echo $rowdata['Nombre']; ?><br/>
 								<strong>Región : </strong><?php echo $rowdata['nombre_region']; ?><br/>

@@ -103,7 +103,7 @@ $arrArchivo = db_select_array (false, $SIS_query, 'seguridad_accesos_nominas_arc
 	<div class="row invoice-info">
 
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
-			Datos Basicos
+			Datos Básicos
 			<address>
 				<strong>Usuario:</strong> <?php echo $row_data['Usuario']; ?><br/>
 				<strong>Sistema:</strong> <?php echo $row_data['Sistema']; ?><br/>

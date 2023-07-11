@@ -241,7 +241,7 @@ array_push( $arrAccess,$row );
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos</h5>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 				<li class=""><a href="#ingresos" data-toggle="tab"><i class="fa fa-sign-in" aria-hidden="true"></i> Ingresos</a></li>
 			</ul>
 		</header>

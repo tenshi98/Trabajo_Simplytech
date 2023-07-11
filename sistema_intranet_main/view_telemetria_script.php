@@ -178,7 +178,7 @@ switch ($rowdata['idShield']) {
 			<h5>Ver Datos del script</h5>
 		</header>
         <div class="body">
-            <h2 class="text-primary">Datos Basicos</h2>
+            <h2 class="text-primary">Datos Básicos</h2>
             <p class="text-muted">
 				<strong>Equipo : </strong><?php echo $rowdata['nombre_equipo']; ?><br/>
 				<strong>Identificador : </strong><?php echo $rowdata['Identificador']; ?><br/>

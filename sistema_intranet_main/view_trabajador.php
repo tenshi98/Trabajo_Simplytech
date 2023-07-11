@@ -206,7 +206,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Ver Datos del Trabajador</h5>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 				<li class=""><a href="#ot" data-toggle="tab"><i class="fa fa-bookmark-o" aria-hidden="true"></i> Ordenes de Trabajo</a></li>
 			</ul>
 		</header>
@@ -224,7 +224,7 @@ $arrDescuentos = db_select_array (false, $SIS_query, 'trabajadores_listado_descu
 						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?><br/>
 							<strong>Rut : </strong><?php echo $rowdata['Rut']; ?><br/>

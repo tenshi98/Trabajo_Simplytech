@@ -104,7 +104,7 @@ $html .= '
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:50%;">
-								Datos Basicos<br/>
+								Datos Básicos<br/>
 								<strong>Usuario:</strong> '.$row_data['Usuario'].'<br/>
 								<strong>Sistema:</strong> '.$row_data['Sistema'].'<br/>
 								<strong>Ubicación:</strong> ';

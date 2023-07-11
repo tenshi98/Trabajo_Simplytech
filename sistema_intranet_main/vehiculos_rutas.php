@@ -108,7 +108,7 @@ array_push( $arrRutas,$row );
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="<?php echo 'vehiculos_rutas.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
-				<li class=""><a href="<?php echo 'vehiculos_rutas_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'vehiculos_rutas_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 				<li class=""><a href="<?php echo 'vehiculos_rutas_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" >Editar Ruta</a></li>
 
 			</ul>
@@ -311,7 +311,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_input_text('Nombre de la Ruta', 'Nombre', $x1, 2);
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

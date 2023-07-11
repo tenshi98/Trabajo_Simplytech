@@ -109,7 +109,7 @@ $arrUnidadMedida = db_select_array (false, $SIS_query, 'sistema_cross_analisis_u
 	<div class="row">
 
 		<div class="col-xs-4">
-			<p class="lead">Datos Basicos:</p>
+			<p class="lead">Datos Básicos:</p>
 			<p class="text-muted well well-sm no-shadow" >
 				<strong>Productor: </strong>                 <?php echo $rowMuestras['Cliente'].'<br/>'; ?>
 				<strong>N° Folio / Pallet: </strong>         <?php echo $rowMuestras['n_folio_pallet'].'<br/>'; ?>
@@ -381,7 +381,7 @@ $arrArchivos = db_select_array (false, $SIS_query, 'cross_quality_registrar_insp
 	<div class="row invoice-info">
 
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-			Datos Basicos
+			Datos Básicos
 			<address>
 				<strong>Producto</strong><br/>
 				<?php echo $row_data['ProductoCategoria'].', '.$row_data['ProductoNombre']; ?><br/>

@@ -172,7 +172,7 @@ if(isset($row_data['SEGURIDAD_CC_Nombre'])&&$row_data['SEGURIDAD_CC_Nombre']!=''
 	<div class="row invoice-info">
 
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
-			Datos Basicos
+			Datos Básicos
 			<address>
 				<strong>Usuario: </strong><?php echo $row_data['Usuario']; ?><br/>
 				<strong>Periodo: </strong><?php echo numero_a_mes($row_data['Periodo_Mes']).' de '.$row_data['Periodo_Ano']; ?><br/>

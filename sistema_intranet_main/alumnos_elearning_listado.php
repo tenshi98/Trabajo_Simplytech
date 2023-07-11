@@ -226,7 +226,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_
 	<div class="box dark">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
-			<h5>Editar Datos Basicos</h5>
+			<h5>Editar Datos Básicos</h5>
 		</header>
 		<div class="body">
 			<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
@@ -529,7 +529,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Datos Basicos</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Datos Básicos</h5>
 				<div class="toolbar">
 					<a href="<?php echo $location.'&id_curso='.$_GET['id_curso'].'&modBase=true' ?>" class="btn btn-xs btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a>
 				</div>

@@ -52,7 +52,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_joi
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowdata['Identificador'], $rowdata['Nombre'], 'Editar Datos Basicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Cliente '.$rowdata['Identificador'], $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -61,7 +61,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_joi
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class=""><a href="<?php echo 'aguas_clientes_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
-				<li class="active"><a href="<?php echo 'aguas_clientes_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class="active"><a href="<?php echo 'aguas_clientes_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 				<li class=""><a href="<?php echo 'aguas_clientes_listado_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
@@ -92,7 +92,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_listado', $SIS_joi
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_tittle(3, 'Datos Basicos');
+					$Form_Inputs->form_tittle(3, 'Datos Básicos');
 					$Form_Inputs->form_select('Tipo de Cliente','idTipo', $x1, 2, 'idTipo', 'Nombre', 'aguas_clientes_tipos', 0, '', $dbConn);
 					$Form_Inputs->form_input_text('Identificador', 'Identificador', $x2, 2);
 					$Form_Inputs->form_input_text('Nombre', 'Nombre', $x3, 2);

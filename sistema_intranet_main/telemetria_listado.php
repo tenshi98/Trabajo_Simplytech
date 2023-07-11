@@ -82,7 +82,7 @@ if(!empty($_GET['clone_idTelemetria'])){
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				//$Form_Inputs->form_input_icon('Identificador', 'Identificador', $x1, 2,'fa fa-flag');
 				$Form_Inputs->form_input_text('Nombre del Equipo', 'Nombre', $x2, 2);
 
@@ -240,7 +240,7 @@ $arrEXOpciones[0] = 'No Asignado';
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="<?php echo 'telemetria_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
-				<li class=""><a href="<?php echo 'telemetria_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'telemetria_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 				<li class=""><a href="<?php echo 'telemetria_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
@@ -417,7 +417,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				//$Form_Inputs->form_input_icon('Identificador', 'Identificador', $x1, 2,'fa fa-flag');
 				$Form_Inputs->form_input_text('Nombre del Equipo', 'Nombre', $x2, 2);
 

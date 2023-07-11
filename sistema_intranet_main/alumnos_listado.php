@@ -107,7 +107,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_listado', $SIS_join, $SIS
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class="active"><a href="<?php echo 'alumnos_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
-				<li class=""><a href="<?php echo 'alumnos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'alumnos_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 				<li class=""><a href="<?php echo 'alumnos_listado_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
@@ -133,7 +133,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_listado', $SIS_join, $SIS
 						<?php } ?>
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						<h2 class="text-primary">Datos Basicos</h2>
+						<h2 class="text-primary">Datos Básicos</h2>
 						<p class="text-muted">
 							<strong>Curso : </strong><?php echo $rowdata['Curso']; ?><br/>
 							<strong>Nombre: </strong><?php echo $rowdata['Nombre'].' '.$rowdata['ApellidoPat'].' '.$rowdata['ApellidoMat']; ?><br/>
@@ -207,7 +207,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_select_filter('Curso','idCurso', $x1, 2, 'idCurso', 'Nombre', 'cursos_listado', $z, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x2, 2);
 				$Form_Inputs->form_input_text('Apellido Paterno', 'ApellidoPat', $x3, 2);

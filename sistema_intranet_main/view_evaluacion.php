@@ -76,7 +76,7 @@ $arrAlumnos = db_select_array (false, $SIS_query, 'alumnos_evaluaciones_asignada
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos de la evaluacion</h5>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 				<li class=""><a href="#alumnos" data-toggle="tab"><i class="fa fa-users" aria-hidden="true"></i> Alumnos</a></li>
 				<li class=""><a href="#fallas" data-toggle="tab"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> Fallas</a></li>
 				<li class=""><a href="#reintentos" data-toggle="tab"><i class="fa fa-reply-all" aria-hidden="true"></i> Reintentos</a></li>
@@ -91,7 +91,7 @@ $arrAlumnos = db_select_array (false, $SIS_query, 'alumnos_evaluaciones_asignada
 						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/evaluation.jpg">
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 						<p class="text-muted">
 							<strong>Tipo Asignacion : </strong><?php echo $rowdata['Asignar']; ?><br/>
 							<strong>Grupo: </strong><?php echo $rowdata['Curso']; ?><br/>

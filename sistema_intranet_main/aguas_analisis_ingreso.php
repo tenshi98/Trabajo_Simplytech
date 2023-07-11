@@ -132,7 +132,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_date('Fecha de la muestra','f_muestra', $x1, 2);
 				$Form_Inputs->form_date('Fecha Recibida','f_recibida', $x2, 2);
 				$Form_Inputs->form_select_filter('Laboratorio','idLaboratorio', $x3, 2, 'idLaboratorio', 'Nombre', 'aguas_analisis_laboratorios', $z, '', $dbConn);
@@ -421,7 +421,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_date('Fecha de la muestra','f_muestra', $x1, 2);
 				$Form_Inputs->form_date('Fecha Recibida','f_recibida', $x2, 2);
 				$Form_Inputs->form_select_filter('Laboratorio','idLaboratorio', $x3, 2, 'idLaboratorio', 'Nombre', 'aguas_analisis_laboratorios', $z, '', $dbConn);

@@ -131,7 +131,7 @@ $arrServicios = db_select_array (false, $SIS_query, 'bodegas_servicios_facturaci
 			<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div>
 			<h5>Datos del Proveedor</h5>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 				<li class=""><a href="#observaciones" data-toggle="tab"><i class="fa fa-tasks" aria-hidden="true"></i> Observaciones</a></li>
 				<li class=""><a href="#productos" data-toggle="tab"><i class="fa fa-cc-visa" aria-hidden="true"></i> Compra de Productos</a></li>
 				<li class="dropdown">
@@ -149,7 +149,7 @@ $arrServicios = db_select_array (false, $SIS_query, 'bodegas_servicios_facturaci
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 							<p class="text-muted word_break">
 								<strong>Tipo de Proveedor : </strong><?php echo $rowdata['tipoCliente']; ?><br/>
 								<?php

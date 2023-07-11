@@ -332,7 +332,7 @@ if(!empty($_GET['clone_idMaquina'])){
 			<header>
 				<ul class="nav nav-tabs pull-right">
 					<li class="active"><a href="<?php echo 'maquinaria_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
-					<li class=""><a href="<?php echo 'maquinaria_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+					<li class=""><a href="<?php echo 'maquinaria_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 					<li class=""><a href="<?php echo 'maquinaria_listado_configuracion.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']; ?>" ><i class="fa fa-wrench" aria-hidden="true"></i> Configuracion</a></li>
 					<li class="dropdown">
 						<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
@@ -369,7 +369,7 @@ if(!empty($_GET['clone_idMaquina'])){
 							<?php } ?>
 						</div>
 						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 							<p class="text-muted">
 								<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?><br/>
 								<strong>Codigo : </strong><?php echo $rowdata['Codigo']; ?><br/>

@@ -78,7 +78,7 @@ $rowdata = db_select_data (false, $SIS_query, 'seguridad_camaras_listado', $SIS_
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
 					<div class="row" style="border-right: 1px solid #333;">
 						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
+							<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 							<p class="text-muted word_break">
 								<strong>Nombre del Grupo : </strong><?php echo $rowdata['Nombre']; ?><br/>
 								<strong>Numero de Camaras: </strong><?php echo $rowdata['N_Camaras']; ?><br/>

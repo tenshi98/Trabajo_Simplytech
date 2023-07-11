@@ -164,7 +164,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_clientes_observaciones', $S
 			<h5>Ver Datos de la Observacion</h5>
 		</header>
         <div class="body">
-            <h2 class="text-primary">Datos Basicos</h2>
+            <h2 class="text-primary">Datos Básicos</h2>
             <p class="text-muted">
 				<strong>Cliente : </strong><?php echo $rowdata['nombre_cliente']; ?><br/>
 				<strong>Usuario : </strong><?php echo $rowdata['nombre_usuario']; ?><br/>
@@ -228,7 +228,7 @@ $arrObservaciones = db_select_array (false, $SIS_query, 'aguas_clientes_observac
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class=""><a href="<?php echo 'aguas_clientes_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
-				<li class=""><a href="<?php echo 'aguas_clientes_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'aguas_clientes_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 				<li class=""><a href="<?php echo 'aguas_clientes_listado_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>

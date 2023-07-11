@@ -145,7 +145,7 @@ $html .= '
 
 		<div class="row invoice-info">
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 invoice-col">
-				Datos Basicos
+				Datos Básicos
 				<address>
 					<strong>Producto</strong><br/>
 					'.$row_data['ProductoCategoria'].', '.$row_data['ProductoNombre'].'<br/>

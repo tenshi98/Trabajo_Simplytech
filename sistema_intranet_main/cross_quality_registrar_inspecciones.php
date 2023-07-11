@@ -239,7 +239,7 @@ array_push( $arrGrupo,$row );
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_select_filter('Productor','idProductor', $x1, 2, 'idProductor', 'Codigo,Nombre', 'productores_listado', $w, '', $dbConn);
 				$Form_Inputs->form_input_text('N° Folio / Pallet', 'n_folio_pallet', $x2, 2);
 				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x3, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $z, '', $dbConn);
@@ -454,7 +454,7 @@ foreach ($arrPermisos as $prod) {
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_select_filter('Productor','idProductor', $x1, 2, 'idProductor', 'Codigo,Nombre', 'productores_listado', $w, '', $dbConn);
 				$Form_Inputs->form_input_text('N° Folio / Pallet', 'n_folio_pallet', $x2, 2);
 				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x3, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $zx1, '', $dbConn);
@@ -673,7 +673,7 @@ foreach ($arrPermisos as $prod) {
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_select_filter('Productor','idProductor', $x1, 2, 'idProductor', 'Codigo,Nombre', 'productores_listado', $w, '', $dbConn);
 				$Form_Inputs->form_input_text('N° Folio / Pallet', 'n_folio_pallet', $x2, 2);
 				$Form_Inputs->form_select_filter('Tipo Embalaje','idTipo', $x3, 2, 'idTipo', 'Codigo,Nombre', 'sistema_cross_analisis_embalaje', $zx1, '', $dbConn);
@@ -1010,7 +1010,7 @@ $z = "idEstado=1 AND idSistema=".$_SESSION['usuario']['basic_data']['idSistema']
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Básicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Producto</td>

@@ -57,7 +57,7 @@ $rowdata = db_select_data (false, $SIS_query, 'prospectos_transportistas_etapa_f
 			<h5>Ver Datos de la Etapa</h5>
 		</header>
         <div class="body">
-            <h2 class="text-primary">Datos Basicos</h2>
+            <h2 class="text-primary">Datos Básicos</h2>
             <p class="text-muted">
 				<strong>Prospecto : </strong><?php echo $rowdata['nombre_prospecto']; ?><br/>
 				<strong>Etapa : </strong><?php echo $rowdata['Etapa']; ?><br/>

@@ -128,7 +128,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 
 				$Form_Inputs->form_select('Tipo Puntuacion','idTipoEvaluacion', $x2, 2, 'idTipoEvaluacion', 'Nombre', 'quiz_tipo_evaluacion', 0, '', $dbConn);
@@ -723,7 +723,7 @@ foreach ($arrPreguntas as $preg) {
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 		<div class="box">
 			<header>
-				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Datos Basicos</h5>
+				<div class="icons"><i class="fa fa-table" aria-hidden="true"></i></div><h5>Datos Básicos</h5>
 				<div class="toolbar">
 					<a href="<?php echo $location.'&id_quiz='.$_GET['id_quiz'].'&modBase=true' ?>" class="btn btn-xs btn-primary"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a>
 				</div>
@@ -891,7 +891,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
 
 				$Form_Inputs->form_select('Tipo Puntuacion','idTipoEvaluacion', $x2, 2, 'idTipoEvaluacion', 'Nombre', 'quiz_tipo_evaluacion', 0, '', $dbConn);

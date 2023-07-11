@@ -796,7 +796,7 @@ foreach ($arrPermisos as $prod) {
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_input_number('Numero OC', 'idOcompra', $x1, 1);
 				$Form_Inputs->form_select_filter('Proveedor','idProveedor', $x2, 1, 'idProveedor', 'Nombre', 'proveedor_listado', $z, '', $dbConn);
 				$Form_Inputs->form_date('F Creacion Ini','Creacion_fecha_ini', $x3, 1);

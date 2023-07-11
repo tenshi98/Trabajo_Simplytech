@@ -104,7 +104,7 @@ $arrVideo = db_select_array (false, $SIS_query, 'cursos_listado_videoconferencia
 						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/training.jpg">
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						<h2 class="text-primary">Datos Basicos</h2>
+						<h2 class="text-primary">Datos Básicos</h2>
 						<p class="text-muted">
 							<strong>Nombre : </strong><?php echo $rowdata['CursoNombre']; ?><br/>
 							<strong>Semanas : </strong><?php echo $rowdata['CursoSemanas'].' semanas de duracion'; ?><br/>
@@ -145,7 +145,7 @@ $arrVideo = db_select_array (false, $SIS_query, 'cursos_listado_videoconferencia
 						<table id="items" style="margin-bottom: 20px;">
 							<thead>
 								<tr role="row">
-									<th colspan="3">Datos Basicos</th>
+									<th colspan="3">Datos Básicos</th>
 									<th colspan="7">Dias</th>
 								</tr>
 								<tr role="row">

@@ -85,7 +85,7 @@ $arrHistorial = db_select_array (false, 'clientes_listado_historial_contratos.Cr
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class=""><a href="<?php echo 'clientes_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
-				<li class=""><a href="<?php echo 'clientes_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class=""><a href="<?php echo 'clientes_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 				<li class=""><a href="<?php echo 'clientes_listado_datos_contacto.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-address-book-o" aria-hidden="true"></i> Datos Contacto</a></li>
 				<li class="dropdown">
 					<a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a>
@@ -142,7 +142,7 @@ $arrHistorial = db_select_array (false, 'clientes_listado_historial_contratos.Cr
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_tittle(3, 'Datos Basicos');
+					$Form_Inputs->form_tittle(3, 'Datos Básicos');
 					$Form_Inputs->form_input_text('Nombre del Contrato', 'Contrato_Nombre', $x1, 2);
 					$Form_Inputs->form_input_text('Numero o Codigo del Contrato', 'Contrato_Numero', $x2, 1);
 					$Form_Inputs->form_select('Renovación/finalización','Contrato_idPeriodo', $x3, 1, 'idPeriodo', 'Nombre', 'core_cross_cliente', 0, '', $dbConn);

@@ -161,7 +161,7 @@ foreach ($arrPromedioProd as $productos) {
 			<h5>Datos del Producto <?php echo $rowdata['Nombre']; ?></h5>
 			<div class="toolbar"> </div>
 			<ul class="nav nav-tabs pull-right">
-				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class="active"><a href="#basicos" data-toggle="tab"><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 				<li class=""><a href="#movimientos" data-toggle="tab"><i class="fa fa-exchange" aria-hidden="true"></i> Movimientos</a></li>
 			</ul>
 		</header>

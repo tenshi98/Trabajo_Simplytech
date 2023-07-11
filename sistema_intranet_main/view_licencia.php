@@ -73,7 +73,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_licencias', $SIS_joi
 						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/licencia.jpg">
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 						<p class="text-muted">
 							<strong>Trabajador : </strong><?php echo $rowdata['TrabNombre'].' '.$rowdata['TrabApellidoPat'].' '.$rowdata['TrabApellidoMat']; ?><br/>
 							<strong>Usuario : </strong><?php echo $rowdata['UserNombre']; ?><br/>

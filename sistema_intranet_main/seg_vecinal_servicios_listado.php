@@ -290,7 +290,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_select('Tipo de Servicio','idTipo', $x1, 2, 'idTipo', 'Nombre', 'seg_vecinal_servicios_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 2);
 				$Form_Inputs->form_select_depend1('Región','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
@@ -352,7 +352,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_select('Tipo de Servicio','idTipo', $x1, 2, 'idTipo', 'Nombre', 'seg_vecinal_servicios_tipos', 0, '', $dbConn);
 				$Form_Inputs->form_input_text('Nombres', 'Nombre', $x2, 2);
 				$Form_Inputs->form_select_depend1('Región','idCiudad', $x3, 2, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,

@@ -65,7 +65,7 @@ $row_data = db_select_data (false, $SIS_query, 'vehiculos_costos', $SIS_join, $S
 						<img style="margin-top:10px;" class="media-object img-thumbnail user-img width100" alt="Imagen Referencia" src="<?php echo DB_SITE_REPO ?>/LIB_assets/img/bag_money.png">
 					</div>
 					<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Basicos</h2>
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Datos Básicos</h2>
 						<p class="text-muted">
 							<strong>Tipo: </strong><?php echo $row_data['Tipo']; ?><br/>
 							<strong>Vehiculo: </strong><?php echo $row_data['VehiculoNombre'].' Patente '.$row_data['VehiculoPatente']; ?><br/>

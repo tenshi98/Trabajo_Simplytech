@@ -94,7 +94,7 @@ $html ='
 
 	<div class="row invoice-info">
 		<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 invoice-col">
-			Datos Basicos
+			Datos Básicos
 			<address>
 				<strong>Usuario:</strong> '.$row_data['Usuario'].'<br/>
 				<strong>Sistema:</strong> '.$row_data['Sistema'].'<br/>

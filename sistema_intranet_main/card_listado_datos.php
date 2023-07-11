@@ -59,7 +59,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Tarjetas', $rowdata['Nombre'], 'Editar Datos Basicos'); ?>
+	<?php echo widget_title('bg-aqua', 'fa-cog', 100, 'Tarjetas', $rowdata['Nombre'], 'Editar Datos Básicos'); ?>
 </div>
 <div class="clearfix"></div>
 
@@ -68,7 +68,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 		<header>
 			<ul class="nav nav-tabs pull-right">
 				<li class=""><a href="<?php echo 'card_listado.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
-				<li class="active"><a href="<?php echo 'card_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Basicos</a></li>
+				<li class="active"><a href="<?php echo 'card_listado_datos.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-list-alt" aria-hidden="true"></i> Datos Básicos</a></li>
 				<li class=""><a href="<?php echo 'card_listado_datos_imagen.php?pagina='.$_GET['pagina'].'&id='.$_GET['id']?>" ><i class="fa fa-file-image-o" aria-hidden="true"></i> Imagen</a></li>
 			</ul>
 		</header>

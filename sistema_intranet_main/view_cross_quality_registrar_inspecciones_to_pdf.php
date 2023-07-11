@@ -153,7 +153,7 @@ $html .= '
 						</tr>
 						<tr>
 							<td style="vertical-align: top; width:33%;">
-								Datos Basicos<br/>
+								Datos Básicos<br/>
 								<strong>Producto</strong><br/>
 								'.$row_data['ProductoCategoria'].', '.$row_data['ProductoNombre'].'<br/>
 								Ubicación: '.$row_data['UbicacionNombre'].'<br/>';

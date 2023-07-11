@@ -206,7 +206,7 @@ $rowData = db_select_data (false, 'NSolicitud, f_programacion, horaProg, f_progr
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_values('Numero de solicitud','NSolicitud', $x1, 2);
 				$Form_Inputs->form_date('Fecha inicio requerido','f_programacion', $x2, 2);
 				$Form_Inputs->form_time('Hora inicio requerido','horaProg', $x3, 2, 1);
@@ -1278,7 +1278,7 @@ foreach ($arrPermisos as $prod) {
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_values('Numero de solicitud','NSolicitud', $x1, 2);
 				$Form_Inputs->form_select('Prioridad','idPrioridad', $x2, 2, 'idPrioridad', 'Nombre', 'core_cross_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Predio','idPredio', $x3, 2, 'idPredio', 'Nombre', 'cross_predios_listado', $z, '', $dbConn);
@@ -1345,7 +1345,7 @@ foreach ($arrPermisos as $prod) {
 				<tbody>
 					<tr>
 						<td class="meta-head"><strong>DATOS BASICOS</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modBase=true' ?>" title="Modificar Datos Básicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
 						<td class="meta-head">N° Solicitud</td>
@@ -1380,7 +1380,7 @@ foreach ($arrPermisos as $prod) {
 					<?php } ?>
 					<tr>
 						<td class="meta-head"><strong>PARAMETROS APLICACION</strong></td>
-						<td class="meta-head"><a href="<?php echo $location.'&modTrac=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
+						<td class="meta-head"><a href="<?php echo $location.'&modTrac=true' ?>" title="Modificar Datos Básicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Mojamiento</td>
@@ -2223,7 +2223,7 @@ foreach ($arrPermisos as $prod) {
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_tittle(3, 'Datos Basicos');
+				$Form_Inputs->form_tittle(3, 'Datos Básicos');
 				$Form_Inputs->form_values('Numero de solicitud','NSolicitud', $x1, 2);
 				$Form_Inputs->form_select('Prioridad','idPrioridad', $x2, 2, 'idPrioridad', 'Nombre', 'core_cross_prioridad', 0, '', $dbConn);
 				$Form_Inputs->form_select_filter('Predio','idPredio', $x3, 2, 'idPredio', 'Nombre', 'cross_predios_listado', $z, '', $dbConn);

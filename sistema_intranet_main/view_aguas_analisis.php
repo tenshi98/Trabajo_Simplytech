@@ -86,7 +86,7 @@ $rowdata = db_select_data (false, $SIS_query, 'aguas_analisis_aguas', $SIS_join,
 			<table id="dataTable" class="table table-bordered table-condensed dataTable">
 				<tbody role="alert" aria-live="polite" aria-relevant="all">
 
-					<tr class="odd"><td colspan="2">Datos Basicos</td></tr>
+					<tr class="odd"><td colspan="2">Datos Básicos</td></tr>
 					<tr class="odd"><td>Fecha muestra:</td>             <td><?php echo fecha_estandar($rowdata['f_muestra']); ?></td></tr>
 					<tr class="odd"><td>Periodo muestra:</td>           <td><?php if($rowdata['f_muestra']!='0000-00-00'){echo fecha2Ano($rowdata['f_muestra']).fecha2NMes($rowdata['f_muestra']);} ?></td></tr>
 					<tr class="odd"><td>Fecha recibida:</td>            <td><?php echo fecha_estandar($rowdata['f_recibida']); ?></td></tr>

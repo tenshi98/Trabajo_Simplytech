@@ -187,7 +187,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 			<h5>Ver Datos de la Observacion</h5>
 		</header>
         <div class="body">
-            <h2 class="text-primary">Datos Basicos</h2>
+            <h2 class="text-primary">Datos Básicos</h2>
             <p class="text-muted">
 				<strong>Prospecto : </strong><?php echo $rowdata['nombre_prospecto']; ?><br/>
 				<strong>Usuario : </strong><?php echo $rowdata['nombre_usuario']; ?><br/>

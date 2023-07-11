@@ -622,7 +622,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'tareas_pendientes_listado_h
 							<?php
 							//solo se puede agregar responsables por quien creo la tarea o es superadministrador
 							if($_SESSION['usuario']['basic_data']['idUsuario']==$rowdata['idUsuario'] OR $_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
-								<a href="<?php echo $new_location.'&modBase=true' ?>" title="Modificar Datos Basicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a>
+								<a href="<?php echo $new_location.'&modBase=true' ?>" title="Modificar Datos Básicos" class="btn btn-xs btn-primary tooltip pull-right" style="position: initial;"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Modificar</a>
 							<?php } ?>
 						</td>
 					</tr>
