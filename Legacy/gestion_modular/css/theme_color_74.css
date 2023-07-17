@@ -1,3 +1,4 @@
+/*******************************************************/
 /* Color barra titulo del tema */
 .navbar-inverse,
 .navbar-inverse .navbar-nav > .open > a{
@@ -7,6 +8,7 @@
 	color: #fff !important;
 }
 
+/*******************************************************/
 /* Color caracteristico del tema */
 #wrap,
 #left,
@@ -19,7 +21,7 @@ body:not(.sidebar-left-mini) #menu .nav-header,
 	background-color: #043380 !important;
 }
 /* Color seleccion del tema */
-#menu>li:hover>a, 
+#menu>li:hover>a,
 #menu>li:focus>a,
 #menu>li a:hover {
 	background-color: rgba(0,0,0,0.3)!important;
@@ -33,6 +35,7 @@ body:not(.sidebar-left-mini) #menu .nav-header,
 	color: #BABABA !important;
 }
 
+/*******************************************************/
 /* Color de las fuentes del tema */
 .head .main-bar h3,
 .user-media .media-body h5.media-heading,
@@ -44,6 +47,7 @@ body:not(.sidebar-left-mini) #menu .nav-header,
     text-shadow: none !important;
 }
 
+/*******************************************************/
 /* Color de de los separadores de las secciones */
 #menu .nav-divider,
 .outer {
@@ -55,13 +59,13 @@ body:not(.sidebar-left-mini) #menu .nav-header,
 }
 #menu > li > a,
 body:not(.sidebar-left-mini) #menu .nav-header {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);	
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 .head{
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);	
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-
+/*******************************************************/
 /* Otros */
 #top > .navbar {
 	border-top: none !important;
@@ -164,7 +168,7 @@ body:not(.sidebar-left-mini) #menu .nav-header {
     border-color: #2E2424;
 }
 .box header .nav-tabs > li.dropdown .dropdown-menu > li > a {
-    color: #fff;   
+    color: #fff;
 }
 .box header .nav-tabs > li.dropdown .dropdown-menu > li > a:hover,
 .box header .nav-tabs > li.dropdown .dropdown-menu > li > a:focus {
@@ -175,6 +179,38 @@ body:not(.sidebar-left-mini) #menu .nav-header {
 .box header .nav-tabs > li.dropdown .dropdown-menu > .active > a:focus {
     background-color: #333;
 }
+
+/*******************************************************/
+/** Modificacion alertas **/
+/*****************************************/
+.alert-default {color: #333333!important;border-color: #cccccc!important;}
+.alert-primary {color: #333333!important;border-color: #2f353a!important;}
+.alert-success {color: #1ABC9C!important;border-color: #0fac8c!important;}
+.alert-info {color: #2E5595!important;border-color: #043380!important;}
+.alert-warning {color: #e9af33!important;border-color: #ffbd33!important;}
+.alert-danger {color: #dd4c2b!important;border-color: #ff5733!important;}
+
+.alert-default .icon, .alert-default .icon::after {border-color: #cccccc!important;background: #cccccc!important;}
+.alert-primary .icon, .alert-primary .icon::after {border-color: #2f353a!important;background: #2f353a!important;}
+.alert-success .icon, .alert-success .icon::after {border-color: #0fac8c!important;background: #1ABC9C!important;}
+.alert-info .icon, .alert-info .icon::after {border-color: #043380!important;background: #2E5595!important;}
+.alert-warning .icon, .alert-warning .icon::after {border-color: #ffbd33!important;background: #e9af33!important;}
+.alert-danger .icon, .alert-danger .icon::after {border-color: #ff5733!important;background: #dd4c2b!important;}
+
+.bs-callout-default {border-color: #cccccc!important;}
+.bs-callout-primary {border-color: #2f353a!important;}
+.bs-callout-success {border-color: #0fac8c!important;}
+.bs-callout-info {border-color: #043380!important;}
+.bs-callout-warning {border-color: #ffbd33!important;}
+.bs-callout-danger {border-color:#ff5733!important;}
+
+.bs-callout-default h4 {color:#cccccc!important;}
+.bs-callout-primary h4 {color:#2f353a!important;}
+.bs-callout-success h4 {color:#0fac8c!important;}
+.bs-callout-info h4 {color:#043380!important;}
+.bs-callout-warning h4 {color:#ffbd33!important;}
+.bs-callout-danger h4 {color:#ff5733!important;}
+
 .login, body {background: url("../img/pattern/gray_jean.png") repeat!important;}
 .bx_shad{-webkit-box-shadow: 0px 0px 5px 1px rgba(0,0,0,1);-moz-box-shadow: 0px 0px 5px 1px rgba(0,0,0,1);box-shadow: 0px 0px 5px 1px rgba(0,0,0,1);}
 .navleft{right: 0 !important;float: right !important;left: auto !important;}
