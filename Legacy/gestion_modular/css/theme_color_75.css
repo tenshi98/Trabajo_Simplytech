@@ -4,6 +4,9 @@
 .navbar-inverse .navbar-nav > .open > a{
 	background-color: #2f353a !important;
 }
+#loader-wrapper .loader-section {
+    background: #2f353a!important;
+}
 .logo_empresa .texto h1{
 	color: #fff !important;
 }
