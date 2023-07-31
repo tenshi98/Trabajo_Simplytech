@@ -118,14 +118,14 @@ body:not(.sidebar-left-mini) #menu .nav-header {
 /* Modificacion de los cuadros del tema */
 .box{
 	background-color: #fff;
-	border: 1px solid #333;
+	border: 1px solid #1abc9c;
 	border-radius: 4px;
 	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
 	box-shadow: 0 1px 1px rgba(0,0,0,.05);
 }
 .box header {
     color: #fff;
-	background: url("../img/pattern/vetgb_black.jpg") repeat!important;
+	background: url("../img/pattern/vetgb_green.jpg") repeat!important;
 	border-color: #333;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
