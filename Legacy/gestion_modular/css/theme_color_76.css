@@ -237,12 +237,12 @@ body:not(.sidebar-left-mini) #menu .nav-header {
 
 /*****************************************/
 .btn-primary {
-	color: #2f353a;background-color: #fff;border-color: #202325;
+	color: #0fac8c;background-color: #fff;border-color: #1abc9c;
     -webkit-transition-duration: 0.5s;
     -webkit-transition-timing-function: linear;
     transition-duration: 0.5s;
     transition-timing-function: linear;
-    box-shadow:0px 0 0 #202325  inset;
+    box-shadow:0px 0 0 #1abc9c  inset;
 }
 .btn-primary:hover,
 .btn-primary:focus,
@@ -250,8 +250,8 @@ body:not(.sidebar-left-mini) #menu .nav-header {
 .btn-primary:hover:active,
 .btn-primary:focus:active,
 .btn-primary:active:active{
-	color: #ececec;background-color: #202325;border-color: #202325;
-    box-shadow:500px 0 0 #202325 inset;
+	color: #ececec;background-color: #1abc9c;border-color: #1abc9c;
+    box-shadow:500px 0 0 #1abc9c inset;
 }
 
 /*****************************************/
@@ -579,6 +579,20 @@ body:not(.sidebar-left-mini) #menu .nav-header {
 .match_badge{margin-bottom: 5px;padding-right: 3px;padding-left: 3px;}
 .match_badge p{font-size: 12px;}
 
-
-
 .video_1-dimensions {width: 100%;}
+/*******************************************************/
+/* Mascota */
+.cardMascota {font-size: 1em;overflow: hidden;padding: 0;border: none;border-radius: .28571429rem;border: 1px solid #ddd;margin-bottom:10px;}
+.cardMascota .card-img-top {display: block;width: 100%;height: auto;}
+.cardMascota .card-block {font-size: 1em;position: relative;margin: 0;border: none;box-shadow: none;padding-left:5px;}
+.cardMascota .card-block .card-title {font-size: 1.28571429em;font-weight: 700;line-height: 1.2857em;margin-top: 5px;margin-bottom: 5px;color: #666;}
+.cardMascota .card-block .meta {font-size: 1em;color: rgba(0, 0, 0, .4);}
+.cardMascota .card-block .meta h5 {text-decoration: none;margin-top: 0px;margin-bottom: 5px;font-weight:normal;}
+.cardMascota .card-footer {font-size: 1em;position: static;top: 0;left: 0;max-width: 100%;color: rgba(0, 0, 0, .4);border-top: 1px solid rgba(0, 0, 0, .05) !important;background: #fff;}
+.cardMascota .card-footer .icon{padding:5px;}
+.cardMascota .card-footer .icon a{color:#ef6645;float: left;text-align: center;cursor: pointer;}
+.cardMascota .card-footer .icon .tooltip{position: inherit;}
+
+/*******************************************************/
+/* Formularios */
+.control-label{color: #666;}
