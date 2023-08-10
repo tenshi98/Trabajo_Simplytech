@@ -1017,12 +1017,9 @@ foreach ($arrPermisos as $prod) {
 				
 				echo '<script>';
 				foreach ($arrTipo as $tipo) {
-					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
-					';
-				}
-
-				foreach ($arrTipo as $tipo) {
-					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
+					echo '
+					let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
+					let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
 					';
 				}
 				?>
