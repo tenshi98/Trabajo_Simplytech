@@ -3512,7 +3512,7 @@ require_once '0_validate_user_1.php';
 			}
 
 			if($errorn==0){
-				// Se obtiene el nombre del logo
+				// Se obtiene el nombre del archivo
 				$rowdata = db_select_data (false, 'Nombre', 'ocompra_listado_archivos', '', 'idFile = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				/*********************************************************************/

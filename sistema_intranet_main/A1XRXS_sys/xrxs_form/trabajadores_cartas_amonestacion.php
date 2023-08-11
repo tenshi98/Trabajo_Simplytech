@@ -333,7 +333,7 @@ require_once '0_validate_user_1.php';
 			}
 
 			if($errorn==0){
-				// Se obtiene el nombre del logo
+				// Se obtiene el nombre del archivo
 				$rowdata = db_select_data (false, 'File_Amonestacion', 'trabajadores_cartas_amonestacion', '', 'idCartaAmo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//se borran los datos
@@ -371,7 +371,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'File_Amonestacion', 'trabajadores_cartas_amonestacion', '', 'idCartaAmo = "'.$_GET['del_file'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/

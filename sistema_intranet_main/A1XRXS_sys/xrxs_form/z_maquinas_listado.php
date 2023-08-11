@@ -355,7 +355,7 @@ require_once '0_validate_user_1.php';
 				//maximo de registros
 				$nmax = 25;
 
-				// Se obtiene el nombre del logo
+				// Se obtiene el nombre del archivo
 				$rowdata = db_select_data (false, 'Direccion_img, FichaTecnica, HDS', 'maquinas_listado', '', 'idMaquina = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//se borran los datos
@@ -671,7 +671,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'FichaTecnica', 'maquinas_listado', '', 'idMaquina = "'.simpleDecode($_GET['del_file'], fecha_actual()).'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
@@ -707,7 +707,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'HDS', 'maquinas_listado', '', 'idMaquina = "'.simpleDecode($_GET['del_hds'], fecha_actual()).'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
@@ -889,7 +889,7 @@ require_once '0_validate_user_1.php';
 				//se borran los datos
 				for ($i = $_GET['lvl']; $i <= $_GET['nmax']; $i++) {
 
-					// Se obtiene el nombre del logo
+					// Se obtiene el nombre del archivo
 					$rowdata = db_select_data (false, 'Direccion_img', 'maquinas_listado_level_'.$i, '', 'idLevel_'.$_GET['lvl'].' = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					//se borran los datos
@@ -3642,7 +3642,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'Direccion_img', 'maquinas_listado_level_'.$_GET['lvl'], '', 'idLevel_'.$_GET['lvl'].' = "'.$_GET['del_img'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/

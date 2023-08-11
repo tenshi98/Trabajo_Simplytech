@@ -421,7 +421,7 @@ require_once '0_validate_user_1.php';
 			}
 
 			if($errorn==0){
-				// Se obtiene el nombre del logo
+				// Se obtiene el nombre del archivo
 				$rowdata = db_select_data (false, 'Direccion_img, File_Curriculum, File_Antecedentes, File_Carnet, File_Contrato, File_Licencia, File_RHTM', 'trabajadores_listado', '', 'idTrabajador = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//se borran los datos
@@ -776,7 +776,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'File_Curriculum', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Curriculum'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
@@ -882,7 +882,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'File_Antecedentes', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Antecedentes'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
@@ -988,7 +988,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'File_Carnet', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Carnet'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
@@ -1093,7 +1093,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'File_Contrato', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Contrato'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
@@ -1213,7 +1213,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'File_Licencia', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_Licencia'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
@@ -1321,7 +1321,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'File_RHTM', 'trabajadores_listado', '', 'idTrabajador = "'.$_GET['del_File_RHTM'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/

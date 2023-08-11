@@ -434,7 +434,7 @@ require_once '0_validate_user_1.php';
 			}
 
 			if($errorn==0){
-				// Se obtiene el nombre del logo
+				// Se obtiene el nombre del archivo
 				$rowdata = db_select_data (false, 'Direccion_img, doc_mantencion, doc_padron, doc_permiso_circulacion, doc_resolucion_sanitaria, doc_revision_tecnica,doc_seguro_carga, doc_soap, doc_cert_trans_personas', 'vehiculos_listado', '', 'idVehiculo = "'.$indice.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//se borran los datos
@@ -1024,7 +1024,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'doc_padron', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_padron'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
@@ -1130,7 +1130,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'doc_permiso_circulacion', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_permiso_circulacion'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
@@ -1236,7 +1236,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'doc_resolucion_sanitaria', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_resolucion_sanitaria'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
@@ -1343,7 +1343,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'doc_revision_tecnica', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_revision_tecnica'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
@@ -1449,7 +1449,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'doc_seguro_carga', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_seguro_carga'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
@@ -1555,7 +1555,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'doc_soap', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_soap'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
@@ -1661,7 +1661,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'doc_cert_trans_personas', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_cert_trans_personas'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
@@ -1938,7 +1938,7 @@ require_once '0_validate_user_1.php';
 			//Se elimina la restriccion del sql 5.7
 			mysqli_query($dbConn, "SET SESSION sql_mode = ''");
 
-			// Se obtiene el nombre del logo
+			// Se obtiene el nombre del archivo
 			$rowdata = db_select_data (false, 'doc_ficha_tecnica', 'vehiculos_listado', '', 'idVehiculo = "'.$_GET['del_doc_ficha'].'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 			/*******************************************************/
