@@ -194,7 +194,7 @@ body:not(.sidebar-left-mini) #menu .nav-header {
 .box header .nav-tabs > li.active > a:focus {
 	color: #333;
 	background-color: #fff;
-	border-color: #333;
+	border-color: #1abc9c;
 	border-bottom-color: transparent;
 }
 .box header .nav-tabs > li.dropdown .dropdown-menu {
