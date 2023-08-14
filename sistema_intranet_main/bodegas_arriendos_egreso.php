@@ -627,7 +627,7 @@ $Form_Inputs = new Inputs();
 					</tr>
 					<tr>
 						<td class="meta-head">Documento</td>
-						<td><?php echo $_SESSION['arriendos_egr_basicos']['TipoDocumento'].' N°'.$_SESSION['arriendos_egr_basicos']['N_Doc']?></td>
+						<td><?php echo $_SESSION['arriendos_egr_basicos']['TipoDocumento'].' N°'.n_doc($_SESSION['arriendos_egr_basicos']['N_Doc'], 8); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Vendedor</td>
@@ -768,7 +768,7 @@ $Form_Inputs = new Inputs();
 						foreach ($_SESSION['arriendos_egr_guias'] as $key => $producto){ ?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="4">
-									<?php echo 'Guia N°'.$producto['N_Doc']; ?>
+									<?php echo 'Guia N°'.n_doc($producto['N_Doc'], 8); ?>
 								</td>
 								<td class="item-name" align="right">
 									<?php
@@ -779,7 +779,7 @@ $Form_Inputs = new Inputs();
 									<div class="btn-group" style="width: 35px;" >
 										<?php
 										$ubicacion = $location.'&del_guia='.$producto['idGuia'];
-										$dialogo   = '¿Realmente deseas eliminar la guia N° '.$producto['N_Doc'].'?'; ?>
+										$dialogo   = '¿Realmente deseas eliminar la guia N° '.n_doc($producto['N_Doc'], 8).'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Guia" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									</div>
 								</td>
@@ -1219,7 +1219,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', 
 					<tr class="odd">
 						<td><?php echo $tipo['Cliente']; ?></td>
 						<td><?php echo Fecha_estandar($tipo['Creacion_fecha']); ?></td>
-						<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
+						<td><?php echo $tipo['Documento'].' '.n_doc($tipo['N_Doc'], 8); ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >

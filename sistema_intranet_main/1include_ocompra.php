@@ -383,7 +383,7 @@ foreach ($arrHistorial as $doc){
 							<tr>
 								<td><?php echo $prod['TrabRut'].' - '.$prod['TrabNombre'].' '.$prod['TrabApellidoPat']; ?></td>
 								<td><?php echo $prod['Descripcion']; ?></td>
-								<td><?php echo 'Boleta N° '.$prod['N_Doc']; ?></td>
+								<td><?php echo 'Boleta N° '.n_doc($prod['N_Doc'], 8); ?></td>
 								<td align="right"><?php echo valores($prod['Valor'], 0); ?></td>
 							</tr>
 						<?php } ?>

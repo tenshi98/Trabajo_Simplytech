@@ -3147,7 +3147,7 @@ function widget_Doc_relacionados($idOcompra,
 								<tr class="odd">
 									<td>Insumos</td>
 									<td>'.$tipo['Proveedor'].'</td>
-									<td>'.$tipo['Documento'].' '.$tipo['N_Doc'].' <strong>('.valores($tipo['ValorTotal'], 0).'-C/IVA)</strong> </td>
+									<td>'.$tipo['Documento'].' '.n_doc($tipo['N_Doc'], 8).' <strong>('.valores($tipo['ValorTotal'], 0).'-C/IVA)</strong> </td>
 									<td>'.Fecha_estandar($tipo['Creacion_fecha']).'</td>
 									<td>'.Fecha_estandar($tipo['F_Pago']).'</td>
 									<td>'.$tipo['Estado'].'</td>
@@ -3163,7 +3163,7 @@ function widget_Doc_relacionados($idOcompra,
 								<tr class="odd">
 									<td>Materiales</td>
 									<td>'.$tipo['Proveedor'].'</td>
-									<td>'.$tipo['Documento'].' '.$tipo['N_Doc'].' <strong>('.valores($tipo['ValorTotal'], 0).'-C/IVA)</strong> </td>
+									<td>'.$tipo['Documento'].' '.n_doc($tipo['N_Doc'], 8).' <strong>('.valores($tipo['ValorTotal'], 0).'-C/IVA)</strong> </td>
 									<td>'.Fecha_estandar($tipo['Creacion_fecha']).'</td>
 									<td>'.Fecha_estandar($tipo['F_Pago']).'</td>
 									<td>'.$tipo['Estado'].'</td>
@@ -3179,7 +3179,7 @@ function widget_Doc_relacionados($idOcompra,
 								<tr class="odd">
 									<td>Arriendos</td>
 									<td>'.$tipo['Proveedor'].'</td>
-									<td>'.$tipo['Documento'].' '.$tipo['N_Doc'].' <strong>('.valores($tipo['ValorTotal'], 0).'-C/IVA)</strong> </td>
+									<td>'.$tipo['Documento'].' '.n_doc($tipo['N_Doc'], 8).' <strong>('.valores($tipo['ValorTotal'], 0).'-C/IVA)</strong> </td>
 									<td>'.Fecha_estandar($tipo['Creacion_fecha']).'</td>
 									<td>'.Fecha_estandar($tipo['F_Pago']).'</td>
 									<td>'.$tipo['Estado'].'</td>
@@ -3195,7 +3195,7 @@ function widget_Doc_relacionados($idOcompra,
 								<tr class="odd">
 									<td>Servicios</td>
 									<td>'.$tipo['Proveedor'].'</td>
-									<td>'.$tipo['Documento'].' '.$tipo['N_Doc'].' <strong>('.valores($tipo['ValorTotal'], 0).'-C/IVA)</strong> </td>
+									<td>'.$tipo['Documento'].' '.n_doc($tipo['N_Doc'], 8).' <strong>('.valores($tipo['ValorTotal'], 0).'-C/IVA)</strong> </td>
 									<td>'.Fecha_estandar($tipo['Creacion_fecha']).'</td>
 									<td>'.Fecha_estandar($tipo['F_Pago']).'</td>
 									<td>'.$tipo['Estado'].'</td>

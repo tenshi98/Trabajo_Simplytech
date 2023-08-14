@@ -602,7 +602,7 @@ array_push( $arrFrecuencia,$row );
 					</tr>
 					<tr>
 						<td class="meta-head">Documento</td>
-						<td><?php echo $rowDocumento['Nombre'].' N°'.$_SESSION['arriendos_egr_nc_basicos']['N_Doc']?></td>
+						<td><?php echo $rowDocumento['Nombre'].' N°'.n_doc($_SESSION['arriendos_egr_nc_basicos']['N_Doc'], 8); ?></td>
 					</tr>
 					<tr>
 						<td class="meta-head">Bodega</td>
@@ -1078,7 +1078,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', 
 					<tr class="odd">
 						<td><?php echo $tipo['Cliente']; ?></td>
 						<td><?php echo Fecha_estandar($tipo['Creacion_fecha']); ?></td>
-						<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
+						<td><?php echo $tipo['Documento'].' '.n_doc($tipo['N_Doc'], 8); ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >

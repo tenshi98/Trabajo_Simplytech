@@ -259,7 +259,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', 
 					<tr class="odd">
 						<td><?php echo $tipo['Cliente']; ?></td>
 						<td><?php echo Fecha_estandar($tipo['Creacion_fecha']); ?></td>
-						<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
+						<td><?php echo $tipo['Documento'].' '.n_doc($tipo['N_Doc'], 8); ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
 							<div class="btn-group" style="width: 35px;" >

@@ -824,7 +824,7 @@ $Form_Inputs = new Inputs(); ?>
 						foreach ($_SESSION['arriendos_ing_guias'] as $key => $producto){ ?>
 							<tr class="item-row linea_punteada">
 								<td class="item-name" colspan="4">
-									<?php echo 'Guia N°'.$producto['N_Doc']; ?>
+									<?php echo 'Guia N°'.n_doc($producto['N_Doc'], 8); ?>
 								</td>
 								<td class="item-name" align="right">
 									<?php
@@ -835,7 +835,7 @@ $Form_Inputs = new Inputs(); ?>
 									<div class="btn-group" style="width: 35px;" >
 										<?php
 										$ubicacion = $location.'&del_guia='.$producto['idGuia'];
-										$dialogo   = '¿Realmente deseas eliminar la guia N° '.$producto['N_Doc'].'?'; ?>
+										$dialogo   = '¿Realmente deseas eliminar la guia N° '.n_doc($producto['N_Doc'], 8).'?'; ?>
 										<a onClick="dialogBox('<?php echo $ubicacion ?>', '<?php echo $dialogo ?>')" title="Borrar Guia" class="btn btn-metis-1 btn-sm tooltip"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
 									</div>
 								</td>
@@ -1314,7 +1314,7 @@ $arrTipo = db_select_array (false, $SIS_query, 'bodegas_arriendos_facturacion', 
 					<?php foreach ($arrTipo as $tipo) { ?>
 					<tr class="odd">
 						<td><?php echo $tipo['Proveedor']; ?></td>
-						<td><?php echo $tipo['Documento'].' '.$tipo['N_Doc']; ?></td>
+						<td><?php echo $tipo['Documento'].' '.n_doc($tipo['N_Doc'], 8); ?></td>
 						<td><?php echo Fecha_estandar($tipo['Creacion_fecha']); ?></td>
 						<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?><td><?php echo $tipo['Sistema']; ?></td><?php } ?>
 						<td>
