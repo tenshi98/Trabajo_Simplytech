@@ -36,7 +36,7 @@ $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelaciona
 
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
-	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
+	alert_post_data(4,1,1,0, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
 }else{
 
 	//variables

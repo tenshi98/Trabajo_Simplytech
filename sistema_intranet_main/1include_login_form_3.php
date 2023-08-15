@@ -41,7 +41,7 @@
 						/******************************************/
 						//Muestro los accesos erroneos
 						if(isset($NAccesos)&&$NAccesos!=''){
-							alert_post_data(4,1,1, $NAccesos.' Accesos erroneos de 5 disponibles');
+							alert_post_data(4,1,1,0, $NAccesos.' Accesos erroneos de 5 disponibles');
 						}
 
 						/******************************************/

@@ -69,7 +69,7 @@ $ClaveUnica = 'Meeting_'.genera_password(8,'alfanumerico');
 
 	<?php
 	$Alert_Text  = 'Puedes iniciar una Reunion o puedes Unirte a una utilizando el codigo que recibiste';
-	alert_post_data(2,1,1, $Alert_Text);
+	alert_post_data(2,1,1,0, $Alert_Text);
 	?>
 
 	<div class="row">
@@ -100,7 +100,7 @@ $ClaveUnica = 'Meeting_'.genera_password(8,'alfanumerico');
 
 	<?php
 	$Alert_Text  = 'La <strong>Clave Unica de Reunion</strong> es <strong>'.$ClaveUnica.'</strong>, compartela para poder trabajar en linea';
-	alert_post_data(2,1,1, $Alert_Text);
+	alert_post_data(2,1,1,0, $Alert_Text);
 	?>
 
 </div>

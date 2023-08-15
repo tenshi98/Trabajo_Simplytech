@@ -68,7 +68,7 @@ $num = 0;
 foreach ($arrUsers as $usuarios) {$num++;}
 //cuadro para descargar
 $Alert_Text  = 'Se ingresara la observacion a <strong>'.$num.'</strong> clientes con el filtro actual';
-alert_post_data(2,1,2, $Alert_Text);
+alert_post_data(2,1,2,0, $Alert_Text);
 
 ?>
 

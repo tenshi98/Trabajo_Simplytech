@@ -254,7 +254,7 @@ foreach ($arrHistorial as $doc){
 			}
 			$Alert_Text  = '<div class="icon"><i class="'.$alert_icon.'"></i></div>';
 			$Alert_Text .= '<strong>Observacion: </strong>'.$alert_obs;
-			alert_post_data($tipo,0,0,  $Alert_Text);
+			alert_post_data($tipo,0,0,0,  $Alert_Text);
 		?>
 	</div>
 	<div class="clearfix" style="margin-bottom:15px;"></div>

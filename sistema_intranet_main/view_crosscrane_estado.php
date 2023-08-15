@@ -152,37 +152,37 @@ foreach ($arrUnimed as $sen) {
 if(isset($rowdata['CrossCrane_tiempo_revision'])&&$rowdata['CrossCrane_tiempo_revision']=='00:00:00'){
 	echo '<div class="col-xs-12" style="margin-top:15px;">';
 		$Alert_Text  = 'No se ha configurado el tiempo de revision';
-		alert_post_data(4,2,2, $Alert_Text);
+		alert_post_data(4,2,2,0, $Alert_Text);
 	echo '</div>';
 }
 if(isset($rowdata['CrossCrane_grupo_amperaje'])&&$rowdata['CrossCrane_grupo_amperaje']==0){
 	echo '<div class="col-xs-12" >';
 		$Alert_Text  = 'No se ha configurado el grupo de alimentacion';
-		alert_post_data(4,2,2, $Alert_Text);
+		alert_post_data(4,2,2,0, $Alert_Text);
 	echo '</div>';
 }
 if(isset($rowdata['CrossCrane_grupo_elevacion'])&&$rowdata['CrossCrane_grupo_elevacion']==0){
 	echo '<div class="col-xs-12" >';
 		$Alert_Text  = 'No se ha configurado el grupo de elevacion';
-		alert_post_data(4,2,2, $Alert_Text);
+		alert_post_data(4,2,2,0, $Alert_Text);
 	echo '</div>';
 }
 if(isset($rowdata['CrossCrane_grupo_giro'])&&$rowdata['CrossCrane_grupo_giro']==0){
 	echo '<div class="col-xs-12" >';
 		$Alert_Text  = 'No se ha configurado el grupo de giro';
-		alert_post_data(4,2,2, $Alert_Text);
+		alert_post_data(4,2,2,0, $Alert_Text);
 	echo '</div>';
 }
 if(isset($rowdata['CrossCrane_grupo_carro'])&&$rowdata['CrossCrane_grupo_carro']==0){
 	echo '<div class="col-xs-12" >';
 		$Alert_Text  = 'No se ha configurado el grupo de carro';
-		alert_post_data(4,2,2, $Alert_Text);
+		alert_post_data(4,2,2,0, $Alert_Text);
 	echo '</div>';
 }
 if(isset($rowdata['CrossCrane_grupo_voltaje'])&&$rowdata['CrossCrane_grupo_voltaje']==0){
 	echo '<div class="col-xs-12" >';
 		$Alert_Text  = 'No se ha configurado el grupo de voltaje';
-		alert_post_data(4,2,2, $Alert_Text);
+		alert_post_data(4,2,2,0, $Alert_Text);
 	echo '</div>';
 }
 if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
@@ -850,7 +850,7 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
 						$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
-						alert_post_data(4,2,2, $Alert_Text);
+						alert_post_data(4,2,2,0, $Alert_Text);
 					}else{
 						if(isset($_GET['ShowMap'])&&$_GET['ShowMap']=='True'){
 							$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>

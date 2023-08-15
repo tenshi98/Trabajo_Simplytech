@@ -118,7 +118,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 
 					<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Cambiar Estado</h2>
 					<?php
-					alert_post_data(2,1,1, '<strong>AVISO</strong>: Estás apunto de apagar una grúa <strong>manualmente</strong>. 
+					alert_post_data(2,1,1,0, '<strong>AVISO</strong>: Estás apunto de apagar una grúa <strong>manualmente</strong>. 
 					Crosstech no se hace responsable por el uso indebido de esta opción o por daños 
 					provocados al equipamiento. Sólo usuarios autorizados por '.$_SESSION['usuario']['basic_data']['RazonSocial'].' 
 					pueden ejecutar esta acción, quedando registro de éste.');

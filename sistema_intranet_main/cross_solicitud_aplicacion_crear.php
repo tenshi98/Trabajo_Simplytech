@@ -1314,7 +1314,7 @@ foreach ($arrPermisos as $prod) {
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['view'])){ ?>
 
-<?php echo alert_post_data(4,1,1, $_SESSION['sol_apli_basicos']['Carencias']); ?>
+<?php echo alert_post_data(4,1,1,0, $_SESSION['sol_apli_basicos']['Carencias']); ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
 	<div class="btn-group pull-right" role="group" aria-label="...">

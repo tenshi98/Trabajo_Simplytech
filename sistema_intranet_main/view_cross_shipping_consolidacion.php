@@ -175,7 +175,7 @@ $zz .= '&view='.$_GET['view'];
 			$Alert_Text  = '<strong>Fecha: </strong>'.fecha_estandar($rowConso['Aprobacion_Fecha']).'<br/>';
 			$Alert_Text .= '<strong>Hora: </strong>'.$rowConso['Aprobacion_Hora'].'<br/>';
 			$Alert_Text .= '<strong>Observacion: </strong>'.$rowConso['Observacion'];
-			alert_post_data(4,1,1, $Alert_Text);
+			alert_post_data(4,1,1,0, $Alert_Text);
 			?>
 		</div>
 		<div class="clearfix" style="margin-bottom:15px;"></div>

@@ -502,7 +502,7 @@ require_once '0_validate_user_1.php';
 			if(isset($SALUD_idDocPago)){       $ndata_2 = count($SALUD_idDocPago);        }else{$ndata_2 = 0;}
 			if(isset($SEGURIDAD_idDocPago)){   $ndata_3 = count($SEGURIDAD_idDocPago);    }else{$ndata_3 = 0;}
 
-			if($ndata_1!=0 OR $ndata_2!=0 OR $ndata_3!=0) {
+			if(count(array_filter($AFP_idDocPago))!=0 OR count(array_filter($SALUD_idDocPago))!=0 OR count(array_filter($SEGURIDAD_idDocPago))!=0) {
 				//Se trae un listado con los documentos de pago
 				$arrDocPago = array();
 				$arrDocPago = db_select_array (false, 'idDocPago, Nombre', 'sistema_documentos_pago', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -519,17 +519,17 @@ require_once '0_validate_user_1.php';
 			$Mont_tot_2 = 0;
 			$Mont_tot_3 = 0;
 			//sumo los montos
-			if($ndata_1!=0){
+			if(count(array_filter($AFP_idDocPago))!=0){
 				for($x = 0; $x < $ndata_1; $x++){
 					$Mont_tot_1 = $Mont_tot_1 + $AFP_Monto[$x];
 				}
 			}
-			if($ndata_2!=0){
+			if(count(array_filter($SALUD_idDocPago))!=0){
 				for($x = 0; $x < $ndata_2; $x++){
 					$Mont_tot_2 = $Mont_tot_2 + $SALUD_Monto[$x];
 				}
 			}
-			if($ndata_3!=0){
+			if(count(array_filter($SEGURIDAD_idDocPago))!=0){
 				for($x = 0; $x < $ndata_3; $x++){
 					$Mont_tot_3 = $Mont_tot_3 + $SEGURIDAD_Monto[$x];
 				}

@@ -396,7 +396,7 @@ if(isset($arrGraficos)&&$arrGraficos!=false && !empty($arrGraficos) && $arrGrafi
 //Si no hay datos
 }else{
 	echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">';
-		alert_post_data(4,2,2, 'No existen datos para el grafico entre las '.$Grafico_HoraInicio.' y las '.$Grafico_HoraTermino);
+		alert_post_data(4,2,2,0, 'No existen datos para el grafico entre las '.$Grafico_HoraInicio.' y las '.$Grafico_HoraTermino);
 	echo '</div>';
 }
 

@@ -168,7 +168,7 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<?php
 			$Alert_Text = 'Descargue el archivo en Formato MP4.';
-			alert_post_data(1,1,1, $Alert_Text);
+			alert_post_data(1,1,1,0, $Alert_Text);
 			?>
 		</div>
 
@@ -184,7 +184,7 @@ if(isset($_GET['Ubication'])&&$_GET['Ubication']!=''&&isset($_GET['File'])&&$_GE
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 			<?php
 			$Alert_Text = 'En algunos casos el archivo transformado no reproduce sonido, puede descargar el archivo original y reproducirlo con VLC Player.';
-			alert_post_data(4,1,1, $Alert_Text);
+			alert_post_data(4,1,1,0, $Alert_Text);
 			?>
 		</div>
 

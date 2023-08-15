@@ -42,7 +42,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 	$Alert_Text  = 'Total de registros encontrados de '.$row_data['Nombre'].': '.Cantidades($row_data['Total'], 0);
 	$Alert_Text .= 'vaya a la transaccion <strong>Administrar - Administrar productos - Tag Datos Comerciales</strong> y';
 	$Alert_Text .= 'realice los cambios';
-	alert_post_data(1,1,1, $Alert_Text);
+	alert_post_data(1,1,1,0, $Alert_Text);
 
 	$total_files = ceil($row_data['Total']/5000);
 	for ($i = 1; $i <= $total_files; $i++) {
@@ -56,7 +56,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		$Alert_Text  = '<span class="pull-left">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>';
 		$Alert_Text .= '<a target="new" href="informe_telemetria_registro_sensores_7_to_excel.php?bla=bla'.$datosx.'" class="btn btn-sm btn-metis-2 pull-right "><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>';
 		$Alert_Text .= '<div class="clearfix"></div>';
-		alert_post_data(2,1,1, $Alert_Text);
+		alert_post_data(2,1,1,0, $Alert_Text);
 		  
 	}
 //Si no se slecciono se traen todos los equipos a los cuales tiene permiso
@@ -100,7 +100,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 			$s_max=$row_data['Total'];
 		}
 	}
-	alert_post_data(2,1,1, $Alert_Text);
+	alert_post_data(2,1,1,0, $Alert_Text);
 	
 	
 	/*****************************************/
@@ -115,7 +115,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 		$Alert_Text  = '<span class="pull-left">Exportar archivo '.$i.' registros del '.Cantidades($reg_ini, 0).' al '.Cantidades($reg_fin, 0).'</span>';
 		$Alert_Text .= '<a target="new" href="informe_telemetria_registro_sensores_7_to_excel.php?bla=bla'.$datosx.'" class="btn btn-sm btn-metis-2 pull-right "><i class="fa fa-file-excel-o" aria-hidden="true"></i> Exportar a Excel</a>';
 		$Alert_Text .= '<div class="clearfix"></div>';
-		alert_post_data(4,1,1, $Alert_Text);
+		alert_post_data(4,1,1,0, $Alert_Text);
 		  
 	}
 

@@ -86,7 +86,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 //información
 echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
 $Alert_Text  = 'Pone el cursor del mouse sobre el marcador  <img src="'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_blue.png" alt="marcador" width="33" height="44">  y arrastralo hasta la posicion correcta';
-alert_post_data(1,3,3, $Alert_Text);
+alert_post_data(1,3,3,0, $Alert_Text);
 echo '</div>';
 
 ?>
@@ -104,7 +104,7 @@ echo '</div>';
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
 						$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
-						alert_post_data(4,2,2, $Alert_Text);
+						alert_post_data(4,2,2,0, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle'];
 					

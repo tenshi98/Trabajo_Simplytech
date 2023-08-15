@@ -498,7 +498,7 @@ if($valor_0!=0){
 		$Alert_Text  = 'Uno de los productos seleccionados no tiene un precio asignado,';
 		$Alert_Text .= 'vaya a la transaccion <strong>Administrar - Administrar productos - Tag Datos Comerciales</strong> y';
 		$Alert_Text .= 'realice los cambios';
-		alert_post_data(4,1,1, $Alert_Text);
+		alert_post_data(4,1,1,0, $Alert_Text);
 				
 	echo '
 	</div>

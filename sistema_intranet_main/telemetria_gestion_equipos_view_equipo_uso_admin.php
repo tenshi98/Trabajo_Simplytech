@@ -155,7 +155,7 @@ for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
 							<div style="margin-top:15px;">
 								<?php
 								$Alert_Text  = 'No existen sensores configurados para la supervision';
-								alert_post_data(2,1,1, $Alert_Text);
+								alert_post_data(2,1,1,0, $Alert_Text);
 								?>
 							</div>
 						<?php } ?>

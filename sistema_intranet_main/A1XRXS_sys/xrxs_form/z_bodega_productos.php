@@ -536,7 +536,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			if(isset($idProducto)){  $ndata_1 = count($idProducto);  }else{$ndata_1 = 0;}
 			//generacion de errores
-			if($ndata_1==0) {
+			if(count(array_filter($idProducto))==0) {
 				$error['ndata_3'] = 'error/No hay Productos agregados';
 			}else{
 				$n_repetidos = 0;
@@ -565,12 +565,15 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					$_SESSION['productos_ing_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
-					$_SESSION['productos_ing_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
-					$_SESSION['productos_ing_productos'][$idProducto[$j1]]['ValorIngreso']  = $ValorTotal[$j1]/$Number[$j1];
-					$_SESSION['productos_ing_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
-					$_SESSION['productos_ing_productos'][$idProducto[$j1]]['Nombre']        = $arrProd['Prod'][$idProducto[$j1]]['Nombre'];
-					$_SESSION['productos_ing_productos'][$idProducto[$j1]]['Unimed']        = $arrProd['Prod'][$idProducto[$j1]]['Unimed'];
+					//verifico si existe dato
+					if(isset($idProducto[$j1])&&$idProducto[$j1]!=''){
+						$_SESSION['productos_ing_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
+						$_SESSION['productos_ing_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
+						$_SESSION['productos_ing_productos'][$idProducto[$j1]]['ValorIngreso']  = $ValorTotal[$j1]/$Number[$j1];
+						$_SESSION['productos_ing_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
+						$_SESSION['productos_ing_productos'][$idProducto[$j1]]['Nombre']        = $arrProd['Prod'][$idProducto[$j1]]['Nombre'];
+						$_SESSION['productos_ing_productos'][$idProducto[$j1]]['Unimed']        = $arrProd['Prod'][$idProducto[$j1]]['Unimed'];
+					}
 				}
 
 				header( 'Location: '.$location.'&view=true' );
@@ -939,7 +942,7 @@ require_once '0_validate_user_1.php';
 				$ndata_1 = db_select_nrows (false, 'idOcompra', 'ocompra_listado', '', "idOcompra='".$idOcompra."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
-			if($ndata_1==0) {$error['ndata_1'] = 'error/No existen Ordenes de Compra con ese numero';}
+			if(count(array_filter($idProducto))==0) {$error['ndata_1'] = 'error/No existen Ordenes de Compra con ese numero';}
 			//Si la OC existe se verifica si tiene productos para asignar
 			if($ndata_1!=0) {
 				$ndata_2 = db_select_nrows (false, 'idOcompra', 'ocompra_listado_existencias_productos', '', "idOcompra='".$idOcompra."' AND Cantidad > cant_ingresada", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1804,7 +1807,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			if(isset($idProducto)){  $ndata_1 = count($idProducto);  }else{$ndata_1 = 0;}
 			//generacion de errores
-			if($ndata_1==0) {
+			if(count(array_filter($idProducto))==0) {
 				$error['ndata_3'] = 'error/No hay productos agregados';
 			}else{
 				$n_repetidos   = 0;
@@ -1855,12 +1858,15 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					$_SESSION['productos_egr_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
-					$_SESSION['productos_egr_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
-					$_SESSION['productos_egr_productos'][$idProducto[$j1]]['ValorEgreso']   = $ValorTotal[$j1]/$Number[$j1];
-					$_SESSION['productos_egr_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
-					$_SESSION['productos_egr_productos'][$idProducto[$j1]]['Nombre']        = $ProductoNombre[$j1];
-					$_SESSION['productos_egr_productos'][$idProducto[$j1]]['Unimed']        = $ProductoUnimed[$j1];
+					//verifico si existe dato
+					if(isset($idProducto[$j1])&&$idProducto[$j1]!=''){
+						$_SESSION['productos_egr_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
+						$_SESSION['productos_egr_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
+						$_SESSION['productos_egr_productos'][$idProducto[$j1]]['ValorEgreso']   = $ValorTotal[$j1]/$Number[$j1];
+						$_SESSION['productos_egr_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
+						$_SESSION['productos_egr_productos'][$idProducto[$j1]]['Nombre']        = $ProductoNombre[$j1];
+						$_SESSION['productos_egr_productos'][$idProducto[$j1]]['Unimed']        = $ProductoUnimed[$j1];
+					}
 				}
 
 				header( 'Location: '.$location.'&view=true' );
@@ -2655,7 +2661,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			if(isset($idProducto)){  $ndata_1 = count($idProducto);  }else{$ndata_1 = 0;}
 			//generacion de errores
-			if($ndata_1==0) {
+			if(count(array_filter($idProducto))==0) {
 				$error['ndata_3'] = 'error/No hay productos agregados';
 			}else{
 				$n_repetidos   = 0;
@@ -2708,12 +2714,15 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					$_SESSION['productos_gasto_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
-					$_SESSION['productos_gasto_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
-					$_SESSION['productos_gasto_productos'][$idProducto[$j1]]['ValorEgreso']   = $ValorIngreso[$j1];
-					$_SESSION['productos_gasto_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorIngreso[$j1]*$Number[$j1];
-					$_SESSION['productos_gasto_productos'][$idProducto[$j1]]['Nombre']        = $ProductoNombre[$j1];
-					$_SESSION['productos_gasto_productos'][$idProducto[$j1]]['Unimed']        = $ProductoUnimed[$j1];
+					//verifico si existe dato
+					if(isset($idProducto[$j1])&&$idProducto[$j1]!=''){
+						$_SESSION['productos_gasto_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
+						$_SESSION['productos_gasto_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
+						$_SESSION['productos_gasto_productos'][$idProducto[$j1]]['ValorEgreso']   = $ValorIngreso[$j1];
+						$_SESSION['productos_gasto_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorIngreso[$j1]*$Number[$j1];
+						$_SESSION['productos_gasto_productos'][$idProducto[$j1]]['Nombre']        = $ProductoNombre[$j1];
+						$_SESSION['productos_gasto_productos'][$idProducto[$j1]]['Unimed']        = $ProductoUnimed[$j1];
+					}
 				}
 
 				header( 'Location: '.$location.'&view=true' );
@@ -3323,7 +3332,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			if(isset($idProducto)){  $ndata_1 = count($idProducto);  }else{$ndata_1 = 0;}
 			//generacion de errores
-			if($ndata_1==0) {
+			if(count(array_filter($idProducto))==0) {
 				$error['ndata_3'] = 'error/No hay productos agregados';
 			}else{
 				$n_repetidos   = 0;
@@ -3376,12 +3385,15 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					$_SESSION['productos_traspaso_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
-					$_SESSION['productos_traspaso_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
-					$_SESSION['productos_traspaso_productos'][$idProducto[$j1]]['ValorEgreso']   = $ValorIngreso[$j1];
-					$_SESSION['productos_traspaso_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorIngreso[$j1]*$Number[$j1];
-					$_SESSION['productos_traspaso_productos'][$idProducto[$j1]]['Nombre']        = $ProductoNombre[$j1];
-					$_SESSION['productos_traspaso_productos'][$idProducto[$j1]]['Unimed']        = $ProductoUnimed[$j1];
+					//verifico si existe dato
+					if(isset($idProducto[$j1])&&$idProducto[$j1]!=''){
+						$_SESSION['productos_traspaso_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
+						$_SESSION['productos_traspaso_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
+						$_SESSION['productos_traspaso_productos'][$idProducto[$j1]]['ValorEgreso']   = $ValorIngreso[$j1];
+						$_SESSION['productos_traspaso_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorIngreso[$j1]*$Number[$j1];
+						$_SESSION['productos_traspaso_productos'][$idProducto[$j1]]['Nombre']        = $ProductoNombre[$j1];
+						$_SESSION['productos_traspaso_productos'][$idProducto[$j1]]['Unimed']        = $ProductoUnimed[$j1];
+					}
 				}
 
 				header( 'Location: '.$location.'&view=true' );
@@ -4536,7 +4548,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			if(isset($idProducto)){  $ndata_1 = count($idProducto);  }else{$ndata_1 = 0;}
 			//generacion de errores
-			if($ndata_1==0) {
+			if(count(array_filter($idProducto))==0) {
 				$error['ndata_3'] = 'error/No hay productos agregados';
 			}else{
 				$n_repetidos   = 0;
@@ -4589,12 +4601,15 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					$_SESSION['productos_traspasoempresa_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
-					$_SESSION['productos_traspasoempresa_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
-					$_SESSION['productos_traspasoempresa_productos'][$idProducto[$j1]]['ValorEgreso']   = $ValorIngreso[$j1];
-					$_SESSION['productos_traspasoempresa_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorIngreso[$j1]*$Number[$j1];
-					$_SESSION['productos_traspasoempresa_productos'][$idProducto[$j1]]['Nombre']        = $ProductoNombre[$j1];
-					$_SESSION['productos_traspasoempresa_productos'][$idProducto[$j1]]['Unimed']        = $ProductoUnimed[$j1];
+					//verifico si existe dato
+					if(isset($idProducto[$j1])&&$idProducto[$j1]!=''){
+						$_SESSION['productos_traspasoempresa_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
+						$_SESSION['productos_traspasoempresa_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
+						$_SESSION['productos_traspasoempresa_productos'][$idProducto[$j1]]['ValorEgreso']   = $ValorIngreso[$j1];
+						$_SESSION['productos_traspasoempresa_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorIngreso[$j1]*$Number[$j1];
+						$_SESSION['productos_traspasoempresa_productos'][$idProducto[$j1]]['Nombre']        = $ProductoNombre[$j1];
+						$_SESSION['productos_traspasoempresa_productos'][$idProducto[$j1]]['Unimed']        = $ProductoUnimed[$j1];
+					}
 				}
 
 				header( 'Location: '.$location.'&view=true' );
@@ -5126,7 +5141,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			if(isset($idProducto)){  $ndata_1 = count($idProducto);  }else{$ndata_1 = 0;}
 			//generacion de errores
-			if($ndata_1==0) {
+			if(count(array_filter($idProducto))==0) {
 				$error['ndata_3'] = 'error/No hay productos agregados';
 			}else{
 				$n_repetidos   = 0;
@@ -5179,12 +5194,15 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					$_SESSION['productos_traspasomanualempresa_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
-					$_SESSION['productos_traspasomanualempresa_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
-					$_SESSION['productos_traspasomanualempresa_productos'][$idProducto[$j1]]['ValorEgreso']   = $ValorIngreso[$j1];
-					$_SESSION['productos_traspasomanualempresa_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorIngreso[$j1]*$Number[$j1];
-					$_SESSION['productos_traspasomanualempresa_productos'][$idProducto[$j1]]['Nombre']        = $ProductoNombre[$j1];
-					$_SESSION['productos_traspasomanualempresa_productos'][$idProducto[$j1]]['Unimed']        = $ProductoUnimed[$j1];
+					//verifico si existe dato
+					if(isset($idProducto[$j1])&&$idProducto[$j1]!=''){
+						$_SESSION['productos_traspasomanualempresa_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
+						$_SESSION['productos_traspasomanualempresa_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
+						$_SESSION['productos_traspasomanualempresa_productos'][$idProducto[$j1]]['ValorEgreso']   = $ValorIngreso[$j1];
+						$_SESSION['productos_traspasomanualempresa_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorIngreso[$j1]*$Number[$j1];
+						$_SESSION['productos_traspasomanualempresa_productos'][$idProducto[$j1]]['Nombre']        = $ProductoNombre[$j1];
+						$_SESSION['productos_traspasomanualempresa_productos'][$idProducto[$j1]]['Unimed']        = $ProductoUnimed[$j1];
+					}
 				}
 
 				header( 'Location: '.$location.'&view=true' );
@@ -5737,7 +5755,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			if(isset($idProducto)){  $ndata_1 = count($idProducto);  }else{$ndata_1 = 0;}
 			//generacion de errores
-			if($ndata_1==0) {
+			if(count(array_filter($idProducto))==0) {
 				$error['ndata_3'] = 'error/No hay productos agregados';
 			}else{
 				$n_repetidos = 0;
@@ -5766,12 +5784,15 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					$_SESSION['productos_ing_manual_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
-					$_SESSION['productos_ing_manual_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
-					$_SESSION['productos_ing_manual_productos'][$idProducto[$j1]]['ValorIngreso']  = $ValorTotal[$j1]/$Number[$j1];
-					$_SESSION['productos_ing_manual_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
-					$_SESSION['productos_ing_manual_productos'][$idProducto[$j1]]['Nombre']        = $arrProd['Prod'][$idProducto[$j1]]['Nombre'];
-					$_SESSION['productos_ing_manual_productos'][$idProducto[$j1]]['Unimed']        = $arrProd['Prod'][$idProducto[$j1]]['Unimed'];
+					//verifico si existe dato
+					if(isset($idProducto[$j1])&&$idProducto[$j1]!=''){
+						$_SESSION['productos_ing_manual_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
+						$_SESSION['productos_ing_manual_productos'][$idProducto[$j1]]['Number']        = $Number[$j1];
+						$_SESSION['productos_ing_manual_productos'][$idProducto[$j1]]['ValorIngreso']  = $ValorTotal[$j1]/$Number[$j1];
+						$_SESSION['productos_ing_manual_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
+						$_SESSION['productos_ing_manual_productos'][$idProducto[$j1]]['Nombre']        = $arrProd['Prod'][$idProducto[$j1]]['Nombre'];
+						$_SESSION['productos_ing_manual_productos'][$idProducto[$j1]]['Unimed']        = $arrProd['Prod'][$idProducto[$j1]]['Unimed'];
+					}
 				}
 
 				header( 'Location: '.$location.'&view=true' );
@@ -6503,7 +6524,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			if(isset($idProducto)){  $ndata_1 = count($idProducto);  }else{$ndata_1 = 0;}
 			//generacion de errores
-			if($ndata_1==0) {
+			if(count(array_filter($idProducto))==0) {
 				$error['ndata_3'] = 'error/No hay productos agregados';
 			}else{
 				$n_repetidos = 0;
@@ -6532,12 +6553,15 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
-					$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['Cantidad_ing']  = $Cantidad_ing[$j1];
-					$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['ValorIngreso']  = $ValorTotal[$j1]/$Cantidad_ing[$j1];
-					$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
-					$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['Nombre']        = $arrProd['Prod'][$idProducto[$j1]]['Nombre'];
-					$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['Unimed']        = $arrProd['Prod'][$idProducto[$j1]]['Unimed'];
+					//verifico si existe dato
+					if(isset($idProducto[$j1])&&$idProducto[$j1]!=''){
+						$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
+						$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['Cantidad_ing']  = $Cantidad_ing[$j1];
+						$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['ValorIngreso']  = $ValorTotal[$j1]/$Cantidad_ing[$j1];
+						$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
+						$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['Nombre']        = $arrProd['Prod'][$idProducto[$j1]]['Nombre'];
+						$_SESSION['productos_ing_nd_productos'][$idProducto[$j1]]['Unimed']        = $arrProd['Prod'][$idProducto[$j1]]['Unimed'];
+					}
 				}
 
 				header( 'Location: '.$location.'&view=true' );
@@ -7377,7 +7401,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			if(isset($idProducto)){  $ndata_1 = count($idProducto);  }else{$ndata_1 = 0;}
 			//generacion de errores
-			if($ndata_1==0) {
+			if(count(array_filter($idProducto))==0) {
 				$error['ndata_3'] = 'error/No hay Productos agregados';
 			}else{
 				$n_repetidos = 0;
@@ -7406,12 +7430,15 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
-					$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['Cantidad_eg']   = $Cantidad_eg[$j1];
-					$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['ValorIngreso']  = $ValorTotal[$j1]/$Cantidad_eg[$j1];
-					$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
-					$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['Nombre']        = $arrProd['Prod'][$idProducto[$j1]]['Nombre'];
-					$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['Unimed']        = $arrProd['Prod'][$idProducto[$j1]]['Unimed'];
+					//verifico si existe dato
+					if(isset($idProducto[$j1])&&$idProducto[$j1]!=''){
+						$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
+						$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['Cantidad_eg']   = $Cantidad_eg[$j1];
+						$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['ValorIngreso']  = $ValorTotal[$j1]/$Cantidad_eg[$j1];
+						$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
+						$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['Nombre']        = $arrProd['Prod'][$idProducto[$j1]]['Nombre'];
+						$_SESSION['productos_ing_nc_productos'][$idProducto[$j1]]['Unimed']        = $arrProd['Prod'][$idProducto[$j1]]['Unimed'];
+					}
 				}
 
 				header( 'Location: '.$location.'&view=true' );
@@ -8252,7 +8279,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			if(isset($idProducto)){  $ndata_1 = count($idProducto);  }else{$ndata_1 = 0;}
 			//generacion de errores
-			if($ndata_1==0) {
+			if(count(array_filter($idProducto))==0) {
 				$error['ndata_3'] = 'error/No hay Productos agregados';
 			}else{
 				$n_repetidos = 0;
@@ -8281,12 +8308,15 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					$_SESSION['productos_egr_nd_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
-					$_SESSION['productos_egr_nd_productos'][$idProducto[$j1]]['Cantidad_eg']   = $Cantidad_eg[$j1];
-					$_SESSION['productos_egr_nd_productos'][$idProducto[$j1]]['ValorIngreso']  = $ValorTotal[$j1]/$Cantidad_eg[$j1];
-					$_SESSION['productos_egr_nd_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
-					$_SESSION['productos_egr_nd_productos'][$idProducto[$j1]]['Nombre']        = $arrProd['Prod'][$idProducto[$j1]]['Nombre'];
-					$_SESSION['productos_egr_nd_productos'][$idProducto[$j1]]['Unimed']        = $arrProd['Prod'][$idProducto[$j1]]['Unimed'];
+					//verifico si existe dato
+					if(isset($idProducto[$j1])&&$idProducto[$j1]!=''){
+						$_SESSION['productos_egr_nd_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
+						$_SESSION['productos_egr_nd_productos'][$idProducto[$j1]]['Cantidad_eg']   = $Cantidad_eg[$j1];
+						$_SESSION['productos_egr_nd_productos'][$idProducto[$j1]]['ValorIngreso']  = $ValorTotal[$j1]/$Cantidad_eg[$j1];
+						$_SESSION['productos_egr_nd_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
+						$_SESSION['productos_egr_nd_productos'][$idProducto[$j1]]['Nombre']        = $arrProd['Prod'][$idProducto[$j1]]['Nombre'];
+						$_SESSION['productos_egr_nd_productos'][$idProducto[$j1]]['Unimed']        = $arrProd['Prod'][$idProducto[$j1]]['Unimed'];
+					}
 				}
 
 				header( 'Location: '.$location.'&view=true' );
@@ -9127,7 +9157,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			if(isset($idProducto)){  $ndata_1 = count($idProducto);  }else{$ndata_1 = 0;}
 			//generacion de errores
-			if($ndata_1==0) {
+			if(count(array_filter($idProducto))==0) {
 				$error['ndata_3'] = 'error/No hay Productos agregados';
 			}else{
 				$n_repetidos = 0;
@@ -9156,12 +9186,15 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					$_SESSION['productos_egr_nc_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
-					$_SESSION['productos_egr_nc_productos'][$idProducto[$j1]]['Cantidad_ing']  = $Cantidad_ing[$j1];
-					$_SESSION['productos_egr_nc_productos'][$idProducto[$j1]]['ValorIngreso']  = $ValorTotal[$j1]/$Cantidad_ing[$j1];
-					$_SESSION['productos_egr_nc_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
-					$_SESSION['productos_egr_nc_productos'][$idProducto[$j1]]['Nombre']        = $arrProd['Prod'][$idProducto[$j1]]['Nombre'];
-					$_SESSION['productos_egr_nc_productos'][$idProducto[$j1]]['Unimed']        = $arrProd['Prod'][$idProducto[$j1]]['Unimed'];
+					//verifico si existe dato
+					if(isset($idProducto[$j1])&&$idProducto[$j1]!=''){
+						$_SESSION['productos_egr_nc_productos'][$idProducto[$j1]]['idProducto']    = $idProducto[$j1];
+						$_SESSION['productos_egr_nc_productos'][$idProducto[$j1]]['Cantidad_ing']  = $Cantidad_ing[$j1];
+						$_SESSION['productos_egr_nc_productos'][$idProducto[$j1]]['ValorIngreso']  = $ValorTotal[$j1]/$Cantidad_ing[$j1];
+						$_SESSION['productos_egr_nc_productos'][$idProducto[$j1]]['ValorTotal']    = $ValorTotal[$j1];
+						$_SESSION['productos_egr_nc_productos'][$idProducto[$j1]]['Nombre']        = $arrProd['Prod'][$idProducto[$j1]]['Nombre'];
+						$_SESSION['productos_egr_nc_productos'][$idProducto[$j1]]['Unimed']        = $arrProd['Prod'][$idProducto[$j1]]['Unimed'];
+					}
 				}
 
 				header( 'Location: '.$location.'&view=true' );

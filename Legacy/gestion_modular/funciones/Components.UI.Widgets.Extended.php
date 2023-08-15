@@ -993,7 +993,7 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 
 	//Si no existe una ID se utiliza una por defecto
 	if(!isset($IDGoogle) OR $IDGoogle==''){
-		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+		return alert_post_data(4,1,1,0, 'No ha ingresado Una API de Google Maps');
 	}else{
 
 		/*******************************************************************************/
@@ -3221,7 +3221,7 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 
 	//Si no existe una ID se utiliza una por defecto
 	if(!isset($IDGoogle) OR $IDGoogle==''){
-		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+		return alert_post_data(4,1,1,0, 'No ha ingresado Una API de Google Maps');
 	}else{
 
 		//variables
@@ -3672,7 +3672,7 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 
 	//Si no existe una ID se utiliza una por defecto
 	if(!isset($IDGoogle) OR $IDGoogle==''){
-		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+		return alert_post_data(4,1,1,0, 'No ha ingresado Una API de Google Maps');
 	}else{
 
 		//variables
@@ -4097,7 +4097,7 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 
 	//Si no existe una ID se utiliza una por defecto
 	if(!isset($IDGoogle) OR $IDGoogle==''){
-		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+		return alert_post_data(4,1,1,0, 'No ha ingresado Una API de Google Maps');
 	}else{
 
 		//variables
@@ -4555,7 +4555,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 
 	//Si no existe una ID se utiliza una por defecto
 	if(!isset($IDGoogle) OR $IDGoogle==''){
-		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+		return alert_post_data(4,1,1,0, 'No ha ingresado Una API de Google Maps');
 	}else{
 
 		//variables
@@ -5209,7 +5209,7 @@ function widget_Gestion_Flota_CrossTech_Transportes_AB($titulo, $idSistema, $IDG
 
 	//Si no existe una ID se utiliza una por defecto
 	if(!isset($IDGoogle) OR $IDGoogle==''){
-		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+		return alert_post_data(4,1,1,0, 'No ha ingresado Una API de Google Maps');
 	}else{
 
 		//variables
@@ -6241,7 +6241,7 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 
 	//Si no existe una ID se utiliza una por defecto
 	if(!isset($IDGoogle) OR $IDGoogle==''){
-		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+		return alert_post_data(4,1,1,0, 'No ha ingresado Una API de Google Maps');
 	}else{
 
 		//variables
@@ -6715,7 +6715,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 
 	//Si no existe una ID se utiliza una por defecto
 	if(!isset($IDGoogle) OR $IDGoogle==''){
-		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+		return alert_post_data(4,1,1,0, 'No ha ingresado Una API de Google Maps');
 	}else{
 
 		//variables
@@ -7534,7 +7534,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 
 	//Si no existe una ID se utiliza una por defecto
 	if(!isset($IDGoogle) OR $IDGoogle==''){
-		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+		return alert_post_data(4,1,1,0, 'No ha ingresado Una API de Google Maps');
 	}else{
 
 		//variables
@@ -8235,22 +8235,22 @@ function widget_Ficha_1($bg_color, $icon, $porcentaje,
 	$requerido = array(1, 2);
 	//verifico si el dato ingresado existe dentro de las opciones
 	if (!in_array($new_tab, $requerido)) {
-		alert_post_data(4,1,1, 'La configuracion $new_tab ('.$new_tab.') no esta dentro de las opciones');
+		alert_post_data(4,1,1,0, 'La configuracion $new_tab ('.$new_tab.') no esta dentro de las opciones');
 		$errorn++;
 	}
 	//verifico si el dato ingresado existe dentro de las opciones
 	if (!in_array($iframe, $requerido)) {
-		alert_post_data(4,1,1, 'La configuracion $iframe ('.$iframe.') no esta dentro de las opciones');
+		alert_post_data(4,1,1,0, 'La configuracion $iframe ('.$iframe.') no esta dentro de las opciones');
 		$errorn++;
 	}
 	//se verifica si es un numero lo que se recibe
 	if (!validarNumero($porcentaje)&&$porcentaje!=''){
-		alert_post_data(4,1,1, 'El valor ingresado en $porcentaje ('.$porcentaje.') no es un numero');
+		alert_post_data(4,1,1,0, 'El valor ingresado en $porcentaje ('.$porcentaje.') no es un numero');
 		$errorn++;
 	}
 	//Verifica si el numero recibido es un entero
 	if (!validaEntero($porcentaje)&&$porcentaje!=''){
-		alert_post_data(4,1,1, 'El valor ingresado en $porcentaje ('.$porcentaje.') no es un numero entero');
+		alert_post_data(4,1,1,0, 'El valor ingresado en $porcentaje ('.$porcentaje.') no es un numero entero');
 		$errorn++;
 	}
 	/********************************************************/
@@ -8312,12 +8312,12 @@ function widget_Ficha_2($bg_color, $icon, $number, $width,
 	$requerido = array(1, 2);
 	//verifico si el dato ingresado existe dentro de las opciones
 	if (!in_array($new_tab, $requerido)) {
-		alert_post_data(4,1,1, 'La configuracion $new_tab ('.$new_tab.') no esta dentro de las opciones');
+		alert_post_data(4,1,1,0, 'La configuracion $new_tab ('.$new_tab.') no esta dentro de las opciones');
 		$errorn++;
 	}
 	//verifico si el dato ingresado existe dentro de las opciones
 	if (!in_array($iframe, $requerido)) {
-		alert_post_data(4,1,1, 'La configuracion $iframe ('.$iframe.') no esta dentro de las opciones');
+		alert_post_data(4,1,1,0, 'La configuracion $iframe ('.$iframe.') no esta dentro de las opciones');
 		$errorn++;
 	}
 	/********************************************************/
@@ -8379,22 +8379,22 @@ function widget_Ficha_3($bg_color, $icon, $number,
 	$requerido = array(1, 2);
 	//verifico si el dato ingresado existe dentro de las opciones
 	if (!in_array($new_tab, $requerido)) {
-		alert_post_data(4,1,1, 'La configuracion $new_tab ('.$new_tab.') no esta dentro de las opciones');
+		alert_post_data(4,1,1,0, 'La configuracion $new_tab ('.$new_tab.') no esta dentro de las opciones');
 		$errorn++;
 	}
 	//verifico si el dato ingresado existe dentro de las opciones
 	if (!in_array($iframe, $requerido)) {
-		alert_post_data(4,1,1, 'La configuracion $iframe ('.$iframe.') no esta dentro de las opciones');
+		alert_post_data(4,1,1,0, 'La configuracion $iframe ('.$iframe.') no esta dentro de las opciones');
 		$errorn++;
 	}
 	//se verifica si es un numero lo que se recibe
 	if (!validarNumero($number)&&$number!=''){
-		alert_post_data(4,1,1, 'El valor ingresado en $number ('.$number.') no es un numero');
+		alert_post_data(4,1,1,0, 'El valor ingresado en $number ('.$number.') no es un numero');
 		$errorn++;
 	}
 	//Verifica si el numero recibido es un entero
 	if (!validaEntero($number)&&$number!=''){
-		alert_post_data(4,1,1, 'El valor ingresado en $number ('.$number.') no es un numero entero');
+		alert_post_data(4,1,1,0, 'El valor ingresado en $number ('.$number.') no es un numero entero');
 		$errorn++;
 	}
 	/********************************************************/
@@ -8768,12 +8768,12 @@ function widget_title($bg_color, $icon, $porcentaje, $titulo, $subtitulo_1, $sub
 	$errorn = 0;
 	//se verifica si es un numero lo que se recibe
 	if (!validarNumero($porcentaje)&&$porcentaje!=''){
-		alert_post_data(4,1,1, 'El valor ingresado en $porcentaje ('.$porcentaje.') no es un numero');
+		alert_post_data(4,1,1,0, 'El valor ingresado en $porcentaje ('.$porcentaje.') no es un numero');
 		$errorn++;
 	}
 	//Verifica si el numero recibido es un entero
 	if (!validaEntero($porcentaje)&&$porcentaje!=''){
-		alert_post_data(4,1,1, 'El valor ingresado en $porcentaje ('.$porcentaje.') no es un numero entero');
+		alert_post_data(4,1,1,0, 'El valor ingresado en $porcentaje ('.$porcentaje.') no es un numero entero');
 		$errorn++;
 	}
 	/********************************************************/
@@ -8807,12 +8807,12 @@ function widget_titleIMG($bg_color, $img, $porcentaje, $titulo, $subtitulo_1, $s
 	$errorn = 0;
 	//se verifica si es un numero lo que se recibe
 	if (!validarNumero($porcentaje)&&$porcentaje!=''){
-		alert_post_data(4,1,1, 'El valor ingresado en $porcentaje ('.$porcentaje.') no es un numero');
+		alert_post_data(4,1,1,0, 'El valor ingresado en $porcentaje ('.$porcentaje.') no es un numero');
 		$errorn++;
 	}
 	//Verifica si el numero recibido es un entero
 	if (!validaEntero($porcentaje)&&$porcentaje!=''){
-		alert_post_data(4,1,1, 'El valor ingresado en $porcentaje ('.$porcentaje.') no es un numero entero');
+		alert_post_data(4,1,1,0, 'El valor ingresado en $porcentaje ('.$porcentaje.') no es un numero entero');
 		$errorn++;
 	}
 	/********************************************************/
@@ -9471,7 +9471,7 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 		return $widget;
 	}else{
 
-		return alert_post_data(4,1,1, 'No hay equipos de este sistema asignados a este perfil');
+		return alert_post_data(4,1,1,0, 'No hay equipos de este sistema asignados a este perfil');
 	}
 
 }
@@ -9496,7 +9496,7 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 
 	//Si no existe una ID se utiliza una por defecto
 	if(!isset($IDGoogle) OR $IDGoogle==''){
-		return alert_post_data(4,1,1, 'No ha ingresado Una API de Google Maps');
+		return alert_post_data(4,1,1,0, 'No ha ingresado Una API de Google Maps');
 	}else{
 
 		//variables

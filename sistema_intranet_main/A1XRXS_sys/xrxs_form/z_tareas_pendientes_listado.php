@@ -300,7 +300,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			if(isset($idResponsable)){ $ndata_1 = count($idResponsable);          }else{$ndata_1 = 0;}
 			//generacion de errores
-			if($ndata_1==0) {$error['ndata_1'] = 'error/No hay responsables agregados';}
+			if(count(array_filter($idResponsable))==0) {$error['ndata_1'] = 'error/No hay responsables agregados';}
 			/*******************************************************************/
 			//Consulto
 			/**********************************************/
@@ -331,9 +331,12 @@ require_once '0_validate_user_1.php';
 				/**********************************************/
 				//Recorro los cuarteles
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					//Para mostrar en la creación
-					$_SESSION['tareas_responsables'][$idResponsable[$j1]]['idResponsable'] = $idResponsable[$j1];
-					$_SESSION['tareas_responsables'][$idResponsable[$j1]]['Responsables']  = $arrUsers[$idResponsable[$j1]]['Nombre'];
+					//valido existencia de datos
+					if(isset($idResponsable[$j1])&&$idResponsable[$j1]!=''){
+						//Para mostrar en la creación
+						$_SESSION['tareas_responsables'][$idResponsable[$j1]]['idResponsable'] = $idResponsable[$j1];
+						$_SESSION['tareas_responsables'][$idResponsable[$j1]]['Responsables']  = $arrUsers[$idResponsable[$j1]]['Nombre'];
+					}
 				}
 
 				//se redirije
@@ -381,13 +384,13 @@ require_once '0_validate_user_1.php';
 			if(isset($idResponsable)){ $ndata_1 = count($idResponsable);   }else{$ndata_1 = 0;}
 			if(isset($Observacion)){   $ndata_2 = count($Observacion);     }else{$ndata_2 = 0;}
 			//generacion de errores
-			if($ndata_1==0) {$error['ndata_1'] = 'error/No hay responsables agregados';}
-			if($ndata_2==0) {$error['ndata_2'] = 'error/No hay tareas asignadas';}
+			if(count(array_filter($idResponsable))==0) { $error['ndata_1'] = 'error/No hay responsables agregados';}
+			if(count(array_filter($Observacion))==0) {   $error['ndata_2'] = 'error/No hay tareas asignadas';}
 			/*******************************************************************/
 			//Consulto
 			/**********************************************/
 			//Se trae un listado con los usuarios
-			if($ndata_1!=0) {
+			if(count(array_filter($idResponsable))!=0) {
 				$arrUsuarios = array();
 				if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 					$arrUsuarios = db_select_array (false, 'idUsuario, Nombre', 'usuarios_listado', '', 'usuarios_listado.idEstado=1', 0, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -427,13 +430,16 @@ require_once '0_validate_user_1.php';
 				/**********************************************/
 				//Recorro los cuarteles
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
-					//sumo 1
-					$idInterno = $idInterno+1;
-					//Para mostrar en la creación
-					$_SESSION['tareas_tareas'][$idInterno]['idInterno']     = $idInterno;
-					$_SESSION['tareas_tareas'][$idInterno]['idResponsable'] = $idResponsable[$j1];
-					$_SESSION['tareas_tareas'][$idInterno]['Responsables']  = $arrUsers[$idResponsable[$j1]]['Nombre'];
-					$_SESSION['tareas_tareas'][$idInterno]['Observacion']   = $Observacion[$j1];
+					//valido existencia de datos
+					if(isset($idResponsable[$j1])&&$idResponsable[$j1]!=''){
+						//sumo 1
+						$idInterno = $idInterno+1;
+						//Para mostrar en la creación
+						$_SESSION['tareas_tareas'][$idInterno]['idInterno']     = $idInterno;
+						$_SESSION['tareas_tareas'][$idInterno]['idResponsable'] = $idResponsable[$j1];
+						$_SESSION['tareas_tareas'][$idInterno]['Responsables']  = $arrUsers[$idResponsable[$j1]]['Nombre'];
+						$_SESSION['tareas_tareas'][$idInterno]['Observacion']   = $Observacion[$j1];
+					}
 				}
 
 				//se redirije
@@ -930,20 +936,22 @@ require_once '0_validate_user_1.php';
 			//variables
 			if(isset($idResponsable)){ $ndata_1 = count($idResponsable);}else{$ndata_1 = 0;}
 			//generacion de errores
-			if($ndata_1==0) {$error['ndata_1'] = 'error/No hay responsables agregados';}
+			if(count(array_filter($idResponsable))==0) {$error['ndata_1'] = 'error/No hay responsables agregados';}
 			/*******************************************************************/
 			//Consulto
-			/**********************************************/
-			for($j1 = 0; $j1 < $ndata_1; $j1++){
-				/*******************************************************************/
-				//variables
-				$ndata_2 = 0;
-				//Se verifica si el dato existe
-				if(isset($idTareas)&&isset($idResponsable[$j1])){
-					$ndata_2 = db_select_nrows (false, 'idTareas', 'tareas_pendientes_listado_responsable', '', "idTareas='".$idTareas."' AND idUsuario='".$idResponsable[$j1]."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+			if(count(array_filter($idResponsable))!=0) {
+				/**********************************************/
+				for($j1 = 0; $j1 < $ndata_1; $j1++){
+					/*******************************************************************/
+					//variables
+					$ndata_2 = 0;
+					//Se verifica si el dato existe
+					if(isset($idTareas)&&isset($idResponsable[$j1])){
+						$ndata_2 = db_select_nrows (false, 'idTareas', 'tareas_pendientes_listado_responsable', '', "idTareas='".$idTareas."' AND idUsuario='".$idResponsable[$j1]."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					}
+					//generacion de errores
+					if($ndata_2 > 0) {$error['ndata_2_'.$j1] = 'error/Uno de los Responsables ya existe en la tarea';}
 				}
-				//generacion de errores
-				if($ndata_2 > 0) {$error['ndata_2_'.$j1] = 'error/Uno de los Responsables ya existe en la tarea';}
 			}
 
 			//Si no hay errores ejecuto el codigo
@@ -1019,8 +1027,8 @@ require_once '0_validate_user_1.php';
 			if(isset($idResponsable)){ $ndata_1 = count($idResponsable);   }else{$ndata_1 = 0;}
 			if(isset($Observacion)){   $ndata_2 = count($Observacion);     }else{$ndata_2 = 0;}
 			//generacion de errores
-			if($ndata_1==0) {$error['ndata_1'] = 'error/No hay responsables agregados';}
-			if($ndata_2==0) {$error['ndata_2'] = 'error/No hay tareas asignadas';}
+			if(count(array_filter($idResponsable))==0) { $error['ndata_1'] = 'error/No hay responsables agregados';}
+			if(count(array_filter($Observacion))==0) {   $error['ndata_2'] = 'error/No hay tareas asignadas';}
 
 			//Si no hay errores ejecuto el codigo
 			if(empty($error)){

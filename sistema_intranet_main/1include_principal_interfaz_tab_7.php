@@ -67,7 +67,7 @@ foreach ($arrSolicitud as $sol) {
 			<?php
 				$Alert_Text  = 'Descargar APP SmartFlux ';
 				$Alert_Text .= '<a href="1download.php?dir='.simpleEncode('app', fecha_actual()).'&file='.simpleEncode('smartflux.apk', fecha_actual()).'" title="Descargar APP" class="btn btn-primary btn-sm" ><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>';
-				alert_post_data(2,1,1,  $Alert_Text);
+				alert_post_data(2,1,1,0,  $Alert_Text);
 			?>
 		</div>
 

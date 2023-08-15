@@ -148,7 +148,7 @@ array_push( $arrCamaras,$row );
 				}else{
 					echo '<div class="col-xs-12" style="margin-top:15px;">';
 						$Alert_Text = 'La camara compartida del canal '.$SIS_Config_Chanel.' no esta completamente configurada';
-						alert_post_data(4,3,1, $Alert_Text);
+						alert_post_data(4,3,1,0, $Alert_Text);
 					echo '</div>';
 				}
 			}

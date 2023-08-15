@@ -88,10 +88,10 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 				//facebook
 				$Alert_Text  = 'Obtener el ID de una página de Facebook';
 				$Alert_Text .= '<a target="_blank" rel="noopener noreferrer" href="https://www.bufa.es/id-pagina-facebook/" title="Obtener ID" class="btn btn-primary btn-sm pull-right margin_width" ><i class="fa fa-facebook" aria-hidden="true"></i> Obtener ID</a>';
-				alert_post_data(2,1,2, $Alert_Text);
+				alert_post_data(2,1,2,0, $Alert_Text);
 				//Linkedin
 				$Alert_Text  = 'Para obtener el <strong>Identificador</strong> de Linkedin, debes iniciar sesion, en el tab donde dice <strong>YO</strong> presionarlo y luego presionar el boton <strong> Ver Perfil</strong>, una vez dentro del perfil ver la barra de direcciones del navegador y copiar lo que viene despues de <strong>https://www.linkedin.com/in/</strong> sin copiar los <strong>/</strong>';
-				alert_post_data(2,1,2, $Alert_Text);
+				alert_post_data(2,1,2,0, $Alert_Text);
 			
 			echo '</div>';
 			?>

@@ -223,7 +223,7 @@ if($arrProducto!=false && !empty($arrProducto) && $arrProducto!=''){ ?>
 <?php }else{
 	echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:15px;">';
 		$Alert_Text  = 'No existen datos';
-		alert_post_data(4,1,1, $Alert_Text);
+		alert_post_data(4,1,1,0, $Alert_Text);
 	echo '</div>';
 } ?>
 <?php

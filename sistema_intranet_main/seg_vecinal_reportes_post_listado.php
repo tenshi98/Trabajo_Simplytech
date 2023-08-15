@@ -346,7 +346,7 @@ array_push( $arrReportes,$row );
 							echo mapa_from_gps($rowdata['GeoLatitud'], $rowdata['GeoLongitud'], 'Evento', 'Calle', $direccion, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 19, 2);
 						}else{
 							$Alert_Text = 'No tiene una dirección definida';
-							alert_post_data(4,2,2, $Alert_Text);
+							alert_post_data(4,2,2,0, $Alert_Text);
 						} ?>
 					</div>
 				</div>

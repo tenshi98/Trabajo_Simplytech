@@ -513,7 +513,7 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 						//Si no existe una ID se utiliza una por defecto
 						if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
 							$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
-							alert_post_data(4,2,2, $Alert_Text);
+							alert_post_data(4,2,2,0, $Alert_Text);
 						}else{ ?>
 
 							<div id="map_canvas_x" style="width: 100%; height: 550px;"></div>

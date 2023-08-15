@@ -12,7 +12,7 @@ echo '
 				echo '
 				<div class="col-xs-12" style="margin-top:5px;">';
 					$Alert_Text = 'Mantencion programada para el '.fecha_estandar($Mantenciones['Fecha']).' desde '.$Mantenciones['Hora_ini'].' hasta las '.$Mantenciones['Hora_fin'].' hrs';
-					alert_post_data(2,1,1, $Alert_Text);
+					alert_post_data(2,1,1,0, $Alert_Text);
 				echo '
 				</div>
 				<div class="clearfix" ></div>';

@@ -311,7 +311,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //cuadro para descargar
 $Alert_Text  = 'Descargar Plantilla';
 $Alert_Text .= '<a href="1download.php?dir='.simpleEncode('templates', fecha_actual()).'&file='.simpleEncode('carga_medidores_plantilla.xlsx', fecha_actual()).'" title="Descargar Plantilla" class="btn btn-primary btn-sm pull-right" ><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>';
-alert_post_data(2,1,2, $Alert_Text);
+alert_post_data(2,1,2,0, $Alert_Text);
 
 ?>
 

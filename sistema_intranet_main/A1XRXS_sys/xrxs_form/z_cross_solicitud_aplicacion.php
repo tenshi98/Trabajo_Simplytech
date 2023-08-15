@@ -330,15 +330,15 @@ require_once '0_validate_user_1.php';
 			if(isset($idProducto)){      $ndata_3 = count($idProducto);      }else{$ndata_3 = 0;}
 			if(isset($idMatSeguridad)){  $ndata_4 = count($idMatSeguridad);  }else{$ndata_4 = 0;}
 			//generacion de errores
-			if($ndata_1==0) {$error['ndata_1'] = 'error/No hay cuarteles agregados';}
-			if($ndata_2==0) {$error['ndata_2'] = 'error/No hay tractores agregados';}
-			if($ndata_3==0) {$error['ndata_3'] = 'error/No hay productos quimicos agregados';}
-			if($ndata_4==0) {$error['ndata_4'] = 'error/No hay materiales de seguridad agregados';}
+			if(count(array_filter($idZona))==0) {          $error['ndata_1'] = 'error/No hay cuarteles agregados';}
+			if(count(array_filter($idVehiculo))==0) {      $error['ndata_2'] = 'error/No hay tractores agregados';}
+			if(count(array_filter($idProducto))==0) {      $error['ndata_3'] = 'error/No hay productos quimicos agregados';}
+			if(count(array_filter($idMatSeguridad))==0) {  $error['ndata_4'] = 'error/No hay materiales de seguridad agregados';}
 			/*******************************************************************/
 			//Consulto
 			/**********************************************/
 			//Se trae un listado con los cuarteles
-			if($ndata_1!=0) {
+			if(count(array_filter($idZona))!=0) {
 				$SIS_query = 'cross_predios_listado_zonas.idZona,
 				cross_predios_listado_zonas.idCategoria,
 				cross_predios_listado_zonas.idProducto,
@@ -355,7 +355,7 @@ require_once '0_validate_user_1.php';
 
 			}
 			/**********************************************/
-			if($ndata_2!=0) {
+			if(count(array_filter($idVehiculo))!=0) {
 				//Se trae un listado con los vehiculos
 				$arrVehiculos = array();
 				$arrVehiculos = db_select_array (false, 'idVehiculo, Nombre', 'vehiculos_listado', '', 'idSistema ='.$_SESSION['sol_apli_basicos']['idSistema'].' AND idEstado=1', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -373,7 +373,7 @@ require_once '0_validate_user_1.php';
 			}
 			/**********************************************/
 			//Se trae un listado con los productos
-			if($ndata_3!=0) {
+			if(count(array_filter($idProducto))!=0) {
 				$SIS_query = 'productos_listado.idProducto,
 				productos_listado.Nombre AS NombreProducto,
 				productos_listado.DosisRecomendada,
@@ -388,7 +388,7 @@ require_once '0_validate_user_1.php';
 			}
 			/**********************************************/
 			//Se trae un listado con los materiales
-			if($ndata_4!=0) {
+			if(count(array_filter($idMatSeguridad))!=0) {
 				$arrMateriales = array();
 				$arrMateriales = db_select_array (false, 'idMatSeguridad, Nombre,Codigo', 'cross_checking_materiales_seguridad', '', 'idEstado=1', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 

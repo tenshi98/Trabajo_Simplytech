@@ -385,7 +385,7 @@ $sub_fecha = '10/'.fecha2NMes(fecha_actual()).'/'.fecha2Ano(fecha_actual());
 //cuadro para descargar
 $Alert_Text  = 'Tasa de Interés Corriente y Máxima Convencional vigentes al '.$sub_fecha;
 $Alert_Text .= '<a target="_blank" rel="noopener noreferrer" href="http://www.sbif.cl/sbifweb/servlet/InfoFinanciera?indice=4.2.1&FECHA='.$sub_fecha.'" title="Ver Tasas" class="btn btn-primary btn-sm pull-right" ><i class="fa fa-list" aria-hidden="true"></i> Ver Tasas</a>';
-alert_post_data(2,1,2, $Alert_Text);
+alert_post_data(2,1,2,0, $Alert_Text);
 
 ?>
 

@@ -108,7 +108,7 @@ require_once 'core/Web.Header.Print.php';
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
 		<?php
 		$Alert_Text  = 'No tiene preguntas asignadas a la Quiz';
-		alert_post_data(4,1,1, $Alert_Text);
+		alert_post_data(4,1,1,0, $Alert_Text);
 		?>
 	</div>
 

@@ -276,7 +276,7 @@ if(isset($count)&&$count>9000){
 	//Se escribe el dato
 	echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
 		$Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
-		alert_post_data(3,1,1, $Alert_Text);
+		alert_post_data(3,1,1,0, $Alert_Text);
 	echo '</div>';
 }
 

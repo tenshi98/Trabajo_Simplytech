@@ -62,7 +62,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'telemetria_geocercas_ubicacione
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
 						$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
-						alert_post_data(4,2,2, $Alert_Text);
+						alert_post_data(4,2,2,0, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
 					<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>

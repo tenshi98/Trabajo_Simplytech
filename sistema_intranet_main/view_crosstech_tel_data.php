@@ -130,7 +130,7 @@ $Total_Presion     = $rowTel['SensoresMedActual_4'];
 if($in_eq_fueralinea!=0){
 	echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:10px;">';
 		$Alert_Text  = 'Este equipo se encuentra fuera de linea, los datos mostrados no corresponden al estado actual real.';
-		alert_post_data(4,2,2, $Alert_Text);
+		alert_post_data(4,2,2,0, $Alert_Text);
 	echo '</div>';
 }
 

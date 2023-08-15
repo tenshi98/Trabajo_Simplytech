@@ -45,7 +45,7 @@ if(!empty($_GET['modBase'])){ ?>
 } else {
 //cuadro para descargar
 $Alert_Text  = 'Todos los archivos deben tener como nombre el identificador del cliente (100101-100.pdf por ejemplo) sin espacios ni otros caracteres';
-alert_post_data(2,1,2, $Alert_Text);
+alert_post_data(2,1,2,0, $Alert_Text);
 
 ?>
 

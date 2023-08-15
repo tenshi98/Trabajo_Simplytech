@@ -30,7 +30,7 @@ if(isset($Navegador)&&$Navegador!=''&&$Navegador!='Mozilla Firefox'&&$Navegador!
 	echo '<div class="col-xs-12" style="margin-top:15px;">';
 		$Alert_Text  = 'Esta utilizando el navegador '.$Navegador;
 		$Alert_Text .= ', Se garantiza el funcionamiento en los navegadores Firefox o Chrome en sus ultimas versiones.';
-		alert_post_data(4,2,2, $Alert_Text);
+		alert_post_data(4,2,2,0, $Alert_Text);
 	echo '</div>';
 }
 
@@ -40,7 +40,7 @@ if(isset($SistOp)&&$SistOp!=''&&$SistOp!='Debian'&&$SistOp!='Ubuntu'&&$SistOp!='
 		$Alert_Text  = 'Esta utilizando el sistema operativo '.$SistOp;
 		$Alert_Text .= ', Se garantiza el funcionamiento en los sistemas operativos Windows 10,Windows 8.1,';
 		$Alert_Text .= 'Windows 8,Windows 7,Debian,Ubuntu,Slackware,Linux Mint,Gentoo,ELementary OS,Fedora,Kubuntu,Linux.';
-		alert_post_data(4,2,2, $Alert_Text);
+		alert_post_data(4,2,2,0, $Alert_Text);
 	echo '</div>';
 }
 

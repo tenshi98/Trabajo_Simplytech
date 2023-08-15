@@ -69,7 +69,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 //cuadro para descargar
 $Alert_Text  = 'Descargar Plantilla';
 $Alert_Text .= '<a href="1download.php?dir='.simpleEncode('templates', fecha_actual()).'&file='.simpleEncode('plantilla_predios.xlsx', fecha_actual()).'" title="Descargar Plantilla" class="btn btn-primary btn-sm pull-right" ><i class="fa fa-download" aria-hidden="true"></i> Descargar</a>';
-alert_post_data(2,1,2, $Alert_Text);
+alert_post_data(2,1,2,0, $Alert_Text);
 
 ?>
 
@@ -187,7 +187,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 					//Si no existe una ID se utiliza una por defecto
 					if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
 						$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
-						alert_post_data(4,2,2, $Alert_Text);
+						alert_post_data(4,2,2,0, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
 

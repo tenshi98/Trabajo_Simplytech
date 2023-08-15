@@ -41,7 +41,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 
 //muestro enlace
 echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px;margin-top:30px;">';
-	alert_post_data(2,1,1, 'Se recomienda utilizar el reproductor VLC Player, se puede descargar desde <a target="_blank" rel="noopener noreferrer" href="https://www.videolan.org/vlc/index.es.html">Aqui</a>');
+	alert_post_data(2,1,1,0, 'Se recomienda utilizar el reproductor VLC Player, se puede descargar desde <a target="_blank" rel="noopener noreferrer" href="https://www.videolan.org/vlc/index.es.html">Aqui</a>');
 echo '</div>';
 
 //verifico que exista el rut
@@ -67,7 +67,7 @@ if(isset($rowdata["FTP_Carpeta"])&&$rowdata["FTP_Carpeta"]!=''){
 			</div>';
 					
 		} catch (Exception $e) {
-			alert_post_data(4,1,1, 'Error '.$e->getMessage());
+			alert_post_data(4,1,1,0, 'Error '.$e->getMessage());
 		}
 	//si existe carpeta muestro	
 	}else{
@@ -83,7 +83,7 @@ if(isset($rowdata["FTP_Carpeta"])&&$rowdata["FTP_Carpeta"]!=''){
 	}
 //si no existe la carpeta
 }else{
-	alert_post_data(4,1,1, 'No existe la carpeta contenedora');
+	alert_post_data(4,1,1,0, 'No existe la carpeta contenedora');
 }
 	
 	

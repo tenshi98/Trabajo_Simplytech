@@ -36,7 +36,7 @@ $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelaciona
 
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
-	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
+	alert_post_data(4,1,1,0, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
 }else{
 
 	//obtengo la cantidad real de sensores
@@ -309,7 +309,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							//Si no existe una ID se utiliza una por defecto
 							if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
 								$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
-								alert_post_data(4,2,2, $Alert_Text);
+								alert_post_data(4,2,2,0, $Alert_Text);
 							}else{
 								$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle'];
 
@@ -553,7 +553,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								$Alert_Text .= '<strong><span style="color:#1E90FF;"><i class="fa fa-map-marker" aria-hidden="true"></i> Flujo desactivado - Fuera de cuartel</span></strong><br/>';
 								echo '<br/><div class="clearfix"></div>';
 								echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
-									alert_post_data(2,1,1, $Alert_Text);
+									alert_post_data(2,1,1,0, $Alert_Text);
 								echo '</div>';
 								echo '<div class="clearfix"></div>';
 
@@ -637,7 +637,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		</div>
 	<?php }else{
 		$Alert_Text  = 'No hay registros relacionados al equipo seleccionado entre las fechas ingresadas';
-		alert_post_data(4,2,2, $Alert_Text);
+		alert_post_data(4,2,2,0, $Alert_Text);
 	} ?>
 <?php } ?>
 
@@ -662,7 +662,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 }
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
-alert_post_data(2,1,1, $Alert_Text);
+alert_post_data(2,1,1,0, $Alert_Text);
 
 ?>
 

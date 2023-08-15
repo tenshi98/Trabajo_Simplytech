@@ -408,7 +408,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 }
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
-alert_post_data(2,1,1, $Alert_Text);
+alert_post_data(2,1,1,0, $Alert_Text);
 
 ?>
 

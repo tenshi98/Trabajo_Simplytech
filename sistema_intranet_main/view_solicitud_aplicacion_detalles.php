@@ -282,7 +282,7 @@ document.getElementById("loading").style.display = "none";
 	<?php
 	$Alert_Text = 'Ver mapa';
 	$Alert_Text.= '<a href="view_solicitud_aplicacion_finalizada_view_mapa.php?idTelemetria='.simpleEncode($row_data['idTelemetria'], fecha_actual()).'&idSolicitud='.simpleEncode($row_data['idSolicitud'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" class="btn btn-primary pull-right margin_form_btn"><i class="fa fa-map-o" aria-hidden="true"></i> Ver mapas</a>';
-	alert_post_data(4,2,2, $Alert_Text);
+	alert_post_data(4,2,2,0, $Alert_Text);
 	?>
 </div>
 

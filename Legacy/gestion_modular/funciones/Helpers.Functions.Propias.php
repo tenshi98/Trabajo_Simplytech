@@ -431,7 +431,7 @@ function SuperficieDisponible($idUniMed, $SupDisp, $UniMed){
 	$tipos = array(1,4);
 	//verifico si el dato ingresado existe dentro de las opciones
 	if (!in_array($idUniMed, $tipos)) {
-		alert_post_data(4,1,1, 'La configuracion $idUniMed ('.$idUniMed.') entregada no esta dentro de las opciones');
+		alert_post_data(4,1,1,0, 'La configuracion $idUniMed ('.$idUniMed.') entregada no esta dentro de las opciones');
 		$errorn++;
 	}
 	/********************************************************/
@@ -491,7 +491,7 @@ function SuperficieDisponibleEdificios($idUniMed, $SupDisp, $UniMed){
 	$tipos = array(1,4);
 	//verifico si el dato ingresado existe dentro de las opciones
 	if (!in_array($idUniMed, $tipos)) {
-		alert_post_data(4,1,1, 'La configuracion $idUniMed ('.$idUniMed.') entregada no esta dentro de las opciones');
+		alert_post_data(4,1,1,0, 'La configuracion $idUniMed ('.$idUniMed.') entregada no esta dentro de las opciones');
 		$errorn++;
 	}
 	/********************************************************/
@@ -543,7 +543,7 @@ function SuperficieDisponibleCasas($idUniMed, $SupDisp, $UniMed){
 	$tipos = array(1,4);
 	//verifico si el dato ingresado existe dentro de las opciones
 	if (!in_array($idUniMed, $tipos)) {
-		alert_post_data(4,1,1, 'La configuracion $idUniMed ('.$idUniMed.') entregada no esta dentro de las opciones');
+		alert_post_data(4,1,1,0, 'La configuracion $idUniMed ('.$idUniMed.') entregada no esta dentro de las opciones');
 		$errorn++;
 	}
 	/********************************************************/

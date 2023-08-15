@@ -1585,7 +1585,7 @@ require_once '0_validate_user_1.php';
 			if(isset($RET_idDocPago)){      $ndata_3 = count($RET_idDocPago);      }else{$ndata_3 = 0;}
 			if(isset($IMPRENT_idDocPago)){  $ndata_4 = count($IMPRENT_idDocPago);  }else{$ndata_4 = 0;}
 
-			if($ndata_1!=0 OR $ndata_2!=0 OR $ndata_3!=0 OR $ndata_4!=0) {
+			if(count(array_filter($IVA_idDocPago))!=0 OR count(array_filter($PPM_idDocPago))!=0 OR count(array_filter($RET_idDocPago))!=0 OR count(array_filter($IMPRENT_idDocPago))!=0) {
 				//Se trae un listado con los documentos de pago
 				$arrDocPago = array();
 				$arrDocPago = db_select_array (false, 'idDocPago, Nombre', 'sistema_documentos_pago', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
@@ -1603,22 +1603,22 @@ require_once '0_validate_user_1.php';
 			$Mont_tot_3 = 0;
 			$Mont_tot_4 = 0;
 			//sumo los montos
-			if($ndata_1!=0){
+			if(count(array_filter($IVA_idDocPago))!=0){
 				for($x = 0; $x < $ndata_1; $x++){
 					$Mont_tot_1 = $Mont_tot_1 + $IVA_Monto[$x];
 				}
 			}
-			if($ndata_2!=0){
+			if(count(array_filter($PPM_idDocPago))!=0){
 				for($x = 0; $x < $ndata_2; $x++){
 					$Mont_tot_2 = $Mont_tot_2 + $PPM_Monto[$x];
 				}
 			}
-			if($ndata_3!=0){
+			if(count(array_filter($RET_idDocPago))!=0){
 				for($x = 0; $x < $ndata_3; $x++){
 					$Mont_tot_3 = $Mont_tot_3 + $RET_Monto[$x];
 				}
 			}
-			if($ndata_4!=0){
+			if(count(array_filter($IMPRENT_idDocPago))!=0){
 				for($x = 0; $x < $ndata_4; $x++){
 					$Mont_tot_4 = $Mont_tot_4 + $IMPRENT_Monto[$x];
 				}

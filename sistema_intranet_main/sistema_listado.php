@@ -306,7 +306,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
 								echo mapa_from_direccion($direccion, 0, $_SESSION['usuario']['basic_data']['Config_IDGoogle'], 18, 1);
 							}else{
 								$Alert_Text  = 'No tiene una dirección definida';
-								alert_post_data(4,2,2, $Alert_Text);
+								alert_post_data(4,2,2,0, $Alert_Text);
 							}
 						?>
 					</div>

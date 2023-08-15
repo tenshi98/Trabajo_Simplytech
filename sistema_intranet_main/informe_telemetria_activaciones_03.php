@@ -49,7 +49,7 @@ $ndata_1 = db_select_nrows (false, 'idTelemetria', 'telemetria_listado_historial
 
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
-	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
+	alert_post_data(4,1,1,0, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
 }else{
 		
 	/**********************************************************/
@@ -84,7 +84,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		echo '
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >';
 			$Alert_Text = 'No tiene configurado el interruptor de encendido';
-			alert_post_data(4,2,2, $Alert_Text);
+			alert_post_data(4,2,2,0, $Alert_Text);
 		echo '
 		</div>';
 		$unk_temp++;
@@ -93,7 +93,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		echo '
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >';
 			$Alert_Text = 'No tiene configurada la hora de termino de la colacion';
-			alert_post_data(4,2,2, $Alert_Text);
+			alert_post_data(4,2,2,0, $Alert_Text);
 		echo '
 		</div>';
 		$unk_temp++;
@@ -102,7 +102,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		echo '
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >';
 			$Alert_Text = 'No tiene configurada la hora de inicio de la colacion';
-			alert_post_data(4,2,2, $Alert_Text);
+			alert_post_data(4,2,2,0, $Alert_Text);
 		echo '
 		</div>';
 		$unk_temp++;
@@ -111,7 +111,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		echo '
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >';
 			$Alert_Text = 'No tiene configurada la hora de inicio de la jornada';
-			alert_post_data(4,2,2, $Alert_Text);
+			alert_post_data(4,2,2,0, $Alert_Text);
 		echo '
 		</div>';
 		$unk_temp++;
@@ -120,7 +120,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		echo '
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" >';
 			$Alert_Text = 'No tiene configurada la hora de termino de la jornada';
-			alert_post_data(4,2,2, $Alert_Text);
+			alert_post_data(4,2,2,0, $Alert_Text);
 		echo '
 		</div>';
 		$unk_temp++;

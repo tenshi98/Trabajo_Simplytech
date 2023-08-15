@@ -288,7 +288,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 		//Si no existe una ID se utiliza una por defecto
 		if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
 			$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
-			alert_post_data(4,2,2, $Alert_Text);
+			alert_post_data(4,2,2,0, $Alert_Text);
 		}else{
 			$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
 
@@ -607,7 +607,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								//Si no existe una ID se utiliza una por defecto
 								if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
 									$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
-									alert_post_data(4,2,2, $Alert_Text);
+									alert_post_data(4,2,2,0, $Alert_Text);
 								}else{ ?>
 									<div id="map_canvas_x1" style="width: 100%; height: 550px;"></div>
 									<script>
@@ -1136,7 +1136,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
 								<?php
 								$Alert_Text = '<a href="view_solicitud_aplicacion_finalizada_view_mapa.php?idTelemetria='.simpleEncode($trac['idTelemetria'], fecha_actual()).'&idSolicitud='.$_GET['view'].'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" class="btn btn-primary pull-right margin_form_btn"><i class="fa fa-map-o" aria-hidden="true"></i> Ver mapas</a>';
-								alert_post_data(4,2,2, $Alert_Text);
+								alert_post_data(4,2,2,0, $Alert_Text);
 								?>
 							</div>
 						</div>
@@ -1151,7 +1151,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
 		<?php
 			$Alert_Text = 'La solicitud no existe';
-			alert_post_data(4,2,2, $Alert_Text);
+			alert_post_data(4,2,2,0, $Alert_Text);
 		?>
 	</div>
 <?php } ?>

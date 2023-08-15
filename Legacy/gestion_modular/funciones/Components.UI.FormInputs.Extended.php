@@ -178,11 +178,11 @@ class Form_Inputs extends Basic_Form_Inputs{
 		//si no hay datos
 		}elseif(empty($arrSelect) OR $arrSelect==''){
 			//Devuelvo mensaje
-			alert_post_data(4,1,1, 'No hay datos en <strong>'.$placeholder.'</strong>, consulte con el administrador');
+			alert_post_data(4,1,1,0, 'No hay datos en <strong>'.$placeholder.'</strong>, consulte con el administrador');
 		//si existe un error
 		}elseif($arrSelect==false){
 			//Devuelvo mensaje
-			alert_post_data(4,1,1, 'Hay un error en la consulta <strong>'.$placeholder.'</strong>, consulte con el administrador');
+			alert_post_data(4,1,1,0, 'Hay un error en la consulta <strong>'.$placeholder.'</strong>, consulte con el administrador');
 		}
 
 	}
@@ -268,11 +268,11 @@ class Form_Inputs extends Basic_Form_Inputs{
 		//si no hay datos
 		}elseif(empty($arrSelect) OR $arrSelect==''){
 			//Devuelvo mensaje
-			alert_post_data(4,1,1, 'No hay datos en <strong>'.$placeholder.'</strong>, consulte con el administrador');
+			alert_post_data(4,1,1,0, 'No hay datos en <strong>'.$placeholder.'</strong>, consulte con el administrador');
 		//si existe un error
 		}elseif($arrSelect==false){
 			//Devuelvo mensaje
-			alert_post_data(4,1,1, 'Hay un error en la consulta <strong>'.$placeholder.'</strong>, consulte con el administrador');
+			alert_post_data(4,1,1,0, 'Hay un error en la consulta <strong>'.$placeholder.'</strong>, consulte con el administrador');
 		}
 	}
 	/*******************************************************************************************************************/

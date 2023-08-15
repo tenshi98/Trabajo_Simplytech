@@ -48,7 +48,7 @@ $ndata_1 = db_select_nrows (false, 'idTabla', 'telemetria_listado_tablarelaciona
 
 //si el dato es superior a 10.000
 if(isset($ndata_1)&&$ndata_1>=10001){
-	alert_post_data(4,1,1, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
+	alert_post_data(4,1,1,0, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
 }else{
 
 	/**********************************************************/
@@ -78,7 +78,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		//Se escribe el dato
 		echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
 			$Alert_Text  = 'El sensor de activacion no esta configurado, por lo tanto se estan mostrando todas las mediciones.';
-			alert_post_data(2,1,1, $Alert_Text);
+			alert_post_data(2,1,1,0, $Alert_Text);
 		echo '</div>';
 	}
 	/**********************************************************/
@@ -482,7 +482,7 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 }
 //Se escribe el dato
 $Alert_Text  = 'La busqueda esta limitada a 10.000 registros, en caso de necesitar mas registros favor comunicarse con el administrador';
-alert_post_data(2,1,1, $Alert_Text);
+alert_post_data(2,1,1,0, $Alert_Text);
 
 ?>
 

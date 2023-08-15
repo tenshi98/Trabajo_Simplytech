@@ -101,7 +101,7 @@ $row_data = db_select_data (false, $SIS_query, 'principal_notificaciones_listado
 						if(isset($_GET['noMol'])&&$_GET['noMol']!=''){
 							//mostrar la alerta
 							$Alert_Text  = 'Se han desactivado las alertas por '.simpleDecode($_GET['noMol'], fecha_actual()).' Horas.';
-							alert_post_data(2,1,1, $Alert_Text);
+							alert_post_data(2,1,1,0, $Alert_Text);
 						}
 
 						//verifico que exista el no molestar
