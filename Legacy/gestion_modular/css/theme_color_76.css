@@ -596,3 +596,7 @@ body:not(.sidebar-left-mini) #menu .nav-header {
 /*******************************************************/
 /* Formularios */
 .control-label{color: #666;}
+
+/*******************************************************/
+/* Tamaño ventana modal */
+.modal-xlg { width: 90%;}
