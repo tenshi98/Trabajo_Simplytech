@@ -582,7 +582,7 @@ body:not(.sidebar-left-mini) #menu .nav-header {
 .video_1-dimensions {width: 100%;}
 /*******************************************************/
 /* Mascota */
-.cardMascota {font-size: 1em;overflow: hidden;padding: 0;border: none;border-radius: .28571429rem;border: 1px solid #ddd;margin-bottom:10px;}
+.cardMascota {font-size: 1em;overflow: hidden;padding: 0;border: none;border-radius: .28571429rem;border: 1px solid #ddd;margin-bottom:10px;background-color: #fff;}
 .cardMascota .card-img-top {display: block;width: 100%;height: auto;}
 .cardMascota .card-block {font-size: 1em;position: relative;margin: 0;border: none;box-shadow: none;padding-left:5px;}
 .cardMascota .card-block .card-title {font-size: 1.28571429em;font-weight: 700;line-height: 1.2857em;margin-top: 5px;margin-bottom: 5px;color: #666;}
