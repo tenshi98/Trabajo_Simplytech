@@ -315,20 +315,25 @@ if(!empty($_GET['clone'])){  ?>
 
 
 					<script>
+						/**********************************************************************/
 						<?php
 						foreach ($arrTipo as $tipo) {
 							echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 						}
 						?>
-						document.getElementById("idProducto").onchange = function() {myFunction()};
 
-						function myFunction() {
+						/**********************************************************************/
+						document.getElementById("idProducto").onchange = function() {LoadProducto()};
+
+						/**********************************************************************/
+						function LoadProducto(){
 							let Componente = document.getElementById("idProducto").value;
 							if (Componente != "") {
 								//escribo dentro del input
 								document.getElementById("escribeme").value = eval("id_data_" + Componente);
 							}
 						}
+
 					</script>
 
 					<div class="form-group">
@@ -396,20 +401,25 @@ if(!empty($_GET['clone'])){  ?>
 					?>
 
 					<script>
+						/**********************************************************************/
 						<?php
 						foreach ($arrTipo as $tipo) {
 							echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 						}
 						?>
-						document.getElementById("idProducto").onchange = function() {myFunction()};
 
-						function myFunction() {
+						/**********************************************************************/
+						document.getElementById("idProducto").onchange = function() {LoadProducto()};
+
+						/**********************************************************************/
+						function LoadProducto(){
 							let Componente = document.getElementById("idProducto").value;
 							if (Componente != "") {
 								//escribo dentro del input
 								document.getElementById("escribeme").value = eval("id_data_" + Componente);
 							}
 						}
+
 					</script>
 
 					<div class="form-group">

@@ -178,159 +178,115 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 					$Form_Inputs->form_input_hidden('idTrabajador', $_GET['id'], 2);
 					?>
 					<script>
-						//oculto los div
-						document.getElementById('div_SueldoLiquido').style.display = 'none';
-						document.getElementById('div_SueldoDia').style.display = 'none';
-						document.getElementById('div_SueldoHora').style.display = 'none';
-						document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'none';
+						/**********************************************************************/
+						$(document).ready(function(){
+							document.getElementById('div_SueldoLiquido').style.display = 'none';
+							document.getElementById('div_SueldoDia').style.display = 'none';
+							document.getElementById('div_SueldoHora').style.display = 'none';
+							document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'none';
+							//se ejecuta al inicio
+							LoadTipoContratoTrab(0);
+							LoadTipoTrabajo(0);
+						});
 
-						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
+						/**********************************************************************/
+						document.getElementById("idTipoContratoTrab").onchange = function() {LoadTipoContratoTrab(1)};
+						document.getElementById("idTipoTrabajo").onchange = function() {LoadTipoTrabajo(1)};
 
+						/**********************************************************************/
+						function LoadTipoContratoTrab(caseLoad){
+							//obtengo los valores
 							let idTipoContratoTrab = $("#idTipoContratoTrab").val();
-							let idTipoTrabajo      = $("#idTipoTrabajo").val();
-
-							/*************************************/
-							//Trabajador con sueldo mensual
-							if(idTipoContratoTrab == 1){
-								document.getElementById('div_SueldoLiquido').style.display = 'block';
-								document.getElementById('div_SueldoDia').style.display = 'none';
-								document.getElementById('div_SueldoHora').style.display = 'none';
-
-							//Trabajador con sueldo semanal
-							}else if(idTipoContratoTrab == 2){
-								document.getElementById('div_SueldoLiquido').style.display = 'block';
-								document.getElementById('div_SueldoDia').style.display = 'none';
-								document.getElementById('div_SueldoHora').style.display = 'none';
-
-							//Trabajador con sueldo diario (jornada semanal de 5 días)
-							}else if(idTipoContratoTrab == 3){
-								document.getElementById('div_SueldoLiquido').style.display = 'none';
-								document.getElementById('div_SueldoDia').style.display = 'block';
-								document.getElementById('div_SueldoHora').style.display = 'none';
-
-							//Trabajador con sueldo diario (jornada semanal de 6 días)
-							}else if(idTipoContratoTrab == 4){
-								document.getElementById('div_SueldoLiquido').style.display = 'none';
-								document.getElementById('div_SueldoDia').style.display = 'block';
-								document.getElementById('div_SueldoHora').style.display = 'none';
-
-							//Trabajador con sueldo por hora
-							}else if(idTipoContratoTrab == 5){
-								document.getElementById('div_SueldoLiquido').style.display = 'none';
-								document.getElementById('div_SueldoDia').style.display = 'none';
-								document.getElementById('div_SueldoHora').style.display = 'block';
-
-							//si no en ninguno
-							}else{
-								document.getElementById('div_SueldoLiquido').style.display = 'none';
-								document.getElementById('div_SueldoDia').style.display = 'none';
-								document.getElementById('div_SueldoHora').style.display = 'none';
-
+							//selecciono
+							switch(idTipoContratoTrab) {
+								//Trabajador con sueldo mensual
+								case '1':
+									document.getElementById('div_SueldoLiquido').style.display = 'block';
+									document.getElementById('div_SueldoDia').style.display = 'none';
+									document.getElementById('div_SueldoHora').style.display = 'none';
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										//document.getElementById('SueldoLiquido').value = "0";
+										document.getElementById('SueldoDia').value = "0";
+										document.getElementById('SueldoHora').value = "0";
+									}
+								break;
+								//Trabajador con sueldo semanal
+								case '2':
+									document.getElementById('div_SueldoLiquido').style.display = 'block';
+									document.getElementById('div_SueldoDia').style.display = 'none';
+									document.getElementById('div_SueldoHora').style.display = 'none';
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										//document.getElementById('SueldoLiquido').value = "0";
+										document.getElementById('SueldoDia').value = "0";
+										document.getElementById('SueldoHora').value = "0";
+									}
+								break;
+								//Trabajador con sueldo diario (jornada semanal de 5 días)
+								case '3':
+									document.getElementById('div_SueldoLiquido').style.display = 'none';
+									document.getElementById('div_SueldoDia').style.display = 'block';
+									document.getElementById('div_SueldoHora').style.display = 'none';
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById('SueldoLiquido').value = "0";
+										//document.getElementById('SueldoDia').value = "0";
+										document.getElementById('SueldoHora').value = "0";
+									}
+								break;
+								//Trabajador con sueldo diario (jornada semanal de 6 días)
+								case '4':
+									document.getElementById('div_SueldoLiquido').style.display = 'none';
+									document.getElementById('div_SueldoDia').style.display = 'block';
+									document.getElementById('div_SueldoHora').style.display = 'none';
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById('SueldoLiquido').value = "0";
+										//document.getElementById('SueldoDia').value = "0";
+										document.getElementById('SueldoHora').value = "0";
+									}
+								break;
+								//Trabajador con sueldo por hora
+								case '5':
+									document.getElementById('div_SueldoLiquido').style.display = 'none';
+									document.getElementById('div_SueldoDia').style.display = 'none';
+									document.getElementById('div_SueldoHora').style.display = 'block';
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById('SueldoLiquido').value = "0";
+										document.getElementById('SueldoDia').value = "0";
+										//document.getElementById('SueldoHora').value = "0";
+									}
+								break;
 							}
-							/*************************************/
-							//Trabajo normal
-							if(idTipoTrabajo == 1){
-								document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'none';
+						}
 
-							//Trabajo pesado
-							}else if(idTipoTrabajo == 2){
-								document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'block';
+						/**********************************************************************/
+						function LoadTipoTrabajo(caseLoad){
+							//obtengo los valores
+							let idTipoTrabajo = $("#idTipoTrabajo").val();
+							//selecciono
+							switch(idTipoTrabajo) {
+								//Errores Conjuntos
+								case '1':
+									document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'none';
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById('PorcentajeTrabajoPesado').value = "0";
+									}
+								break;
+								//Errores Conjuntos
+								case '2':
+									document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'block';
+									//Reseteo los valores a 0
+									if(caseLoad==1){
 
-							//si no en ninguno
-							}else{
-								document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'none';
-
+									}
+								break;
 							}
+						}
 
-						});
-
-						$("#idTipoContratoTrab").on("change", function(){ //se ejecuta al cambiar valor del select
-							let idTipoContratoTrab_sel = $(this).val(); //Asignamos el valor seleccionado
-
-							//Trabajador con sueldo mensual
-							if(idTipoContratoTrab_sel == 1){
-								document.getElementById('div_SueldoLiquido').style.display = 'block';
-								document.getElementById('div_SueldoDia').style.display = 'none';
-								document.getElementById('div_SueldoHora').style.display = 'none';
-								//Reseteo los valores a 0
-								//document.getElementById('SueldoLiquido').value = "0";
-								document.getElementById('SueldoDia').value = "0";
-								document.getElementById('SueldoHora').value = "0";
-
-							//Trabajador con sueldo semanal
-							}else if(idTipoContratoTrab_sel == 2){
-								document.getElementById('div_SueldoLiquido').style.display = 'block';
-								document.getElementById('div_SueldoDia').style.display = 'none';
-								document.getElementById('div_SueldoHora').style.display = 'none';
-								//Reseteo los valores a 0
-								//document.getElementById('SueldoLiquido').value = "0";
-								document.getElementById('SueldoDia').value = "0";
-								document.getElementById('SueldoHora').value = "0";
-
-							//Trabajador con sueldo diario (jornada semanal de 5 días)
-							}else if(idTipoContratoTrab_sel == 3){
-								document.getElementById('div_SueldoLiquido').style.display = 'none';
-								document.getElementById('div_SueldoDia').style.display = 'block';
-								document.getElementById('div_SueldoHora').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('SueldoLiquido').value = "0";
-								//document.getElementById('SueldoDia').value = "0";
-								document.getElementById('SueldoHora').value = "0";
-
-							//Trabajador con sueldo diario (jornada semanal de 6 días)
-							}else if(idTipoContratoTrab_sel == 4){
-								document.getElementById('div_SueldoLiquido').style.display = 'none';
-								document.getElementById('div_SueldoDia').style.display = 'block';
-								document.getElementById('div_SueldoHora').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('SueldoLiquido').value = "0";
-								//document.getElementById('SueldoDia').value = "0";
-								document.getElementById('SueldoHora').value = "0";
-
-							//Trabajador con sueldo por hora
-							}else if(idTipoContratoTrab_sel == 5){
-								document.getElementById('div_SueldoLiquido').style.display = 'none';
-								document.getElementById('div_SueldoDia').style.display = 'none';
-								document.getElementById('div_SueldoHora').style.display = 'block';
-								//Reseteo los valores a 0
-								document.getElementById('SueldoLiquido').value = "0";
-								document.getElementById('SueldoDia').value = "0";
-								//document.getElementById('SueldoHora').value = "0";
-
-							//si no en ninguno
-							}else{
-								document.getElementById('div_SueldoLiquido').style.display = 'none';
-								document.getElementById('div_SueldoDia').style.display = 'none';
-								document.getElementById('div_SueldoHora').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('SueldoLiquido').value = "0";
-								document.getElementById('SueldoDia').value = "0";
-								document.getElementById('SueldoHora').value = "0";
-
-							}
-						});
-
-						$("#idTipoTrabajo").on("change", function(){ //se ejecuta al cambiar valor del select
-							let idTipoTrabajo_sel = $(this).val(); //Asignamos el valor seleccionado
-
-							//Trabajo normal
-							if(idTipoTrabajo_sel == 1){
-								document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('PorcentajeTrabajoPesado').value = "0";
-
-							//Trabajo pesado
-							}else if(idTipoTrabajo_sel == 2){
-								document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'block';
-
-							//si no en ninguno
-							}else{
-								document.getElementById('div_PorcentajeTrabajoPesado').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('PorcentajeTrabajoPesado').value = "0";
-
-							}
-						});
 					</script>
 
 					<div class="form-group">

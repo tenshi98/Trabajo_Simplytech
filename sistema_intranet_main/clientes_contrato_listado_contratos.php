@@ -154,10 +154,24 @@ $rowdata = db_select_data (false, $SIS_query, 'licitacion_listado_level_'.$_GET[
 
 				?>
 				<script>
-					//funcion para actualizar el valor total
-					document.getElementById("Valor").onkeyup = function() {myFunction()};
+					/**********************************************************************/
+					$(document).ready(function(){
+						document.getElementById('div_idFrecuencia').style.display = 'none';
+						document.getElementById('div_Cantidad').style.display = 'none';
+						document.getElementById('div_TiempoProgramado').style.display = 'none';
+						document.getElementById('div_idTrabajo').style.display = 'none';
+						document.getElementById('div_Valor').style.display = 'none';
+						document.getElementById('div_ValorTotal').style.display = 'none';
+						//se ejecuta al inicio
+						LoadUtilizable(0);
+					});
 
-					function myFunction() {
+					/**********************************************************************/
+					document.getElementById("Valor").onkeyup = function() {LoadValor()};
+					document.getElementById("idUtilizable").onchange = function() {LoadUtilizable(1)};
+
+					/**********************************************************************/
+					function LoadValor() {
 						let CantIngreso = document.getElementById("Cantidad").value
 						let valor       = document.getElementById("Valor").value;
 						if (CantIngreso != "" && valor != "") {
@@ -166,66 +180,45 @@ $rowdata = db_select_data (false, $SIS_query, 'licitacion_listado_level_'.$_GET[
 						}
 					}
 
-					document.getElementById('div_idFrecuencia').style.display = 'none';
-					document.getElementById('div_Cantidad').style.display = 'none';
-					document.getElementById('div_TiempoProgramado').style.display = 'none';
-					document.getElementById('div_idTrabajo').style.display = 'none';
-					document.getElementById('div_Valor').style.display = 'none';
-					document.getElementById('div_ValorTotal').style.display = 'none';
-
-					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-						let Sensores_val= $("#idUtilizable").val();
-						//si es SI
-						if(Sensores_val == 1){
-							document.getElementById('div_idFrecuencia').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_TiempoProgramado').style.display = 'none';
-							document.getElementById('div_idTrabajo').style.display = 'none';
-							document.getElementById('div_Valor').style.display = 'none';
-							document.getElementById('div_ValorTotal').style.display = 'none';
-
-						//si es NO
-						} else if(Sensores_val == 2){
-							document.getElementById('div_idFrecuencia').style.display = '';
-							document.getElementById('div_Cantidad').style.display = '';
-							document.getElementById('div_TiempoProgramado').style.display = '';
-							document.getElementById('div_idTrabajo').style.display = '';
-							document.getElementById('div_Valor').style.display = '';
-							document.getElementById('div_ValorTotal').style.display = '';
+					/**********************************************************************/
+					function LoadUtilizable(caseLoad){
+						//obtengo los valores
+						let Sensores_val = $("#idUtilizable").val();
+						//selecciono
+						switch(Sensores_val) {
+							//Errores Conjuntos
+							case '1':
+								document.getElementById('div_idFrecuencia').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_TiempoProgramado').style.display = 'none';
+								document.getElementById('div_idTrabajo').style.display = 'none';
+								document.getElementById('div_Valor').style.display = 'none';
+								document.getElementById('div_ValorTotal').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('idFrecuencia').selectedIndex = 0;
+									document.getElementById('Cantidad').value = "0";
+									document.getElementById('TiempoProgramado').value = "0";
+									document.getElementById('idTrabajo').selectedIndex = 0;
+									document.getElementById('Valor').value = "0";
+									document.getElementById('ValorTotal').value = "0";
+								}
+							break;
+							//Errores Conjuntos
+							case '2':
+								document.getElementById('div_idFrecuencia').style.display = '';
+								document.getElementById('div_Cantidad').style.display = '';
+								document.getElementById('div_TiempoProgramado').style.display = '';
+								document.getElementById('div_idTrabajo').style.display = '';
+								document.getElementById('div_Valor').style.display = '';
+								document.getElementById('div_ValorTotal').style.display = '';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									//nada
+								}
+							break;
 						}
-
-					});
-
-					$("#idUtilizable").on("change", function(){ //se ejecuta al cambiar valor del select
-						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-						//si es SI
-						if(modelSelected1 == 1){
-							document.getElementById('div_idFrecuencia').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_TiempoProgramado').style.display = 'none';
-							document.getElementById('div_idTrabajo').style.display = 'none';
-							document.getElementById('div_Valor').style.display = 'none';
-							document.getElementById('div_ValorTotal').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idFrecuencia').selectedIndex = 0;
-							document.getElementById('Cantidad').value = "0";
-							document.getElementById('TiempoProgramado').value = "0";
-							document.getElementById('idTrabajo').selectedIndex = 0;
-							document.getElementById('Valor').value = "0";
-							document.getElementById('ValorTotal').value = "0";
-
-						//si es NO
-						} else if(modelSelected1 == 2){
-							document.getElementById('div_idFrecuencia').style.display = '';
-							document.getElementById('div_Cantidad').style.display = '';
-							document.getElementById('div_TiempoProgramado').style.display = '';
-							document.getElementById('div_idTrabajo').style.display = '';
-							document.getElementById('div_Valor').style.display = '';
-							document.getElementById('div_ValorTotal').style.display = '';
-
-						}
-					});
-
+					}
 
 				</script>
 
@@ -317,56 +310,69 @@ $rowdata = db_select_data (false, $SIS_query, 'licitacion_listado_level_'.$_GET[
 				?>
 
 				<script>
-					//funcion para actualizar el valor total
-				document.getElementById("Valor").onkeyup = function() {myFunction()};
+					/**********************************************************************/
+					$(document).ready(function(){
+						document.getElementById('div_idFrecuencia').style.display = 'none';
+						document.getElementById('div_Cantidad').style.display = 'none';
+						document.getElementById('div_TiempoProgramado').style.display = 'none';
+						document.getElementById('div_idTrabajo').style.display = 'none';
+						document.getElementById('div_Valor').style.display = 'none';
+						document.getElementById('div_ValorTotal').style.display = 'none';
+					});
 
-					function myFunction() {
+					/**********************************************************************/
+					document.getElementById("Valor").onkeyup = function() {LoadValor()};
+					document.getElementById("idUtilizable").onchange = function() {LoadUtilizable(1)};
+
+					/**********************************************************************/
+					function LoadValor() {
 						let CantIngreso = document.getElementById("Cantidad").value
-						let Valor = document.getElementById("Valor").value;
-						if (CantIngreso != "" && Valor != "") {
-							document.getElementById("Total").value      = CantIngreso * Valor;
-							document.getElementById("ValorTotal").value = CantIngreso * Valor;
+						let valor       = document.getElementById("Valor").value;
+						if (CantIngreso != "" && valor != "") {
+							document.getElementById("Total").value      = CantIngreso * valor;
+							document.getElementById("ValorTotal").value = CantIngreso * valor;
 						}
 					}
 
-				</script>
-				<script>
-					document.getElementById('div_idFrecuencia').style.display = 'none';
-					document.getElementById('div_Cantidad').style.display = 'none';
-					document.getElementById('div_TiempoProgramado').style.display = 'none';
-					document.getElementById('div_idTrabajo').style.display = 'none';
-					document.getElementById('div_Valor').style.display = 'none';
-					document.getElementById('div_ValorTotal').style.display = 'none';
-
-					$("#idUtilizable").on("change", function(){ //se ejecuta al cambiar valor del select
-						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-						//si es SI
-						if(modelSelected1 == 1){
-							document.getElementById('div_idFrecuencia').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_TiempoProgramado').style.display = 'none';
-							document.getElementById('div_idTrabajo').style.display = 'none';
-							document.getElementById('div_Valor').style.display = 'none';
-							document.getElementById('div_ValorTotal').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idFrecuencia').selectedIndex = 0;
-							document.getElementById('Cantidad').value = "0";
-							document.getElementById('TiempoProgramado').value = "0";
-							document.getElementById('idTrabajo').selectedIndex = 0;
-							document.getElementById('Valor').value = "0";
-							document.getElementById('ValorTotal').value = "0";
-
-						//si es NO
-						} else if(modelSelected1 == 2){
-							document.getElementById('div_idFrecuencia').style.display = '';
-							document.getElementById('div_Cantidad').style.display = '';
-							document.getElementById('div_TiempoProgramado').style.display = '';
-							document.getElementById('div_idTrabajo').style.display = '';
-							document.getElementById('div_Valor').style.display = '';
-							document.getElementById('div_ValorTotal').style.display = '';
-
+					/**********************************************************************/
+					function LoadUtilizable(caseLoad){
+						//obtengo los valores
+						let Sensores_val = $("#idUtilizable").val();
+						//selecciono
+						switch(Sensores_val) {
+							//Errores Conjuntos
+							case '1':
+								document.getElementById('div_idFrecuencia').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_TiempoProgramado').style.display = 'none';
+								document.getElementById('div_idTrabajo').style.display = 'none';
+								document.getElementById('div_Valor').style.display = 'none';
+								document.getElementById('div_ValorTotal').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('idFrecuencia').selectedIndex = 0;
+									document.getElementById('Cantidad').value = "0";
+									document.getElementById('TiempoProgramado').value = "0";
+									document.getElementById('idTrabajo').selectedIndex = 0;
+									document.getElementById('Valor').value = "0";
+									document.getElementById('ValorTotal').value = "0";
+								}
+							break;
+							//Errores Conjuntos
+							case '2':
+								document.getElementById('div_idFrecuencia').style.display = '';
+								document.getElementById('div_Cantidad').style.display = '';
+								document.getElementById('div_TiempoProgramado').style.display = '';
+								document.getElementById('div_idTrabajo').style.display = '';
+								document.getElementById('div_Valor').style.display = '';
+								document.getElementById('div_ValorTotal').style.display = '';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									//nada
+								}
+							break;
 						}
-					});
+					}
 
 				</script>
 
@@ -834,43 +840,37 @@ $rowdata = db_select_data (false, $SIS_query, 'licitacion_listado', '', $SIS_whe
 				?>
 
 				<script>
-					document.getElementById('div_ValorMensual').style.display = 'none';
-					document.getElementById('div_Presupuesto').style.display = 'none';
-
-					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-						let TipoLicitacion_val= $("#idTipoLicitacion").val();
-						//si es A suma Alzada
-						if(TipoLicitacion_val == 1){
-							document.getElementById('div_ValorMensual').style.display = '';
-							document.getElementById('div_Presupuesto').style.display = 'none';
-							document.getElementById('Presupuesto').value = "0";
-
-						//si es Por Itemizado
-						} else if(TipoLicitacion_val == 2){
-							document.getElementById('div_ValorMensual').style.display = 'none';
-							document.getElementById('div_Presupuesto').style.display = '';
-							document.getElementById('ValorMensual').value = "0";
-
-						}
-
+					/**********************************************************************/
+					$(document).ready(function(){
+						document.getElementById('div_ValorMensual').style.display = 'none';
+						document.getElementById('div_Presupuesto').style.display = 'none';
+						//se ejecuta al inicio
+						LoadTipoLicitacion(0);
 					});
 
-					$("#idTipoLicitacion").on("change", function(){ //se ejecuta al cambiar valor del select
-						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-						//si es A suma Alzada
-						if(modelSelected1 == 1){
-							document.getElementById('div_ValorMensual').style.display = '';
-							document.getElementById('div_Presupuesto').style.display = 'none';
-							document.getElementById('Presupuesto').value = "0";
+					/**********************************************************************/
+					document.getElementById("idTipoLicitacion").onchange = function() {LoadTipoLicitacion(1)};
 
-						//si es Por Itemizado
-						} else if(modelSelected1 == 2){
-							document.getElementById('div_ValorMensual').style.display = 'none';
-							document.getElementById('div_Presupuesto').style.display = '';
-							document.getElementById('ValorMensual').value = "0";
-
+					/**********************************************************************/
+					function LoadTipoLicitacion(caseLoad){
+						//obtengo los valores
+						let TipoLicitacion = $("#idTipoLicitacion").val();
+						//selecciono
+						switch(TipoLicitacion) {
+							//si es A suma Alzada
+							case '1':
+								document.getElementById('div_ValorMensual').style.display = '';
+								document.getElementById('div_Presupuesto').style.display = 'none';
+								document.getElementById('Presupuesto').value = "0";
+							break;
+							//si es Por Itemizado
+							case '2':
+								document.getElementById('div_ValorMensual').style.display = 'none';
+								document.getElementById('div_Presupuesto').style.display = '';
+								document.getElementById('ValorMensual').value = "0";
+							break;
 						}
-					});
+					}
 
 				</script>
 
@@ -939,25 +939,35 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				?>
 
 				<script>
-					document.getElementById('div_ValorMensual').style.display = 'none';
-					document.getElementById('div_Presupuesto').style.display = 'none';
-
-					$("#idTipoLicitacion").on("change", function(){ //se ejecuta al cambiar valor del select
-						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-						//si es A suma Alzada
-						if(modelSelected1 == 1){
-							document.getElementById('div_ValorMensual').style.display = '';
-							document.getElementById('div_Presupuesto').style.display = 'none';
-							document.getElementById('Presupuesto').value = "0";
-
-						//si es Por Itemizado
-						} else if(modelSelected1 == 2){
-							document.getElementById('div_ValorMensual').style.display = 'none';
-							document.getElementById('div_Presupuesto').style.display = '';
-							document.getElementById('ValorMensual').value = "0";
-
-						}
+					/**********************************************************************/
+					$(document).ready(function(){
+						document.getElementById('div_ValorMensual').style.display = 'none';
+						document.getElementById('div_Presupuesto').style.display = 'none';
 					});
+
+					/**********************************************************************/
+					document.getElementById("idTipoLicitacion").onchange = function() {LoadTipoLicitacion(1)};
+
+					/**********************************************************************/
+					function LoadTipoLicitacion(caseLoad){
+						//obtengo los valores
+						let TipoLicitacion = $("#idTipoLicitacion").val();
+						//selecciono
+						switch(TipoLicitacion) {
+							//si es A suma Alzada
+							case '1':
+								document.getElementById('div_ValorMensual').style.display = '';
+								document.getElementById('div_Presupuesto').style.display = 'none';
+								document.getElementById('Presupuesto').value = "0";
+							break;
+							//si es Por Itemizado
+							case '2':
+								document.getElementById('div_ValorMensual').style.display = 'none';
+								document.getElementById('div_Presupuesto').style.display = '';
+								document.getElementById('ValorMensual').value = "0";
+							break;
+						}
+					}
 
 				</script>
 

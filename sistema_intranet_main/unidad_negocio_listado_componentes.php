@@ -382,37 +382,22 @@ foreach ($arrPermisos as $prod) {
 				while ( $row = mysqli_fetch_assoc ($resultado)){
 				array_push( $arrTipo,$row );
 				}
-				
-				echo '<script>';
-				foreach ($arrTipo as $tipo) {
-					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
-					';
-				}
 
-				foreach ($arrTipo as $tipo) {
-					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
-					';
-				}
 				?>
-				</script>
-
-				<script>
-				document.getElementById("idProducto").onchange = function() {myFunction()};
-
-				function myFunction() {
-					let Componente = document.getElementById("idProducto").value;
-					if (Componente != "") {
-						//escribo dentro del input
-						document.getElementById("idUml_fake").value = eval("id_data1_" + Componente);
-						document.getElementById("idUml").value      = eval("id_data2_" + Componente);
-					}
-				}
-				</script>
 
 				<script>
 					/**********************************************************************/
-					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
+					<?php
+					foreach ($arrTipo as $tipo) {
+						echo '
+						let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
+						let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
+						';
+					}
+					?>
 
+					/**********************************************************************/
+					$(document).ready(function(){
 						//Se ocultan todos los input
 						document.getElementById('div_Modelo').style.display = 'none';
 						document.getElementById('div_AnoFab').style.display = 'none';
@@ -429,327 +414,214 @@ foreach ($arrPermisos as $prod) {
 						document.getElementById('div_idUml').style.display = 'none';
 						document.getElementById('div_Frecuencia').style.display = 'none';
 						document.getElementById('div_idFrecuencia').style.display = 'none';
-
-						let Sensores_val_1= $("#idUtilizable").val();
-
-						//si es No Usable
-						if(Sensores_val_1 == 1){
-							document.getElementById('div_Modelo').style.display = 'none';
-							document.getElementById('div_AnoFab').style.display = 'none';
-							document.getElementById('div_Serie').style.display = 'none';
-							document.getElementById('div_idSubTipo').style.display = 'none';
-							document.getElementById('div_Saf').style.display = 'none';
-							document.getElementById('div_Numero').style.display = 'none';
-							document.getElementById('div_idProducto').style.display = 'none';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = 'none';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = 'none';
-							document.getElementById('div_idFrecuencia').style.display = 'none';
-
-						//si es Componente
-						} else if(Sensores_val_1 == 2){
-							document.getElementById('div_Modelo').style.display = '';
-							document.getElementById('div_AnoFab').style.display = '';
-							document.getElementById('div_Serie').style.display = '';
-							document.getElementById('div_idSubTipo').style.display = 'none';
-							document.getElementById('div_Saf').style.display = 'none';
-							document.getElementById('div_Numero').style.display = 'none';
-							document.getElementById('div_idProducto').style.display = 'none';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = 'none';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = 'none';
-							document.getElementById('div_idFrecuencia').style.display = 'none';
-
-						//si es Subcomponente
-						} else if(Sensores_val_1 == 3){
-							document.getElementById('div_Modelo').style.display = 'none';
-							document.getElementById('div_AnoFab').style.display = 'none';
-							document.getElementById('div_Serie').style.display = 'none';
-							document.getElementById('div_idSubTipo').style.display = '';
-							document.getElementById('div_Saf').style.display = '';
-							document.getElementById('div_Numero').style.display = '';
-							document.getElementById('div_idProducto').style.display = 'none';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = 'none';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = 'none';
-							document.getElementById('div_idFrecuencia').style.display = 'none';
-
-						}
-
-						let Sensores_val_2= $("#idSubTipo").val();
-
-						//si es grasa
-						if(Sensores_val_2 == 1){
-							document.getElementById('div_Saf').style.display = '';
-							document.getElementById('div_Numero').style.display = '';
-							document.getElementById('div_idProducto').style.display = '';
-							document.getElementById('div_Grasa_inicial').style.display = '';
-							document.getElementById('div_Grasa_relubricacion').style.display = '';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = '';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = '';
-							document.getElementById('div_idFrecuencia').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";
-
-						//si es aceite
-						} else if(Sensores_val_2 == 2){
-							document.getElementById('div_Saf').style.display = '';
-							document.getElementById('div_Numero').style.display = '';
-							document.getElementById('div_idProducto').style.display = '';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = '';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = '';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = '';
-							document.getElementById('div_idFrecuencia').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Cantidad').value = "0";
-
-						//si es normal
-						} else if(Sensores_val_2 == 3){
-							document.getElementById('div_Saf').style.display = '';
-							document.getElementById('div_Numero').style.display = '';
-							document.getElementById('div_idProducto').style.display = '';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = '';
-							document.getElementById('div_idUml_fake').style.display = '';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = '';
-							document.getElementById('div_idFrecuencia').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";
-						//si es otro
-						} else if(Sensores_val_2 == 4){
-							document.getElementById('div_Saf').style.display = 'none';
-							document.getElementById('div_Numero').style.display = 'none';
-							document.getElementById('div_idProducto').style.display = 'none';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = 'none';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = '';
-							document.getElementById('div_idFrecuencia').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";
-						}
-
+						//cargo al inicio
+						LoadProducto();
+						LoadUtilizable(0);
+						LoadSubTipo(0);
 					});
 
 					/**********************************************************************/
+					document.getElementById("idProducto").onchange = function() {LoadProducto()};
+					document.getElementById("idUtilizable").onchange = function() {LoadUtilizable(1)};
+					document.getElementById("idSubTipo").onchange = function() {LoadSubTipo(1)};
 
-					$("#idUtilizable").on("change", function(){
-						let TipoComp = $(this).val();
-
-						//si es No Usable
-						if(TipoComp == 1){
-							document.getElementById('div_Modelo').style.display = 'none';
-							document.getElementById('div_AnoFab').style.display = 'none';
-							document.getElementById('div_Serie').style.display = 'none';
-							document.getElementById('div_idSubTipo').style.display = 'none';
-							document.getElementById('div_Saf').style.display = 'none';
-							document.getElementById('div_Numero').style.display = 'none';
-							document.getElementById('div_idProducto').style.display = 'none';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = 'none';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = 'none';
-							document.getElementById('div_idFrecuencia').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idProducto').selectedIndex = 0;
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";
-							document.getElementById('idUml_fake').value = "0";
-							document.getElementById('idUml').value = "0";
-							document.getElementById('Frecuencia').value = "0";
-							document.getElementById('idFrecuencia').selectedIndex = 0;
-
-						//si es Componente
-						} else if(TipoComp == 2){
-							document.getElementById('div_Modelo').style.display = '';
-							document.getElementById('div_AnoFab').style.display = '';
-							document.getElementById('div_Serie').style.display = '';
-							document.getElementById('div_idSubTipo').style.display = 'none';
-							document.getElementById('div_Saf').style.display = 'none';
-							document.getElementById('div_Numero').style.display = 'none';
-							document.getElementById('div_idProducto').style.display = 'none';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = 'none';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = 'none';
-							document.getElementById('div_idFrecuencia').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idProducto').selectedIndex = 0;
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";
-							document.getElementById('idUml_fake').value = "0";
-							document.getElementById('idUml').value = "0";
-							document.getElementById('Frecuencia').value = "0";
-							document.getElementById('idFrecuencia').selectedIndex = 0;
-
-						//si es Subcomponente
-						} else if(TipoComp == 3){
-							document.getElementById('div_Modelo').style.display = 'none';
-							document.getElementById('div_AnoFab').style.display = 'none';
-							document.getElementById('div_Serie').style.display = 'none';
-							document.getElementById('div_idSubTipo').style.display = '';
-							document.getElementById('div_Saf').style.display = '';
-							document.getElementById('div_Numero').style.display = '';
-							document.getElementById('div_idProducto').style.display = 'none';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = 'none';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = 'none';
-							document.getElementById('div_idFrecuencia').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idProducto').selectedIndex = 0;
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";
-							document.getElementById('idUml_fake').value = "0";
-							document.getElementById('idUml').value = "0";
-							document.getElementById('Frecuencia').value = "0";
-							document.getElementById('idFrecuencia').selectedIndex = 0;
-
+					/**********************************************************************/
+					function LoadProducto(){
+						let Componente = document.getElementById("idProducto").value;
+						if (Componente != "") {
+							//escribo dentro del input
+							document.getElementById("idUml_fake").value = eval("id_data1_" + Componente);
+							document.getElementById("idUml").value      = eval("id_data2_" + Componente);
 						}
-					});
+					}
 
-					$("#idSubTipo").on("change", function(){ //se ejecuta al cambiar valor del select
-						let modelSelected = $(this).val(); //Asignamos el valor seleccionado
-
-						//si es grasa
-						if(modelSelected == 1){
-							document.getElementById('div_Saf').style.display = '';
-							document.getElementById('div_Numero').style.display = '';
-							document.getElementById('div_idProducto').style.display = '';
-							document.getElementById('div_Grasa_inicial').style.display = '';
-							document.getElementById('div_Grasa_relubricacion').style.display = '';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = '';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = '';
-							document.getElementById('div_idFrecuencia').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";
-
-						//si es aceite
-						} else if(modelSelected == 2){
-							document.getElementById('div_Saf').style.display = '';
-							document.getElementById('div_Numero').style.display = '';
-							document.getElementById('div_idProducto').style.display = '';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = '';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = '';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = '';
-							document.getElementById('div_idFrecuencia').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Cantidad').value = "0";
-
-						//si es normal
-						} else if(modelSelected == 3){
-							document.getElementById('div_Saf').style.display = '';
-							document.getElementById('div_Numero').style.display = '';
-							document.getElementById('div_idProducto').style.display = '';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = '';
-							document.getElementById('div_idUml_fake').style.display = '';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = '';
-							document.getElementById('div_idFrecuencia').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";
-						//si es otro
-						} else if(modelSelected == 4){
-							document.getElementById('div_Saf').style.display = '';
-							document.getElementById('div_Numero').style.display = '';
-							document.getElementById('div_idProducto').style.display = 'none';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = 'none';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = '';
-							document.getElementById('div_idFrecuencia').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";
-						//el resto
-						} else {
-							document.getElementById('div_Saf').style.display = 'none';
-							document.getElementById('div_Numero').style.display = 'none';
-							document.getElementById('div_idProducto').style.display = 'none';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = 'none';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = 'none';
-							document.getElementById('div_idFrecuencia').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";
+					/**********************************************************************/
+					function LoadUtilizable(caseLoad){
+						//obtengo los valores
+						let Sensores_val_1= $("#idUtilizable").val();
+						//selecciono
+						switch(Sensores_val_1) {
+							//si es No Usable
+							case '1':
+								document.getElementById('div_Modelo').style.display = 'none';
+								document.getElementById('div_AnoFab').style.display = 'none';
+								document.getElementById('div_Serie').style.display = 'none';
+								document.getElementById('div_idSubTipo').style.display = 'none';
+								document.getElementById('div_Saf').style.display = 'none';
+								document.getElementById('div_Numero').style.display = 'none';
+								document.getElementById('div_idProducto').style.display = 'none';
+								document.getElementById('div_Grasa_inicial').style.display = 'none';
+								document.getElementById('div_Grasa_relubricacion').style.display = 'none';
+								document.getElementById('div_Aceite').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_idUml_fake').style.display = 'none';
+								document.getElementById('div_idUml').style.display = 'none';
+								document.getElementById('div_Frecuencia').style.display = 'none';
+								document.getElementById('div_idFrecuencia').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('idProducto').selectedIndex = 0;
+									document.getElementById('Grasa_inicial').value = "0";
+									document.getElementById('Grasa_relubricacion').value = "0";
+									document.getElementById('Aceite').value = "0";
+									document.getElementById('Cantidad').value = "0";
+									document.getElementById('idUml_fake').value = "0";
+									document.getElementById('idUml').value = "0";
+									document.getElementById('Frecuencia').value = "0";
+									document.getElementById('idFrecuencia').selectedIndex = 0;
+								}
+							break;
+							//si es Componente
+							case '2':
+								document.getElementById('div_Modelo').style.display = '';
+								document.getElementById('div_AnoFab').style.display = '';
+								document.getElementById('div_Serie').style.display = '';
+								document.getElementById('div_idSubTipo').style.display = 'none';
+								document.getElementById('div_Saf').style.display = 'none';
+								document.getElementById('div_Numero').style.display = 'none';
+								document.getElementById('div_idProducto').style.display = 'none';
+								document.getElementById('div_Grasa_inicial').style.display = 'none';
+								document.getElementById('div_Grasa_relubricacion').style.display = 'none';
+								document.getElementById('div_Aceite').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_idUml_fake').style.display = 'none';
+								document.getElementById('div_idUml').style.display = 'none';
+								document.getElementById('div_Frecuencia').style.display = 'none';
+								document.getElementById('div_idFrecuencia').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('idProducto').selectedIndex = 0;
+									document.getElementById('Grasa_inicial').value = "0";
+									document.getElementById('Grasa_relubricacion').value = "0";
+									document.getElementById('Aceite').value = "0";
+									document.getElementById('Cantidad').value = "0";
+									document.getElementById('idUml_fake').value = "0";
+									document.getElementById('idUml').value = "0";
+									document.getElementById('Frecuencia').value = "0";
+									document.getElementById('idFrecuencia').selectedIndex = 0;
+								}
+							break;
+							//si es Subcomponente
+							case '3':
+								document.getElementById('div_Modelo').style.display = 'none';
+								document.getElementById('div_AnoFab').style.display = 'none';
+								document.getElementById('div_Serie').style.display = 'none';
+								document.getElementById('div_idSubTipo').style.display = '';
+								document.getElementById('div_Saf').style.display = '';
+								document.getElementById('div_Numero').style.display = '';
+								document.getElementById('div_idProducto').style.display = 'none';
+								document.getElementById('div_Grasa_inicial').style.display = 'none';
+								document.getElementById('div_Grasa_relubricacion').style.display = 'none';
+								document.getElementById('div_Aceite').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_idUml_fake').style.display = 'none';
+								document.getElementById('div_idUml').style.display = 'none';
+								document.getElementById('div_Frecuencia').style.display = 'none';
+								document.getElementById('div_idFrecuencia').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('idProducto').selectedIndex = 0;
+									document.getElementById('Grasa_inicial').value = "0";
+									document.getElementById('Grasa_relubricacion').value = "0";
+									document.getElementById('Aceite').value = "0";
+									document.getElementById('Cantidad').value = "0";
+									document.getElementById('idUml_fake').value = "0";
+									document.getElementById('idUml').value = "0";
+									document.getElementById('Frecuencia').value = "0";
+									document.getElementById('idFrecuencia').selectedIndex = 0;
+								}
+							break;
 						}
+					}
 
-					});
+					/**********************************************************************/
+					function LoadSubTipo(caseLoad){
+						//obtengo los valores
+						let Sensores_val_2= $("#idSubTipo").val();
+						//selecciono
+						switch(Sensores_val_2) {
+							//Errores Conjuntos
+							case '1':
+								document.getElementById('div_Saf').style.display = '';
+								document.getElementById('div_Numero').style.display = '';
+								document.getElementById('div_idProducto').style.display = '';
+								document.getElementById('div_Grasa_inicial').style.display = '';
+								document.getElementById('div_Grasa_relubricacion').style.display = '';
+								document.getElementById('div_Aceite').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_idUml_fake').style.display = '';
+								document.getElementById('div_idUml').style.display = 'none';
+								document.getElementById('div_Frecuencia').style.display = '';
+								document.getElementById('div_idFrecuencia').style.display = '';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('Aceite').value = "0";
+									document.getElementById('Cantidad').value = "0";
+								}
+							break;
+							//Errores Conjuntos
+							case '2':
+								document.getElementById('div_Saf').style.display = '';
+								document.getElementById('div_Numero').style.display = '';
+								document.getElementById('div_idProducto').style.display = '';
+								document.getElementById('div_Grasa_inicial').style.display = 'none';
+								document.getElementById('div_Grasa_relubricacion').style.display = 'none';
+								document.getElementById('div_Aceite').style.display = '';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_idUml_fake').style.display = '';
+								document.getElementById('div_idUml').style.display = 'none';
+								document.getElementById('div_Frecuencia').style.display = '';
+								document.getElementById('div_idFrecuencia').style.display = '';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('Grasa_inicial').value = "0";
+									document.getElementById('Grasa_relubricacion').value = "0";
+									document.getElementById('Cantidad').value = "0";
+								}
+							break;
+							//Errores Conjuntos
+							case '3':
+								document.getElementById('div_Saf').style.display = '';
+								document.getElementById('div_Numero').style.display = '';
+								document.getElementById('div_idProducto').style.display = '';
+								document.getElementById('div_Grasa_inicial').style.display = 'none';
+								document.getElementById('div_Grasa_relubricacion').style.display = 'none';
+								document.getElementById('div_Aceite').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = '';
+								document.getElementById('div_idUml_fake').style.display = '';
+								document.getElementById('div_idUml').style.display = 'none';
+								document.getElementById('div_Frecuencia').style.display = '';
+								document.getElementById('div_idFrecuencia').style.display = '';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('Grasa_inicial').value = "0";
+									document.getElementById('Grasa_relubricacion').value = "0";
+									document.getElementById('Aceite').value = "0";
+								}
+							break;
+							//Errores Conjuntos
+							case '4':
+								document.getElementById('div_Saf').style.display = 'none';
+								document.getElementById('div_Numero').style.display = 'none';
+								document.getElementById('div_idProducto').style.display = 'none';
+								document.getElementById('div_Grasa_inicial').style.display = 'none';
+								document.getElementById('div_Grasa_relubricacion').style.display = 'none';
+								document.getElementById('div_Aceite').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_idUml_fake').style.display = 'none';
+								document.getElementById('div_idUml').style.display = 'none';
+								document.getElementById('div_Frecuencia').style.display = '';
+								document.getElementById('div_idFrecuencia').style.display = '';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('Grasa_inicial').value = "0";
+									document.getElementById('Grasa_relubricacion').value = "0";
+									document.getElementById('Aceite').value = "0";
+									document.getElementById('Cantidad').value = "0";
+								}
+							break;
+						}
+					}
 
 				</script>
 
@@ -1014,222 +886,246 @@ foreach ($arrPermisos as $prod) {
 				while ( $row = mysqli_fetch_assoc ($resultado)){
 				array_push( $arrTipo,$row );
 				}
-				
-				echo '<script>';
-				foreach ($arrTipo as $tipo) {
-					echo '
-					let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
-					let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
-					';
-				}
+
 				?>
-				</script>
 
 				<script>
-				document.getElementById("idProducto").onchange = function() {myFunction()};
-
-				function myFunction() {
-					let Componente = document.getElementById("idProducto").value;
-					if (Componente != "") {
-						//escribo dentro del input
-						document.getElementById("idUml_fake").value = eval("id_data1_" + Componente);
-						document.getElementById("idUml").value      = eval("id_data2_" + Componente);
+					/**********************************************************************/
+					<?php
+					foreach ($arrTipo as $tipo) {
+						echo '
+						let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
+						let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
+						';
 					}
-				}
-				</script>
+					?>
 
-				<script>
-					//Se ocultan todos los input
-					document.getElementById('div_Modelo').style.display = 'none';
-					document.getElementById('div_AnoFab').style.display = 'none';
-					document.getElementById('div_Serie').style.display = 'none';
-					document.getElementById('div_idSubTipo').style.display = 'none';
-					document.getElementById('div_Saf').style.display = 'none';
-					document.getElementById('div_Numero').style.display = 'none';
-					document.getElementById('div_idProducto').style.display = 'none';
-					document.getElementById('div_Grasa_inicial').style.display = 'none';
-					document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-					document.getElementById('div_Aceite').style.display = 'none';
-					document.getElementById('div_Cantidad').style.display = 'none';
-					document.getElementById('div_idUml_fake').style.display = 'none';
-					document.getElementById('div_idUml').style.display = 'none';
-					document.getElementById('div_Frecuencia').style.display = 'none';
-					document.getElementById('div_idFrecuencia').style.display = 'none';
-
-					$("#idUtilizable").on("change", function(){
-						let TipoComp = $(this).val();
-
-						//si es No Usable
-						if(TipoComp == 1){
-							document.getElementById('div_Modelo').style.display = 'none';
-							document.getElementById('div_AnoFab').style.display = 'none';
-							document.getElementById('div_Serie').style.display = 'none';
-							document.getElementById('div_idSubTipo').style.display = 'none';
-							document.getElementById('div_Saf').style.display = 'none';
-							document.getElementById('div_Numero').style.display = 'none';
-							document.getElementById('div_idProducto').style.display = 'none';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = 'none';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = 'none';
-							document.getElementById('div_idFrecuencia').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idProducto').selectedIndex = 0;
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";
-							document.getElementById('idUml_fake').value = "0";
-							document.getElementById('idUml').value = "0";
-							document.getElementById('Frecuencia').value = "0";
-							document.getElementById('idFrecuencia').selectedIndex = 0;
-
-						//si es Componente
-						} else if(TipoComp == 2){
-							document.getElementById('div_Modelo').style.display = '';
-							document.getElementById('div_AnoFab').style.display = '';
-							document.getElementById('div_Serie').style.display = '';
-							document.getElementById('div_idSubTipo').style.display = 'none';
-							document.getElementById('div_Saf').style.display = 'none';
-							document.getElementById('div_Numero').style.display = 'none';
-							document.getElementById('div_idProducto').style.display = 'none';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = 'none';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = 'none';
-							document.getElementById('div_idFrecuencia').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idProducto').selectedIndex = 0;
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";
-							document.getElementById('idUml_fake').value = "0";
-							document.getElementById('idUml').value = "0";
-							document.getElementById('Frecuencia').value = "0";
-							document.getElementById('idFrecuencia').selectedIndex = 0;
-
-						//si es Subcomponente
-						} else if(TipoComp == 3){
-							document.getElementById('div_Modelo').style.display = 'none';
-							document.getElementById('div_AnoFab').style.display = 'none';
-							document.getElementById('div_Serie').style.display = 'none';
-							document.getElementById('div_idSubTipo').style.display = '';
-							document.getElementById('div_Saf').style.display = '';
-							document.getElementById('div_Numero').style.display = '';
-							document.getElementById('div_idProducto').style.display = 'none';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = 'none';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = 'none';
-							document.getElementById('div_idFrecuencia').style.display = 'none';
-
-						}
+					/**********************************************************************/
+					$(document).ready(function(){
+						//Se ocultan todos los input
+						document.getElementById('div_Modelo').style.display = 'none';
+						document.getElementById('div_AnoFab').style.display = 'none';
+						document.getElementById('div_Serie').style.display = 'none';
+						document.getElementById('div_idSubTipo').style.display = 'none';
+						document.getElementById('div_Saf').style.display = 'none';
+						document.getElementById('div_Numero').style.display = 'none';
+						document.getElementById('div_idProducto').style.display = 'none';
+						document.getElementById('div_Grasa_inicial').style.display = 'none';
+						document.getElementById('div_Grasa_relubricacion').style.display = 'none';
+						document.getElementById('div_Aceite').style.display = 'none';
+						document.getElementById('div_Cantidad').style.display = 'none';
+						document.getElementById('div_idUml_fake').style.display = 'none';
+						document.getElementById('div_idUml').style.display = 'none';
+						document.getElementById('div_Frecuencia').style.display = 'none';
+						document.getElementById('div_idFrecuencia').style.display = 'none';
+						//cargo al inicio
+						LoadProducto();
+						LoadUtilizable(0);
+						LoadSubTipo(0);
 					});
 
-					$("#idSubTipo").on("change", function(){ //se ejecuta al cambiar valor del select
-						let modelSelected = $(this).val(); //Asignamos el valor seleccionado
+					/**********************************************************************/
+					document.getElementById("idProducto").onchange = function() {LoadProducto()};
+					document.getElementById("idUtilizable").onchange = function() {LoadUtilizable(1)};
+					document.getElementById("idSubTipo").onchange = function() {LoadSubTipo(1)};
 
-						//si es grasa
-						if(modelSelected == 1){
-							document.getElementById('div_Saf').style.display = '';
-							document.getElementById('div_Numero').style.display = '';
-							document.getElementById('div_idProducto').style.display = '';
-							document.getElementById('div_Grasa_inicial').style.display = '';
-							document.getElementById('div_Grasa_relubricacion').style.display = '';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = '';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = '';
-							document.getElementById('div_idFrecuencia').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";
-
-						//si es aceite
-						} else if(modelSelected == 2){
-							document.getElementById('div_Saf').style.display = '';
-							document.getElementById('div_Numero').style.display = '';
-							document.getElementById('div_idProducto').style.display = '';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = '';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = '';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = '';
-							document.getElementById('div_idFrecuencia').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Cantidad').value = "0";
-
-						//si es normal
-						} else if(modelSelected == 3){
-							document.getElementById('div_Saf').style.display = '';
-							document.getElementById('div_Numero').style.display = '';
-							document.getElementById('div_idProducto').style.display = '';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = '';
-							document.getElementById('div_idUml_fake').style.display = '';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = '';
-							document.getElementById('div_idFrecuencia').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";
-						//si es otro
-						} else if(modelSelected == 4){
-							document.getElementById('div_Saf').style.display = '';
-							document.getElementById('div_Numero').style.display = '';
-							document.getElementById('div_idProducto').style.display = 'none';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = 'none';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = '';
-							document.getElementById('div_idFrecuencia').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";
-						//el resto
-						} else {
-							document.getElementById('div_Saf').style.display = 'none';
-							document.getElementById('div_Numero').style.display = 'none';
-							document.getElementById('div_idProducto').style.display = 'none';
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idUml_fake').style.display = 'none';
-							document.getElementById('div_idUml').style.display = 'none';
-							document.getElementById('div_Frecuencia').style.display = 'none';
-							document.getElementById('div_idFrecuencia').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";
+					/**********************************************************************/
+					function LoadProducto(){
+						let Componente = document.getElementById("idProducto").value;
+						if (Componente != "") {
+							//escribo dentro del input
+							document.getElementById("idUml_fake").value = eval("id_data1_" + Componente);
+							document.getElementById("idUml").value      = eval("id_data2_" + Componente);
 						}
+					}
 
-					});
+					/**********************************************************************/
+					function LoadUtilizable(caseLoad){
+						//obtengo los valores
+						let Sensores_val_1= $("#idUtilizable").val();
+						//selecciono
+						switch(Sensores_val_1) {
+							//si es No Usable
+							case '1':
+								document.getElementById('div_Modelo').style.display = 'none';
+								document.getElementById('div_AnoFab').style.display = 'none';
+								document.getElementById('div_Serie').style.display = 'none';
+								document.getElementById('div_idSubTipo').style.display = 'none';
+								document.getElementById('div_Saf').style.display = 'none';
+								document.getElementById('div_Numero').style.display = 'none';
+								document.getElementById('div_idProducto').style.display = 'none';
+								document.getElementById('div_Grasa_inicial').style.display = 'none';
+								document.getElementById('div_Grasa_relubricacion').style.display = 'none';
+								document.getElementById('div_Aceite').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_idUml_fake').style.display = 'none';
+								document.getElementById('div_idUml').style.display = 'none';
+								document.getElementById('div_Frecuencia').style.display = 'none';
+								document.getElementById('div_idFrecuencia').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('idProducto').selectedIndex = 0;
+									document.getElementById('Grasa_inicial').value = "0";
+									document.getElementById('Grasa_relubricacion').value = "0";
+									document.getElementById('Aceite').value = "0";
+									document.getElementById('Cantidad').value = "0";
+									document.getElementById('idUml_fake').value = "0";
+									document.getElementById('idUml').value = "0";
+									document.getElementById('Frecuencia').value = "0";
+									document.getElementById('idFrecuencia').selectedIndex = 0;
+								}
+							break;
+							//si es Componente
+							case '2':
+								document.getElementById('div_Modelo').style.display = '';
+								document.getElementById('div_AnoFab').style.display = '';
+								document.getElementById('div_Serie').style.display = '';
+								document.getElementById('div_idSubTipo').style.display = 'none';
+								document.getElementById('div_Saf').style.display = 'none';
+								document.getElementById('div_Numero').style.display = 'none';
+								document.getElementById('div_idProducto').style.display = 'none';
+								document.getElementById('div_Grasa_inicial').style.display = 'none';
+								document.getElementById('div_Grasa_relubricacion').style.display = 'none';
+								document.getElementById('div_Aceite').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_idUml_fake').style.display = 'none';
+								document.getElementById('div_idUml').style.display = 'none';
+								document.getElementById('div_Frecuencia').style.display = 'none';
+								document.getElementById('div_idFrecuencia').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('idProducto').selectedIndex = 0;
+									document.getElementById('Grasa_inicial').value = "0";
+									document.getElementById('Grasa_relubricacion').value = "0";
+									document.getElementById('Aceite').value = "0";
+									document.getElementById('Cantidad').value = "0";
+									document.getElementById('idUml_fake').value = "0";
+									document.getElementById('idUml').value = "0";
+									document.getElementById('Frecuencia').value = "0";
+									document.getElementById('idFrecuencia').selectedIndex = 0;
+								}
+							break;
+							//si es Subcomponente
+							case '3':
+								document.getElementById('div_Modelo').style.display = 'none';
+								document.getElementById('div_AnoFab').style.display = 'none';
+								document.getElementById('div_Serie').style.display = 'none';
+								document.getElementById('div_idSubTipo').style.display = '';
+								document.getElementById('div_Saf').style.display = '';
+								document.getElementById('div_Numero').style.display = '';
+								document.getElementById('div_idProducto').style.display = 'none';
+								document.getElementById('div_Grasa_inicial').style.display = 'none';
+								document.getElementById('div_Grasa_relubricacion').style.display = 'none';
+								document.getElementById('div_Aceite').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_idUml_fake').style.display = 'none';
+								document.getElementById('div_idUml').style.display = 'none';
+								document.getElementById('div_Frecuencia').style.display = 'none';
+								document.getElementById('div_idFrecuencia').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('idProducto').selectedIndex = 0;
+									document.getElementById('Grasa_inicial').value = "0";
+									document.getElementById('Grasa_relubricacion').value = "0";
+									document.getElementById('Aceite').value = "0";
+									document.getElementById('Cantidad').value = "0";
+									document.getElementById('idUml_fake').value = "0";
+									document.getElementById('idUml').value = "0";
+									document.getElementById('Frecuencia').value = "0";
+									document.getElementById('idFrecuencia').selectedIndex = 0;
+								}
+							break;
+						}
+					}
+
+					/**********************************************************************/
+					function LoadSubTipo(caseLoad){
+						//obtengo los valores
+						let Sensores_val_2= $("#idSubTipo").val();
+						//selecciono
+						switch(Sensores_val_2) {
+							//Errores Conjuntos
+							case '1':
+								document.getElementById('div_Saf').style.display = '';
+								document.getElementById('div_Numero').style.display = '';
+								document.getElementById('div_idProducto').style.display = '';
+								document.getElementById('div_Grasa_inicial').style.display = '';
+								document.getElementById('div_Grasa_relubricacion').style.display = '';
+								document.getElementById('div_Aceite').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_idUml_fake').style.display = '';
+								document.getElementById('div_idUml').style.display = 'none';
+								document.getElementById('div_Frecuencia').style.display = '';
+								document.getElementById('div_idFrecuencia').style.display = '';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('Aceite').value = "0";
+									document.getElementById('Cantidad').value = "0";
+								}
+							break;
+							//Errores Conjuntos
+							case '2':
+								document.getElementById('div_Saf').style.display = '';
+								document.getElementById('div_Numero').style.display = '';
+								document.getElementById('div_idProducto').style.display = '';
+								document.getElementById('div_Grasa_inicial').style.display = 'none';
+								document.getElementById('div_Grasa_relubricacion').style.display = 'none';
+								document.getElementById('div_Aceite').style.display = '';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_idUml_fake').style.display = '';
+								document.getElementById('div_idUml').style.display = 'none';
+								document.getElementById('div_Frecuencia').style.display = '';
+								document.getElementById('div_idFrecuencia').style.display = '';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('Grasa_inicial').value = "0";
+									document.getElementById('Grasa_relubricacion').value = "0";
+									document.getElementById('Cantidad').value = "0";
+								}
+							break;
+							//Errores Conjuntos
+							case '3':
+								document.getElementById('div_Saf').style.display = '';
+								document.getElementById('div_Numero').style.display = '';
+								document.getElementById('div_idProducto').style.display = '';
+								document.getElementById('div_Grasa_inicial').style.display = 'none';
+								document.getElementById('div_Grasa_relubricacion').style.display = 'none';
+								document.getElementById('div_Aceite').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = '';
+								document.getElementById('div_idUml_fake').style.display = '';
+								document.getElementById('div_idUml').style.display = 'none';
+								document.getElementById('div_Frecuencia').style.display = '';
+								document.getElementById('div_idFrecuencia').style.display = '';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('Grasa_inicial').value = "0";
+									document.getElementById('Grasa_relubricacion').value = "0";
+									document.getElementById('Aceite').value = "0";
+								}
+							break;
+							//Errores Conjuntos
+							case '4':
+								document.getElementById('div_Saf').style.display = 'none';
+								document.getElementById('div_Numero').style.display = 'none';
+								document.getElementById('div_idProducto').style.display = 'none';
+								document.getElementById('div_Grasa_inicial').style.display = 'none';
+								document.getElementById('div_Grasa_relubricacion').style.display = 'none';
+								document.getElementById('div_Aceite').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_idUml_fake').style.display = 'none';
+								document.getElementById('div_idUml').style.display = 'none';
+								document.getElementById('div_Frecuencia').style.display = '';
+								document.getElementById('div_idFrecuencia').style.display = '';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('Grasa_inicial').value = "0";
+									document.getElementById('Grasa_relubricacion').value = "0";
+									document.getElementById('Aceite').value = "0";
+									document.getElementById('Cantidad').value = "0";
+								}
+							break;
+						}
+					}
 
 				</script>
 

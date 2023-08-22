@@ -255,39 +255,39 @@ foreach ($arrPermisos as $prod) {
 				$Form_Inputs->form_select('Estado','idEstado', $x9, 2, 'idEstado', 'Nombre', 'core_analisis_estado', 0, '', $dbConn);
 
 				$Form_Inputs->form_input_hidden('idAnalisis', $_GET['id'], 2);
-			
+
 				?>
 				<script>
-					document.getElementById('div_idLaboratorio').style.display = 'none';
+					/**********************************************************************/
+					$(document).ready(function(){
+						document.getElementById('div_idLaboratorio').style.display = 'none';
+						//se ejecuta al inicio
+						LoadTipo(0);
+					});
 
-					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
+					/**********************************************************************/
+					document.getElementById("idTipo").onchange = function() {LoadTipo(1)};
 
+					/**********************************************************************/
+					function LoadTipo(caseLoad){
+						//obtengo los valores
 						let Sensores_val= $("#idTipo").val();
-
-						//si es Interno
-						if(Sensores_val == 1){
-							document.getElementById('div_idLaboratorio').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idLaboratorio').selectedIndex = 0;
-						//si es Externo
-						} else {
-							document.getElementById('div_idLaboratorio').style.display = '';
+						//selecciono
+						switch(Sensores_val) {
+							//si es Interno
+							case '1':
+								document.getElementById('div_idLaboratorio').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('idLaboratorio').selectedIndex = 0;
+								}
+							break;
+							//si es Externo
+							case '2':
+								document.getElementById('div_idLaboratorio').style.display = '';
+							break;
 						}
-					});
-
-					$("#idTipo").on("change", function(){ //se ejecuta al cambiar valor del select
-						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-
-						//si es Interno
-						if(modelSelected1 == 1){
-							document.getElementById('div_idLaboratorio').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idLaboratorio').selectedIndex = 0;
-						//si es Externo
-						} else {
-							document.getElementById('div_idLaboratorio').style.display = '';
-						}
-					});
+					}
 
 				</script>
 
@@ -482,21 +482,34 @@ foreach ($arrPermisos as $prod) {
 				?>
 
 				<script>
-					document.getElementById('div_idLaboratorio').style.display = 'none';
-
-					$("#idTipo").on("change", function(){ //se ejecuta al cambiar valor del select
-						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-
-						//si es Interno
-						if(modelSelected1 == 1){
-							document.getElementById('div_idLaboratorio').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idLaboratorio').selectedIndex = 0;		
-						//si es Externo
-						} else {
-							document.getElementById('div_idLaboratorio').style.display = '';
-						}
+					/**********************************************************************/
+					$(document).ready(function(){
+						document.getElementById('div_idLaboratorio').style.display = 'none';
 					});
+
+					/**********************************************************************/
+					document.getElementById("idTipo").onchange = function() {LoadTipo(1)};
+
+					/**********************************************************************/
+					function LoadTipo(caseLoad){
+						//obtengo los valores
+						let Sensores_val= $("#idTipo").val();
+						//selecciono
+						switch(Sensores_val) {
+							//si es Interno
+							case '1':
+								document.getElementById('div_idLaboratorio').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('idLaboratorio').selectedIndex = 0;
+								}
+							break;
+							//si es Externo
+							case '2':
+								document.getElementById('div_idLaboratorio').style.display = '';
+							break;
+						}
+					}
 
 				</script>
 

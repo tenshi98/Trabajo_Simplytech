@@ -105,30 +105,36 @@ $rowdata = db_select_data (false, $SIS_query, 'apoderados_listado', $SIS_join, $
 					$Form_Inputs->form_input_hidden('idApoderado', $_GET['id'], 2);
 					?>
 					<script>
-						document.getElementById('div_idOpciones_2').style.display = 'none';
-
-						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-							let Sensores_val= $("#idOpciones_1").val();
-							//si es SI
-							if(Sensores_val == 1){
-								document.getElementById('div_idOpciones_2').style.display = '';
-							//si es NO
-							} else if(Sensores_val == 2){
-								document.getElementById('div_idOpciones_2').style.display = 'none';
-							}
+						/**********************************************************************/
+						$(document).ready(function(){
+							document.getElementById('div_idOpciones_2').style.display = 'none';
+							//se ejecuta al inicio
+							LoadOpciones_1(0);
 						});
 
-						$("#idOpciones_1").on("change", function(){ //se ejecuta al cambiar valor del select
-							let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
-							//si es SI
-							if(modelSelected1 == 1){
-								document.getElementById('div_idOpciones_2').style.display = '';
-							//si es NO
-							} else if(modelSelected1 == 2){
-								document.getElementById('div_idOpciones_2').style.display = 'none';
-								document.getElementById('idOpciones_2').selectedIndex = 0;
+						/**********************************************************************/
+						document.getElementById("idOpciones_1").onchange = function() {LoadOpciones_1(1)};
+
+						/**********************************************************************/
+						function LoadOpciones_1(caseLoad){
+							//obtengo los valores
+							let Sensores_val = $("#idOpciones_1").val();
+							//selecciono
+							switch(Sensores_val) {
+								//si es SI
+								case '1':
+									document.getElementById('div_idOpciones_2').style.display = '';
+								break;
+								//si es NO
+								case '2':
+									document.getElementById('div_idOpciones_2').style.display = 'none';
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById('idOpciones_2').selectedIndex = 0;
+									}
+								break;
 							}
-						});
+						}
 
 					</script>
 

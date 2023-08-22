@@ -165,77 +165,48 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 				?>
 
 				<script>
-					//oculto los div
-					document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'none';
-					document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'none';
-					document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'none';
-					document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
-
-					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-
-						let SensoresUso_<?php echo $_GET['mod']; ?>= $("#SensoresUso_<?php echo $_GET['mod']; ?>").val();
-
-						//Si es si
-						if(SensoresUso_<?php echo $_GET['mod']; ?> == 1){
-							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'block';
-							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'block';
-							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'block';
-							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'block';
-
-						//Si es no
-						}else if(SensoresUso_<?php echo $_GET['mod']; ?> == 2){
-							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'none';
-							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'none';
-							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'none';
-							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
-
-						//si no en ninguno
-						}else{
-							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'none';
-							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'none';
-							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'none';
-							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
-
-						}
-
+					/**********************************************************************/
+					$(document).ready(function(){
+						document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'none';
+						document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'none';
+						document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'none';
+						document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
+						//se ejecuta al inicio
+						LoadSensoresUso(0);
 					});
 
-					$("#SensoresUso_<?php echo $_GET['mod']; ?>").on("change", function(){ //se ejecuta al cambiar valor del select
-						let SensoresUso_<?php echo $_GET['mod']; ?>_sel = $(this).val(); //Asignamos el valor seleccionado
+					/**********************************************************************/
+					document.getElementById("SensoresUso_<?php echo $_GET['mod']; ?>").onchange = function() {LoadSensoresUso(1)};
 
-						//Si es si
-						if(SensoresUso_<?php echo $_GET['mod']; ?>_sel == 1){
-							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'block';
-							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'block';
-							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'block';
-							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'block';
-
-						//Si es no
-						}else if(SensoresUso_<?php echo $_GET['mod']; ?>_sel == 2){
-							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'none';
-							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'none';
-							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'none';
-							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('SensoresFechaUso_<?php echo $_GET['mod']; ?>').value = "0000-00-00";
-							document.getElementById('SensoresAccionC_<?php echo $_GET['mod']; ?>').value = "0";
-							document.getElementById('SensoresAccionT_<?php echo $_GET['mod']; ?>').value = "0";
-							document.getElementById('SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').selectedIndex = 0;
-
-						//si no en ninguno
-						}else{
-							document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'block';
-							document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'block';
-							document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'block';
-							document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'block';
-							//Reseteo los valores a 0
-							document.getElementById('SensoresFechaUso_<?php echo $_GET['mod']; ?>').value = "0000-00-00";
-							document.getElementById('SensoresAccionC_<?php echo $_GET['mod']; ?>').value = "0";
-							document.getElementById('SensoresAccionT_<?php echo $_GET['mod']; ?>').value = "0";
-							document.getElementById('SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').selectedIndex = 0;
-
+					/**********************************************************************/
+					function LoadSensoresUso(caseLoad){
+						//obtengo los valores
+						let SensoresUso = $("#SensoresUso_<?php echo $_GET['mod']; ?>").val();
+						//selecciono
+						switch(SensoresUso) {
+							//Errores Conjuntos
+							case '1':
+								document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'block';
+								document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'block';
+								document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'block';
+								document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'block';
+							break;
+							//Errores Conjuntos
+							case '2':
+								document.getElementById('div_SensoresFechaUso_<?php echo $_GET['mod']; ?>').style.display = 'none';
+								document.getElementById('div_SensoresAccionC_<?php echo $_GET['mod']; ?>').style.display = 'none';
+								document.getElementById('div_SensoresAccionT_<?php echo $_GET['mod']; ?>').style.display = 'none';
+								document.getElementById('div_SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('SensoresFechaUso_<?php echo $_GET['mod']; ?>').value = "0000-00-00";
+									document.getElementById('SensoresAccionC_<?php echo $_GET['mod']; ?>').value = "0";
+									document.getElementById('SensoresAccionT_<?php echo $_GET['mod']; ?>').value = "0";
+									document.getElementById('SensoresAccionAlerta_<?php echo $_GET['mod']; ?>').selectedIndex = 0;
+								}
+							break;
 						}
-					});
+					}
 
 				</script>
 

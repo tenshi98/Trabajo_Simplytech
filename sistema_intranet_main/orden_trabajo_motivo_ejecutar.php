@@ -503,23 +503,28 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
 
-				echo '<script>';
-				foreach ($arrTipo as $tipo) {
-					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
-				}
 				?>
-				</script>
 
 				<script>
-				document.getElementById("idProducto").onchange = function() {myFunction()};
-
-				function myFunction() {
-					let Componente = document.getElementById("idProducto").value;
-					if (Componente != "") {
-						//escribo dentro del input
-						document.getElementById("escribeme").value = eval("id_data_" + Componente);
+					/**********************************************************************/
+					<?php
+					foreach ($arrTipo as $tipo) {
+						echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 					}
-				}
+					?>
+
+					/**********************************************************************/
+					document.getElementById("idProducto").onchange = function() {LoadProducto()};
+
+					/**********************************************************************/
+					function LoadProducto(){
+						let Componente = document.getElementById("idProducto").value;
+						if (Componente != "") {
+							//escribo dentro del input
+							document.getElementById("escribeme").value = eval("id_data_" + Componente);
+						}
+					}
+
 				</script>
 
 				<div class="form-group">
@@ -668,23 +673,28 @@ $arrTipo = db_select_array (false, $SIS_query, 'insumos_listado', $SIS_join, $SI
 				$Form_Inputs->form_input_hidden('f_creacion', fecha_actual(), 2);
 				$Form_Inputs->form_input_hidden('f_programacion', $rowdata['f_programacion'], 2);
 
-				echo '<script>';
-				foreach ($arrTipo as $tipo) {
-					echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
-				}
 				?>
-				</script>
 
 				<script>
-				document.getElementById("idProducto").onchange = function() {myFunction()};
-
-				function myFunction() {
-					let Componente = document.getElementById("idProducto").value;
-					if (Componente != "") {
-						//escribo dentro del input
-						document.getElementById("escribeme").value = eval("id_data_" + Componente);
+					/**********************************************************************/
+					<?php
+					foreach ($arrTipo as $tipo) {
+						echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 					}
-				}
+					?>
+
+					/**********************************************************************/
+					document.getElementById("idProducto").onchange = function() {LoadProducto()};
+
+					/**********************************************************************/
+					function LoadProducto(){
+						let Componente = document.getElementById("idProducto").value;
+						if (Componente != "") {
+							//escribo dentro del input
+							document.getElementById("escribeme").value = eval("id_data_" + Componente);
+						}
+					}
+
 				</script>
 
 				<div class="form-group">

@@ -118,60 +118,42 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado', $SIS_join,
 					?>
 
 					<script>
-						//oculto los div
-						document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
-						document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
-
-						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-
-							let idCotizacionSaludExtra      = $("#idCotizacionSaludExtra").val();
-
-							/*************************************/
-							//Si
-							if(idCotizacionSaludExtra == 1){
-								document.getElementById('div_PorcCotSaludExtra').style.display = 'block';
-								document.getElementById('div_MontoCotSaludExtra').style.display = 'block';
-
-							//No
-							}else if(idCotizacionSaludExtra == 2){
-								document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
-								document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
-
-							//si no en ninguno
-							}else{
-								document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
-								document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
-
-							}
-
+						/**********************************************************************/
+						$(document).ready(function(){
+							document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
+							document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
+							//se ejecuta al inicio
+							LoadCotizacionSaludExtra(0);
 						});
 
-						$("#idCotizacionSaludExtra").on("change", function(){ //se ejecuta al cambiar valor del select
-							let idCotizacionSaludExtra_sel = $(this).val(); //Asignamos el valor seleccionado
+						/**********************************************************************/
+						document.getElementById("idCotizacionSaludExtra").onchange = function() {LoadCotizacionSaludExtra(1)};
 
-							//Si
-							if(idCotizacionSaludExtra_sel == 1){
-								document.getElementById('div_PorcCotSaludExtra').style.display = 'block';
-								document.getElementById('div_MontoCotSaludExtra').style.display = 'block';
-
-							//No
-							}else if(idCotizacionSaludExtra_sel == 2){
-								document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
-								document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('PorcCotSaludExtra').value = "0";
-								document.getElementById('MontoCotSaludExtra').value = "0";
-
-							//si no en ninguno
-							}else{
-								document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
-								document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
-								//Reseteo los valores a 0
-								document.getElementById('PorcCotSaludExtra').value = "0";
-								document.getElementById('MontoCotSaludExtra').value = "0";
-
+						/**********************************************************************/
+						function LoadCotizacionSaludExtra(caseLoad){
+							//obtengo los valores
+							let idCotizacionSaludExtra = $("#idCotizacionSaludExtra").val();
+							//selecciono
+							switch(idCotizacionSaludExtra) {
+								//Si
+								case '1':
+									document.getElementById('div_PorcCotSaludExtra').style.display = 'block';
+									document.getElementById('div_MontoCotSaludExtra').style.display = 'block';
+								break;
+								//No
+								case '2':
+									document.getElementById('div_PorcCotSaludExtra').style.display = 'none';
+									document.getElementById('div_MontoCotSaludExtra').style.display = 'none';
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById('PorcCotSaludExtra').value = "0";
+										document.getElementById('MontoCotSaludExtra').value = "0";
+									}
+								break;
 							}
-						});
+						}
+
+
 					</script>
 
 					<div class="form-group">

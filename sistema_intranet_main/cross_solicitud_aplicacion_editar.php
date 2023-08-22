@@ -299,15 +299,24 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 
 				<script>
 
+					/**********************************************************************/
 					<?php
 					foreach ($arrTipo as $tipo) {
-						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
+						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';
 						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 					}
 					?>
-					document.getElementById("idProducto").onchange = function() {myFunction()};
 
-					function myFunction() {
+					/**********************************************************************/
+					$(document).ready(function(){
+						LoadProducto();
+					});
+
+					/**********************************************************************/
+					document.getElementById("idProducto").onchange = function() {LoadProducto()};
+
+					/**********************************************************************/
+					function LoadProducto(){
 						let Componente = document.getElementById("idProducto").value;
 						if (Componente != "") {
 							//escribo dentro del input
@@ -316,14 +325,6 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 						}
 					}
 
-					$(document).ready(function(){
-						let Componente = document.getElementById("idProducto").value;
-						if (Componente != "") {
-							//escribo dentro del input
-							document.getElementById("escribeme1").value = eval("id_data_" + Componente);
-							document.getElementById("escribeme2").value = eval("id_med_" + Componente);
-						}
-					});
 				</script>
 
 				<div class="form-group">
@@ -381,15 +382,24 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 
 				<script>
 
+					/**********************************************************************/
 					<?php
 					foreach ($arrTipo as $tipo) {
-						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
+						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';
 						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 					}
 					?>
-					document.getElementById("idProducto").onchange = function() {myFunction()};
 
-					function myFunction() {
+					/**********************************************************************/
+					$(document).ready(function(){
+						LoadProducto();
+					});
+
+					/**********************************************************************/
+					document.getElementById("idProducto").onchange = function() {LoadProducto()};
+
+					/**********************************************************************/
+					function LoadProducto(){
 						let Componente = document.getElementById("idProducto").value;
 						if (Componente != "") {
 							//escribo dentro del input
@@ -398,14 +408,6 @@ $arrTipo = db_select_array (false, $SIS_query, 'productos_listado', $SIS_join, $
 						}
 					}
 
-					$(document).ready(function(){
-						let Componente = document.getElementById("idProducto").value;
-						if (Componente != "") {
-							//escribo dentro del input
-							document.getElementById("escribeme1").value = eval("id_data_" + Componente);
-							document.getElementById("escribeme2").value = eval("id_med_" + Componente);
-						}
-					});
 				</script>
 
 				<div class="form-group">
@@ -708,18 +710,28 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 				$Form_Inputs->form_textarea('Objetivo','Objetivo', $x13, 1);
 
 				$Form_Inputs->form_input_hidden('idSolicitud', $_GET['view'], 2);
-				?>			
-				
+				?>
+
 				<script>
+
+					/**********************************************************************/
 					<?php
 					foreach ($arrTipo as $tipo) {
-						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';	
+						echo 'let id_data_'.$tipo['idProducto'].'= "'.Cantidades_decimales_justos($tipo['DosisRecomendada']).'";';
 						echo 'let id_med_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
 					}
 					?>
-					document.getElementById("idProducto").onchange = function() {myFunction()};
 
-					function myFunction() {
+					/**********************************************************************/
+					$(document).ready(function(){
+						LoadProducto();
+					});
+
+					/**********************************************************************/
+					document.getElementById("idProducto").onchange = function() {LoadProducto()};
+
+					/**********************************************************************/
+					function LoadProducto(){
 						let Componente = document.getElementById("idProducto").value;
 						if (Componente != "") {
 							//escribo dentro del input
@@ -728,14 +740,6 @@ if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']
 						}
 					}
 
-					$(document).ready(function(){
-						let Componente = document.getElementById("idProducto").value;
-						if (Componente != "") {
-							//escribo dentro del input
-							document.getElementById("escribeme1").value = eval("id_data_" + Componente);
-							document.getElementById("escribeme2").value = eval("id_med_" + Componente);
-						}
-					});
 				</script>
 
 				<div class="form-group">

@@ -175,141 +175,76 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_hidden('codigoServicio', 13694, 2);
 				$Form_Inputs->form_input_hidden('idAnalisisAgua', $_GET['id'], 2);
 
-				echo '<script>';
-				foreach ($arrTipo as $tipo) {
-					echo '
-					let id_idSector_'.$tipo['idCliente'].'= "'.$tipo['idSector'].'";
-					let id_idPuntoMuestreo_'.$tipo['idCliente'].'= "'.$tipo['idPuntoMuestreo'].'";
-					let UTM_norte_'.$tipo['idCliente'].'= "'.$tipo['UTM_norte'].'";
-					let UTM_este_'.$tipo['idCliente'].'= "'.$tipo['UTM_este'].'";
-					let Sector_'.$tipo['idCliente'].'= "'.$tipo['Sector'].'";
-					let Punto_'.$tipo['idCliente'].'= "'.$tipo['Punto'].'";
-					';
-				}
-				echo '</script>';
-
 				?>
 
 				<script>
-					//oculto todos los div
-					document.getElementById('div_RemuestraFecha').style.display = 'none';
-					document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
-					document.getElementById('div_idSector').style.display = 'none';
-					document.getElementById('div_UTM_norte').style.display = 'none';
-					document.getElementById('div_UTM_este').style.display = 'none';
-					document.getElementById('div_idPuntoMuestreo').style.display = 'none';
-					document.getElementById('div_idCliente').style.display = 'none';
-					document.getElementById('div_idSector_fake1').style.display = 'none';
-					document.getElementById('div_UTM_norte_fake1').style.display = 'none';
-					document.getElementById('div_UTM_este_fake1').style.display = 'none';
-					document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
 
-					//declaro variables
-					var elem_8 = document.getElementById("idPuntoMuestreo_fake2");
+					/**********************************************************************/
+					<?php
+					foreach ($arrTipo as $tipo) {
+						echo '
+						let id_idSector_'.$tipo['idCliente'].'= "'.$tipo['idSector'].'";
+						let id_idPuntoMuestreo_'.$tipo['idCliente'].'= "'.$tipo['idPuntoMuestreo'].'";
+						let UTM_norte_'.$tipo['idCliente'].'= "'.$tipo['UTM_norte'].'";
+						let UTM_este_'.$tipo['idCliente'].'= "'.$tipo['UTM_este'].'";
+						let Sector_'.$tipo['idCliente'].'= "'.$tipo['Sector'].'";
+						let Punto_'.$tipo['idCliente'].'= "'.$tipo['Punto'].'";
+						';
+					}
+					?>
 
-					//inicio documentos
-					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
+					/**********************************************************************/
+					$(document).ready(function(){
+						//oculto todos los div
+						document.getElementById('div_RemuestraFecha').style.display = 'none';
+						document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
+						document.getElementById('div_idSector').style.display = 'none';
+						document.getElementById('div_UTM_norte').style.display = 'none';
+						document.getElementById('div_UTM_este').style.display = 'none';
+						document.getElementById('div_idPuntoMuestreo').style.display = 'none';
+						document.getElementById('div_idCliente').style.display = 'none';
+						document.getElementById('div_idSector_fake1').style.display = 'none';
+						document.getElementById('div_UTM_norte_fake1').style.display = 'none';
+						document.getElementById('div_UTM_este_fake1').style.display = 'none';
+						document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
+						//se ejecuta al inicio
+						LoadTipoMuestra(0);
+						LoadOpciones(0);
+						LoadCliente(0);
+					});
 
-						/***********************************************************************************/
-						tipo_val_1= $("#idTipoMuestra").val();
-						tipo_val_2= $("#idOpciones").val();
-						tipo_val_3= $("#idCliente").val();
+					/**********************************************************************/
+					document.getElementById("idTipoMuestra").onchange = function() {LoadTipoMuestra(1)};
+					document.getElementById("idOpciones").onchange = function() {LoadOpciones(1)};
+					document.getElementById("idCliente").onchange = function() {LoadCliente(1)};
 
-						if(tipo_val_1 == 1){
-							document.getElementById('div_RemuestraFecha').style.display = 'none';
-							document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
-						//si es remuestra
-						} else if(tipo_val_1 == 2){
-							document.getElementById('div_RemuestraFecha').style.display = '';
-							document.getElementById('div_Remuestra_codigo_muestra').style.display = '';
-						} else {
-							document.getElementById('div_RemuestraFecha').style.display = 'none';
-							document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
-						}
-
-						if(tipo_val_2 == 1){
-							document.getElementById('div_idSector').style.display = 'none';
-							document.getElementById('div_UTM_norte').style.display = 'none';
-							document.getElementById('div_UTM_este').style.display = 'none';
-							document.getElementById('div_idPuntoMuestreo').style.display = 'none';
-							document.getElementById('div_idCliente').style.display = '';
-							document.getElementById('div_idSector_fake1').style.display = '';
-							document.getElementById('div_UTM_norte_fake1').style.display = '';
-							document.getElementById('div_UTM_este_fake1').style.display = '';
-							document.getElementById('div_idPuntoMuestreo_fake1').style.display = '';
-						//si es no
-						} else if(tipo_val_2 == 2){
-							document.getElementById('div_idSector').style.display = '';
-							document.getElementById('div_UTM_norte').style.display = '';
-							document.getElementById('div_UTM_este').style.display = '';
-							document.getElementById('div_idPuntoMuestreo').style.display = '';
-							document.getElementById('div_idCliente').style.display = 'none';
-							document.getElementById('div_idSector_fake1').style.display = 'none';
-							document.getElementById('div_UTM_norte_fake1').style.display = 'none';
-							document.getElementById('div_UTM_este_fake1').style.display = 'none';
-							document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
-						} else {
-							document.getElementById('div_idSector').style.display = 'none';
-							document.getElementById('div_UTM_norte').style.display = 'none';
-							document.getElementById('div_UTM_este').style.display = 'none';
-							document.getElementById('div_idPuntoMuestreo').style.display = 'none';
-							document.getElementById('div_idCliente').style.display = 'none';
-							document.getElementById('div_idSector_fake1').style.display = 'none';
-							document.getElementById('div_UTM_norte_fake1').style.display = 'none';
-							document.getElementById('div_UTM_este_fake1').style.display = 'none';
-							document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
-						}
-
-						//actualizo
-						document.getElementById("idSector_fake1").value         = eval("Sector_" + tipo_val_3);
-						document.getElementById("UTM_norte_fake1").value        = eval("UTM_norte_" + tipo_val_3);
-						document.getElementById("UTM_este_fake1").value         = eval("UTM_este_" + tipo_val_3);
-						document.getElementById("idPuntoMuestreo_fake1").value  = eval("Punto_" + tipo_val_3);
-						document.getElementById("idSector_fake2").value         = eval("id_idSector_" + tipo_val_3);
-						document.getElementById("UTM_norte_fake2").value        = eval("UTM_norte_" + tipo_val_3);
-						document.getElementById("UTM_este_fake2").value         = eval("UTM_este_" + tipo_val_3);
-						document.getElementById("idPuntoMuestreo_fake2").value  = eval("id_idPuntoMuestreo_" + tipo_val_3);
-
-						/***********************************************************************************/
-						//busco cambios en el Cliente seleccionado
-						$("#idCliente").on("change", function(){
-							//verifico si la seleccion tiene datos y procedo a escribir
-							let idCliente = $(this).val();
-							if (idCliente != "") {
-								document.getElementById("idSector_fake1").value         = eval("Sector_" + idCliente);
-								document.getElementById("UTM_norte_fake1").value        = eval("UTM_norte_" + idCliente);
-								document.getElementById("UTM_este_fake1").value         = eval("UTM_este_" + idCliente);
-								document.getElementById("idPuntoMuestreo_fake1").value  = eval("Punto_" + idCliente);
-								document.getElementById("idSector_fake2").value         = eval("id_idSector_" + idCliente);
-								document.getElementById("UTM_norte_fake2").value        = eval("UTM_norte_" + idCliente);
-								document.getElementById("UTM_este_fake2").value         = eval("UTM_este_" + idCliente);
-								document.getElementById("idPuntoMuestreo_fake2").value  = eval("id_idPuntoMuestreo_" + idCliente);
-							}
-
-						});
-
-						//busco cambios en el tipo de muestra
-						$("#idTipoMuestra").on("change", function(){
-							let idTipoMuestra = $(this).val();
-							//si es muestra
-							if(idTipoMuestra == 1){
+					/**********************************************************************/
+					function LoadTipoMuestra(caseLoad){
+						//obtengo los valores
+						let tipo_val_1 = $("#idTipoMuestra").val();
+						//selecciono
+						switch(tipo_val_1) {
+							//Errores Conjuntos
+							case '1':
 								document.getElementById('div_RemuestraFecha').style.display = 'none';
 								document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
-							//si es remuestra
-							} else if(idTipoMuestra == 2){
+							break;
+							//Errores Conjuntos
+							case '2':
 								document.getElementById('div_RemuestraFecha').style.display = '';
 								document.getElementById('div_Remuestra_codigo_muestra').style.display = '';
-							} else {
-								document.getElementById('div_RemuestraFecha').style.display = 'none';
-								document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
-							}
-						});
+							break;
+						}
+					}
 
-						//busco cambios en el uso del cliente
-						$("#idOpciones").on("change", function(){
-							let idOpciones = $(this).val();
-							//si es si
-							if(idOpciones == 1){
+					/**********************************************************************/
+					function LoadOpciones(caseLoad){
+						//obtengo los valores
+						let tipo_val_2 = $("#idOpciones").val();
+						//selecciono
+						switch(tipo_val_2) {
+							//Errores Conjuntos
+							case '1':
 								document.getElementById('div_idSector').style.display = 'none';
 								document.getElementById('div_UTM_norte').style.display = 'none';
 								document.getElementById('div_UTM_este').style.display = 'none';
@@ -319,8 +254,9 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_UTM_norte_fake1').style.display = '';
 								document.getElementById('div_UTM_este_fake1').style.display = '';
 								document.getElementById('div_idPuntoMuestreo_fake1').style.display = '';
-							//si es no
-							} else if(idOpciones == 2){
+							break;
+							//Errores Conjuntos
+							case '2':
 								document.getElementById('div_idSector').style.display = '';
 								document.getElementById('div_UTM_norte').style.display = '';
 								document.getElementById('div_UTM_este').style.display = '';
@@ -330,20 +266,26 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_UTM_norte_fake1').style.display = 'none';
 								document.getElementById('div_UTM_este_fake1').style.display = 'none';
 								document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
-							} else {
-								document.getElementById('div_idSector').style.display = 'none';
-								document.getElementById('div_UTM_norte').style.display = 'none';
-								document.getElementById('div_UTM_este').style.display = 'none';
-								document.getElementById('div_idPuntoMuestreo').style.display = 'none';
-								document.getElementById('div_idCliente').style.display = 'none';
-								document.getElementById('div_idSector_fake1').style.display = 'none';
-								document.getElementById('div_UTM_norte_fake1').style.display = 'none';
-								document.getElementById('div_UTM_este_fake1').style.display = 'none';
-								document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
-							}
-						});
+							break;
+						}
+					}
 
-					});
+					/**********************************************************************/
+					function LoadCliente(caseLoad){
+						//obtengo los valores
+						let tipo_val_3= $("#idCliente").val();
+						//selecciono
+						if (tipo_val_3 != "") {
+							document.getElementById("idSector_fake1").value         = eval("Sector_" + tipo_val_3);
+							document.getElementById("UTM_norte_fake1").value        = eval("UTM_norte_" + tipo_val_3);
+							document.getElementById("UTM_este_fake1").value         = eval("UTM_este_" + tipo_val_3);
+							document.getElementById("idPuntoMuestreo_fake1").value  = eval("Punto_" + tipo_val_3);
+							document.getElementById("idSector_fake2").value         = eval("id_idSector_" + tipo_val_3);
+							document.getElementById("UTM_norte_fake2").value        = eval("UTM_norte_" + tipo_val_3);
+							document.getElementById("UTM_este_fake2").value         = eval("UTM_este_" + tipo_val_3);
+							document.getElementById("idPuntoMuestreo_fake2").value  = eval("id_idPuntoMuestreo_" + tipo_val_3);
+						}
+					}
 
 				</script>
 
@@ -463,77 +405,72 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_input_hidden('codigoArchivo', 1, 2);
 				$Form_Inputs->form_input_hidden('codigoServicio', 13694, 2);
 
-				echo '<script>';
-				foreach ($arrTipo as $tipo) {
-					echo '
-					var id_idSector_'.$tipo['idCliente'].'= "'.$tipo['idSector'].'";
-					var id_idPuntoMuestreo_'.$tipo['idCliente'].'= "'.$tipo['idPuntoMuestreo'].'";
-					var UTM_norte_'.$tipo['idCliente'].'= "'.$tipo['UTM_norte'].'";
-					var UTM_este_'.$tipo['idCliente'].'= "'.$tipo['UTM_este'].'";
-					var Sector_'.$tipo['idCliente'].'= "'.$tipo['Sector'].'";
-					var Punto_'.$tipo['idCliente'].'= "'.$tipo['Punto'].'";
-					';
-				}
-				echo '</script>';
-
 				?>
 
 				<script>
-					//oculto todos los div
-					document.getElementById('div_RemuestraFecha').style.display = 'none';
-					document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
-					document.getElementById('div_idSector').style.display = 'none';
-					document.getElementById('div_UTM_norte').style.display = 'none';
-					document.getElementById('div_UTM_este').style.display = 'none';
-					document.getElementById('div_idPuntoMuestreo').style.display = 'none';
-					document.getElementById('div_idCliente').style.display = 'none';
-					document.getElementById('div_idSector_fake1').style.display = 'none';
-					document.getElementById('div_UTM_norte_fake1').style.display = 'none';
-					document.getElementById('div_UTM_este_fake1').style.display = 'none';
-					document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
 
-					//inicio documentos
-					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
+					/**********************************************************************/
+					<?php
+					foreach ($arrTipo as $tipo) {
+						echo '
+						let id_idSector_'.$tipo['idCliente'].'= "'.$tipo['idSector'].'";
+						let id_idPuntoMuestreo_'.$tipo['idCliente'].'= "'.$tipo['idPuntoMuestreo'].'";
+						let UTM_norte_'.$tipo['idCliente'].'= "'.$tipo['UTM_norte'].'";
+						let UTM_este_'.$tipo['idCliente'].'= "'.$tipo['UTM_este'].'";
+						let Sector_'.$tipo['idCliente'].'= "'.$tipo['Sector'].'";
+						let Punto_'.$tipo['idCliente'].'= "'.$tipo['Punto'].'";
+						';
+					}
+					?>
 
-						//busco cambios en el Cliente seleccionado
-						$("#idCliente").on("change", function(){
-							//verifico si la seleccion tiene datos y procedo a escribir
-							let idCliente = $(this).val();
-							if (idCliente != "") {
-								document.getElementById("idSector_fake1").value         = eval("Sector_" + idCliente);
-								document.getElementById("UTM_norte_fake1").value        = eval("UTM_norte_" + idCliente);
-								document.getElementById("UTM_este_fake1").value         = eval("UTM_este_" + idCliente);
-								document.getElementById("idPuntoMuestreo_fake1").value  = eval("Punto_" + idCliente);
-								document.getElementById("idSector_fake2").value         = eval("id_idSector_" + idCliente);
-								document.getElementById("UTM_norte_fake2").value        = eval("UTM_norte_" + idCliente);
-								document.getElementById("UTM_este_fake2").value         = eval("UTM_este_" + idCliente);
-								document.getElementById("idPuntoMuestreo_fake2").value  = eval("id_idPuntoMuestreo_" + idCliente);
-							}
+					/**********************************************************************/
+					$(document).ready(function(){
+						//oculto todos los div
+						document.getElementById('div_RemuestraFecha').style.display = 'none';
+						document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
+						document.getElementById('div_idSector').style.display = 'none';
+						document.getElementById('div_UTM_norte').style.display = 'none';
+						document.getElementById('div_UTM_este').style.display = 'none';
+						document.getElementById('div_idPuntoMuestreo').style.display = 'none';
+						document.getElementById('div_idCliente').style.display = 'none';
+						document.getElementById('div_idSector_fake1').style.display = 'none';
+						document.getElementById('div_UTM_norte_fake1').style.display = 'none';
+						document.getElementById('div_UTM_este_fake1').style.display = 'none';
+						document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
+					});
 
-						});
+					/**********************************************************************/
+					document.getElementById("idTipoMuestra").onchange = function() {LoadTipoMuestra(1)};
+					document.getElementById("idOpciones").onchange = function() {LoadOpciones(1)};
+					document.getElementById("idCliente").onchange = function() {LoadCliente(1)};
 
-						//busco cambios en el tipo de muestra
-						$("#idTipoMuestra").on("change", function(){
-							let idTipoMuestra = $(this).val();
-							//si es muestra
-							if(idTipoMuestra == 1){
+					/**********************************************************************/
+					function LoadTipoMuestra(caseLoad){
+						//obtengo los valores
+						let tipo_val_1 = $("#idTipoMuestra").val();
+						//selecciono
+						switch(tipo_val_1) {
+							//Errores Conjuntos
+							case '1':
 								document.getElementById('div_RemuestraFecha').style.display = 'none';
 								document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
-							//si es remuestra
-							} else if(idTipoMuestra == 2){
+							break;
+							//Errores Conjuntos
+							case '2':
 								document.getElementById('div_RemuestraFecha').style.display = '';
 								document.getElementById('div_Remuestra_codigo_muestra').style.display = '';
-							} else {
-								document.getElementById('div_RemuestraFecha').style.display = 'none';
-								document.getElementById('div_Remuestra_codigo_muestra').style.display = 'none';
-							}
-						});
+							break;
+						}
+					}
 
-						//busco cambios en el uso del cliente
-						$("#idOpciones").on("change", function(){
-							let idOpciones = $(this).val();
-							//si es si
-							if(idOpciones == 1){
+					/**********************************************************************/
+					function LoadOpciones(caseLoad){
+						//obtengo los valores
+						let tipo_val_2 = $("#idOpciones").val();
+						//selecciono
+						switch(tipo_val_2) {
+							//Errores Conjuntos
+							case '1':
 								document.getElementById('div_idSector').style.display = 'none';
 								document.getElementById('div_UTM_norte').style.display = 'none';
 								document.getElementById('div_UTM_este').style.display = 'none';
@@ -543,8 +480,9 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_UTM_norte_fake1').style.display = '';
 								document.getElementById('div_UTM_este_fake1').style.display = '';
 								document.getElementById('div_idPuntoMuestreo_fake1').style.display = '';
-							//si es no
-							} else if(idOpciones == 2){
+							break;
+							//Errores Conjuntos
+							case '2':
 								document.getElementById('div_idSector').style.display = '';
 								document.getElementById('div_UTM_norte').style.display = '';
 								document.getElementById('div_UTM_este').style.display = '';
@@ -554,20 +492,26 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 								document.getElementById('div_UTM_norte_fake1').style.display = 'none';
 								document.getElementById('div_UTM_este_fake1').style.display = 'none';
 								document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
-							} else {
-								document.getElementById('div_idSector').style.display = 'none';
-								document.getElementById('div_UTM_norte').style.display = 'none';
-								document.getElementById('div_UTM_este').style.display = 'none';
-								document.getElementById('div_idPuntoMuestreo').style.display = 'none';
-								document.getElementById('div_idCliente').style.display = 'none';
-								document.getElementById('div_idSector_fake1').style.display = 'none';
-								document.getElementById('div_UTM_norte_fake1').style.display = 'none';
-								document.getElementById('div_UTM_este_fake1').style.display = 'none';
-								document.getElementById('div_idPuntoMuestreo_fake1').style.display = 'none';
-							}
-						});
+							break;
+						}
+					}
 
-					});
+					/**********************************************************************/
+					function LoadCliente(caseLoad){
+						//obtengo los valores
+						let tipo_val_3= $("#idCliente").val();
+						//selecciono
+						if (tipo_val_3 != "") {
+							document.getElementById("idSector_fake1").value         = eval("Sector_" + tipo_val_3);
+							document.getElementById("UTM_norte_fake1").value        = eval("UTM_norte_" + tipo_val_3);
+							document.getElementById("UTM_este_fake1").value         = eval("UTM_este_" + tipo_val_3);
+							document.getElementById("idPuntoMuestreo_fake1").value  = eval("Punto_" + tipo_val_3);
+							document.getElementById("idSector_fake2").value         = eval("id_idSector_" + tipo_val_3);
+							document.getElementById("UTM_norte_fake2").value        = eval("UTM_norte_" + tipo_val_3);
+							document.getElementById("UTM_este_fake2").value         = eval("UTM_este_" + tipo_val_3);
+							document.getElementById("idPuntoMuestreo_fake2").value  = eval("id_idPuntoMuestreo_" + tipo_val_3);
+						}
+					}
 
 				</script>
 

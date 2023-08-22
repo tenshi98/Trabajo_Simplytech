@@ -384,160 +384,110 @@ foreach ($arrPermisos as $prod) {
 				while ( $row = mysqli_fetch_assoc ($resultado)){
 				array_push( $arrTipo,$row );
 				}
-				
-				echo '<script>';
-				foreach ($arrTipo as $tipo) {
-					echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
-					';
-				}
 
-				foreach ($arrTipo as $tipo) {
-					echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
-					';
-				}
 				?>
-				</script>
+
 				<script>
-				
-				document.getElementById("idProducto").onchange = function() {myFunction()};
-
-				function myFunction() {
-					let Componente = document.getElementById("idProducto").value;
-					if (Componente != "") {
-						//escribo dentro del input
-						document.getElementById("idUml_fake").value = eval("id_data1_" + Componente);
-						document.getElementById("idUml").value      = eval("id_data2_" + Componente);
+					/**********************************************************************/
+					<?php
+					foreach ($arrTipo as $tipo) {
+						echo '
+						let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
+						let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
+						';
 					}
-				}
-
-				$(document).ready(function(){
-					
-					document.getElementById('div_Grasa_inicial').style.display = 'none';
-					document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-					document.getElementById('div_Aceite').style.display = 'none';
-					document.getElementById('div_Cantidad').style.display = 'none';
-					document.getElementById('div_idProducto').style.display = '';
-					
-					let Sensores_val_2= $("#idSubTipo").val();
-
-					//si es grasa
-					if(Sensores_val_2 == 1){ 
-						document.getElementById('div_Grasa_inicial').style.display = '';
-						document.getElementById('div_Grasa_relubricacion').style.display = '';
-						document.getElementById('div_Aceite').style.display = 'none';
-						document.getElementById('div_Cantidad').style.display = 'none';	
-						document.getElementById('div_idProducto').style.display = '';
-						//Reseteo los valores a 0
-						document.getElementById('Aceite').value = "0";
-						document.getElementById('Cantidad').value = "0";
-
-					//si es aceite
-					} else if(Sensores_val_2 == 2){ 
-						document.getElementById('div_Grasa_inicial').style.display = 'none';
-						document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-						document.getElementById('div_Aceite').style.display = '';
-						document.getElementById('div_Cantidad').style.display = 'none';
-						document.getElementById('div_idProducto').style.display = '';
-						//Reseteo los valores a 0
-						document.getElementById('Grasa_inicial').value = "0";
-						document.getElementById('Grasa_relubricacion').value = "0";
-						document.getElementById('Cantidad').value = "0";
-
-					//si es normal
-					} else if(Sensores_val_2 == 3){ 
-						document.getElementById('div_Grasa_inicial').style.display = 'none';
-						document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-						document.getElementById('div_Aceite').style.display = 'none';
-						document.getElementById('div_Cantidad').style.display = '';
-						document.getElementById('div_idProducto').style.display = '';
-						//Reseteo los valores a 0
-						document.getElementById('Grasa_inicial').value = "0";
-						document.getElementById('Grasa_relubricacion').value = "0";
-						document.getElementById('Aceite').value = "0";
-
-					//si es otro
-					} else if(Sensores_val_2 == 4){ 
+					?>
+					/**********************************************************************/
+					$(document).ready(function(){
 						document.getElementById('div_Grasa_inicial').style.display = 'none';
 						document.getElementById('div_Grasa_relubricacion').style.display = 'none';
 						document.getElementById('div_Aceite').style.display = 'none';
 						document.getElementById('div_Cantidad').style.display = 'none';
 						document.getElementById('div_idProducto').style.display = '';
-						//Reseteo los valores a 0
-						document.getElementById('Grasa_inicial').value = "0";
-						document.getElementById('Grasa_relubricacion').value = "0";
-						document.getElementById('Aceite').value = "0";
-						document.getElementById('Cantidad').value = "0";
+						//cargo al inicio
+						LoadProducto();
+						LoadSubTipo(0);
+					});
 
-					}
-				});
-				/**********************************************************************/
-				
-					$("#idSubTipo").on("change", function(){
-						let modelSelected = $(this).val(); 
-				
-						//si es grasa
-						if(modelSelected == 1){
-							document.getElementById('div_Grasa_inicial').style.display = '';
-							document.getElementById('div_Grasa_relubricacion').style.display = '';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idProducto').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";
+					/**********************************************************************/
+					document.getElementById("idProducto").onchange = function() {LoadProducto()};
+					document.getElementById("idSubTipo").onchange = function() {LoadSubTipo(1)};
 
-						//si es aceite
-						} else if(modelSelected == 2){
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = '';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idProducto').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Cantidad').value = "0";
-
-						//si es normal
-						} else if(modelSelected == 3){
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = '';
-							document.getElementById('div_idProducto').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";
-						//si es otro
-						} else if(modelSelected == 4){
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idProducto').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";
-						//el resto
-						} else {
-							document.getElementById('div_Grasa_inicial').style.display = 'none';
-							document.getElementById('div_Grasa_relubricacion').style.display = 'none';
-							document.getElementById('div_Aceite').style.display = 'none';
-							document.getElementById('div_Cantidad').style.display = 'none';
-							document.getElementById('div_idProducto').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('Grasa_inicial').value = "0";
-							document.getElementById('Grasa_relubricacion').value = "0";
-							document.getElementById('Aceite').value = "0";
-							document.getElementById('Cantidad').value = "0";
+					/**********************************************************************/
+					function LoadProducto(){
+						let Componente = document.getElementById("idProducto").value;
+						if (Componente != "") {
+							//escribo dentro del input
+							document.getElementById("idUml_fake").value = eval("id_data1_" + Componente);
+							document.getElementById("idUml").value      = eval("id_data2_" + Componente);
 						}
+					}
 
-					});	
-					
-						
+					/**********************************************************************/
+					function LoadSubTipo(caseLoad){
+						//obtengo valor
+						let Sensores_val_2= $("#idSubTipo").val();
+						//si es grasa
+						switch(Sensores_val_2) {
+							//Errores Conjuntos
+							case '1':
+								document.getElementById('div_Grasa_inicial').style.display = '';
+								document.getElementById('div_Grasa_relubricacion').style.display = '';
+								document.getElementById('div_Aceite').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_idProducto').style.display = '';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('Aceite').value = "0";
+									document.getElementById('Cantidad').value = "0";
+								}
+							break;
+							//si es aceite
+							case '2':
+								document.getElementById('div_Grasa_inicial').style.display = 'none';
+								document.getElementById('div_Grasa_relubricacion').style.display = 'none';
+								document.getElementById('div_Aceite').style.display = '';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_idProducto').style.display = '';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('Grasa_inicial').value = "0";
+									document.getElementById('Grasa_relubricacion').value = "0";
+									document.getElementById('Cantidad').value = "0";
+								}
+							break;
+							//si es normal
+							case '3':
+								document.getElementById('div_Grasa_inicial').style.display = 'none';
+								document.getElementById('div_Grasa_relubricacion').style.display = 'none';
+								document.getElementById('div_Aceite').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = '';
+								document.getElementById('div_idProducto').style.display = '';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('Grasa_inicial').value = "0";
+									document.getElementById('Grasa_relubricacion').value = "0";
+									document.getElementById('Aceite').value = "0";
+								}
+							break;
+							//si es otro
+							case '4':
+								document.getElementById('div_Grasa_inicial').style.display = 'none';
+								document.getElementById('div_Grasa_relubricacion').style.display = 'none';
+								document.getElementById('div_Aceite').style.display = 'none';
+								document.getElementById('div_Cantidad').style.display = 'none';
+								document.getElementById('div_idProducto').style.display = '';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('Grasa_inicial').value = "0";
+									document.getElementById('Grasa_relubricacion').value = "0";
+									document.getElementById('Aceite').value = "0";
+									document.getElementById('Cantidad').value = "0";
+								}
+							break;
+						}
+					}
+
 				</script>
 
 				<div class="form-group">
@@ -781,16 +731,21 @@ foreach ($arrPermisos as $prod) {
 					?>
 
 					<script>
+						/**********************************************************************/
 						<?php
 						foreach ($arrTipo as $tipo) {
-							echo 'let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
-							echo 'let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";';
+							echo '
+							let id_data1_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";
+							let id_data2_'.$tipo['idProducto'].'= "'.$tipo['idUml'].'";
+							';
 						}
 						?>
 
-						document.getElementById("idProducto").onchange = function() {myFunction()};
+						/**********************************************************************/
+						document.getElementById("idProducto").onchange = function() {LoadProducto()};
 
-						function myFunction() {
+						/**********************************************************************/
+						function LoadProducto(){
 							let Componente = document.getElementById("idProducto").value;
 							if (Componente != "") {
 								//escribo dentro del input
@@ -926,18 +881,25 @@ foreach ($arrPermisos as $prod) {
 					?>
 
 					<script>
+						/**********************************************************************/
+						<?php
+						foreach ($arrUnimed as $tipo) {
+							echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
+						}
+						?>
 
-						<?php foreach ($arrUnimed as $tipo) { echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";'; } ?>
+						/**********************************************************************/
+						document.getElementById("idProducto").onchange = function() {LoadProducto()};
 
-						document.getElementById("idProducto").onchange = function() {myFunction()};
-
-						function myFunction() {
+						/**********************************************************************/
+						function LoadProducto(){
 							let Componente = document.getElementById("idProducto").value;
 							if (Componente != "") {
 								//escribo dentro del input
 								document.getElementById("escribeme").value = eval("id_data_" + Componente);
 							}
 						}
+
 					</script>
 
 					<div class="form-group">
@@ -1024,18 +986,25 @@ foreach ($arrPermisos as $prod) {
 					?>
 
 					<script>
+						/**********************************************************************/
+						<?php
+						foreach ($arrUnimed as $tipo) {
+							echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
+						}
+						?>
 
-						<?php foreach ($arrUnimed as $tipo) { echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";'; } ?>
+						/**********************************************************************/
+						document.getElementById("idProducto").onchange = function() {LoadProducto()};
 
-						document.getElementById("idProducto").onchange = function() {myFunction()};
-
-						function myFunction() {
+						/**********************************************************************/
+						function LoadProducto(){
 							let Componente = document.getElementById("idProducto").value;
 							if (Componente != "") {
 								//escribo dentro del input
 								document.getElementById("escribeme").value = eval("id_data_" + Componente);
 							}
 						}
+
 					</script>
 
 					<div class="form-group">
@@ -1123,18 +1092,25 @@ foreach ($arrPermisos as $prod) {
 					?>
 
 					<script>
+						/**********************************************************************/
+						<?php
+						foreach ($arrUnimed as $tipo) {
+							echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
+						}
+						?>
 
-						<?php foreach ($arrUnimed as $tipo) { echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";'; } ?>
+						/**********************************************************************/
+						document.getElementById("idProducto").onchange = function() {LoadProducto()};
 
-						document.getElementById("idProducto").onchange = function() {myFunction()};
-
-						function myFunction() {
+						/**********************************************************************/
+						function LoadProducto(){
 							let Componente = document.getElementById("idProducto").value;
 							if (Componente != "") {
 								//escribo dentro del input
 								document.getElementById("escribeme").value = eval("id_data_" + Componente);
 							}
 						}
+
 					</script>
 
 					<div class="form-group">
@@ -1221,18 +1197,25 @@ foreach ($arrPermisos as $prod) {
 					?>
 
 					<script>
+						/**********************************************************************/
+						<?php
+						foreach ($arrUnimed as $tipo) {
+							echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
+						}
+						?>
 
-						<?php foreach ($arrUnimed as $tipo) { echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";'; } ?>
+						/**********************************************************************/
+						document.getElementById("idProducto").onchange = function() {LoadProducto()};
 
-						document.getElementById("idProducto").onchange = function() {myFunction()};
-
-						function myFunction() {
+						/**********************************************************************/
+						function LoadProducto(){
 							let Componente = document.getElementById("idProducto").value;
 							if (Componente != "") {
 								//escribo dentro del input
 								document.getElementById("escribeme").value = eval("id_data_" + Componente);
 							}
 						}
+
 					</script>
 
 					<div class="form-group">

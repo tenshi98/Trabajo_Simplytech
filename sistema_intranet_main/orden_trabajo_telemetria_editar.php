@@ -431,18 +431,25 @@ if(!empty($_GET['edit_trabajo'])){
 					?>
 
 					<script>
+						/**********************************************************************/
+						<?php
+						foreach ($arrUnimed as $tipo) {
+							echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
+						}
+						?>
 
-						<?php foreach ($arrUnimed as $tipo) { echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";'; } ?>
+						/**********************************************************************/
+						document.getElementById("idProducto").onchange = function() {LoadProducto()};
 
-						document.getElementById("idProducto").onchange = function() {myFunction()};
-
-						function myFunction() {
+						/**********************************************************************/
+						function LoadProducto(){
 							let Componente = document.getElementById("idProducto").value;
 							if (Componente != "") {
 								//escribo dentro del input
 								document.getElementById("escribeme").value = eval("id_data_" + Componente);
 							}
 						}
+
 					</script>
 
 					<div class="form-group">
@@ -515,18 +522,25 @@ if(!empty($_GET['edit_trabajo'])){
 					?>
 
 					<script>
+						/**********************************************************************/
+						<?php
+						foreach ($arrUnimed as $tipo) {
+							echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
+						}
+						?>
 
-						<?php foreach ($arrUnimed as $tipo) { echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";'; } ?>
+						/**********************************************************************/
+						document.getElementById("idProducto").onchange = function() {LoadProducto()};
 
-						document.getElementById("idProducto").onchange = function() {myFunction()};
-
-						function myFunction() {
+						/**********************************************************************/
+						function LoadProducto(){
 							let Componente = document.getElementById("idProducto").value;
 							if (Componente != "") {
 								//escribo dentro del input
 								document.getElementById("escribeme").value = eval("id_data_" + Componente);
 							}
 						}
+
 					</script>
 
 					<div class="form-group">
@@ -601,18 +615,25 @@ if(!empty($_GET['edit_trabajo'])){
 					</script>
 
 					<script>
+						/**********************************************************************/
+						<?php
+						foreach ($arrUnimed as $tipo) {
+							echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
+						}
+						?>
 
-						<?php foreach ($arrUnimed as $tipo) { echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";'; } ?>
+						/**********************************************************************/
+						document.getElementById("idProducto").onchange = function() {LoadProducto()};
 
-						document.getElementById("idProducto").onchange = function() {myFunction()};
-
-						function myFunction() {
+						/**********************************************************************/
+						function LoadProducto(){
 							let Componente = document.getElementById("idProducto").value;
 							if (Componente != "") {
 								//escribo dentro del input
 								document.getElementById("escribeme").value = eval("id_data_" + Componente);
 							}
 						}
+
 					</script>
 
 					<div class="form-group">
@@ -685,18 +706,25 @@ if(!empty($_GET['edit_trabajo'])){
 					?>
 
 					<script>
+						/**********************************************************************/
+						<?php
+						foreach ($arrUnimed as $tipo) {
+							echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";';
+						}
+						?>
 
-						<?php foreach ($arrUnimed as $tipo) { echo 'let id_data_'.$tipo['idProducto'].'= "'.$tipo['Unimed'].'";'; } ?>
+						/**********************************************************************/
+						document.getElementById("idProducto").onchange = function() {LoadProducto()};
 
-						document.getElementById("idProducto").onchange = function() {myFunction()};
-
-						function myFunction() {
+						/**********************************************************************/
+						function LoadProducto(){
 							let Componente = document.getElementById("idProducto").value;
 							if (Componente != "") {
 								//escribo dentro del input
 								document.getElementById("escribeme").value = eval("id_data_" + Componente);
 							}
 						}
+
 					</script>
 
 					<div class="form-group">

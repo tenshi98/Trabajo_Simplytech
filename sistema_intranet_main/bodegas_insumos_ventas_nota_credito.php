@@ -639,44 +639,37 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				?>
 
 				<script>
-					document.getElementById('div_fecha_fact_desde').style.display = 'none';
-					document.getElementById('div_fecha_fact_hasta').style.display = 'none';
-
-					//se ejecuta al cargar la página (OBLIGATORIO)
+					/**********************************************************************/
 					$(document).ready(function(){
-						let idDocumentosSelected= $("#idDocumentos").val();
-						//si es Factura
-						if(idDocumentosSelected == 2){
-							document.getElementById('div_fecha_fact_desde').style.display = '';
-							document.getElementById('div_fecha_fact_hasta').style.display = '';
-
-						//Para el resto
-						} else {
-							document.getElementById('div_fecha_fact_desde').style.display = 'none';
-							document.getElementById('div_fecha_fact_hasta').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementsByName('fecha_fact_desde').value = "0";
-							document.getElementsByName('fecha_fact_hasta').value = "0";
-						}
-
+						document.getElementById('div_fecha_fact_desde').style.display = 'none';
+						document.getElementById('div_fecha_fact_hasta').style.display = 'none';
+						//se ejecuta al inicio
+						LoadDocumentos(0);
 					});
 
-					$("#idDocumentos").on("change", function(){ //se ejecuta al cambiar valor del select
-						let idDocumentos = $(this).val(); //Asignamos el valor seleccionado
-						//si es Factura
-						if(idDocumentos == 2){
-							document.getElementById('div_fecha_fact_desde').style.display = '';
-							document.getElementById('div_fecha_fact_hasta').style.display = '';
+					/**********************************************************************/
+					document.getElementById("idDocumentos").onchange = function() {LoadDocumentos(1)};
 
-						//Para el resto
-						} else {
-							document.getElementById('div_fecha_fact_desde').style.display = 'none';
-							document.getElementById('div_fecha_fact_hasta').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementsByName('fecha_fact_desde').value = "0";
-							document.getElementsByName('fecha_fact_hasta').value = "0";
+					/**********************************************************************/
+					function LoadDocumentos(caseLoad){
+						//obtengo los valores
+						let idDocumentos = $("#idDocumentos").val();
+						//selecciono
+						switch(idDocumentos) {
+							//Errores Conjuntos
+							case '2':
+								document.getElementById('div_fecha_fact_desde').style.display = '';
+								document.getElementById('div_fecha_fact_hasta').style.display = '';
+							break;
+							default:
+								document.getElementById('div_fecha_fact_desde').style.display = 'none';
+								document.getElementById('div_fecha_fact_hasta').style.display = 'none';
+								//Reseteo los valores a 0
+								document.getElementsByName('fecha_fact_desde').value = "0";
+								document.getElementsByName('fecha_fact_hasta').value = "0";
+							break;
 						}
-					});
+					}
 
 				</script>
 
@@ -1012,25 +1005,35 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				?>
 
 				<script>
-					document.getElementById('div_fecha_fact_desde').style.display = 'none';
-					document.getElementById('div_fecha_fact_hasta').style.display = 'none';
-
-					$("#idDocumentos").on("change", function(){ //se ejecuta al cambiar valor del select
-						let idDocumentos = $(this).val(); //Asignamos el valor seleccionado
-						//si es Factura
-						if(idDocumentos == 2){
-							document.getElementById('div_fecha_fact_desde').style.display = '';
-							document.getElementById('div_fecha_fact_hasta').style.display = '';
-
-						//Para el resto
-						} else {
-							document.getElementById('div_fecha_fact_desde').style.display = 'none';
-							document.getElementById('div_fecha_fact_hasta').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementsByName('fecha_fact_desde').value = "0";
-							document.getElementsByName('fecha_fact_hasta').value = "0";
-						}
+					/**********************************************************************/
+					$(document).ready(function(){
+						document.getElementById('div_fecha_fact_desde').style.display = 'none';
+						document.getElementById('div_fecha_fact_hasta').style.display = 'none';
 					});
+
+					/**********************************************************************/
+					document.getElementById("idDocumentos").onchange = function() {LoadDocumentos(1)};
+
+					/**********************************************************************/
+					function LoadDocumentos(caseLoad){
+						//obtengo los valores
+						let idDocumentos = $("#idDocumentos").val();
+						//selecciono
+						switch(idDocumentos) {
+							//Errores Conjuntos
+							case '2':
+								document.getElementById('div_fecha_fact_desde').style.display = '';
+								document.getElementById('div_fecha_fact_hasta').style.display = '';
+							break;
+							default:
+								document.getElementById('div_fecha_fact_desde').style.display = 'none';
+								document.getElementById('div_fecha_fact_hasta').style.display = 'none';
+								//Reseteo los valores a 0
+								document.getElementsByName('fecha_fact_desde').value = "0";
+								document.getElementsByName('fecha_fact_hasta').value = "0";
+							break;
+						}
+					}
 
 				</script>
 
