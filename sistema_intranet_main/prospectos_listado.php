@@ -350,7 +350,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 				//Solo para plataforma Intranet
 				if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){
 					$Form_Inputs->form_tittle(3, 'Unidades de Negocio');
-					$Form_Inputs->form_checkbox_active('Unidad de Negocio','idTab', $x9, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
+					$Form_Inputs->form_checkbox_active('Unidad de Negocio','idTab', $x9, 1, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
 				}
 					
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
@@ -564,7 +564,7 @@ foreach ($arrTabs as $tab) {
 				$Form_Inputs->form_date('Fecha ultima modificacion','FModificacion', $x12, 1);
 				//Solo para plataforma Intranet
 				if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){
-					$Form_Inputs->form_checkbox_active('Unidad de Negocio','idTab', $x13, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
+					$Form_Inputs->form_checkbox_active('Unidad de Negocio','idTab', $x13, 1, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
 				}
 
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);

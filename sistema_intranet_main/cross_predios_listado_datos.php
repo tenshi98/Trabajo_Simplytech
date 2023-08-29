@@ -106,39 +106,36 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 					?>
 
 					<script>
-						
-						$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-									
-							let idPais  = $("#idPais").val();
-
-							//Si el pais es distinto de chile
-							if(idPais!=1){
-								document.getElementById("idCiudad").disabled = true;
-								document.getElementById("idComuna").disabled = true;
-								document.getElementById('idCiudad').selectedIndex = 0;
-								document.getElementById('idComuna').selectedIndex = 0;
-							}else{
-								document.getElementById("idCiudad").disabled = false;
-								document.getElementById("idComuna").disabled = false;
-							}
+						/**********************************************************************/
+						$(document).ready(function(){
+							//se ejecuta al inicio
+							LoadPais(0);
 						});
 
-						$("#idPais").on("change", function(){
-							
-							let idPais_sel = $("#idPais").val();
+						/**********************************************************************/
+						document.getElementById("idPais").onchange = function() {LoadPais(1)};
 
-							//Si el pais es distinto de chile
-							if(idPais_sel!=1){
-								document.getElementById("idCiudad").disabled = true;
-								document.getElementById("idComuna").disabled = true;
-								document.getElementById('idCiudad').selectedIndex = 0;
-								document.getElementById('idComuna').selectedIndex = 0;
-							}else{
-								document.getElementById("idCiudad").disabled = false;
-								document.getElementById("idComuna").disabled = false;
+						/**********************************************************************/
+						function LoadPais(caseLoad){
+							//obtengo los valores
+							let idPais = $("#idPais").val();
+							//selecciono
+							switch(idPais) {
+								//Si el pais es chile
+								case '1':
+									document.getElementById("idCiudad").disabled = false;
+									document.getElementById("idComuna").disabled = false;
+								break;
+								//Si el pais es distinto de chile
+								default:
+									document.getElementById("idCiudad").disabled = true;
+									document.getElementById("idComuna").disabled = true;
+									document.getElementById('idCiudad').selectedIndex = 0;
+									document.getElementById('idComuna').selectedIndex = 0;
+								break;
 							}
-						});
-						
+						}
+
 					</script>
 
 					<div class="form-group">

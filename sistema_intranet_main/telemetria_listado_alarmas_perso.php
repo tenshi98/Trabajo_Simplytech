@@ -503,6 +503,7 @@ if(!empty($_GET['editItem'])){
 
 					<script>
 
+						/**********************************************************************/
 						$(document).ready(function(){
 							document.getElementById("div_valor_error").style.display = "none";
 							document.getElementById("div_valor_diferencia").style.display = "none";
@@ -510,15 +511,18 @@ if(!empty($_GET['editItem'])){
 							document.getElementById("div_Rango_fin").style.display = "none";
 							document.getElementById("div_HoraInicio").style.display = "none";
 							document.getElementById("div_HoraTermino").style.display = "none";
-							cambia_tipo();
+							LoadTipo(0);
 						});
 
-						document.getElementById("idTipo").onchange = function() {cambia_tipo()};
+						/**********************************************************************/
+						document.getElementById("idTipo").onchange = function() {LoadTipo(1)};
 
-						function cambia_tipo(){
-							let Componente = document.form1.idTipo[document.form1.idTipo.selectedIndex].value;
-
-							switch(Componente) {
+						/**********************************************************************/
+						function LoadTipo(caseLoad){
+							//obtengo los valores
+							let Sensores_val= $("#idTipo").val();
+							//selecciono
+							switch(Sensores_val) {
 								//Errores Conjuntos
 								case '1':
 									document.getElementById("div_valor_error").style.display = "block";
@@ -527,13 +531,15 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_Rango_fin").style.display = "none";
 									document.getElementById("div_HoraInicio").style.display = "none";
 									document.getElementById("div_HoraTermino").style.display = "none";
-									//reseteo
-									document.getElementById("valor_diferencia").value = "";
-									document.getElementById("Rango_ini").value = "";
-									document.getElementById("Rango_fin").value = "";
-									document.getElementById("HoraInicio").value = "";
-									document.getElementById("HoraTermino").value = "";
-									document.getElementById("alert_post_data").innerHTML = "Todos los sensores tienen el mismo valor de error";
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById("valor_diferencia").value = "";
+										document.getElementById("Rango_ini").value = "";
+										document.getElementById("Rango_fin").value = "";
+										document.getElementById("HoraInicio").value = "";
+										document.getElementById("HoraTermino").value = "";
+										document.getElementById("alert_post_data").innerHTML = "Todos los sensores tienen el mismo valor de error";
+									}
 								break;
 								//Rango Porcentaje Grupo
 								case '2':
@@ -543,13 +549,15 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_Rango_fin").style.display = "none";
 									document.getElementById("div_HoraInicio").style.display = "none";
 									document.getElementById("div_HoraTermino").style.display = "none";
-									//reseteo
-									document.getElementById("valor_error").value = "";
-									document.getElementById("Rango_ini").value = "";
-									document.getElementById("Rango_fin").value = "";
-									document.getElementById("HoraInicio").value = "";
-									document.getElementById("HoraTermino").value = "";
-									document.getElementById("alert_post_data").innerHTML = "Un sensor tiene un valor que es x porcentaje inferior o superior a otro sensor dentro del grupo de sensores";
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById("valor_error").value = "";
+										document.getElementById("Rango_ini").value = "";
+										document.getElementById("Rango_fin").value = "";
+										document.getElementById("HoraInicio").value = "";
+										document.getElementById("HoraTermino").value = "";
+										document.getElementById("alert_post_data").innerHTML = "Un sensor tiene un valor que es x porcentaje inferior o superior a otro sensor dentro del grupo de sensores";
+									}
 								break;
 								//Alertas Personalizadas (al menos 1 error)
 								case '3':
@@ -559,14 +567,16 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_Rango_fin").style.display = "none";
 									document.getElementById("div_HoraInicio").style.display = "none";
 									document.getElementById("div_HoraTermino").style.display = "none";
-									//reseteo
-									document.getElementById("valor_error").value = "";
-									document.getElementById("valor_diferencia").value = "";
-									document.getElementById("Rango_ini").value = "";
-									document.getElementById("Rango_fin").value = "";
-									document.getElementById("HoraInicio").value = "";
-									document.getElementById("HoraTermino").value = "";
-									document.getElementById("alert_post_data").innerHTML = "Al menos un sensor se encuentra fuera del rango de trabajo normal";
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById("valor_error").value = "";
+										document.getElementById("valor_diferencia").value = "";
+										document.getElementById("Rango_ini").value = "";
+										document.getElementById("Rango_fin").value = "";
+										document.getElementById("HoraInicio").value = "";
+										document.getElementById("HoraTermino").value = "";
+										document.getElementById("alert_post_data").innerHTML = "Al menos un sensor se encuentra fuera del rango de trabajo normal";
+									}
 								break;
 								//Alertas Personalizadas (todos con error)
 								case '4':
@@ -576,14 +586,16 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_Rango_fin").style.display = "none";
 									document.getElementById("div_HoraInicio").style.display = "none";
 									document.getElementById("div_HoraTermino").style.display = "none";
-									//reseteo
-									document.getElementById("valor_error").value = "";
-									document.getElementById("valor_diferencia").value = "";
-									document.getElementById("Rango_ini").value = "";
-									document.getElementById("Rango_fin").value = "";
-									document.getElementById("HoraInicio").value = "";
-									document.getElementById("HoraTermino").value = "";
-									document.getElementById("alert_post_data").innerHTML = "Todos los sensores se encuentra fuera del rango de trabajo normal";
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById("valor_error").value = "";
+										document.getElementById("valor_diferencia").value = "";
+										document.getElementById("Rango_ini").value = "";
+										document.getElementById("Rango_fin").value = "";
+										document.getElementById("HoraInicio").value = "";
+										document.getElementById("HoraTermino").value = "";
+										document.getElementById("alert_post_data").innerHTML = "Todos los sensores se encuentra fuera del rango de trabajo normal";
+									}
 								break;
 								//Promedios fuera de Rangos
 								case '5':
@@ -593,12 +605,14 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_Rango_fin").style.display = "block";
 									document.getElementById("div_HoraInicio").style.display = "none";
 									document.getElementById("div_HoraTermino").style.display = "none";
-									//reseteo
-									document.getElementById("valor_error").value = "";
-									document.getElementById("valor_diferencia").value = "";
-									document.getElementById("HoraInicio").value = "";
-									document.getElementById("HoraTermino").value = "";
-									document.getElementById("alert_post_data").innerHTML = "El promedio de los sensores esta fuera del rango establecido";
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById("valor_error").value = "";
+										document.getElementById("valor_diferencia").value = "";
+										document.getElementById("HoraInicio").value = "";
+										document.getElementById("HoraTermino").value = "";
+										document.getElementById("alert_post_data").innerHTML = "El promedio de los sensores esta fuera del rango establecido";
+									}
 								break;
 								//Alertas Personalizadas (todos con valor especifico)
 								case '6':
@@ -608,14 +622,16 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_Rango_fin").style.display = "none";
 									document.getElementById("div_HoraInicio").style.display = "none";
 									document.getElementById("div_HoraTermino").style.display = "none";
-									//reseteo
-									document.getElementById("valor_error").value = "";
-									document.getElementById("valor_diferencia").value = "";
-									document.getElementById("Rango_ini").value = "";
-									document.getElementById("Rango_fin").value = "";
-									document.getElementById("HoraInicio").value = "";
-									document.getElementById("HoraTermino").value = "";
-									document.getElementById("alert_post_data").innerHTML = "Todos los sensores estan con un valor predefinido, el cual indica error";
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById("valor_error").value = "";
+										document.getElementById("valor_diferencia").value = "";
+										document.getElementById("Rango_ini").value = "";
+										document.getElementById("Rango_fin").value = "";
+										document.getElementById("HoraInicio").value = "";
+										document.getElementById("HoraTermino").value = "";
+										document.getElementById("alert_post_data").innerHTML = "Todos los sensores estan con un valor predefinido, el cual indica error";
+									}
 								break;
 								//Sensor funcionando fuera de horario
 								case '7':
@@ -625,12 +641,14 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_Rango_fin").style.display = "none";
 									document.getElementById("div_HoraInicio").style.display = "block";
 									document.getElementById("div_HoraTermino").style.display = "block";
-									//reseteo
-									document.getElementById("valor_error").value = "";
-									document.getElementById("valor_diferencia").value = "";
-									document.getElementById("Rango_ini").value = "";
-									document.getElementById("Rango_fin").value = "";
-									document.getElementById("alert_post_data").innerHTML = "Los sensores seleccionados estan funcionando fuera de los horarios establecidos";
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById("valor_error").value = "";
+										document.getElementById("valor_diferencia").value = "";
+										document.getElementById("Rango_ini").value = "";
+										document.getElementById("Rango_fin").value = "";
+										document.getElementById("alert_post_data").innerHTML = "Los sensores seleccionados estan funcionando fuera de los horarios establecidos";
+									}
 								break;
 
 							}
@@ -703,7 +721,7 @@ if(!empty($_GET['editItem'])){
 
 					?>
 					<script>
-
+						/**********************************************************************/
 						$(document).ready(function(){
 							document.getElementById("div_valor_error").style.display = "none";
 							document.getElementById("div_valor_diferencia").style.display = "none";
@@ -713,12 +731,15 @@ if(!empty($_GET['editItem'])){
 							document.getElementById("div_HoraTermino").style.display = "none";
 						});
 
-						document.getElementById("idTipo").onchange = function() {cambia_tipo()};
+						/**********************************************************************/
+						document.getElementById("idTipo").onchange = function() {LoadTipo(1)};
 
-						function cambia_tipo(){
-							let Componente = document.form1.idTipo[document.form1.idTipo.selectedIndex].value;
-
-							switch(Componente) {
+						/**********************************************************************/
+						function LoadTipo(caseLoad){
+							//obtengo los valores
+							let Sensores_val= $("#idTipo").val();
+							//selecciono
+							switch(Sensores_val) {
 								//Errores Conjuntos
 								case '1':
 									document.getElementById("div_valor_error").style.display = "block";
@@ -727,13 +748,15 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_Rango_fin").style.display = "none";
 									document.getElementById("div_HoraInicio").style.display = "none";
 									document.getElementById("div_HoraTermino").style.display = "none";
-									//reseteo
-									document.getElementById("valor_diferencia").value = "";
-									document.getElementById("Rango_ini").value = "";
-									document.getElementById("Rango_fin").value = "";
-									document.getElementById("HoraInicio").value = "";
-									document.getElementById("HoraTermino").value = "";
-									document.getElementById("alert_post_data").innerHTML = "Todos los sensores tienen el mismo valor de error";
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById("valor_diferencia").value = "";
+										document.getElementById("Rango_ini").value = "";
+										document.getElementById("Rango_fin").value = "";
+										document.getElementById("HoraInicio").value = "";
+										document.getElementById("HoraTermino").value = "";
+										document.getElementById("alert_post_data").innerHTML = "Todos los sensores tienen el mismo valor de error";
+									}
 								break;
 								//Rango Porcentaje Grupo
 								case '2':
@@ -743,13 +766,15 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_Rango_fin").style.display = "none";
 									document.getElementById("div_HoraInicio").style.display = "none";
 									document.getElementById("div_HoraTermino").style.display = "none";
-									//reseteo
-									document.getElementById("valor_error").value = "";
-									document.getElementById("Rango_ini").value = "";
-									document.getElementById("Rango_fin").value = "";
-									document.getElementById("HoraInicio").value = "";
-									document.getElementById("HoraTermino").value = "";
-									document.getElementById("alert_post_data").innerHTML = "Un sensor tiene un valor que es x porcentaje inferior o superior a otro sensor dentro del grupo de sensores";
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById("valor_error").value = "";
+										document.getElementById("Rango_ini").value = "";
+										document.getElementById("Rango_fin").value = "";
+										document.getElementById("HoraInicio").value = "";
+										document.getElementById("HoraTermino").value = "";
+										document.getElementById("alert_post_data").innerHTML = "Un sensor tiene un valor que es x porcentaje inferior o superior a otro sensor dentro del grupo de sensores";
+									}
 								break;
 								//Alertas Personalizadas (al menos 1 error)
 								case '3':
@@ -759,14 +784,16 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_Rango_fin").style.display = "none";
 									document.getElementById("div_HoraInicio").style.display = "none";
 									document.getElementById("div_HoraTermino").style.display = "none";
-									//reseteo
-									document.getElementById("valor_error").value = "";
-									document.getElementById("valor_diferencia").value = "";
-									document.getElementById("Rango_ini").value = "";
-									document.getElementById("Rango_fin").value = "";
-									document.getElementById("HoraInicio").value = "";
-									document.getElementById("HoraTermino").value = "";
-									document.getElementById("alert_post_data").innerHTML = "Al menos un sensor se encuentra fuera del rango de trabajo normal";
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById("valor_error").value = "";
+										document.getElementById("valor_diferencia").value = "";
+										document.getElementById("Rango_ini").value = "";
+										document.getElementById("Rango_fin").value = "";
+										document.getElementById("HoraInicio").value = "";
+										document.getElementById("HoraTermino").value = "";
+										document.getElementById("alert_post_data").innerHTML = "Al menos un sensor se encuentra fuera del rango de trabajo normal";
+									}
 								break;
 								//Alertas Personalizadas (todos con error)
 								case '4':
@@ -776,14 +803,16 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_Rango_fin").style.display = "none";
 									document.getElementById("div_HoraInicio").style.display = "none";
 									document.getElementById("div_HoraTermino").style.display = "none";
-									//reseteo
-									document.getElementById("valor_error").value = "";
-									document.getElementById("valor_diferencia").value = "";
-									document.getElementById("Rango_ini").value = "";
-									document.getElementById("Rango_fin").value = "";
-									document.getElementById("HoraInicio").value = "";
-									document.getElementById("HoraTermino").value = "";
-									document.getElementById("alert_post_data").innerHTML = "Todos los sensores se encuentra fuera del rango de trabajo normal";
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById("valor_error").value = "";
+										document.getElementById("valor_diferencia").value = "";
+										document.getElementById("Rango_ini").value = "";
+										document.getElementById("Rango_fin").value = "";
+										document.getElementById("HoraInicio").value = "";
+										document.getElementById("HoraTermino").value = "";
+										document.getElementById("alert_post_data").innerHTML = "Todos los sensores se encuentra fuera del rango de trabajo normal";
+									}
 								break;
 								//Promedios fuera de Rangos
 								case '5':
@@ -793,12 +822,14 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_Rango_fin").style.display = "block";
 									document.getElementById("div_HoraInicio").style.display = "none";
 									document.getElementById("div_HoraTermino").style.display = "none";
-									//reseteo
-									document.getElementById("valor_error").value = "";
-									document.getElementById("valor_diferencia").value = "";
-									document.getElementById("HoraInicio").value = "";
-									document.getElementById("HoraTermino").value = "";
-									document.getElementById("alert_post_data").innerHTML = "El promedio de los sensores esta fuera del rango establecido";
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById("valor_error").value = "";
+										document.getElementById("valor_diferencia").value = "";
+										document.getElementById("HoraInicio").value = "";
+										document.getElementById("HoraTermino").value = "";
+										document.getElementById("alert_post_data").innerHTML = "El promedio de los sensores esta fuera del rango establecido";
+									}
 								break;
 								//Alertas Personalizadas (todos con valor especifico)
 								case '6':
@@ -808,14 +839,16 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_Rango_fin").style.display = "none";
 									document.getElementById("div_HoraInicio").style.display = "none";
 									document.getElementById("div_HoraTermino").style.display = "none";
-									//reseteo
-									document.getElementById("valor_error").value = "";
-									document.getElementById("valor_diferencia").value = "";
-									document.getElementById("Rango_ini").value = "";
-									document.getElementById("Rango_fin").value = "";
-									document.getElementById("HoraInicio").value = "";
-									document.getElementById("HoraTermino").value = "";
-									document.getElementById("alert_post_data").innerHTML = "Todos los sensores estan con un valor predefinido, el cual indica error";
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById("valor_error").value = "";
+										document.getElementById("valor_diferencia").value = "";
+										document.getElementById("Rango_ini").value = "";
+										document.getElementById("Rango_fin").value = "";
+										document.getElementById("HoraInicio").value = "";
+										document.getElementById("HoraTermino").value = "";
+										document.getElementById("alert_post_data").innerHTML = "Todos los sensores estan con un valor predefinido, el cual indica error";
+									}
 								break;
 								//Sensor funcionando fuera de horario
 								case '7':
@@ -825,15 +858,18 @@ if(!empty($_GET['editItem'])){
 									document.getElementById("div_Rango_fin").style.display = "none";
 									document.getElementById("div_HoraInicio").style.display = "block";
 									document.getElementById("div_HoraTermino").style.display = "block";
-									//reseteo
-									document.getElementById("valor_error").value = "";
-									document.getElementById("valor_diferencia").value = "";
-									document.getElementById("Rango_ini").value = "";
-									document.getElementById("Rango_fin").value = "";
-									document.getElementById("alert_post_data").innerHTML = "Los sensores seleccionados estan funcionando fuera de los horarios establecidos";
+									//Reseteo los valores a 0
+									if(caseLoad==1){
+										document.getElementById("valor_error").value = "";
+										document.getElementById("valor_diferencia").value = "";
+										document.getElementById("Rango_ini").value = "";
+										document.getElementById("Rango_fin").value = "";
+										document.getElementById("alert_post_data").innerHTML = "Los sensores seleccionados estan funcionando fuera de los horarios establecidos";
+									}
 								break;
 
 							}
+
 						}
 					</script>
 

@@ -285,7 +285,7 @@ if(isset($_GET['idGraficos'])&&$_GET['idGraficos']==1){ ?>
 						})
 						.catch(function (error) {
 							console.error('oops, something went wrong!', error);
-							alert('No se puede exportar!');
+							Swal.fire({icon: 'error',title: 'Oops...',text: 'No se puede exportar!'});
 							document.getElementById("loading").style.display = "none";
 						});
 					}

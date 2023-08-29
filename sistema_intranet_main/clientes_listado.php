@@ -550,7 +550,7 @@ foreach ($arrTabs as $tab) {
 				$Form_Inputs->form_input_icon('Giro de la empresa', 'Giro', $x9, 1,'fa fa-industry');
 				//Solo para plataforma Intranet
 				if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){
-					$Form_Inputs->form_checkbox_active('Unidad de Negocio','idTab', $x10, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
+					$Form_Inputs->form_checkbox_active('Unidad de Negocio','idTab', $x10, 1, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
 				}
 
 				$Form_Inputs->form_input_hidden('pagina', 1, 1);

@@ -333,7 +333,7 @@ connection.onstreamended = function(event) {
         mediaElement.parentNode.removeChild(mediaElement);
 
         if(event.userid === connection.sessionid && !connection.isInitiator) {
-          alert('Broadcast is ended. We will reload this page to clear the cache.');
+          Swal.fire({icon: 'error',title: 'Oops...',text: 'Broadcast is ended. We will reload this page to clear the cache.'});
           location.reload();
         }
     }
@@ -342,7 +342,7 @@ connection.onstreamended = function(event) {
 connection.onMediaError = function(e) {
     if (e.message === 'Concurrent mic process limit.') {
         if (DetectRTC.audioInputDevices.length <= 1) {
-            alert('Please select external microphone. Check github issue number 483.');
+            Swal.fire({icon: 'error',title: 'Oops...',text: 'Please select external microphone. Check github issue number 483.'});
             return;
         }
 
@@ -442,7 +442,7 @@ if(roomid && roomid.length) {
 if(navigator.connection &&
    navigator.connection.type === 'cellular' &&
    navigator.connection.downlinkMax <= 0.115) {
-  alert('2G is not supported. Please use a better internet service.');
+  Swal.fire({icon: 'error',title: 'Oops...',text: '2G is not supported. Please use a better internet service.'});
 }
 </script>
 

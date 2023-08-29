@@ -405,7 +405,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 										 $dbConn, 'form1');
 				$Form_Inputs->form_select_depend1('Especie','idCategoria', $x6, 1, 'idCategoria', 'Nombre', 'sistema_variedades_categorias', 0, 0,
 										 'Variedad','idProducto', $x7, 1, 'idProducto', 'Nombre', 'variedades_listado', 'idEstado=1', 0,
-										 $dbConn, 'form1');					 
+										 $dbConn, 'form1');
 				$Form_Inputs->form_select_filter('N° Solicitud','NSolicitud', $x1, 1, 'NSolicitud', 'NSolicitud', 'cross_solicitud_aplicacion_listado', $w, '', $dbConn);
 				$Form_Inputs->form_select('Estado','idEstado', $x15, 2, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
 				$Form_Inputs->form_date('Fecha Programada Desde','f_programacion_desde', $x8, 1);
@@ -414,94 +414,110 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 				$Form_Inputs->form_date('Fecha Ejecutada Hasta','f_ejecucion_hasta', $x11, 1);
 				$Form_Inputs->form_date('Fecha Terminada Desde','f_termino_desde', $x12, 1);
 				$Form_Inputs->form_date('Fecha Terminada Hasta','f_termino_hasta', $x13, 1);
-				
+
 				/*
 				$Form_Inputs->form_select_join_filter('Usuario Creador','idUsuario', $x14, 1, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				$Form_Inputs->form_select('Estado','idEstado', $x15, 1, 'idEstado', 'Nombre', 'core_estado_solicitud', 0, '', $dbConn);
 				$Form_Inputs->form_input_number('N° Solicitud','NSolicitud', $x1, 1);
 				$Form_Inputs->form_select_filter('Estado Fenológico','idEstadoFen', $x5, 1, 'idEstadoFen', 'Codigo,Nombre', 'cross_checking_estado_fenologico', $y, '', $dbConn);
-					*/	
+					*/
 				?>
 
 				<script>
-					//oculto los div
-					document.getElementById('div_f_programacion_desde').style.display = 'none';
-					document.getElementById('div_f_programacion_hasta').style.display = 'none';
-					document.getElementById('div_f_ejecucion_desde').style.display = 'none';
-					document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
-					document.getElementById('div_f_termino_desde').style.display = 'none';
-					document.getElementById('div_f_termino_hasta').style.display = 'none';
-
-					$("#idEstado").on("change", function(){ //se ejecuta al cambiar valor del select
-						let idEstado = $(this).val(); //Asignamos el valor seleccionado
-
-						//Solicitado
-						if(idEstado == 1){
-							document.getElementById('div_f_programacion_desde').style.display = 'block';
-							document.getElementById('div_f_programacion_hasta').style.display = 'block';
-							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
-							document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
-							document.getElementById('div_f_termino_desde').style.display = 'none';
-							document.getElementById('div_f_termino_hasta').style.display = 'none';
-							//Reseteo los valores a 0
-							//document.getElementById('f_programacion_desde').value = "";
-							//document.getElementById('f_programacion_hasta').value = "";
-							document.getElementById('f_ejecucion_desde').value = "";
-							document.getElementById('f_ejecucion_hasta').value = "";
-							document.getElementById('f_termino_desde').value = "";
-							document.getElementById('f_termino_hasta').value = "";				
-						
-						//Programado
-						}else if(idEstado == 2){
-							document.getElementById('div_f_programacion_desde').style.display = 'none';
-							document.getElementById('div_f_programacion_hasta').style.display = 'none';
-							document.getElementById('div_f_ejecucion_desde').style.display = 'block';
-							document.getElementById('div_f_ejecucion_hasta').style.display = 'block';
-							document.getElementById('div_f_termino_desde').style.display = 'none';
-							document.getElementById('div_f_termino_hasta').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('f_programacion_desde').value = "";
-							document.getElementById('f_programacion_hasta').value = "";
-							//document.getElementById('f_ejecucion_desde').value = "";
-							//document.getElementById('f_ejecucion_hasta').value = "";
-							document.getElementById('f_termino_desde').value = "";
-							document.getElementById('f_termino_hasta').value = "";	
-						
-						//Ejecutado
-						}else if(idEstado == 3){
-							document.getElementById('div_f_programacion_desde').style.display = 'none';
-							document.getElementById('div_f_programacion_hasta').style.display = 'none';
-							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
-							document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
-							document.getElementById('div_f_termino_desde').style.display = 'block';
-							document.getElementById('div_f_termino_hasta').style.display = 'block';
-							//Reseteo los valores a 0
-							document.getElementById('f_programacion_desde').value = "";
-							document.getElementById('f_programacion_hasta').value = "";
-							document.getElementById('f_ejecucion_desde').value = "";
-							document.getElementById('f_ejecucion_hasta').value = "";
-							//document.getElementById('f_termino_desde').value = "";
-							//document.getElementById('f_termino_hasta').value = "";		
-						
-						//el resto
-						}else{
-							document.getElementById('div_f_programacion_desde').style.display = 'none';
-							document.getElementById('div_f_programacion_hasta').style.display = 'none';
-							document.getElementById('div_f_ejecucion_desde').style.display = 'none';
-							document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
-							document.getElementById('div_f_termino_desde').style.display = 'none';
-							document.getElementById('div_f_termino_hasta').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('f_programacion_desde').value = "";
-							document.getElementById('f_programacion_hasta').value = "";
-							document.getElementById('f_ejecucion_desde').value = "";
-							document.getElementById('f_ejecucion_hasta').value = "";
-							document.getElementById('f_termino_desde').value = "";
-							document.getElementById('f_termino_hasta').value = "";				
-								
-						}
+					/**********************************************************************/
+					$(document).ready(function(){
+						document.getElementById('div_f_programacion_desde').style.display = 'none';
+						document.getElementById('div_f_programacion_hasta').style.display = 'none';
+						document.getElementById('div_f_ejecucion_desde').style.display = 'none';
+						document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
+						document.getElementById('div_f_termino_desde').style.display = 'none';
+						document.getElementById('div_f_termino_hasta').style.display = 'none';
 					});
-					
+
+					/**********************************************************************/
+					document.getElementById("idEstado").onchange = function() {LoadEstado(1)};
+
+					/**********************************************************************/
+					function LoadEstado(caseLoad){
+						//obtengo los valores
+						let idEstado = $("#idEstado").val();
+						//selecciono
+						switch(idEstado) {
+							//Solicitado
+							case '1':
+								document.getElementById('div_f_programacion_desde').style.display = 'block';
+								document.getElementById('div_f_programacion_hasta').style.display = 'block';
+								document.getElementById('div_f_ejecucion_desde').style.display = 'none';
+								document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
+								document.getElementById('div_f_termino_desde').style.display = 'none';
+								document.getElementById('div_f_termino_hasta').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									//document.getElementById('f_programacion_desde').value = "";
+									//document.getElementById('f_programacion_hasta').value = "";
+									document.getElementById('f_ejecucion_desde').value = "";
+									document.getElementById('f_ejecucion_hasta').value = "";
+									document.getElementById('f_termino_desde').value = "";
+									document.getElementById('f_termino_hasta').value = "";
+								}
+							break;
+							//Programado
+							case '2':
+								document.getElementById('div_f_programacion_desde').style.display = 'none';
+								document.getElementById('div_f_programacion_hasta').style.display = 'none';
+								document.getElementById('div_f_ejecucion_desde').style.display = 'block';
+								document.getElementById('div_f_ejecucion_hasta').style.display = 'block';
+								document.getElementById('div_f_termino_desde').style.display = 'none';
+								document.getElementById('div_f_termino_hasta').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('f_programacion_desde').value = "";
+									document.getElementById('f_programacion_hasta').value = "";
+									//document.getElementById('f_ejecucion_desde').value = "";
+									//document.getElementById('f_ejecucion_hasta').value = "";
+									document.getElementById('f_termino_desde').value = "";
+									document.getElementById('f_termino_hasta').value = "";
+								}
+							break;
+							//Ejecutado
+							case '3':
+								document.getElementById('div_f_programacion_desde').style.display = 'none';
+								document.getElementById('div_f_programacion_hasta').style.display = 'none';
+								document.getElementById('div_f_ejecucion_desde').style.display = 'none';
+								document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
+								document.getElementById('div_f_termino_desde').style.display = 'block';
+								document.getElementById('div_f_termino_hasta').style.display = 'block';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('f_programacion_desde').value = "";
+									document.getElementById('f_programacion_hasta').value = "";
+									document.getElementById('f_ejecucion_desde').value = "";
+									document.getElementById('f_ejecucion_hasta').value = "";
+									//document.getElementById('f_termino_desde').value = "";
+									//document.getElementById('f_termino_hasta').value = "";
+								}
+							break;
+							//el resto
+							default:
+								document.getElementById('div_f_programacion_desde').style.display = 'none';
+								document.getElementById('div_f_programacion_hasta').style.display = 'none';
+								document.getElementById('div_f_ejecucion_desde').style.display = 'none';
+								document.getElementById('div_f_ejecucion_hasta').style.display = 'none';
+								document.getElementById('div_f_termino_desde').style.display = 'none';
+								document.getElementById('div_f_termino_hasta').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('f_programacion_desde').value = "";
+									document.getElementById('f_programacion_hasta').value = "";
+									document.getElementById('f_ejecucion_desde').value = "";
+									document.getElementById('f_ejecucion_hasta').value = "";
+									document.getElementById('f_termino_desde').value = "";
+									document.getElementById('f_termino_hasta').value = "";
+								}
+							break;
+						}
+					}
+
 				</script>
 
 				<div class="form-group">

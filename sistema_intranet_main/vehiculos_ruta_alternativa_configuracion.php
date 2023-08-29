@@ -202,10 +202,10 @@ array_push( $arrRutas,$row );
 										if (results[0]) {
 											document.getElementById(div).value = results[0].formatted_address;
 										}else {
-											alert('No results found');
+											Swal.fire({icon: 'error',title: 'Oops...',text: 'Sin resultados encontrados.'});
 										}
 									}else {
-										alert('Geocoder failed due to: ' + status);
+										Swal.fire({icon: 'error',title: 'Oops...',text: 'Geocoder ha fallado por: ' + status});
 									}
 								});
 							}
@@ -527,10 +527,10 @@ array_push( $arrRutasAlt,$row );
 										if (results[0]) {
 											document.getElementById(div).value = results[0].formatted_address;
 										}else {
-											alert('No results found');
+											Swal.fire({icon: 'error',title: 'Oops...',text: 'Sin resultados encontrados.'});
 										}
 									}else {
-										alert('Geocoder failed due to: ' + status);
+										Swal.fire({icon: 'error',title: 'Oops...',text: 'Geocoder ha fallado por: ' + status});
 									}
 								});
 							}

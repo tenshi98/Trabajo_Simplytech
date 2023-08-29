@@ -123,11 +123,11 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 					$Form_Inputs->form_select_depend1('Región','idCiudad', $x4, 1, 'idCiudad', 'Nombre', 'core_ubicacion_ciudad', 0, 0,
 											'Comuna','idComuna', $x5, 1, 'idComuna', 'Nombre', 'core_ubicacion_comunas', 0, 0,
 											 $dbConn, 'form1');
-					$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x6, 1,'fa fa-map');	 
+					$Form_Inputs->form_input_icon('Dirección', 'Direccion', $x6, 1,'fa fa-map');
 					//Solo para plataforma Intranet
 					if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){
 						$Form_Inputs->form_tittle(3, 'Unidades de Negocio');
-						$Form_Inputs->form_checkbox_active('Unidad de Negocio','idTab', $x7, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
+						$Form_Inputs->form_checkbox_active('Unidad de Negocio','idTab', $x7, 1, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
 					}
 
 					$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

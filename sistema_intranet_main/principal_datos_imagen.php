@@ -188,7 +188,7 @@ $Count_pagos = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4];
 										success:function(data){
 											$('#uploadimageModal').modal('hide');
 											location.reload();
-											//alert('listo');
+											//Swal.fire({icon: 'error',title: 'Oops...',text: 'Listo.'});
 										}
 									});
 								})

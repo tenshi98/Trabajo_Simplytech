@@ -166,7 +166,7 @@ $arrHistorial = db_select_array (false, 'clientes_listado_historial_contratos.Cr
 					//Solo para plataforma Intranet
 					if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==7){
 						$Form_Inputs->form_tittle(3, 'Servicios');
-						$Form_Inputs->form_checkbox_active('Unidad de Negocio','idTab', $x14, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
+						$Form_Inputs->form_checkbox_active('Unidad de Negocio','idTab', $x14, 1, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
 					}
 
 					$Form_Inputs->form_ckeditor('Observaciones','Contrato_Obs', $x15, 1, 2);

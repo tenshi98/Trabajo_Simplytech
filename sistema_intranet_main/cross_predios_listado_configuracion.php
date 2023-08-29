@@ -295,7 +295,7 @@ array_push( $arrPuntos,$row );
 										map.setCenter(myLatlng); 
 														  
 									}else {
-										alert('Geocode was not successful for the following reason: ' + status);
+										Swal.fire({icon: 'error',title: 'Oops...',text: 'Geocode was not successful for the following reason: ' + status});
 									}
 								});
 							}
@@ -619,7 +619,7 @@ array_push( $arrZonas,$row );
 										marker.setPosition(myLatlng); 
 														  
 									}else {
-										alert('Geocode was not successful for the following reason: ' + status);
+										Swal.fire({icon: 'error',title: 'Oops...',text: 'Geocode was not successful for the following reason: ' + status});
 									}
 								});
 							}

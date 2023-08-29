@@ -198,8 +198,8 @@ require_once 'core/Web.Header.Main.php';
 				$Form_Inputs->form_multiple_upload('Subir archivos','form_multiple_upload2', 1, '"jpg", "png", "gif", "jpeg"');
 
 				$Form_Inputs->form_tittle(3, 'Opciones');
-				$Form_Inputs->form_checkbox_active('opciones seleccionadas','form_checkbox_active1', $x39, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
-				$Form_Inputs->form_checkbox_active('opciones seleccionadas','form_checkbox_active2', $x40, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
+				$Form_Inputs->form_checkbox_active('opciones seleccionadas','form_checkbox_active1', $x39, 1, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
+				$Form_Inputs->form_checkbox_active('opciones seleccionadas','form_checkbox_active2', $x40, 2, 2, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, $dbConn);
 
 				$Form_Inputs->form_tittle(3, 'Selects');
 				$Form_Inputs->form_select('form_select','form_select1', $x41, 1, 'idBodega', 'Nombre', 'bodegas_productos_listado', 0, '', $dbConn);

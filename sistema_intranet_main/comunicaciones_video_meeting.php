@@ -169,7 +169,7 @@ document.getElementById('open-room').onclick = function() {
 		}else {
 			disableInputButtons(true);
 			if(error === 'Room not available') {
-				alert('Esta Reunion ya fue creada, unase a esta.');
+				Swal.fire({icon: 'error',title: 'Oops...',text: 'Esta Reunion ya fue creada, unase a esta.'});
 				return;
 			}
 			alert(error);
@@ -187,7 +187,7 @@ document.getElementById('join-room').onclick = function() {
 			if (error) {
 				disableInputButtons(true);
 				if(error === 'Room not available') {
-					alert('La Reunion no existe, favor crearla antes de ingresar.');
+					Swal.fire({icon: 'error',title: 'Oops...',text: 'La Reunion no existe, favor crearla antes de ingresar.'});
 					return;
 				}
 				alert(error);
@@ -388,7 +388,7 @@ connection.onstreamended = function(event) {
 connection.onMediaError = function(e) {
     if (e.message === 'Concurrent mic process limit.') {
         if (DetectRTC.audioInputDevices.length <= 1) {
-            alert('Favor seleccione un microfono valido.');
+            Swal.fire({icon: 'error',title: 'Oops...',text: 'Favor seleccione un microfono valido.'});
             return;
         }
 
@@ -477,7 +477,7 @@ if (roomid && roomid.length) {
 if(navigator.connection &&
    navigator.connection.type === 'cellular' &&
    navigator.connection.downlinkMax <= 0.115) {
-  alert('2G no esta soportado, favor conectese con 3G hacia arriba.');
+  Swal.fire({icon: 'error',title: 'Oops...',text: '2G no esta soportado, favor conectese con 3G hacia arriba.'});
 }
 
 // ......................................................

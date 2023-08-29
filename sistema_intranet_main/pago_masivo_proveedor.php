@@ -742,7 +742,7 @@ $Form_Inputs = new Inputs();
 			saveFact(level, number, value, text, valor);
 			setTimeout ("window.location.reload(false);", 1000);
 		}else{
-			alert('Selecciona una opción');
+			Swal.fire({icon: 'error',title: 'Oops...',text: 'Selecciona una opción.'});
 		}
 		
 		

@@ -247,7 +247,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 							})
 							.catch(function (error) {
 								console.error('oops, something went wrong!', error);
-								alert('No se puede exportar!');
+								Swal.fire({icon: 'error',title: 'Oops...',text: 'No se puede exportar!'});
 								document.getElementById("loading").style.display = "none";
 							});
 						}

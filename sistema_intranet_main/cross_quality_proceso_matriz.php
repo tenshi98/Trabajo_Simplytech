@@ -163,123 +163,88 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 				?>
 
 				<script>
-					document.getElementById('div_PuntoMedAceptable').style.display = 'none';
-					document.getElementById('div_PuntoMedAlerta').style.display = 'none';
-					document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
-					document.getElementById('div_PuntoUniMed').style.display = 'none';
-					document.getElementById('div_Validar').style.display = 'none';
-
-					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-
-						let Sensores_val = $("#PuntoidTipo").val();
-
-						//si es Medicion (Decimal) con parametros limitantes
-						if(Sensores_val == 1){
-							document.getElementById('div_PuntoMedAceptable').style.display = '';
-							document.getElementById('div_PuntoMedAlerta').style.display = '';
-							document.getElementById('div_PuntoMedCondenatorio').style.display = '';
-							document.getElementById('div_PuntoUniMed').style.display = '';
-						//si es Medicion (Decimal) sin parametros limitantes
-						}else if(Sensores_val == 2){
-							document.getElementById('div_PuntoMedAceptable').style.display = 'none';
-							document.getElementById('div_PuntoMedAlerta').style.display = 'none';
-							document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
-							document.getElementById('div_PuntoUniMed').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('PuntoMedAceptable').value = "0";
-							document.getElementById('PuntoMedAlerta').value = "0";
-							document.getElementById('PuntoMedCondenatorio').value = "0";
-						//si es Medicion (Enteros) con parametros limitantes
-						}else if(Sensores_val == 3){
-							document.getElementById('div_PuntoMedAceptable').style.display = '';
-							document.getElementById('div_PuntoMedAlerta').style.display = '';
-							document.getElementById('div_PuntoMedCondenatorio').style.display = '';
-							document.getElementById('div_PuntoUniMed').style.display = '';
-						//si es Medicion (Enteros) sin parametros limitantes
-						}else if(Sensores_val == 4){
-							document.getElementById('div_PuntoMedAceptable').style.display = 'none';
-							document.getElementById('div_PuntoMedAlerta').style.display = 'none';
-							document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
-							document.getElementById('div_PuntoUniMed').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('PuntoMedAceptable').value = "0";
-							document.getElementById('PuntoMedAlerta').value = "0";
-							document.getElementById('PuntoMedCondenatorio').value = "0";
-						//si es Texto Libre con Validacion
-						}else if(Sensores_val == 11){
-							document.getElementById('div_Validar').style.display = '';
-							document.getElementById('div_PuntoUniMed').style.display = 'none';
-						//para el resto
-						} else {
-							document.getElementById('div_PuntoMedAceptable').style.display = 'none';
-							document.getElementById('div_PuntoMedAlerta').style.display = 'none';
-							document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
-							document.getElementById('div_PuntoUniMed').style.display = 'none';
-							document.getElementById('div_Validar').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('PuntoMedAceptable').value = "0";
-							document.getElementById('PuntoMedAlerta').value = "0";
-							document.getElementById('PuntoMedCondenatorio').value = "0";
-							document.getElementById('PuntoUniMed').value = "0";
-							document.getElementById('Validar').value = "";
-
-						}
+					/**********************************************************************/
+					$(document).ready(function(){
+						document.getElementById('div_PuntoMedAceptable').style.display = 'none';
+						document.getElementById('div_PuntoMedAlerta').style.display = 'none';
+						document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
+						document.getElementById('div_PuntoUniMed').style.display = 'none';
+						document.getElementById('div_Validar').style.display = 'none';
+						//se ejecuta al inicio
+						LoadPuntoidTipo(0);
 					});
 
-					$("#PuntoidTipo").on("change", function(){ //se ejecuta al cambiar valor del select
-						let modelSelected1 = $(this).val(); //Asignamos el valor seleccionado
+					/**********************************************************************/
+					document.getElementById("PuntoidTipo").onchange = function() {LoadPuntoidTipo(1)};
 
-						//si es Medicion (Decimal) con parametros limitantes
-						if(modelSelected1 == 1){
-							document.getElementById('div_PuntoMedAceptable').style.display = '';
-							document.getElementById('div_PuntoMedAlerta').style.display = '';
-							document.getElementById('div_PuntoMedCondenatorio').style.display = '';
-							document.getElementById('div_PuntoUniMed').style.display = '';
-						//si es Medicion (Decimal) sin parametros limitantes
-						}else if(modelSelected1 == 2){
-							document.getElementById('div_PuntoMedAceptable').style.display = 'none';
-							document.getElementById('div_PuntoMedAlerta').style.display = 'none';
-							document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
-							document.getElementById('div_PuntoUniMed').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('PuntoMedAceptable').value = "0";
-							document.getElementById('PuntoMedAlerta').value = "0";
-							document.getElementById('PuntoMedCondenatorio').value = "0";
-						//si es Medicion (Enteros) con parametros limitantes
-						}else if(modelSelected1 == 3){
-							document.getElementById('div_PuntoMedAceptable').style.display = '';
-							document.getElementById('div_PuntoMedAlerta').style.display = '';
-							document.getElementById('div_PuntoMedCondenatorio').style.display = '';
-							document.getElementById('div_PuntoUniMed').style.display = '';
-						//si es Medicion (Enteros) sin parametros limitantes
-						}else if(modelSelected1 == 4){
-							document.getElementById('div_PuntoMedAceptable').style.display = 'none';
-							document.getElementById('div_PuntoMedAlerta').style.display = 'none';
-							document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
-							document.getElementById('div_PuntoUniMed').style.display = '';
-							//Reseteo los valores a 0
-							document.getElementById('PuntoMedAceptable').value = "0";
-							document.getElementById('PuntoMedAlerta').value = "0";
-							document.getElementById('PuntoMedCondenatorio').value = "0";
-						//si es Texto Libre con Validacion
-						}else if(modelSelected1 == 11){
-							document.getElementById('div_Validar').style.display = '';
-							document.getElementById('div_PuntoUniMed').style.display = 'none';
-						//para el resto
-						} else {
-							document.getElementById('div_PuntoMedAceptable').style.display = 'none';
-							document.getElementById('div_PuntoMedAlerta').style.display = 'none';
-							document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
-							document.getElementById('div_PuntoUniMed').style.display = 'none';
-							document.getElementById('div_Validar').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('PuntoMedAceptable').value = "0";
-							document.getElementById('PuntoMedAlerta').value = "0";
-							document.getElementById('PuntoMedCondenatorio').value = "0";
-							document.getElementById('PuntoUniMed').value = "0";
-							document.getElementById('Validar').value = "";
+					/**********************************************************************/
+					function LoadPuntoidTipo(caseLoad){
+						//obtengo los valores
+						let Sensores_val= $("#PuntoidTipo").val();
+						//selecciono
+						switch(Sensores_val) {
+							//si es Medicion (Decimal) con parametros limitantes
+							case '1':
+								document.getElementById('div_PuntoMedAceptable').style.display = '';
+								document.getElementById('div_PuntoMedAlerta').style.display = '';
+								document.getElementById('div_PuntoMedCondenatorio').style.display = '';
+								document.getElementById('div_PuntoUniMed').style.display = '';
+							break;
+							//si es Medicion (Decimal) sin parametros limitantes
+							case '2':
+								document.getElementById('div_PuntoMedAceptable').style.display = 'none';
+								document.getElementById('div_PuntoMedAlerta').style.display = 'none';
+								document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
+								document.getElementById('div_PuntoUniMed').style.display = '';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('PuntoMedAceptable').value = "0";
+									document.getElementById('PuntoMedAlerta').value = "0";
+									document.getElementById('PuntoMedCondenatorio').value = "0";
+								}
+							break;
+							//si es Medicion (Enteros) con parametros limitantes
+							case '3':
+								document.getElementById('div_PuntoMedAceptable').style.display = '';
+								document.getElementById('div_PuntoMedAlerta').style.display = '';
+								document.getElementById('div_PuntoMedCondenatorio').style.display = '';
+								document.getElementById('div_PuntoUniMed').style.display = '';
+							break;
+							//si es Medicion (Enteros) sin parametros limitantes
+							case '4':
+								document.getElementById('div_PuntoMedAceptable').style.display = 'none';
+								document.getElementById('div_PuntoMedAlerta').style.display = 'none';
+								document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
+								document.getElementById('div_PuntoUniMed').style.display = '';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('PuntoMedAceptable').value = "0";
+									document.getElementById('PuntoMedAlerta').value = "0";
+									document.getElementById('PuntoMedCondenatorio').value = "0";
+								}
+							break;
+							//si es Texto Libre con Validacion
+							case '11':
+								document.getElementById('div_Validar').style.display = '';
+								document.getElementById('div_PuntoUniMed').style.display = 'none';
+							break;
+							default:
+								document.getElementById('div_PuntoMedAceptable').style.display = 'none';
+								document.getElementById('div_PuntoMedAlerta').style.display = 'none';
+								document.getElementById('div_PuntoMedCondenatorio').style.display = 'none';
+								document.getElementById('div_PuntoUniMed').style.display = 'none';
+								document.getElementById('div_Validar').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('PuntoMedAceptable').value = "0";
+									document.getElementById('PuntoMedAlerta').value = "0";
+									document.getElementById('PuntoMedCondenatorio').value = "0";
+									document.getElementById('PuntoUniMed').value = "0";
+									document.getElementById('Validar').value = "";
+								}
+							break;
 						}
-					});
+					}
 
 				</script>
 
@@ -513,201 +478,178 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 				?>
 
 				<script>
-					document.getElementById('div_idNotaTipo_1').style.display = 'none';
-					document.getElementById('div_idNotaTipo_2').style.display = 'none';
-					document.getElementById('div_idNotaTipo_3').style.display = 'none';
-					document.getElementById('div_Validar_1').style.display = 'none';
-					document.getElementById('div_Validar_2').style.display = 'none';
-					document.getElementById('div_Validar_3').style.display = 'none';
-
-					$(document).ready(function(){//se ejecuta al cargar la página (OBLIGATORIO)
-
-						let Sensores_val_1= $("#idNota_1").val();
-						let Sensores_val_2= $("#idNota_2").val();
-						let Sensores_val_3= $("#idNota_3").val();
-
-						let Sensores_tipo_1= $("#idNotaTipo_1").val();
-						let Sensores_tipo_2= $("#idNotaTipo_2").val();
-						let Sensores_tipo_3= $("#idNotaTipo_3").val();
-
-						/******************************************************************/
-						//si la opción esta activa
-						if(Sensores_val_1 == 1){
-							document.getElementById('div_idNotaTipo_1').style.display = '';				
-						//si la opción esta inactiva
-						}else if(Sensores_val_1 == 2){
-							document.getElementById('div_idNotaTipo_1').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idNotaTipo_1').selectedIndex = 0;
-						//para el resto
-						} else {
-							document.getElementById('div_idNotaTipo_1').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idNotaTipo_1').selectedIndex = 0;
-						}
-						/******************************************************************/
-						//si la opción esta activa
-						if(Sensores_val_2 == 1){
-							document.getElementById('div_idNotaTipo_2').style.display = '';				
-						//si la opción esta inactiva
-						}else if(Sensores_val_2 == 2){
-							document.getElementById('div_idNotaTipo_2').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idNotaTipo_2').selectedIndex = 0;
-						//para el resto
-						} else {
-							document.getElementById('div_idNotaTipo_2').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idNotaTipo_2').selectedIndex = 0;
-						}
-						/******************************************************************/
-						//si la opción esta activa
-						if(Sensores_val_3 == 1){
-							document.getElementById('div_idNotaTipo_3').style.display = '';				
-						//si la opción esta inactiva
-						}else if(Sensores_val_3 == 2){
-							document.getElementById('div_idNotaTipo_3').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idNotaTipo_3').selectedIndex = 0;
-						//para el resto
-						} else {
-							document.getElementById('div_idNotaTipo_3').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idNotaTipo_3').selectedIndex = 0;
-						}
-
-						/******************************************************************/
-						//Texto Libre con Validacion
-						if(Sensores_tipo_1 == 11){
-							document.getElementById('div_Validar_1').style.display = '';				
-						//para el resto
-						} else {
-							document.getElementById('div_Validar_1').style.display = 'none';
-							//Reseteo los valores a vacio
-							document.getElementById('Validar_1').value = "";
-						}
-						/******************************************************************/
-						//Texto Libre con Validacion
-						if(Sensores_tipo_2 == 11){
-							document.getElementById('div_Validar_2').style.display = '';				
-						//para el resto
-						} else {
-							document.getElementById('div_Validar_2').style.display = 'none';
-							//Reseteo los valores a vacio
-							document.getElementById('Validar_2').value = "";
-						}
-						/******************************************************************/
-						//Texto Libre con Validacion
-						if(Sensores_tipo_3 == 11){
-							document.getElementById('div_Validar_3').style.display = '';				
-						//para el resto
-						} else {
-							document.getElementById('div_Validar_3').style.display = 'none';
-							//Reseteo los valores a vacio
-							document.getElementById('Validar_3').value = "";
-						}
-					});
-					
-							
-					/******************************************************************/
-					$("#idNota_1").on("change", function(){ //se ejecuta al cambiar valor del select
-						let modelSelected_1 = $(this).val(); //Asignamos el valor seleccionado
-
-						//si la opción esta activa
-						if(modelSelected_1 == 1){
-							document.getElementById('div_idNotaTipo_1').style.display = '';
-						//si la opción esta inactiva
-						}else if(modelSelected_1 == 2){
-							document.getElementById('div_idNotaTipo_1').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idNotaTipo_1').selectedIndex = 0;
-						//para el resto
-						} else {
-							document.getElementById('div_idNotaTipo_1').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idNotaTipo_1').selectedIndex = 0;
-						}
-					});
-					/******************************************************************/
-					$("#idNota_2").on("change", function(){ //se ejecuta al cambiar valor del select
-						let modelSelected_2 = $(this).val(); //Asignamos el valor seleccionado
-
-						//si la opción esta activa
-						if(modelSelected_2 == 1){
-							document.getElementById('div_idNotaTipo_2').style.display = '';
-						//si la opción esta inactiva
-						}else if(modelSelected_2 == 2){
-							document.getElementById('div_idNotaTipo_2').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idNotaTipo_2').selectedIndex = 0;	
-						//para el resto
-						} else {
-							document.getElementById('div_idNotaTipo_2').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idNotaTipo_2').selectedIndex = 0;
-						}
-					});
-					/******************************************************************/
-					$("#idNota_3").on("change", function(){ //se ejecuta al cambiar valor del select
-						let modelSelected_3 = $(this).val(); //Asignamos el valor seleccionado
-
-						//si la opción esta activa
-						if(modelSelected_3 == 1){
-							document.getElementById('div_idNotaTipo_3').style.display = '';
-						//si la opción esta inactiva
-						}else if(modelSelected_3 == 2){
-							document.getElementById('div_idNotaTipo_3').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idNotaTipo_3').selectedIndex = 0;
-						//para el resto
-						} else {
-							document.getElementById('div_idNotaTipo_3').style.display = 'none';
-							//Reseteo los valores a 0
-							document.getElementById('idNotaTipo_3').selectedIndex = 0;
-						}
+					/**********************************************************************/
+					$(document).ready(function(){
+						document.getElementById('div_idNotaTipo_1').style.display = 'none';
+						document.getElementById('div_idNotaTipo_2').style.display = 'none';
+						document.getElementById('div_idNotaTipo_3').style.display = 'none';
+						document.getElementById('div_Validar_1').style.display = 'none';
+						document.getElementById('div_Validar_2').style.display = 'none';
+						document.getElementById('div_Validar_3').style.display = 'none';
+						//se ejecuta al inicio
+						LoadNota_1(0);
+						LoadNota_2(0);
+						LoadNota_3(0);
+						LoadNotaTipo_1(0);
+						LoadNotaTipo_2(0);
+						LoadNotaTipo_3(0);
 					});
 
-					/******************************************************************/
-					$("#idNotaTipo_1").on("change", function(){ //se ejecuta al cambiar valor del select
-						let Sensores_tipo_1 = $(this).val(); //Asignamos el valor seleccionado
-						//Texto Libre con Validacion
-						if(Sensores_tipo_1 == 11){
-							document.getElementById('div_Validar_1').style.display = '';				
-						//para el resto
-						} else {
-							document.getElementById('div_Validar_1').style.display = 'none';
-							//Reseteo los valores a vacio
-							document.getElementById('Validar_1').value = "";
+					/**********************************************************************/
+					document.getElementById("idNota_1").onchange = function() {LoadNota_1(1)};
+					document.getElementById("idNota_2").onchange = function() {LoadNota_2(1)};
+					document.getElementById("idNota_3").onchange = function() {LoadNota_3(1)};
+					document.getElementById("idNotaTipo_1").onchange = function() {LoadNotaTipo_1(1)};
+					document.getElementById("idNotaTipo_2").onchange = function() {LoadNotaTipo_2(1)};
+					document.getElementById("idNotaTipo_3").onchange = function() {LoadNotaTipo_3(1)};
+
+					/**********************************************************************/
+					function LoadNota_1(caseLoad){
+						//obtengo los valores
+						let Sensores_val_1 = $("#idNota_1").val();
+						//selecciono
+						switch(Sensores_val_1) {
+							//si la opción esta activa
+							case '1':
+								document.getElementById('div_idNotaTipo_1').style.display = '';
+							break;
+							//si la opción esta inactiva
+							case '2':
+								document.getElementById('div_idNotaTipo_1').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('idNotaTipo_1').selectedIndex = 0;
+								}
+							break;
+							//para el resto
+							default:
+								document.getElementById('div_idNotaTipo_1').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('idNotaTipo_1').selectedIndex = 0;
+								}
+							break;
 						}
-					});
-					/******************************************************************/
-					$("#idNotaTipo_2").on("change", function(){ //se ejecuta al cambiar valor del select
-						let Sensores_tipo_2 = $(this).val(); //Asignamos el valor seleccionado
-						//Texto Libre con Validacion
-						if(Sensores_tipo_2 == 11){
-							document.getElementById('div_Validar_2').style.display = '';				
-						//para el resto
-						} else {
-							document.getElementById('div_Validar_2').style.display = 'none';
-							//Reseteo los valores a vacio
-							document.getElementById('Validar_2').value = "";
+					}
+
+					/**********************************************************************/
+					function LoadNota_2(caseLoad){
+						//obtengo los valores
+						let Sensores_val_2 = $("#idNota_2").val();
+						//selecciono
+						switch(Sensores_val_2) {
+							//si la opción esta activa
+							case '1':
+								document.getElementById('div_idNotaTipo_2').style.display = '';
+							break;
+							//si la opción esta inactiva
+							case '2':
+								document.getElementById('div_idNotaTipo_2').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('idNotaTipo_2').selectedIndex = 0;
+								}
+							break;
+							//para el resto
+							default:
+								document.getElementById('div_idNotaTipo_2').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('idNotaTipo_2').selectedIndex = 0;
+								}
+							break;
 						}
-					});
-					/******************************************************************/
-					$("#idNotaTipo_3").on("change", function(){ //se ejecuta al cambiar valor del select
-						let Sensores_tipo_3 = $(this).val(); //Asignamos el valor seleccionado
-						//Texto Libre con Validacion
-						if(Sensores_tipo_3 == 11){
-							document.getElementById('div_Validar_3').style.display = '';				
-						//para el resto
-						} else {
-							document.getElementById('div_Validar_3').style.display = 'none';
-							//Reseteo los valores a vacio
-							document.getElementById('Validar_3').value = "";
+					}
+
+					/**********************************************************************/
+					function LoadNota_3(caseLoad){
+						//obtengo los valores
+						let Sensores_val_3 = $("#idNota_3").val();
+						//selecciono
+						switch(Sensores_val_3) {
+							//si la opción esta activa
+							case '1':
+								document.getElementById('div_idNotaTipo_3').style.display = '';
+							break;
+							//si la opción esta inactiva
+							case '2':
+								document.getElementById('div_idNotaTipo_3').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('idNotaTipo_3').selectedIndex = 0;
+								}
+							break;
+							//para el resto
+							default:
+								document.getElementById('div_idNotaTipo_3').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('idNotaTipo_3').selectedIndex = 0;
+								}
+							break;
 						}
-					});	
-							
-							
+					}
+
+					/**********************************************************************/
+					function LoadNotaTipo_1(caseLoad){
+						//obtengo los valores
+						let Sensores_tipo_1 = $("#idNotaTipo_1").val();
+						//selecciono
+						switch(Sensores_tipo_1) {
+							//Texto Libre con Validacion
+							case '11':
+								document.getElementById('div_Validar_1').style.display = '';
+							break;
+							default:
+								document.getElementById('div_Validar_1').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('Validar_1').value = "";
+								}
+							break;
+						}
+					}
+
+					/**********************************************************************/
+					function LoadNotaTipo_2(caseLoad){
+						//obtengo los valores
+						let Sensores_tipo_2 = $("#idNotaTipo_2").val();
+						//selecciono
+						switch(Sensores_tipo_2) {
+							//Texto Libre con Validacion
+							case '11':
+								document.getElementById('div_Validar_2').style.display = '';
+							break;
+							default:
+								document.getElementById('div_Validar_2').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('Validar_2').value = "";
+								}
+							break;
+						}
+					}
+
+					/**********************************************************************/
+					function LoadNotaTipo_3(caseLoad){
+						//obtengo los valores
+						let Sensores_tipo_3 = $("#idNotaTipo_3").val();
+						//selecciono
+						switch(Sensores_tipo_3) {
+							//Texto Libre con Validacion
+							case '11':
+								document.getElementById('div_Validar_3').style.display = '';
+							break;
+							default:
+								document.getElementById('div_Validar_3').style.display = 'none';
+								//Reseteo los valores a 0
+								if(caseLoad==1){
+									document.getElementById('Validar_3').value = "";
+								}
+							break;
+						}
+					}
+
 				</script>
 
 				<div class="form-group">

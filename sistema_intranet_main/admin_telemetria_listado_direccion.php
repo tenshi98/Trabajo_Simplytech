@@ -188,7 +188,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 								});
 
 							}
-							/* ************************************************************************** */	
+							/* ************************************************************************** */
 							function codeLatLng(lat,lng, div) {
 								geocoder = new google.maps.Geocoder();
 								var latlng = new google.maps.LatLng(lat, lng);
@@ -197,14 +197,21 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 										if (results[0]) {
 											document.getElementById(div).value = results[0].formatted_address;
 										}else {
-											alert('No results found');
+											Swal.fire({
+												icon: 'error',
+												title: 'Oops...',
+												text: 'No hay resultados.'
+											});
 										}
 									}else {
-										alert('Geocoder failed due to: ' + status);
+										Swal.fire({
+											icon: 'error',
+											title: 'Oops...',
+											text: 'Geocoder failed due to: ' + status
+										});
 									}
 								});
 							}
-							
 
 							/* ************************************************************************** */
 							google.maps.event.addDomListener(window, "load", initialize());

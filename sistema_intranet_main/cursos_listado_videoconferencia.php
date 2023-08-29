@@ -120,7 +120,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select_join_filter('Profesor','idUsuario', $x2, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x3, 2, 2);
 				$Form_Inputs->form_time('Hora Termino','HoraTermino', $x4, 2, 1);
-				$Form_Inputs->form_checkbox_active('Dias','idDia', $x5, 2, 'idDia', 'Nombre', 'core_tiempo_dias', 0, $dbConn);
+				$Form_Inputs->form_checkbox_active('Dias','idDia', $x5, 2, 2, 'idDia', 'Nombre', 'core_tiempo_dias', 0, $dbConn);
 
 				$Form_Inputs->form_input_hidden('idCurso', $_GET['id'], 2);
 				$Form_Inputs->form_input_hidden('idVideoConferencia', $_GET['edit'], 2);
@@ -178,7 +178,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				$Form_Inputs->form_select_join_filter('Profesor','idUsuario', $x2, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 				$Form_Inputs->form_time('Hora Inicio','HoraInicio', $x3, 2, 2);
 				$Form_Inputs->form_time('Hora Termino','HoraTermino', $x4, 2, 1);
-				$Form_Inputs->form_checkbox_active('Dias','idDia', $x5, 2, 'idDia', 'Nombre', 'core_tiempo_dias', 0, $dbConn);
+				$Form_Inputs->form_checkbox_active('Dias','idDia', $x5, 2, 2, 'idDia', 'Nombre', 'core_tiempo_dias', 0, $dbConn);
 
 				$Form_Inputs->form_input_hidden('idCurso', $_GET['id'], 2);
 

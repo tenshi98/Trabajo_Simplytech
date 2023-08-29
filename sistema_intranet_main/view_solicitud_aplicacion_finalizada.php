@@ -823,7 +823,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 													map_2.setCenter(myLatlng);
 																			  
 												}else {
-													alert('Geocode was not successful for the following reason: ' + status);
+													Swal.fire({icon: 'error',title: 'Oops...',text: 'Geocode was not successful for the following reason: ' + status});
 												}
 											});
 										}

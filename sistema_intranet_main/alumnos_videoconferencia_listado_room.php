@@ -140,12 +140,20 @@ $rowdata = db_select_data (false, $SIS_query, 'cursos_listado', $SIS_join, $SIS_
 			  //showRoomURL(connection.sessionid);
 			}
 			else {
-			  disableInputButtons(true);
-			  if(error === 'Room not available') {
-				alert('Esta Videoconferencia ya fue creada, unase a esta.');
-				return;
-			  }
-			  alert(error);
+			    disableInputButtons(true);
+			    if(error === 'Room not available') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Esta Videoconferencia ya fue creada, unase a esta.'
+                    });
+                    return;
+			    }
+                Swal.fire({
+					icon: 'error',
+					title: 'Oops...',
+					text: error
+				});
 			}
 		});
 	};
@@ -380,7 +388,11 @@ connection.onstreamended = function(event) {
 connection.onMediaError = function(e) {
     if (e.message === 'Concurrent mic process limit.') {
         if (DetectRTC.audioInputDevices.length <= 1) {
-            alert('Favor seleccione un microfono valido.');
+            Swal.fire({
+				icon: 'error',
+				title: 'Oops...',
+				text: 'Favor seleccione un microfono valido.'
+			});
             return;
         }
 
@@ -484,9 +496,13 @@ if (roomid && roomid.length) {
 
 // detect 2G
 if(navigator.connection &&
-   navigator.connection.type === 'cellular' &&
-   navigator.connection.downlinkMax <= 0.115) {
-  alert('2G no esta soportado, favor conectese con 3G hacia arriba.');
+    navigator.connection.type === 'cellular' &&
+    navigator.connection.downlinkMax <= 0.115) {
+    Swal.fire({
+		icon: 'error',
+		title: 'Oops...',
+		text: '2G no esta soportado, favor conectese con 3G hacia arriba.'
+	});
 }
 
 // ......................................................
