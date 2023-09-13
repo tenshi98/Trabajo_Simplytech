@@ -200,6 +200,7 @@ ul.tree>li:first-child::after {border-radius:5px 0 0 0;}
 /** The Magic **/
 .breadcrumb-bar a{margin-right: 0px !important;}
 .btn-breadcrumb{padding-left: 0px;}
+.btn-breadcrumb > .btn:not(.btn-arrow-right):not(.btn-arrow-left) {z-index: auto!important;}
 .btn-breadcrumb a{color: #999;margin-left:5px;}
 .btn-breadcrumb .btn:not(:last-child):after {content: " ";display: block;width: 0;height: 0;border-top: 17px solid transparent;border-bottom: 17px solid transparent;border-left: 10px solid white;position: absolute;top: 50%;margin-top: -17px;left: 100%;z-index: 3;}
 .btn-breadcrumb .btn:not(:last-child):before {content: " ";display: block;width: 0;height: 0;border-top: 17px solid transparent;border-bottom: 17px solid transparent;border-left: 10px solid rgb(173, 173, 173);position: absolute;top: 50%;margin-top: -17px;margin-left: 1px;left: 100%;z-index: 3;}
@@ -1365,6 +1366,7 @@ span.badge-red{background: #e74c3c none repeat scroll 0 0 !important;}
 .custom-table tbody tr.active th:before, .custom-table tbody tr.active th:after, .custom-table tbody tr.active td:before, .custom-table tbody tr.active td:after {opacity: 1;visibility: visible;}
 .custom-table .d-block {display: block !important;}
 .custom-table small,.custom-table .small {font-size: 95%;font-weight: 400;}
+.custom-table tbody tr td, .custom-table tbody tr td small {white-space: initial;}
 
 /* tabla personalizada */
 .radioBtn .notActive{color: #3276b1;background-color: #fff;}
