@@ -96,3 +96,11 @@ blockquote {background: #fff;font-style: italic;border-left: 3px solid #f0715f;b
 	.navbar-toggle {display: none;}
 	.menutop1-toggle {display: none;}
 }
+.multi-select input[type="checkbox"]{opacity: 1!important;}
+.multi-select .btn-group{width: 100%;}
+.multi-select .btn-group .multiselect{width: 100%;text-align: left;}
+.multi-select .btn-group .multiselect:hover{background-color: #fff !important;}
+.multi-select .btn-group .multiselect {padding-left: 25px !important;}
+.multi-select .btn-group .multiselect .caret{position: absolute; right: 5px; top: 15px;}
+.requiredBox .multiselect {background:url(../img/required.png) no-repeat 5px center;background-color: #fff !important;}
+

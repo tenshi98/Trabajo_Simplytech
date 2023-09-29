@@ -57,6 +57,7 @@
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/tooltipster/css/tooltipster.bundle.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/sweetalert2/sweetalert2.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/css/select2.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIBS_js/multiple-select/bootstrap-multiselect.css">
 
 		<!-- Javascript -->
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/js/main.min.js"></script>
@@ -79,6 +80,7 @@
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/plotly_js/dist/plotly-locale-es-ar.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/sweetalert2/sweetalert2.min.js"></script>
 		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIB_assets/js/form_stars.js"></script>
+		<script type="text/javascript" src="<?php echo DB_SITE_REPO ?>/LIBS_js/multiple-select/bootstrap-multiselect.js"></script>
 
 		<!-- Correcciones CSS -->
 		<style>
