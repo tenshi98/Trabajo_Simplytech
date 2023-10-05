@@ -114,7 +114,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 
 						<input id="pac-input" class="pac-controls" type="text" placeholder="Buscar Dirección">
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
-						
+
 
 						<script>
 
