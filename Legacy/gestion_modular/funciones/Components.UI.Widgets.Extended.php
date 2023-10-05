@@ -1021,7 +1021,7 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 		}
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join = "";
-		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+		if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 			$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
 			$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
 		}
@@ -1426,7 +1426,7 @@ function widget_Equipos($nombreEquipo, $seguimiento, $equipo, $enlace, $idSistem
 	}
 	//Verifico el tipo de usuario que esta ingresando y el id
 	$SIS_join = "";
-	if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+	if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 		$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
 		$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
 	}
@@ -1521,7 +1521,7 @@ function widget_Resumen_GPS_equipos($titulo, $seguimiento, $idSistema, $idTipoUs
 	}
 	//Verifico el tipo de usuario que esta ingresando y el id
 	$SIS_join = '';
-	if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+	if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 		$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
 		$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 	}
@@ -1704,7 +1704,7 @@ function widget_Resumen_equipo($titulo_cuadro, $seguimiento, $equipo, $enlace, $
 	}
 	//Verifico el tipo de usuario que esta ingresando y el id
 	$SIS_join  = 'LEFT JOIN `core_sistemas` ON core_sistemas.idSistema = telemetria_listado.idSistema';
-	if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+	if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 		$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
 		$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 	}
@@ -2056,7 +2056,7 @@ function widget_GPS_equipos_lista($titulo_cuadro, $seguimiento, $equipo, $enlace
 	}
 	//Verifico el tipo de usuario que esta ingresando y el id
 	$SIS_join  = '';
-	if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+	if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 		$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
 		$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
 	}
@@ -2230,7 +2230,7 @@ function widget_GPS_lista($titulo_cuadro, $seguimiento, $equipo, $enlace,
 	}
 	//Verifico el tipo de usuario que esta ingresando y el id
 	$SIS_join  = '';
-	if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+	if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 		$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
 		$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
 	}
@@ -2403,7 +2403,7 @@ function widget_Promedios_equipo($titulo_cuadro, $seguimiento, $equipo, $enlace,
 	}
 	//Verifico el tipo de usuario que esta ingresando y el id
 	$SIS_join  = '';
-	if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+	if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 		$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
 		$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
 	}
@@ -2642,7 +2642,7 @@ function widget_Promedios_equipo_grupos($titulo_cuadro, $seguimiento, $equipo, $
 	}
 	//Verifico el tipo de usuario que esta ingresando y el id
 	$SIS_join  = '';
-	if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+	if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 		$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
 		$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
 	}
@@ -3252,7 +3252,7 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 		}
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
-		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+		if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
 			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
@@ -3700,7 +3700,7 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 		}
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
-		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+		if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
 			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
@@ -4128,7 +4128,7 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 		}
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
-		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+		if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
 			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
@@ -4589,7 +4589,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 		}
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
-		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+		if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
 			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
@@ -5243,7 +5243,7 @@ function widget_Gestion_Flota_CrossTech_Transportes_AB($titulo, $idSistema, $IDG
 		}
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
-		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+		if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
 			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
@@ -5885,7 +5885,7 @@ function widget_Equipos_Crosstech($nombreEquipo, $seguimiento, $equipo, $enlace,
 	}
 	//Verifico el tipo de usuario que esta ingresando y el id
 	$SIS_join  = '';
-	if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+	if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 		$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
 		$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
 	}
@@ -5983,7 +5983,7 @@ function widget_Promedios_equipo_grupos_Crosstech($titulo_cuadro, $seguimiento, 
 	}
 	//Verifico el tipo de usuario que esta ingresando y el id
 	$SIS_join  = '';
-	if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+	if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 		$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
 		$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
 	}
@@ -6272,7 +6272,7 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 		}
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
-		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+		if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
 			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
@@ -6742,7 +6742,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 		}
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
-		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+		if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
 			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
@@ -7564,7 +7564,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 		}
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
-		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+		if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
 			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
@@ -8857,7 +8857,7 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 	}
 	//Verifico el tipo de usuario que esta ingresando y el id
 	$SIS_join  = '';
-	if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+	if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 		$SIS_join  .= " INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ";
 		$SIS_where .= " AND usuarios_equipos_telemetria.idUsuario = ".$idUsuario;
 	}
@@ -9517,7 +9517,7 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 		}
 		//Verifico el tipo de usuario que esta ingresando y el id
 		$SIS_join  = '';
-		if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
+		if(isset($idTipoUsuario, $idUsuario)&&$idTipoUsuario!=1&&$idUsuario!=0){
 			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
 			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
