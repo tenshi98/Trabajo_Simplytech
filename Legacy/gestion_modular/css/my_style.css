@@ -1411,13 +1411,30 @@ span.badge-red{background: #e74c3c none repeat scroll 0 0 !important;}
 .widget_star_rating .review-stat{font-weight:300;font-size:18px; margin-bottom:2px;}
 
 /* boletas de veterinaria */
-.facts .invoice-top .logo {margin-bottom: 20px;}
-.facts .invoice-top .data {color:#535b61;}
-.facts .invoice-top .data .text-sm-end {text-align: right !important;}
-.facts .invoice-details {border-top: 1px solid #EDEDED;padding-top: 20px;margin-top: 20px;}
-.facts .invoice-details .logo img{width:100%;}
-.facts .invoice-details .data{margin-bottom: 1.5rem !important;}
+.facts .invoice-top .logo img{width:100%;}
+.facts .invoice-top .data{margin-bottom: 1.5rem !important;}
+.facts .invoice-details .data {color:#535b61;}
+.facts .invoice-details .data .text-sm-end {text-align: right !important;}
+.facts .invoice-details {border-top: 1px solid #EDEDED;padding-top: 10px;padding-bottom: 10px;margin-top: 10px;margin-bottom: 10px;}
 .facts .invoice-sells .card-header {background-color: #38475a !important;color: #FFF;}
 .facts .invoice-sells .text-end {text-align: right !important;}
 .facts .invoice-sells .card-footer{background-color:#e9ecef;}
 .facts .invoice-sells .bg-title {background-color: #38475a !important;color: #FFF;}
+
+/* boletas impresas de veterinaria */
+.factsPrint .invoice-top .data {color:#535b61;text-align: center;}
+.factsPrint .invoice-top .data h4{color:#535b61;}
+.factsPrint .invoice-top .data p{color:#535b61;}
+.factsPrint .invoice-details .tittle{margin: 10px 0;display: flex;justify-content: center;position: relative;}
+.factsPrint .invoice-details .tittle::before {content: ""; position: absolute; height: 0; width: 100%; left: 0; top: 50%; border-top: 1px dashed #b5b5b5;}
+.factsPrint .invoice-details .tittle span{display: inline-flex; padding: 0 5px; background-color: #FFF; z-index: 2; font-weight: 500; color: #38475a;text-transform: uppercase;}
+.factsPrint .invoice-details .text-end {text-align: right !important;}
+.factsPrint .invoice-sells .card-header {border-top: 1px dashed #b5b5b5;border-bottom: 1px dashed #b5b5b5;font-weight: 500;}
+.factsPrint .invoice-sells .table > tbody > tr > td,
+.factsPrint .invoice-sells .table > tfoot > tr > td {border-top: none;}
+.factsPrint .invoice-sells .text-end {text-align: right !important;}
+.factsPrint .invoice-sells .bg-title {border-top: 1px dashed #b5b5b5;border-bottom: 1px dashed #b5b5b5;font-weight: 500;}
+.factsPrint .invoice-sells .card-footer{border-top: 1px dashed #b5b5b5;border-bottom: 1px dashed #b5b5b5;font-weight: 500;}
+@media screen and (max-width: 767px) {
+    .factsPrint .invoice-sells .table-responsive {border: none;}
+}
