@@ -1189,58 +1189,57 @@ require_once '0_validate_user_1.php';
 
 					/********************************************************************************/
 					//Variables
-					$SIS_data1   = "'".$ultimo_id."'"; //idTelemetria
-					$SIS_data2   = "'".$ultimo_id."'"; //idTelemetria
-					$SIS_data3   = "'".$ultimo_id."'"; //idTelemetria
-					$SIS_data4   = "'".$ultimo_id."'"; //idTelemetria
-					$SIS_data5   = "'".$ultimo_id."'"; //idTelemetria
-					$SIS_data6   = "'".$ultimo_id."'"; //idTelemetria
-					$SIS_data7   = "'".$ultimo_id."'"; //idTelemetria
-					$SIS_data8   = "'".$ultimo_id."'"; //idTelemetria
-					$SIS_data9   = "'".$ultimo_id."'"; //idTelemetria
-					$SIS_data10  = "'".$ultimo_id."'"; //idTelemetria
-					$SIS_data11  = "'".$ultimo_id."'"; //idTelemetria
-					$SIS_data12  = "'".$ultimo_id."'"; //idTelemetria
-					$SIS_columns1  = 'idTelemetria';   //Columna
-					$SIS_columns2  = 'idTelemetria';   //Columna
-					$SIS_columns3  = 'idTelemetria';   //Columna
-					$SIS_columns4  = 'idTelemetria';   //Columna
-					$SIS_columns5  = 'idTelemetria';   //Columna
-					$SIS_columns6  = 'idTelemetria';   //Columna
-					$SIS_columns7  = 'idTelemetria';   //Columna
-					$SIS_columns8  = 'idTelemetria';   //Columna
-					$SIS_columns9  = 'idTelemetria';   //Columna
+					$SIS_data01  = "'".$telemetria_id."'"; //idTelemetria
+					$SIS_data02  = "'".$telemetria_id."'"; //idTelemetria
+					$SIS_data03  = "'".$telemetria_id."'"; //idTelemetria
+					$SIS_data04  = "'".$telemetria_id."'"; //idTelemetria
+					$SIS_data05  = "'".$telemetria_id."'"; //idTelemetria
+					$SIS_data06  = "'".$telemetria_id."'"; //idTelemetria
+					$SIS_data07  = "'".$telemetria_id."'"; //idTelemetria
+					$SIS_data08  = "'".$telemetria_id."'"; //idTelemetria
+					$SIS_data09  = "'".$telemetria_id."'"; //idTelemetria
+					$SIS_data10  = "'".$telemetria_id."'"; //idTelemetria
+					$SIS_data11  = "'".$telemetria_id."'"; //idTelemetria
+					$SIS_data12  = "'".$telemetria_id."'"; //idTelemetria
+					$SIS_columns01 = 'idTelemetria';   //Columna
+					$SIS_columns02 = 'idTelemetria';   //Columna
+					$SIS_columns03 = 'idTelemetria';   //Columna
+					$SIS_columns04 = 'idTelemetria';   //Columna
+					$SIS_columns05 = 'idTelemetria';   //Columna
+					$SIS_columns06 = 'idTelemetria';   //Columna
+					$SIS_columns07 = 'idTelemetria';   //Columna
+					$SIS_columns08 = 'idTelemetria';   //Columna
+					$SIS_columns09 = 'idTelemetria';   //Columna
 					$SIS_columns10 = 'idTelemetria';   //Columna
 					$SIS_columns11 = 'idTelemetria';   //Columna
 					$SIS_columns12 = 'idTelemetria';   //Columna
 
 					//Recorro la configuracion de los sensores
 					for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
-						if(isset($rowdata['SensoresNombre_'.$i]) && $rowdata['SensoresNombre_'.$i]!=''){                $SIS_data1  .= ",'".$rowdata['SensoresNombre_'.$i]."'";         $SIS_columns1  .= ',SensoresNombre_'.$i;}
-						if(isset($rowdata['SensoresTipo_'.$i]) && $rowdata['SensoresTipo_'.$i]!=''){                    $SIS_data2  .= ",'".$rowdata['SensoresTipo_'.$i]."'";           $SIS_columns2  .= ',SensoresTipo_'.$i;}
-						if(isset($rowdata['SensoresGrupo_'.$i]) && $rowdata['SensoresGrupo_'.$i]!=''){                  $SIS_data3  .= ",'".$rowdata['SensoresGrupo_'.$i]."'";          $SIS_columns3  .= ',SensoresGrupo_'.$i;}
-						if(isset($rowdata['SensoresUniMed_'.$i]) && $rowdata['SensoresUniMed_'.$i]!=''){                $SIS_data4  .= ",'".$rowdata['SensoresUniMed_'.$i]."'";         $SIS_columns4  .= ',SensoresUniMed_'.$i;}
-						if(isset($rowdata['SensoresActivo_'.$i]) && $rowdata['SensoresActivo_'.$i]!=''){                $SIS_data5  .= ",'".$rowdata['SensoresActivo_'.$i]."'";         $SIS_columns5  .= ',SensoresActivo_'.$i;}
-						if(isset($rowdata['SensoresUso_'.$i]) && $rowdata['SensoresUso_'.$i]!=''){                      $SIS_data6  .= ",'".$rowdata['SensoresUso_'.$i]."'";            $SIS_columns6  .= ',SensoresUso_'.$i;}
-						if(isset($rowdata['SensoresFechaUso_'.$i]) && $rowdata['SensoresFechaUso_'.$i]!=''){            $SIS_data7  .= ",'".$rowdata['SensoresFechaUso_'.$i]."'";       $SIS_columns7  .= ',SensoresFechaUso_'.$i;}
-						if(isset($rowdata['SensoresAccionC_'.$i]) && $rowdata['SensoresAccionC_'.$i]!=''){              $SIS_data8  .= ",'".$rowdata['SensoresAccionC_'.$i]."'";        $SIS_columns8  .= ',SensoresAccionC_'.$i;}
-						if(isset($rowdata['SensoresAccionT_'.$i]) && $rowdata['SensoresAccionT_'.$i]!=''){              $SIS_data9  .= ",'".$rowdata['SensoresAccionT_'.$i]."'";        $SIS_columns9  .= ',SensoresAccionT_'.$i;}
+						if(isset($rowdata['SensoresNombre_'.$i]) && $rowdata['SensoresNombre_'.$i]!=''){                $SIS_data01 .= ",'".$rowdata['SensoresNombre_'.$i]."'";         $SIS_columns01 .= ',SensoresNombre_'.$i;}
+						if(isset($rowdata['SensoresTipo_'.$i]) && $rowdata['SensoresTipo_'.$i]!=''){                    $SIS_data02 .= ",'".$rowdata['SensoresTipo_'.$i]."'";           $SIS_columns02 .= ',SensoresTipo_'.$i;}
+						if(isset($rowdata['SensoresGrupo_'.$i]) && $rowdata['SensoresGrupo_'.$i]!=''){                  $SIS_data03 .= ",'".$rowdata['SensoresGrupo_'.$i]."'";          $SIS_columns03 .= ',SensoresGrupo_'.$i;}
+						if(isset($rowdata['SensoresUniMed_'.$i]) && $rowdata['SensoresUniMed_'.$i]!=''){                $SIS_data04 .= ",'".$rowdata['SensoresUniMed_'.$i]."'";         $SIS_columns04 .= ',SensoresUniMed_'.$i;}
+						if(isset($rowdata['SensoresActivo_'.$i]) && $rowdata['SensoresActivo_'.$i]!=''){                $SIS_data05 .= ",'".$rowdata['SensoresActivo_'.$i]."'";         $SIS_columns05 .= ',SensoresActivo_'.$i;}
+						if(isset($rowdata['SensoresUso_'.$i]) && $rowdata['SensoresUso_'.$i]!=''){                      $SIS_data06 .= ",'".$rowdata['SensoresUso_'.$i]."'";            $SIS_columns06 .= ',SensoresUso_'.$i;}
+						if(isset($rowdata['SensoresFechaUso_'.$i]) && $rowdata['SensoresFechaUso_'.$i]!=''){            $SIS_data07 .= ",'".$rowdata['SensoresFechaUso_'.$i]."'";       $SIS_columns07 .= ',SensoresFechaUso_'.$i;}
+						if(isset($rowdata['SensoresAccionC_'.$i]) && $rowdata['SensoresAccionC_'.$i]!=''){              $SIS_data08 .= ",'".$rowdata['SensoresAccionC_'.$i]."'";        $SIS_columns08 .= ',SensoresAccionC_'.$i;}
+						if(isset($rowdata['SensoresAccionT_'.$i]) && $rowdata['SensoresAccionT_'.$i]!=''){              $SIS_data09 .= ",'".$rowdata['SensoresAccionT_'.$i]."'";        $SIS_columns09 .= ',SensoresAccionT_'.$i;}
 						if(isset($rowdata['SensoresAccionAlerta_'.$i]) && $rowdata['SensoresAccionAlerta_'.$i]!=''){    $SIS_data10 .= ",'".$rowdata['SensoresAccionAlerta_'.$i]."'";   $SIS_columns10 .= ',SensoresAccionAlerta_'.$i;}
 						if(isset($rowdata['SensoresRevision_'.$i]) && $rowdata['SensoresRevision_'.$i]!=''){            $SIS_data11 .= ",'".$rowdata['SensoresRevision_'.$i]."'";       $SIS_columns11 .= ',SensoresRevision_'.$i;}
 						if(isset($rowdata['SensoresRevisionGrupo_'.$i]) && $rowdata['SensoresRevisionGrupo_'.$i]!=''){  $SIS_data12 .= ",'".$rowdata['SensoresRevisionGrupo_'.$i]."'";  $SIS_columns12 .= ',SensoresRevisionGrupo_'.$i;}
 					}
 
-
 					//Creo registro dentro de cada tabla relacionada a los sensores
-					$ultimo_id_9  = db_insert_data (false, $SIS_columns1,  $SIS_data1,  'telemetria_listado_sensores_nombre', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$ultimo_id_12 = db_insert_data (false, $SIS_columns2,  $SIS_data2,  'telemetria_listado_sensores_tipo', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$ultimo_id_7  = db_insert_data (false, $SIS_columns3,  $SIS_data3,  'telemetria_listado_sensores_grupo', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$ultimo_id_13 = db_insert_data (false, $SIS_columns4,  $SIS_data4,  'telemetria_listado_sensores_unimed', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$ultimo_id_6  = db_insert_data (false, $SIS_columns5,  $SIS_data5,  'telemetria_listado_sensores_activo', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$ultimo_id_14 = db_insert_data (false, $SIS_columns6,  $SIS_data6,  'telemetria_listado_sensores_uso', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$ultimo_id_15 = db_insert_data (false, $SIS_columns7,  $SIS_data7,  'telemetria_listado_sensores_uso_fecha', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$ultimo_id_2  = db_insert_data (false, $SIS_columns8,  $SIS_data8,  'telemetria_listado_sensores_accion_c', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					$ultimo_id_5  = db_insert_data (false, $SIS_columns9,  $SIS_data9,  'telemetria_listado_sensores_accion_t', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ultimo_id_9  = db_insert_data (false, $SIS_columns01, $SIS_data01, 'telemetria_listado_sensores_nombre', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ultimo_id_12 = db_insert_data (false, $SIS_columns02, $SIS_data02, 'telemetria_listado_sensores_tipo', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ultimo_id_7  = db_insert_data (false, $SIS_columns03, $SIS_data03, 'telemetria_listado_sensores_grupo', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ultimo_id_13 = db_insert_data (false, $SIS_columns04, $SIS_data04, 'telemetria_listado_sensores_unimed', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ultimo_id_6  = db_insert_data (false, $SIS_columns05, $SIS_data05, 'telemetria_listado_sensores_activo', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ultimo_id_14 = db_insert_data (false, $SIS_columns06, $SIS_data06, 'telemetria_listado_sensores_uso', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ultimo_id_15 = db_insert_data (false, $SIS_columns07, $SIS_data07, 'telemetria_listado_sensores_uso_fecha', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ultimo_id_2  = db_insert_data (false, $SIS_columns08, $SIS_data08, 'telemetria_listado_sensores_accion_c', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ultimo_id_5  = db_insert_data (false, $SIS_columns09, $SIS_data09, 'telemetria_listado_sensores_accion_t', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					$ultimo_id_1  = db_insert_data (false, $SIS_columns10, $SIS_data10, 'telemetria_listado_sensores_accion_alerta', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					$ultimo_id_10 = db_insert_data (false, $SIS_columns11, $SIS_data11, 'telemetria_listado_sensores_revision', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					$ultimo_id_11 = db_insert_data (false, $SIS_columns12, $SIS_data12, 'telemetria_listado_sensores_revision_grupo', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
