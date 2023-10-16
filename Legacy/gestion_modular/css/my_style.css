@@ -1421,20 +1421,57 @@ span.badge-red{background: #e74c3c none repeat scroll 0 0 !important;}
 .facts .invoice-sells .card-footer{background-color:#e9ecef;}
 .facts .invoice-sells .bg-title {background-color: #38475a !important;color: #FFF;}
 
-/* boletas impresas de veterinaria */
-.factsPrint .invoice-top .data {color:#535b61;text-align: center;}
-.factsPrint .invoice-top .data h4{color:#535b61;}
-.factsPrint .invoice-top .data p{color:#535b61;}
-.factsPrint .invoice-details .tittle{margin: 10px 0;display: flex;justify-content: center;position: relative;}
-.factsPrint .invoice-details .tittle::before {content: ""; position: absolute; height: 0; width: 100%; left: 0; top: 50%; border-top: 1px dashed #b5b5b5;}
-.factsPrint .invoice-details .tittle span{display: inline-flex; padding: 0 5px; background-color: #FFF; z-index: 2; font-weight: 500; color: #38475a;text-transform: uppercase;}
-.factsPrint .invoice-details .text-end {text-align: right !important;}
-.factsPrint .invoice-sells .card-header {border-top: 1px dashed #b5b5b5;border-bottom: 1px dashed #b5b5b5;font-weight: 500;}
-.factsPrint .invoice-sells .table > tbody > tr > td,
-.factsPrint .invoice-sells .table > tfoot > tr > td {border-top: none;}
-.factsPrint .invoice-sells .text-end {text-align: right !important;}
-.factsPrint .invoice-sells .bg-title {border-top: 1px dashed #b5b5b5;border-bottom: 1px dashed #b5b5b5;font-weight: 500;}
-.factsPrint .invoice-sells .card-footer{border-top: 1px dashed #b5b5b5;border-bottom: 1px dashed #b5b5b5;font-weight: 500;}
+/* boletas impresas de veterinaria A4 */
+.factsPrintA4 .invoice-top .data {color:#535b61;text-align: center;}
+.factsPrintA4 .invoice-top .data h4{color:#535b61;}
+.factsPrintA4 .invoice-top .data p{color:#535b61;}
+.factsPrintA4 .invoice-details .tittle{margin: 10px 0;display: flex;justify-content: center;position: relative;}
+.factsPrintA4 .invoice-details .tittle::before {content: ""; position: absolute; height: 0; width: 100%; left: 0; top: 50%; border-top: 1px dashed #b5b5b5;}
+.factsPrintA4 .invoice-details .tittle span{display: inline-flex; padding: 0 5px; background-color: #FFF; z-index: 2; font-weight: 500; color: #38475a;text-transform: uppercase;}
+.factsPrintA4 .invoice-details .text-end {text-align: right !important;}
+.factsPrintA4 .invoice-sells .card-header {border-top: 1px dashed #b5b5b5;border-bottom: 1px dashed #b5b5b5;font-weight: 500;}
+.factsPrintA4 .invoice-sells .table > tbody > tr > td,
+.factsPrintA4 .invoice-sells .table > tfoot > tr > td {border-top: none;}
+.factsPrintA4 .invoice-sells .text-end {text-align: right !important;}
+.factsPrintA4 .invoice-sells .bg-title {border-top: 1px dashed #b5b5b5;border-bottom: 1px dashed #b5b5b5;font-weight: 500;}
+.factsPrintA4 .invoice-sells .card-footer{border-top: 1px dashed #b5b5b5;border-bottom: 1px dashed #b5b5b5;font-weight: 500;}
 @media screen and (max-width: 767px) {
-    .factsPrint .invoice-sells .table-responsive {border: none;}
+    .factsPrintA4 .invoice-sells .table-responsive {border: none;}
 }
+
+/* boletas impresas de veterinaria POS */
+.factsPrintPOS {padding-bottom: 110px;}
+.factsPrintPOS .invoice-top .data {color:#535b61;text-align: center;}
+.factsPrintPOS .invoice-top .data h4{color:#535b61;}
+.factsPrintPOS .invoice-top .data p{color:#535b61;}
+.factsPrintPOS .invoice-details .tittle{margin: 10px 0;display: flex;justify-content: center;position: relative;border-top: 2px solid #b5b5b5;border-bottom: 2px solid #b5b5b5;}
+.factsPrintPOS .invoice-details .tittle span{display: inline-flex; padding: 0 5px; background-color: #FFF; z-index: 2; font-weight: 500; color: #38475a;text-transform: uppercase;}
+.factsPrintPOS .invoice-details .text-end {text-align: right !important;}
+.factsPrintPOS .invoice-sells .card-header {border-top: 2px solid #b5b5b5;border-bottom: 2px solid #b5b5b5;font-weight: 500;}
+.factsPrintPOS .invoice-sells .table > tbody > tr > td,
+.factsPrintPOS .invoice-sells .table > tfoot > tr > td {border-top: none;}
+.factsPrintPOS .invoice-sells .table > tbody > tr > td,
+.factsPrintPOS .invoice-sells .table > tbody > tr > th,
+.factsPrintPOS .invoice-sells .table > tfoot > tr > td,
+.factsPrintPOS .invoice-sells .table > tfoot > tr > th,
+.factsPrintPOS .invoice-sells .table > thead > tr > td,
+.factsPrintPOS .invoice-sells .table > thead > tr > th {padding: 1px;}
+.factsPrintPOS .invoice-sells .text-end {text-align: right !important;}
+.factsPrintPOS .invoice-sells .bg-title {border-top: 2px solid #b5b5b5;border-bottom: 2px solid #b5b5b5;font-weight: 500;}
+.factsPrintPOS .invoice-sells .card-footer{border-top: 2px solid #b5b5b5;border-bottom: 2px solid #b5b5b5;font-weight: 500;}
+@media screen and (max-width: 767px) {
+    .factsPrintPOS .invoice-sells .table-responsive {border: none;}
+}
+
+
+
+
+/* calendario de reservas */
+.calendar_body .fc-content{border: 1px solid #1abc9c;}
+.calendar_body .fc-border-separate .calendar_min {min-height: 60px;}
+.calendar_body .fc-border-separate thead tr {background: #1abc9c !important;color: #FFF;border: 1px solid #1abc9c;}
+.calendar_body .fc-border-separate thead tr th {border: 1px solid #1abc9c;}
+.calendar_body .fc-border-separate tbody {background: #fff !important;}
+.calendar_body .fc-border-separate tbody .fc-Dia-content{text-align: center;}
+.calendar_body .fc-border-separate tbody .fc-Dia-content a{margin-top: 35px;}
+.calendar_body .fc-border-separate tbody .fc-Dia{cursor: pointer;}
