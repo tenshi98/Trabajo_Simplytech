@@ -1463,8 +1463,8 @@ span.badge-red{background: #e74c3c none repeat scroll 0 0 !important;}
     .factsPrintPOS .invoice-sells .table-responsive {border: none;}
 }
 
-
-
+/* Estilo para la ventana de bienvenida del usuario */
+.perfil-box .main-box-body .profile-box-header{background-color: #1abc9c;background: url("../img/pattern/vetgb_green.jpg") repeat !important;}
 
 /* calendario de reservas */
 .calendar_body .fc-content{border: 1px solid #1abc9c;}
