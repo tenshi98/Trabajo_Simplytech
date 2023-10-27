@@ -251,10 +251,10 @@ $SIS_where.= " AND gestion_reserva_oficinas.idSistema=".$_SESSION['usuario']['ba
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {     
 	$SIS_where .= " AND gestion_reserva_oficinas.idUsuario = '".$_GET['idUsuario']."'";
 }
-if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){
+if(isset($_GET['h_inicio'], $_GET['h_termino']) && $_GET['h_inicio'] != '' && $_GET['h_termino']!=''){
 	$SIS_where .= " AND gestion_reserva_oficinas.Hora_Inicio BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'";
 }
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){
+if(isset($_GET['f_inicio'], $_GET['f_termino']) && $_GET['f_inicio'] != '' && $_GET['f_termino']!=''){
 	$SIS_where .= " AND gestion_reserva_oficinas.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){                 $SIS_where .= " AND gestion_reserva_oficinas.idEstado='".$_GET['idEstado']."'";}

@@ -19,7 +19,7 @@ if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){    $search .="&idProv
 if(isset($_GET['idLicitacion'])&&$_GET['idLicitacion']!=''){  $search .="&idLicitacion=".$_GET['idLicitacion'];}
 if(isset($_GET['idOcompra'])&&$_GET['idOcompra']!=''){     $search .="&idOcompra=".$_GET['idOcompra'];}
 if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){   $search .="&idEstado=".$_GET['idEstado'];}
-if(isset($_GET['f_creacion_inicio'])&&$_GET['f_creacion_inicio']!=''&&isset($_GET['f_creacion_termino'])&&$_GET['f_creacion_termino']!=''){
+if(isset($_GET['f_creacion_inicio'], $_GET['f_creacion_termino'])&&$_GET['f_creacion_inicio']!=''&&$_GET['f_creacion_termino']!=''){
 	$search .="&f_creacion_inicio=".$_GET['f_creacion_inicio'];
 	$search .="&f_creacion_termino=".$_GET['f_creacion_termino'];
 }
@@ -67,7 +67,7 @@ $SIS_where.= " AND ocompra_listado.idSistema=".$_SESSION['usuario']['basic_data'
 if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){  $SIS_where.= " AND ocompra_listado.idProveedor=".$_GET['idProveedor'];}
 if(isset($_GET['idOcompra'])&&$_GET['idOcompra']!=''){      $SIS_where.= " AND ocompra_listado.idOcompra=".$_GET['idOcompra'];}
 if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){ $SIS_where.= " AND ocompra_listado.idEstado=".$_GET['idEstado'];}
-if(isset($_GET['f_creacion_inicio'])&&$_GET['f_creacion_inicio']!=''&&isset($_GET['f_creacion_termino'])&&$_GET['f_creacion_termino']!=''){
+if(isset($_GET['f_creacion_inicio'], $_GET['f_creacion_termino'])&&$_GET['f_creacion_inicio']!=''&&$_GET['f_creacion_termino']!=''){
 	$SIS_where.= " AND ocompra_listado.Creacion_fecha BETWEEN '".$_GET['f_creacion_inicio']."' AND '".$_GET['f_creacion_termino']."'";
 }
 /**********************************************************/

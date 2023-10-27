@@ -24,15 +24,15 @@ if(isset($_GET['N_Doc'])&&$_GET['N_Doc']!=''){         $search .="&N_Doc=".$_GET
 if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){   $search .="&idEstado=".$_GET['idEstado'];}
 if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){ $search .="&idDocPago=".$_GET['idDocPago'];}
 if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){ $search .="&N_DocPago=".$_GET['N_DocPago'];}
-if(isset($_GET['f_creacion_inicio'])&&$_GET['f_creacion_inicio']!=''&&isset($_GET['f_creacion_termino'])&&$_GET['f_creacion_termino']!=''){
+if(isset($_GET['f_creacion_inicio'], $_GET['f_creacion_termino'])&&$_GET['f_creacion_inicio']!=''&&$_GET['f_creacion_termino']!=''){
 	$search .="&f_creacion_inicio=".$_GET['f_creacion_inicio'];
 	$search .="&f_creacion_termino=".$_GET['f_creacion_termino'];
 }
-if(isset($_GET['f_pago_inicio'])&&$_GET['f_pago_inicio']!=''&&isset($_GET['f_pago_termino'])&&$_GET['f_pago_termino']!=''){
+if(isset($_GET['f_pago_inicio'], $_GET['f_pago_termino'])&&$_GET['f_pago_inicio']!=''&&$_GET['f_pago_termino']!=''){
 	$search .="&f_pago_inicio=".$_GET['f_pago_inicio'];
 	$search .="&f_pago_termino=".$_GET['f_pago_termino'];
 }
-if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
+if(isset($_GET['f_inicio_p'], $_GET['f_termino_p'])&&$_GET['f_inicio_p']!=''&&$_GET['f_termino_p']!=''){
 	$search .="&f_inicio_p=".$_GET['f_inicio_p'];
 	$search .="&f_termino_p=".$_GET['f_termino_p'];
 }
@@ -94,13 +94,13 @@ if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){ $SIS_where.= " AND bodegas_
 if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){      $SIS_where.= " AND bodegas_productos_facturacion.idDocPago=".$_GET['idDocPago'];}
 if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){      $SIS_where.= " AND bodegas_productos_facturacion.N_DocPago=".$_GET['N_DocPago'];}
 
-if(isset($_GET['f_creacion_inicio'])&&$_GET['f_creacion_inicio']!=''&&isset($_GET['f_creacion_termino'])&&$_GET['f_creacion_termino']!=''){
+if(isset($_GET['f_creacion_inicio'], $_GET['f_creacion_termino'])&&$_GET['f_creacion_inicio']!=''&&$_GET['f_creacion_termino']!=''){
 	$SIS_where.= " AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_creacion_inicio']."' AND '".$_GET['f_creacion_termino']."'";
 }
-if(isset($_GET['f_pago_inicio'])&&$_GET['f_pago_inicio']!=''&&isset($_GET['f_pago_termino'])&&$_GET['f_pago_termino']!=''){
+if(isset($_GET['f_pago_inicio'], $_GET['f_pago_termino'])&&$_GET['f_pago_inicio']!=''&&$_GET['f_pago_termino']!=''){
 	$SIS_where.= " AND bodegas_productos_facturacion.Pago_fecha BETWEEN '".$_GET['f_pago_inicio']."' AND '".$_GET['f_pago_termino']."'";
 }
-if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
+if(isset($_GET['f_inicio_p'], $_GET['f_termino_p'])&&$_GET['f_inicio_p']!=''&&$_GET['f_termino_p']!=''){
 	$SIS_where.= " AND bodegas_productos_facturacion.F_Pago BETWEEN '".$_GET['f_inicio_p']."' AND '".$_GET['f_termino_p']."'";
 }
 /**********************************************************/

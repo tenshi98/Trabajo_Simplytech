@@ -103,7 +103,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
-			if(isset($IP_Client)&&isset($idBloqueo)){
+			if(isset($IP_Client, $idBloqueo)){
 				$ndata_1 = db_select_nrows (false, 'idBloqueo', 'sistema_seguridad_bloqueo_ip', '', "IP_Client='".$IP_Client."' AND idBloqueo!='".$idBloqueo."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores

@@ -61,7 +61,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
-			if(isset($Nombre)&&isset($idFont)){
+			if(isset($Nombre, $idFont)){
 				$ndata_1 = db_select_nrows (false, 'Nombre', 'core_permisos_categorias', '', "Nombre='".$Nombre."' AND idFont='".$idFont."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
@@ -101,7 +101,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
-			if(isset($Nombre)&&isset($id_pmcat)&&isset($idFont)){
+			if(isset($Nombre, $id_pmcat, $idFont)){
 				$ndata_1 = db_select_nrows (false, 'Nombre', 'core_permisos_categorias', '', "Nombre='".$Nombre."' AND idFont='".$idFont."' AND id_pmcat!='".$id_pmcat."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores

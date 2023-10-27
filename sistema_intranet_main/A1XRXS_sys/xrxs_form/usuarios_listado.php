@@ -97,7 +97,7 @@ require_once '0_validate_user_1.php';
 	if(isset($email)&&!validarEmail($email)){     $error['email']    = 'error/El Email ingresado no es valido';}
 	if(isset($Fono)&&!validarNumero($Fono)){      $error['Fono']	 = 'error/Ingrese un numero telefonico valido';}
 	if(isset($Rut)&&!validarRut($Rut)){           $error['Rut']      = 'error/El Rut ingresado no es valido';}
-	if(isset($password)&&isset($repassword)){
+	if(isset($password, $repassword)){
 		if ( $password <> $repassword )           $error['password'] = 'error/Las contraseñas ingresadas no coinciden';
 	}
 	if(isset($usuario)){
@@ -260,16 +260,16 @@ require_once '0_validate_user_1.php';
 			if(isset($usuario)){
 				$ndata_1 = db_select_nrows (false, 'usuario', 'usuarios_listado', '', "usuario='".$usuario."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
-			if(isset($Nombre)&&isset($idUsuario)){
+			if(isset($Nombre, $idUsuario)){
 				$ndata_2 = db_select_nrows (false, 'Nombre', 'usuarios_listado', '', "Nombre='".$Nombre."' AND idUsuario!='".$idUsuario."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
-			if(isset($Rut)&&isset($idUsuario)){
+			if(isset($Rut, $idUsuario)){
 				$ndata_3 = db_select_nrows (false, 'Rut', 'usuarios_listado', '', "Rut='".$Rut."' AND idUsuario!='".$idUsuario."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
-			if(isset($email)&&isset($idUsuario)){
+			if(isset($email, $idUsuario)){
 				$ndata_4 = db_select_nrows (false, 'email', 'usuarios_listado', '', "email='".$email."' AND idUsuario!='".$idUsuario."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
-			if(isset($oldpassword)&&isset($idUsuario)){
+			if(isset($oldpassword, $idUsuario)){
 				$ndata_5 = db_select_nrows (false, 'password', 'usuarios_listado', '', "idUsuario='".$idUsuario."' AND password='".md5($oldpassword)."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
@@ -421,7 +421,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
-			if(isset($id_usuario)&&$id_usuario!=''&&isset($id_permiso)&&$id_permiso!=''){
+			if(isset($id_usuario, $id_permiso)&&$id_usuario!=''&&$id_permiso!=''){
 				$ndata_1 = db_select_nrows (false, 'idUsuario', 'usuarios_permisos', '', "idUsuario='".$id_usuario."' AND idAdmpm='".$id_permiso."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
@@ -1859,7 +1859,7 @@ require_once '0_validate_user_1.php';
 			if(isset($usuario)){
 				$ndata_1 = db_select_nrows (false, 'usuario', 'usuarios_listado', '', "usuario='".$usuario."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
-			/*if(isset($email)&&isset($idSistema)){
+			/*if(isset($email, $idSistema)){
 				$ndata_2 = db_select_nrows (false, 'email', 'usuarios_listado', '', "email='".$email."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}*/
 			//generacion de errores
@@ -2994,7 +2994,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
-			if(isset($idSistema)&&$idSistema!=''&&isset($id_usuario)&&$id_usuario!=''){
+			if(isset($idSistema, $id_usuario)&&$idSistema!=''&&$id_usuario!=''){
 				$ndata_1 = db_select_nrows (false, 'idSistema', 'usuarios_sistemas','', "idSistema='".$idSistema."' AND idUsuario='".$id_usuario."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores

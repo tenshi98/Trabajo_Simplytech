@@ -41,7 +41,7 @@ if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != '')  {
 	$y .= " AND maquinas_listado_matriz.idMatriz = '".$_GET['idMaquina']."'";
 	$z .= " AND analisis_listado.idMatriz = '".$_GET['idMatriz']."'";
 }
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){
+if(isset($_GET['f_inicio'], $_GET['f_termino']) && $_GET['f_inicio'] != '' && $_GET['f_termino']!=''){
 	$z .= " AND analisis_listado.f_muestreo BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 /*********************************************************************/
@@ -622,7 +622,7 @@ array_push( $arrFlashpoint,$row );
 	if(isset($_GET['idSistema']) && $_GET['idSistema'] != '')  {     $zz .= '&idSistema='.$_GET['idSistema'];}else{$zz .= '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];}
 	if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != '')  {     $zz .= '&idMaquina='.$_GET['idMaquina'];}
 	if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != '')  {       $zz .= '&idMatriz='.$_GET['idMatriz'];}
-	if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){
+	if(isset($_GET['f_inicio'], $_GET['f_termino']) && $_GET['f_inicio'] != '' && $_GET['f_termino']!=''){
 		$zz .= '&f_inicio='.$_GET['f_inicio'];
 		$zz .= '&f_termino='.$_GET['f_termino'];
 	}

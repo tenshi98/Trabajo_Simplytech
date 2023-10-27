@@ -305,10 +305,10 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 if(isset($_GET['idUsuario']) && $_GET['idUsuario'] != '')  {        $SIS_where .= " AND orden_trabajo_eventos_listado.idUsuario = '".$_GET['idUsuario']."'";}
 if(isset($_GET['idTrabajador']) && $_GET['idTrabajador'] != '')  {  $SIS_where .= " AND orden_trabajo_eventos_listado.idTrabajador = '".$_GET['idTrabajador']."'";}
 if(isset($_GET['idMaquina']) && $_GET['idMaquina'] != '')  {        $SIS_where .= " AND orden_trabajo_eventos_listado.idMaquina = '".$_GET['idMaquina']."'";}
-if(isset($_GET['h_inicio']) && $_GET['h_inicio'] != ''&&isset($_GET['h_termino']) && $_GET['h_termino']!=''){
+if(isset($_GET['h_inicio'], $_GET['h_termino']) && $_GET['h_inicio'] != '' && $_GET['h_termino']!=''){
 	$SIS_where .= " AND orden_trabajo_eventos_listado.Hora BETWEEN '".$_GET['h_inicio']."' AND '".$_GET['h_termino']."'";
 }
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){
+if(isset($_GET['f_inicio'], $_GET['f_termino']) && $_GET['f_inicio'] != '' && $_GET['f_termino']!=''){
 	$SIS_where .= " AND orden_trabajo_eventos_listado.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
 /**********************************************************/

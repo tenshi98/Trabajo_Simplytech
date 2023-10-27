@@ -127,13 +127,13 @@ require_once '0_validate_user_1.php';
 			$ndata_2 = 0;
 			$ndata_3 = 0;
 			//Se verifica si el dato existe
-			if(isset($Nombre)&&isset($idSistema)){
+			if(isset($Nombre, $idSistema)){
 				$ndata_1 = db_select_nrows (false, 'Nombre', 'proveedor_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
-			if(isset($Rut)&&isset($idSistema)){
+			if(isset($Rut, $idSistema)){
 				$ndata_2 = db_select_nrows (false, 'Rut', 'proveedor_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
-			if(isset($email)&&isset($idSistema)){
+			if(isset($email, $idSistema)){
 				$ndata_3 = db_select_nrows (false, 'email', 'proveedor_listado', '', "email='".$email."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores

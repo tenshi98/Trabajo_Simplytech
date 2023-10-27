@@ -90,7 +90,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
-			if(isset($Nombre)&&isset($id_pmcat)){
+			if(isset($Nombre, $id_pmcat)){
 				$ndata_1 = db_select_nrows (false, 'Nombre', 'core_permisos_listado', '', "Nombre='".$Nombre."' AND id_pmcat='".$id_pmcat."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
@@ -159,7 +159,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
-			if(isset($Nombre)&&isset($id_pmcat)&&isset($idAdmpm)){
+			if(isset($Nombre, $id_pmcat, $idAdmpm)){
 				$ndata_1 = db_select_nrows (false, 'Nombre', 'core_permisos_listado', '', "Nombre='".$Nombre."' AND id_pmcat='".$id_pmcat."' AND idAdmpm!='".$idAdmpm."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores

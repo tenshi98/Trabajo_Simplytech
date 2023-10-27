@@ -32,9 +32,9 @@ if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
 /********************************************************************/
 //se verifica si se ingreso la hora, es un dato optativo
 $SIS_where = '';
-if(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''&&isset($h_inicio)&&$h_inicio!=''&&isset($h_termino)&&$h_termino!=''){
+if(isset($f_inicio, $f_termino, $h_inicio, $h_termino)&&$f_inicio!=''&&$f_termino!=''&&$h_inicio!=''&&$h_termino!=''){
 	$SIS_where.="(backup_telemetria_listado_tablarelacionada_".$idTelemetria.".TimeStamp BETWEEN '".$f_inicio." ".$h_inicio."' AND '".$f_termino." ".$h_termino."')";
-}elseif(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''){
+}elseif(isset($f_inicio, $f_termino)&&$f_inicio!=''&&$f_termino!=''){
 	$SIS_where.="(backup_telemetria_listado_tablarelacionada_".$idTelemetria.".FechaSistema BETWEEN '".$f_inicio."' AND '".$f_termino."')";
 }
 //verifico el numero de datos antes de hacer la consulta

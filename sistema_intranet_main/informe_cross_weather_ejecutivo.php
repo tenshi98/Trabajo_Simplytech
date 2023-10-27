@@ -16,7 +16,7 @@ $location = $original;
 //Se agregan ubicaciones
 $search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $location .= "?submit_filter=Filtrar";
-if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
+if(isset($_GET['fecha_desde'], $_GET['fecha_hasta'])&&$_GET['fecha_desde']!=''&&$_GET['fecha_hasta']!=''){
 	$search .="&fecha_desde=".$_GET['fecha_desde'];
 	$search .="&fecha_hasta=".$_GET['fecha_hasta'];
 }
@@ -44,7 +44,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 $SIS_where = $x_table.".idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
+if(isset($_GET['fecha_desde'], $_GET['fecha_hasta'])&&$_GET['fecha_desde']!=''&&$_GET['fecha_hasta']!=''){
 	$SIS_where.= " AND ".$x_table.".Fecha BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
 }
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){

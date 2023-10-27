@@ -39,7 +39,7 @@ if(isset($_GET['idProveedor']) && $_GET['idProveedor']!=''){   $z .= " AND ocomp
 if(isset($_GET['idSistema']) && $_GET['idSistema']!=''){$z .= " AND ocompra_listado.idSistema=".$_GET['idSistema'];}
 if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){$z .= " AND ocompra_listado.idUsuario=".$_GET['idUsuario'];}
 if(isset($_GET['idEstado']) && $_GET['idEstado']!=''){  $z .= " AND ocompra_listado.idEstado=".$_GET['idEstado'];}
-if(isset($_GET['Creacion_fecha_ini']) && $_GET['Creacion_fecha_ini'] != ''&&isset($_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_fin']!=''){   
+if(isset($_GET['Creacion_fecha_ini'], $_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_ini'] != '' && $_GET['Creacion_fecha_fin']!=''){   
 	$z .= " AND ocompra_listado.Creacion_fecha BETWEEN '".$_GET['Creacion_fecha_ini']."' AND '".$_GET['Creacion_fecha_fin']."'";
 }
 /**************************************************************/

@@ -42,13 +42,13 @@ if(isset($_GET['idDocPago']) && $_GET['idDocPago']!=''){         $SIS_where .= "
 if(isset($_GET['N_DocPago']) && $_GET['N_DocPago']!=''){         $SIS_where .= " AND bodegas_insumos_facturacion.N_DocPago LIKE '%".EstandarizarInput($_GET['N_DocPago'])."%'";}
 if(isset($_GET['idProducto']) && $_GET['idProducto']!=''){       $SIS_where .= " AND bodegas_insumos_facturacion_existencias.idProducto=".$_GET['idProducto'];}
 
-if(isset($_GET['Creacion_fecha_ini']) && $_GET['Creacion_fecha_ini'] != ''&&isset($_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_fin']!=''){   
+if(isset($_GET['Creacion_fecha_ini'], $_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_ini'] != '' && $_GET['Creacion_fecha_fin']!=''){   
 	$SIS_where .= " AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '".$_GET['Creacion_fecha_ini']."' AND '".$_GET['Creacion_fecha_fin']."'";
 }
-if(isset($_GET['Pago_fecha_ini']) && $_GET['Pago_fecha_ini'] != ''&&isset($_GET['Pago_fecha_fin']) && $_GET['Pago_fecha_fin']!=''){   
+if(isset($_GET['Pago_fecha_ini'], $_GET['Pago_fecha_fin']) && $_GET['Pago_fecha_ini'] != '' && $_GET['Pago_fecha_fin']!=''){   
 	$SIS_where .= " AND bodegas_insumos_facturacion.Pago_fecha BETWEEN '".$_GET['Pago_fecha_ini']."' AND '".$_GET['Pago_fecha_fin']."'";
 }
-if(isset($_GET['F_Pago_ini']) && $_GET['F_Pago_ini'] != ''&&isset($_GET['F_Pago_fin']) && $_GET['F_Pago_fin']!=''){   
+if(isset($_GET['F_Pago_ini'], $_GET['F_Pago_fin']) && $_GET['F_Pago_ini'] != '' && $_GET['F_Pago_fin']!=''){   
 	$SIS_where .= " AND bodegas_insumos_facturacion.F_Pago BETWEEN '".$_GET['F_Pago_ini']."' AND '".$_GET['F_Pago_fin']."'";
 }
 

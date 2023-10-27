@@ -170,7 +170,7 @@ array_push( $arrMediciones,$row );
 		if($Prom_derecho!=0){   $correccion = (($Prom_izquierdo - $Prom_derecho)/$Prom_derecho)*100;}else{$correccion = 0;}
 	}
 	
-	$data_gauge = 'var data_correccion_x = '.str_replace(",", ".",Cantidades($correccion, 2)).';';
+	$data_gauge = 'var data_correccion_x = "'.str_replace(",", ".",Cantidades($correccion, 2)).'";';
 
 	/******************************************************/
 	//Rutas

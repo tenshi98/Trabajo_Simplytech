@@ -26,7 +26,7 @@ echo '<ul class="nav navbar-nav '.$classnav.'" id="navbar_nav" >
 		foreach($_SESSION['usuario']['menu'] as $menu=>$menuCat) {
 
 			//si la transaccion actual es igual a la categoria
-			if(isset($original)&&isset($_SESSION['usuario']['Permisos'][$original]['CategoriaNombre'])&&$menu==$_SESSION['usuario']['Permisos'][$original]['CategoriaNombre']){
+			if(isset($original, $_SESSION['usuario']['Permisos'][$original]['CategoriaNombre'])&&$menu==$_SESSION['usuario']['Permisos'][$original]['CategoriaNombre']){
 				$menu_class='active';
 			}else{
 				$menu_class='';

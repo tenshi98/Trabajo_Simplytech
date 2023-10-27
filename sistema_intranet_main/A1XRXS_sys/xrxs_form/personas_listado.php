@@ -91,7 +91,7 @@ require_once '0_validate_user_1.php';
 			if(isset($Nombre)&&isset($ApellidoPaterno)&&isset($ApellidoMaterno)&&isset($idSistema)){
 				$ndata_1 = db_select_nrows (false, 'Nombre', 'personas_listado', '', "Nombre='".$Nombre."' AND ApellidoPaterno='".$ApellidoPaterno."' AND ApellidoMaterno='".$ApellidoMaterno."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
-			if(isset($Rut)&&isset($idSistema)){
+			if(isset($Rut, $idSistema)){
 				$ndata_2 = db_select_nrows (false, 'Rut', 'personas_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores

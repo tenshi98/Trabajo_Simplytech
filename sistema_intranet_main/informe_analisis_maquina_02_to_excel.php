@@ -42,7 +42,7 @@ if(isset($_GET['idMatriz']) && $_GET['idMatriz'] != '')  {
 	$SIS_where_2 .= " AND maquinas_listado_matriz.idMatriz = '".$_GET['idMaquina']."'";
 	$SIS_where_3 .= " AND analisis_listado.idMatriz = '".$_GET['idMatriz']."'";
 }
-if(isset($_GET['f_inicio']) && $_GET['f_inicio'] != ''&&isset($_GET['f_termino']) && $_GET['f_termino']!=''){
+if(isset($_GET['f_inicio'], $_GET['f_termino']) && $_GET['f_inicio'] != '' && $_GET['f_termino']!=''){
 	$SIS_where_3 .= " AND analisis_listado.f_muestreo BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 }
 /*******************************************************/

@@ -155,13 +155,13 @@ require_once '0_validate_user_1.php';
 			$ndata_3 = 0;
 			$ndata_4 = 0;
 			//Se verifica si el dato existe
-			if(isset($Nombre)&&isset($idSistema)){
+			if(isset($Nombre, $idSistema)){
 				$ndata_1 = db_select_nrows (false, 'Nombre', 'aguas_clientes_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
-			if(isset($Rut)&&isset($idSistema)){
+			if(isset($Rut, $idSistema)){
 				$ndata_2 = db_select_nrows (false, 'Rut', 'aguas_clientes_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
-			if(isset($email)&&isset($idSistema)){
+			if(isset($email, $idSistema)){
 				$ndata_3 = db_select_nrows (false, 'email', 'aguas_clientes_listado', '', "email='".$email."' AND idSistema='".$idSistema."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($Identificador)&&isset($idSistema)){
@@ -248,13 +248,13 @@ require_once '0_validate_user_1.php';
 			$ndata_3 = 0;
 			$ndata_4 = 0;
 			//Se verifica si el dato existe
-			if(isset($Nombre)&&isset($idSistema)&&isset($idCliente)){
+			if(isset($Nombre, $idSistema, $idCliente)){
 				$ndata_1 = db_select_nrows (false, 'Nombre', 'aguas_clientes_listado', '', "Nombre='".$Nombre."' AND idSistema='".$idSistema."' AND idCliente!='".$idCliente."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
-			if(isset($Rut)&&isset($idSistema)&&isset($idCliente)){
+			if(isset($Rut, $idSistema, $idCliente)){
 				$ndata_2 = db_select_nrows (false, 'Rut', 'aguas_clientes_listado', '', "Rut='".$Rut."' AND idSistema='".$idSistema."' AND idCliente!='".$idCliente."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
-			if(isset($email)&&isset($idSistema)&&isset($idCliente)){
+			if(isset($email, $idSistema, $idCliente)){
 				$ndata_3 = db_select_nrows (false, 'email', 'aguas_clientes_listado', '', "email='".$email."' AND idSistema='".$idSistema."' AND idCliente!='".$idCliente."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($Identificador)&&isset($idSistema)&&isset($idCliente)){

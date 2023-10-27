@@ -40,7 +40,7 @@ $search .='&submit_filter=Filtrar';
 $search .='&idOpciones=2';
 $search .='&idTipoUsuario='.$_SESSION['usuario']['basic_data']['idTipoUsuario'];
 //verifico si existen los parametros de fecha
-if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
+if(isset($_GET['f_inicio'], $_GET['f_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''){
 	$SIS_where.= " AND telemetria_listado_errores_999.Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 	$search   .= '&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
 }

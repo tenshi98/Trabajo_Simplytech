@@ -45,7 +45,7 @@ if(isset($_GET['idEstado'])&&$_GET['idEstado']!=''){
 	$SIS_where_3.=" AND bodegas_productos_facturacion.idEstado=".$_GET['idEstado'];
 	$SIS_where_4.=" AND bodegas_servicios_facturacion.idEstado=".$_GET['idEstado'];
 }
-if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
+if(isset($_GET['f_inicio'], $_GET['f_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''){
 	$SIS_where_1.=" AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 	$SIS_where_2.=" AND bodegas_insumos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 	$SIS_where_3.=" AND bodegas_productos_facturacion.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";

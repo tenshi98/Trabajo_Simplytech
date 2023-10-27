@@ -33,9 +33,9 @@ if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
 /********************************************************************/
 //se verifica si se ingreso la hora, es un dato optativo
 $SIS_where = '';
-if(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''&&isset($h_inicio)&&$h_inicio!=''&&isset($h_termino)&&$h_termino!=''){
+if(isset($f_inicio, $f_termino, $h_inicio, $h_termino)&&$f_inicio!=''&&$f_termino!=''&&$h_inicio!=''&&$h_termino!=''){
 	$SIS_where.= "(telemetria_listado_crossenergy_dia.TimeStamp BETWEEN '".$f_inicio." ".$h_inicio."' AND '".$f_termino." ".$h_termino."')";
-}elseif(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''){
+}elseif(isset($f_inicio, $f_termino)&&$f_inicio!=''&&$f_termino!=''){
 	$SIS_where.= "(telemetria_listado_crossenergy_dia.FechaSistema BETWEEN '".$f_inicio."' AND '".$f_termino."')";
 }
 $SIS_where.= " AND telemetria_listado_crossenergy_dia.idTelemetria=".$idTelemetria;
@@ -150,9 +150,9 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$pdf_subtitulo .= '
 	Informe grupo '.DeSanitizar($rowGrupo['Nombre']).' del equipo '.DeSanitizar($rowEquipo['NombreEquipo']).'
 	';
-	if(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''&&isset($h_inicio)&&$h_inicio!=''&&isset($h_termino)&&$h_termino!=''){
+	if(isset($f_inicio, $f_termino, $h_inicio, $h_termino)&&$f_inicio!=''&&$f_termino!=''&&$h_inicio!=''&&$h_termino!=''){
 		$pdf_subtitulo .= 'Del '.fecha_estandar($f_inicio).'-'.$h_inicio.' hasta '.fecha_estandar($f_termino).'-'.$h_termino;
-	}elseif(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''){
+	}elseif(isset($f_inicio, $f_termino)&&$f_inicio!=''&&$f_termino!=''){
 		$pdf_subtitulo .= 'Del '.fecha_estandar($f_inicio).' hasta '.fecha_estandar($f_termino);
 	}
 	$pdf_file       = 'Informe Resumen Dia grupo '.DeSanitizar($rowGrupo['Nombre']).' del equipo '.DeSanitizar($rowEquipo['NombreEquipo']).'.pdf';

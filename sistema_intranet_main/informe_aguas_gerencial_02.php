@@ -15,7 +15,7 @@ $original = "informe_aguas_gerencial_02.php";
 $location = $original;
 //Se agregan ubicaciones
 $search ='&submit_filter=Filtrar';
-if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
+if(isset($_GET['f_inicio'], $_GET['f_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''){
 	$search .="&f_inicio=".$_GET['f_inicio'];
 	$search .="&f_termino=".$_GET['f_termino'];
 }

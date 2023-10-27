@@ -17,7 +17,7 @@ $location = $original;
 $search ='&submit_filter=Filtrar';
 $location .= "?submit_filter=Filtrar";
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){      $location .= "&idTelemetria=".$_GET['idTelemetria'];      $search .= "&idTelemetria=".$_GET['idTelemetria'];}
-if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
+if(isset($_GET['fecha_desde'], $_GET['fecha_hasta'])&&$_GET['fecha_desde']!=''&&$_GET['fecha_hasta']!=''){
 	$search .="&fecha_desde=".$_GET['fecha_desde'];
 	$search .="&fecha_hasta=".$_GET['fecha_hasta'];
 }
@@ -39,7 +39,7 @@ $SIS_where = "telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTa
 //Se aplican los filtros
 if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
 	$SIS_where.=" AND (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['fecha_desde']." ".$_GET['h_inicio']."' AND '".$_GET['fecha_hasta']." ".$_GET['h_termino']."')";
-}elseif(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
+}elseif(isset($_GET['fecha_desde'], $_GET['fecha_hasta'])&&$_GET['fecha_desde']!=''&&$_GET['fecha_hasta']!=''){
 	$SIS_where.=" AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
 }
 

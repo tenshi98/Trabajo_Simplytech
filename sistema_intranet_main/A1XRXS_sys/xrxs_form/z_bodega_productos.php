@@ -157,7 +157,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
-			if(isset($idProveedor)&&isset($idDocumentos)&&isset($N_Doc)){
+			if(isset($idProveedor, $idDocumentos, $N_Doc)){
 				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_productos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
@@ -328,7 +328,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
-			if(isset($idProveedor)&&isset($idDocumentos)&&isset($N_Doc)){
+			if(isset($idProveedor, $idDocumentos, $N_Doc)){
 				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_productos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
@@ -6205,7 +6205,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
-			if(isset($idProveedor)&&isset($idDocumentos)&&isset($N_Doc)){
+			if(isset($idProveedor, $idDocumentos, $N_Doc)){
 				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_productos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
@@ -6364,7 +6364,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
-			if(isset($idProveedor)&&isset($idDocumentos)&&isset($N_Doc)){
+			if(isset($idProveedor, $idDocumentos, $N_Doc)){
 				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_productos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
@@ -7096,7 +7096,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
-			if(isset($idProveedor)&&isset($idDocumentos)&&isset($N_Doc)){
+			if(isset($idProveedor, $idDocumentos, $N_Doc)){
 				$ndata_1 = db_select_nrows (false, 'idFacturacion', 'bodegas_productos_facturacion', '', "idProveedor='".$idProveedor."' AND idDocumentos='".$idDocumentos."' AND N_Doc='".$N_Doc."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores

@@ -39,7 +39,7 @@ require_once '0_validate_user_1.php';
 				$SIS_query = 'COUNT(idErrores) AS NAlertas';
 				$SIS_where = "idTelemetria=".$idTelemetria." AND idLeido=0 AND idSistema=".$idSistema;
 				//si existe la fecha filtro por ella
-				if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
+				if(isset($_GET['f_inicio'], $_GET['f_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''){
 					$SIS_where .= " AND Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 				}
 

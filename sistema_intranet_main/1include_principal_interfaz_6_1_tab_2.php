@@ -360,7 +360,7 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 							if($Prom_derecho!=0){   $correccion = (($Prom_izquierdo - $Prom_derecho)/$Prom_derecho)*100;}else{$correccion = 0;}
 						}
 
-						echo 'var data_correccion_rows = '.str_replace(",", ".",Cantidades($correccion, 2)).';
+						echo 'var data_correccion_rows = "'.str_replace(",", ".",Cantidades($correccion, 2)).'";
 						//se llama funcion de dibujo
 						draw_correccion(data_correccion_rows);
 					}

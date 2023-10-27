@@ -53,11 +53,11 @@ if (isset($_GET['idLaboratorio']) && $_GET['idLaboratorio']!=''){
 	$n .="&idLaboratorio=".$_GET['idLaboratorio'];
 }
 
-if(isset($_GET['f_muestra_inicio']) && $_GET['f_muestra_inicio'] != ''&&isset($_GET['f_muestra_termino']) && $_GET['f_muestra_termino']!=''){
+if(isset($_GET['f_muestra_inicio'], $_GET['f_muestra_termino']) && $_GET['f_muestra_inicio'] != '' && $_GET['f_muestra_termino']!=''){
 	$z .= " AND aguas_analisis_aguas.f_muestra BETWEEN '".$_GET['f_muestra_inicio']."' AND '".$_GET['f_muestra_termino']."'";
 	$n .="&f_muestra_inicio=".$_GET['f_muestra_inicio']."&f_muestra_termino=".$_GET['f_muestra_termino'];
 }
-if(isset($_GET['f_recibida_inicio']) && $_GET['f_recibida_inicio'] != ''&&isset($_GET['f_recibida_termino']) && $_GET['f_recibida_termino']!=''){
+if(isset($_GET['f_recibida_inicio'], $_GET['f_recibida_termino']) && $_GET['f_recibida_inicio'] != '' && $_GET['f_recibida_termino']!=''){
 	$z .= " AND aguas_analisis_aguas.f_recibida BETWEEN '".$_GET['f_recibida_inicio']."' AND '".$_GET['f_recibida_termino']."'";
 	$n .="&f_recibida_inicio=".$_GET['f_recibida_inicio']."&f_recibida_termino=".$_GET['f_recibida_termino'];
 }

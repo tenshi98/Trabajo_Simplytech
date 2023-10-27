@@ -27,7 +27,7 @@ $SIS_where = "telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTa
 //Se aplican los filtros
 if(isset($_GET['idPredio']) && $_GET['idPredio']!=''){   $SIS_where .= " AND cross_predios_listado_zonas.idPredio=".$_GET['idPredio'];}
 if(isset($_GET['idZona']) && $_GET['idZona']!=''){$SIS_where .= " AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona=".$_GET['idZona'];}
-if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
+if(isset($_GET['fecha_desde'], $_GET['fecha_hasta'])&&$_GET['fecha_desde']!=''&&$_GET['fecha_hasta']!=''){
 	$SIS_where.=" AND telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
 }
 $SIS_where .=" GROUP BY cross_predios_listado_zonas.idPredio, telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idZona, telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".idTelemetria";

@@ -21,7 +21,7 @@ if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){ $search .="&idCliente=".$
 if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){       $search .="&idTipo=".$_GET['idTipo'];}
 if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){ $search .="&idDocPago=".$_GET['idDocPago'];}
 if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){ $search .="&N_DocPago=".$_GET['N_DocPago'];}
-if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
+if(isset($_GET['f_inicio_p'], $_GET['f_termino_p'])&&$_GET['f_inicio_p']!=''&&$_GET['f_termino_p']!=''){
 	$search .="&f_inicio_p=".$_GET['f_inicio_p'];
 	$search .="&f_termino_p=".$_GET['f_termino_p'];
 }
@@ -53,7 +53,7 @@ switch ($_GET['idTipoProd']) {
 		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){  $z.=" AND bodegas_arriendos_facturacion.idProveedor=".$_GET['idProveedor'];}
 		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){      $z.=" AND bodegas_arriendos_facturacion.idCliente=".$_GET['idCliente'];}
 		if(isset($_GET['idEquipo'])&&$_GET['idEquipo']!=''){ $z.=" AND bodegas_arriendos_facturacion_existencias.idEquipo=".$_GET['idEquipo'];}
-		if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
+		if(isset($_GET['f_inicio'], $_GET['f_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''){
 			$z.=" AND bodegas_arriendos_facturacion_existencias.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 		}
 		/**********************************************************/
@@ -102,7 +102,7 @@ switch ($_GET['idTipoProd']) {
 		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){  $z.=" AND bodegas_insumos_facturacion.idProveedor=".$_GET['idProveedor'];}
 		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){      $z.=" AND bodegas_insumos_facturacion.idCliente=".$_GET['idCliente'];}
 		if(isset($_GET['idInsumo'])&&$_GET['idInsumo']!=''){ $z.=" AND bodegas_insumos_facturacion_existencias.idProducto=".$_GET['idInsumo'];}
-		if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
+		if(isset($_GET['f_inicio'], $_GET['f_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''){
 			$z.=" AND bodegas_insumos_facturacion_existencias.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 		}
 		/**********************************************************/
@@ -151,7 +151,7 @@ switch ($_GET['idTipoProd']) {
 		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){  $z.=" AND bodegas_productos_facturacion.idProveedor=".$_GET['idProveedor'];}
 		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){      $z.=" AND bodegas_productos_facturacion.idCliente=".$_GET['idCliente'];}
 		if(isset($_GET['idProducto'])&&$_GET['idProducto']!=''){    $z.=" AND bodegas_productos_facturacion_existencias.idProducto=".$_GET['idProducto'];}
-		if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
+		if(isset($_GET['f_inicio'], $_GET['f_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''){
 			$z.=" AND bodegas_productos_facturacion_existencias.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 		}
 		/**********************************************************/
@@ -200,7 +200,7 @@ switch ($_GET['idTipoProd']) {
 		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){  $z.=" AND bodegas_servicios_facturacion.idProveedor=".$_GET['idProveedor'];}
 		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){      $z.=" AND bodegas_servicios_facturacion.idCliente=".$_GET['idCliente'];}
 		if(isset($_GET['idServicio'])&&$_GET['idServicio']!=''){    $z.=" AND bodegas_servicios_facturacion_existencias.idServicio=".$_GET['idServicio'];}
-		if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
+		if(isset($_GET['f_inicio'], $_GET['f_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''){
 			$z.=" AND bodegas_servicios_facturacion_existencias.Creacion_fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."'";
 		}
 		/**********************************************************/

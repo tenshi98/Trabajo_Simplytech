@@ -33,7 +33,7 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 //se verifica si se ingreso la hora, es un dato optativo
 $SIS_where = $x_table.".idSistema=".$_GET['idSistema'];
 //Se aplican los filtros
-if(isset($_GET['fecha_desde'])&&$_GET['fecha_desde']!=''&&isset($_GET['fecha_hasta'])&&$_GET['fecha_hasta']!=''){
+if(isset($_GET['fecha_desde'], $_GET['fecha_hasta'])&&$_GET['fecha_desde']!=''&&$_GET['fecha_hasta']!=''){
 	$SIS_where.= " AND ".$x_table.".Fecha BETWEEN '".$_GET['fecha_desde']."' AND '".$_GET['fecha_hasta']."'";
 }
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){

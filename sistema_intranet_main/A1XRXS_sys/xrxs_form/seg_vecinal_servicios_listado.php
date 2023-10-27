@@ -107,7 +107,7 @@ require_once '0_validate_user_1.php';
 			if($ndata_2 > 0) {$error['ndata_3'] = 'error/El correo de ingresado ya existe en el sistema';}
 			/*******************************************************************/
 			//Consulto la latitud y la longitud
-			if(isset($idCiudad) && $idCiudad != ''&&isset($idComuna) && $idComuna != ''&&isset($Direccion) && $Direccion!=''){
+			if(isset($idCiudad, $idComuna, $Direccion) && $idCiudad != '' && $idComuna != '' && $Direccion!=''){
 				//variable con la dirección
 				$address = '';
 				if(isset($idCiudad) && $idCiudad!=''){
@@ -180,7 +180,7 @@ require_once '0_validate_user_1.php';
 			$ndata_1 = 0;
 			$ndata_2 = 0;
 			//Se verifica si el dato existe
-			if(isset($Nombre)&&isset($idServicio)){
+			if(isset($Nombre, $idServicio)){
 				$ndata_1 = db_select_nrows (false, 'Nombre', 'seg_vecinal_servicios_listado', '', "Nombre='".$Nombre."' AND idServicio!='".$idServicio."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			if(isset($email)&&isset($idServicio)){
@@ -191,7 +191,7 @@ require_once '0_validate_user_1.php';
 			if($ndata_2 > 0) {$error['ndata_3'] = 'error/El correo de ingresado ya existe en el sistema';}
 			/*******************************************************************/
 			//Consulto la latitud y la longitud
-			if(isset($idCiudad) && $idCiudad != ''&&isset($idComuna) && $idComuna != ''&&isset($Direccion) && $Direccion!=''){
+			if(isset($idCiudad, $idComuna, $Direccion) && $idCiudad != '' && $idComuna != '' && $Direccion!=''){
 				//variable con la dirección
 				$address = '';
 				if(isset($idCiudad) && $idCiudad!=''){

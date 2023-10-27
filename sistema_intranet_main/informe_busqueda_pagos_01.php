@@ -21,7 +21,7 @@ if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){ $search .="&idCliente=".$
 if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){       $search .="&idTipo=".$_GET['idTipo'];}
 if(isset($_GET['idDocPago'])&&$_GET['idDocPago']!=''){ $search .="&idDocPago=".$_GET['idDocPago'];}
 if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){ $search .="&N_DocPago=".$_GET['N_DocPago'];}
-if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
+if(isset($_GET['f_inicio_p'], $_GET['f_termino_p'])&&$_GET['f_inicio_p']!=''&&$_GET['f_termino_p']!=''){
 	$search .="&f_inicio_p=".$_GET['f_inicio_p'];
 	$search .="&f_termino_p=".$_GET['f_termino_p'];
 }
@@ -75,7 +75,7 @@ switch ($_GET['idType']) {
 		if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){      $SIS_where.= " AND pagos_facturas_proveedores.N_DocPago=".$_GET['N_DocPago'];}
 		if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){     $SIS_where.= " AND pagos_facturas_proveedores.idTipo=".$_GET['idTipo'];}
 		if(isset($_GET['idProveedor'])&&$_GET['idProveedor']!=''){  $SIS_where.= " AND pagos_facturas_proveedores.idProveedor=".$_GET['idProveedor'];}
-		if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
+		if(isset($_GET['f_inicio_p'], $_GET['f_termino_p'])&&$_GET['f_inicio_p']!=''&&$_GET['f_termino_p']!=''){
 			$SIS_where.= " AND pagos_facturas_proveedores.F_Pago BETWEEN '".$_GET['f_inicio_p']."' AND '".$_GET['f_termino_p']."'";
 		}	
 		/**********************************************************/
@@ -132,7 +132,7 @@ switch ($_GET['idType']) {
 		if(isset($_GET['N_DocPago'])&&$_GET['N_DocPago']!=''){      $SIS_where.= " AND pagos_facturas_clientes.N_DocPago=".$_GET['N_DocPago'];}
 		if(isset($_GET['idTipo'])&&$_GET['idTipo']!=''){     $SIS_where.= " AND pagos_facturas_clientes.idTipo=".$_GET['idTipo'];}
 		if(isset($_GET['idCliente'])&&$_GET['idCliente']!=''){      $SIS_where.= " AND pagos_facturas_clientes.idCliente=".$_GET['idCliente'];}
-		if(isset($_GET['f_inicio_p'])&&$_GET['f_inicio_p']!=''&&isset($_GET['f_termino_p'])&&$_GET['f_termino_p']!=''){
+		if(isset($_GET['f_inicio_p'], $_GET['f_termino_p'])&&$_GET['f_inicio_p']!=''&&$_GET['f_termino_p']!=''){
 			$SIS_where.= " AND pagos_facturas_clientes.F_Pago BETWEEN '".$_GET['f_inicio_p']."' AND '".$_GET['f_termino_p']."'";
 		}	
 		/**********************************************************/

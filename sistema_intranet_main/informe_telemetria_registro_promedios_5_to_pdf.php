@@ -35,9 +35,9 @@ if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
 /********************************************************************/
 //se verifica si se ingreso la hora, es un dato optativo
 $subf='';
-if(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''&&isset($h_inicio)&&$h_inicio!=''&&isset($h_termino)&&$h_termino!=''){
+if(isset($f_inicio, $f_termino, $h_inicio, $h_termino)&&$f_inicio!=''&&$f_termino!=''&&$h_inicio!=''&&$h_termino!=''){
 	$subf = " AND (TimeStamp BETWEEN '".$f_inicio." ".$h_inicio."' AND '".$f_termino." ".$h_termino."')";
-}elseif(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''){
+}elseif(isset($f_inicio, $f_termino)&&$f_inicio!=''&&$f_termino!=''){
 	$subf = " AND (FechaSistema BETWEEN '".$f_inicio."' AND '".$f_termino."')";
 }
 
@@ -183,9 +183,9 @@ $pdf_subtitulo  = DeSanitizar($_SESSION['usuario']['basic_data']['RazonSocial'])
 $pdf_subtitulo .= '
 Informe grupo '.DeSanitizar($rowGrupo['Nombre']).' del equipo '.DeSanitizar($rowEquipo['Nombre']).'
 ';
-if(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''&&isset($h_inicio)&&$h_inicio!=''&&isset($h_termino)&&$h_termino!=''){
+if(isset($f_inicio, $f_termino, $h_inicio, $h_termino)&&$f_inicio!=''&&$f_termino!=''&&$h_inicio!=''&&$h_termino!=''){
 	$pdf_subtitulo .= 'Del '.fecha_estandar($f_inicio).'-'.$h_inicio.' hasta '.fecha_estandar($f_termino).'-'.$h_termino;
-}elseif(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''){
+}elseif(isset($f_inicio, $f_termino)&&$f_inicio!=''&&$f_termino!=''){
 	$pdf_subtitulo .= 'Del '.fecha_estandar($f_inicio).' hasta '.fecha_estandar($f_termino);
 }
 $pdf_file       = 'Informe Promedio Diario del equipo '.DeSanitizar($rowEquipo['Nombre']).'.pdf';

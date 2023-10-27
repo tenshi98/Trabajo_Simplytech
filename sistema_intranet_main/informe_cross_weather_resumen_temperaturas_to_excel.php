@@ -33,9 +33,9 @@ if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){
 //se verifica si se ingreso la hora, es un dato optativo
 //Variable de busqueda
 $SIS_where = $x_table.".idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-if(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''&&isset($_GET['h_inicio'])&&$_GET['h_inicio']!=''&&isset($_GET['h_termino'])&&$_GET['h_termino']!=''){
+if(isset($_GET['f_inicio'], $_GET['f_termino'], $_GET['h_inicio'], $_GET['h_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''&&$_GET['h_inicio']!=''&&$_GET['h_termino']!=''){
 	$SIS_where.= " AND (".$x_table.".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
-}elseif(isset($_GET['f_inicio'])&&$_GET['f_inicio']!=''&&isset($_GET['f_termino'])&&$_GET['f_termino']!=''){
+}elseif(isset($_GET['f_inicio'], $_GET['f_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''){
 	$SIS_where.= " AND (".$x_table.".Fecha BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
 if(isset($_GET['idTelemetria'])&&$_GET['idTelemetria']!=''){

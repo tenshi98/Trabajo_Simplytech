@@ -91,22 +91,22 @@ if(isset($_GET['idEstadoDevolucion']) && $_GET['idEstadoDevolucion']!=''){
 	$search .= "&idEstadoDevolucion=".$_GET['idEstadoDevolucion'];
 }
 
-if(isset($_GET['Creacion_fecha_ini']) && $_GET['Creacion_fecha_ini'] != ''&&isset($_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_fin']!=''){   
+if(isset($_GET['Creacion_fecha_ini'], $_GET['Creacion_fecha_fin']) && $_GET['Creacion_fecha_ini'] != '' && $_GET['Creacion_fecha_fin']!=''){   
 	$z .= " AND bodegas_arriendos_facturacion.Creacion_fecha BETWEEN '".$_GET['Creacion_fecha_ini']."' AND '".$_GET['Creacion_fecha_fin']."'";
 	$search .= "&Creacion_fecha_ini=".$_GET['Creacion_fecha_ini'];
 	$search .= "&Creacion_fecha_fin=".$_GET['Creacion_fecha_fin'];
 }
-if(isset($_GET['Pago_fecha_ini']) && $_GET['Pago_fecha_ini'] != ''&&isset($_GET['Pago_fecha_fin']) && $_GET['Pago_fecha_fin']!=''){   
+if(isset($_GET['Pago_fecha_ini'], $_GET['Pago_fecha_fin']) && $_GET['Pago_fecha_ini'] != '' && $_GET['Pago_fecha_fin']!=''){   
 	$z .= " AND bodegas_arriendos_facturacion.Pago_fecha BETWEEN '".$_GET['Pago_fecha_ini']."' AND '".$_GET['Pago_fecha_fin']."'";
 	$search .= "&Pago_fecha_ini=".$_GET['Pago_fecha_ini'];
 	$search .= "&Pago_fecha_fin=".$_GET['Pago_fecha_fin'];
 }
-if(isset($_GET['F_Pago_ini']) && $_GET['F_Pago_ini'] != ''&&isset($_GET['F_Pago_fin']) && $_GET['F_Pago_fin']!=''){   
+if(isset($_GET['F_Pago_ini'], $_GET['F_Pago_fin']) && $_GET['F_Pago_ini'] != '' && $_GET['F_Pago_fin']!=''){   
 	$z .= " AND bodegas_arriendos_facturacion.F_Pago BETWEEN '".$_GET['F_Pago_ini']."' AND '".$_GET['F_Pago_fin']."'";
 	$search .= "&F_Pago_ini=".$_GET['F_Pago_ini'];
 	$search .= "&F_Pago_fin=".$_GET['F_Pago_fin'];
 }
-if(isset($_GET['F_Devolucion_ini']) && $_GET['F_Devolucion_ini'] != ''&&isset($_GET['F_Devolucion_fin']) && $_GET['F_Devolucion_fin']!=''){   
+if(isset($_GET['F_Devolucion_ini'], $_GET['F_Devolucion_fin']) && $_GET['F_Devolucion_ini'] != '' && $_GET['F_Devolucion_fin']!=''){   
 	$z .= " AND bodegas_arriendos_facturacion.F_Pago BETWEEN '".$_GET['F_Devolucion_ini']."' AND '".$_GET['F_Devolucion_fin']."'";
 	$search .= "&F_Devolucion_ini=".$_GET['F_Devolucion_ini'];
 	$search .= "&F_Devolucion_fin=".$_GET['F_Devolucion_fin'];

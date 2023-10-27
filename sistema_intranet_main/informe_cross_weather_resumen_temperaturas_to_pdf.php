@@ -44,9 +44,9 @@ if(isset($idSistema)&&$idSistema!=''&&$idSistema!=0){
 /********************************************************************/
 //Variable de busqueda
 $SIS_where = $x_table.".idSistema=".$idSistema;
-if(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''&&isset($h_inicio)&&$h_inicio!=''&&isset($h_termino)&&$h_termino!=''){
+if(isset($f_inicio, $f_termino, $h_inicio, $h_termino)&&$f_inicio!=''&&$f_termino!=''&&$h_inicio!=''&&$h_termino!=''){
 	$SIS_where.= " AND (".$x_table.".TimeStamp BETWEEN '".$f_inicio." ".$h_inicio."' AND '".$f_termino." ".$h_termino."')";
-}elseif(isset($f_inicio)&&$f_inicio!=''&&isset($f_termino)&&$f_termino!=''){
+}elseif(isset($f_inicio, $f_termino)&&$f_inicio!=''&&$f_termino!=''){
 	$SIS_where.= " AND (".$x_table.".Fecha BETWEEN '".$f_inicio."' AND '".$f_termino."')";
 }
 if(isset($idTelemetria)&&$idTelemetria!=''){

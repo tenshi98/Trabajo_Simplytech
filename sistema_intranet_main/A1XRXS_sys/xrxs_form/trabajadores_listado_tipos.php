@@ -95,7 +95,7 @@ require_once '0_validate_user_1.php';
 			//variables
 			$ndata_1 = 0;
 			//Se verifica si el dato existe
-			if(isset($Nombre)&&isset($idTipo)){
+			if(isset($Nombre, $idTipo)){
 				$ndata_1 = db_select_nrows (false, 'Nombre', 'trabajadores_listado_tipos', '', "Nombre='".$Nombre."' AND idTipo!='".$idTipo."'", $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 			}
 			//generacion de errores
