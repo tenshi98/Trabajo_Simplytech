@@ -40,152 +40,106 @@ $f_termino   = fecha_actual();
 if(hora_actual()<$timeback){
 	$f_inicio = restarDias(fecha_actual(),1);
 }
+//$_GET['idEquipoActual'] = 221;
 
-//se verifica si se ingreso la hora, es un dato optativo
-$z = " WHERE (TimeStamp BETWEEN '".$f_inicio." ".$h_inicio ."' AND '".$f_termino." ".$h_termino."')";
-
-/*****************************************/
-//datos extras
-$aa = '';
-$aa .= ',FechaSistema';
-$aa .= ',HoraSistema';
-$aa .= ',GeoLatitud';
-$aa .= ',GeoLongitud';
-$aa .= ',GeoVelocidad';
+// Se trae un listado con todos los elementos
+$SIS_query = 'idTabla';
+$SIS_query .= ',FechaSistema';
+$SIS_query .= ',HoraSistema';
+$SIS_query .= ',GeoLatitud';
+$SIS_query .= ',GeoLongitud';
+$SIS_query .= ',GeoVelocidad';
 //se recorre deacuerdo a la cantidad de sensores
 for ($i = 1; $i <= $_GET['idSensoresActual']; $i++) {
-	$aa .= ',Sensor_'.$i;
-}		
-/*****************************************/
-//Insumos
+	$SIS_query .= ',Sensor_'.$i;
+}
+$SIS_join  = '';
+$SIS_where = 'TimeStamp BETWEEN "'.$f_inicio.' '.$h_inicio .'" AND "'.$f_termino.' '.$h_termino.'"';
+$SIS_order = 'FechaSistema ASC, HoraSistema ASC LIMIT 10000';
 $arrMediciones = array();
-$query = "SELECT idTabla
-".$aa."
-					
-FROM `telemetria_listado_tablarelacionada_".$_GET['idEquipoActual']."`
-".$z."
-ORDER BY FechaSistema ASC, HoraSistema ASC 
-LIMIT 10000";						
-//Consulta
-$resultado = mysqli_query ($dbConn, $query);
-//Si ejecuto correctamente la consulta
-if(!$resultado){
+$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idEquipoActual'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrReservasDia');
 
-	//variables
-	$NombreUsr   = $_SESSION['usuario']['basic_data']['Nombre'];
-	$Transaccion = basename($_SERVER["REQUEST_URI"], ".php");
-
-	//generar log
-	php_error_log($NombreUsr, $Transaccion, '', mysqli_errno($dbConn), mysqli_error($dbConn), $query );
-		
-}
-while ( $row = mysqli_fetch_assoc ($resultado)){
-array_push( $arrMediciones,$row );
-}
 
 ?>
 
 <script>
-	
+
 	var DatosRefresco = "<?php echo 'Datos desde <strong>'.fecha_estandar($f_inicio).'-'.$h_inicio .'</strong> a <strong>'.fecha_estandar($f_termino).'-'.$h_termino.'</strong>'; ?>";
-	
+
 	<?php
 	/******************************************************/
-	//Velocidades
-	$data_vel = 'var data_vel_x = [';
-	//recorro los resultados
-	foreach ($arrMediciones as $med) {
-		if(isset($med['GeoVelocidad'])&&$med['GeoVelocidad']>0){
-			if((isset($med['Sensor_1'])&&$med['Sensor_1']>0) OR (isset($med['Sensor_2'])&&$med['Sensor_2']>0)){
-				$data_vel .= '["'.$med['HoraSistema'].'", '.Cantidades_decimales_justos($med['GeoVelocidad']).'],';
-			}
-		}
-	}
-	$data_vel .= '];';
-						
-	/******************************************************/
-	//Vaciado del estanque
-	$data_tanque = 'var data_tanque_x = [';
-	//recorro los resultados
-	foreach ($arrMediciones as $med) {
-		if(isset($med['Sensor_3'])&&$med['Sensor_3']>0&&$med['Sensor_3']<99900){
-			if((isset($med['Sensor_1'])&&$med['Sensor_1']>0) OR (isset($med['Sensor_2'])&&$med['Sensor_2']>0)){
-				$data_tanque .= '["'.$med['HoraSistema'].'", '.Cantidades_decimales_justos($med['Sensor_3']).'],';
-			}
-		}
-	}
-	$data_tanque .= '];';
-						
-	/******************************************************/
-	//Flujo de caudales
-	$data_caud_flu = 'var data_caud_flu_x = [';
-	//recorro los resultados
-	foreach ($arrMediciones as $med) {
-		if((isset($med['Sensor_1'])&&$med['Sensor_1']>0&&$med['Sensor_1']<99900) OR (isset($med['Sensor_2'])&&$med['Sensor_2']>0&&$med['Sensor_2']<99900)){
-			$data_caud_flu .= '["'.$med['HoraSistema'].'", '.Cantidades_decimales_justos($med['Sensor_1']).', '.Cantidades_decimales_justos($med['Sensor_2']).'],';
-		}
-	}
-	$data_caud_flu .= '];';
-
-	/******************************************************/
-	//Caudales
-	
 	//variables
 	$total_derecho    = 0;
 	$total_izquierdo  = 0;
 	$cuenta_derecho   = 0;
 	$cuenta_izquierdo = 0;
-	//recorro los resultados
-	foreach ($arrMediciones as $med) {
-		//solo si el ramal esta derecho funcionando
-		if(isset($med['Sensor_1'])&&$med['Sensor_1']>=1){
-			$total_derecho   = $total_derecho + $med['Sensor_1'];
-			$cuenta_derecho++;
-		}
-		//solo si el ramal esta izquierdo funcionando
-		if(isset($med['Sensor_2'])&&$med['Sensor_2']>=1){
-			$total_izquierdo   = $total_izquierdo + $med['Sensor_2'];
-			$cuenta_izquierdo++;
-		}
-	}
-	//Calculo
-	if($cuenta_derecho!=0){    $Prom_derecho   = $total_derecho/$cuenta_derecho;      }else{$Prom_derecho   = 0;}
-	if($cuenta_izquierdo!=0){  $Prom_izquierdo = $total_izquierdo/$cuenta_izquierdo;  }else{$Prom_izquierdo = 0;}
-	
-	$data_caud  = 'var data_caud_x = [';
-	$data_caud .= '["Grupo 1",';
-	$data_caud .= Cantidades_decimales_justos($Prom_derecho).',';
-	$data_caud .= '"'.Cantidades($Prom_derecho, 2).'",';
-	$data_caud .= Cantidades_decimales_justos($Prom_izquierdo).',';
-	$data_caud .= '"'.Cantidades($Prom_izquierdo, 2).'",';
-	$data_caud .= '],';
-	$data_caud .= '];';
-						
-	
-	/******************************************************/
-	//Correccion
-	if($Prom_derecho>$Prom_izquierdo){
-		if($Prom_izquierdo!=0){ $correccion = (($Prom_derecho - $Prom_izquierdo)/$Prom_izquierdo)*100;}else{$correccion = 0;}
-	}else{
-		if($Prom_derecho!=0){   $correccion = (($Prom_izquierdo - $Prom_derecho)/$Prom_derecho)*100;}else{$correccion = 0;}
-	}
-	
-	$data_gauge = 'var data_correccion_x = "'.str_replace(",", ".",Cantidades($correccion, 2)).'";';
 
+	$data_vel       = 'var data_vel_x = [';//Velocidades
+	$data_tanque    = 'var data_tanque_x = [';//Vaciado del estanque
+	$data_caud_flu  = 'var data_caud_flu_x = [';//Flujo de caudales
+	$data_locations = 'var locations_x = [';//Rutas
 	/******************************************************/
-	//Rutas
-	$data_locations = 'var locations_x = [';
-		foreach ( $arrMediciones as $pos ) {
+	//verifico si existen datos
+	if($arrMediciones!=false){
+		//recorro los resultados
+		foreach ($arrMediciones as $med) {
+			if(isset($med['GeoVelocidad'])&&$med['GeoVelocidad']>0){
+				if((isset($med['Sensor_1'])&&$med['Sensor_1']>0) OR (isset($med['Sensor_2'])&&$med['Sensor_2']>0)){
+					$data_vel .= '["'.$med['HoraSistema'].'", '.Cantidades_decimales_justos($med['GeoVelocidad']).'],';
+				}
+			}
+			if(isset($med['Sensor_3'])&&$med['Sensor_3']>0&&$med['Sensor_3']<99900){
+				if((isset($med['Sensor_1'])&&$med['Sensor_1']>0) OR (isset($med['Sensor_2'])&&$med['Sensor_2']>0)){
+					$data_tanque .= '["'.$med['HoraSistema'].'", '.Cantidades_decimales_justos($med['Sensor_3']).'],';
+				}
+			}
+			if((isset($med['Sensor_1'])&&$med['Sensor_1']>0&&$med['Sensor_1']<99900) OR (isset($med['Sensor_2'])&&$med['Sensor_2']>0&&$med['Sensor_2']<99900)){
+				$data_caud_flu .= '["'.$med['HoraSistema'].'", '.Cantidades_decimales_justos($med['Sensor_1']).', '.Cantidades_decimales_justos($med['Sensor_2']).'],';
+			}
+			//solo si el ramal esta derecho funcionando
+			if(isset($med['Sensor_1'])&&$med['Sensor_1']>=1){
+				$total_derecho   = $total_derecho + $med['Sensor_1'];
+				$cuenta_derecho++;
+			}
+			//solo si el ramal esta izquierdo funcionando
+			if(isset($med['Sensor_2'])&&$med['Sensor_2']>=1){
+				$total_izquierdo   = $total_izquierdo + $med['Sensor_2'];
+				$cuenta_izquierdo++;
+			}
 			if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){
 				if((isset($pos['Sensor_1'])&&$pos['Sensor_1']>0) OR (isset($pos['Sensor_2'])&&$pos['Sensor_2']>0)){
 					$data_locations .= "['".$pos['idTabla']."', ".$pos['GeoLatitud'].", ".$pos['GeoLongitud']."],";
 				}
 			}
 		}
+		//Calculo
+		if($cuenta_derecho!=0){    $Prom_derecho   = $total_derecho/$cuenta_derecho;      }else{$Prom_derecho   = 0;}
+		if($cuenta_izquierdo!=0){  $Prom_izquierdo = $total_izquierdo/$cuenta_izquierdo;  }else{$Prom_izquierdo = 0;}
+		//Correccion
+		if($Prom_derecho>$Prom_izquierdo){
+			if($Prom_izquierdo!=0){ $correccion = (($Prom_derecho - $Prom_izquierdo)/$Prom_izquierdo)*100;}else{$correccion = 0;}
+		}else{
+			if($Prom_derecho!=0){   $correccion = (($Prom_izquierdo - $Prom_derecho)/$Prom_derecho)*100;}else{$correccion = 0;}
+		}
+	}
+	$data_vel       .= '];';
+	$data_tanque    .= '];';
+	$data_caud_flu  .= '];';
 	$data_locations .= '];';
-													
+
 	/******************************************************/
-	//se imprimen los datos	
+	$data_caud  = 'var data_caud_x = [';
+		$data_caud .= '["Grupo 1",';
+		$data_caud .= Cantidades_decimales_justos($Prom_derecho).',';
+		$data_caud .= '"'.Cantidades($Prom_derecho, 2).'",';
+		$data_caud .= Cantidades_decimales_justos($Prom_izquierdo).',';
+		$data_caud .= '"'.Cantidades($Prom_izquierdo, 2).'",';
+		$data_caud .= '],';
+	$data_caud .= '];';
+	$data_gauge = 'var data_correccion_x = "'.str_replace(",", ".",Cantidades($correccion, 2)).'";';
+
+	/******************************************************/
+	//se imprimen los datos
 	echo $data_vel;
 	echo $data_tanque;
 	echo $data_caud_flu;
