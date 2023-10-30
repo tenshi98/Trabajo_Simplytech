@@ -1475,3 +1475,5 @@ span.badge-red{background: #e74c3c none repeat scroll 0 0 !important;}
 .calendar_body .fc-border-separate tbody .fc-Dia-content{text-align: center;}
 .calendar_body .fc-border-separate tbody .fc-Dia-content a{margin-top: 35px;}
 .calendar_body .fc-border-separate tbody .fc-Dia{cursor: pointer;}
+.calendar_body .fc-border-separate tbody .active {background-color: #dff0d8;}
+.calendar_body .fc-border-separate tbody .danger {background-color: #f2dede;}
