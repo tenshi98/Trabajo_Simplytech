@@ -163,7 +163,7 @@
 			<td align="right"><?php echo Valores(($rowDatos['DetalleOtrosCargos1Valor']/1.19), 2); ?></td>
 			<td align="right"><?php echo Valores(($rowDatos['DetalleOtrosCargos1Valor']/1.19), 0); ?></td>
 			</tr>
-		<?php } 
+		<?php }
 		//Otros Cargos 2
 		if(isset($rowDatos['DetalleOtrosCargos2Valor'])&&$rowDatos['DetalleOtrosCargos2Valor']!=0){ ?>
 			<tr>
@@ -173,7 +173,7 @@
 			<td align="right"><?php echo Valores(($rowDatos['DetalleOtrosCargos2Valor']/1.19), 2); ?></td>
 			<td align="right"><?php echo Valores(($rowDatos['DetalleOtrosCargos2Valor']/1.19), 0); ?></td>
 			</tr>
-		<?php } 
+		<?php }
 		//Otros Cargos 3
 		if(isset($rowDatos['DetalleOtrosCargos3Valor'])&&$rowDatos['DetalleOtrosCargos3Valor']!=0){ ?>
 			<tr>
@@ -183,7 +183,7 @@
 			<td align="right"><?php echo Valores(($rowDatos['DetalleOtrosCargos3Valor']/1.19), 2); ?></td>
 			<td align="right"><?php echo Valores(($rowDatos['DetalleOtrosCargos3Valor']/1.19), 0); ?></td>
 			</tr>
-		<?php } 
+		<?php }
 		//Otros Cargos 4
 		if(isset($rowDatos['DetalleOtrosCargos4Valor'])&&$rowDatos['DetalleOtrosCargos4Valor']!=0){ ?>
 			<tr>
@@ -193,7 +193,7 @@
 			<td align="right"><?php echo Valores(($rowDatos['DetalleOtrosCargos4Valor']/1.19), 2); ?></td>
 			<td align="right"><?php echo Valores(($rowDatos['DetalleOtrosCargos4Valor']/1.19), 0); ?></td>
 			</tr>
-		<?php } 
+		<?php }
 		//Otros Cargos 5
 		if(isset($rowDatos['DetalleOtrosCargos5Valor'])&&$rowDatos['DetalleOtrosCargos5Valor']!=0){ ?>
 			<tr>
