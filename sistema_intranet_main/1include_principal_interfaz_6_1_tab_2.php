@@ -230,28 +230,33 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 						//se esperan 3 segundos
 						setTimeout(
 							function(){
-								//actualizo graficos
-								actualiza_graficos(data_vel_x, data_tanque_x, data_caud_flu_x, data_caud_x);
-								correccion_x = data_correccion_x;
-								update_correccion();
+								//si es distinto de 0
+								if(data_correccion_x!="0"){
+									//actualizo graficos
+									actualiza_graficos(data_vel_x, data_tanque_x, data_caud_flu_x, data_caud_x);
+									correccion_x = data_correccion_x;
+									update_correccion();
 
-								//vacio rutas
-								route = [];
-								var myLatlng;
-								//actualiza mapa
-								for(var i in locations_x){
-									tmp = new google.maps.LatLng(locations_x[i][1], locations_x[i][2]);
-									route.push(tmp);
-									myLatlng = new google.maps.LatLng(locations_x[i][1], locations_x[i][2]);
+									//vacio rutas
+									route = [];
+									var myLatlng;
+									//actualiza mapa
+									for(var i in locations_x){
+										tmp = new google.maps.LatLng(locations_x[i][1], locations_x[i][2]);
+										route.push(tmp);
+										myLatlng = new google.maps.LatLng(locations_x[i][1], locations_x[i][2]);
+									}
+									//Se dibuja la ruta
+									RutasAlternativas(route);
+
+									//se centra mapa
+									map_x.setCenter(myLatlng);
+
+									//actualizo la cabecera
+									document.getElementById("txtEquipo").innerHTML="Equipo: <strong>"+Nombre+" - "+Identificador+"</strong>";
+								}else{
+									document.getElementById("txtEquipo").innerHTML="Equipo: <strong>"+Nombre+" - "+Identificador+" Sin Datos</strong>";
 								}
-								//Se dibuja la ruta
-								RutasAlternativas(route);
-
-								//se centra mapa
-								map_x.setCenter(myLatlng);
-
-								//actualizo la cabecera
-								document.getElementById("txtEquipo").innerHTML="Equipo: <strong>"+Nombre+" - "+Identificador+"</strong>";
 
 								//oculto el loader
 								document.getElementById("loading").style.display = "none";
