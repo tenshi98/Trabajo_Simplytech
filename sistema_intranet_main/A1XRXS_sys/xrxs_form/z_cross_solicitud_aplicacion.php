@@ -182,7 +182,7 @@ require_once '0_validate_user_1.php';
 /*******************************************************************************************************************/
 	if(isset($Observaciones) && $Observaciones!=''){ $Observaciones = EstandarizarInput($Observaciones);}
 	if(isset($Observacion) && $Observacion!=''){     $Observacion   = EstandarizarInput($Observacion);}
-	if(isset($Objetivo) && $Objetivo!=''){           $Objetivo      = EstandarizarInput($Objetivo);}
+	//if(isset($Objetivo) && $Objetivo!=''){           $Objetivo      = EstandarizarInput($Objetivo);}
 
 /*******************************************************************************************************************/
 /*                                        Verificacion de los datos ingresados                                     */
@@ -507,12 +507,12 @@ require_once '0_validate_user_1.php';
 				unset($_SESSION['sol_apli_materiales']);
 
 				//Guardo los datos de Parámetros de Aplicación
-				$_SESSION['sol_apli_basicos']['Mojamiento']  = Cantidades_decimales_justos($Mojamiento);
+				/*$_SESSION['sol_apli_basicos']['Mojamiento']  = Cantidades_decimales_justos($Mojamiento);
 				$_SESSION['sol_apli_basicos']['VelTractor']  = Cantidades_decimales_justos($VelTractor);
 				$_SESSION['sol_apli_basicos']['VelViento']   = Cantidades_decimales_justos($VelViento);
 				$_SESSION['sol_apli_basicos']['TempMin']     = Cantidades_decimales_justos($TempMin);
 				$_SESSION['sol_apli_basicos']['TempMax']     = Cantidades_decimales_justos($TempMax);
-				$_SESSION['sol_apli_basicos']['HumTempMax']  = Cantidades_decimales_justos($HumTempMax);
+				$_SESSION['sol_apli_basicos']['HumTempMax']  = Cantidades_decimales_justos($HumTempMax);*/
 
 				//Recorro los cuarteles
 				for($j1 = 0; $j1 < $ndata_1; $j1++){
@@ -615,7 +615,7 @@ require_once '0_validate_user_1.php';
 			if(empty($error)){
 
 				//si cambia la variedad se resetea todo
-				if($_SESSION['sol_apli_basicos']['idProducto']!=$idProducto){
+				if(isset($_SESSION['sol_apli_basicos']['idProducto'], $idProducto)&&$_SESSION['sol_apli_basicos']['idProducto']!=$idProducto){
 					//Borro todas las sesiones
 					unset($_SESSION['sol_apli_cuarteles']);
 					unset($_SESSION['sol_apli_tractores']);
@@ -667,13 +667,13 @@ require_once '0_validate_user_1.php';
 				if(isset($NSolicitud)&&$NSolicitud!=''){                   $_SESSION['sol_apli_basicos']['NSolicitud']          = $NSolicitud;         }else{$_SESSION['sol_apli_basicos']['NSolicitud']          = '';}
 
 				//datos en blanco
-				$_SESSION['sol_apli_basicos']['Mojamiento']          = 0;
+				/*$_SESSION['sol_apli_basicos']['Mojamiento']          = 0;
 				$_SESSION['sol_apli_basicos']['VelTractor']          = 0;
 				$_SESSION['sol_apli_basicos']['VelViento']           = 0;
 				$_SESSION['sol_apli_basicos']['TempMin']             = 0;
 				$_SESSION['sol_apli_basicos']['TempMax']             = 0;
 				$_SESSION['sol_apli_basicos']['HumTempMax']          = 0;
-				$_SESSION['sol_apli_basicos']['Carencias']           = '';
+				$_SESSION['sol_apli_basicos']['Carencias']           = '';*/
 
 				//Datos guardados
 				$_SESSION['sol_apli_basicos']['Predio']              = $rowPredio['Predio'];
@@ -1800,7 +1800,7 @@ require_once '0_validate_user_1.php';
 				$row_data = db_select_data (false, 'idProducto', 'cross_solicitud_aplicacion_listado', '', 'idSolicitud = "'.$idSolicitud.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 				//si cambia la variedad se resetea todo
-				if(isset($idProducto)&&$row_data['idProducto']!=$idProducto){
+				if(isset($row_data['idProducto'], $idProducto)&&$row_data['idProducto']!=$idProducto){
 					//se borran los datos
 					$resultado_1 = db_delete_data (false, 'cross_solicitud_aplicacion_listado_cuarteles', 'idSolicitud = "'.$idSolicitud.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					$resultado_2 = db_delete_data (false, 'cross_solicitud_aplicacion_listado_productos', 'idSolicitud = "'.$idSolicitud.'"', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
