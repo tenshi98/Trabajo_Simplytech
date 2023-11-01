@@ -188,26 +188,29 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 								break;
 							//se actualizan los iconos
 							case 2:
-								//actualizo graficos
-								actualiza_graficos(data_vel_x, data_tanque_x, data_caud_flu_x, data_caud_x);
-								correccion_x = data_correccion_x;
-								update_correccion();
+								//si es distinto de 0
+								if(data_correccion_x!="0"){
+									//actualizo graficos
+									actualiza_graficos(data_vel_x, data_tanque_x, data_caud_flu_x, data_caud_x);
+									update_correccion(data_correccion_x);
 
-								//vacio rutas
-								route = [];
-								var myLatlng;
-								//actualiza mapa
-								for(var i in locations_x){
-									tmp = new google.maps.LatLng(locations_x[i][1], locations_x[i][2]);
-									route.push(tmp);
-									myLatlng = new google.maps.LatLng(locations_x[i][1], locations_x[i][2]);
+									//vacio rutas
+									route = [];
+									var myLatlng;
+									//actualiza mapa
+									for(var i in locations_x){
+										tmp = new google.maps.LatLng(locations_x[i][1], locations_x[i][2]);
+										route.push(tmp);
+										myLatlng = new google.maps.LatLng(locations_x[i][1], locations_x[i][2]);
+									}
+									//Se dibuja la ruta
+									RutasAlternativas(route);
+
+									//se centra mapa
+									map_x.setCenter(myLatlng);
+								}else{
+									document.getElementById("txtEquipo").innerHTML="Equipo: <strong>"+Nombre+" - "+Identificador+" Sin Datos</strong>";
 								}
-								//Se dibuja la ruta
-								RutasAlternativas(route);
-
-								//se centra mapa
-								map_x.setCenter(myLatlng);
-
 								break;
 						}
 						Counter_x1++;
@@ -234,23 +237,24 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 								if(data_correccion_x!="0"){
 									//actualizo graficos
 									actualiza_graficos(data_vel_x, data_tanque_x, data_caud_flu_x, data_caud_x);
-									correccion_x = data_correccion_x;
-									update_correccion();
+									update_correccion(data_correccion_x);
+									//Valido que exista ruta
+									if (typeof locations_x != "undefined" && locations_x != null && locations_x.length != null && locations_x.length > 0) {
+										//vacio rutas
+										route = [];
+										var myLatlng;
+										//actualiza mapa
+										for(var i in locations_x){
+											tmp = new google.maps.LatLng(locations_x[i][1], locations_x[i][2]);
+											route.push(tmp);
+											myLatlng = new google.maps.LatLng(locations_x[i][1], locations_x[i][2]);
+										}
+										//Se dibuja la ruta
+										RutasAlternativas(route);
 
-									//vacio rutas
-									route = [];
-									var myLatlng;
-									//actualiza mapa
-									for(var i in locations_x){
-										tmp = new google.maps.LatLng(locations_x[i][1], locations_x[i][2]);
-										route.push(tmp);
-										myLatlng = new google.maps.LatLng(locations_x[i][1], locations_x[i][2]);
+										//se centra mapa
+										map_x.setCenter(myLatlng);
 									}
-									//Se dibuja la ruta
-									RutasAlternativas(route);
-
-									//se centra mapa
-									map_x.setCenter(myLatlng);
 
 									//actualizo la cabecera
 									document.getElementById("txtEquipo").innerHTML="Equipo: <strong>"+Nombre+" - "+Identificador+"</strong>";
@@ -272,7 +276,6 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 						draw_estanque(data_2);
 						draw_caudales_flujos(data_3);
 						draw_caudales(data_4);
-						update_correccion();
 
 						//actualizo la hora de actualizacion
 						document.getElementById("txtDatade").innerHTML=DatosRefresco;
@@ -498,8 +501,37 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 						chart_gauge = new google.visualization.Gauge(document.getElementById("chart_gauge"));
 						chart_gauge.draw(data_gauge, options_gauge);
 					}
-					function update_correccion() {
-						data_gauge.setValue(0, 1, correccion_x);
+					/********************************************************************/
+					//Correccion
+					function update_correccion(data) {
+						//datos
+						data_gauge = google.visualization.arrayToDataTable([
+							["Label", "Valor"],
+							["%", data]
+						]);
+						//opciones
+						options_gauge = {
+							width: 400,
+							height: 200,
+							greenFrom: 0,
+							greenTo: 10,
+							yellowFrom: 11,
+							yellowTo: 15,
+							redFrom: 16,
+							redTo: 100,
+							majorTicks: ["0","10","20","30","40","50", "60", "70", "80", "90", "100"],
+							minorTicks: 5,
+							min:0,
+							max:100
+						};
+						//Formateo
+						/*var formatCalibracion = new google.visualization.NumberFormat({
+							suffix: \'%\',
+							fractionDigits: 1
+						});
+						formatCalibracion.format(data_gauge, 1);*/
+						//dibujo
+						chart_gauge = new google.visualization.Gauge(document.getElementById("chart_gauge"));
 						chart_gauge.draw(data_gauge, options_gauge);
 					}
 				</script>
