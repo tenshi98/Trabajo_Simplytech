@@ -259,6 +259,9 @@ if(isset($arrEquipo[0]['idTelemetria'])&&$arrEquipo[0]['idTelemetria']!=''){
 									//actualizo la cabecera
 									document.getElementById("txtEquipo").innerHTML="Equipo: <strong>"+Nombre+" - "+Identificador+"</strong>";
 								}else{
+									//actualizo graficos
+									actualiza_graficos([], [], [], [["Grupo 1",0,"0",0,"0",],]);
+									update_correccion("0");
 									document.getElementById("txtEquipo").innerHTML="Equipo: <strong>"+Nombre+" - "+Identificador+" Sin Datos</strong>";
 								}
 
