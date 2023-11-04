@@ -106,9 +106,9 @@ $arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablare
 				$total_izquierdo   = $total_izquierdo + $med['Sensor_2'];
 				$cuenta_izquierdo++;
 			}
-			if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){
-				if((isset($pos['Sensor_1'])&&$pos['Sensor_1']>0) OR (isset($pos['Sensor_2'])&&$pos['Sensor_2']>0)){
-					$data_locations .= "['".$pos['idTabla']."', ".$pos['GeoLatitud'].", ".$pos['GeoLongitud']."],";
+			if($med['GeoLatitud']<0&&$med['GeoLongitud']<0){
+				if((isset($med['Sensor_1'])&&$med['Sensor_1']>0) OR (isset($med['Sensor_2'])&&$med['Sensor_2']>0)){
+					$data_locations .= "['".$med['idTabla']."', ".$med['GeoLatitud'].", ".$med['GeoLongitud']."],";
 				}
 			}
 		}
