@@ -684,7 +684,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`Direccion_img` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		`fCreacion` date NOT NULL,
 		PRIMARY KEY (`idCanil`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_duenos_listado`  (
@@ -704,7 +704,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`idSexo` int UNSIGNED NOT NULL,
 		`DNI_Image` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		PRIMARY KEY (`idDueno`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 4 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_duenos_listado_historial`  (
@@ -714,7 +714,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`Creacion_fecha` date NOT NULL,
 		`Observaciones` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		PRIMARY KEY (`idHistorial`, `idDueno`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_duenos_listado_mascotas`  (
@@ -737,7 +737,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`Color` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		`GrupoSanguineo` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		PRIMARY KEY (`idMascota`, `idDueno`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_duenos_listado_mascotas_historial`  (
@@ -757,7 +757,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`Diagnostico` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		`idFacturacion` bigint UNSIGNED NOT NULL,
 		PRIMARY KEY (`idHistorial`, `idMascota`, `idFacturacion`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_facturacion_listado`  (
@@ -785,7 +785,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`idConsulta` int UNSIGNED NOT NULL,
 		`idTrabajador` int UNSIGNED NOT NULL,
 		PRIMARY KEY (`idFacturacion`, `idDueno`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 9 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_facturacion_listado_consumos`  (
@@ -795,7 +795,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`idProducto` int UNSIGNED NOT NULL,
 		`Number` decimal(11, 2) UNSIGNED NOT NULL,
 		PRIMARY KEY (`idConsumo`, `idFacturacion`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 8 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Fixed;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Fixed;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_facturacion_listado_descuentos`  (
@@ -814,7 +814,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`Number` int UNSIGNED NOT NULL,
 		`ValorTotal` int UNSIGNED NOT NULL,
 		PRIMARY KEY (`idExistencia`, `idFacturacion`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Fixed;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Fixed;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_facturacion_listado_historial`  (
@@ -824,7 +824,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`Creacion_fecha` date NOT NULL,
 		`Observacion` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		PRIMARY KEY (`idHistorial`, `idFacturacion`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 10 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_facturacion_listado_servicios`  (
@@ -834,7 +834,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`Number` int UNSIGNED NOT NULL,
 		`ValorTotal` int UNSIGNED NOT NULL,
 		PRIMARY KEY (`idExistencia`, `idFacturacion`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 13 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Fixed;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Fixed;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_hospitalizacion_listado`  (
@@ -853,7 +853,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`idCanil` int UNSIGNED NOT NULL,
 		`idFacturacion` bigint UNSIGNED NOT NULL,
 		PRIMARY KEY (`idHospitalizacion`, `idDueno`, `idMascota`, `idFacturacion`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_peluqueria_atencion_listado`  (
@@ -872,7 +872,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`idFacturacion` bigint UNSIGNED NOT NULL,
 		`idConfirmacion` int UNSIGNED NOT NULL,
 		PRIMARY KEY (`idPeluqueria`, `idDueno`, `idMascota`, `idFacturacion`, `idFecha`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_peluqueria_dias_listado`  (
@@ -883,7 +883,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`Dia` int UNSIGNED NOT NULL,
 		`idEstado` int UNSIGNED NOT NULL,
 		PRIMARY KEY (`idFecha`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Fixed;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Fixed;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_productos_listado`  (
@@ -902,7 +902,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`Codigo` varchar(120) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		`Direccion_img` varchar(120) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		PRIMARY KEY (`idProducto`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_productos_listado_historial`  (
@@ -912,7 +912,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`Creacion_fecha` date NOT NULL,
 		`Observaciones` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		PRIMARY KEY (`idHistorial`, `idProducto`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 11 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_proveedores_listado`  (
@@ -928,7 +928,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`idTipo` int UNSIGNED NOT NULL,
 		`Giro` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		PRIMARY KEY (`idProveedor`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_proveedores_listado_email`  (
@@ -937,7 +937,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`Email` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		`Comentario` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		PRIMARY KEY (`idEmail`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_proveedores_listado_fono`  (
@@ -956,7 +956,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`Creacion_fecha` date NOT NULL,
 		`Observaciones` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		PRIMARY KEY (`idHistorial`, `idProveedor`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 7 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_reservas_listado`  (
@@ -975,7 +975,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`idOrigen` int UNSIGNED NOT NULL,
 		`idConfirmacion` int UNSIGNED NOT NULL,
 		PRIMARY KEY (`idReservas`, `idDueno`, `idMascota`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 6 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_servicios_listado`  (
@@ -990,7 +990,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`idServicioProg` int UNSIGNED NOT NULL,
 		`nDiasProg` int UNSIGNED NOT NULL,
 		PRIMARY KEY (`idServicio`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 8 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_servicios_listado_historial`  (
@@ -1000,7 +1000,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`Creacion_fecha` date NOT NULL,
 		`Observaciones` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		PRIMARY KEY (`idHistorial`, `idServicio`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 21 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_servicios_listado_productos`  (
@@ -1009,7 +1009,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`idProducto` int UNSIGNED NOT NULL,
 		`Cantidad` decimal(11, 2) UNSIGNED NOT NULL,
 		PRIMARY KEY (`idProdRel`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 5 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Fixed;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Fixed;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_trabajadores_listado`  (
@@ -1060,7 +1060,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`idPermisosPeluqueria` int UNSIGNED NOT NULL,
 		`idPermisosInformes` int UNSIGNED NOT NULL,
 		PRIMARY KEY (`idTrabajador`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_trabajadores_listado_email`  (
@@ -1069,7 +1069,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`Email` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		`Comentario` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		PRIMARY KEY (`idEmail`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 2 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_trabajadores_listado_fono`  (
@@ -1078,7 +1078,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`Fono` int UNSIGNED NOT NULL,
 		`Comentario` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		PRIMARY KEY (`idFono`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 3 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
 	$query  = "CREATE TABLE `clientes_list_".$ClientID."_vet_trabajadores_listado_historial`  (
@@ -1088,7 +1088,7 @@ function NewClienteVet($ClientID, $dbConn){
 		`Creacion_fecha` date NOT NULL,
 		`Observaciones` text CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
 		PRIMARY KEY (`idHistorial`, `idTrabajador`) USING BTREE
-	  ) ENGINE = MyISAM AUTO_INCREMENT = 24 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
+	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Dynamic;";
 	$result = mysqli_query($dbConn, $query);
 
 
