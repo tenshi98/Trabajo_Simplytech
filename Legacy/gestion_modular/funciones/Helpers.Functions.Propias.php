@@ -794,7 +794,8 @@ function NewClienteVet($ClientID, $dbConn){
 		`idServicio` int UNSIGNED NOT NULL,
 		`idProducto` int UNSIGNED NOT NULL,
 		`Number` decimal(11, 2) UNSIGNED NOT NULL,
-		PRIMARY KEY (`idConsumo`, `idFacturacion`) USING BTREE
+		`idExistencia` bigint UNSIGNED NOT NULL,
+		PRIMARY KEY (`idConsumo`, `idFacturacion`, `idExistencia`) USING BTREE
 	  ) ENGINE = MyISAM AUTO_INCREMENT = 1 CHARACTER SET = latin1 COLLATE = latin1_swedish_ci COMMENT = 'Dinamica' ROW_FORMAT = Fixed;";
 	$result = mysqli_query($dbConn, $query);
 	// se crea la nueva tabla
