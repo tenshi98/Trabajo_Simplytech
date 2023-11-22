@@ -1201,6 +1201,9 @@ require_once '0_validate_user_1.php';
 					$SIS_data10  = "'".$telemetria_id."'"; //idTelemetria
 					$SIS_data11  = "'".$telemetria_id."'"; //idTelemetria
 					$SIS_data12  = "'".$telemetria_id."'"; //idTelemetria
+					$SIS_data13  = "'".$telemetria_id."'"; //idTelemetria
+					$SIS_data14  = "'".$telemetria_id."'"; //idTelemetria
+					$SIS_data15  = "'".$telemetria_id."'"; //idTelemetria
 					$SIS_columns01 = 'idTelemetria';   //Columna
 					$SIS_columns02 = 'idTelemetria';   //Columna
 					$SIS_columns03 = 'idTelemetria';   //Columna
@@ -1213,6 +1216,9 @@ require_once '0_validate_user_1.php';
 					$SIS_columns10 = 'idTelemetria';   //Columna
 					$SIS_columns11 = 'idTelemetria';   //Columna
 					$SIS_columns12 = 'idTelemetria';   //Columna
+					$SIS_columns13 = 'idTelemetria';   //Columna
+					$SIS_columns14 = 'idTelemetria';   //Columna
+					$SIS_columns15 = 'idTelemetria';   //Columna
 
 					//Recorro la configuracion de los sensores
 					for ($i = 1; $i <= $rowdata['cantSensores']; $i++) {
@@ -1243,10 +1249,9 @@ require_once '0_validate_user_1.php';
 					$ultimo_id_1  = db_insert_data (false, $SIS_columns10, $SIS_data10, 'telemetria_listado_sensores_accion_alerta', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					$ultimo_id_10 = db_insert_data (false, $SIS_columns11, $SIS_data11, 'telemetria_listado_sensores_revision', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 					$ultimo_id_11 = db_insert_data (false, $SIS_columns12, $SIS_data12, 'telemetria_listado_sensores_revision_grupo', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					//$ultimo_id_3  = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_sensores_accion_med_c', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					//$ultimo_id_4  = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_sensores_accion_med_t', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-					//$ultimo_id_8  = db_insert_data (false, $SIS_columns, $SIS_data, 'telemetria_listado_sensores_med_actual', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
-
+					$ultimo_id_3  = db_insert_data (false, $SIS_columns13, $SIS_data13, 'telemetria_listado_sensores_accion_med_c', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ultimo_id_4  = db_insert_data (false, $SIS_columns14, $SIS_data14, 'telemetria_listado_sensores_accion_med_t', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
+					$ultimo_id_8  = db_insert_data (false, $SIS_columns15, $SIS_data15, 'telemetria_listado_sensores_med_actual', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 					/********************************************************************************/
 					// elimino la tabla si es que existe
