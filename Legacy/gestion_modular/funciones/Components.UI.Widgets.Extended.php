@@ -9110,7 +9110,7 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 					//los valores
 					$Graphics_yData      .='['.$arrData[$gruUso['idGrupo']][$gru['idGrupo']]['Value'].'],';
 					//los nombres
-					$Graphics_names      .= '"'.TituloMenu($gruUso['Nombre']).' - '.TituloMenu($gru['Nombre']).'",';
+					$Graphics_names      .= '"'.DeSanitizar(TituloMenu($gruUso['Nombre']).' - '.TituloMenu($gru['Nombre'])).'",';
 					//los tipos
 					$Graphics_types      .= "'',";
 					//si lleva texto en las burbujas
