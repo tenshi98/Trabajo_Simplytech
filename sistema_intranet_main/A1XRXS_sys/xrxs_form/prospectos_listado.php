@@ -35,7 +35,7 @@ require_once '0_validate_user_1.php';
 	if (!empty($_POST['PersonaContacto_email']))   $PersonaContacto_email     = $_POST['PersonaContacto_email'];
 	if (!empty($_POST['PersonaContacto_Cargo']))   $PersonaContacto_Cargo     = $_POST['PersonaContacto_Cargo'];
 	if (!empty($_POST['Web']))                     $Web                       = $_POST['Web'];
-	if (!empty($_POST['Giro']))                    $Giro                      = $_POST['Giro'];
+	if ( isset($_POST['Giro']))                    $Giro                      = $_POST['Giro'];
 	if (!empty($_POST['F_Ingreso']))               $F_Ingreso                 = $_POST['F_Ingreso'];
 	if (!empty($_POST['idUsuario']))               $idUsuario                 = $_POST['idUsuario'];
 	if (!empty($_POST['idEstadoFidelizacion']))    $idEstadoFidelizacion      = $_POST['idEstadoFidelizacion'];
