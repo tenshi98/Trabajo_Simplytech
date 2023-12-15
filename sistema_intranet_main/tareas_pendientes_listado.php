@@ -253,7 +253,7 @@ $usrfil .= $responsables;
 
 		<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->input_hold('text','Observacion','Observacion[]', '', 1); ?>
+				<?php $Form_Inputs->input('text','Observacion','Observacion[]', '', 1); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
@@ -261,7 +261,7 @@ $usrfil .= $responsables;
 				<div class="input-group">
 					<?php
 					if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-						$Form_Inputs->select('Responsable','idResponsable[]', 2, 'idUsuario', 'Nombre', 'usuarios_listado', $usrfil,'', $dbConn);
+						$Form_Inputs->select('Responsable','idResponsable[]', '',2, 'idUsuario', 'Nombre', 'usuarios_listado', $usrfil,'', $dbConn);
 					}else{
 						$Form_Inputs->select_bodega('Responsable','idResponsable[]', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 					}
@@ -357,7 +357,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 				<div class="input-group">
 					<?php
 					if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-						$Form_Inputs->select('Responsable','idResponsable[]', 2, 'idUsuario', 'Nombre', 'usuarios_listado', $usrfil,'', $dbConn);
+						$Form_Inputs->select('Responsable','idResponsable[]', '',2, 'idUsuario', 'Nombre', 'usuarios_listado', $usrfil,'', $dbConn);
 					}else{
 						$Form_Inputs->select_bodega('Responsable','idResponsable[]', $x1, 2, 'idUsuario', 'Nombre', 'usuarios_listado', 'usuarios_sistemas',$usrfil, $dbConn);
 					}

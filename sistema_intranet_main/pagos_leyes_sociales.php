@@ -403,10 +403,10 @@ input[type="date"].form-control{
 
 <div style="display: none;">
 
-	<div id="clone_pago_afp" class="pago_afp_container"> 
+	<div id="clone_pago_afp" class="pago_afp_container">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','AFP_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
+				<?php $Form_Inputs->select('Documento de Pago','AFP_idDocPago[]', '',2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
@@ -433,10 +433,10 @@ input[type="date"].form-control{
 		<div class="clearfix"></div>
 	</div>
 
-	<div id="clone_pago_salud" class="pago_salud_container"> 
+	<div id="clone_pago_salud" class="pago_salud_container">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','SALUD_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
+				<?php $Form_Inputs->select('Documento de Pago','SALUD_idDocPago[]', '',2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
@@ -463,10 +463,10 @@ input[type="date"].form-control{
 		<div class="clearfix"></div>
 	</div>
 
-	<div id="clone_pago_seguridad" class="pago_seguridad_container"> 
+	<div id="clone_pago_seguridad" class="pago_seguridad_container">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','SEGURIDAD_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
+				<?php $Form_Inputs->select('Documento de Pago','SEGURIDAD_idDocPago[]', '',2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
@@ -542,7 +542,7 @@ input[type="date"].form-control{
 		//inserto dentro del div deseado
 		objTo.appendChild(clone_pago_seguridad);
     }
-    
+
     /**********************************************************/
 	//se eliminan filas
 	$(document).on('click', '.remove_pago_afp', function(e) {
@@ -559,8 +559,7 @@ input[type="date"].form-control{
 		e.preventDefault();
 		$(this).parent().parent().parent().remove();
 	});
-    
-    
+
 </script>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 }elseif(!empty($_GET['addPago'])){
@@ -611,8 +610,7 @@ input[type="date"].form-control{
 						<div class="clearfix"></div>
 						<div id="insert_pago_seguridad"></div>
 					<?php } ?>
-					
-				
+
 					<div class="form-group" style="margin-top:10px;">
 						<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar" name="submit_pagos">
 						<a href="<?php echo $location.'&view=true'; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -628,10 +626,10 @@ input[type="date"].form-control{
 
 <div style="display: none;">
 
-	<div id="clone_pago_afp" class="pago_afp_container"> 
+	<div id="clone_pago_afp" class="pago_afp_container">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','AFP_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
+				<?php $Form_Inputs->select('Documento de Pago','AFP_idDocPago[]', '',2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
@@ -658,10 +656,10 @@ input[type="date"].form-control{
 		<div class="clearfix"></div>
 	</div>
 
-	<div id="clone_pago_salud" class="pago_salud_container"> 
+	<div id="clone_pago_salud" class="pago_salud_container">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','SALUD_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
+				<?php $Form_Inputs->select('Documento de Pago','SALUD_idDocPago[]', '',2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
@@ -688,10 +686,10 @@ input[type="date"].form-control{
 		<div class="clearfix"></div>
 	</div>
 
-	<div id="clone_pago_seguridad" class="pago_seguridad_container"> 
+	<div id="clone_pago_seguridad" class="pago_seguridad_container">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','SEGURIDAD_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
+				<?php $Form_Inputs->select('Documento de Pago','SEGURIDAD_idDocPago[]', '',2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
@@ -767,7 +765,7 @@ input[type="date"].form-control{
 		//inserto dentro del div deseado
 		objTo.appendChild(clone_pago_seguridad);
     }
-    
+
     /**********************************************************/
 	//se eliminan filas
 	$(document).on('click', '.remove_pago_afp', function(e) {

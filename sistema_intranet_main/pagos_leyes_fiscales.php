@@ -481,10 +481,10 @@ input[type="date"].form-control{
 
 <div style="display: none;">
 
-	<div id="clone_pago_iva" class="pago_iva_container"> 
+	<div id="clone_pago_iva" class="pago_iva_container">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','IVA_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
+				<?php $Form_Inputs->select('Documento de Pago','IVA_idDocPago[]', '',2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
@@ -511,10 +511,10 @@ input[type="date"].form-control{
 		<div class="clearfix"></div>
 	</div>
 
-	<div id="clone_pago_ppm" class="pago_ppm_container"> 
+	<div id="clone_pago_ppm" class="pago_ppm_container">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','PPM_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
+				<?php $Form_Inputs->select('Documento de Pago','PPM_idDocPago[]', '',2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
@@ -541,10 +541,10 @@ input[type="date"].form-control{
 		<div class="clearfix"></div>
 	</div>
 
-	<div id="clone_pago_ret" class="pago_ret_container"> 
+	<div id="clone_pago_ret" class="pago_ret_container">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','RET_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
+				<?php $Form_Inputs->select('Documento de Pago','RET_idDocPago[]', '',2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
@@ -571,10 +571,10 @@ input[type="date"].form-control{
 		<div class="clearfix"></div>
 	</div>
 
-	<div id="clone_pago_impuesto_renta" class="pago_impuesto_renta_container"> 
+	<div id="clone_pago_impuesto_renta" class="pago_impuesto_renta_container">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','IMPRENT_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
+				<?php $Form_Inputs->select('Documento de Pago','IMPRENT_idDocPago[]', '',2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
@@ -764,10 +764,10 @@ input[type="date"].form-control{
 
 <div style="display: none;">
 
-	<div id="clone_pago_iva" class="pago_iva_container"> 
+	<div id="clone_pago_iva" class="pago_iva_container">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','IVA_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
+				<?php $Form_Inputs->select('Documento de Pago','IVA_idDocPago[]', '',2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
@@ -794,10 +794,10 @@ input[type="date"].form-control{
 		<div class="clearfix"></div>
 	</div>
 
-	<div id="clone_pago_ppm" class="pago_ppm_container"> 
+	<div id="clone_pago_ppm" class="pago_ppm_container">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','PPM_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
+				<?php $Form_Inputs->select('Documento de Pago','PPM_idDocPago[]', '',2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
@@ -824,10 +824,10 @@ input[type="date"].form-control{
 		<div class="clearfix"></div>
 	</div>
 
-	<div id="clone_pago_ret" class="pago_ret_container"> 
+	<div id="clone_pago_ret" class="pago_ret_container">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','RET_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
+				<?php $Form_Inputs->select('Documento de Pago','RET_idDocPago[]', '',2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
@@ -854,10 +854,10 @@ input[type="date"].form-control{
 		<div class="clearfix"></div>
 	</div>
 
-	<div id="clone_pago_impuesto_renta" class="pago_impuesto_renta_container"> 
+	<div id="clone_pago_impuesto_renta" class="pago_impuesto_renta_container">
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">
 			<div class="form-group">
-				<?php $Form_Inputs->select('Documento de Pago','IMPRENT_idDocPago[]', 2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
+				<?php $Form_Inputs->select('Documento de Pago','IMPRENT_idDocPago[]', '',2, 'idDocPago', 'Nombre', 'sistema_documentos_pago', 0,'',$dbConn); ?>
 			</div>
 		</div>
 		<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 nopadding">

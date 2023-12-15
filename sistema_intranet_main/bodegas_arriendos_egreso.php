@@ -685,7 +685,7 @@ $Form_Inputs = new Inputs();
 									</div>
 								</td>
 							<?php }else{ ?>
-								<td><?php $Form_Inputs->input_date('Fecha Vencimiento','f_pago', 2); ?></td>
+								<td><?php $Form_Inputs->input_date('Fecha Vencimiento','f_pago', '', 2); ?></td>
 								<td>
 									<div class="btn-group" style="width: 35px;" >
 										<?php $ubicacion=$location.'&view=true&addfpago=true'; ?>

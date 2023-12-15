@@ -820,7 +820,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 				<div class="form-group">
 					<div class="input-group">
-						<?php $Form_Inputs->input_hold('text','Objetivo','Objetivo[]', '', 1); ?>
+						<?php $Form_Inputs->input('text','Objetivo','Objetivo[]', '', 1); ?>
 						<div class="input-group-btn">
 							<button class="btn btn-metis-1 tooltip remove_producto" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 						</div>
@@ -834,7 +834,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 				<div class="form-group">
 				<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->select('Tractor','idTelemetria[]', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w,'', $dbConn);
+					$Form_Inputs->select('Tractor','idTelemetria[]', '',2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w,'', $dbConn);
 				}else{
 					$Form_Inputs->select_bodega('Tractor','idTelemetria[]', '', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				} ?>
@@ -842,13 +842,13 @@ if(!empty($_GET['clone_idSolicitud'])){
 			</div>
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 				<div class="form-group">
-					<?php $Form_Inputs->select('Equipo Aplicacion','idVehiculo[]', 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $y,'', $dbConn); ?>
+					<?php $Form_Inputs->select('Equipo Aplicacion','idVehiculo[]', '',2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $y,'', $dbConn); ?>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 				<div class="form-group">
 					<div class="input-group">
-						<?php $Form_Inputs->select('Trabajador Asignado','idTrabajador[]', 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $m,'', $dbConn); ?>
+						<?php $Form_Inputs->select('Trabajador Asignado','idTrabajador[]', '',2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $m,'', $dbConn); ?>
 						<div class="input-group-btn">
 							<button class="btn btn-metis-1 tooltip remove_tractor" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 						</div>
@@ -862,7 +862,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
 				<div class="form-group">
 					<div class="input-group">
-						<?php $Form_Inputs->select('Material de Seguridad','idMatSeguridad[]', 2, 'idMatSeguridad', 'Nombre', 'cross_checking_materiales_seguridad', 'idEstado=1','', $dbConn); ?>
+						<?php $Form_Inputs->select('Material de Seguridad','idMatSeguridad[]', '',2, 'idMatSeguridad', 'Nombre', 'cross_checking_materiales_seguridad', 'idEstado=1','', $dbConn); ?>
 						<div class="input-group-btn">
 							<button class="btn btn-metis-1 tooltip remove_material" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 						</div>
@@ -1692,7 +1692,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 				<div class="form-group">
 					<div class="input-group">
-						<?php $Form_Inputs->input_hold('text','Objetivo','Objetivo[]', '', 1); ?>
+						<?php $Form_Inputs->input('text','Objetivo','Objetivo[]', '', 1); ?>
 						<div class="input-group-btn">
 							<button class="btn btn-metis-1 tooltip remove_producto" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 						</div>
@@ -1706,7 +1706,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 				<div class="form-group">
 				<?php if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){
-					$Form_Inputs->select('Tractor','idTelemetria[]', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w,'', $dbConn);
+					$Form_Inputs->select('Tractor','idTelemetria[]', '',2, 'idTelemetria', 'Nombre', 'telemetria_listado', $w,'', $dbConn);
 				}else{
 					$Form_Inputs->select_bodega('Tractor','idTelemetria[]', '', 2, 'idTelemetria', 'Nombre', 'telemetria_listado', 'usuarios_equipos_telemetria', $w, $dbConn);
 				} ?>
@@ -1714,13 +1714,13 @@ if(!empty($_GET['clone_idSolicitud'])){
 			</div>
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 				<div class="form-group">
-					<?php $Form_Inputs->select('Equipo Aplicacion','idVehiculo[]', 2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $y,'', $dbConn); ?>
+					<?php $Form_Inputs->select('Equipo Aplicacion','idVehiculo[]', '',2, 'idVehiculo', 'Nombre', 'vehiculos_listado', $y,'', $dbConn); ?>
 				</div>
 			</div>
 			<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 nopadding">
 				<div class="form-group">
 					<div class="input-group">
-						<?php $Form_Inputs->select('Trabajador Asignado','idTrabajador[]', 2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $m,'', $dbConn); ?>
+						<?php $Form_Inputs->select('Trabajador Asignado','idTrabajador[]', '',2, 'idTrabajador', 'Rut,Nombre,ApellidoPat', 'trabajadores_listado', $m,'', $dbConn); ?>
 						<div class="input-group-btn">
 							<button class="btn btn-metis-1 tooltip remove_tractor" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 						</div>
@@ -1734,7 +1734,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 nopadding">
 				<div class="form-group">
 					<div class="input-group">
-						<?php $Form_Inputs->select('Material de Seguridad','idMatSeguridad[]', 2, 'idMatSeguridad', 'Nombre', 'cross_checking_materiales_seguridad', 'idEstado=1','', $dbConn); ?>
+						<?php $Form_Inputs->select('Material de Seguridad','idMatSeguridad[]', '',2, 'idMatSeguridad', 'Nombre', 'cross_checking_materiales_seguridad', 'idEstado=1','', $dbConn); ?>
 						<div class="input-group-btn">
 							<button class="btn btn-metis-1 tooltip remove_material" type="button" title="Borrar Información" > <i class="fa fa-trash-o" aria-hidden="true"></i> </button>
 						</div>
