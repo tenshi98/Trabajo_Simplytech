@@ -2131,8 +2131,8 @@ if(!empty($_GET['clone_idSolicitud'])){
 	if(isset($_GET['idEstadoFen']) && $_GET['idEstadoFen']!=''){         $SIS_where .= " AND cross_solicitud_aplicacion_listado.idEstadoFen=".$_GET['idEstadoFen'];}
 	if(isset($_GET['idCategoria']) && $_GET['idCategoria']!=''){         $SIS_where .= " AND cross_solicitud_aplicacion_listado.idCategoria=".$_GET['idCategoria'];}
 	if(isset($_GET['idProducto']) && $_GET['idProducto']!=''){           $SIS_where .= " AND cross_solicitud_aplicacion_listado.idProducto=".$_GET['idProducto'];}
-	if(isset($_GET['f_programacion']) && $_GET['f_programacion']!=''){   $SIS_where .= " AND cross_solicitud_aplicacion_listado.f_programacion=".$_GET['f_programacion'];}
-	if(isset($_GET['horaProg']) && $_GET['horaProg']!=''){               $SIS_where .= " AND cross_solicitud_aplicacion_listado.horaProg=".$_GET['horaProg'];}
+	if(isset($_GET['f_programacion']) && $_GET['f_programacion']!=''){   $SIS_where .= " AND cross_solicitud_aplicacion_listado.f_programacion='".$_GET['f_programacion']."'";}
+	if(isset($_GET['horaProg']) && $_GET['horaProg']!=''){               $SIS_where .= " AND cross_solicitud_aplicacion_listado.horaProg='".$_GET['horaProg']."'";}
 	if(isset($_GET['idUsuario']) && $_GET['idUsuario']!=''){             $SIS_where .= " AND cross_solicitud_aplicacion_listado.idUsuario=".$_GET['idUsuario'];}
 
 	/**********************************************************/

@@ -137,7 +137,7 @@ $arrHistorial = db_select_array (false, $SIS_query, 'contab_caja_gastos_historia
 	</div>
 
 	<div class="">
-		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<table class="table table-striped">
 				<thead>
 					<tr>

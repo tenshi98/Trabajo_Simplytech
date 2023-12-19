@@ -685,7 +685,7 @@ array_push( $arrFlashpoint,$row );
 	</div>
 </div>
 
-<div class="col-xs-12 table-responsive"  style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive"  style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<?php
 			//variables
 			$x_count = 1;

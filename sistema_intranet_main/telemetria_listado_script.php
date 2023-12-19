@@ -208,7 +208,7 @@ LEFT JOIN `core_telemetria_tabs`                 ON core_telemetria_tabs.idTab  
 LEFT JOIN `core_sistemas_opciones`        opc2   ON opc2.idOpciones                                    = telemetria_listado.id_Geo
 LEFT JOIN `core_sistemas_opciones`        opc3   ON opc3.idOpciones                                    = telemetria_listado.id_Sensores
 LEFT JOIN `telemetria_listado_sensores_tipo`     ON telemetria_listado_sensores_tipo.idTelemetria      = telemetria_listado.idTelemetria';
-$SIS_where = 'idTelemetria ='.$_GET['id'];
+$SIS_where = 'telemetria_listado.idTelemetria ='.$_GET['id'];
 $rowdata = db_select_data (false, $SIS_query , 'telemetria_listado', $SIS_join, $SIS_where, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowdata');
 
 ?>

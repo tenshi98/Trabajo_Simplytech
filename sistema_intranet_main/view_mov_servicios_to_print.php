@@ -382,7 +382,7 @@ $html .= '
 	$html .= '</div>
 
 	<div class="">
-		<div class="col-xs-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive" style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<table class="table table-striped">
 				<thead>
 					<tr>

@@ -96,6 +96,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	}
 	// Se trae un listado con todos los datos separados por tractores
 	$SIS_query = 'FechaSistema,HoraSistema'.$subquery;
+	$SIS_where = 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.idTelemetria ='.$_GET['idTelemetria'];
 	$SIS_order = 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema ASC, telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.HoraSistema ASC LIMIT 10000';
 	$arrMediciones = array();
 	$arrMediciones = db_select_array (false, $SIS_query, 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'], $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrMediciones');

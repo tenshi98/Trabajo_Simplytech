@@ -932,7 +932,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 						<div role="tabpanel" class="tab-pane fade" id="equipo_<?php echo $trac['idTelemetria']; ?>">
 
 							<div class="">
-								<div class="col-xs-12 table-responsive">
+								<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
 									<table id="dataTable" class="table table-bordered table-condensed table-hover table-striped dataTable">
 										<tbody>
 											<tr role="row">

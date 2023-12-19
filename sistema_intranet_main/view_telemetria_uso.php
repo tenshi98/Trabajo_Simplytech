@@ -32,12 +32,12 @@ require_once 'core/Web.Header.Views.php';
 $SIS_where  = 'telemetria_listado_historial_activaciones.idEstado=1';
 /**********************************************************/
 //Se aplican los filtros
-if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){      
+if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){
 	$SIS_where.=" AND telemetria_listado_historial_activaciones.idTelemetria =".$_GET['idTelemetria'];
 }
-if(isset($_GET['f_inicio'], $_GET['f_termino'], $_GET['h_inicio'], $_GET['h_termino']) && $_GET['f_inicio'] != '' && $_GET['f_termino'] != '' && $_GET['h_inicio'] != '' && $_GET['h_termino']!=''){
+if(isset($_GET['F_inicio'], $_GET['F_termino'], $_GET['H_inicio'], $_GET['H_termino']) && $_GET['F_inicio'] != '' && $_GET['F_termino'] != '' && $_GET['H_inicio'] != '' && $_GET['H_termino']!=''){
 	$SIS_where.=" AND telemetria_listado_historial_activaciones.TimeStamp BETWEEN '".$_GET['F_inicio']." ".$_GET['H_inicio']."' AND '".$_GET['F_termino']." ".$_GET['H_termino']."'";
-}elseif(isset($_GET['f_inicio'], $_GET['f_termino']) && $_GET['f_inicio'] != '' && $_GET['f_termino']!=''){
+}elseif(isset($_GET['F_inicio'], $_GET['F_termino']) && $_GET['F_inicio'] != '' && $_GET['F_termino']!=''){
 	$SIS_where.=" AND telemetria_listado_historial_activaciones.Fecha BETWEEN '".$_GET['F_inicio']."' AND '".$_GET['F_termino']."'";
 }
 
@@ -72,7 +72,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	$arrConsulta = db_select_array (false, $SIS_query,  'telemetria_listado_historial_activaciones', $SIS_join,  $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrConsulta');
 
 	/**************************************************************************************/
-	//variables 
+	//variables
 	$unk_temp = 0;
 	//mensajes de error en caso de no tener configurados los datos
 	if(isset($arrConsulta[0]['EquipoActivacionValor'])&&$arrConsulta[0]['EquipoActivacionValor']==0){
@@ -132,10 +132,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 
 	if(isset($arrConsulta)&&$arrConsulta!=false && !empty($arrConsulta) && $arrConsulta!=''){
-		
+
 		filtrar($arrConsulta, 'EquipoNombre');
 		foreach($arrConsulta as $categoria=>$permisos){ ?>
-					                               
+
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				<div class="box">
 					<header>
@@ -155,9 +155,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 									<th>Sobre<br/>Tiempo    <a title="Corresponde a la diferencia de tiempo entre la hora de inicio real y la programada, solo en el caso de que la hora de inicio real sea inferior a la programada. Tambien corresponde a la diferencia entre la hora de termino real y la programada, solo en el caso de que la hora de termino real sea superior a la programada " class="tooltip" style="display: inline-block;position: relative;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
 									<th>Detalles</th>
 								</tr>
-							</thead>	
-					
-									  
+							</thead>
+
 							<tbody role="alert" aria-live="polite" aria-relevant="all">
 								<?php
 								//Variables
@@ -205,7 +204,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 											if($Tiempo>'00:30:00'){
 												$TiempoColacionTot = $Tiempo;
 											}
-											
 										}
 										/***************************************/
 										//Verifico el tiempo muerto
@@ -243,12 +241,10 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										if(isset($con['FueraHorario'])&&$con['FueraHorario']==1){
 											$FueraHorario++;
 										}
-										
 
 									/*****************************************************************/
 									//Si cambia de dia
-									}elseif($fecha!=''&&$fecha!=$con['EquipoFecha']){ 
-										
+									}elseif($fecha!=''&&$fecha!=$con['EquipoFecha']){
 										//Calculo de la perdida de tiempo
 										if($con['EquipoJornada_inicio']<=$HoraInicio){
 											$TiempoPerdido = sumahoras($TiempoPerdido, restahoras($con['EquipoJornada_inicio'], $HoraInicio));
@@ -256,7 +252,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										if($con['EquipoJornada_termino']>=$HoraTermino){
 											$TiempoPerdido = sumahoras($TiempoPerdido, restahoras($HoraTermino, $con['EquipoJornada_termino'] ));
 										}
-									
 										?>
 										<tr class="odd">
 											<td><?php echo $categoria; ?></td>
@@ -333,7 +328,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 											$FueraHorario++;
 										}
 									}
-									
 									$l_ejti = $con['EquipoJornada_inicio'];
 									$l_ejtt = $con['EquipoJornada_termino'];
 									$l_mp   = $con['EquipoMicroparada'];
@@ -360,7 +354,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								if($l_ejtt<=$HoraInicio&&$l_v1!=$l_v2){
 									$SobreTiempo_2 = sumahoras($SobreTiempo_2, restahoras($l_ejtt,$HoraInicio ));
 								}
-										
 								?>
 								<tr class="odd">
 									<td><?php echo $categoria; ?></td>
@@ -379,13 +372,13 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										</div>
 									</td>
 								</tr>
-													   
+
 							</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
-			<?php 
+			<?php
 		}
 	}else{
 		alert_post_data(2,1,1,0, 'No hay datos, intenta con otro rango de fechas.');

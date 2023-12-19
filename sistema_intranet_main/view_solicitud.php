@@ -159,7 +159,7 @@ $arrOtros = db_select_array (false, $SIS_query, 'solicitud_listado_existencias_o
 	</div>
 
 	<div class="row">
-		<div class="col-xs-12 table-responsive">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive">
 			<table class="table table-striped">
 				<thead>
 					<tr>

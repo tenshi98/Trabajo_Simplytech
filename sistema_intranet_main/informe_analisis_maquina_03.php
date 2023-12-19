@@ -259,7 +259,7 @@ array_push( $arrGrupo,$row );
 	</div>
 
 	<div class="row">
-		<div class="col-xs-12 table-responsive"  style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive"  style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">
 			<?php 
 			
 			echo '<table class="table table_noborder" >';
@@ -309,7 +309,7 @@ array_push( $arrGrupo,$row );
 		if($grupo['idGrupo']==4 OR $grupo['idGrupo']==5){
 					
 			echo '<div class="row">';
-				echo '<div class="col-xs-12 table-responsive"  style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">';
+				echo '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-responsive"  style="padding-left: 0px; padding-right: 0px;border: 1px solid #ddd;">';
 					echo '<table class="table" >';
 						echo '<tbody>';
 									
