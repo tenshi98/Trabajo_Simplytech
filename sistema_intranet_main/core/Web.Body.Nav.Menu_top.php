@@ -15,11 +15,6 @@ echo '<ul class="nav navbar-nav '.$classnav.'" id="navbar_nav" >
 		<li><a href="principal.php"><i class="fa fa-home" aria-hidden="true"></i> Principal</a></li>
 		<li><a href="principal_datos.php"><i class="fa fa-address-card-o" aria-hidden="true"></i> Mis Datos</a></li>';
 
-	//Si esta activa la opción de correo Interno
-	if($_SESSION['usuario']['basic_data']['CorreoInterno']==1){
-		echo '<li><a href="principal_correos.php"><i class="fa fa-envelope-o" aria-hidden="true"></i> Correo</a></li>';
-	}
-
 	//Veo si existe el menu
 	if(isset($_SESSION['usuario']['menu'])){
 		//recorro el menu
@@ -90,7 +85,6 @@ echo '<ul class="nav navbar-nav '.$classnav.'" id="navbar_nav" >
 		echo '<li class="dropdown ">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Core - Configuracion <i class="fa fa-angle-down" aria-hidden="true"></i></a>
 			<ul class="dropdown-menu">
-				<li><a href="core_email.php">                                <i class="fa fa-cogs" aria-hidden="true"></i> Configuracion Correo Interno</a></li>
 				<li><a href="core_comparacion_base.php">                     <i class="fa fa-cogs" aria-hidden="true"></i> Comparacion Base Datos</a></li>
 				<li><a href="core_información_base.php">                     <i class="fa fa-cogs" aria-hidden="true"></i> Información Base Datos</a></li>
 			</ul>

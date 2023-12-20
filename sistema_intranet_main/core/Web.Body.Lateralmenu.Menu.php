@@ -14,16 +14,6 @@
         </a>
     </li>
 
-    <?php
-    //Si esta activa la opción de correo Interno
-	if($_SESSION['usuario']['basic_data']['CorreoInterno']==1){ ?>
-		<li class="">
-			<a href="principal_correos.php" <?php if(isset($original)&&$original=='principal_correos.php'){echo 'class="active"';} ?>>
-				<i class="fa fa-envelope-o" aria-hidden="true"></i><span class="link-title"> Correo</span>
-			</a>
-		</li>
-    <?php } ?>
-
 <?php
 //Veo si existe el menu
 if(isset($_SESSION['usuario']['menu'])){
@@ -102,7 +92,6 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']==1){ ?>
 			<i class="fa fa-angle-right pull-right margin_width" aria-hidden="true"></i>
 		</a>
 		<ul>
-			<li><a href="core_email.php">             <i class="fa fa-cogs" aria-hidden="true"></i> Configuracion Correo Interno</a></li>
 			<li><a href="core_comparacion_base.php">  <i class="fa fa-cogs" aria-hidden="true"></i> Comparacion Base Datos</a></li>
 			<li><a href="core_información_base.php">  <i class="fa fa-cogs" aria-hidden="true"></i> Información Base Datos</a></li>
 		</ul>
