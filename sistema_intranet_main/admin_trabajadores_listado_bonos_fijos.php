@@ -80,7 +80,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado_bonos_fijos'
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Bono Asignado</h5>
@@ -118,7 +118,7 @@ $rowdata = db_select_data (false, $SIS_query, 'trabajadores_listado_bonos_fijos'
 validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Bono Asignado</h5>

@@ -57,7 +57,7 @@ if(isset($error1)&&$error1!=''){echo notifications_list($error1);};
 if(!empty($_GET['addDetalle'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Detalle</h5>
@@ -93,7 +93,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 }elseif(!empty($_GET['lock_cuartel'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Cerrar Cuartel</h5>

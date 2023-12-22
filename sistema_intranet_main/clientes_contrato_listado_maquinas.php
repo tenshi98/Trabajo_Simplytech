@@ -190,7 +190,7 @@ if(!empty($_GET['clone_idMaquina'])){
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Clonar <?php echo 'Maquina '.$_GET['nombre_maquina']; ?></h5>
@@ -224,7 +224,7 @@ if(!empty($_GET['clone_idMaquina'])){
 }elseif(!empty($_GET['clone_idMatriz'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Clonar Matriz <?php echo $_GET['nombre_matriz']; ?></h5>
@@ -269,7 +269,7 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_jo
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Parametros</h5>
@@ -535,7 +535,7 @@ $rowdata = db_select_data (false, $SIS_query, 'maquinas_listado_matriz', $SIS_jo
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion Matriz de Analisis</h5>
@@ -575,7 +575,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Matriz de Analisis</h5>
@@ -705,7 +705,7 @@ $w = 'idUtilizable=1';
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Trabajo</h5>
@@ -839,7 +839,7 @@ foreach ($arrPermisos as $prod) {
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Componente</h5>
@@ -1186,7 +1186,7 @@ foreach ($arrPermisos as $prod) {
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Componente</h5>
@@ -2033,7 +2033,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Configuracion</h5>
@@ -2096,7 +2096,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Maquina</h5>
@@ -2153,7 +2153,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Nueva Maquina</h5>

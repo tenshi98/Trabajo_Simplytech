@@ -691,7 +691,7 @@ if (validarNumero($_GET['view'])){
 	alert_post_data(2,1,1,0, $Alert_Text);
 	?>
 	<br/>
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtro de busqueda</h5>

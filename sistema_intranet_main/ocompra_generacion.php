@@ -82,7 +82,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['new_oc'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Datos Nueva Orden de Compra</h5>
@@ -145,7 +145,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Proveedor</h5>
@@ -201,7 +201,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Proveedor</h5>
@@ -257,7 +257,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Proveedor</h5>
@@ -313,7 +313,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Proveedor</h5>
@@ -369,7 +369,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Proveedor</h5>
@@ -884,7 +884,7 @@ array_push( $arrProveedores,$row );
 } else { ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Filtrar Solicitudes</h5>

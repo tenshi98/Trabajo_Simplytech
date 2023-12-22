@@ -164,7 +164,7 @@ input[type="date"].form-control{
 
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Pagos</h5>
@@ -705,7 +705,7 @@ input[type="date"].form-control{
 
 <div class="row">
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Pagos</h5>
@@ -980,7 +980,7 @@ input[type="date"].form-control{
 }elseif(!empty($_GET['addFile'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
@@ -1011,7 +1011,7 @@ input[type="date"].form-control{
 validaPermisoUser($rowlevel['level'], 2, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>
@@ -1078,7 +1078,7 @@ validaPermisoUser($rowlevel['level'], 2, $dbConn); ?>
 validaPermisoUser($rowlevel['level'], 2, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>
@@ -1155,7 +1155,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar datos basicos del egreso</h5>
@@ -1718,7 +1718,7 @@ $w = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Pago</h5>

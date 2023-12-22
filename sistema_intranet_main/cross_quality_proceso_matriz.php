@@ -92,7 +92,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn);
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Clonar Tipo Planilla <?php echo $_GET['nombre_matriz']; ?></h5>
@@ -144,7 +144,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Parametros del punto</h5>
@@ -436,7 +436,7 @@ $rowdata = db_select_data (false, $SIS_query, 'cross_quality_proceso_matriz', $S
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion Tipo Planilla</h5>
@@ -680,7 +680,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Tipo Planilla</h5>

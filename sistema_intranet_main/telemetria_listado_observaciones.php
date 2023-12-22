@@ -79,7 +79,7 @@ $rowdata = db_select_data (false, 'Observacion', 'telemetria_listado_observacion
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Observacion</h5>
@@ -114,7 +114,7 @@ $rowdata = db_select_data (false, 'Observacion', 'telemetria_listado_observacion
 validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Observacion</h5>

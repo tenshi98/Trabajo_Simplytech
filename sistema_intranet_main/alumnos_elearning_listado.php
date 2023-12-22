@@ -150,7 +150,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Cuestionario</h5>
@@ -189,7 +189,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Cuestionario</h5>
@@ -230,7 +230,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Datos Básicos</h5>
@@ -275,7 +275,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_
 } elseif(!empty($_GET['addFile'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
@@ -308,7 +308,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_
  }elseif(!empty($_GET['addUnidad'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Nueva Unidad</h5>
@@ -352,7 +352,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidade
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Pregunta</h5>
@@ -390,7 +390,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidade
  }elseif(!empty($_GET['addContenido'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Nuevo Contenido</h5>
@@ -434,7 +434,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado_unidade
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Contenido</h5>
@@ -726,7 +726,7 @@ foreach($arrContenidos as $categoria=>$permisos){
 validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Elearning</h5>

@@ -144,7 +144,7 @@ if(isset($error1)&&$error1!=''){echo notifications_list($error1);};
 if(!empty($_GET['addDetalle'])){ ?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Detalle</h5>
@@ -180,7 +180,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 /*}elseif(!empty($_GET['lock_cuartel'])){ ?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Cerrar Cuartel</h5>
@@ -276,7 +276,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Editar Producto Químico</h5>
@@ -360,7 +360,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Producto Químico</h5>
@@ -451,7 +451,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Editar Tractor</h5>
@@ -509,7 +509,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Tractor</h5>
@@ -575,7 +575,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Editar Cuartel</h5>
@@ -663,7 +663,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Cuartel</h5>
@@ -762,7 +762,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 <?php //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 } elseif(!empty($_GET['addMaterial'])){ ?>
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Material de Seguridad</h5>
@@ -808,7 +808,7 @@ if(!empty($_GET['addDetalle'])){ ?>
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Modificar la Solicitud de Aplicacion</h5>

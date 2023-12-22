@@ -80,7 +80,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_menu_otros', $SIS_
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Menu</h5>
@@ -133,7 +133,7 @@ $rowdata = db_select_data (false, $SIS_query, 'sitios_listado_menu_otros', $SIS_
 validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Menu</h5>

@@ -72,7 +72,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['consolidacion_rechazo'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Rechazar Consolidacion de Compra</h5>
@@ -108,7 +108,7 @@ if(!empty($_GET['consolidacion_rechazo'])){ ?>
 } elseif(!empty($_GET['consolidacion_nula'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Anular Consolidacion de Compra</h5>

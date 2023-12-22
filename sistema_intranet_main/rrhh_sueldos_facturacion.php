@@ -320,7 +320,7 @@ array_push( $arrArchivos,$row );
 }elseif(!empty($_GET['addFile'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
@@ -355,7 +355,7 @@ array_push( $arrArchivos,$row );
 <div class="clearfix"></div>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar datos basicos del Ingreso</h5>
@@ -568,7 +568,7 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 <div class="clearfix"></div>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Facturacion Sueldos</h5>

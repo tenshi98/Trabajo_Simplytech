@@ -191,7 +191,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['addOC'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Asignar OC</h5>
@@ -222,7 +222,7 @@ if(!empty($_GET['addOC'])){ ?>
 } elseif(!empty($_GET['editDescuentos'])){  ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Descuento</h5>
@@ -257,7 +257,7 @@ if(!empty($_GET['addOC'])){ ?>
 } elseif(!empty($_GET['addDescuentos'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Descuento</h5>
@@ -290,7 +290,7 @@ if(!empty($_GET['addOC'])){ ?>
 } elseif(!empty($_GET['addFile'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
@@ -372,7 +372,7 @@ foreach ($arrPermisos as $prod) {
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Compra de Productos</h5>
@@ -446,7 +446,7 @@ $Form_Inputs = new Inputs();
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Productos</h5>
@@ -598,7 +598,7 @@ $z=" idDocumentos = 1 AND idEstado = 1 AND idProveedor = ".$_SESSION['productos_
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Guias</h5>
@@ -630,7 +630,7 @@ $z=" idDocumentos = 1 AND idEstado = 1 AND idProveedor = ".$_SESSION['productos_
 } elseif(!empty($_GET['addImpuesto'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Impuestos</h5>
@@ -667,7 +667,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Centro de Costo</h5>
@@ -717,7 +717,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Datos Básicos</h5>
@@ -1173,7 +1173,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 	 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar datos basicos de la Compra</h5>
@@ -1216,7 +1216,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 } ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Compra</h5>

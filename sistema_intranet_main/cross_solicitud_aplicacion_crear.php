@@ -194,7 +194,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Clonar Solicitud <?php echo n_doc($_GET['NSolicitud'], 5); ?></h5>
@@ -252,7 +252,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Editar Cuartel</h5>
@@ -312,7 +312,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Editar Producto Químico</h5>
@@ -394,7 +394,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Producto Químico</h5>
@@ -476,7 +476,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Editar Tractor</h5>
@@ -532,7 +532,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Tractor</h5>
@@ -576,7 +576,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 } elseif(!empty($_GET['addMaterial'])){ ?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Material de Seguridad</h5>
@@ -662,7 +662,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<div class="box dark">
+			<div class="box">
 				<header>
 					<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 					<h5>Agregar Trabajos</h5>
@@ -1067,7 +1067,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 } elseif(!empty($_GET['modTrac'])){  ?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Modificar Parámetros de Aplicacion</h5>
@@ -1149,7 +1149,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Modificar la Solicitud de Aplicacion</h5>
@@ -1534,7 +1534,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 
 	<div class="row">
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-			<div class="box dark">
+			<div class="box">
 				<header>
 					<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 					<h5>Generar Nueva Solicitud de Aplicacion - PASO 3</h5>
@@ -1939,7 +1939,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 } elseif(!empty($_GET['new_2'])){  ?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Generar Nueva Solicitud de Aplicacion - PASO 2</h5>
@@ -2024,7 +2024,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Generar Nueva Solicitud de Aplicacion - PASO 1</h5>

@@ -107,7 +107,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['addFile'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
@@ -137,7 +137,7 @@ if(!empty($_GET['addFile'])){ ?>
 }elseif(!empty($_GET['editMonto'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Egreso</h5>
@@ -175,7 +175,7 @@ if(!empty($_GET['addFile'])){ ?>
 } elseif(!empty($_GET['addMonto'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Egreso</h5>
@@ -222,7 +222,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar datos basicos del egreso</h5>
@@ -449,7 +449,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 } ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear egreso</h5>

@@ -194,7 +194,7 @@ foreach ($arrPermisos as $prod) {
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion del Analisis</h5>
@@ -409,7 +409,7 @@ foreach ($arrPermisos as $prod) {
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Ingreso datos de <?php echo $rowdata2['Nombre']; ?></h5>
@@ -540,7 +540,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idConfig_2
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Seleccion de Maquina y Analisis</h5>

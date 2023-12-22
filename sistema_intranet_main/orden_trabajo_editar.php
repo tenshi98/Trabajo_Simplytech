@@ -214,7 +214,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Observacion del trabajo</h5>
@@ -268,7 +268,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar analisis del trabajo</h5>
@@ -328,7 +328,7 @@ foreach ($arrPermisos as $prod) {
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Productos</h5>
@@ -512,7 +512,7 @@ foreach ($arrPermisos as $prod) {
 }elseif(!empty($_GET['addItemizado'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Itemizado</h5>
@@ -564,7 +564,7 @@ foreach ($arrPermisos as $prod) {
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Tarea</h5>
@@ -688,7 +688,7 @@ foreach ($arrPermisos as $prod) {
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Editar Productos</h5>
@@ -777,7 +777,7 @@ foreach ($arrPermisos as $prod) {
 }elseif(!empty($_GET['addItemizado_row'])){ ?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Itemizado</h5>
@@ -850,7 +850,7 @@ foreach ($arrPermisos as $prod) {
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Productos</h5>
@@ -962,7 +962,7 @@ foreach ($arrPermisos as $prod) {
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Editar Productos</h5>
@@ -1061,7 +1061,7 @@ foreach ($arrPermisos as $prod) {
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Insumos</h5>
@@ -1173,7 +1173,7 @@ foreach ($arrPermisos as $prod) {
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Editar Insumos</h5>
@@ -1250,7 +1250,7 @@ foreach ($arrPermisos as $prod) {
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Agregar Trabajador</h5>
@@ -1304,7 +1304,7 @@ foreach ($arrPermisos as $prod) {
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Editar Trabajador</h5>
@@ -1347,7 +1347,7 @@ foreach ($arrPermisos as $prod) {
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Modificar datos basicos de la OT</h5>
@@ -1392,7 +1392,7 @@ foreach ($arrPermisos as $prod) {
 	?>
 
 	<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-		<div class="box dark">
+		<div class="box">
 			<header>
 				<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 				<h5>Modificar datos basicos de la OT</h5>

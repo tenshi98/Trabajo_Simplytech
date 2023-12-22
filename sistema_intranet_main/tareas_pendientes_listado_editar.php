@@ -118,7 +118,7 @@ switch ($_GET['edit_cambio_estado']) {
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5><?php echo $slc_tittle; ?></h5>
@@ -164,7 +164,7 @@ $rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado_tareas'
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Editar Tarea</h5>
@@ -202,7 +202,7 @@ $rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado_tareas'
 }elseif(!empty($_GET['addFile'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
@@ -266,7 +266,7 @@ $usrfil .= $responsables;
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Trabajos</h5>
@@ -370,7 +370,7 @@ if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 ?>
 
 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Responsables</h5>
@@ -465,7 +465,7 @@ $rowdata = db_select_data (false, $SIS_query, 'tareas_pendientes_listado', $SIS_
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar datos basicos de la Tarea</h5>

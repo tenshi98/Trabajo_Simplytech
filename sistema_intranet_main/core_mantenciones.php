@@ -80,7 +80,7 @@ if(!$resultado){
 $rowdata = mysqli_fetch_assoc ($resultado);	?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion de la Mantencion</h5>
@@ -120,7 +120,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);	?>
 } elseif(!empty($_GET['new'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Mantencion</h5>

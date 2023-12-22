@@ -142,7 +142,7 @@ if(isset($error)&&$error!=''){echo notifications_list($error);}
 if(!empty($_GET['addFile'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Subir Archivo</h5>
@@ -224,7 +224,7 @@ array_push( $arrGrupo,$row );
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Ingreso datos de <?php echo $rowdata['Nombre']; ?></h5>
@@ -406,7 +406,7 @@ array_push( $arrGrupo,$row );
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Ingreso datos de <?php echo $rowdata['Nombre']; ?></h5>
@@ -589,7 +589,7 @@ array_push( $arrGrupo,$row );
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Ingreso datos de <?php echo $rowdata['Nombre']; ?></h5>
@@ -722,7 +722,7 @@ $z = "idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Maquina</h5>
@@ -757,7 +757,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Agregar Trabajador</h5>
@@ -789,7 +789,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 } elseif(!empty($_GET['modBase'])){ ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificar Inspeccion</h5>
@@ -1068,7 +1068,7 @@ $z="idSistema=".$_SESSION['usuario']['basic_data']['idSistema']." AND idEstado=1
 validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Inspeccion</h5>

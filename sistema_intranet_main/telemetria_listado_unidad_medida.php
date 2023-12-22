@@ -68,7 +68,7 @@ $rowdata = db_select_data (false, 'Nombre,NombreLargo', 'telemetria_listado_unid
 ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Modificacion Unidad Medida</h5>
@@ -106,7 +106,7 @@ $rowdata = db_select_data (false, 'Nombre,NombreLargo', 'telemetria_listado_unid
 validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 <div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter">
-	<div class="box dark">
+	<div class="box">
 		<header>
 			<div class="icons"><i class="fa fa-edit" aria-hidden="true"></i></div>
 			<h5>Crear Unidad Medida</h5>
