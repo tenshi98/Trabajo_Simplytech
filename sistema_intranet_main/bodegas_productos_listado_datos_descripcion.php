@@ -100,7 +100,7 @@ $rowdata = mysqli_fetch_assoc ($resultado); ?>
 
 					//se dibujan los inputs
 					$Form_Inputs = new Form_Inputs();
-					$Form_Inputs->form_ckeditor('Descripcion','Descripcion', $x1, 1, 2);
+					$Form_Inputs->form_ckeditor('Descripción','Descripcion', $x1, 1, 2);
 
 					$Form_Inputs->form_input_hidden('idBodega', $_GET['id'], 2);
 					?>

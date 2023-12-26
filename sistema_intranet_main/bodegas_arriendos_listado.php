@@ -110,7 +110,7 @@ $rowdata = db_select_data (false, $SIS_query, 'bodegas_arriendos_listado', $SIS_
 							<strong>Nombre : </strong><?php echo $rowdata['Nombre']; ?>
 						</p>
 
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripcion</h2>
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripción</h2>
 						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>

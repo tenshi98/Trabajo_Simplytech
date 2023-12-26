@@ -146,7 +146,7 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 							<strong>Estado : </strong><?php echo $rowdata['Estado']; ?>
 						</p>
 
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripcion</h2>
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripción</h2>
 						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>

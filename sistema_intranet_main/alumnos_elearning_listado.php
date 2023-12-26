@@ -254,7 +254,7 @@ $rowdata = db_select_data (false, $SIS_query, 'alumnos_elearning_listado', $SIS_
 				$Form_Inputs->form_ckeditor('Resumen','Resumen', $x2, 1, 2);
 				$Form_Inputs->form_ckeditor('Objetivos','Objetivos', $x3, 1, 2);
 				$Form_Inputs->form_ckeditor('Requisitos','Requisitos', $x4, 1, 2);
-				$Form_Inputs->form_ckeditor('Descripcion','Descripcion', $x5, 1, 2);
+				$Form_Inputs->form_ckeditor('Descripción','Descripcion', $x5, 1, 2);
 				$Form_Inputs->form_select('Estado','idEstado', $x6, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);

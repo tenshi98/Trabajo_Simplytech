@@ -526,7 +526,7 @@ if(isset($rowdata['idConfig_1'])&&$rowdata['idConfig_1']==1){
 							<strong>Uso Ubicación: </strong><?php echo $rowdata['UsoUbicacion']; ?>
 						</p>
 
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripcion</h2>
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripción</h2>
 						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
 
 						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Archivos</h2>

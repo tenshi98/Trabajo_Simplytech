@@ -92,7 +92,7 @@ $rowdata = db_select_data (false, $SIS_query, 'variedades_listado', $SIS_join, $
 						</p>
 						
 						
-						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripcion</h2>
+						<h2 class="text-primary"><i class="fa fa-list" aria-hidden="true"></i> Descripción</h2>
 						<p class="text-muted"><?php echo $rowdata['Descripcion']; ?></p>
 						
 						
