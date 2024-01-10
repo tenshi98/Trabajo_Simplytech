@@ -13,7 +13,7 @@ define('XMBCXRXSKGC', 1);
 /**********************************************************************************************************************************/
 /*                                          Se llaman a los archivos necesarios                                                   */
 /**********************************************************************************************************************************/
-require_once 'core/Load.Utils.Views.php';
+require_once 'core/Load.Utils.Web.php';
 /**********************************************************************************************************************************/
 /*                                                 Variables Globales                                                             */
 /**********************************************************************************************************************************/
@@ -21,7 +21,7 @@ require_once 'core/Load.Utils.Views.php';
 if(isset($_SESSION['usuario']['basic_data']['ConfigTime'])&&$_SESSION['usuario']['basic_data']['ConfigTime']!=0){$n_lim = $_SESSION['usuario']['basic_data']['ConfigTime']*60;set_time_limit($n_lim);}else{set_time_limit(2400);}
 //Memora RAM Maxima del servidor, 4GB por defecto
 if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario']['basic_data']['ConfigRam']!=0){$n_ram = $_SESSION['usuario']['basic_data']['ConfigRam']; ini_set('memory_limit', $n_ram.'M');}else{ini_set('memory_limit', '4096M');}
-
+$original = '';
 ?>
 <!doctype html>
 <html class="no-js">
@@ -53,7 +53,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/bootstrap3/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/lib/font-awesome-animation/font-awesome-animation.min.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/css/main.min.css">
-		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/css/theme_color_<?php if(isset($_SESSION['usuario']['basic_data']['Config_idTheme'])&&$_SESSION['usuario']['basic_data']['Config_idTheme']!=''){echo $_SESSION['usuario']['basic_data']['Config_idTheme'];}else{echo '1';} ?>.css">
+		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/css/theme_color_<?php if(isset($_GET['idTheme'])&&$_GET['idTheme']!=''){echo $_GET['idTheme'];}else{echo '1';} ?>.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/lib/fullcalendar/fullcalendar.css">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/css/my_style.css?<?php echo time(); ?>">
 		<link rel="stylesheet" type="text/css" href="<?php echo DB_SITE_REPO ?>/LIB_assets/css/my_colors.min.css">
@@ -107,12 +107,12 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
                 <span class="icon-bar"></span>
               </button>
               <a href="principal.php" class="navbar-brand">
-                <?php require_once 'core/logo_empresa.php'; ?>
+			  	<?php require_once 'core/Web.Body.Nav.Logo.php'; ?>
               </a>
             </header>
-            <?php require_once 'core/infobox.php'; ?>
+            <?php require_once 'core/Web.Body.Nav.Actions.php'; ?>
             <div class="collapse navbar-collapse navbar-ex1-collapse">
-              <?php require_once 'core/menu_top.php'; ?>
+				<?php require_once 'core/Web.Body.Nav.Menu_top.php'; ?>
             </div>
           </div>
         </nav>
@@ -123,8 +123,8 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
         </header>
       </div>
       <div id="left">
-       <?php require_once 'core/userbox.php'; ?>
-       <?php require_once 'core/menu.php'; ?>
+	  	<?php require_once 'core/Web.Body.Lateralmenu.Userbox.php'; ?>
+		<?php require_once 'core/Web.Body.Lateralmenu.Menu.php'; ?>
       </div>
       <div id="content">
         <div class="outer">
