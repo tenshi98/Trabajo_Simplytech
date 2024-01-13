@@ -44,7 +44,7 @@ $SIS_where.= " AND backup_telemetria_listado_errores.idTipo!='999'";
 $SIS_where.= " AND backup_telemetria_listado_errores.Valor<'99900'";
 $SIS_where.= " AND telemetria_listado.id_Geo='1'";
 $SIS_where.= " AND backup_telemetria_listado_errores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Solo para plataforma CrossTech
+//Solo para plataforma Simplytech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$SIS_where .= " AND telemetria_listado.idTab=4";//CrossWeather
 }
@@ -181,7 +181,7 @@ $z  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSist
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
-//Solo para plataforma CrossTech
+//Solo para plataforma Simplytech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$z .= " AND telemetria_listado.idTab=4";//CrossWeather
 }

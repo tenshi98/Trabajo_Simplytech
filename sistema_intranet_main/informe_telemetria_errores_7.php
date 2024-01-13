@@ -80,7 +80,7 @@ $SIS_where.= " AND telemetria_listado_errores.Valor<'99900'";
 $SIS_where.= " AND telemetria_listado.id_Geo='2'";
 $SIS_where.= " AND telemetria_listado_errores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
 
-//Solo para plataforma CrossTech
+//Solo para plataforma Simplytech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$SIS_where .= " AND telemetria_listado.idTab=9";//CrossEnergy
 }
@@ -218,7 +218,7 @@ $z .= " AND telemetria_listado.id_Sensores=1";                                  
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
-//Solo para plataforma CrossTech
+//Solo para plataforma Simplytech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$z .= " AND telemetria_listado.idTab=9";//CrossEnergy
 }

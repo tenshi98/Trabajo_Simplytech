@@ -171,7 +171,7 @@ require_once '0_validate_user_1.php';
 						//envio de correo
 						try {
 							//se envia correo
-							$rmail = tareas_envio_correo($rowusr['email_principal'], 'Crosstech',
+							$rmail = tareas_envio_correo($rowusr['email_principal'], 'Simplytech',
 														 $noti['email'], $noti['Nombre'],
 														 '', '',
 														 $Asunto,

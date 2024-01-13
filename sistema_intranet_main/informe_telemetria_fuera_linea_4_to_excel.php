@@ -33,7 +33,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 //Inicia variable
 $SIS_where  = "telemetria_listado_error_fuera_linea.idFueraLinea>0";
 $SIS_where .= " AND telemetria_listado.id_Geo='1'";
-//Solo para plataforma CrossTech
+//Solo para plataforma Simplytech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$SIS_where .= " AND telemetria_listado.idTab=1";//CrossChecking	
 }

@@ -631,7 +631,7 @@ require_once '0_validate_user_1.php';
 															$BodyMail .= '<a href="'.$Link.'" style="display:block;width:100%;text-align: center;font-size: 20px;text-decoration: none;color: #004AAD;"><strong>Empezar &#8594;</strong></a>';
 															$BodyMail .= '</div>';
 
-															$rmail = tareas_envio_correo($rowusr['email_principal'], 'Crosstech',
+															$rmail = tareas_envio_correo($rowusr['email_principal'], 'Simplytech',
 																						 $Post_Email, $Nombre,
 																						 '', '',
 																						 'Registro de Usuario',

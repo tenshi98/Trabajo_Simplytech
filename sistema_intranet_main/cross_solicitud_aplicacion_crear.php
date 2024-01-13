@@ -468,7 +468,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 	}
-	//Solo para plataforma CrossTech
+	//Solo para plataforma Simplytech
 	if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 		$w .= " AND telemetria_listado.idTab=1";//CrossChecking
 	}
@@ -525,7 +525,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 	}
-	//Solo para plataforma CrossTech
+	//Solo para plataforma Simplytech
 	if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 		$w .= " AND telemetria_listado.idTab=1";//CrossChecking
 	}
@@ -622,7 +622,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 	}
-	//Solo para plataforma CrossTech
+	//Solo para plataforma Simplytech
 	if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 		$w .= " AND telemetria_listado.idTab=1";//CrossChecking
 	}
@@ -1494,7 +1494,7 @@ if(!empty($_GET['clone_idSolicitud'])){
 	if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 		$w .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 	}
-	//Solo para plataforma CrossTech
+	//Solo para plataforma Simplytech
 	if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 		$w .= " AND telemetria_listado.idTab=1";//CrossChecking
 	}

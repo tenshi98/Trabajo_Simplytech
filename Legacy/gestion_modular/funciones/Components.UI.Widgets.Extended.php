@@ -6746,7 +6746,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
 			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
-		//Solo para plataforma CrossTech
+		//Solo para plataforma Simplytech
 		$SIS_where .= " AND telemetria_listado.idTab=6";//CrossCrane
 
 		//numero sensores equipo
@@ -7568,7 +7568,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
 			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
-		//Solo para plataforma CrossTech
+		//Solo para plataforma Simplytech
 		$SIS_where .= " AND telemetria_listado.idTab=9";//CrossEnergy
 
 		//numero sensores equipo
@@ -9521,7 +9521,7 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 			$SIS_join  .= ' INNER JOIN usuarios_equipos_telemetria ON usuarios_equipos_telemetria.idTelemetria = telemetria_listado.idTelemetria ';
 			$SIS_where .= ' AND usuarios_equipos_telemetria.idUsuario = '.$idUsuario;
 		}
-		//Solo para plataforma CrossTech
+		//Solo para plataforma Simplytech
 		$SIS_where .= " AND telemetria_listado.idTab=6";//CrossCrane
 
 		//numero sensores equipo

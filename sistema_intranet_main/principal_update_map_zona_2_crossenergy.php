@@ -52,7 +52,7 @@ if(isset($idTipoUsuario)&&$idTipoUsuario!=1&&isset($idUsuario)&&$idUsuario!=0){
 if(isset($idZona)&&$idZona!=''&&$idZona!=9999){
 	$SIS_where .= " AND telemetria_listado.idZona = ".$idZona;
 }
-//Solo para plataforma CrossTech
+//Solo para plataforma Simplytech
 $SIS_where .= " AND telemetria_listado.idTab=9";//CrossEnergy
 
 //numero sensores equipo

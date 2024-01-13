@@ -149,7 +149,7 @@ require_once '0_validate_user_1.php';
 						/*********************************************************************/
 						//Se crea el cuerpodel correo al cliente
 						$BodyMail_Cliente  = '<div style="background-color: #D9D9D9; padding: 10px;">';
-						$BodyMail_Cliente .= '<img src="http://clientes.crosstech.cl/img/login_logo.png" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
+						$BodyMail_Cliente .= '<img src="http://clientes.simplytech.cl/img/login_logo.png" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
 						$BodyMail_Cliente .= '<h3 style="text-align: center;font-size: 30px;">';
 						$BodyMail_Cliente .= '¡Ticket generado exitosamente!<br/>';
 						$BodyMail_Cliente .= 'N° '.n_doc($ultimo_id, 8);
@@ -168,7 +168,7 @@ require_once '0_validate_user_1.php';
 
 						//Se crea el cuerpo del correo al usuario
 						$BodyMail_Usuario  = '<div style="background-color: #D9D9D9; padding: 10px;">';
-						$BodyMail_Usuario .= '<img src="http://clientes.crosstech.cl/img/login_logo.png" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
+						$BodyMail_Usuario .= '<img src="http://clientes.simplytech.cl/img/login_logo.png" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
 						$BodyMail_Usuario .= '<h3 style="text-align: center;font-size: 30px;">';
 						$BodyMail_Usuario .= '¡Nuevo ticket de '.$rowCliente['Nombre'].'!<br/>';
 						$BodyMail_Usuario .= 'N° '.n_doc($ultimo_id, 8);
@@ -361,7 +361,7 @@ require_once '0_validate_user_1.php';
 						/*********************************************************************/
 						//Se crea el cuerpodel correo al cliente
 						$BodyMail_top     = '<div style="background-color: #D9D9D9; padding: 10px;">';
-						$BodyMail_top    .= '<img src="http://clientes.crosstech.cl/img/login_logo.png" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
+						$BodyMail_top    .= '<img src="http://clientes.simplytech.cl/img/login_logo.png" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
 						$BodyMail_top    .= '<h3 style="text-align: center;font-size: 30px;">';
 						$BodyMail_top    .= $Mensaje;
 						$BodyMail_top    .= '</h3>';

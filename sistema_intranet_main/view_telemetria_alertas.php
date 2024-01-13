@@ -79,7 +79,7 @@ $SIS_where.= " AND telemetria_listado_errores.idTipo!='999'";
 $SIS_where.= " AND telemetria_listado_errores.Valor<'99900'";
 $SIS_where.= " AND telemetria_listado.id_Geo='2'";
 $SIS_where.= " AND telemetria_listado_errores.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Solo para plataforma CrossTech
+//Solo para plataforma Simplytech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$SIS_where .= " AND telemetria_listado.idTab=6";//CrossCrane
 }

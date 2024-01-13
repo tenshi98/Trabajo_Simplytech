@@ -85,7 +85,7 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 
 /*CrossChecking*/   $Tab_1 = $prm_x[1] + $prm_x[2] + $prm_x[3] + $prm_x[4] + $prm_x[5] + $prm_x[6] + $prm_x[7] + $prm_x[8] + $prm_x[9] + $prm_x[10] + $prm_x[11] + $prm_x[12];
 /*CrossC*/          $Tab_2 = $prm_x[13] + $prm_x[14] + $prm_x[15] + $prm_x[16] + $prm_x[17] + $prm_x[18] + $prm_x[19] + $prm_x[20] + $prm_x[21];
-/*CrossTrack*/      $Tab_3 = $prm_x[22] + $prm_x[23] + $prm_x[24] + $prm_x[25] + $prm_x[26] + $prm_x[27] + $prm_x[28] + $prm_x[29] + $prm_x[30] + $prm_x[31] + $prm_x[32] + $prm_x[33] + $prm_x[34] + $prm_x[35];
+/*CrossTrack*/      $Tab_3 = 0;//$prm_x[22] + $prm_x[23] + $prm_x[24] + $prm_x[25] + $prm_x[26] + $prm_x[27] + $prm_x[28] + $prm_x[29] + $prm_x[30] + $prm_x[31] + $prm_x[32] + $prm_x[33] + $prm_x[34] + $prm_x[35];
 /*CrossWeather*/    $Tab_4 = $prm_x[36];
 /*CrossWater*/      $Tab_5 = 0;
 /*CrossCrane*/      $Tab_6 = $prm_x[37] + $prm_x[38] + $prm_x[39] + $prm_x[40] + $prm_x[41];
@@ -94,7 +94,7 @@ for ($i = 1; $i <= $x_nperm; $i++) {
 /************************************************************************************/
 // Listado con los nombres del tab
 $arrTabMenu = array();
-$arrTabMenu = db_select_array (false, 'idTab, Nombre', 'core_telemetria_tabs', '', '', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTabMenu');
+$arrTabMenu = db_select_array (false, 'idTab, Nombre', 'core_telemetria_tabs', '', 'idTab!=3 AND idTab!=5', 'Nombre ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrTabMenu');
 //Recorro
 foreach ($arrTabMenu as $tab) {
 	$arrOrderTabMenu[$tab['idTab']] = $tab['Nombre'];
@@ -170,102 +170,114 @@ foreach ($arrTabMenu as $tab) {
 					<h1>¡Hola <?php echo $_SESSION['usuario']['basic_data']['Nombre'] ?>!</h1>
 				</div>
 				<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
-					<p class="xtabtext">Bienvenido a CrossTech. Toma decisiones oportunas, rápidas
+					<p class="xtabtext">Bienvenido a Simplytech. Toma decisiones oportunas, rápidas
 					y eficaces. Te apoyamos para que seas más eficiente en los procesos de medición.</p>
 				</div>
 			</div>
 
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 fcenter">
 
-				<a href="<?php if($Tab_2!=0){echo 'principal_6_2.php';} ?>">
-					<div class="tile color_1 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
-						<div class="tile-content">
-							<div class="tile-icon-large">
-								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossC.png">
-								<p><strong>Ambientes <br/>Controlados</strong></p>
+				<?php if($Tab_2!=0){ ?>
+					<a href="principal_6_2.php">
+						<div class="tile color_1 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
+							<div class="tile-content">
+								<div class="tile-icon-large">
+									<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/SimC.png">
+									<p><strong>Ambientes <br/>Controlados</strong></p>
+								</div>
 							</div>
+							<span class="tile-label">
+								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_clima.png">
+							</span>
 						</div>
-						<span class="tile-label">
-							<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_clima.png">
-						</span>
-					</div>
-				</a>
+					</a>
+				<?php } ?>
 
-				<a href="<?php if($Tab_1!=0){echo 'principal_6_1.php';} ?>">
-					<div class="tile color_2 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
-						<div class="tile-content">
-							<div class="tile-icon-large">
-								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossChecking.png">
-								<p><strong>Aplicaciones <br/>Agroquimicas</strong></p>
+				<?php if($Tab_1!=0){ ?>
+					<a href="principal_6_1.php">
+						<div class="tile color_2 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
+							<div class="tile-content">
+								<div class="tile-icon-large">
+									<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossChecking.png">
+									<p><strong>Aplicaciones <br/>Agroquimicas</strong></p>
+								</div>
 							</div>
+							<span class="tile-label">
+								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_tractor.png">
+							</span>
 						</div>
-						<span class="tile-label">
-							<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_tractor.png">
-						</span>
-					</div>
-				</a>
+					</a>
+				<?php } ?>
 
-				<a href="<?php if($Tab_6!=0){echo 'principal_6_6.php';} ?>">
-					<div class="tile color_3 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
-						<div class="tile-content">
-							<div class="tile-icon-large">
-								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossCrane.png">
-								<p><strong>Gruas de <br/>Construccion</strong></p>
+				<?php if($Tab_6!=0){ ?>
+					<a href="principal_6_6.php">
+						<div class="tile color_3 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
+							<div class="tile-content">
+								<div class="tile-icon-large">
+									<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/SimCrane.png">
+									<p><strong>Gruas de <br/>Construccion</strong></p>
+								</div>
 							</div>
+							<span class="tile-label">
+								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_grua.png">
+							</span>
 						</div>
-						<span class="tile-label">
-							<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_grua.png">
-						</span>
-					</div>
-				</a>
+					</a>
+				<?php } ?>
 
-				<a href="<?php if($Tab_3!=0){echo 'principal_6_3.php';} ?>">
-					<div class="tile color_4 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
-						<div class="tile-content">
-							<div class="tile-icon-large">
-								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossTrack.png">
-								<p><strong>Gestion de <br/>Flota GPS</strong></p>
+				<?php if($Tab_3!=0){ ?>
+					<a href="principal_6_3.php">
+						<div class="tile color_4 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
+							<div class="tile-content">
+								<div class="tile-icon-large">
+									<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossTrack.png">
+									<p><strong>Gestion de <br/>Flota GPS</strong></p>
+								</div>
 							</div>
+							<span class="tile-label">
+								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_alfiler.png">
+							</span>
 						</div>
-						<span class="tile-label">
-							<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_alfiler.png">
-						</span>
-					</div>
-				</a>
+					</a>
+				<?php } ?>
 
-				<a href="<?php if($Tab_4!=0){echo 'principal_6_4.php';} ?>">
-					<div class="tile color_5 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
-						<div class="tile-content">
-							<div class="tile-icon-large">
-								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossWheather.png">
-								<p><strong>Unidad <br/>Meteorologica</strong></p>
+				<?php if($Tab_4!=0){ ?>
+					<a href="principal_6_4.php">
+						<div class="tile color_5 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
+							<div class="tile-content">
+								<div class="tile-icon-large">
+									<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/SimWeather.png">
+									<p><strong>Unidad <br/>Meteorologica</strong></p>
+								</div>
 							</div>
+							<span class="tile-label">
+								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_wheater.png">
+							</span>
 						</div>
-						<span class="tile-label">
-							<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_wheater.png">
-						</span>
-					</div>
-				</a>
+					</a>
+				<?php } ?>
 
-				<a href="<?php if($Tab_7!=0){echo 'principal_6_7.php';} ?>">
-					<div class="tile color_6 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
-						<div class="tile-content">
-							<div class="tile-icon-large">
-								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossEnergy.png">
-								<p><strong>Consumo <br/>Eléctrico</strong></p>
+				<?php if($Tab_7!=0){ ?>
+					<a href="principal_6_7.php">
+						<div class="tile color_6 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
+							<div class="tile-content">
+								<div class="tile-icon-large">
+									<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/SimEnergy.png">
+									<p><strong>Consumo <br/>Eléctrico</strong></p>
+								</div>
 							</div>
+							<span class="tile-label">
+								<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_destello.png">
+							</span>
 						</div>
-						<span class="tile-label">
-							<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_destello.png">
-						</span>
-					</div>
-				</a>
+					</a>
+				<?php } ?>
 
 				<div class="tile color_7 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 					<div class="tile-content">
 						<div class="tile-icon-large">
 							<p style="color:#ffffff;"><strong>Asistencia <br/>Tecnica</strong></p>
-							<a href="mailto:soporte@crosstech.cl?Subject=Asistencia"><img alt="Imagen Referencia" class="imgx" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_asistencia_tecnica.png"></a>
+							<a href="mailto:soporte@simplytech.cl?Subject=Asistencia"><img alt="Imagen Referencia" class="imgx" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_asistencia_tecnica.png"></a>
 						</div>
 					</div>
 				</div>
@@ -274,7 +286,7 @@ foreach ($arrTabMenu as $tab) {
 					<div class="tile-content">
 						<div class="tile-icon-large">
 							<p style="color:#ffffff;"><strong>Cotizar <br/>Servicio</strong></p>
-							<a href="mailto:ventas@crosstech.cl?Subject=Cotizacion"><img alt="Imagen Referencia" class="imgx" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_cotizar.png"></a>
+							<a href="mailto:ventas@simplytech.cl?Subject=Cotizacion"><img alt="Imagen Referencia" class="imgx" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_cotizar.png"></a>
 						</div>
 					</div>
 				</div>
@@ -285,7 +297,7 @@ foreach ($arrTabMenu as $tab) {
 				<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
 					<br/>
 					<p class="xtabtext">
-						Si tienes alguna consulta con tu servicio contratado, puedes escribirnos a soporte@crosstech.cl y responderemos rápidamente a tus preguntas.
+						Si tienes alguna consulta con tu servicio contratado, puedes escribirnos a soporte@simplytech.cl y responderemos rápidamente a tus preguntas.
 					</p>
 				</div>
 			</div>
@@ -303,11 +315,11 @@ foreach ($arrTabMenu as $tab) {
 										$_SESSION['usuario']['basic_data']['Social_youtube'],
 										$_SESSION['usuario']['basic_data']['Social_tumblr']
 										);
-									
+
 				}
 				?>
 			</div>
-			
+
         </div>
 	</div>
 </div>

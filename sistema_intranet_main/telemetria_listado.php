@@ -555,7 +555,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 				$Form_Inputs->form_input_icon('Numero de Serie', 'NumSerie', $x3, 1,'fa fa-barcode');
 				$Form_Inputs->form_select('Estado','idEstado', $x4, 1, 'idEstado', 'Nombre', 'core_estados', 0, '', $dbConn);
 				$Form_Inputs->form_select('Geolocalizacion','id_Geo', $x5, 1, 'idOpciones', 'Nombre', 'core_sistemas_opciones', 0, '', $dbConn);
-				//Solo para plataforma CrossTech
+				//Solo para plataforma Simplytech
 				if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 					$Form_Inputs->form_select('Tab','idTab', $x6, 1, 'idTab', 'Nombre', 'core_telemetria_tabs', 0, '', $dbConn);
 				}
@@ -625,7 +625,7 @@ $arrEquipos = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_joi
 							</div>
 						</th>
 						<?php
-						//Solo para plataforma CrossTech
+						//Solo para plataforma Simplytech
 						if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){ ?>
 							<th>
 								<div class="pull-left">Tag</div>

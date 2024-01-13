@@ -229,7 +229,7 @@ $spreadsheet->getProperties()->setCreator("Office 2007")
 $SIS_where  = "telemetria_listado.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];   //Sistema
 $SIS_where .= " AND telemetria_listado.id_Geo=2";                                                //Geolocalizacion inactiva
 $SIS_where .= " AND telemetria_listado.id_Sensores=1";                                           //sensores activos
-//Solo para plataforma CrossTech
+//Solo para plataforma Simplytech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$SIS_where .= " AND telemetria_listado.idTab=3";//CrossTrack
 }

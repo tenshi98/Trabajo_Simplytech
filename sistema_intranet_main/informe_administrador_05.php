@@ -72,7 +72,7 @@ echo '<h3 class="supertittle text-primary">Aerosan</h3>';
 //Variables
 $arreglo = array();
 $arreglo[1] = 'si'; //recorrerlo
-$arreglo[2] = 'hhttps://clientes.crosstech.cl/upload/'; //carpeta de imagenes del sitio
+$arreglo[2] = 'hhttps://clientes.simplytech.cl/upload/'; //carpeta de imagenes del sitio
 //Se llama a los widget
 echo widget_Equipos('Equipo', 2, 0,'#', 1, 1, 1, $dbConn1);
 echo widget_Resumen_equipo('Ultimas Mediciones del equipo', 2, 0, $arreglo[2], 1, 1, 1, $dbConn1);

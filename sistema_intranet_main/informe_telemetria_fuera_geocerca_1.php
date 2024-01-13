@@ -42,7 +42,7 @@ if (!$num_pag){$comienzo = 0;$num_pag = 1;} else {$comienzo = ( $num_pag - 1 ) *
 $SIS_where = "telemetria_listado_error_geocerca.idErrores>0";
 $SIS_where.= " AND telemetria_listado.id_Geo='1'";
 $SIS_where.= " AND telemetria_listado_error_geocerca.idSistema=".$_SESSION['usuario']['basic_data']['idSistema'];
-//Solo para plataforma CrossTech
+//Solo para plataforma Simplytech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$SIS_where .= " AND telemetria_listado.idTab=3";//CrossTrack
 }
@@ -147,7 +147,7 @@ $z .= " AND telemetria_listado.id_Geo=1";                                       
 if($_SESSION['usuario']['basic_data']['idTipoUsuario']!=1){
 	$z .= " AND usuarios_equipos_telemetria.idUsuario = ".$_SESSION['usuario']['basic_data']['idUsuario'];
 }
-//Solo para plataforma CrossTech
+//Solo para plataforma Simplytech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$z .= " AND telemetria_listado.idTab=3";//CrossTrack
 }

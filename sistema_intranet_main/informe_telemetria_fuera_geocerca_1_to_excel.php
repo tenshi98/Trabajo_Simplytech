@@ -34,7 +34,7 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 $SIS_where = "telemetria_listado_error_geocerca.idErrores>0";
 $SIS_where.= " AND telemetria_listado.id_Geo='1'";
 $SIS_where.= " AND telemetria_listado_error_geocerca.idSistema=".$_GET['idSistema'];
-//Solo para plataforma CrossTech
+//Solo para plataforma Simplytech
 if(isset($_SESSION['usuario']['basic_data']['idInterfaz'])&&$_SESSION['usuario']['basic_data']['idInterfaz']==6){
 	$SIS_where.= " AND telemetria_listado.idTab=3";//CrossTrack
 }
