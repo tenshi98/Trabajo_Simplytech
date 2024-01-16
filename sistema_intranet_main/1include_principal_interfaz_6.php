@@ -132,7 +132,7 @@ foreach ($arrTabMenu as $tab) {
 .tile .tile-content .imgw{width: 70%;}
 .tile .tile-content .imgx{width: 30%;}
 .tile .tile-content .tile-icon-large {margin-left: 0px;vertical-align: middle !important;text-align: center;}
-.tile .tile-content .tile-icon-large p{font-size: 16px;color: #222;}
+.tile .tile-content .tile-icon-large p{font-size: 16px;color: #333;}
 .tile.color_1 {background-color: #FFD734;}
 .tile.color_2 {background-color: #F47619;}
 .tile.color_3 {background-color: #C6A664;}
@@ -141,6 +141,8 @@ foreach ($arrTabMenu as $tab) {
 .tile.color_6 {background-color: #D1336C;}
 .tile.color_7 {background-color: #79766C;}
 .tile.color_8 {background-color: #8B00FF;}
+.tile.color_9 {background-color: #EEF2F5;}
+.tile.color_10 {background-color: #FFF;}
 .tile.tile-small {min-height: 70px;}
 .tile.tile-medium {min-height: 200px;}
 .tile.tile-large {min-height: 310px;}
@@ -161,7 +163,7 @@ foreach ($arrTabMenu as $tab) {
 				<?php if($Tab_5!=0){ ?><li>   <a href="principal_6_5.php"><?php echo $arrOrderTabMenu[5]; ?></a></li><?php } ?>
 				<?php if($Tab_4!=0){ ?><li>   <a href="principal_6_4.php"><?php echo $arrOrderTabMenu[4]; ?></a></li><?php } ?>
 				<?php if($Tab_7!=0){ ?><li>   <a href="principal_6_7.php"><?php echo $arrOrderTabMenu[9]; ?></a></li><?php } ?>
-				<li><a href="principal_6_8.php"><span style="color: #9900ff;"><i class="fa fa-book" aria-hidden="true"></i> Tutoriales</span></a></li>
+				<li><a href="principal_6_8.php"><span style="color: #1649E4;"><i class="fa fa-book" aria-hidden="true"></i> Tutoriales</span></a></li>
 			</ul>
 		</header>
         <div class="tab-content">
@@ -179,7 +181,7 @@ foreach ($arrTabMenu as $tab) {
 
 				<?php if($Tab_2!=0){ ?>
 					<a href="principal_6_2.php">
-						<div class="tile color_1 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
+						<div class="tile color_9 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 							<div class="tile-content">
 								<div class="tile-icon-large">
 									<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/SimC.png">
@@ -193,7 +195,7 @@ foreach ($arrTabMenu as $tab) {
 					</a>
 				<?php } ?>
 
-				<?php if($Tab_1!=0){ ?>
+				<?php /*if($Tab_1!=0){ ?>
 					<a href="principal_6_1.php">
 						<div class="tile color_2 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 							<div class="tile-content">
@@ -207,11 +209,11 @@ foreach ($arrTabMenu as $tab) {
 							</span>
 						</div>
 					</a>
-				<?php } ?>
+				<?php }*/ ?>
 
 				<?php if($Tab_6!=0){ ?>
 					<a href="principal_6_6.php">
-						<div class="tile color_3 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
+						<div class="tile color_10 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 							<div class="tile-content">
 								<div class="tile-icon-large">
 									<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/SimCrane.png">
@@ -227,7 +229,7 @@ foreach ($arrTabMenu as $tab) {
 
 				<?php if($Tab_3!=0){ ?>
 					<a href="principal_6_3.php">
-						<div class="tile color_4 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
+						<div class="tile color_9 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 							<div class="tile-content">
 								<div class="tile-icon-large">
 									<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/CrossTrack.png">
@@ -243,7 +245,7 @@ foreach ($arrTabMenu as $tab) {
 
 				<?php if($Tab_4!=0){ ?>
 					<a href="principal_6_4.php">
-						<div class="tile color_5 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
+						<div class="tile color_10 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 							<div class="tile-content">
 								<div class="tile-icon-large">
 									<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/SimWeather.png">
@@ -259,7 +261,7 @@ foreach ($arrTabMenu as $tab) {
 
 				<?php if($Tab_7!=0){ ?>
 					<a href="principal_6_7.php">
-						<div class="tile color_6 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
+						<div class="tile color_9 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 							<div class="tile-content">
 								<div class="tile-icon-large">
 									<img alt="Imagen Referencia" class="imgw" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/SimEnergy.png">
@@ -273,19 +275,19 @@ foreach ($arrTabMenu as $tab) {
 					</a>
 				<?php } ?>
 
-				<div class="tile color_7 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
+				<div class="tile color_10 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 					<div class="tile-content">
 						<div class="tile-icon-large">
-							<p style="color:#ffffff;"><strong>Asistencia <br/>Tecnica</strong></p>
+							<p><strong>Asistencia <br/>Tecnica</strong></p>
 							<a href="mailto:soporte@simplytech.cl?Subject=Asistencia"><img alt="Imagen Referencia" class="imgx" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_asistencia_tecnica.png"></a>
 						</div>
 					</div>
 				</div>
 
-				<div class="tile color_8 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
+				<div class="tile color_9 tile-medium col-xs-12 col-sm-6 col-md-3 col-lg-3"  >
 					<div class="tile-content">
 						<div class="tile-icon-large">
-							<p style="color:#ffffff;"><strong>Cotizar <br/>Servicio</strong></p>
+							<p><strong>Cotizar <br/>Servicio</strong></p>
 							<a href="mailto:ventas@simplytech.cl?Subject=Cotizacion"><img alt="Imagen Referencia" class="imgx" src="<?php echo DB_SITE_REPO ?>/Legacy/gestion_modular/img/tile_cotizar.png"></a>
 						</div>
 					</div>
@@ -324,6 +326,6 @@ foreach ($arrTabMenu as $tab) {
 	</div>
 </div>
 
-<?php widget_whatsappFloatBtn('+56943497697', 'Necesito un poco de información'); ?>
+<?php widget_whatsappFloatBtn('+56990994763', 'Necesito un poco de información'); ?>
 
 

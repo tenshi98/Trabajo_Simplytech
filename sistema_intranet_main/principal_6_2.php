@@ -166,7 +166,7 @@ foreach ($arrTabMenu as $tab) {
 				<?php if($Tab_5!=0){ ?><li>                <a href="principal_6_5.php"><?php echo $arrOrderTabMenu[5]; ?></a></li><?php } ?>
 				<?php if($Tab_4!=0){ ?><li>                <a href="principal_6_4.php"><?php echo $arrOrderTabMenu[4]; ?></a></li><?php } ?>
 				<?php if($Tab_7!=0){ ?><li>                <a href="principal_6_7.php"><?php echo $arrOrderTabMenu[9]; ?></a></li><?php } ?>
-				<li><a href="principal_6_8.php"><span style="color: #9900ff;"><i class="fa fa-book" aria-hidden="true"></i> Tutoriales</span></a></li>
+				<li><a href="principal_6_8.php"><span style="color: #1649E4;"><i class="fa fa-book" aria-hidden="true"></i> Tutoriales</span></a></li>
 			</ul>
 		</header>
 		<div class="tab-content">

@@ -28,8 +28,8 @@ body:not(.sidebar-left-mini) #menu .nav-header,
 #menu>li:hover>a, 
 #menu>li:focus>a,
 #menu>li a:hover {
-	background-color: #FFE100 !important;
-	color: #1649E4 !important;
+	background-color: #EEF2F5 !important;
+	color: #333 !important;
 }
 /* Color submenu del tema */
 #menu>li ul {
@@ -142,3 +142,9 @@ body:not(.sidebar-left-mini) #menu .nav-header {
     float: right!important;
 	left: auto!important;
 }
+.head {
+    background-color: #EEF2F5 !important;
+  }
+  .head .main-bar h3{
+    color: #333;
+  }
