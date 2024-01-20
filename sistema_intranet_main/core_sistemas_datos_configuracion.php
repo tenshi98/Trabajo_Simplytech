@@ -227,7 +227,7 @@ $rowdata = db_select_data (false, $SIS_query, 'core_sistemas',$SIS_join, $SIS_wh
 							} else if(RefreshPaginaPrincipal == 2){
 								document.getElementById('div_idOpcionesGen_6').style.display = 'none';
 								//Reseteo los valores a 0
-								document.getElementById('idOpcionesGen_6').value = "0";
+								//document.getElementById('idOpcionesGen_6').value = "0";
 							}
 						});
 

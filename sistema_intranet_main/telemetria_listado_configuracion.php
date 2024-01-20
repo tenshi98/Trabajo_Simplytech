@@ -204,7 +204,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', '', 'idTelem
 							} else if(idUsoFTP == 2){
 								document.getElementById('div_FTP_Carpeta').style.display = 'none';
 								//Reseteo los valores a 0
-								document.getElementById('FTP_Carpeta').value = "";
+								//document.getElementById('FTP_Carpeta').value = "";
 							}
 
 						});
