@@ -359,39 +359,44 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 				alert_post_data(4,2,2,0, $Alert_Text);
 			}else{
 				$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-				<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=visualization"></script>
-
+				<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 				<div id="map_canvas" style="width: 100%; height: 550px;"></div>
-
 				<script>
+					let map;
 
-					var myLatlng = new google.maps.LatLng(<?php echo $arrPuntos[0]['Latitud']; ?>, <?php echo $arrPuntos[0]['Longitud']; ?>);
+					async function initMap() {
+						const { Map } = await google.maps.importLibrary("maps");
 
-					var myOptions = {
-						zoom: 17,
-						center: myLatlng,
-						mapTypeId: google.maps.MapTypeId.SATELLITE
-					};
-					map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+						var myLatlng = new google.maps.LatLng(<?php echo $arrPuntos[0]['Latitud']; ?>, <?php echo $arrPuntos[0]['Longitud']; ?>);
+
+						var myOptions = {
+							zoom: 17,
+							center: myLatlng,
+							mapTypeId: google.maps.MapTypeId.SATELLITE
+						};
+
+						map = new Map(document.getElementById("map_canvas"), myOptions);
+						/* Data points defined as a mixture of WeightedLocation and LatLng objects */
+						var heatMapData = [
+							<?php
+							//recorro los resultados
+							foreach ($arrMediciones as $med) {
+								if(isset($med['GeoLatitud'])&&$med['GeoLatitud']!=0&&isset($med['GeoLongitud'])&&$med['GeoLongitud']!=0){
+									$pres = $med['Sensor_1'] + $med['Sensor_2'];
+									echo '{location: new google.maps.LatLng('.$med['GeoLatitud'].', '.$med['GeoLongitud'].'), weight: '.$pres.'},';
+								}
+							} ?>
+						];
+
+						var heatmap = new google.maps.visualization.HeatmapLayer({
+						data: heatMapData
+						});
+						heatmap.setMap(map);
+						dibuja_zona();
+
+					}
 
 					//Se dibujan los puntos en base a los niveles de riego
-					/* Data points defined as a mixture of WeightedLocation and LatLng objects */
-					var heatMapData = [
-						<?php
-						//recorro los resultados
-						foreach ($arrMediciones as $med) {
-							if(isset($med['GeoLatitud'])&&$med['GeoLatitud']!=0&&isset($med['GeoLongitud'])&&$med['GeoLongitud']!=0){
-								$pres = $med['Sensor_1'] + $med['Sensor_2'];
-								echo '{location: new google.maps.LatLng('.$med['GeoLatitud'].', '.$med['GeoLongitud'].'), weight: '.$pres.'},';
-							}
-						} ?>
-					];
-
-					var heatmap = new google.maps.visualization.HeatmapLayer({
-					  data: heatMapData
-					});
-					heatmap.setMap(map);
-					dibuja_zona();
 					/* ************************************************************************** */
 					function dibuja_zona() {
 

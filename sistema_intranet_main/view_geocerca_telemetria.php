@@ -72,81 +72,78 @@ $arrZonas = db_select_array (false, $SIS_query, 'telemetria_geocercas_ubicacione
 						alert_post_data(4,2,2,0, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-					<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+						<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 					<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 					<script>
-						
-						var map;
+						let map;
 						var marker;
-						/* ************************************************************************** */
-						function initialize() {
-							
-							var myLatlng = new google.maps.LatLng(-33.4372, -70.6506);
-							
+
+						async function initMap() {
+							const { Map } = await google.maps.importLibrary("maps");
+
+							var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
 							var myOptions = {
 								zoom: 18,
 								center: myLatlng,
 								mapTypeId: google.maps.MapTypeId.SATELLITE
 							};
-							map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+							map = new Map(document.getElementById("map_canvas"), myOptions);
 							map.setTilt(0);
-							
+
 							dibuja_zona();
 
 						}
+
 						/* ************************************************************************** */
 						function dibuja_zona() {
-								<?php
-								//Variables con la primera posicion
-								$Latitud_x = '';
-								$Longitud_x = '';
-								?>
+							<?php
+							//Variables con la primera posicion
+							$Latitud_x = '';
+							$Longitud_x = '';
+							?>
 
-								var triangleCoords = [
-									<?php //recorrer
-									foreach ($arrZonas as $puntos) {
-										echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
-										';
-										if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'){
-											$Latitud_x = $puntos['Latitud'];
-											$Longitud_x = $puntos['Longitud'];
-										}
+							var triangleCoords = [
+								<?php //recorrer
+								foreach ($arrZonas as $puntos) {
+									echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
+									';
+									if(isset($puntos['Latitud'])&&$puntos['Latitud']!='0'){
+										$Latitud_x = $puntos['Latitud'];
+										$Longitud_x = $puntos['Longitud'];
 									}
-									if(isset($Longitud_x)&&$Longitud_x!=''){
-										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
-									} ?>
-								];
-							
-								// Construct the polygon.
-								var bermudaTriangle = new google.maps.Polygon({
-									paths: triangleCoords,
-									strokeColor: '#FF0000',
-									strokeOpacity: 0.8,
-									strokeWeight: 2,
-									fillColor: '#FF0000',
-									fillOpacity: 0.35
-								});
-								bermudaTriangle.setMap(map);
-									
-								<?php
-								if(isset($Latitud_x)&&$Latitud_x!=''&&isset($Longitud_x)&&$Longitud_x!=''){
-									echo 'marker.setPosition(new google.maps.LatLng('.$Latitud_x.', '.$Longitud_x.'));
-										  map.panTo(marker.position);'; 
+								}
+								if(isset($Longitud_x)&&$Longitud_x!=''){
+									echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}';
 								} ?>
+							];
 
-							}
-							
-							
-						/* ************************************************************************** */
-						google.maps.event.addDomListener(window, "load", initialize());
+							// Construct the polygon.
+							var bermudaTriangle = new google.maps.Polygon({
+								paths: triangleCoords,
+								strokeColor: '#FF0000',
+								strokeOpacity: 0.8,
+								strokeWeight: 2,
+								fillColor: '#FF0000',
+								fillOpacity: 0.35
+							});
+							bermudaTriangle.setMap(map);
+
+							<?php
+							if(isset($Latitud_x)&&$Latitud_x!=''&&isset($Longitud_x)&&$Longitud_x!=''){
+								echo 'marker.setPosition(new google.maps.LatLng('.$Latitud_x.', '.$Longitud_x.'));
+										 map.panTo(marker.position);';
+							} ?>
+
+						}
 
 					</script>
 
-		
 				<?php } ?>
 			</div>
 		</div>
- 
+
 	</div>
 </div>
 

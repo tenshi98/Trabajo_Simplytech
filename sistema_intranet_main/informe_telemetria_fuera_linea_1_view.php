@@ -53,29 +53,33 @@ require_once 'core/Web.Header.Views.php';
 		<div class="table-responsive">
 			<?php
 			$explanation2 .= '<strong>Tiempo: </strong>'.$rowdata['Tiempo'].' hrs<br/>';
-							
+
 			//Si no existe una ID se utiliza una por defecto
 			if(!isset($_SESSION['usuario']['basic_data']['Config_IDGoogle']) OR $_SESSION['usuario']['basic_data']['Config_IDGoogle']==''){
 				$Alert_Text  = 'No ha ingresado Una API de Google Maps.';
 				alert_post_data(4,2,2,0, $Alert_Text);
 			}else{
 				$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-				<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
-				<script type="text/javascript">
-					function initialize() {
-						var myLatlng = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
-						var mapOptions = {
-							zoom: 15,
-							scrollwheel: false,
-							center: myLatlng,
-							mapTypeId: google.maps.MapTypeId.ROADMAP
-						}
-						var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+				<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
+				<script>
+					let map;
 
+					async function initMap() {
+						const { Map } = await google.maps.importLibrary("maps");
+
+						var myLatlng = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
 						// marker position
 						var factory_1 = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud_Last'] ?>, <?php echo $rowdata['GeoLongitud_Last'] ?>);
 						var factory_2 = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
 
+						var myOptions = {
+							zoom: 15,
+							scrollwheel: false,
+							center: myLatlng,
+							mapTypeId: google.maps.MapTypeId.ROADMAP
+						};
+
+						map = new Map(document.getElementById("map_canvas"), myOptions);
 						// InfoWindow content
 						var content_1 = '<div id="iw-container">' +
 										'<div class="iw-title">Desconexion</div>' +
@@ -85,7 +89,7 @@ require_once 'core/Web.Header.Views.php';
 										'</div>' +
 										'<div class="iw-bottom-gradient"></div>' +
 										'</div>';
-								
+
 						var content_2 = '<div id="iw-container">' +
 										'<div class="iw-title">Conexion</div>' +
 										'<div class="iw-content">' +
@@ -96,7 +100,7 @@ require_once 'core/Web.Header.Views.php';
 										'</div>' +
 										'<div class="iw-bottom-gradient"></div>' +
 										'</div>';
-												
+
 
 						// A new Info Window is created and set content
 						var infowindow_1 = new google.maps.InfoWindow({
@@ -106,8 +110,8 @@ require_once 'core/Web.Header.Views.php';
 						var infowindow_2 = new google.maps.InfoWindow({
 							content: content_2,
 							maxWidth: 350
-						});   
-										
+						});
+
 						// marker options
 						var marker_1 = new google.maps.Marker({
 							position	: factory_1,
@@ -123,7 +127,6 @@ require_once 'core/Web.Header.Views.php';
 							animation 	: google.maps.Animation.DROP,
 							icon      	: "<?php echo DB_SITE_REPO ?>/LIB_assets/img/map-icons/1_series_green.png"
 						});
-								
 
 						// This event expects a click on a marker
 						// When this event is fired the Info Window is opened.
@@ -191,7 +194,7 @@ require_once 'core/Web.Header.Views.php';
 								$(this).css({opacity: '1'});
 							});
 						});
-										
+
 						//muestro la infowindow al inicio
 						infowindow_1.open(map,marker_1);
 						infowindow_2.open(map,marker_2);
@@ -199,13 +202,12 @@ require_once 'core/Web.Header.Views.php';
 						//centralizo el mapa en base al ultimo dato obtenido
 						map.panTo(marker_1.getPosition());
 
-											
-					}  
+					}
+
 				</script>
-				<div id="map_canvas" style="width:100%; height:500px">
-					<script type="text/javascript">initialize();</script>
-				</div>
-			   
+
+				<div id="map_canvas" style="width:100%; height:500px"></div>
+
 			<?php } ?>
 		</div>
 	</div>

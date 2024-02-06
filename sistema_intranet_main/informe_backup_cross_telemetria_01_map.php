@@ -95,39 +95,45 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 				alert_post_data(4,2,2,0, $Alert_Text);
 			}else{
 				$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-				<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=visualization"></script>
-											
+
+				<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 				<div id="map_canvas" style="width: 100%; height: 550px;"></div>
-
 				<script>
-					
-					var myLatlng = new google.maps.LatLng(<?php echo $arrPuntos[0]['Latitud']; ?>, <?php echo $arrPuntos[0]['Longitud']; ?>);
+					let map;
 
-					var myOptions = {
-						zoom: 15,
-						center: myLatlng,
-						mapTypeId: 'satellite'
-					};
-					map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+					async function initMap() {
+						const { Map } = await google.maps.importLibrary("maps");
 
-					/* Data points defined as a mixture of WeightedLocation and LatLng objects */
-					var heatMapData = [
-						<?php
-						//recorro los resultados
-						foreach ($arrMediciones as $med) {
-							$pres = $med['CantidadMuestra'];
-							echo '{location: new google.maps.LatLng('.$med['GeoLatitud'].', '.$med['GeoLongitud'].'), weight: '.$pres.'},';
-						} ?>
-					];
+						var myLatlng = new google.maps.LatLng(<?php echo $arrPuntos[0]['Latitud']; ?>, <?php echo $arrPuntos[0]['Longitud']; ?>);
 
-					var heatmap = new google.maps.visualization.HeatmapLayer({
-					  data: heatMapData
-					});
-					heatmap.setMap(map);
-					dibuja_zona();
+						var myOptions = {
+							zoom: 15,
+							center: myLatlng,
+							mapTypeId: google.maps.MapTypeId.SATELLITE
+						};
+
+						map = new Map(document.getElementById("map_canvas"), myOptions);
+						/* Data points defined as a mixture of WeightedLocation and LatLng objects */
+						var heatMapData = [
+							<?php
+							//recorro los resultados
+							foreach ($arrMediciones as $med) {
+								$pres = $med['CantidadMuestra'];
+								echo '{location: new google.maps.LatLng('.$med['GeoLatitud'].', '.$med['GeoLongitud'].'), weight: '.$pres.'},';
+							} ?>
+						];
+
+						var heatmap = new google.maps.visualization.HeatmapLayer({
+						data: heatMapData
+						});
+						heatmap.setMap(map);
+						dibuja_zona();
+
+					}
+
 					/* ************************************************************************** */
 					function dibuja_zona() {
-								
+
 						var triangleCoords = [
 							<?php
 							//Variables con la primera posicion
@@ -166,7 +172,7 @@ $arrPuntos = db_select_array (false, 'idUbicaciones, Latitud, Longitud', 'cross_
 			<?php } ?>
 		</div>
 	</div>
-      
+
 </section>
 
 <?php if(isset($_GET['return'])&&$_GET['return']!=''){ ?>

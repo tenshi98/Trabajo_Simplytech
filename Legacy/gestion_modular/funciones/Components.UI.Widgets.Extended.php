@@ -1126,15 +1126,17 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 						</div>
 						<div class="box-body">
 							<div class="">
-								<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+								<script async src="https://maps.googleapis.com/maps/api/js?key='.$google.'&callback=initMap"></script>
 								<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 								<div id="consulta"></div>
 
 								<script>
-									var map;
+									let map;
 									var marker;
-									/* ************************************************************************** */
-									function initialize() {
+
+									async function initMap() {
+										const { Map } = await google.maps.importLibrary("maps");
+
 										var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
 
 										var myOptions = {
@@ -1147,7 +1149,8 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 											center: myLatlng,
 											mapTypeId: google.maps.MapTypeId.ROADMAP
 										};
-										map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);';
+
+										map = new Map(document.getElementById("map_canvas"), myOptions);';
 
 										if(isset($seguimiento)&&$seguimiento!=''&&$seguimiento==1){
 											$GPS .= '
@@ -1158,7 +1161,9 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 										}
 
 										$GPS .= '
+
 									}
+
 									/* ************************************************************************** */
 									function ubiquity() {
 
@@ -1361,9 +1366,6 @@ function widget_GPS_equipos($titulo,$nombreEquipo, $seguimiento, $map_visibility
 										return tmp;
 
 									}
-
-									/* ************************************************************************** */
-									google.maps.event.addDomListener(window, "load", initialize());
 								</script>
 
 							</div>
@@ -3319,7 +3321,7 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 
 
 		$GPS = '
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+		<script async src="https://maps.googleapis.com/maps/api/js?key='.$google.'&callback=initMap"></script>
 
 		<div class="row"
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -3464,13 +3466,12 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 		</div>
 
 		<style>
-		.my-custom-scrollbar {position: relative;height: 550px;overflow: auto;}
-		.table-wrapper-scroll-y {display: block;}
+			.my-custom-scrollbar {position: relative;height: 550px;overflow: auto;}
+			.table-wrapper-scroll-y {display: block;}
 		</style>
 
 		<script>
-
-			var map;
+			let map;
 			var markers = [];
 			//Ubicación de los distintos dispositivos
 			var locations = [ ';
@@ -3508,6 +3509,25 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 				}
 			$GPS .= '];
 
+			async function initMap() {
+				const { Map } = await google.maps.importLibrary("maps");
+
+				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+				var myOptions = {
+					zoom: 12,
+					center: myLatlng,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+
+				map = new Map(document.getElementById("map_canvas"), myOptions);
+				//ubicacion inicial
+				setMarkers(map, locations, 1);
+				//actualizacion de posicion
+				transMarker(map, '.$SegActual.');
+
+			}
+
 			/* ************************************************************************** */
 			function chngZona() {
 				idZona = document.getElementById("selectZona").value;
@@ -3527,23 +3547,6 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 				markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
 			}
 
-			/* ************************************************************************** */
-			function initialize() {
-				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
-
-				var myOptions = {
-					zoom: 12,
-					center: myLatlng,
-					mapTypeId: google.maps.MapTypeId.ROADMAP
-				};
-				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
-				//ubicacion inicial
-				setMarkers(map, locations, 1);
-				//actualizacion de posicion
-				transMarker(map, '.$SegActual.');
-
-			}
 			/* ************************************************************************** */
 			function setMarkers(map, locations, optc) {
 
@@ -3648,9 +3651,6 @@ function widget_Gestion_Flota($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $id
 				clearMarkers();
 				markers = [];
 			}
-
-			/* ************************************************************************** */
-			google.maps.event.addDomListener(window, "load", initialize());
 		</script>';
 
 			$GPS .= '<div class="row">';
@@ -3761,7 +3761,7 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 
 
 		$GPS = '
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+		<script async src="https://maps.googleapis.com/maps/api/js?key='.$google.'&callback=initMap"></script>
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -3895,8 +3895,7 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 		</style>
 
 		<script>
-
-			var map;
+			let map;
 			var markers = [];
 			//Ubicación de los distintos dispositivos
 			var locations = [ ';
@@ -3931,6 +3930,27 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 					$GPS .= "], ";
 				}
 			$GPS .= '];
+
+			async function initMap() {
+				const { Map } = await google.maps.importLibrary("maps");
+
+				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+				var myOptions = {
+					zoom: 12,
+					center: myLatlng,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+
+				map = new Map(document.getElementById("map_canvas"), myOptions);
+
+				//ubicacion inicial
+				setMarkers(map, locations, 1);
+				//actualizacion de posicion
+				transMarker(map, '.$SegActual.');
+
+			}
+
 			/* ************************************************************************** */
 			function chngZona() {
 				idZona = document.getElementById("selectZona").value;
@@ -3950,24 +3970,6 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 				markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
 			}
 
-
-			/* ************************************************************************** */
-			function initialize() {
-				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
-
-				var myOptions = {
-					zoom: 12,
-					center: myLatlng,
-					mapTypeId: google.maps.MapTypeId.ROADMAP
-				};
-				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
-				//ubicacion inicial
-				setMarkers(map, locations, 1);
-				//actualizacion de posicion
-				transMarker(map, '.$SegActual.');
-
-			}
 			/* ************************************************************************** */
 			function setMarkers(map, locations, optc) {
 
@@ -4072,9 +4074,6 @@ function widget_Gestion_Equipos($titulo,$idSistema, $IDGoogle, $idTipoUsuario, $
 				clearMarkers();
 				markers = [];
 			}
-
-			/* ************************************************************************** */
-			google.maps.event.addDomListener(window, "load", initialize());
 		</script>
 
 		';
@@ -4195,7 +4194,7 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 
 
 		$GPS = '
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+		<script async src="https://maps.googleapis.com/maps/api/js?key='.$google.'&callback=initMap"></script>
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -4351,8 +4350,7 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 		</style>
 
 		<script>
-
-			var map;
+			let map;
 			var markers = [];
 			//Ubicación de los distintos dispositivos
 			var locations = [ ';
@@ -4390,6 +4388,26 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 				}
 			$GPS .= '];
 
+			async function initMap() {
+				const { Map } = await google.maps.importLibrary("maps");
+
+				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+				var myOptions = {
+					zoom: 12,
+					center: myLatlng,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+
+				map = new Map(document.getElementById("map_canvas"), myOptions);
+
+				//ubicacion inicial
+				setMarkers(map, locations, 1);
+				//actualizacion de posicion
+				transMarker(map, '.$SegActual.');
+
+			}
+
 			/* ************************************************************************** */
 			function chngZona() {
 				idZona = document.getElementById("selectZona").value;
@@ -4409,23 +4427,6 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 				markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
 			}
 
-			/* ************************************************************************** */
-			function initialize() {
-				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
-
-				var myOptions = {
-					zoom: 12,
-					center: myLatlng,
-					mapTypeId: google.maps.MapTypeId.ROADMAP
-				};
-				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
-				//ubicacion inicial
-				setMarkers(map, locations, 1);
-				//actualizacion de posicion
-				transMarker(map, '.$SegActual.');
-
-			}
 			/* ************************************************************************** */
 			function setMarkers(map, locations, optc) {
 
@@ -4530,9 +4531,6 @@ function widget_Gestion_Flota_Cross($titulo,$idSistema, $IDGoogle, $idTipoUsuari
 				clearMarkers();
 				markers = [];
 			}
-
-			/* ************************************************************************** */
-			google.maps.event.addDomListener(window, "load", initialize());
 		</script>';
 
 			$GPS .= '<div class="row">';
@@ -4669,7 +4667,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 		$arrPredios = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPredios');
 
 		$GPS = '
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+		<script async src="https://maps.googleapis.com/maps/api/js?key='.$google.'&callback=initMap"></script>
 		<style>
 			.my_marker {color: black;background-color:#1E90FF;border: solid 1px black;font-weight: 900;padding: 4px;top: -8px;}
 			.my_marker::after {content: "";position: absolute;top: 100%;left: 50%;transform: translate(-50%, 0%);border: solid 8px transparent;border-top-color: black;}
@@ -4866,8 +4864,7 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 		</style>
 
 		<script>
-
-			var map;
+			let map;
 			var markers = [];
 			//Ubicación de los distintos dispositivos
 			var locations = [ ';
@@ -4905,6 +4902,25 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 				}
 			$GPS .= '];
 
+			async function initMap() {
+				const { Map } = await google.maps.importLibrary("maps");
+
+				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+				var myOptions = {
+					zoom: 14,
+					center: myLatlng,
+					mapTypeId: google.maps.MapTypeId.SATELLITE
+				};
+
+				map = new Map(document.getElementById("map_canvas"), myOptions);
+				//dibuja zonas
+				map.setTilt(0);
+				//dibuja zonas
+				dibuja_zona();
+
+			}
+
 			/* ************************************************************************** */
 			function chngZona() {
 				idZona = document.getElementById("selectZona").value;
@@ -4924,23 +4940,6 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 				markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
 			}
 
-
-			/* ************************************************************************** */
-			function initialize() {
-				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
-
-				var myOptions = {
-					zoom: 14,
-					center: myLatlng,
-					mapTypeId: google.maps.MapTypeId.SATELLITE
-				};
-				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-				//dibuja zonas
-				map.setTilt(0);
-				//dibuja zonas
-				dibuja_zona();
-
-			}
 			/* ************************************************************************** */
 			class MyMarker extends google.maps.OverlayView {
 				constructor(params) {
@@ -5182,9 +5181,6 @@ function widget_Gestion_Flota_CrossTech($titulo, $idSistema, $IDGoogle, $idTipoU
 				transMarker(map, '.$SegActual.');
 
 			}
-
-			/* ************************************************************************** */
-			google.maps.event.addDomListener(window, "load", initialize());
 		</script>';
 
 		//despliega el resumen
@@ -5323,7 +5319,7 @@ function widget_Gestion_Flota_CrossTech_Transportes_AB($titulo, $idSistema, $IDG
 		$arrPredios = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrPredios');
 
 		$GPS = '
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+		<script async src="https://maps.googleapis.com/maps/api/js?key='.$google.'&callback=initMap"></script>
 		<style>
 			.my_marker {color: black;background-color:#1E90FF;border: solid 1px black;font-weight: 900;padding: 4px;top: -8px;}
 			.my_marker::after {content: "";position: absolute;top: 100%;left: 50%;transform: translate(-50%, 0%);border: solid 8px transparent;border-top-color: black;}
@@ -5520,8 +5516,7 @@ function widget_Gestion_Flota_CrossTech_Transportes_AB($titulo, $idSistema, $IDG
 		</style>
 
 		<script>
-
-			var map;
+			let map;
 			var markers = [];
 			//Ubicación de los distintos dispositivos
 			var locations = [ ';
@@ -5559,6 +5554,25 @@ function widget_Gestion_Flota_CrossTech_Transportes_AB($titulo, $idSistema, $IDG
 				}
 			$GPS .= '];
 
+			async function initMap() {
+				const { Map } = await google.maps.importLibrary("maps");
+
+				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+				var myOptions = {
+					zoom: 14,
+					center: myLatlng,
+					mapTypeId: google.maps.MapTypeId.SATELLITE
+				};
+
+				map = new Map(document.getElementById("map_canvas"), myOptions);
+				//dibuja zonas
+				map.setTilt(0);
+				//dibuja zonas
+				dibuja_zona();
+
+			}
+
 			/* ************************************************************************** */
 			function chngZona() {
 				idZona = document.getElementById("selectZona").value;
@@ -5578,23 +5592,6 @@ function widget_Gestion_Flota_CrossTech_Transportes_AB($titulo, $idSistema, $IDG
 				markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
 			}
 
-
-			/* ************************************************************************** */
-			function initialize() {
-				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
-
-				var myOptions = {
-					zoom: 14,
-					center: myLatlng,
-					mapTypeId: google.maps.MapTypeId.SATELLITE
-				};
-				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-				//dibuja zonas
-				map.setTilt(0);
-				//dibuja zonas
-				dibuja_zona();
-
-			}
 			/* ************************************************************************** */
 			class MyMarker extends google.maps.OverlayView {
 				constructor(params) {
@@ -5836,9 +5833,6 @@ function widget_Gestion_Flota_CrossTech_Transportes_AB($titulo, $idSistema, $IDG
 				transMarker(map, '.$SegActual.');
 
 			}
-
-			/* ************************************************************************** */
-			google.maps.event.addDomListener(window, "load", initialize());
 		</script>';
 
 		//despliega el resumen
@@ -6338,7 +6332,7 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 		$_SESSION['usuario']['zona']['idUsuario']      = $idUsuario;
 
 		$GPS = '
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+		<script async src="https://maps.googleapis.com/maps/api/js?key='.$google.'&callback=initMap"></script>
 		<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 		<script type="text/javascript">google.charts.load(\'current\', {\'packages\':[\'bar\', \'corechart\', \'table\', \'gauge\']});</script>
 
@@ -6509,33 +6503,12 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 		</style>
 
 		<script>
-			/* ************************************************************************** */
-			/* ************************************************************************** */
-			/* ************************************************************************** */
-			var map;
+			let map;
 			var markers = [];
 
-			/* ************************************************************************** */
-			function chngZona() {
-				idZona = document.getElementById("selectZona").value;
-				$(\'#vehiContent\').load(\'principal_update_zonaList_2_crosstech.php'.$enlace.'&idZona=\' + idZona);
-				setMarkers(map, locations, 1);
-			}
+			async function initMap() {
+				const { Map } = await google.maps.importLibrary("maps");
 
-			/* ************************************************************************** */
-			function fncCenterMap(Latitud, Longitud, n_icon){
-				latlon = new google.maps.LatLng(Latitud, Longitud);
-				map.panTo(latlon);
-				//volver todo a normal
-				for (let i = 0; i < markers.length; i++) {
-					markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
-				}
-				//colorear el seleccionado
-				markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
-			}
-
-			/* ************************************************************************** */
-			function initialize() {
 				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
 
 				var myOptions = {
@@ -6543,8 +6516,8 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 					center: myLatlng,
 					mapTypeId: google.maps.MapTypeId.ROADMAP
 				};
-				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
+				map = new Map(document.getElementById("map_canvas"), myOptions);
 				//Ubicación de los distintos dispositivos
 				var locations = [ ';
 					foreach ( $arrEquipo as $data ) {
@@ -6585,6 +6558,26 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 				transMarker(map, '.$SegActual.');
 
 			}
+
+			/* ************************************************************************** */
+			function chngZona() {
+				idZona = document.getElementById("selectZona").value;
+				$(\'#vehiContent\').load(\'principal_update_zonaList_2_crosstech.php'.$enlace.'&idZona=\' + idZona);
+				setMarkers(map, locations, 1);
+			}
+
+			/* ************************************************************************** */
+			function fncCenterMap(Latitud, Longitud, n_icon){
+				latlon = new google.maps.LatLng(Latitud, Longitud);
+				map.panTo(latlon);
+				//volver todo a normal
+				for (let i = 0; i < markers.length; i++) {
+					markers[i].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_orange.png");
+				}
+				//colorear el seleccionado
+				markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
+			}
+
 			/* ************************************************************************** */
 			function setMarkers(map, locations, optc) {
 
@@ -6690,8 +6683,6 @@ function widget_Gestion_Equipos_CrossTech($titulo,$idSistema, $IDGoogle, $idTipo
 				markers = [];
 			}
 
-			/* ************************************************************************** */
-			google.maps.event.addDomListener(window, "load", initialize());
 		</script>
 
 		';
@@ -7071,7 +7062,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 			</div>';
 
 		$GPS .= '
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+		<script async src="https://maps.googleapis.com/maps/api/js?key='.$google.'&callback=initMap"></script>
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -7259,8 +7250,7 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 		</style>
 
 		<script>
-
-			var map;
+			let map;
 			var markers = [];
 			//Ubicación de los distintos dispositivos
 			var locations = [ ';
@@ -7295,6 +7285,27 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 					$GPS .= "], ";
 				}
 			$GPS .= '];
+
+			async function initMap() {
+				const { Map } = await google.maps.importLibrary("maps");
+
+				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+				var myOptions = {
+					zoom: 12,
+					center: myLatlng,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+
+				map = new Map(document.getElementById("map_canvas"), myOptions);
+
+				//ubicacion inicial
+				setMarkers(map, locations, 1);
+				//actualizacion de posicion
+				transMarker(map, '.$SegActual.');
+
+			}
+
 			/* ************************************************************************** */
 			function chngZona() {
 				idZona = document.getElementById("selectZona").value;
@@ -7314,24 +7325,6 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 				markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
 			}
 
-
-			/* ************************************************************************** */
-			function initialize() {
-				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
-
-				var myOptions = {
-					zoom: 12,
-					center: myLatlng,
-					mapTypeId: google.maps.MapTypeId.ROADMAP
-				};
-				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
-				//ubicacion inicial
-				setMarkers(map, locations, 1);
-				//actualizacion de posicion
-				transMarker(map, '.$SegActual.');
-
-			}
 			/* ************************************************************************** */
 			function setMarkers(map, locations, optc) {
 
@@ -7437,8 +7430,6 @@ function widget_Gestion_Equipos_crosscrane($titulo,$idSistema, $IDGoogle, $idTip
 				markers = [];
 			}
 
-			/* ************************************************************************** */
-			google.maps.event.addDomListener(window, "load", initialize());
 		</script>
 
 		';
@@ -7771,7 +7762,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 			</div>';
 
 		$GPS .= '
-		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>
+		<script async src="https://maps.googleapis.com/maps/api/js?key='.$google.'&callback=initMap"></script>
 
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -7927,8 +7918,7 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 		</style>
 
 		<script>
-
-			var map;
+			let map;
 			var markers = [];
 			//Ubicación de los distintos dispositivos
 			var locations = [ ';
@@ -7962,6 +7952,27 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 					$GPS .= "], ";
 				}
 			$GPS .= '];
+
+			async function initMap() {
+				const { Map } = await google.maps.importLibrary("maps");
+
+				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+				var myOptions = {
+					zoom: 12,
+					center: myLatlng,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+
+				map = new Map(document.getElementById("map_canvas"), myOptions);
+
+				//ubicacion inicial
+				setMarkers(map, locations, 1);
+				//actualizacion de posicion
+				transMarker(map, '.$SegActual.');
+
+			}
+
 			/* ************************************************************************** */
 			function chngZona() {
 				idZona = document.getElementById("selectZona").value;
@@ -7981,24 +7992,6 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 				markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
 			}
 
-
-			/* ************************************************************************** */
-			function initialize() {
-				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
-
-				var myOptions = {
-					zoom: 12,
-					center: myLatlng,
-					mapTypeId: google.maps.MapTypeId.ROADMAP
-				};
-				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
-				//ubicacion inicial
-				setMarkers(map, locations, 1);
-				//actualizacion de posicion
-				transMarker(map, '.$SegActual.');
-
-			}
 			/* ************************************************************************** */
 			function setMarkers(map, locations, optc) {
 
@@ -8104,8 +8097,6 @@ function widget_Gestion_Equipos_crossEnergy($titulo,$idSistema, $IDGoogle, $idTi
 				markers = [];
 			}
 
-			/* ************************************************************************** */
-			google.maps.event.addDomListener(window, "load", initialize());
 		</script>
 
 		';
@@ -9863,7 +9854,7 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 				$GPS .= '
 			</div>';
 
-		$GPS .= '<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key='.$google.'&sensor=false"></script>';
+		$GPS .= '<script async src="https://maps.googleapis.com/maps/api/js?key='.$google.'&callback=initMap"></script>';
 
 		$GPS .= '
 		<div class="row">
@@ -10205,24 +10196,20 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 			</div>
 		</div>';
 
-
-
 		$GPS .= '
-
 		<style>
-		.my-custom-scrollbar {
-			position: relative;
-			height: 550px;
-			overflow: auto;
-		}
-		.table-wrapper-scroll-y {
-			display: block;
-		}
+			.my-custom-scrollbar {
+				position: relative;
+				height: 550px;
+				overflow: auto;
+			}
+			.table-wrapper-scroll-y {
+				display: block;
+			}
 		</style>
 
 		<script>
-
-			var map;
+			let map;
 			var markers = [];
 			//Ubicación de los distintos dispositivos
 			var locations = [ ';
@@ -10260,6 +10247,27 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 					}
 				}
 			$GPS .= '];
+
+			async function initMap() {
+				const { Map } = await google.maps.importLibrary("maps");
+
+				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+				var myOptions = {
+					zoom: 12,
+					center: myLatlng,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				};
+
+				map = new Map(document.getElementById("map_canvas"), myOptions);
+
+				//ubicacion inicial
+				setMarkers(map, locations, 1);
+				//actualizacion de posicion
+				transMarker(map, '.$SegActual.');
+
+			}
+
 			/* ************************************************************************** */
 			function chngZona() {
 				idZona = document.getElementById("selectZona").value;
@@ -10279,24 +10287,6 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 				markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
 			}
 
-
-			/* ************************************************************************** */
-			function initialize() {
-				var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
-
-				var myOptions = {
-					zoom: 12,
-					center: myLatlng,
-					mapTypeId: google.maps.MapTypeId.ROADMAP
-				};
-				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-
-				//ubicacion inicial
-				setMarkers(map, locations, 1);
-				//actualizacion de posicion
-				transMarker(map, '.$SegActual.');
-
-			}
 			/* ************************************************************************** */
 			function setMarkers(map, locations, optc) {
 
@@ -10401,8 +10391,6 @@ function widget_Gestion_Equipos_crosscrane_ubicacion($titulo,$idSistema, $IDGoog
 				markers = [];
 			}
 
-			/* ************************************************************************** */
-			google.maps.event.addDomListener(window, "load", initialize());
 		</script>
 
 		';

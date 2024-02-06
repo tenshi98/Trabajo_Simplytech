@@ -143,7 +143,7 @@ if($in_eq_fueralinea!=0){
 
 ?>
 
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">google.charts.load('current', {'packages':['bar', 'corechart', 'table', 'gauge']});</script>
 
@@ -484,7 +484,7 @@ if($in_eq_fueralinea!=0){
 				/* ************************************************************************** */
 				/* ************************************************************************** */
 
-				var map;
+				let map;
 				var markers = [];
 
 				/* ************************************************************************** */
@@ -499,9 +499,10 @@ if($in_eq_fueralinea!=0){
 					markers[n_icon].setIcon("'.DB_SITE_REPO.'/LIB_assets/img/map-icons/1_series_green.png");
 				}
 
-
 				/* ************************************************************************** */
-				function initialize() {
+				async function initMap() {
+					const { Map } = await google.maps.importLibrary("maps");
+
 					var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
 
 					var myOptions = {
@@ -509,8 +510,8 @@ if($in_eq_fueralinea!=0){
 						center: myLatlng,
 						mapTypeId: google.maps.MapTypeId.ROADMAP
 					};
-					map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
 
+					map = new Map(document.getElementById("map_canvas"), myOptions);
 					//Ubicación de los distintos dispositivos
 					var locations = [ ';
 
@@ -549,6 +550,7 @@ if($in_eq_fueralinea!=0){
 					setMarkers(map, locations, 1);
 
 				}
+
 				/* ************************************************************************** */
 				function setMarkers(map, locations, optc) {
 
@@ -626,8 +628,6 @@ if($in_eq_fueralinea!=0){
 					markers = [];
 				}
 
-				/* ************************************************************************** */
-				google.maps.event.addDomListener(window, "load", initialize());
 			</script>
 
 			';

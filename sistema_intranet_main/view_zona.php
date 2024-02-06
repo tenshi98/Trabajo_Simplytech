@@ -73,14 +73,15 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 							alert_post_data(4,2,2,0, $Alert_Text);
 						}else{
 							$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-							<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+							<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 							<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 							<script>
-
-								var map;
+								let map;
 								var marker;
-								/* ************************************************************************** */
-								function initialize() {
+
+								async function initMap() {
+									const { Map } = await google.maps.importLibrary("maps");
+
 									var myLatlng = new google.maps.LatLng(<?php echo $arrPuntos[0]['Latitud']; ?>, <?php echo $arrPuntos[0]['Longitud']; ?>);
 
 									var myOptions = {
@@ -88,18 +89,18 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 										center: myLatlng,
 										mapTypeId: google.maps.MapTypeId.SATELLITE
 									};
-									map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-									
-								
+
+									map = new Map(document.getElementById("map_canvas"), myOptions);
 									//RutasAlternativas();
 									dibuja_zona();
 
 								}
+
 								/* ************************************************************************** */
 								function dibuja_zona() {
 
 									var triangleCoords = [
-										<?php 
+										<?php
 										//Variables con la primera posicion
 										$Latitud_x       = '';
 										$Longitud_x      = '';
@@ -124,20 +125,20 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 											}
 										}
 										if(isset($Longitud_x)&&$Longitud_x!=''){
-											echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
+											echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}';
 										}
 										//Centralizado del mapa
 										$Latitud_z_prom  = $Latitud_z/$zcounter;
 										$Longitud_z_prom = $Longitud_z/$zcounter;
 										?>
 									];
-								
+
 									<?php
 									if(isset($Latitud_z_prom)&&$Latitud_z_prom!=0&&isset($Longitud_z_prom)&&$Longitud_z_prom!=0){
 										echo 'myLatlng = new google.maps.LatLng('.$Latitud_z_prom.', '.$Longitud_z_prom.');
-											map.setCenter(myLatlng);'; 
+											map.setCenter(myLatlng);';
 									} ?>
-									
+
 										// Construct the polygon.
 										var bermudaTriangle = new google.maps.Polygon({
 											paths: triangleCoords,
@@ -150,8 +151,6 @@ $arrPuntos = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas_ub
 										bermudaTriangle.setMap(map);
 
 								}
-								/* ************************************************************************** */
-								google.maps.event.addDomListener(window, "load", initialize());
 
 							</script>
 						<?php } ?>

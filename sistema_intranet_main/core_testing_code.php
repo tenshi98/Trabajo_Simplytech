@@ -444,14 +444,16 @@ array_push( $arrZonas,$row );
 							$Longitud = -70.65170304882815;
 						}
 						?>
-						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+
+						<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
-
-							var map;
+							let map;
 							var marker;
-							/* ************************************************************************** */
-							function initialize() {
+
+							async function initMap() {
+								const { Map } = await google.maps.importLibrary("maps");
+
 								var myLatlng = new google.maps.LatLng(<?php echo $Latitud; ?>, <?php echo $Longitud; ?>);
 
 								var myOptions = {
@@ -459,7 +461,8 @@ array_push( $arrZonas,$row );
 									center: myLatlng,
 									mapTypeId: google.maps.MapTypeId.ROADMAP
 								};
-								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+								map = new Map(document.getElementById("map_canvas"), myOptions);
 
 								marker = new google.maps.Marker({
 									draggable	: true,
@@ -529,8 +532,6 @@ array_push( $arrZonas,$row );
 
 								} ?>
 							}
-							/* ************************************************************************** */
-							google.maps.event.addDomListener(window, "load", initialize());
 
 						</script>
 					<?php } ?>

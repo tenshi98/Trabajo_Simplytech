@@ -102,52 +102,16 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 							.my_marker {color: white;background-color: black;border: solid 1px black;font-weight: 900;padding: 4px;top: -8px;}
 							.my_marker::after {content: "";position: absolute;top: 100%;left: 50%;transform: translate(-50%, 0%);border: solid 8px transparent;border-top-color: black;}
 						</style>
-			
-						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+
+						<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
-						
-							/* ************************************************************************** */
-							class MyMarker extends google.maps.OverlayView {
-								constructor(params) {
-									super();
-									this.position = params.position;
-
-									const content = document.createElement('div');
-									content.classList.add('my_marker');
-									content.textContent = params.label;
-									content.style.position = 'absolute';
-									content.style.transform = 'translate(-50%, -100%)';
-
-									const container = document.createElement('div');
-									container.style.position = 'absolute';
-									container.style.cursor = 'pointer';
-									container.appendChild(content);
-
-									this.container = container;
-								}
-
-								onAdd() {
-									this.getPanes().floatPane.appendChild(this.container);
-								}
-
-								onRemove() {
-									this.container.remove();
-								}
-
-								draw() {
-									const pos = this.getProjection().fromLatLngToDivPixel(this.position);
-									this.container.style.left = pos.x + 'px';
-									this.container.style.top = pos.y + 'px';
-								}
-							}
-  
-							/* ************************************************************************** */
-							var map;
+							let map;
 							var marker;
-							/* ************************************************************************** */
-							function initialize() {
-								
+
+							async function initMap() {
+								const { Map } = await google.maps.importLibrary("maps");
+
 								var myLatlng = new google.maps.LatLng(<?php echo $rowdata['PredioLatitud']; ?>, <?php echo $rowdata['PredioLongitud']; ?>);
 
 								var myOptions = {
@@ -155,7 +119,8 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 									center: myLatlng,
 									mapTypeId: google.maps.MapTypeId.SATELLITE
 								};
-								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+								map = new Map(document.getElementById("map_canvas"), myOptions);
 								map.setTilt(0);
 
 								// InfoWindow content
@@ -175,16 +140,13 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 												'</div>' +
 												'<div class="iw-bottom-gradient"></div>' +
 												'</div>';
-	
 
-		
 								// A new Info Window is created and set content
 								var infowindow = new google.maps.InfoWindow({
 									content: content_1,
 									maxWidth: 350
-								});	
-								
-									
+								});
+
 								marker = new google.maps.Marker({
 									position	: myLatlng,
 									map			: map,
@@ -254,16 +216,52 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 										$(this).css({opacity: '1'});
 									});
 								});
-												
+
 								//muestro la infowindow al inicio
 								infowindow.open(map,marker);
-								
+
 								dibuja_zona();
 
 							}
+
+							/* ************************************************************************** */
+							class MyMarker extends google.maps.OverlayView {
+								constructor(params) {
+									super();
+									this.position = params.position;
+
+									const content = document.createElement('div');
+									content.classList.add('my_marker');
+									content.textContent = params.label;
+									content.style.position = 'absolute';
+									content.style.transform = 'translate(-50%, -100%)';
+
+									const container = document.createElement('div');
+									container.style.position = 'absolute';
+									container.style.cursor = 'pointer';
+									container.appendChild(content);
+
+									this.container = container;
+								}
+
+								onAdd() {
+									this.getPanes().floatPane.appendChild(this.container);
+								}
+
+								onRemove() {
+									this.container.remove();
+								}
+
+								draw() {
+									const pos = this.getProjection().fromLatLngToDivPixel(this.position);
+									this.container.style.left = pos.x + 'px';
+									this.container.style.top = pos.y + 'px';
+								}
+							}
+
 							/* ************************************************************************** */
 							function dibuja_zona() {
-								
+
 								var polygons = [];
 								<?php
 								//variables
@@ -303,13 +301,13 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 											}
 										}
 									}
-									
+
 									if(isset($Longitud_x)&&$Longitud_x!=''){
 										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
 									}
 
 									echo '];';
-									
+
 									echo '
 									polygons.push(new google.maps.Polygon({
 										paths: path'.$todaszonas.',
@@ -321,7 +319,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 									}));
 									polygons[polygons.length-1].setMap(map);
 									';
-									
+
 									if($zcounter3!=0){
 										$Latitud_z_prom_2  = $Latitud_z_2/$zcounter3;
 										$Longitud_z_prom_2 = $Longitud_z_2/$zcounter3;
@@ -335,7 +333,7 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 										label: "'.$zonas[0]['Nombre'].'"
 									});
 									marker.setMap(map);
-  
+
 									// When the mouse moves within the polygon, display the label and change the BG color.
 									google.maps.event.addListener(polygons['.$zcounter2.'], "mousemove", function(event) {
 										polygons['.$zcounter2.'].setOptions({
@@ -352,25 +350,21 @@ $arrZonas = db_select_array (false, $SIS_query, 'cross_predios_listado_zonas', $
 									';
 
 									$zcounter2++;
-										
+
 								}
-								
-							
-								
+
 								echo 'myLatlng = new google.maps.LatLng('.$rowdata['PredioLatitud'].', '.$rowdata['PredioLongitud'].');
-													map.setCenter(myLatlng);'; 
+													map.setCenter(myLatlng);';
 								?>
 							}
-							/* ************************************************************************** */
-							google.maps.event.addDomListener(window, "load", initialize());
+
 
 						</script>
 
-		
 				<?php } ?>
 			</div>
 		</div>
- 
+
 	</div>
 </div>
 

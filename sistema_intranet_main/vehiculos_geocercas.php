@@ -168,23 +168,25 @@ array_push( $arrPuntos,$row );
 						alert_post_data(4,2,2,0, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+						<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
-							
-							var map;
+							let map;
 							var marker;
 							var geocoder = new google.maps.Geocoder();
-							/* ************************************************************************** */
-							function initialize() {
-								var myLatlng = new google.maps.LatLng(-33.4372, -70.6506);
+
+							async function initMap() {
+								const { Map } = await google.maps.importLibrary("maps");
+
+								var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
 
 								var myOptions = {
 									zoom: 18,
 									center: myLatlng,
 									mapTypeId: google.maps.MapTypeId.SATELLITE
 								};
-								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+								map = new Map(document.getElementById("map_canvas"), myOptions);
 								map.setTilt(0);
 
 								marker = new google.maps.Marker({
@@ -205,15 +207,16 @@ array_push( $arrPuntos,$row );
 									document.getElementById("Longitud_fake").value = event.latLng.lng();
 
 								});
-								
+
 								dibuja_zona();
 
 							}
+
 							/* ************************************************************************** */
 							function dibuja_zona() {
-								
+
 								var triangleCoords = [
-									<?php 
+									<?php
 									//Variables con la primera posicion
 									$Latitud_x = '';
 									$Longitud_x = '';
@@ -228,13 +231,11 @@ array_push( $arrPuntos,$row );
 									}
 									//se cierra la figura
 									if(isset($Longitud_x)&&$Longitud_x!=''){
-										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
+										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}';
 									}
 									?>
 								];
-							
-								
-								
+
 									// Construct the polygon.
 									var bermudaTriangle = new google.maps.Polygon({
 										paths: triangleCoords,
@@ -245,23 +246,18 @@ array_push( $arrPuntos,$row );
 										fillOpacity: 0.35
 									});
 									bermudaTriangle.setMap(map);
-									
+
 								<?php
-								
+
 								if(isset($rowUbicacion['Latitud'])&&$rowUbicacion['Latitud']!=''&&isset($rowUbicacion['Longitud'])&&$rowUbicacion['Longitud']!=''){
 									echo 'myLatlng = new google.maps.LatLng('.$rowUbicacion['Latitud'].', '.$rowUbicacion['Longitud'].');
 										  marker.setPosition(myLatlng);
 										  map.setCenter(myLatlng);
-										  map.panTo(marker.position);'; 
+										  map.panTo(marker.position);';
 
 								} ?>
 
 							}
-							
-							
-							
-							/* ************************************************************************** */
-							google.maps.event.addDomListener(window, "load", initialize());
 
 						</script>
 					<?php } ?>
@@ -365,24 +361,25 @@ array_push( $arrPuntos,$row );
 						alert_post_data(4,2,2,0, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+						<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
-							
-							var map;
+							let map;
 							var marker;
 							var geocoder = new google.maps.Geocoder();
-							var myLatlng = new google.maps.LatLng(-33.4372, -70.6506);
 
-							/* ************************************************************************** */
-							function initialize() {
-								
+							async function initMap() {
+								const { Map } = await google.maps.importLibrary("maps");
+
+								var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
 								var myOptions = {
 									zoom: 18,
 									center: myLatlng,
 									mapTypeId: google.maps.MapTypeId.SATELLITE
 								};
-								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+								map = new Map(document.getElementById("map_canvas"), myOptions);
 								map.setTilt(0);
 
 								marker = new google.maps.Marker({
@@ -403,10 +400,11 @@ array_push( $arrPuntos,$row );
 									document.getElementById("Longitud_fake").value = event.latLng.lng();
 
 								});
-								
+
 								dibuja_zona();
 
 							}
+
 							/* ************************************************************************** */
 							function dibuja_zona() {
 								<?php
@@ -429,7 +427,7 @@ array_push( $arrPuntos,$row );
 										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
 									} ?>
 								];
-							
+
 								// Construct the polygon.
 								var bermudaTriangle = new google.maps.Polygon({
 									paths: triangleCoords,
@@ -440,20 +438,14 @@ array_push( $arrPuntos,$row );
 									fillOpacity: 0.35
 								});
 								bermudaTriangle.setMap(map);
-									
+
 								<?php
 								if(isset($Latitud_x)&&$Latitud_x!=''&&isset($Longitud_x)&&$Longitud_x!=''){
 									echo 'marker.setPosition(new google.maps.LatLng('.$Latitud_x.', '.$Longitud_x.'));
-										  map.panTo(marker.position);'; 
+										  map.panTo(marker.position);';
 								} ?>
 
 							}
-							
-							
-							
-							
-							/* ************************************************************************** */
-							google.maps.event.addDomListener(window, "load", initialize());
 
 						</script>
 					<?php } ?>
@@ -473,7 +465,7 @@ array_push( $arrPuntos,$row );
 						$Form_Inputs->form_input_hidden('Latitud', 0, 2);
 						$Form_Inputs->form_input_hidden('Longitud', 0, 2);
 						$Form_Inputs->form_input_hidden('idZona', $_GET['edit_puntos'], 2);
-						
+
 						?>
 
 						<div class="form-group">
@@ -490,16 +482,16 @@ array_push( $arrPuntos,$row );
 							<th width="10">Acciones</th>
 						</tr>
 						</thead>
-										  
+
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
-						<?php 
+						<?php
 						$nx=1;
 						foreach ($arrPuntos as $pos) { ?>
 							<tr class="odd">
 								<td><?php echo $nx; ?></td>
 								<td><?php echo 'lat: '.$pos['Latitud'].'<br/>lng: '.$pos['Longitud']; ?></td>
 								<td>
-									<div class="btn-group" style="width: 70px;" >  
+									<div class="btn-group" style="width: 70px;" >
 										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $location.'&edit_puntos='.$_GET['edit_puntos'].'&mod='.$pos['idUbicaciones']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=2){
 											$ubicacion = $location.'&edit_puntos='.$_GET['edit_puntos'].'&del_punto='.simpleEncode($pos['idUbicaciones'], fecha_actual());
@@ -509,9 +501,9 @@ array_push( $arrPuntos,$row );
 									</div>
 								</td>
 							</tr>
-						<?php 
+						<?php
 						$nx++;
-						} ?>        
+						} ?>
 						</tbody>
 					</table>
 				</div>
@@ -538,12 +530,12 @@ $resultado = mysqli_query ($dbConn, $query);
 if(!$resultado){
 	//Genero numero aleatorio
 	$vardata = genera_password(8,'alfanumerico');
-					
+
 	//Guardo el error en una variable temporal
 	$_SESSION['ErrorListing'][$vardata]['code']         = mysqli_errno($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['description']  = mysqli_error($dbConn);
 	$_SESSION['ErrorListing'][$vardata]['query']        = $query;
-					
+
 }
 $rowdata = mysqli_fetch_assoc ($resultado);
 
@@ -572,7 +564,6 @@ $rowdata = mysqli_fetch_assoc ($resultado);
 
 				?>
 
-							
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_edit_zona">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>
@@ -602,9 +593,8 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 				//se dibujan los inputs
 				$Form_Inputs = new Form_Inputs();
-				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);	
-				
-				
+				$Form_Inputs->form_input_text('Nombre', 'Nombre', $x1, 2);
+
 
 				$Form_Inputs->form_input_disabled('Empresa Relacionada','fake_emp', $_SESSION['usuario']['basic_data']['RazonSocial']);
 				$Form_Inputs->form_input_hidden('idSistema', $_SESSION['usuario']['basic_data']['idSistema'], 2);
@@ -612,7 +602,6 @@ validaPermisoUser($rowlevel['level'], 3, $dbConn); ?>
 
 				?>
 
-							
 				<div class="form-group">
 					<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf0c7; Guardar Cambios" name="submit_zona">
 					<a href="<?php echo $location; ?>" class="btn btn-danger pull-right margin_form_btn"><i class="fa fa-arrow-left" aria-hidden="true"></i> Cancelar y Volver</a>

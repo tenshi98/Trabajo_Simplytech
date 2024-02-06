@@ -143,19 +143,19 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 					.my_marker::after {content: "";position: absolute;top: 100%;left: 50%;transform: translate(-50%, 0%);border: solid 8px transparent;border-top-color: black;}
 				</style>
 
-				<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=visualization"></script>
+				<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 
 				<div id="map_canvas_y" style="width: 100%; height: 550px;"></div>
 				<br/><br/>
 				<div id="map_canvas_z" style="width: 100%; height: 550px;"></div>
 				<script>
-						
-					/* ************************************************************************** */
-					var map_1, map_2;
+					let map_1, map_2;
 					var marker;
 					var markersCam = [];
-					/* ************************************************************************** */
-					function initialize() {
+
+					async function initMap() {
+						const { Map } = await google.maps.importLibrary("maps");
+
 						var myLatlng = new google.maps.LatLng(<?php echo $Cent_zonaLatitud.','.$Cent_zonaLongitud; ?>);
 
 						var myOptions1 = {
@@ -168,9 +168,9 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 							center: myLatlng,
 							mapTypeId: google.maps.MapTypeId.SATELLITE
 						};
-						map_1 = new google.maps.Map(document.getElementById("map_canvas_y"), myOptions1);
-						map_2 = new google.maps.Map(document.getElementById("map_canvas_z"), myOptions2);
 
+						map_1 = new Map(document.getElementById("map_canvas_y"), myOptions1);
+						map_2 = new Map(document.getElementById("map_canvas_z"), myOptions2);
 						//Se dibujan los puntos en base a los niveles de riego
 						/* Data points defined as a mixture of WeightedLocation and LatLng objects */
 						var heatMapData = [<?php echo $rec_x; ?>];
@@ -186,14 +186,14 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 
 						//marcadores
 						setMarkers(map_1, locations);
-			
+
 						dibuja_zona();
-						
 
 					}
+
 					/* ************************************************************************** */
 					function dibuja_zona() {
-								
+
 						var polygons1 = [];
 						var polygons2 = [];
 						<?php
@@ -203,24 +203,24 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 						$Latitud_z_prom  = 0;
 						$Longitud_z_prom = 0;
 						$zcounter        = 0;
-						$zcounter2        = 0;
+						$zcounter2       = 0;
 
 						//Se filtra por zona
 						filtrar($arrZonas, 'idZona');
 						//se recorre
 						foreach ($arrZonas as $todaszonas=>$zonas) {
-							
+
 							$Latitud_z_2       = 0;
 							$Longitud_z_2      = 0;
 							$Latitud_z_prom_2  = 0;
 							$Longitud_z_prom_2 = 0;
-							$zcounter3         = 0;		
+							$zcounter3         = 0;
 							echo 'var path'.$todaszonas.' = [';
 
 							//Variables con la primera posicion
 							$Latitud_x = '';
 							$Longitud_x = '';
-									
+
 							foreach ($zonas as $puntos) {
 								if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
 									echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
@@ -238,13 +238,13 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 									}
 								}
 							}
-									
+
 							if(isset($Longitud_x)&&$Longitud_x!=''){
 								echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}';
 							}
-									
+
 							echo '];';
-									
+
 							echo '
 							polygons1.push(new google.maps.Polygon({
 								paths: path'.$todaszonas.',
@@ -264,8 +264,8 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 							}));
 							polygons1[polygons1.length-1].setMap(map_1);
 							polygons2[polygons2.length-1].setMap(map_2);
-							';	
-							
+							';
+
 							/*if($zcounter3!=0){
 								$Latitud_z_prom_2  = $Latitud_z_2/$zcounter3;
 								$Longitud_z_prom_2 = $Longitud_z_2/$zcounter3;
@@ -273,7 +273,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 							// The label that pops up when the mouse moves within each polygon.
 							echo '
 							/*myLatlng = new google.maps.LatLng('.$Latitud_z_prom_2.', '.$Longitud_z_prom_2.');
-									
+
 							var marker1 = new MyMarker({
 								position: myLatlng,
 								label: "'.$zonas[0]['Nombre'].'"
@@ -284,7 +284,7 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 							});
 							marker1.setMap(map_1);
 							marker2.setMap(map_2);*/
-  
+
 							// When the mouse moves within the polygon, display the label and change the BG color.
 							google.maps.event.addListener(polygons1['.$zcounter2.'], "mousemove", function(event) {
 								polygons1['.$zcounter2.'].setOptions({
@@ -302,15 +302,15 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 
 									$zcounter2++;
 						}
-								
+
 						//Centralizado del mapa
 						if($zcounter!=0){
 							$Latitud_z_prom  = $Latitud_z/$zcounter;
 							$Longitud_z_prom = $Longitud_z/$zcounter;
-										
+
 							if(isset($Latitud_z_prom)&&$Latitud_z_prom!=0&&isset($Longitud_z_prom)&&$Longitud_z_prom!=0){
 									echo 'myLatlng = new google.maps.LatLng('.$Latitud_z_prom.', '.$Longitud_z_prom.');';
-									echo 'map_1.setCenter(myLatlng);'; 
+									echo 'map_1.setCenter(myLatlng);';
 									echo 'map_2.setCenter(myLatlng);';
 							}
 						}
@@ -320,27 +320,27 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 					function setMarkers(map_1, locations) {
 
 						var marker, i, last_latitude, last_longitude;
-								
+
 						for (i = 0; i < locations.length; i++) {
-									
+
 							//defino ubicacion y datos
 							var latitude   = locations[i][0];
 							var longitude  = locations[i][1];
 							var data       = locations[i][2];
 							var icon       = locations[i][3];
-							var marcador   = "<?php echo DB_SITE_REPO; ?>/LIB_assets/img/map-icons/3_comun_" + icon + ".png";	
-							var title      = "Información";	
-							
+							var marcador   = "<?php echo DB_SITE_REPO; ?>/LIB_assets/img/map-icons/3_comun_" + icon + ".png";
+							var title      = "Información";
+
 							//guardo las ultimas ubicaciones
 							last_latitude   = locations[i][0];
 							last_longitude  = locations[i][1];
 
-							//ubicacion mapa		
+							//ubicacion mapa
 							latlngset = new google.maps.LatLng(latitude, longitude);
 
 							//se crea marcador
 							var marker = new google.maps.Marker({
-								map         : map_1, 
+								map         : map_1,
 								position    : latlngset,
 								icon      	: marcador
 							});
@@ -394,10 +394,6 @@ $Cent_zonaLongitud  = $arrZonas[0]['Longitud'];
 						markersCam = [];
 					}
 
-					/* ************************************************************************** */
-					google.maps.event.addDomListener(window, "load", initialize());
-					
-						
 				</script>
 			<?php } ?>
 		</div>

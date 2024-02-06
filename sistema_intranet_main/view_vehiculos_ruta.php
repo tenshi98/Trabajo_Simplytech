@@ -75,14 +75,15 @@ $arrRutas = db_select_array (false, $SIS_query, 'vehiculos_rutas_ubicaciones', $
 						alert_post_data(4,2,2,0, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+						<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
-
-							var map;
+							let map;
 							var marker;
-							/* ************************************************************************** */
-							function initialize() {
+
+							async function initMap() {
+								const { Map } = await google.maps.importLibrary("maps");
+
 								var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
 
 								var myOptions = {
@@ -90,19 +91,21 @@ $arrRutas = db_select_array (false, $SIS_query, 'vehiculos_rutas_ubicaciones', $
 									center: myLatlng,
 									mapTypeId: google.maps.MapTypeId.ROADMAP
 								};
-								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+								map = new Map(document.getElementById("map_canvas"), myOptions);
 								RutasAlternativas();
+
 							}
 
 							/* ************************************************************************** */
 							function RutasAlternativas() {
-								
+
 								var route=[];
 								var tmp;
 
-								var locations = [ 
+								var locations = [
 								<?php foreach ( $arrRutas as $pos ) { ?>
-									['<?php echo $pos['idUbicaciones']; ?>', <?php echo $pos['Latitud']; ?>, <?php echo $pos['Longitud']; ?>], 					
+									['<?php echo $pos['idUbicaciones']; ?>', <?php echo $pos['Latitud']; ?>, <?php echo $pos['Longitud']; ?>],
 								<?php } ?>
 								];
 
@@ -110,7 +113,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'vehiculos_rutas_ubicaciones', $
 									tmp=new google.maps.LatLng(locations[i][1], locations[i][2]);
 									route.push(tmp);
 								}
-								
+
 								var drawn = new google.maps.Polyline({
 									map: map,
 									path: route,
@@ -124,7 +127,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'vehiculos_rutas_ubicaciones', $
 							}
 							/* ************************************************************************** */
 							function Puntos() {
-								var infowindow = new google.maps.InfoWindow({  
+								var infowindow = new google.maps.InfoWindow({
 								  content: ''
 								});
 								var marcadores = [
@@ -137,7 +140,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'vehiculos_rutas_ubicaciones', $
 											echo ',';
 										}
 									?>
-								{  
+								{
 								  position: {
 									lat: <?php echo $pos['Latitud']; ?>,
 									lng: <?php echo $pos['Longitud']; ?>
@@ -156,7 +159,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'vehiculos_rutas_ubicaciones', $
 
 
 								];
-								for (let i = 0, j = marcadores.length; i < j; i++) {  
+								for (let i = 0, j = marcadores.length; i < j; i++) {
 								  var contenido = marcadores[i].contenido;
 								  var marker = new google.maps.Marker({
 									position	: new google.maps.LatLng(marcadores[i].position.lat, marcadores[i].position.lng),
@@ -224,8 +227,7 @@ $arrRutas = db_select_array (false, $SIS_query, 'vehiculos_rutas_ubicaciones', $
 									});
 								});
 							}
-							/* ************************************************************************** */
-							google.maps.event.addDomListener(window, "load", initialize());
+
 						</script>
 					<?php } ?>
 				</div>

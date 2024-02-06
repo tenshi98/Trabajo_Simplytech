@@ -321,16 +321,11 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 								alert_post_data(4,2,2,0, $Alert_Text);
 							}else{
 								$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-
-								<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
-
+								<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 								<div id="map_canvas" style="width: 100%; height: 550px;"></div>
-
 								<script>
-
-									var map;
+									let map;
 									var marker;
-
 									var locations = [
 										<?php foreach ( $arrEquipos as $pos ) {
 											if($pos['GeoLatitud']<0&&$pos['GeoLongitud']<0){
@@ -339,8 +334,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										} ?>
 									];
 
-									/* ************************************************************************** */
-									function initialize() {
+									async function initMap() {
+										const { Map } = await google.maps.importLibrary("maps");
 
 										var myOptions = {
 											zoom: 16,
@@ -351,7 +346,8 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 											disableDoubleClickZoom: true,
 											mapTypeId: google.maps.MapTypeId.SATELLITE
 										};
-										map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+										map = new Map(document.getElementById("map_canvas"), myOptions);
 
 										//Se llama a la ruta
 										RutasRealizadas();
@@ -547,8 +543,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 										<?php } ?>
 
 									}
-									/* ************************************************************************** */
-									google.maps.event.addDomListener(window, "load", initialize());
+
 								</script>
 
 								<?php

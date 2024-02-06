@@ -118,16 +118,17 @@ $rowdata = db_select_data (false, 'Nombre,idCiudad,idComuna,Direccion,GeoLatitud
 						}else{
 							$nlong = '-70.6506';
 						} ?>
-						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=places"></script>
+						<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 
 						<input id="pac-input" class="pac-controls" type="text" placeholder="Buscar Dirección">
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
-
-							var map;
+							let map;
 							var marker;
-							/* ************************************************************************** */
-							function initialize() {
+
+							async function initMap() {
+								const { Map } = await google.maps.importLibrary("maps");
+
 								var myLatlng = new google.maps.LatLng(<?php echo $nlat; ?>, <?php echo $nlong; ?>);
 
 								var myOptions = {
@@ -135,7 +136,8 @@ $rowdata = db_select_data (false, 'Nombre,idCiudad,idComuna,Direccion,GeoLatitud
 									center: myLatlng,
 									mapTypeId: google.maps.MapTypeId.ROADMAP
 								};
-								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+								map = new Map(document.getElementById("map_canvas"), myOptions);
 
 								marker = new google.maps.Marker({
 									draggable	: true,
@@ -190,7 +192,10 @@ $rowdata = db_select_data (false, 'Nombre,idCiudad,idComuna,Direccion,GeoLatitud
 									map.setZoom(Math.min(map.getZoom(),12));
 
 								});
+
 							}
+
+
 							/* ************************************************************************** */
 							function codeLatLng(lat,lng, div) {
 								geocoder = new google.maps.Geocoder();
@@ -208,8 +213,6 @@ $rowdata = db_select_data (false, 'Nombre,idCiudad,idComuna,Direccion,GeoLatitud
 								});
 							}
 
-							/* ************************************************************************** */
-							google.maps.event.addDomListener(window, "load", initialize());
 						</script>
 					<?php } ?>
 				</div>

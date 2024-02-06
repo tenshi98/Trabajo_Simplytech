@@ -130,23 +130,25 @@ if(!empty($_GET['mod'])){
 							alert_post_data(4,2,2,0, $Alert_Text);
 						}else{
 							$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-							<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+							<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 							<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 							<script>
-
-								var map;
+								let map;
 								var marker;
 								var geocoder = new google.maps.Geocoder();
-								/* ************************************************************************** */
-								function initialize() {
-									var myLatlng = new google.maps.LatLng(-33.4372, -70.6506);
+
+								async function initMap() {
+									const { Map } = await google.maps.importLibrary("maps");
+
+									var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
 
 									var myOptions = {
 										zoom: 18,
 										center: myLatlng,
 										mapTypeId: google.maps.MapTypeId.SATELLITE
 									};
-									map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+									map = new Map(document.getElementById("map_canvas"), myOptions);
 									map.setTilt(0);
 
 									marker = new google.maps.Marker({
@@ -171,6 +173,7 @@ if(!empty($_GET['mod'])){
 									dibuja_zona();
 
 								}
+
 								/* ************************************************************************** */
 								function dibuja_zona() {
 
@@ -217,9 +220,6 @@ if(!empty($_GET['mod'])){
 									} ?>
 
 								}
-
-								/* ************************************************************************** */
-								google.maps.event.addDomListener(window, "load", initialize());
 
 							</script>
 						<?php } ?>
@@ -298,25 +298,26 @@ if(!empty($_GET['mod'])){
 							alert_post_data(4,2,2,0, $Alert_Text);
 						}else{
 							$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-							<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=places"></script>
+							<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 							<input id="pac-input" class="pac-controls" type="text" placeholder="Buscar Dirección">
 							<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 							<script>
-
-								var map;
+								let map;
 								var marker;
 								var geocoder = new google.maps.Geocoder();
-								var myLatlng = new google.maps.LatLng(-33.4372, -70.6506);
 
-								/* ************************************************************************** */
-								function initialize() {
+								async function initMap() {
+									const { Map } = await google.maps.importLibrary("maps");
+
+									var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
 
 									var myOptions = {
 										zoom: 18,
 										center: myLatlng,
 										mapTypeId: google.maps.MapTypeId.SATELLITE
 									};
-									map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+									map = new Map(document.getElementById("map_canvas"), myOptions);
 									map.setTilt(0);
 
 									marker = new google.maps.Marker({
@@ -377,6 +378,7 @@ if(!empty($_GET['mod'])){
 									dibuja_zona();
 
 								}
+
 								/* ************************************************************************** */
 								function codeLatLng(lat,lng, div) {
 									geocoder = new google.maps.Geocoder();
@@ -443,8 +445,7 @@ if(!empty($_GET['mod'])){
 
 								}
 
-								/* ************************************************************************** */
-								google.maps.event.addDomListener(window, "load", initialize());
+
 
 							</script>
 						<?php } ?>

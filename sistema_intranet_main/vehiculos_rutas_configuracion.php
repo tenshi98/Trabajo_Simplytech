@@ -138,14 +138,15 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 						alert_post_data(4,2,2,0, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+						<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
-
-							var map;
+							let map;
 							var marker;
-							/* ************************************************************************** */
-							function initialize() {
+
+							async function initMap() {
+								const { Map } = await google.maps.importLibrary("maps");
+
 								var myLatlng = new google.maps.LatLng(<?php echo $rowUbicacion['Latitud']; ?>, <?php echo $rowUbicacion['Longitud']; ?>);
 
 								var myOptions = {
@@ -153,7 +154,8 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 									center: myLatlng,
 									mapTypeId: google.maps.MapTypeId.ROADMAP
 								};
-								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+								map = new Map(document.getElementById("map_canvas"), myOptions);
 
 								marker = new google.maps.Marker({
 									draggable	: true,
@@ -177,7 +179,7 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 								});
 
 							}
-							/* ************************************************************************** */	
+							/* ************************************************************************** */
 							//devuelve la dirección
 							function codeLatLng(lat,lng, div) {
 								geocoder = new google.maps.Geocoder();
@@ -195,8 +197,6 @@ $rowUbicacion = mysqli_fetch_assoc ($resultado);
 								});
 							}
 
-							/* ************************************************************************** */
-							google.maps.event.addDomListener(window, "load", initialize());
 						</script>
 					<?php } ?>
 				</div>
@@ -310,14 +310,15 @@ array_push( $arrRutas,$row );
 						alert_post_data(4,2,2,0, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+						<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
-							
-							var map;
+							let map;
 							var marker;
-							/* ************************************************************************** */
-							function initialize() {
+
+							async function initMap() {
+								const { Map } = await google.maps.importLibrary("maps");
+
 								var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
 
 								var myOptions = {
@@ -325,7 +326,8 @@ array_push( $arrRutas,$row );
 									center: myLatlng,
 									mapTypeId: google.maps.MapTypeId.ROADMAP
 								};
-								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+								map = new Map(document.getElementById("map_canvas"), myOptions);
 
 								marker = new google.maps.Marker({
 									draggable	: true,
@@ -348,11 +350,12 @@ array_push( $arrRutas,$row );
 
 
 								});
-								
+
 								RutasAlternativas();
 
 							}
-							/* ************************************************************************** */	
+
+							/* ************************************************************************** */
 							function codeLatLng(lat,lng, div) {
 								geocoder = new google.maps.Geocoder();
 								var latlng = new google.maps.LatLng(lat, lng);
@@ -371,13 +374,13 @@ array_push( $arrRutas,$row );
 							/* ************************************************************************** */
 							//crea las rutas
 							function RutasAlternativas() {
-									
+
 								var route=[];
 								var tmp;
-									
-								var locations = [ 
+
+								var locations = [
 								<?php foreach ( $arrRutas as $pos ) { ?>
-									['<?php echo $pos['idUbicaciones']; ?>', <?php echo $pos['Latitud']; ?>, <?php echo $pos['Longitud']; ?>], 					
+									['<?php echo $pos['idUbicaciones']; ?>', <?php echo $pos['Latitud']; ?>, <?php echo $pos['Longitud']; ?>],
 								<?php } ?>
 								];
 
@@ -385,12 +388,12 @@ array_push( $arrRutas,$row );
 									tmp=new google.maps.LatLng(locations[i][1], locations[i][2]);
 									route.push(tmp);
 								}
-									
+
 								if(route){
 									marker.setPosition(new google.maps.LatLng(locations[locations.length - 1][1], locations[locations.length - 1][2]));
 									map.panTo(marker.position);
 								}
-									
+
 								var drawn = new google.maps.Polyline({
 									map: map,
 									path: route,
@@ -405,7 +408,7 @@ array_push( $arrRutas,$row );
 							/* ************************************************************************** */
 							//pone los marcadores
 							function Puntos() {
-								var infowindow = new google.maps.InfoWindow({  
+								var infowindow = new google.maps.InfoWindow({
 								  content: ''
 								});
 								var marcadores = [
@@ -423,7 +426,7 @@ array_push( $arrRutas,$row );
 											echo ',';
 										}
 									?>
-									{  
+									{
 									  position: {
 										lat: <?php echo $pos['Latitud']; ?>,
 										lng: <?php echo $pos['Longitud']; ?>
@@ -436,7 +439,7 @@ array_push( $arrRutas,$row );
 													"</div>" +
 													"<div class='iw-bottom-gradient'></div>" +
 													"</div>"
-								
+
 									}
 
 								<?php } ?>
@@ -444,13 +447,13 @@ array_push( $arrRutas,$row );
 
 								];
 								for (let i = 0, j = marcadores.length; i < j; i++) {
-									if(i!=<?php echo $count_in-1; ?>){ 
+									if(i!=<?php echo $count_in-1; ?>){
 										var contenido = marcadores[i].contenido;
 										var marker = new google.maps.Marker({
 											position: new google.maps.LatLng(marcadores[i].position.lat, marcadores[i].position.lng),
 											map: map
 										});
-									  
+
 										(function(marker, contenido) {
 											google.maps.event.addListener(marker, 'click', function() {
 											infowindow.setContent(contenido);
@@ -458,7 +461,7 @@ array_push( $arrRutas,$row );
 										});
 										})(marker, contenido);
 									}
-								  
+
 								}
 
 								// *
@@ -513,10 +516,7 @@ array_push( $arrRutas,$row );
 									});
 								});
 							}
-							
 
-							/* ************************************************************************** */
-							google.maps.event.addDomListener(window, "load", initialize());
 
 						</script>
 					<?php } ?>
@@ -554,16 +554,16 @@ array_push( $arrRutas,$row );
 							<th width="10">Acciones</th>
 						</tr>
 						</thead>
-										  
+
 						<tbody role="alert" aria-live="polite" aria-relevant="all">
-						<?php 
+						<?php
 						$nx=1;
 						foreach ($arrRutas as $rutas) { ?>
 							<tr class="odd">
 								<td><?php echo $nx; ?></td>
 								<td><?php echo $rutas['direccion']; ?></td>
 								<td>
-									<div class="btn-group" style="width: 70px;" >  
+									<div class="btn-group" style="width: 70px;" >
 										<?php if ($rowlevel['level']>=2){ ?><a href="<?php echo $new_location.'&id='.$_GET['id'].'&mod='.$rutas['idUbicaciones']; ?>" title="Editar Información" class="btn btn-success btn-sm tooltip"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><?php } ?>
 										<?php if ($rowlevel['level']>=4){
 											$ubicacion = $new_location.'&id='.$_GET['id'].'&del='.simpleEncode($rutas['idUbicaciones'], fecha_actual());
@@ -573,9 +573,9 @@ array_push( $arrRutas,$row );
 									</div>
 								</td>
 							</tr>
-						<?php 
+						<?php
 						$nx++;
-						} ?>        
+						} ?>
 						</tbody>
 					</table>
 				</div>

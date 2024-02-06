@@ -126,11 +126,31 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 							.my_marker {color: white;background-color: black;border: solid 1px black;font-weight: 900;padding: 4px;top: -8px;}
 							.my_marker::after {content: "";position: absolute;top: 100%;left: 50%;transform: translate(-50%, 0%);border: solid 8px transparent;border-top-color: black;}
 						</style>
-			
-						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+
+						<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 						<script>
-						
+							let map;
+							var marker;
+
+							async function initMap() {
+								const { Map } = await google.maps.importLibrary("maps");
+
+								var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+								var myOptions = {
+									zoom: 15,
+									center: myLatlng,
+									mapTypeId: google.maps.MapTypeId.SATELLITE
+								};
+
+								map = new Map(document.getElementById("map_canvas"), myOptions);
+								map.setTilt(0);
+
+								dibuja_zona();
+
+							}
+
 							/* ************************************************************************** */
 							class MyMarker extends google.maps.OverlayView {
 								constructor(params) {
@@ -165,29 +185,10 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 									this.container.style.top = pos.y + 'px';
 								}
 							}
-  
-							/* ************************************************************************** */
-							var map;
-							var marker;
-							/* ************************************************************************** */
-							function initialize() {
-								
-								var myLatlng = new google.maps.LatLng(-33.4372, -70.6506);
 
-								var myOptions = {
-									zoom: 15,
-									center: myLatlng,
-									mapTypeId: google.maps.MapTypeId.SATELLITE
-								};
-								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
-								map.setTilt(0);
-								
-								dibuja_zona();
-
-							}
 							/* ************************************************************************** */
 							function dibuja_zona() {
-								
+
 								var polygons = [];
 								<?php
 								//variables
@@ -196,7 +197,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 								$Latitud_z_prom  = 0;
 								$Longitud_z_prom = 0;
 								$zcounter        = 0;
-								$zcounter2        = 0;
+								$zcounter2       = 0;
 
 								//Se filtra por zona
 								filtrar($arrZonas, 'idZona');
@@ -230,13 +231,13 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 											}
 										}
 									}
-									
+
 									if(isset($Longitud_x)&&$Longitud_x!=''){
-										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
+										echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}';
 									}
 
 									echo '];';
-									
+
 									echo '
 									polygons.push(new google.maps.Polygon({
 										paths: path'.$todaszonas.',
@@ -248,7 +249,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 									}));
 									polygons[polygons.length-1].setMap(map);
 									';
-									
+
 									if($zcounter3!=0){
 										$Latitud_z_prom_2  = $Latitud_z_2/$zcounter3;
 										$Longitud_z_prom_2 = $Longitud_z_2/$zcounter3;
@@ -262,7 +263,7 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 										label: "'.$zonas[0]['Nombre'].'"
 									});
 									marker.setMap(map);
-  
+
 									// When the mouse moves within the polygon, display the label and change the BG color.
 									google.maps.event.addListener(polygons['.$zcounter2.'], "mousemove", function(event) {
 										polygons['.$zcounter2.'].setOptions({
@@ -279,17 +280,17 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 									';
 
 									$zcounter2++;
-										
+
 								}
 
 								//Centralizado del mapa
 								if($zcounter!=0){
 									$Latitud_z_prom  = $Latitud_z/$zcounter;
 									$Longitud_z_prom = $Longitud_z/$zcounter;
-										
+
 									if(isset($Latitud_z_prom)&&$Latitud_z_prom!=0&&isset($Longitud_z_prom)&&$Longitud_z_prom!=0){
 											echo 'myLatlng = new google.maps.LatLng('.$Latitud_z_prom.', '.$Longitud_z_prom.');
-													map.setCenter(myLatlng);'; 
+													map.setCenter(myLatlng);';
 									}else{
 										echo 'codeAddress();';
 									}
@@ -298,31 +299,29 @@ $Ubicacion = str_replace("av.", 'Avenida', $Ubicacion);
 							}
 							/* ************************************************************************** */
 							function codeAddress() {
-						  
+
 								geocoder.geocode( { address: '<?php echo $Ubicacion ?>'}, function(results, status) {
 									if (status == google.maps.GeocoderStatus.OK) {
 
 										// marker position
 										myLatlng = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-								
+
 										map.setCenter(myLatlng);
-										//marker.setPosition(myLatlng);  
-														  
+										//marker.setPosition(myLatlng);
+
 									}else {
 										Swal.fire({icon: 'error',title: 'Oops...',text: 'Geocode was not successful for the following reason: ' + status});
 									}
 								});
 							}
-							/* ************************************************************************** */
-							google.maps.event.addDomListener(window, "load", initialize());
+
 
 						</script>
 
-		
 				<?php } ?>
 			</div>
 		</div>
- 
+
 	</div>
 </div>
 

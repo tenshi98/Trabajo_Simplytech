@@ -187,16 +187,13 @@ foreach ($arrUnimed as $sen) {
 						alert_post_data(4,2,2,0, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
-
-						<script type="text/javascript">
-
+						<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
+						<script>
+							let map;
 							var marker;
 							var infowindow = new google.maps.InfoWindow({
 								content: ''
 							});
-							var map;
-
 							var marcadores = [
 								<?php
 								$in=0;
@@ -230,16 +227,19 @@ foreach ($arrUnimed as $sen) {
 								<?php } ?>
 							];
 
-							function initialize() {
-								var myLatlng = new google.maps.LatLng(-33.4691, -70.642);
-								var opciones = {
+							/**********************************************/
+							async function initMap() {
+								const { Map } = await google.maps.importLibrary("maps");
+
+								var myLatlng = new google.maps.LatLng(-33.477271996598965, -70.65170304882815);
+
+								var myOptions = {
 									zoom: 12,
 									center: myLatlng,
 									mapTypeId: google.maps.MapTypeId.ROADMAP
 								};
-								var div = document.getElementById('map_canvas');
-								map = new google.maps.Map(div, opciones);
 
+								map = new Map(document.getElementById("map_canvas"), myOptions);
 								for (let i = 0, j = marcadores.length; i < j; i++) {
 									var contenido = marcadores[i].contenido;
 									marker = new google.maps.Marker({
@@ -355,7 +355,7 @@ foreach ($arrUnimed as $sen) {
 							}
 						</script>
 
-						<div id="map_canvas" style="width: 100%; height: 550px;"><script type="text/javascript">initialize();</script></div>
+						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 
 					<?php } ?>
 				</div>

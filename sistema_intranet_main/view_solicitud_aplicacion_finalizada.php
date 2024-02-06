@@ -298,8 +298,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 			alert_post_data(4,2,2,0, $Alert_Text);
 		}else{
 			$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-
-			<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=visualization"></script>
+			<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 		<?php } ?>
 		<style>
 			.my_marker {color: white;background-color: black;border: solid 1px black;font-weight: 900;padding: 4px;top: -8px;}
@@ -323,20 +322,20 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 						<li class="active"><a href="#resumen"   aria-controls="resumen"   role="tab" data-toggle="tab"><i class="fa fa-bars" aria-hidden="true"></i> Resumen</a></li>
 						<?php
 						$xcounter = 1;
-						foreach($arrTractores as $trac) {	
+						foreach($arrTractores as $trac) {
 							if ($arrTractoresData!=false && !empty($arrTractoresData) && $arrTractoresData!='') {
 								$sum_LitrosAplicados    = 0;
 								foreach ($arrTractoresData as $tractda) {
 									if(isset($trac['idTelemetria'])&&isset($tractda['idTelemetria'])&&$trac['idTelemetria']==$tractda['idTelemetria']){
-										$sum_LitrosAplicados    = $sum_LitrosAplicados + $tractda['LitrosAplicados'];				
+										$sum_LitrosAplicados    = $sum_LitrosAplicados + $tractda['LitrosAplicados'];
 									}
 								}
 							}
-							//paginador de tabs	
+							//paginador de tabs
 							if($xcounter==7){ ?> <li class="dropdown"><a href="#" data-toggle="dropdown"><i class="fa fa-plus" aria-hidden="true"></i> Ver mas <i class="fa fa-angle-down" aria-hidden="true"></i></a><ul class="dropdown-menu" role="menu"> <?php } ?>
 							<li>
 								<a href="#equipo_<?php echo $trac['idTelemetria']; ?>" aria-controls="equipo_<?php echo $trac['idTelemetria']; ?>" role="tab" data-toggle="tab">
-									<?php 
+									<?php
 									//Reviso si tuvo participacion
 									if($sum_LitrosAplicados!=0){
 										echo '<span style="color: #3c763d;"><i class="fa fa-check" aria-hidden="true"></i> '.$trac['VehiculoNombre'].'</span>';
@@ -361,8 +360,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 						<?php //<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Porcentaje Plantas Aplicadas</strong></h5>     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_plantas_aplicadas" style="height: 200px;"></div></div> ?>
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Litros Programados vs Aplicados</strong></h5>  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_litros_aplicados" style="height: 200px;"></div></div>			
 						<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4"><h5 class="text-center"><strong>Caudales Promedios</strong></h5>               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12"             id="chart_caudales" style="height: 200px;"></div></div>
-						
-						
+
 						<?php
 						/********************************************************************/
 						//Velocidades
@@ -376,14 +374,14 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							var chart_gauge                 = "";
 							//var chart_aplicadas             = "";
 							var chart_mojamiento            = "";
-							
+
 							var data_vel                    = "";
 							var data_litros                 = "";
 							var data_caud                   = "";
 							var data_gauge                  = "";
 							//var data_aplicadas              = "";
 							var data_mojamiento             = "";
-							
+
 							var options_vel                 = "";
 							var options_litros              = "";
 							var options_caud                = "";
@@ -391,14 +389,13 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							//var options_aplicadas           = "";
 							var options_mojamiento          = "";
 
-							//carga de los graficos	
+							//carga de los graficos
 							google.charts.setOnLoadCallback(Chart_velocidades);
 							google.charts.setOnLoadCallback(Chart_litros_aplicados);
 							google.charts.setOnLoadCallback(Chart_caudales);
 							google.charts.setOnLoadCallback(Chart_correccion);
 							//google.charts.setOnLoadCallback(Chart_aplicadas);
 							google.charts.setOnLoadCallback(Chart_mojamiento);
-											
 
 							/* ************************************************************************** */
 							//Graficos	al cargar datos
@@ -408,8 +405,8 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								draw_velocidades(data_vel_rows);
 							}
 							function Chart_litros_aplicados() {';
-								//variables	
-								echo 'var data_litros_rows = [';						
+								//variables
+								echo 'var data_litros_rows = [';
 								echo '["Litros Aplicados",';
 								echo Cantidades_decimales_justos($LitrosProgramados).',';
 								echo '"'.Cantidades($LitrosProgramados, 2).'",';
@@ -421,8 +418,8 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								draw_litros_aplicados(data_litros_rows);
 							}
 							function Chart_caudales() {';
-								//caudales	
-								echo 'var data_caud_rows = [';						
+								//caudales
+								echo 'var data_caud_rows = [';
 								echo '["Caudales",';
 								echo Cantidades_decimales_justos($TractorDerechoProm).',';
 								echo '"'.Cantidades($TractorDerechoProm, 2).'",';
@@ -431,9 +428,9 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								echo '],';
 								echo '];
 								//se llama funcion de dibujo
-								draw_caudales(data_caud_rows);		
+								draw_caudales(data_caud_rows);
 							}
-							function Chart_correccion() {';	
+							function Chart_correccion() {';
 								if($TractorDerechoProm>$TractorIzquierdoProm){
 									if($TractorIzquierdoProm!=0){ $correccion = (($TractorDerechoProm - $TractorIzquierdoProm)/$TractorIzquierdoProm)*100;}else{$correccion = 0;}
 								}else{
@@ -468,7 +465,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								]);
 								//opciones
 								options_vel = {
-									width: 400, 
+									width: 400,
 									height: 200,
 									greenFrom: 5,
 									greenTo: 7,
@@ -490,10 +487,10 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							function draw_litros_aplicados(data) {
 								//Caudales
 								data_litros = new google.visualization.DataTable();
-								data_litros.addColumn("string", "Litros"); 
+								data_litros.addColumn("string", "Litros");
 								data_litros.addColumn("number", "Programado");
 								data_litros.addColumn({type: "string", role: "annotation"});
-								data_litros.addColumn("number", "Aplicado"); 
+								data_litros.addColumn("number", "Aplicado");
 								data_litros.addColumn({type: "string", role: "annotation"});
 								//datos
 								data_litros.addRows(data);
@@ -516,10 +513,10 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							function draw_caudales(data) {
 								//Caudales
 								data_caud = new google.visualization.DataTable();
-								data_caud.addColumn("string", "Grupo"); 
+								data_caud.addColumn("string", "Grupo");
 								data_caud.addColumn("number", "Caudal Derecho");
 								data_caud.addColumn({type: "string", role: "annotation"});
-								data_caud.addColumn("number", "Caudal Izquierdo"); 
+								data_caud.addColumn("number", "Caudal Izquierdo");
 								data_caud.addColumn({type: "string", role: "annotation"});
 								//datos
 								data_caud.addRows(data);
@@ -535,7 +532,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								//dibujo
 								chart_caud = new google.visualization.ColumnChart(document.getElementById("chart_caudales"));
 								chart_caud.draw(data_caud, options_caud);
-										
+
 							}
 							/********************************************************************/
 							//Correccion
@@ -547,7 +544,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								]);
 								//opciones
 								options_gauge = {
-									width: 400, 
+									width: 400,
 									height: 200,
 									greenFrom: 0,
 									greenTo: 10,
@@ -586,7 +583,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								]);
 								//opciones
 								options_mojamiento = {
-									width: 400, 
+									width: 400,
 									height: 200,
 									yellowFrom: 0,
 									yellowTo: 93,
@@ -618,48 +615,13 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 								}else{ ?>
 									<div id="map_canvas_x1" style="width: 100%; height: 550px;"></div>
 									<script>
-										
-										/* ************************************************************************** */
-										/*class MyMarker extends google.maps.OverlayView {
-											constructor(params) {
-												super();
-												this.position = params.position;
-
-												const content = document.createElement('div');
-												content.classList.add('my_marker');
-												content.textContent = params.label;
-												content.style.position = 'absolute';
-												content.style.transform = 'translate(-50%, -100%)';
-
-												const container = document.createElement('div');
-												container.style.position = 'absolute';
-												container.style.cursor = 'pointer';
-												container.appendChild(content);
-
-												this.container = container;
-											}
-
-											onAdd() {
-												this.getPanes().floatPane.appendChild(this.container);
-											}
-
-											onRemove() {
-												this.container.remove();
-											}
-
-											draw() {
-												const pos = this.getProjection().fromLatLngToDivPixel(this.position);
-												this.container.style.left = pos.x + 'px';
-												this.container.style.top = pos.y + 'px';
-											}
-										}
-			  
-										/* ************************************************************************** */
-										var map_1,map_2;
+										let map_1,map_2;
 										var marker;
 										var markersCam = [];
-										/* ************************************************************************** */
-										function initialize() {
+
+										async function initMap() {
+											const { Map } = await google.maps.importLibrary("maps");
+
 											var myLatlng = new google.maps.LatLng(<?php echo $Cent_zonaLatitud.','.$Cent_zonaLongitud; ?>);
 
 											var myOptions1 = {
@@ -672,8 +634,9 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 												center: myLatlng,
 												mapTypeId: google.maps.MapTypeId.SATELLITE
 											};*/
-											map_1 = new google.maps.Map(document.getElementById("map_canvas_x1"), myOptions1);
-											//map_2 = new google.maps.Map(document.getElementById("map_canvas_x2"), myOptions2);
+
+											map_1 = new Map(document.getElementById("map_canvas_x1"), myOptions1);
+											//map_2 = new Map(document.getElementById("map_canvas_x2"), myOptions2);
 
 											//Se dibujan los puntos en base a los niveles de riego
 											/* Data points defined as a mixture of WeightedLocation and LatLng objects */
@@ -684,23 +647,23 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 												map: map_2
 											});
 											heatmap.setMap(map_2);*/
-											
+
 											//Ubicación de los distintos dispositivos
 											var locations = [<?php echo $marker_loc; ?>];
-													
+
 											//marcadores
 											setMarkers(map_1, locations);
-			
+
 											dibuja_zona();
-											
 
 										}
+
 										/* ************************************************************************** */
 										function dibuja_zona() {
-													
+
 											var polygons1 = [];
 											//var polygons2 = [];
-											<?php 
+											<?php
 											//variables
 											$Latitud_z       = 0;
 											$Longitud_z      = 0;
@@ -708,7 +671,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 											$Longitud_z_prom = 0;
 											$zcounter        = 0;
 											$zcounter2        = 0;
-														
+
 											//Se filtra por zona
 											filtrar($arrZonas, 'idZona');
 											//se recorre
@@ -717,13 +680,13 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 												$Longitud_z_2      = 0;
 												$Latitud_z_prom_2  = 0;
 												$Longitud_z_prom_2 = 0;
-												$zcounter3         = 0;		
+												$zcounter3         = 0;
 												echo 'var path'.$todaszonas.' = [';
 
 												//Variables con la primera posicion
 												$Latitud_x = '';
 												$Longitud_x = '';
-														
+
 												foreach ($zonas as $puntos) {
 													if(isset($puntos['Latitud'])&&$puntos['Latitud']!=''&&isset($puntos['Longitud'])&&$puntos['Longitud']!=''){
 														echo '{lat: '.$puntos['Latitud'].', lng: '.$puntos['Longitud'].'},
@@ -741,13 +704,13 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 														}
 													}
 												}
-														
+
 												if(isset($Longitud_x)&&$Longitud_x!=''){
-													echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}'; 
+													echo '{lat: '.$Latitud_x.', lng: '.$Longitud_x.'}';
 												}
-														
+
 												echo '];';
-														
+
 												echo '
 												polygons1.push(new google.maps.Polygon({
 													paths: path'.$todaszonas.',
@@ -767,7 +730,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 												}));*/
 												polygons1[polygons1.length-1].setMap(map_1);
 												//polygons2[polygons2.length-1].setMap(map_2);
-												';	
+												';
 												/*if($zcounter3!=0){
 													$Latitud_z_prom_2  = $Latitud_z_2/$zcounter3;
 													$Longitud_z_prom_2 = $Longitud_z_2/$zcounter3;
@@ -775,13 +738,13 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 												// The label that pops up when the mouse moves within each polygon.
 												echo '
 												/*myLatlng = new google.maps.LatLng('.$Latitud_z_prom_2.', '.$Longitud_z_prom_2.');
-												
+
 												var marker = new MyMarker({
 													position: myLatlng,
 													label: "'.$zonas[0]['Nombre'].'"
 												});
 												marker.setMap(map_1);*/
-			  
+
 												// When the mouse moves within the polygon, display the label and change the BG color.
 												google.maps.event.addListener(polygons1['.$zcounter2.'], "mousemove", function(event) {
 													polygons1['.$zcounter2.'].setOptions({
@@ -796,39 +759,38 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 													});
 												});
 												';
-												
-												$zcounter2++;		
+
+												$zcounter2++;
 											}
-													
+
 											//Centralizado del mapa
 											if($zcounter!=0){
 												$Latitud_z_prom  = $Latitud_z/$zcounter;
 												$Longitud_z_prom = $Longitud_z/$zcounter;
-															
+
 												if(isset($Latitud_z_prom)&&$Latitud_z_prom!=0&&isset($Longitud_z_prom)&&$Longitud_z_prom!=0){
 														echo 'myLatlng = new google.maps.LatLng('.$Latitud_z_prom.', '.$Longitud_z_prom.');';
-														echo 'map_1.setCenter(myLatlng);'; 
-														//echo 'map_2.setCenter(myLatlng);'; 
+														echo 'map_1.setCenter(myLatlng);';
+														//echo 'map_2.setCenter(myLatlng);';
 												}else{
 													echo 'codeAddress();';
 												}
 											}
 											?>
-											
-											
+
 										}
 										/* ************************************************************************** */
 										function codeAddress() {
-											  
+
 											geocoder.geocode( { address: '<?php echo $Ubicacion ?>'}, function(results, status) {
 												if (status == google.maps.GeocoderStatus.OK) {
-															
+
 													// marker position
 													myLatlng = new google.maps.LatLng(results[0].geometry.location.lat(), results[0].geometry.location.lng());
-													
+
 													map_1.setCenter(myLatlng);
 													map_2.setCenter(myLatlng);
-																			  
+
 												}else {
 													Swal.fire({icon: 'error',title: 'Oops...',text: 'Geocode was not successful for the following reason: ' + status});
 												}
@@ -838,36 +800,36 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 										function setMarkers(map_1, locations) {
 
 											var marker, i, last_latitude, last_longitude;
-													
+
 											for (i = 0; i < locations.length; i++) {
-														
+
 												//defino ubicacion y datos
 												var latitude   = locations[i][0];
 												var longitude  = locations[i][1];
 												var data       = locations[i][2];
 												var icon       = locations[i][3];
-												var marcador   = "<?php echo DB_SITE_REPO; ?>/LIB_assets/img/map-icons/3_comun_" + icon + ".png";	
-												var title      = "Información";	
-												
+												var marcador   = "<?php echo DB_SITE_REPO; ?>/LIB_assets/img/map-icons/3_comun_" + icon + ".png";
+												var title      = "Información";
+
 												//guardo las ultimas ubicaciones
 												last_latitude   = locations[i][0];
 												last_longitude  = locations[i][1];
-				
-												//ubicacion mapa		
+
+												//ubicacion mapa
 												latlngset = new google.maps.LatLng(latitude, longitude);
 
 												//defino marcador
 												/*switch (icon) {
-													case 0: 
-														marcador = "<?php echo DB_SITE_REPO; ?>/LIB_assets/img/map-icons/1_tractor_1.png";   	    
+													case 0:
+														marcador = "<?php echo DB_SITE_REPO; ?>/LIB_assets/img/map-icons/1_tractor_1.png";
 														break;
-													case 1: 
-														marcador = "<?php echo DB_SITE_REPO; ?>/LIB_assets/img/map-icons/1_tractor_2.png";   	    
+													case 1:
+														marcador = "<?php echo DB_SITE_REPO; ?>/LIB_assets/img/map-icons/1_tractor_2.png";
 														break;
 												}*/
 												//se crea marcador
 												var marker = new google.maps.Marker({
-													map         : map_1, 
+													map         : map_1,
 													position    : latlngset,
 													icon      	: marcador
 												});
@@ -920,15 +882,14 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 											clearMarkers();
 											markersCam = [];
 										}
-										/* ************************************************************************** */
-										google.maps.event.addDomListener(window, "load", initialize());
+
 									</script>
 								<?php } ?>
 							</div>
 						</div>
 					</div>
 
-					<?php foreach($arrTractores as $trac) { ?>		  
+					<?php foreach($arrTractores as $trac) { ?>
 						<div role="tabpanel" class="tab-pane fade" id="equipo_<?php echo $trac['idTelemetria']; ?>">
 
 							<div class="">
@@ -944,22 +905,22 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 											</tr>
 											<tr class="active">
 												<td><strong>Cuartel</strong></td>
-												
+
 												<td><strong>Programada</strong></td>
 												<td><strong>Minima</strong></td>
 												<td><strong>Maxima</strong></td>
 												<td><strong>Promedio</strong></td>
-												
+
 												<td><strong>Total</strong></td>
 												<td><strong>Dispersión de Flujos</strong></td>
-												
+
 												<td><strong>Litros</strong></td>
 												<td><strong>Tiempo</strong></td>
-												
+
 												<td width="10"><strong>Acciones</strong></td>
-												
+
 											</tr>
-											<?php 
+											<?php
 											//recorro el lsiatdo entregado por la base de datos
 											if ($arrTractoresData!=false && !empty($arrTractoresData) && $arrTractoresData!='') {
 												//variables en 0
@@ -972,20 +933,20 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 												$sum_correccion_caudal  = 0;
 												$sum_LitrosAplicados    = 0;
 												$sum_TiempoAplicacion   = '00:00:00';
-												
+
 												foreach ($arrTractoresData as $tractda) {
 													if(isset($trac['idTelemetria'])&&isset($tractda['idTelemetria'])&&$trac['idTelemetria']==$tractda['idTelemetria']){
 														?>
-														
+
 														<tr class="item-row linea_punteada">
-															
+
 															<td class="item-name"><?php echo $tractda['CuartelNombre']; ?></td>
-															
+
 															<td class="item-name"><?php echo Cantidades($tractda['VelocidadProg'], 1); ?></td>
 															<td class="item-name"><?php echo Cantidades($tractda['VelocidadMin'], 1); ?></td>
 															<td class="item-name"><?php echo Cantidades($tractda['VelocidadMax'], 1); ?></td>
 															<td class="item-name"><?php echo Cantidades($tractda['VelocidadProm'], 1); ?></td>
-															
+
 															<?php
 															$total_caudal = $tractda['PromCaudalIzq'] + $tractda['PromCaudalDer'];
 															if($tractda['PromCaudalDer']>$tractda['PromCaudalIzq']){
@@ -994,13 +955,13 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 																if($tractda['PromCaudalDer']!=0){$correccion = (($tractda['PromCaudalIzq'] - $tractda['PromCaudalDer'])/$tractda['PromCaudalDer'])*100;}else{$correccion = 0;}
 															}
 															?>
-															
+
 															<td class="item-name"><?php echo Cantidades($total_caudal, 2); ?></td>
 															<td class="item-name"><?php echo Cantidades($correccion, 2).' %'; ?></td>
-															
+
 															<td class="item-name"><?php echo Cantidades($tractda['LitrosAplicados'], 2); ?></td>
 															<td class="item-name"><?php echo $tractda['TiempoAplicacion']; ?></td>
-															
+
 															<td>
 																<div class="btn-group" style="width: 70px;" >
 																	<a href="<?php echo 'view_solicitud_aplicacion_detenciones.php?view='.simpleEncode($row_data['idSolicitud'], fecha_actual()).'&idTelemetria='.simpleEncode($trac['idTelemetria'], fecha_actual()).'&idZona='.simpleEncode($tractda['idZona'], fecha_actual()).'&return='.basename($_SERVER["REQUEST_URI"], ".php"); ?>" title="Ver Detenciones" class="btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
@@ -1009,9 +970,9 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 															</td>
 
 														</tr>
-													
-														<?php 
-														//operaciones 
+
+														<?php
+														//operaciones
 														if($total_caudal!=0){$xcounter++;}
 														$sum_VelocidadProg      = $sum_VelocidadProg + $tractda['VelocidadProg'];
 														$sum_VelocidadMin       = $sum_VelocidadMin + $tractda['VelocidadMin'];
@@ -1020,29 +981,29 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 														$sum_total_caudal       = $sum_total_caudal + $total_caudal;
 														$sum_correccion_caudal  = $sum_correccion_caudal + $correccion;
 														$sum_LitrosAplicados    = $sum_LitrosAplicados + $tractda['LitrosAplicados'];
-														$sum_TiempoAplicacion   = sumahoras($sum_TiempoAplicacion,$tractda['TiempoAplicacion']);	
-														
+														$sum_TiempoAplicacion   = sumahoras($sum_TiempoAplicacion,$tractda['TiempoAplicacion']);
+
 													}
 												} ?>
 												<tr class="item-row linea_punteada">
 													<td class="item-name"><strong>Totales</strong></td>
-															
+
 													<td class="item-name"><strong><?php if($xcounter!=0){echo Cantidades($sum_VelocidadProg/$xcounter, 1);}else{echo '0';} ?></strong></td>
 													<td class="item-name"><strong><?php if($xcounter!=0){echo Cantidades($sum_VelocidadMin/$xcounter, 1);}else{echo '0';} ?></strong></td>
 													<td class="item-name"><strong><?php if($xcounter!=0){echo Cantidades($sum_VelocidadMax/$xcounter, 1);}else{echo '0';} ?></strong></td>
 													<td class="item-name"><strong><?php if($xcounter!=0){echo Cantidades($sum_VelocidadProm/$xcounter, 1);}else{echo '0';} ?></strong></td>
-								
+
 													<td class="item-name"><strong><?php if($xcounter!=0){echo Cantidades($sum_total_caudal/$xcounter, 2);}else{echo '0';} ?></strong></td>
 													<td class="item-name"><strong><?php if($xcounter!=0){echo Cantidades($sum_correccion_caudal/$xcounter, 2).' %';}else{echo '0 %';} ?></strong></td>
-															
+
 													<td class="item-name"><strong><?php echo Cantidades($sum_LitrosAplicados, 2); ?></strong></td>
 													<td class="item-name"><strong><?php echo $sum_TiempoAplicacion; ?></strong></td>
-															
+
 													<td></td>
-															
+
 												</tr>
-												
-												<?php 
+
+												<?php
 											}else{
 												echo '<tr class="item-row linea_punteada"><td colspan="10">No hay Cuarteles Recorridos</td></tr>';
 											} ?>
@@ -1055,15 +1016,15 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							/********************************************************************/
 							//Caudales
 							echo '
-							<script>				
+							<script>
 								google.charts.setOnLoadCallback(drawChart_caudales_'.$trac['idTelemetria'].');
 
 								function drawChart_caudales_'.$trac['idTelemetria'].'() {
 									var data_caud_'.$trac['idTelemetria'].' = new google.visualization.DataTable();
-									data_caud_'.$trac['idTelemetria'].'.addColumn("string", "Hora"); 
+									data_caud_'.$trac['idTelemetria'].'.addColumn("string", "Hora");
 									data_caud_'.$trac['idTelemetria'].'.addColumn("number", "Caudal Derecho");
-									data_caud_'.$trac['idTelemetria'].'.addColumn("number", "Caudal Izquierdo"); 
-									
+									data_caud_'.$trac['idTelemetria'].'.addColumn("number", "Caudal Izquierdo");
+
 									data_caud_'.$trac['idTelemetria'].'.addRows(['.$arrMedTractores[$trac['idTelemetria']]['caudales'].']);
 
 									var options1_'.$trac['idTelemetria'].' = {
@@ -1084,14 +1045,14 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							/********************************************************************/
 							//Nivel Estanque
 							echo '
-							<script>				
+							<script>
 								google.charts.setOnLoadCallback(drawChart_niveles_'.$trac['idTelemetria'].');
 
 								function drawChart_niveles_'.$trac['idTelemetria'].'() {
 									var data_niveles_'.$trac['idTelemetria'].' = new google.visualization.DataTable();
-									data_niveles_'.$trac['idTelemetria'].'.addColumn("string", "Hora"); 
+									data_niveles_'.$trac['idTelemetria'].'.addColumn("string", "Hora");
 									data_niveles_'.$trac['idTelemetria'].'.addColumn("number", "Nivel Estanque");
-									
+
 									data_niveles_'.$trac['idTelemetria'].'.addRows(['.$arrMedTractores[$trac['idTelemetria']]['niveles'].']);
 
 									var options2_'.$trac['idTelemetria'].' = {
@@ -1112,14 +1073,14 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							/********************************************************************/
 							//Velocidades
 							echo '
-							<script>				
+							<script>
 								google.charts.setOnLoadCallback(drawChart_velocidades_'.$trac['idTelemetria'].');
 
 								function drawChart_velocidades_'.$trac['idTelemetria'].'() {
 									var data_vel_'.$trac['idTelemetria'].' = new google.visualization.DataTable();
-									data_vel_'.$trac['idTelemetria'].'.addColumn("string", "Hora"); 
+									data_vel_'.$trac['idTelemetria'].'.addColumn("string", "Hora");
 									data_vel_'.$trac['idTelemetria'].'.addColumn("number", "Velocidad");
-									
+
 									data_vel_'.$trac['idTelemetria'].'.addRows(['.$arrMedTractores[$trac['idTelemetria']]['velocidades'].']);
 
 									var options3_'.$trac['idTelemetria'].' = {
@@ -1138,8 +1099,7 @@ if(isset($row_data['idSolicitud'])&&$row_data['idSolicitud']!=''){
 							<div id="chart_velocidades_'.$trac['idTelemetria'].'" style="height: 300px; width: 100%;"></div>';
 
 							?>
-							
-							
+
 							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:20px;">
 								<?php
 								$Alert_Text = '<a href="view_solicitud_aplicacion_finalizada_view_mapa.php?idTelemetria='.simpleEncode($trac['idTelemetria'], fecha_actual()).'&idSolicitud='.$_GET['view'].'&return='.basename($_SERVER["REQUEST_URI"], ".php").'" class="btn btn-primary pull-right margin_form_btn"><i class="fa fa-map-o" aria-hidden="true"></i> Ver mapas</a>';

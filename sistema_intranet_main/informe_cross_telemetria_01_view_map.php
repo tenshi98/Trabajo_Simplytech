@@ -67,21 +67,25 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelaciona
 				alert_post_data(4,2,2,0, $Alert_Text);
 			}else{
 				$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle']; ?>
-				<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
-				<script type="text/javascript">
-					function initialize() {
+				<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
+				<script>
+					let map;
+
+					async function initMap() {
+						const { Map } = await google.maps.importLibrary("maps");
+
 						var myLatlng = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
-						var mapOptions = {
+						// marker position
+						var factory = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
+
+						var myOptions = {
 							zoom: 15,
 							scrollwheel: false,
 							center: myLatlng,
 							mapTypeId: google.maps.MapTypeId.SATELLITE
-						}
-						var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+						};
 
-						// marker position
-						var factory = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud'] ?>, <?php echo $rowdata['GeoLongitud'] ?>);
-
+						map = new Map(document.getElementById("map_canvas"), myOptions);
 						// InfoWindow content
 						var content = '<div id="iw-container">' +
 										'<div class="iw-title">Mediciones</div>' +
@@ -97,15 +101,13 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelaciona
 										'</div>' +
 										'<div class="iw-bottom-gradient"></div>' +
 										'</div>';
-											
 
-			
 						// A new Info Window is created and set content
 						var infowindow = new google.maps.InfoWindow({
 							content: content,
 							maxWidth: 350
-						});	   
-										
+						});
+
 						// marker options
 						var marker = new google.maps.Marker({
 							position	: factory,
@@ -177,20 +179,19 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado_tablarelaciona
 								$(this).css({opacity: '1'});
 							});
 						});
-										
+
 						//muestro la infowindow al inicio
 						infowindow.open(map,marker);
 
 						//centralizo el mapa en base al ultimo dato obtenido
 						map.panTo(marker.getPosition());
-								
-										
-					}  
+
+					}
+
 				</script>
-				<div id="map_canvas" style="width:100%; height:500px">
-					<script type="text/javascript">initialize();</script>
-				</div>
-				  
+
+				<div id="map_canvas" style="width:100%; height:500px"></div>
+
 			<?php } ?>
 		</div>
 	</div>

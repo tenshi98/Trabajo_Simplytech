@@ -867,16 +867,16 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 								.my_marker::after {content: "";position: absolute;top: 100%;left: 50%;transform: translate(-50%, 0%);border: solid 8px transparent;border-top-color: black;}
 							</style>
 
-							<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false"></script>
+							<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 							<div class="row">
 								<div id="map_canvas" style="width: 100%; height: 550px;"></div>
 							</div>
 							<script>
-								/* ************************************************************************** */
-								var map;
+								let map;
 								var marker;
-								/* ************************************************************************** */
-								function initialize() {
+
+								async function initMap() {
+									const { Map } = await google.maps.importLibrary("maps");
 
 									var myLatlng = new google.maps.LatLng(<?php echo $rowdata['GeoLatitud']; ?>, <?php echo $rowdata['GeoLongitud']; ?>);
 
@@ -885,7 +885,8 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 										center: myLatlng,
 										mapTypeId: google.maps.MapTypeId.SATELLITE
 									};
-									map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+									map = new Map(document.getElementById("map_canvas"), myOptions);
 									map.setTilt(0);
 
 									// InfoWindow content
@@ -981,10 +982,9 @@ if(isset($n_permisos['idOpcionesGen_6'])&&$n_permisos['idOpcionesGen_6']!=0){
 									infowindow.open(map,marker);
 
 								}
-								/* ************************************************************************** */
-								google.maps.event.addDomListener(window, "load", initialize());
 
 							</script>
+
 							<?php
 						}
 

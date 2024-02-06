@@ -103,7 +103,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 						alert_post_data(4,2,2,0, $Alert_Text);
 					}else{
 						$google = $_SESSION['usuario']['basic_data']['Config_IDGoogle'];
-					
+
 						if(isset($rowdata['GeoLatitud']) && $rowdata['GeoLatitud']!='' && $rowdata['GeoLatitud']!=0){
 							$nlat = $rowdata['GeoLatitud'];
 						}else{
@@ -115,20 +115,20 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 						}else{
 							$nlong = '-70.6506';
 						}
-						
+
 						?>
-						<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&sensor=false&libraries=places"></script>
+
+						<script async src="https://maps.googleapis.com/maps/api/js?key=<?php echo $google; ?>&callback=initMap"></script>
 
 						<input id="pac-input" class="pac-controls" type="text" placeholder="Buscar Dirección">
 						<div id="map_canvas" style="width: 100%; height: 550px;"></div>
-
-
 						<script>
-
-							var map;
+							let map;
 							var marker;
-							/* ************************************************************************** */
-							function initialize() {
+
+							async function initMap() {
+								const { Map } = await google.maps.importLibrary("maps");
+
 								var myLatlng = new google.maps.LatLng(<?php echo $nlat; ?>, <?php echo $nlong; ?>);
 
 								var myOptions = {
@@ -136,7 +136,8 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 									center: myLatlng,
 									mapTypeId: google.maps.MapTypeId.ROADMAP
 								};
-								map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+
+								map = new Map(document.getElementById("map_canvas"), myOptions);
 
 								marker = new google.maps.Marker({
 									draggable	: true,
@@ -155,7 +156,6 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 
 									document.getElementById("Latitud_fake").value = event.latLng.lat();
 									document.getElementById("Longitud_fake").value = event.latLng.lng();
-			
 
 								});
 
@@ -174,20 +174,17 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 
 											var myLatlng = new google.maps.LatLng(place.geometry.location.lat(), place.geometry.location.lng());
 											marker.setPosition(myLatlng);
-													 
 											bounds.extend(place.geometry.location);
-				
 											document.getElementById("GeoLatitud").value = place.geometry.location.lat();
 											document.getElementById("GeoLongitud").value = place.geometry.location.lng();
-											codeLatLng(place.geometry.location.lat(),place.geometry.location.lng(),'Direccion');							
+											codeLatLng(place.geometry.location.lat(),place.geometry.location.lng(),'Direccion');
 											document.getElementById("Latitud_fake").value = place.geometry.location.lat();
 											document.getElementById("Longitud_fake").value = place.geometry.location.lng();
-																			
 
-										}(place));	
+										}(place));
 
 									}
-										 
+
 									map.fitBounds(bounds);
 									searchBox.set('map', map);
 									map.setZoom(Math.min(map.getZoom(),12));
@@ -195,6 +192,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 								});
 
 							}
+
 							/* ************************************************************************** */
 							function codeLatLng(lat,lng, div) {
 								geocoder = new google.maps.Geocoder();
@@ -220,8 +218,6 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 								});
 							}
 
-							/* ************************************************************************** */
-							google.maps.event.addDomListener(window, "load", initialize());
 						</script>
 
 					<?php } ?>
@@ -232,7 +228,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 				<div style="margin-top:20px;">
 					<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
 
-						<?php 
+						<?php
 						if(isset($idZona)){      $x0  = $idZona;      }else{$x0  = $rowdata['idZona'];}
 						if(isset($idCiudad)){    $x1  = $idCiudad;    }else{$x1  = $rowdata['idCiudad'];}
 						if(isset($idComuna)){    $x2  = $idComuna;    }else{$x2  = $rowdata['idComuna'];}
@@ -248,8 +244,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 						$Form_Inputs->form_input_icon('Dirección', 'Direccion', $rowdata['Direccion'], 1,'fa fa-map');
 						$Form_Inputs->form_input_disabled('Latitud', 'Latitud_fake', $rowdata['GeoLatitud']);
 						$Form_Inputs->form_input_disabled('Longitud', 'Longitud_fake', $rowdata['GeoLongitud']);
-						
-						
+
 						$Form_Inputs->form_input_hidden('GeoLatitud', $rowdata['GeoLatitud'], 2);
 						$Form_Inputs->form_input_hidden('GeoLongitud', $rowdata['GeoLongitud'], 2);
 						$Form_Inputs->form_input_hidden('idTelemetria', $_GET['id'], 2);
@@ -266,9 +261,7 @@ $rowdata = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, $
 			</div>
 
 		</div>
-		
-		
-   
+
 	</div>
 </div>
 
