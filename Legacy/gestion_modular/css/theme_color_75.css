@@ -414,14 +414,22 @@ body:not(.sidebar-left-mini) #menu .nav-header {
 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label {position: relative;padding: 1.7em;margin-left: 70px;-webkit-background-clip: padding-box;-moz-background-clip: padding;background-clip: padding-box;-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;padding-top:0px;}
 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2{color: #303641;font-family: "Noto Sans",sans-serif;font-size: 12px;margin: 0;line-height: 1.428571429;}
 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2 {font-size: 16px;margin-bottom: 10px;}
-.timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2 a {color: #303641;}
+.timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2 a {color: #303641;cursor: pointer;}
 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label h2.pased a {color: #db0d0d;}
 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label .timeline-box{padding-left:15px;}
 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label .timeline-box p {color: #303641;font-family: "Noto Sans",sans-serif;font-size: 12px;margin: 0;line-height: 1.428571429;text-transform: uppercase;}
 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label .timeline-box p span{color: #737881;}
 .timeline-centered .timeline-entry .timeline-entry-inner .timeline-label .timeline-box p + p {margin-top: 15px;}
 
-
-
+/* Acordeon */
+.panel-group {margin-bottom: 0;padding: 30px;}
+#accordion .panel {border: medium none;border-radius: 0;box-shadow: none;margin: 0 0 15px 10px;}
+#accordion .panel-heading {border-radius: 30px;padding: 0;}
+#accordion .panel-title a {background: #ffb900 none repeat scroll 0 0;border: 1px solid transparent;border-radius: 30px;color: #fff;display: block;font-size: 18px;font-weight: 600;padding: 12px 20px 12px 50px;position: relative;transition: all 0.3s ease 0s;}
+#accordion .panel-title a.collapsed {background: #fff none repeat scroll 0 0;border: 1px solid #ddd;color: #333;}
+#accordion .panel-title a::after, #accordion .panel-title a.collapsed::after {background: #ffb900 none repeat scroll 0 0;border: 1px solid transparent;border-radius: 50%;box-shadow: 0 3px 10px rgba(0, 0, 0, 0.58);color: #fff;content: "";font-family: fontawesome;font-size: 25px;height: 55px;left: -20px;line-height: 55px;position: absolute;text-align: center;top: -5px;transition: all 0.3s ease 0s;width: 55px;}
+#accordion .panel-title a.collapsed::after {background: #fff none repeat scroll 0 0;border: 1px solid #ddd;box-shadow: none;color: #333;content: "";}
+#accordion .panel-body {background: transparent none repeat scroll 0 0;border-top: medium none;padding: 20px 25px 10px 9px;position: relative;}
+#accordion .panel-body .panel-doted {border-left: 1px dashed #8c8c8c;padding-left: 25px;}
 
 
