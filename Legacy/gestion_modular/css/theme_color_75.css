@@ -313,6 +313,10 @@ body:not(.sidebar-left-mini) #menu .nav-header {
 .btn-primary:focus:active,
 .btn-primary:active:active{color: #fff;background-color: #dc3545;border-color: #dc3545;box-shadow:500px 0 0 #dc3545 inset;}
 
+.btn-primary.active,
+.btn-primary:active,
+.open > .dropdown-toggle.btn-primary {color: #fff;background-color: #dc3545;background-image: none;border-color: #dc3545;}
+
 /*****************************************/
 .btn-success {color: #fff;background-color: #5cb85c;border-color: #5cb85c;box-shadow:0px 0 0 #5cb85c inset;}
 .btn-success:hover,
