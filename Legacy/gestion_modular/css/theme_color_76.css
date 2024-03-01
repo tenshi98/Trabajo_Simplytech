@@ -148,3 +148,9 @@ body:not(.sidebar-left-mini) #menu .nav-header {
   .head .main-bar h3{
     color: #333;
   }
+@media (max-width:768px){
+  .navbar-inverse .navbar-nav > li > a, .dropdown-menu > li > a {
+    color: #fafafa !important;
+  }
+}
+
