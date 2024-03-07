@@ -31,11 +31,11 @@ if(isset($_GET['idSistema'])&&$_GET['idSistema']!=''&&$_GET['idSistema']!=0){
 }
 
 //se verifica si se ingreso la hora, es un dato optativo
-$SIS_where = '';
+$SIS_where = 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema!="0000-00-00"';
 if(isset($_GET['f_inicio'], $_GET['f_termino'], $_GET['h_inicio'], $_GET['h_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''&&$_GET['h_inicio']!=''&&$_GET['h_termino']!=''){
-	$SIS_where .=" (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
+	$SIS_where .=" AND (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
 }elseif(isset($_GET['f_inicio'], $_GET['f_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''){
-	$SIS_where .=" (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
+	$SIS_where .=" AND (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
 
 //verifico el numero de datos antes de hacer la consulta
@@ -46,13 +46,13 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1,0, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
 }else{
 	/****************************************************************/
-	$consql = '
+	$SIS_query = '
 	telemetria_listado.Nombre AS NombreEquipo,
 	telemetria_listado.cantSensores';
 	for ($i = 1; $i <= 72; $i++) {
-		$consql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
-		$consql .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
-		$consql .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
 	}
 	$SIS_join  = '
 	LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria    = telemetria_listado.idTelemetria
@@ -103,7 +103,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			//Verifico si el sensor esta activo para guardar el dato
 			if(isset($rowEquipo['SensoresActivo_'.$i])&&$rowEquipo['SensoresActivo_'.$i]==1){
 				$m_table_title   .= '<th style="font-size: 10px;text-align:center;background-color: #c3c3c3;">'.$Grupo[$rowEquipo['SensoresGrupo_'.$i]].'</th>';
-				$arrTableTemp[$i] = 0;//se resetea
+				$arrTableTemp[$i] = 99999;//se resetea
 			}
 		}
 	}
@@ -133,21 +133,22 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 						if($arrTableTemp[$x]!=$fac['SensorValue_'.$x]){
 							//guardo dato de la tabla
 							switch ($fac['SensorValue_'.$x]) {
-								case 1: $table .= '<td>Cerrado</td>'; break;
-								case 0: $table .= '<td>Abierto</td>'; break;
+								case 0: $table .= '<td>Cerrado</td>'; break;
+								case 1: $table .= '<td>Abierto</td>'; break;
 							}
 							//guardo el valor para el proximo bucle
 							$arrTableTemp[$x] = $fac['SensorValue_'.$x];
 							//cuento
 							$count++;
 						}else{
-							//guardo el valor para el proximo bucle
-							$arrTableTemp[$x] = $fac['SensorValue_'.$x];
+							$table  .= '<td></td>';
 							//guardo dato de la tabla
 							switch ($fac['SensorValue_'.$x]) {
 								case 0: $table2 .= '<td>Cerrado</td>'; break;
 								case 1: $table2 .= '<td>Abierto</td>'; break;
 							}
+							//guardo el valor para el proximo bucle
+							$arrTableTemp[$x] = $fac['SensorValue_'.$x];
 						}
 					}
 				}
@@ -198,16 +199,19 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$m_table .= '</tr>';
 	}
 
-	//Ultima linea
-	$HorasTrans  = horas_transcurridas($Ult_diaInicio, $Ult_diaTermino, $Ult_horaInicio, $Ult_horaTermino);
-	$m_table .= '<tr class="odd">';
-	$m_table .= '<td>'.fecha_estandar($Ult_diaInicio).'</td>';
-	$m_table .= '<td>'.$Ult_horaInicio.'</td>';
-	$m_table .= '<td>'.fecha_estandar($Ult_diaTermino).'</td>';
-	$m_table .= '<td>'.$Ult_horaTermino.'</td>';
-	$m_table .= '<td>'.$HorasTrans.'</td>';
-	$m_table .= $table2;
-	$m_table .= '</tr>';
+	//Verifico si existe
+	if(isset($Ult_diaInicio)&&$Ult_diaInicio!=''&&$Ult_diaInicio!='0000-00-00'){
+		//Ultima linea
+		$HorasTrans  = horas_transcurridas($Ult_diaInicio, $Ult_diaTermino, $Ult_horaInicio, $Ult_horaTermino);
+		$m_table .= '<tr class="odd">';
+		$m_table .= '<td>'.fecha_estandar($Ult_diaInicio).'</td>';
+		$m_table .= '<td>'.$Ult_horaInicio.'</td>';
+		$m_table .= '<td>'.fecha_estandar($Ult_diaTermino).'</td>';
+		$m_table .= '<td>'.$Ult_horaTermino.'</td>';
+		$m_table .= '<td>'.$HorasTrans.'</td>';
+		$m_table .= $table2;
+		$m_table .= '</tr>';
+	}
 
 	/********************************************************************/
 	//Se define el contenido del PDF

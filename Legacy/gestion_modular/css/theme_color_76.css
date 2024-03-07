@@ -38,8 +38,11 @@ body:not(.sidebar-left-mini) #menu .nav-header,
 #menu>li ul li a{
 	color: #333 !important;
 }
-.navbar-inverse .navbar-nav > li > a, .dropdown-menu > li > a {
+.dropdown-menu > li > a {
     color: #333 !important;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #fafafa !important;
 }
 
 /* Color de las fuentes del tema */
@@ -65,10 +68,10 @@ body:not(.sidebar-left-mini) #menu .nav-header,
 }
 #menu > li > a,
 body:not(.sidebar-left-mini) #menu .nav-header {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);	
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 .head{
-    border-bottom: 1px solid rgba(0, 0, 0, 0.1);	
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 /* Otros */
@@ -88,6 +91,7 @@ body:not(.sidebar-left-mini) #menu .nav-header {
 
 /* Modificacion de las tablas */
 .box {
+    background-color: #fff;
     -webkit-border-radius: 8px 8px 0px 0px !important;
     -moz-border-radius: 8px 8px 0px 0px !important;
 	border-radius: 8px 8px 0px 0px !important;
@@ -148,9 +152,5 @@ body:not(.sidebar-left-mini) #menu .nav-header {
   .head .main-bar h3{
     color: #333;
   }
-@media (max-width:768px){
-  .navbar-inverse .navbar-nav > li > a, .dropdown-menu > li > a {
-    color: #fafafa !important;
-  }
-}
+
 

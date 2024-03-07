@@ -9341,7 +9341,7 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 													if(isset($gru['CountHum'])&&$gru['CountHum']!=0){     $Hum     = Cantidades(($gru['Hum']/$gru['CountHum']), 1);         }else{ $Hum     = 0; }
 													if(isset($gru['CountBool'])&&$gru['CountBool']!=0){
 														$tempv  = $gru['Bool']/$gru['CountBool'];
-														$s_link = 'informe_telemetria_registro_sensores_20.php?f_inicio='.fecha_actual().'&f_termino='.fecha_actual().'&idTelemetria='.$idTelemetria.'&submit_filter=Filtrar';
+														$s_link = 'informe_telemetria_registro_sensores_20.php?f_inicio='.fecha_actual().'&f_termino='.fecha_actual().'&idTelemetria='.$idTelemetria.'&RevisionGrupo='.$gruUso['idGrupo'].'&submit_filter=Filtrar';
 														//si esta abierto
 														if($tempv!=0){
 															$danger_color = 'warning';

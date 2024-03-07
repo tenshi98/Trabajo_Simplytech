@@ -31,11 +31,11 @@ if(isset($_SESSION['usuario']['basic_data']['ConfigRam'])&&$_SESSION['usuario'][
 /*                                                          Consultas                                                             */
 /**********************************************************************************************************************************/
 //se verifica si se ingreso la hora, es un dato optativo
-$SIS_where = '';
+$SIS_where = 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema!="0000-00-00"';
 if(isset($_GET['f_inicio'], $_GET['f_termino'], $_GET['h_inicio'], $_GET['h_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''&&$_GET['h_inicio']!=''&&$_GET['h_termino']!=''){
-	$SIS_where .=" (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
+	$SIS_where .=" AND (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
 }elseif(isset($_GET['f_inicio'], $_GET['f_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''){
-	$SIS_where .=" (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
+	$SIS_where .=" AND (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
 
 //verifico el numero de datos antes de hacer la consulta
@@ -262,7 +262,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				$spreadsheet->setActiveSheetIndex(0)
 							->setCellValue($arrData[$x].'1', $Grupo[$rowEquipo['SensoresGrupo_'.$i]]);
 				$x++;
-				$arrTableTemp[$i] = 0;//se resetea
+				$arrTableTemp[$i] = 99999;//se resetea
 			}
 		}
 	}
@@ -316,6 +316,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		}
 		//se crea la fila
 		if($count!=0){
+
 			//variables
 			$anterior    = $posit - 1;
 			$diaInicio   = $arrTable[$anterior]['FechaHasta'];
@@ -341,6 +342,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			//Guardo el ultimo registro
 			$Ult_diaInicio   = $fac['FechaSistema'];
 			$Ult_horaInicio  = $fac['HoraSistema'];
+
 		}
 
 		//Guardo el ultimo registro
@@ -375,17 +377,20 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	}
 
 	/*****************************************************************/
-	$HorasTrans  = horas_transcurridas($Ult_diaInicio, $Ult_diaTermino, $Ult_horaInicio, $Ult_horaTermino);
-	$spreadsheet->setActiveSheetIndex(0)
-				->setCellValue('A'.$nn, $Ult_diaInicio)
-				->setCellValue('B'.$nn, $Ult_horaInicio)
-				->setCellValue('C'.$nn, $Ult_diaTermino)
-				->setCellValue('D'.$nn, $Ult_horaTermino)
-				->setCellValue('E'.$nn, $HorasTrans);
-
-	for ($x = 1; $x <= $Maincount; $x++) {
+	//Verifico si existe
+	if(isset($Ult_diaInicio)&&$Ult_diaInicio!=''&&$Ult_diaInicio!='0000-00-00'){
+		$HorasTrans  = horas_transcurridas($Ult_diaInicio, $Ult_diaTermino, $Ult_horaInicio, $Ult_horaTermino);
 		$spreadsheet->setActiveSheetIndex(0)
-					->setCellValue($arrData[$x].$nn, DeSanitizar($arrTable3[$x]['Contenido']));
+					->setCellValue('A'.$nn, $Ult_diaInicio)
+					->setCellValue('B'.$nn, $Ult_horaInicio)
+					->setCellValue('C'.$nn, $Ult_diaTermino)
+					->setCellValue('D'.$nn, $Ult_horaTermino)
+					->setCellValue('E'.$nn, $HorasTrans);
+
+		for ($x = 1; $x <= $Maincount; $x++) {
+			$spreadsheet->setActiveSheetIndex(0)
+						->setCellValue($arrData[$x].$nn, DeSanitizar($arrTable3[$x]['Contenido']));
+		}
 	}
 
 	// Rename worksheet

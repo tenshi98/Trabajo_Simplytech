@@ -33,14 +33,14 @@ require_once 'core/Web.Header.Main.php';
 if(!empty($_GET['submit_filter'])){
 
 //se verifica si se ingreso la hora, es un dato optativo
-$SIS_where = '';
+$SIS_where = 'telemetria_listado_tablarelacionada_'.$_GET['idTelemetria'].'.FechaSistema!="0000-00-00"';
 $search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 $search .= '&idGrupo='.$_GET['idGrupo'].'&idTelemetria='.$_GET['idTelemetria'].'&f_inicio='.$_GET['f_inicio'].'&f_termino='.$_GET['f_termino'];
 if(isset($_GET['f_inicio'], $_GET['f_termino'], $_GET['h_inicio'], $_GET['h_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''&&$_GET['h_inicio']!=''&&$_GET['h_termino']!=''){
-	$SIS_where .=" (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
+	$SIS_where .=" AND (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".TimeStamp BETWEEN '".$_GET['f_inicio']." ".$_GET['h_inicio']."' AND '".$_GET['f_termino']." ".$_GET['h_termino']."')";
 	$search    .="&h_inicio=".$_GET['h_inicio']."&h_termino=".$_GET['h_termino'];
 }elseif(isset($_GET['f_inicio'], $_GET['f_termino'])&&$_GET['f_inicio']!=''&&$_GET['f_termino']!=''){
-	$SIS_where .=" (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
+	$SIS_where .=" AND (telemetria_listado_tablarelacionada_".$_GET['idTelemetria'].".FechaSistema BETWEEN '".$_GET['f_inicio']."' AND '".$_GET['f_termino']."')";
 }
 
 //verifico el numero de datos antes de hacer la consulta
@@ -51,18 +51,20 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	alert_post_data(4,1,1,0, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
 }else{
 	/****************************************************************/
-	$consql = '
+	$SIS_query = '
 	telemetria_listado.Nombre AS NombreEquipo,
 	telemetria_listado.cantSensores';
 	for ($i = 1; $i <= 72; $i++) {
-		$consql .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
-		$consql .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
-		$consql .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i.' AS SensoresGrupo_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i.' AS SensoresUniMed_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i.' AS SensoresActivo_'.$i;
+		$SIS_query .= ',telemetria_listado_sensores_revision_grupo.SensoresRevisionGrupo_'.$i.' AS SensoresRevisionGrupo_'.$i;
 	}
 	$SIS_join  = '
-	LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria    = telemetria_listado.idTelemetria
-	LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria   = telemetria_listado.idTelemetria
-	LEFT JOIN `telemetria_listado_sensores_activo`  ON telemetria_listado_sensores_activo.idTelemetria   = telemetria_listado.idTelemetria';
+	LEFT JOIN `telemetria_listado_sensores_grupo`           ON telemetria_listado_sensores_grupo.idTelemetria            = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_unimed`          ON telemetria_listado_sensores_unimed.idTelemetria           = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_activo`          ON telemetria_listado_sensores_activo.idTelemetria           = telemetria_listado.idTelemetria
+	LEFT JOIN `telemetria_listado_sensores_revision_grupo`  ON telemetria_listado_sensores_revision_grupo.idTelemetria   = telemetria_listado.idTelemetria';
 	//obtengo la cantidad real de sensores
 	$rowEquipo = db_select_data (false, $SIS_query, 'telemetria_listado', $SIS_join, 'telemetria_listado.idTelemetria='.$_GET['idTelemetria'], $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'rowEquipo');
 
@@ -71,7 +73,12 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 	for ($i = 1; $i <= $rowEquipo['cantSensores']; $i++) {
 		//Verifico la unidad de medida
 		if(isset($rowEquipo['SensoresUniMed_'.$i])&&$rowEquipo['SensoresUniMed_'.$i]==12){
-			$consql .= ',Sensor_'.$i.' AS SensorValue_'.$i;
+			//verifico si existe
+			if(isset($_GET['RevisionGrupo'])&&$_GET['RevisionGrupo']==$rowEquipo['SensoresRevisionGrupo_'.$i]){
+				$consql .= ',Sensor_'.$i.' AS SensorValue_'.$i;
+			}elseif(!isset($_GET['RevisionGrupo'])){
+				$consql .= ',Sensor_'.$i.' AS SensorValue_'.$i;
+			}
 		}
 	}
 	/****************************************************************/
@@ -107,8 +114,14 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		if(isset($rowEquipo['SensoresUniMed_'.$i])&&$rowEquipo['SensoresUniMed_'.$i]==12){
 			//Verifico si el sensor esta activo para guardar el dato
 			if(isset($rowEquipo['SensoresActivo_'.$i])&&$rowEquipo['SensoresActivo_'.$i]==1){
-				$m_table_title   .= '<th>'.$Grupo[$rowEquipo['SensoresGrupo_'.$i]].'</th>';
-				$arrTableTemp[$i] = 99999;//se resetea
+				//verifico si existe
+				if(isset($_GET['RevisionGrupo'])&&$_GET['RevisionGrupo']==$rowEquipo['SensoresRevisionGrupo_'.$i]){
+					$m_table_title   .= '<th>'.$Grupo[$rowEquipo['SensoresGrupo_'.$i]].'</th>';
+					$arrTableTemp[$i] = 99999;//se resetea
+				}elseif(!isset($_GET['RevisionGrupo'])){
+					$m_table_title   .= '<th>'.$Grupo[$rowEquipo['SensoresGrupo_'.$i]].'</th>';
+					$arrTableTemp[$i] = 99999;//se resetea
+				}
 			}
 		}
 	}
@@ -134,56 +147,118 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 				if(isset($rowEquipo['SensoresActivo_'.$x])&&$rowEquipo['SensoresActivo_'.$x]==1){
 					//Que el valor medido sea distinto de 999
 					if(isset($fac['SensorValue_'.$x])&&$fac['SensorValue_'.$x]<99900){
-						//verifico si hay cambios en el valor
-						if($arrTableTemp[$x]!=$fac['SensorValue_'.$x]){
-							//guardo dato de la tabla
-							switch ($fac['SensorValue_'.$x]) {
-								case 1:
-									$table  .= '
-									<td>
-										<label class="label label-success">Cerrado</label>
-										<div class="btn-group" style="width: 35px;" >
-											<a href="informe_telemetria_registro_sensores_20_trazabilidad.php?f_inicio=STR_f_inicio&h_inicio=STR_h_inicio&f_termino=STR_f_termino&h_termino=STR_h_termino&idTelemetria='.$_GET['idTelemetria'].'&idGrupo='.$rowEquipo['SensoresGrupo_'.$x].'" title="Ver Trazabilidad" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
-										</div>
-									</td>';
-									break;
-								case 0:
-									$table  .= '
-									<td>
-										<label class="label label-danger">Abierto</label>
-										<div class="btn-group" style="width: 35px;" >
-											<a href="informe_telemetria_registro_sensores_20_trazabilidad.php?f_inicio=STR_f_inicio&h_inicio=STR_h_inicio&f_termino=STR_f_termino&h_termino=STR_h_termino&idTelemetria='.$_GET['idTelemetria'].'&idGrupo='.$rowEquipo['SensoresGrupo_'.$x].'" title="Ver Trazabilidad" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
-										</div>
-									</td>';
-									break;
+						//verifico si existe
+						if(isset($_GET['RevisionGrupo'])&&$_GET['RevisionGrupo']==$rowEquipo['SensoresRevisionGrupo_'.$x]){
+							//verifico si hay cambios en el valor
+							if($arrTableTemp[$x]!=$fac['SensorValue_'.$x]){
+								//guardo dato de la tabla
+								switch ($fac['SensorValue_'.$x]) {
+									case 0:
+										$table  .= '
+										<td>
+											<label class="label label-success">Cerrado</label>
+											<div class="btn-group" style="width: 35px;" >
+												<a href="informe_telemetria_registro_sensores_20_trazabilidad.php?f_inicio=STR_f_inicio&h_inicio=STR_h_inicio&f_termino=STR_f_termino&h_termino=STR_h_termino&idTelemetria='.$_GET['idTelemetria'].'&idGrupo='.$rowEquipo['SensoresGrupo_'.$x].'" title="Ver Trazabilidad" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											</div>
+										</td>';
+										break;
+									case 1:
+										$table  .= '
+										<td>
+											<label class="label label-danger">Abierto</label>
+											<div class="btn-group" style="width: 35px;" >
+												<a href="informe_telemetria_registro_sensores_20_trazabilidad.php?f_inicio=STR_f_inicio&h_inicio=STR_h_inicio&f_termino=STR_f_termino&h_termino=STR_h_termino&idTelemetria='.$_GET['idTelemetria'].'&idGrupo='.$rowEquipo['SensoresGrupo_'.$x].'" title="Ver Trazabilidad" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											</div>
+										</td>';
+										break;
+								}
+								//guardo el valor para el proximo bucle
+								$arrTableTemp[$x] = $fac['SensorValue_'.$x];
+								//cuento
+								$count++;
+							}else{
+								$table  .= '<td></td>';
+								//guardo dato de la tabla
+								switch ($fac['SensorValue_'.$x]) {
+									case 0:
+										$table2  .= '
+										<td>
+											<label class="label label-success">Cerrado</label>
+											<div class="btn-group" style="width: 35px;" >
+												<a href="informe_telemetria_registro_sensores_20_trazabilidad.php?f_inicio=STR_f_inicio&h_inicio=STR_h_inicio&f_termino=STR_f_termino&h_termino=STR_h_termino&idTelemetria='.$_GET['idTelemetria'].'&idGrupo='.$rowEquipo['SensoresGrupo_'.$x].'" title="Ver Trazabilidad" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											</div>
+										</td>';
+										break;
+									case 1:
+										$table2  .= '
+										<td>
+											<label class="label label-danger">Abierto</label>
+											<div class="btn-group" style="width: 35px;" >
+												<a href="informe_telemetria_registro_sensores_20_trazabilidad.php?f_inicio=STR_f_inicio&h_inicio=STR_h_inicio&f_termino=STR_f_termino&h_termino=STR_h_termino&idTelemetria='.$_GET['idTelemetria'].'&idGrupo='.$rowEquipo['SensoresGrupo_'.$x].'" title="Ver Trazabilidad" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											</div>
+										</td>';
+										break;
+								}
+								//guardo el valor para el proximo bucle
+								$arrTableTemp[$x] = $fac['SensorValue_'.$x];
+								//cuento
+								//$count++;
 							}
-							//guardo el valor para el proximo bucle
-							$arrTableTemp[$x] = $fac['SensorValue_'.$x];
-							//cuento
-							$count++;
-						}else{
-							//guardo el valor para el proximo bucle
-							$arrTableTemp[$x] = $fac['SensorValue_'.$x];
-							//guardo dato de la tabla
-							switch ($fac['SensorValue_'.$x]) {
-								case 0:
-									$table2  .= '
-									<td>
-										<label class="label label-success">Cerrado</label>
-										<div class="btn-group" style="width: 35px;" >
-											<a href="informe_telemetria_registro_sensores_20_trazabilidad.php?f_inicio=STR_f_inicio&h_inicio=STR_h_inicio&f_termino=STR_f_termino&h_termino=STR_h_termino&idTelemetria='.$_GET['idTelemetria'].'&idGrupo='.$rowEquipo['SensoresGrupo_'.$x].'" title="Ver Trazabilidad" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
-										</div>
-									</td>';
-									break;
-								case 1:
-									$table2  .= '
-									<td>
-										<label class="label label-danger">Abierto</label>
-										<div class="btn-group" style="width: 35px;" >
-											<a href="informe_telemetria_registro_sensores_20_trazabilidad.php?f_inicio=STR_f_inicio&h_inicio=STR_h_inicio&f_termino=STR_f_termino&h_termino=STR_h_termino&idTelemetria='.$_GET['idTelemetria'].'&idGrupo='.$rowEquipo['SensoresGrupo_'.$x].'" title="Ver Trazabilidad" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
-										</div>
-									</td>';
-									break;
+						}elseif(!isset($_GET['RevisionGrupo'])){
+							//verifico si hay cambios en el valor
+							if($arrTableTemp[$x]!=$fac['SensorValue_'.$x]){
+								//guardo dato de la tabla
+								switch ($fac['SensorValue_'.$x]) {
+									case 0:
+										$table  .= '
+										<td>
+											<label class="label label-success">Cerrado</label>
+											<div class="btn-group" style="width: 35px;" >
+												<a href="informe_telemetria_registro_sensores_20_trazabilidad.php?f_inicio=STR_f_inicio&h_inicio=STR_h_inicio&f_termino=STR_f_termino&h_termino=STR_h_termino&idTelemetria='.$_GET['idTelemetria'].'&idGrupo='.$rowEquipo['SensoresGrupo_'.$x].'" title="Ver Trazabilidad" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											</div>
+										</td>';
+										break;
+									case 1:
+										$table  .= '
+										<td>
+											<label class="label label-danger">Abierto</label>
+											<div class="btn-group" style="width: 35px;" >
+												<a href="informe_telemetria_registro_sensores_20_trazabilidad.php?f_inicio=STR_f_inicio&h_inicio=STR_h_inicio&f_termino=STR_f_termino&h_termino=STR_h_termino&idTelemetria='.$_GET['idTelemetria'].'&idGrupo='.$rowEquipo['SensoresGrupo_'.$x].'" title="Ver Trazabilidad" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											</div>
+										</td>';
+										break;
+								}
+								//guardo el valor para el proximo bucle
+								$arrTableTemp[$x] = $fac['SensorValue_'.$x];
+								//cuento
+								$count++;
+							}else{
+								$table  .= '<td></td>';
+								//guardo dato de la tabla
+								switch ($fac['SensorValue_'.$x]) {
+									case 0:
+										$table2  .= '
+										<td>
+											<label class="label label-success">Cerrado</label>
+											<div class="btn-group" style="width: 35px;" >
+												<a href="informe_telemetria_registro_sensores_20_trazabilidad.php?f_inicio=STR_f_inicio&h_inicio=STR_h_inicio&f_termino=STR_f_termino&h_termino=STR_h_termino&idTelemetria='.$_GET['idTelemetria'].'&idGrupo='.$rowEquipo['SensoresGrupo_'.$x].'" title="Ver Trazabilidad" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											</div>
+										</td>';
+										break;
+									case 1:
+										$table2  .= '
+										<td>
+											<label class="label label-danger">Abierto</label>
+											<div class="btn-group" style="width: 35px;" >
+												<a href="informe_telemetria_registro_sensores_20_trazabilidad.php?f_inicio=STR_f_inicio&h_inicio=STR_h_inicio&f_termino=STR_f_termino&h_termino=STR_h_termino&idTelemetria='.$_GET['idTelemetria'].'&idGrupo='.$rowEquipo['SensoresGrupo_'.$x].'" title="Ver Trazabilidad" class="iframe btn btn-primary btn-sm tooltip"><i class="fa fa-list" aria-hidden="true"></i></a>
+											</div>
+										</td>';
+										break;
+								}
+								//guardo el valor para el proximo bucle
+								$arrTableTemp[$x] = $fac['SensorValue_'.$x];
+								//cuento
+								//$count++;
 							}
 						}
 					}
@@ -192,7 +267,6 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		}
 		//se crea la fila
 		if($count!=0){
-
 			//variables
 			$anterior    = $posit - 1;
 			$diaInicio   = $arrTable[$anterior]['FechaHasta'];
@@ -219,6 +293,7 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 			//Guardo el ultimo registro
 			$Ult_diaInicio   = $fac['FechaSistema'];
 			$Ult_horaInicio  = $fac['HoraSistema'];
+
 		}
 
 		//Guardo el ultimo registro
@@ -241,14 +316,17 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 		$m_table .= '</tr>';
 	}
 
-	//Ultima linea
-	$HorasTrans  = horas_transcurridas($Ult_diaInicio, $Ult_diaTermino, $Ult_horaInicio, $Ult_horaTermino);
-	$m_table .= '<tr class="odd">';
-	$m_table .= '<td>'.fecha_estandar($Ult_diaInicio).' - '.$Ult_horaInicio.'</td>';
-	$m_table .= '<td>'.fecha_estandar($Ult_diaTermino).' - '.$Ult_horaTermino.'</td>';
-	$m_table .= '<td>'.$HorasTrans.'</td>';
-	$m_table .= $new_table2;
-	$m_table .= '</tr>';
+	//Verifico si existe
+	if(isset($Ult_diaInicio)&&$Ult_diaInicio!=''&&$Ult_diaInicio!='0000-00-00'){
+		//Ultima linea
+		$HorasTrans  = horas_transcurridas($Ult_diaInicio, $Ult_diaTermino, $Ult_horaInicio, $Ult_horaTermino);
+		$m_table .= '<tr class="odd">';
+		$m_table .= '<td>'.fecha_estandar($Ult_diaInicio).' - '.$Ult_horaInicio.'</td>';
+		$m_table .= '<td>'.fecha_estandar($Ult_diaTermino).' - '.$Ult_horaTermino.'</td>';
+		$m_table .= '<td>'.$HorasTrans.'</td>';
+		$m_table .= $new_table2;
+		$m_table .= '</tr>';
+	}
 
 	?>
 
