@@ -188,8 +188,8 @@ require_once '0_validate_user_1.php';
 						//si tiene la interfaz de crosstech
 						if(isset($rowdata['idOpcionesGen_7'])&&$rowdata['idOpcionesGen_7']==6){
 							//logo de la compañia
-							$login_logo  = DB_SITE_MAIN.'/img/login_logo.png';
-							$file_logo   = 'img/login_logo.png';
+							$login_logo  = DB_SITE_MAIN.'/img/round_logo.png';
+							$file_logo   = 'img/round_logo.png';
 
 							//solo si existe
 							if (file_exists($file_logo)){
@@ -200,18 +200,49 @@ require_once '0_validate_user_1.php';
 									$rowusr = db_select_data (false, 'Nombre,email_principal', 'core_sistemas','', 'idSistema='.$idSistema, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, $form_trabajo);
 
 									//Se crea el cuerpo
-									$BodyMail  = '<div style="background-color: #D9D9D9; padding: 10px;">';
-									$BodyMail .= '<img src="'.$login_logo.'" style="width: 60%;display:block;margin-left: auto;margin-right: auto;margin-top:30px;margin-bottom:30px;">';
-									$BodyMail .= '<h3 style="text-align: center;font-size: 30px;">';
-									$BodyMail .= '¡Hola <strong>'.$Nombre.'</strong>!<br/>';
-									$BodyMail .= 'Bienvenido/a a <strong>'.$rowusr['Nombre'].'</strong>';
-									$BodyMail .= '</h3>';
-									$BodyMail .= '<p style="text-align: center;font-size: 20px;">';
-									$BodyMail .= 'Tu usuario es: <strong>'.$usuario.'</strong><br/>';
-									$BodyMail .= 'La contraseña predeterminada es <strong>1234</strong>, luego el sistema te pedira cambiarla una vez iniciada sesion por primera vez.';
-									$BodyMail .= '</p>';
-									$BodyMail .= '<a href="'.DB_SITE_MAIN.'" style="display:block;width:100%;text-align: center;font-size: 20px;text-decoration: none;color: #004AAD;"><strong>Empezar &#8594;</strong></a>';
-									$BodyMail .= '</div>';
+									$BodyMail  = '
+									<div style="background-color: #eef2f5;">
+										<div style="background-color:transparent">
+											<div style="margin:0 auto;min-width:320px;max-width:600px;height:50px;"></div>
+										</div>
+										<div style="background-color:transparent">
+											<div style="margin:0 auto;min-width:320px;max-width:600px;background-color: #1649e4;border-top-left-radius: 5px;border-top-right-radius: 5px;">
+												<div style="width:70%;float: left;">
+													<p style="font-size: 30px;color:#ffe31d;margin:50px;font-family: Arial, sans-serif;">Bienvenidos</p>
+												</div>
+												<div style="width:30%;float: left;" align="center">
+													<div style="padding:24px;">
+														<img src="'.$login_logo.'" alt="" style="width: 100%; max-width: 200px; height: auto; margin: auto; display: block;">
+													</div>
+												</div>
+												<div style="clear: both;"></div>
+											</div>
+										</div>
+										<div style="background-color:transparent">
+											<div style="margin:0 auto;min-width:320px;max-width:600px;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;background-color:#ffffff;">
+												<div style="padding:24px;">
+													<p style="font-size: 12px;color:#1649e4;font-family: Arial, sans-serif;">
+														¡Hola '.$Nombre.'!<br/><br/>
+														Es un placer darte la bienvenida a nuestro servicio. En '.$rowusr['Nombre'].', entendemos que
+														cada cliente es único, y estamos emocionados de tener la oportunidad de
+														personalizar su experiencia para satisfacer sus necesidades específicas.<br/><br/>
+														Mediante este correo te dejamos tus datos de acceso a nuestra plataforma de
+														gestión.<br/><br/>
+														Acceso: <a href="'.DB_SITE_MAIN.'" style="text-decoration: none;color: #004AAD;">Ingresar</a><br/>
+														Nombre Usuario: '.$usuario.'<br/>
+														Password: 1234 (el sistema te pedira cambiarla una vez iniciada sesion por primera vez.)<br/><br/>
+														Nuevamente te damos la bienvenida a '.$rowusr['Nombre'].'.<br/><br/>
+														Saludos,<br/><br/>
+														Equipo '.$rowusr['Nombre'].'
+													</p>
+													<div style="clear: both;"></div>
+												</div>
+											</div>
+										</div>
+										<div style="background-color:transparent">
+											<div style="margin:0 auto;min-width:320px;max-width:600px;height:50px;"></div>
+										</div>
+									</div>';
 
 									$rmail = tareas_envio_correo($rowusr['email_principal'], 'Simplytech',
 																 $email, $Nombre,

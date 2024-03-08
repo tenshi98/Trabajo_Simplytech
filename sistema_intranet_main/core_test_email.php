@@ -42,6 +42,11 @@ if (!empty($_POST['submit_email_google'])){
 	$form_trabajo= 'send_mail_google';
 	require_once 'A1XRXS_sys/xrxs_form/z_server_test.php';
 }
+if (!empty($_POST['submit_email_format'])){
+	//Llamamos al formulario
+	$form_trabajo= 'send_mail_format';
+	require_once 'A1XRXS_sys/xrxs_form/z_server_test.php';
+}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -83,17 +88,17 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 				<li class="active"><a href="#data1" data-toggle="tab"><i class="fa fa-envelope-o" aria-hidden="true"></i> Correo</a></li>
 				<li class=""><a href="#data2" data-toggle="tab"><i class="fa fa-envelope-o" aria-hidden="true"></i> Correo con Imagen</a></li>
 				<li class=""><a href="#data3" data-toggle="tab"><i class="fa fa-envelope-o" aria-hidden="true"></i> Correo google</a></li>
+				<li class=""><a href="#data4" data-toggle="tab"><i class="fa fa-envelope-o" aria-hidden="true"></i> Correo formato</a></li>
 			</ul>
 		</header>
         <div class="tab-content">
-			
-		
+
 			<div class="tab-pane fade active in" id="data1">
 				<div class="wmd-panel">
 					<div class="table-responsive">
 						<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 							<form class="form-horizontal" method="post" id="form1" name="form1" autocomplete="off" novalidate>
-				
+
 								<?php
 								//Se verifican si existen los datos
 								if(isset($email)){      $x1  = $email;    }else{$x1  = '';}
@@ -105,9 +110,9 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 								$Form_Inputs->form_textarea('Texto','texto', $x2, 2);
 
 								$Form_Inputs->form_input_hidden('email_principal', $rowEmpresa['email_principal'], 2);
-								
+
 								?>
-					   
+
 								<div class="form-group">
 									<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf003; Enviar Prueba" name="submit_email"> 
 								</div>
@@ -124,7 +129,7 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 					<div class="table-responsive">
 						<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 							<form class="form-horizontal" method="post" id="form2" name="form2" novalidate>
-				
+
 								<?php
 								//Se verifican si existen los datos
 								if(isset($email)){      $x1  = $email;    }else{$x1  = '';}
@@ -136,9 +141,9 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 								$Form_Inputs->form_textarea('Texto','texto', $x2, 2);
 
 								$Form_Inputs->form_input_hidden('email_principal', $rowEmpresa['email_principal'], 2);
-								
+
 								?>
-					   
+
 								<div class="form-group">
 									<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf003; Enviar Prueba" name="submit_email_image"> 
 								</div>
@@ -155,7 +160,7 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 					<div class="table-responsive">
 						<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
 							<form class="form-horizontal" method="post" id="form3" name="form3" novalidate>
-				
+
 								<?php
 								//Se verifican si existen los datos
 								if(isset($email)){             $x1 = $email;           }else{$x1 = '';}
@@ -172,9 +177,9 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 								$Form_Inputs->form_input_icon('Gmail Usuario', 'GmailUsuario', $x3, 2,'fa fa-envelope-o');
 								$Form_Inputs->form_input_icon('Gmail Password', 'GmailPassword', $x4, 2,'fa fa-envelope-o');
 								$Form_Inputs->form_input_icon('email principal', 'email_principal', $x5, 2,'fa fa-envelope-o');
-								
+
 								?>
-					   
+
 								<div class="form-group">
 									<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf003; Enviar Prueba" name="submit_email_google"> 
 								</div>
@@ -185,15 +190,45 @@ $rowEmpresa = db_select_data (false, 'email_principal, Config_Gmail_Usuario, Con
 					</div>
 				</div>
 			</div>
-			
+
+			<div class="tab-pane fade" id="data4">
+				<div class="wmd-panel">
+					<div class="table-responsive">
+						<div class="col-xs-12 col-sm-10 col-md-9 col-lg-8 fcenter" style="padding-top:40px;">
+							<form class="form-horizontal" method="post" id="form4" name="form4" autocomplete="off" novalidate>
+
+								<?php
+								//Se verifican si existen los datos
+								if(isset($email)){      $x1  = $email;    }else{$x1  = '';}
+								if(isset($texto)){      $x2  = $texto;    }else{$x2  = '';}
+
+								//se dibujan los inputs
+								$Form_Inputs = new Form_Inputs();
+								$Form_Inputs->form_input_icon('Email', 'email', $x1, 2,'fa fa-envelope-o');
+								$Form_Inputs->form_textarea('Texto','texto', $x2, 2);
+
+								$Form_Inputs->form_input_hidden('email_principal', $rowEmpresa['email_principal'], 2);
+
+								?>
+
+								<div class="form-group">
+									<input type="submit" class="btn btn-primary pull-right margin_form_btn fa-input" value="&#xf003; Enviar Prueba" name="submit_email_format">
+								</div>
+
+							</form>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
         </div>
 	</div>
 </div>
 
-		
+
 <?php widget_validator(); ?>
 
-           
 <?php
 /**********************************************************************************************************************************/
 /*                                             Se llama al pie del documento html                                                 */

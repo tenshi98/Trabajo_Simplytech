@@ -247,6 +247,69 @@ require_once '0_validate_user_1.php';
 
 		break;
 /*******************************************************************************************************************/
+		case 'send_mail_format':
+			//logo de la compañia
+			$login_logo  = DB_SITE_MAIN.'/img/round_logo.png';
+			//Se crea el cuerpo
+			$BodyMail  = '
+			<div style="background-color: #eef2f5;">
+				<div style="background-color:transparent">
+					<div style="margin:0 auto;min-width:320px;max-width:600px;height:50px;"></div>
+				</div>
+				<div style="background-color:transparent">
+					<div style="margin:0 auto;min-width:320px;max-width:600px;background-color: #1649e4;border-top-left-radius: 5px;border-top-right-radius: 5px;">
+						<div style="width:70%;float: left;">
+							<p style="font-size: 30px;color:#ffe31d;margin:50px;font-family: Arial, sans-serif;">Bienvenidos</p>
+						</div>
+						<div style="width:30%;float: left;" align="center">
+							<div style="padding:24px;">
+								<img src="'.$login_logo.'" alt="" style="width: 100%; max-width: 200px; height: auto; margin: auto; display: block;">
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+					</div>
+				</div>
+				<div style="background-color:transparent">
+					<div style="margin:0 auto;min-width:320px;max-width:600px;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;background-color:#ffffff;">
+						<div style="padding:24px;">
+							<p style="font-size: 12px;color:#1649e4;font-family: Arial, sans-serif;">'.$texto.'</p>
+							<div style="clear: both;"></div>
+						</div>
+					</div>
+				</div>
+				<div style="background-color:transparent">
+					<div style="margin:0 auto;min-width:320px;max-width:600px;height:50px;"></div>
+				</div>
+			</div>';
+
+			//Envio de correo
+			$rmail = tareas_envio_correo($email_principal, DB_EMPRESA_NAME,
+                                         $email, 'Receptor',
+                                         '', '',
+                                         'Notificacion',
+                                         $BodyMail,'',
+                                         '',
+                                         1,
+										 '','');
+            //se guarda el log
+			log_response(1, $rmail, $email.' (Asunto:Notificacion)');
+
+            //Envio del mensaje
+			if ($rmail!=1) {
+				echo '<pre>';
+					var_dump($rmail);
+					//echo (extension_loaded('openssl')?'SSL loaded':'SSL not loaded')."\n";
+				echo '</pre>';
+				//header( 'Location: '.$location.'?error='.$rmail );
+				//die;
+			} else {
+				$error['texto']    = 'sucess/Email enviado correctamente';
+				header( 'Location: '.$location.'?send=true' );
+				die;
+			}
+
+		break;
+/*******************************************************************************************************************/
 	}
 
 ?>
