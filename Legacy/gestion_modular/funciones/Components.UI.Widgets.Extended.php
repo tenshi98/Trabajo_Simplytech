@@ -9302,6 +9302,9 @@ function widget_CrossC($titulo, $timeBack, $seguimiento, $idSistema, $idTipoUsua
 													<th><a href="view_alertas_personalizadas.php?view='.simpleEncode($_SESSION['usuario']['widget_CrossC']['idTelemetria'], fecha_actual()).'" class="iframe btn btn-danger btn-sm"><i class="fa fa-bell-o" aria-hidden="true"></i> Alertas</a></th>
 												</tr>';
 
+											//Ordeno
+											sort($arrTempGrupos);
+											//recorro
 											foreach ($arrTempGrupos as $gruUso) {
 												//verificar errores
 												if(isset($gruUso['NErrores'])&&$gruUso['NErrores']!=0){
