@@ -85,7 +85,7 @@ if(!empty($_GET['submit_filter'])){
 		$arrConsulta = db_select_array (false, $SIS_query,  'telemetria_listado_historial_activaciones', $SIS_join,  $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrConsulta');
 
 		/**************************************************************************************/
-		//variables 
+		//variables
 		$unk_temp = 0;
 		//mensajes de error en caso de no tener configurados los datos
 		if(isset($arrConsulta[0]['EquipoActivacionValor'])&&$arrConsulta[0]['EquipoActivacionValor']==0){

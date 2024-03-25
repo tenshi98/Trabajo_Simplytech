@@ -113,7 +113,7 @@ foreach($arrConsulta as $categoria=>$permisos){
 	$FueraHorario       = 0;
 	$Direccion          = '';
 	$CodigoInterno      = '';
-							
+
 	//Recorrido
 	foreach ($permisos as $con) {
 		//Contrato Codigo
@@ -149,7 +149,7 @@ foreach($arrConsulta as $categoria=>$permisos){
 				if($Tiempo>'00:30:00'){
 					$TiempoColacionTot = $Tiempo;
 				}
-										
+
 			}
 			/***************************************/
 			//Verifico el tiempo muerto
@@ -172,7 +172,7 @@ foreach($arrConsulta as $categoria=>$permisos){
 					}
 				}
 			}
-									
+
 			/***************************************/
 			//Verifico el sobretiempo
 			if($SobreTiempo_1=='00:00:00'&&$con['EquipoJornada_inicio']>=$con['EquipoHora']&&$con['EquipoValor']==$con['EquipoActivacionValor']){
@@ -181,17 +181,17 @@ foreach($arrConsulta as $categoria=>$permisos){
 			if($con['EquipoJornada_termino']<=$con['EquipoHora']&&$con['EquipoValor']!=$con['EquipoActivacionValor']){
 				$SobreTiempo_2 = restahoras($con['EquipoJornada_termino'],$con['EquipoHora'] );
 			}
-									
+
 			/***************************************/
 			//Verifico si tiene algun dato que figure como fuera de horario
 			if(isset($con['FueraHorario'])&&$con['FueraHorario']!=0){
 				$FueraHorario++;
 			}
-			
+
 		/*****************************************************************/
 		//Si cambia de dia
-		}elseif($fecha!=''&&$fecha!=$con['EquipoFecha']){ 
-			
+		}elseif($fecha!=''&&$fecha!=$con['EquipoFecha']){
+
 			//Calculo de la perdida de tiempo
 			if($con['EquipoJornada_inicio']<=$HoraInicio){
 				$TiempoPerdido = sumahoras($TiempoPerdido, restahoras($con['EquipoJornada_inicio'], $HoraInicio));
@@ -241,7 +241,7 @@ foreach($arrConsulta as $categoria=>$permisos){
 			if(isset($con['FueraHorario'])&&$con['FueraHorario']!=0){
 				$FueraHorario++;
 			}
-									
+
 		/*****************************************************************/
 		//Primer dato
 		}else{
@@ -274,16 +274,16 @@ foreach($arrConsulta as $categoria=>$permisos){
 			if(isset($con['FueraHorario'])&&$con['FueraHorario']!=0){
 				$FueraHorario++;
 			}
-					
+
 		}
-								
+
 		$l_ejti = $con['EquipoJornada_inicio'];
 		$l_ejtt = $con['EquipoJornada_termino'];
 		$l_mp   = $con['EquipoMicroparada'];
 		$l_v1   = $con['EquipoValor'];
 		$l_v2   = $con['EquipoActivacionValor'];
-						
-	} 
+
+	}
 	/**********************************************************************************/
 	//ultimo dato
 	//Calculo colacion
@@ -301,8 +301,8 @@ foreach($arrConsulta as $categoria=>$permisos){
 	}
 	if($l_ejtt<=$HoraInicio&&$l_v1!=$l_v2){
 		$SobreTiempo_2 = sumahoras($SobreTiempo_2, restahoras($l_ejtt,$HoraInicio ));
-	}	
-	
+	}
+
 	$spreadsheet->setActiveSheetIndex(0)
 				->setCellValue('A'.$nn, DeSanitizar($categoria))
 				->setCellValue('B'.$nn, DeSanitizar($CodigoInterno))
@@ -314,12 +314,9 @@ foreach($arrConsulta as $categoria=>$permisos){
 				->setCellValue('H'.$nn, $TiempoMuerto)
 				->setCellValue('I'.$nn, $TiempoPerdido)
 				->setCellValue('J'.$nn, sumahoras($SobreTiempo_1,$SobreTiempo_2));
-	$nn++;		
-		
-}		
+	$nn++;
 
-
-
+}
 
 // Rename worksheet
 $spreadsheet->getActiveSheet()->setTitle('Activaciones');

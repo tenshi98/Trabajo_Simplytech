@@ -26,10 +26,10 @@ require_once '../A2XRXS_gears/xrxs_configuracion/Load.User.Permission.php';
 //Variables para filtro y paginacion
 $search  = '&idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
 if(isset($_GET['idTelemetria']) && $_GET['idTelemetria']!=''){  $location .= "&idTelemetria=".$_GET['idTelemetria'];  $search .= "&idTelemetria=".$_GET['idTelemetria'];}
-if(isset($_GET['F_inicio']) && $_GET['F_inicio']!=''){   $location .= "&F_inicio=".$_GET['F_inicio'];          $search .= "&F_inicio=".$_GET['F_inicio'];}
-if(isset($_GET['H_inicio']) && $_GET['H_inicio']!=''){   $location .= "&H_inicio=".$_GET['H_inicio'];          $search .= "&H_inicio=".$_GET['H_inicio'];}
-if(isset($_GET['F_termino']) && $_GET['F_termino']!=''){ $location .= "&F_termino=".$_GET['F_termino'];        $search .= "&F_termino=".$_GET['F_termino'];}
-if(isset($_GET['H_termino']) && $_GET['H_termino']!=''){ $location .= "&H_termino=".$_GET['H_termino'];        $search .= "&H_termino=".$_GET['H_termino'];}
+if(isset($_GET['F_inicio']) && $_GET['F_inicio']!=''){          $location .= "&F_inicio=".$_GET['F_inicio'];          $search .= "&F_inicio=".$_GET['F_inicio'];}
+if(isset($_GET['H_inicio']) && $_GET['H_inicio']!=''){          $location .= "&H_inicio=".$_GET['H_inicio'];          $search .= "&H_inicio=".$_GET['H_inicio'];}
+if(isset($_GET['F_termino']) && $_GET['F_termino']!=''){        $location .= "&F_termino=".$_GET['F_termino'];        $search .= "&F_termino=".$_GET['F_termino'];}
+if(isset($_GET['H_termino']) && $_GET['H_termino']!=''){        $location .= "&H_termino=".$_GET['H_termino'];        $search .= "&H_termino=".$_GET['H_termino'];}
 /**********************************************************************************************************************************/
 /*                                         Se llaman a la cabecera del documento html                                             */
 /**********************************************************************************************************************************/
@@ -58,7 +58,7 @@ if(!empty($_GET['submit_filter'])){
 	if(isset($ndata_1)&&$ndata_1>=10001){
 		alert_post_data(4,1,1,0, 'Estas tratando de seleccionar mas de 10.000 datos, trata con un rango inferior para poder mostrar resultados');
 	}else{
-			
+
 		/**********************************************************/
 		//se consulta
 		$SIS_query = '
@@ -81,10 +81,8 @@ if(!empty($_GET['submit_filter'])){
 		$arrConsulta = array();
 		$arrConsulta = db_select_array (false, $SIS_query, 'telemetria_listado_historial_activaciones', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], $original, 'arrConsulta');
 
-
-
 		/**************************************************************************************/
-		//variables 
+		//variables
 		$unk_temp = 0;
 		//mensajes de error en caso de no tener configurados los datos
 		if(isset($arrConsulta[0]['EquipoActivacionValor'])&&$arrConsulta[0]['EquipoActivacionValor']==0){
@@ -152,7 +150,7 @@ if(!empty($_GET['submit_filter'])){
 
 		<?php filtrar($arrConsulta, 'EquipoNombre');
 			foreach($arrConsulta as $categoria=>$permisos){ ?>
-														
+
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="box">
 						<header>
@@ -172,9 +170,8 @@ if(!empty($_GET['submit_filter'])){
 										<th>Sobre<br/>Tiempo    <a title="Corresponde a la diferencia de tiempo entre la hora de inicio real y la programada, solo en el caso de que la hora de inicio real sea inferior a la programada. Tambien corresponde a la diferencia entre la hora de termino real y la programada, solo en el caso de que la hora de termino real sea superior a la programada " class="tooltip" style="display: inline-block;"><i class="fa fa-info-circle" aria-hidden="true"></i></a></th>
 										<th>Detalles</th>
 									</tr>
-								</thead>	
-						
-										
+								</thead>
+
 								<tbody role="alert" aria-live="polite" aria-relevant="all">
 									<?php
 									//Variables
@@ -222,7 +219,6 @@ if(!empty($_GET['submit_filter'])){
 												if($Tiempo>'00:30:00'){
 													$TiempoColacionTot = $Tiempo;
 												}
-												
 											}
 											/***************************************/
 											//Verifico el tiempo muerto
@@ -260,12 +256,11 @@ if(!empty($_GET['submit_filter'])){
 											if(isset($con['FueraHorario'])&&$con['FueraHorario']==1){
 												$FueraHorario++;
 											}
-											
 
 										/*****************************************************************/
 										//Si cambia de dia
-										}elseif($fecha!=''&&$fecha!=$con['EquipoFecha']){ 
-											
+										}elseif($fecha!=''&&$fecha!=$con['EquipoFecha']){
+
 											//Calculo de la perdida de tiempo
 											if($con['EquipoJornada_inicio']<=$HoraInicio){
 												$TiempoPerdido = sumahoras($TiempoPerdido, restahoras($con['EquipoJornada_inicio'], $HoraInicio));
@@ -273,7 +268,7 @@ if(!empty($_GET['submit_filter'])){
 											if($con['EquipoJornada_termino']>=$HoraTermino){
 												$TiempoPerdido = sumahoras($TiempoPerdido, restahoras($HoraTermino, $con['EquipoJornada_termino'] ));
 											}
-										
+
 											?>
 											<tr class="odd">
 												<td><?php echo $categoria; ?></td>
@@ -350,7 +345,7 @@ if(!empty($_GET['submit_filter'])){
 												$FueraHorario++;
 											}
 										}
-										
+
 										$l_ejti = $con['EquipoJornada_inicio'];
 										$l_ejtt = $con['EquipoJornada_termino'];
 										$l_mp   = $con['EquipoMicroparada'];
@@ -377,7 +372,7 @@ if(!empty($_GET['submit_filter'])){
 									if($l_ejtt<=$HoraInicio&&$l_v1!=$l_v2){
 										$SobreTiempo_2 = sumahoras($SobreTiempo_2, restahoras($l_ejtt,$HoraInicio ));
 									}
-											
+
 									?>
 									<tr class="odd">
 										<td><?php echo $categoria; ?></td>
@@ -396,7 +391,7 @@ if(!empty($_GET['submit_filter'])){
 											</div>
 										</td>
 									</tr>
-														
+
 								</tbody>
 							</table>
 						</div>
@@ -404,8 +399,6 @@ if(!empty($_GET['submit_filter'])){
 				</div>
 		<?php } ?>
 	<?php } ?>
-
-		
 
 	<div class="clearfix"></div>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-bottom:30px">
@@ -457,7 +450,6 @@ if(!empty($_GET['submit_filter'])){
 					$Form_Inputs->form_input_number('Amperes a revisar', 'Amp', $x6, 1);
 
 					$Form_Inputs->form_input_hidden('pagina', 1, 2);
-					
 
 					?>
 
