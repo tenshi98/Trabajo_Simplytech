@@ -44,6 +44,9 @@ body:not(.sidebar-left-mini) #menu .nav-header,
 .navbar-inverse .navbar-nav > li > a {
     color: #fafafa !important;
 }
+.navbar-inverse .navbar-nav .dropdown-menu > li > a {
+    color: #fafafa !important;
+}
 
 /* Color de las fuentes del tema */
 .head .main-bar h3,
