@@ -319,9 +319,16 @@ if(isset($ndata_1)&&$ndata_1>=10001){
 
 			//variables
 			$anterior    = $posit - 1;
-			$diaInicio   = $arrTable[$anterior]['FechaHasta'];
+			//verifico si existe
+			if(isset($arrTable[$anterior]['FechaHasta'], $arrTable[$anterior]['HoraHasta'])){
+				$diaInicio   = $arrTable[$anterior]['FechaHasta'];
+				$horaInicio  = $arrTable[$anterior]['HoraHasta'];
+			}else{
+				$diaInicio   = $fac['FechaSistema'];
+				$horaInicio  = $fac['HoraSistema'];
+			}
+
 			$diaTermino  = $fac['FechaSistema'];
-			$horaInicio  = $arrTable[$anterior]['HoraHasta'];
 			$horaTermino = $fac['HoraSistema'];
 			$HorasTrans  = horas_transcurridas($diaInicio, $diaTermino, $horaInicio, $horaTermino);
 
