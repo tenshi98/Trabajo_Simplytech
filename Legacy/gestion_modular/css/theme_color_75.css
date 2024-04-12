@@ -69,7 +69,6 @@
 	background-color: #db0d0d;
 }
 
-
 /*******************************************************/
 /* Color caracteristico del tema */
 #wrap,
@@ -391,6 +390,7 @@ body:not(.sidebar-left-mini) #menu .nav-header {
 .obraCont .obraPad{box-shadow: 0px 0px 9px 1px #c0c0c0;border-radius: 10px;padding: 10px 20px;text-align: center;min-height: 100px;}
 .obraCont .obraPad span{color: #999;font-size: 12px;}
 .obraCont .obraPad .badge {top: 3px;position: absolute;background-color: #db0d0d;color: #fff!important;right: 25px;}
+.obraCont .obraPad .badge.bluebadge {top: 3px;position: absolute;background-color: #0d66db;color: #fff!important;right: 25px;}
 
 /*Linea Tiempo */
 .timeline-centered {position: relative;margin-bottom: 30px;}
