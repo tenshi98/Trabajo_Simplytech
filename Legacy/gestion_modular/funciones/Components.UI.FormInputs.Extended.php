@@ -729,6 +729,160 @@ class Form_Inputs extends Basic_Form_Inputs{
 		echo $input;
 	}
 	/*******************************************************************************************************************/
+	public function form_select_tel_group_apert($placeholder,$name, $idChanged, $idForm, $required, $dbConn){
+
+		/******************************************/
+		//Valido si es requerido
+		switch ($required) {
+			//Si el dato no es requerido
+			case 1:
+				$requerido = '';//variable vacia
+				break;
+			//Si el dato es requerido
+			case 2:
+				$requerido = 'required'; //se marca como requerido
+				if(!isset($_SESSION['form_require']) OR $_SESSION['form_require']==''){$_SESSION['form_require'] = 'required';}
+				$_SESSION['form_require'].= ','.$name;  //se guarda en la sesion para la validacion al guardar formulario
+				break;
+		}
+
+		/******************************/
+		//numero sensores equipo
+		$N_Maximo_Sensores = 72;
+		$subquery = '';
+		for ($i = 1; $i <= $N_Maximo_Sensores; $i++) {
+			$subquery .= ',telemetria_listado_sensores_grupo.SensoresGrupo_'.$i;
+			$subquery .= ',telemetria_listado_sensores_activo.SensoresActivo_'.$i;
+			$subquery .= ',telemetria_listado_sensores_unimed.SensoresUniMed_'.$i;
+		}
+		// Se trae un listado de todos los registros
+		$SIS_query = '
+		telemetria_listado.idTelemetria,
+		telemetria_listado.cantSensores'.$subquery;
+		$SIS_join  = '
+		LEFT JOIN `telemetria_listado_sensores_grupo`   ON telemetria_listado_sensores_grupo.idTelemetria   = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_activo`  ON telemetria_listado_sensores_activo.idTelemetria  = telemetria_listado.idTelemetria
+		LEFT JOIN `telemetria_listado_sensores_unimed`  ON telemetria_listado_sensores_unimed.idTelemetria  = telemetria_listado.idTelemetria';
+		$SIS_where = 'telemetria_listado.idSistema='.$_SESSION['usuario']['basic_data']['idSistema'];
+		$SIS_order = 'telemetria_listado.idTelemetria ASC';
+		$arrSelect = array();
+		$arrSelect = db_select_array (false, $SIS_query, 'telemetria_listado', $SIS_join, $SIS_where, $SIS_order, $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrSelect');
+		// Se trae un listado de todos los registros
+		$arrGrupos = array();
+		$arrGrupos = db_select_array (false, 'idGrupo,Nombre', 'telemetria_listado_grupos', '', '', 'idGrupo ASC', $dbConn, $_SESSION['usuario']['basic_data']['Nombre'], basename($_SERVER["REQUEST_URI"], ".php"), 'arrGrupos');
+		//se recorren los grupos
+		$arrFinalGrupos = array();
+		foreach ($arrGrupos as $sen) {
+			$arrFinalGrupos[$sen['idGrupo']] = $sen['Nombre'];
+		}
+
+		/******************************/
+		//se dibuja
+		$input = '<div class="form-group" id="div_'.$name.'" >
+						<label class="control-label col-xs-12 col-sm-4 col-md-4 col-lg-4">'.$placeholder.'</label>
+						<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 field">
+							<select name="'.$name.'" id="'.$name.'" class="form-control" '.$requerido.'>
+								<option value="" selected>Seleccione una Opción</option>
+							</select>
+						</div>
+					</div>';
+
+		/******************************************/
+		//script
+		$input .= '<script>';
+		$input .= 'document.getElementById("'.$idChanged.'").onchange = function() {cambia_'.$idChanged.'()};';
+
+		foreach ($arrSelect as $select) {
+			$id_data = 'let id_data_'.$select['idTelemetria'].'=new Array(""';
+			$data    = 'let data_'.$select['idTelemetria'].'=new Array("Seleccione una Opción"';
+			$valorx  = 0;
+			//se arma arreglo temporal
+			$arrTempGrupos = array();
+			//recorro
+			for ($i = 1; $i <= $select['cantSensores']; $i++) {
+				//solo sensores activos
+				if(isset($select['SensoresUniMed_'.$i],$select['SensoresActivo_'.$i])&&$select['SensoresUniMed_'.$i]==12&&$select['SensoresActivo_'.$i]==1){
+					//si el arreglo temporal existe
+					if(isset($arrTempGrupos[$select['SensoresGrupo_'.$i]])&&$arrTempGrupos[$select['SensoresGrupo_'.$i]]==1){
+						//nada
+					}else{
+						//ejecuto
+						//verifico que el grupo no este ingresado
+						if($valorx != $select['SensoresGrupo_'.$i]){
+
+							/***************************/
+							//guardo valor
+							$valorx = $select['SensoresGrupo_'.$i];
+							//genero valor
+							$arrTempGrupos[$select['SensoresGrupo_'.$i]] = 1;
+
+							if($valorx!=0){
+								/***************************/
+								//id_data
+								$id_data .= ',"'.$valorx.'"';
+
+								/***************************/
+								//data
+								if(isset($arrFinalGrupos[$select['SensoresGrupo_'.$i]])){
+									$grupo = $arrFinalGrupos[$select['SensoresGrupo_'.$i]];
+								}else{
+									$grupo = '';
+								}
+								$data .= ',"'.$grupo.'"';
+							}
+						}
+					}
+				}
+			}
+			$id_data .= ')
+			';
+			$data .= ')
+			';
+
+			/***************************/
+			//guardo dentro del input
+			$input .= $id_data;
+			$input .= $data;
+
+		}
+
+		/******************************************/
+		//ejecucion script
+		$input .= '
+		function cambia_'.$idChanged.'(){
+
+			let Componente = document.'.$idForm.'.'.$idChanged.'[document.'.$idForm.'.'.$idChanged.'.selectedIndex].value
+			try {
+				if (Componente != "") {
+					id_data = eval("id_data_" + Componente);
+					data    = eval("data_" + Componente);
+					num_int = id_data.length;
+					document.'.$idForm.'.'.$name.'.length = num_int;
+					for(i=0;i<num_int;i++){
+						document.'.$idForm.'.'.$name.'.options[i].value = id_data[i];
+						document.'.$idForm.'.'.$name.'.options[i].text  = data[i];
+					}
+					document.getElementById("div_'.$name.'").style.display = "block";
+				}else{
+					document.'.$idForm.'.'.$name.'.length = 1;
+					document.'.$idForm.'.'.$name.'.options[0].value = "";
+					document.'.$idForm.'.'.$name.'.options[0].text  = "Seleccione una Opción";
+					document.getElementById("div_'.$name.'").style.display = "none";
+				}
+			} catch (e) {
+				document.'.$idForm.'.'.$name.'.length = 1;
+				document.'.$idForm.'.'.$name.'.options[0].value = "";
+				document.'.$idForm.'.'.$name.'.options[0].text  = "Seleccione una Opción";
+				document.getElementById("div_'.$name.'").style.display = "none";
+
+			}
+			document.'.$idForm.'.'.$name.'.options[0].selected = true;
+		}
+		</script>';
+
+		echo $input;
+	}
+	/*******************************************************************************************************************/
 	public function form_select_col_tem_hum($placeholder, $name, $required){
 
 		/******************************************/
